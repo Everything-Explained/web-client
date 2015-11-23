@@ -1,0 +1,52 @@
+
+// SCROLLBAR STYLE
+.optiscroll-v,
+.optiscroll-h
+	background: transparent
+	/* Scrollbars are visible only on hover */
+	opacity: 0
+	transition: opacity 0.2s ease 0s
+
+
+.optiscroll.vtrack-on:hover > .optiscroll-v
+	opacity: 1
+
+
+.optiscroll.htrack-on:hover > .optiscroll-h
+	opacity: 1
+
+
+.optiscroll-v
+	top: 4px
+	bottom: 4px
+	width: 0
+
+
+.optiscroll-h
+	left: 4px
+	right: 4px
+	height: 0
+	display: none
+
+
+// TRACK STYLE
+.optiscroll-vtrack,
+.optiscroll-htrack
+	background: $scrollbar-color
+	border-radius: 5px
+	box-shadow: 0 0 1px #FFF
+	transition: all .3s
+
+
+.optiscroll-vtrack
+	width: 7px
+	right: 4px
+
+
+.optiscroll-htrack
+	height: 3px
+	bottom: 4px
+
+
+.optiscroll-vtrack:hover
+	background: $scrollbar-hover-color

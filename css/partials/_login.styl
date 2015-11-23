@@ -1,0 +1,121 @@
+body #a0-lock.a0-theme-default
+  .a0-panel.a0-active
+    background url($login-bg-image) repeat
+    border-radius 5px
+
+
+    .a0-icon
+      border-radius 8px
+      background-color transparent
+      margin-right 10px
+      height 39px
+      width 37px
+      overflow visible
+      &:before
+        position relative
+        font-family icomoon
+        font-size 40px
+        color $head-1-color
+        background-color transparent
+
+    .a0-icon.a0-facebook
+      &:hover
+        background-color $login-facebook-bg
+      &:hover:before
+        color $login-facebook-color
+
+    .a0-icon.a0-github
+      &:before
+        content 'g'
+      &:hover
+        background-color transparent
+      &:hover:before
+        color $login-github-color
+
+    .a0-icon.a0-googleplus
+      &:hover
+        background-color transparent
+      &:hover:before
+        color $login-google-color
+
+    .a0-icon.a0-windows
+      &:hover
+        background-color transparent
+      &:hover:before
+        color $login-microsoft-color
+
+
+body #a0-lock .a0-zocial:active,
+body #a0-lock.a0-theme-default .a0-zocial:focus
+  opacity 1
+
+body #a0-lock.a0-theme-default .a0-equal-viewport .a0-zocial:hover:before,
+body #a0-lock.a0-theme-default .a0-zocial.a0-icon:hover:before
+  background-color transparent
+
+
+body #a0-lock .a0-panel .a0-inputs,
+body #a0-lock.a0-theme-default .a0-panel .a0-inputs,
+body #a0-widget .a0-panel .a0-inputs
+  border 0
+
+// Email/Password Inputs
+body #a0-lock .a0-panel .a0-inputs input,
+body #a0-lock.a0-theme-default .a0-panel .a0-inputs input,
+body #a0-widget .a0-panel .a0-inputs input
+  background: transparent
+
+// Email/Password Input:FOCUS
+body #a0-lock .a0-panel .a0-inputs input:focus,
+body #a0-lock.a0-theme-default .a0-panel .a0-inputs input:focus,
+body #a0-widget .a0-panel .a0-inputs input:focus
+  background-color transparent
+
+// Input icons
+body #a0-lock .a0-panel .a0-inputs i,
+body #a0-lock.a0-theme-default .a0-panel .a0-inputs i,
+body #a0-widget .a0-panel .a0-inputs i
+  color $head-1-color  !important;
+
+body #a0-lock .a0-panel .a0-email,
+body #a0-lock.a0-theme-default .a0-panel .a0-email,
+body #a0-widget .a0-panel .a0-email,
+body #a0-lock .a0-panel .a0-password,
+body #a0-lock.a0-theme-default .a0-panel .a0-password,
+body #a0-widget .a0-panel .a0-password,
+body #a0-lock .a0-panel .a0-repeatPassword,
+body #a0-lock.a0-theme-default .a0-panel .a0-repeatPassword,
+body #a0-widget .a0-panel .a0-repeatPassword
+  border-color rgba(255, 255, 255, .2)
+
+body #a0-lock .a0-panel button.a0-primary,
+body #a0-lock.a0-theme-default .a0-panel button.a0-primary,
+body #a0-widget .a0-panel button.a0-primary
+  background rgba(0, 0, 0, .4)
+  border-radius 100px
+  width 80%
+
+
+
+body #a0-lock
+  &.a0-theme-default .a0-panel
+    .a0-header h1
+      color $login-header-color
+    .a0-footer
+      display none
+
+    // Close button
+    .a0-close
+      color $login-close-btn
+    .a0-close:hover
+      color $login-close-btn-hover
+
+    // .a0-separator
+    //   display none
+    .a0-icon-container
+      height 33px
+    .a0-icon-container .a0-avatar
+      display none
+
+  // .a0-emailPassword
+  //   display none

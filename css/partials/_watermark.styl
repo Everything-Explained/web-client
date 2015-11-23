@@ -1,0 +1,23 @@
+
+section#TrayTop .watermark
+	position: fixed
+	left: -7px
+	bottom: 40px
+	color: $watermark-color
+	font-size: 16px
+	opacity: .7
+	font-family: PT, Geneva, Tahoma, sans-serif
+	transform: rotate(45deg)
+
+	&:after
+		position: absolute
+		left: -33px
+		bottom: -11px
+		width: 194px
+		height: 32px
+		background-color: $watermark-bg-color
+		content: ' '
+		z-index: -1
+		border-top: 4px double $watermark-border-color
+		border-bottom: 4px double $watermark-border-color
+		box-shadow: 0 0 1px 1px $watermark-boxshadow-color

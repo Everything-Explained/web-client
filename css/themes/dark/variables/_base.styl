@@ -1,0 +1,62 @@
+@import '../../../_utilities'
+
+$hue = 52
+
+// PRIMARY Colors
+$white = hsl(255, 100%, 100%)
+$white-trans = 255, 100%, 100%
+$white-light = $white
+$white-light-trans = hsla(255, 100%, 100%, 0)
+
+$black = hsl(0, 0, 0)
+$black-trans = 0, 0, 0
+$black-light = hsla($black-trans, .8 / $golden-ratio)
+$black-light-trans = lighten($black, 8%)
+
+
+// Theme Colors
+$transient = hsl($hue, 68%, 42%)
+$transient-trans = $hue, 68%, 42%
+$transient-light = hsl($hue, 66%, 50%)
+$transient-light-trans = $hue, 66%, 50%
+
+$dark = rgb(155, 155, 155)
+$dark-trans = rgba(155, 155, 155, 0)
+
+
+// HEADERS
+$head-1-color = hsla($transient-light-trans, .97)
+$head-2-color = $white-dark
+$head-3-color = gray
+
+
+// OVERLAY Colors
+$panel = hsla($dark-trans, .2 / $golden-ratio)
+$panel-hover = hsla($dark-trans, .1 / $golden-ratio)
+$accent-color = desaturate($transient-light, 43%)
+$accent-dark = darken($transient-light, 35%)
+
+
+// BORDERS
+$border-emphasis = hsla($white-trans, .9 / $golden-ratio)
+$border-dark-color = $goldenrod-dark
+
+
+// BODY Colors
+$body-selection = hsla($transient-light-trans, .3 / $golden-ratio)
+
+
+// TEXT Colors
+$text-emphasis = lighten(hsla($transient-light-trans, .99 / $golden-ratio), 23%)
+$text-color = hsla($white-trans, .6 / $golden-ratio)
+
+
+// MESSAGE Levels
+$info = #90c7de
+$attention = #ffb180
+$neutral = gray
+
+
+// IMAGES
+$body-bg-image = "../img/bg/dark_variations.png"
+$dark-body-loader-image = url("../img/dark-loader.gif")

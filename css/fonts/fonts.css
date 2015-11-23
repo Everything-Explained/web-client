@@ -1,0 +1,36 @@
+@font-face {
+	font-family: 'icomoon';
+	src: url('icomoon.ttf?33mgyn') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Delius);
+
+@font-face {
+	font-family: Comfort;
+	src: url(Comfortaa-Regular.ttf);
+}
+
+@font-face {
+	font-family: 'PT';
+	src: url(PT.ttf);
+}
+
+@font-face {
+	font-family: 'ShareTech';
+	src: url(ShareTechMono-Regular.ttf);
+}

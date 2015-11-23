@@ -1,0 +1,40 @@
+
+template
+  section#PageTop
+
+    header.global
+      form#LoginContainer(class='${loginActive? "active" : ""}')
+        input(type='text', placeholder='username')
+        input(type='password', placeholder='password')
+        button#LoginButton(onsubmit='return false', mousedown.delegate='login()') Login
+      
+      a.theme-selector(mousedown.delegate='lightsOnOff($event)', 
+                       href='javascript:void(0)', 
+                       title='Turn lights on/off', 
+                       class='${lights ? "light" : "dark"}')
+      
+
+    div#PageTransition(class='${page.overlay? "active" : ""}')
+
+    section#TrayTop.buffer
+      aside.watermark Alpha: ${version}
+      menu#TabMenu
+        ul
+          li( repeat.for='route of activeRoutes', 
+              mousedown.delegate='$parent.goTo(route.href)', 
+              class='${route.isActive ? "active" : ""}') ${route.title}
+
+    section#PageMiddle
+      section#TrayLeft(class='buffer2 ${utils.page.leftTray.className}')
+        menu#MainMenu
+          ul
+            li( repeat.for='nav of navList', 
+                mousedown.delegate='$parent.populateRoutes(nav, $event, true)', 
+                class='${nav.isActive ? "active" : ""} ${$parent.router.isNavigating && nav.isActive ? "page-loader" : ""}', 
+                innerhtml='${$parent.router.isNavigating && nav.isActive ? "&nbsp;" : nav.name}')
+
+      router-view#PageContent
+
+      section#TrayRight(class='buffer2 ${page.rightTray.className}')
+
+    footer#TrayBottom.buffer

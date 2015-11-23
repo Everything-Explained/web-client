@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title!= title
+    link(rel="stylesheet", href="../css/fonts/fonts.css")
+    link(rel='stylesheet', href='../css/optiscroll.css')
+    script(src='http://cdn.auth0.com/js/lock-7.min.js' async)
+    script(src='http://cdn.auth0.com/w2/auth0-6.js' async)
+    script(src='helpers/lightsOnOff.js')
+    script findTheLights()
+    script(src='../libs/lodash.min.js')
+    script(src='../libs/optiscroll.min.js')
+    //- script(src='../helpers/globals.js')
+    //- script(src='../controllers/errorhandler.js')
+
+  body(aurelia-app='app-config')
+    div.body-loader(data-message='Loading Amenaeble Alpha')
+
+    script(src='jspm_packages/system.js')
+    script(src='config.js')
+    script().
+      System.import('aurelia-bootstrapper');
