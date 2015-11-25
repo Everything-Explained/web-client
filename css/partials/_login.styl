@@ -64,12 +64,15 @@ body #a0-lock .a0-panel .a0-inputs input,
 body #a0-lock.a0-theme-default .a0-panel .a0-inputs input,
 body #a0-widget .a0-panel .a0-inputs input
   background: transparent
+  font-size 14px
+  color $login-btn-text-color
 
 // Email/Password Input:FOCUS
 body #a0-lock .a0-panel .a0-inputs input:focus,
 body #a0-lock.a0-theme-default .a0-panel .a0-inputs input:focus,
 body #a0-widget .a0-panel .a0-inputs input:focus
   background-color transparent
+  color $login-btn-text-color
 
 // Input icons
 body #a0-lock .a0-panel .a0-inputs i,
@@ -79,6 +82,7 @@ body #a0-widget .a0-panel .a0-inputs i
 
 body #a0-lock .a0-panel .a0-email,
 body #a0-lock.a0-theme-default .a0-panel .a0-email,
+body #a0-lock.a0-theme-default .a0-panel .a0-username,
 body #a0-widget .a0-panel .a0-email,
 body #a0-lock .a0-panel .a0-password,
 body #a0-lock.a0-theme-default .a0-panel .a0-password,
@@ -87,6 +91,7 @@ body #a0-lock .a0-panel .a0-repeatPassword,
 body #a0-lock.a0-theme-default .a0-panel .a0-repeatPassword,
 body #a0-widget .a0-panel .a0-repeatPassword
   border-color rgba(255, 255, 255, .2)
+
 
 body #a0-lock .a0-panel button.a0-primary,
 body #a0-lock.a0-theme-default .a0-panel button.a0-primary,
@@ -101,6 +106,7 @@ body #a0-lock
   &.a0-theme-default .a0-panel
     .a0-header h1
       color $login-header-color
+      margin-bottom 20px
     .a0-footer
       display none
 
@@ -110,12 +116,33 @@ body #a0-lock
     .a0-close:hover
       color $login-close-btn-hover
 
-    // .a0-separator
-    //   display none
     .a0-icon-container
       height 33px
     .a0-icon-container .a0-avatar
       display none
 
-  // .a0-emailPassword
-  //   display none
+    .a0-instructions
+      color $login-instructions-color
+
+    .a0-separator
+      margin 20px 0 13px 0
+      font-size 14px
+      color $login-separator-color
+
+    button.a0-primary
+      background-color $panel
+      border-radius 13px
+      color $login-btn-text-color
+      &:hover
+        color $head-1-color
+        background-color hsla(0, 0, 0, .3 / $golden-ratio)
+
+  &.a0-theme-default .a0-btn-small
+    border 0
+    border-radius 5px
+    background-color $panel
+    color $login-btn-text-color
+    font-size 11px
+    &:hover
+      color $head-1-color
+      background-color hsla(0, 0, 0, .3 / $golden-ratio)
