@@ -34,3 +34,8 @@
 	font-family: 'ShareTech';
 	src: url(ShareTechMono-Regular.ttf);
 }
+
+@font-face {
+	font-family: 'Delius';
+	src: url(Delius-Regular.ttf);
+}

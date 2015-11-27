@@ -1,6 +1,6 @@
 
 
-$speed = 0.2s
+$speed = .2s
 
 
 #overlay
@@ -9,7 +9,7 @@ $speed = 0.2s
 	left: 0
 	right: 0
 	bottom: 0
-	background-color: rgba(255, 255, 255, 0.7)
+	background-color $modal-overlay-bg-color
 	opacity: 0
 	visibility: hidden
 	z-index: 1000
@@ -30,7 +30,9 @@ aside.modal
 	top: 100px
 	margin: 0 auto
 	width: 50%
-	box-shadow: 0 0 23px 3px #ccc
+	background $modal-bg
+	box-shadow $modal-boxshadow
+	color $modal-default-color
 	border-radius: 5px
 	transform: rotateX(-55deg)
 	transition: all $speed ease-in-out
@@ -49,25 +51,25 @@ aside.modal
 		padding: 3px 8px 5px 8px
 		font-weight: bold
 		text-decoration: none
-		color: deeppink
-		background-color: #fff
-		box-shadow: 0 0 10px 1px  #aaa
+		color: $modal-close-btn-color
+		background $modal-close-btn-bg
+		box-shadow $modal-close-btn-boxshadow
 		transition: all $speed ease-in-out
 
 	a.close:hover
-		background-color: deeppink
-		color: #fff
+		background $modal-close-btn-hover-bg
+		color $modal-close-btn-hover-color
 
 	header
 		text-align: center
 		padding: 7px 0
 		font-size: 24px
 		font-family: Verdana
-		background-color: #ECEBD2
-		border-bottom: 2px dashed #fff
+		color $modal-header-color
+		background $modal-header-bg-color
+		border-bottom $modal-separator-border
 		border-top-right-radius: 5px
 		border-top-left-radius: 5px
-
 	.content
 		font-family: Delius
 		font-size: 18px
@@ -75,11 +77,12 @@ aside.modal
 		padding-right: 5px
 		min-height: 100px
 		max-height: 255px
-		background-color: #F2F1E1
+		color $modal-content-color
+		background-color $modal-content-bg-color
+		text-outline($modal-content-outline-size, $modal-content-outline-color)
 		border-bottom-left-radius: 5px
 		border-bottom-right-radius: 5px
 		overflow-y: auto
-
 		h2
 			margin-top: 20px
 			font-size: 20px
@@ -87,12 +90,17 @@ aside.modal
 
 			&:first-child
 				margin-top: 0
-
 		span
 			position: relative
 			display: block
 			padding-bottom: 7px
-
 		b
 			padding-right: 7px
 			font-family: Consolas, monospace
+
+
+aside.modal.bbl
+	h2
+		color $modal-bbl-content-header-color
+	b
+		color $modal-bbl-number-color
