@@ -40,6 +40,6 @@ template
         ul
           li(repeat.for='user of users', class='${user.isTyping}') ${user.name}
 
-    chat-commander.au-animate(chat-data.bind='data')
+    chat-commander#ChatCommander.au-animate(chat-data.bind='data')
 
 

@@ -65,14 +65,29 @@ body #a0-lock.a0-theme-default .a0-panel .a0-inputs input,
 body #a0-widget .a0-panel .a0-inputs input
   background: transparent
   font-size 14px
-  color $login-btn-text-color
+  color $login-input-color
+
+body #a0-lock.a0-theme-default .a0-panel input::-webkit-input-placeholder
+  color $login-placeholder-color
+  transition opacity .3s
+
+body #a0-lock.a0-theme-default .a0-panel input:focus::-webkit-input-placeholder
+  opacity .5
+
 
 // Email/Password Input:FOCUS
 body #a0-lock .a0-panel .a0-inputs input:focus,
 body #a0-lock.a0-theme-default .a0-panel .a0-inputs input:focus,
 body #a0-widget .a0-panel .a0-inputs input:focus
   background-color transparent
-  color $login-btn-text-color
+  color $login-input-color
+
+body #a0-lock.a0-theme-default .a0-panel input::-moz-placeholder
+  color $login-placeholder-color
+  transition opacity .3s
+
+body #a0-lock.a0-theme-default .a0-panel input:focus::-moz-placeholder
+  opacity .2
 
 // Input icons
 body #a0-lock .a0-panel .a0-inputs i,
@@ -90,7 +105,7 @@ body #a0-widget .a0-panel .a0-password,
 body #a0-lock .a0-panel .a0-repeatPassword,
 body #a0-lock.a0-theme-default .a0-panel .a0-repeatPassword,
 body #a0-widget .a0-panel .a0-repeatPassword
-  border-color rgba(255, 255, 255, .2)
+  border-color $login-separator-color // rgba(255, 255, 255, .2)
 
 
 body #a0-lock .a0-panel button.a0-primary,
@@ -127,22 +142,22 @@ body #a0-lock
     .a0-separator
       margin 20px 0 13px 0
       font-size 14px
-      color $login-separator-color
+      color $login-OR-color
 
     button.a0-primary
-      background-color $panel
+      background-color $login-btn-bg-color
       border-radius 13px
       color $login-btn-text-color
       &:hover
-        color $head-1-color
-        background-color hsla(0, 0, 0, .3 / $golden-ratio)
+        color $login-btn-text-hover
+        background-color $login-btn-bg-hover
 
   &.a0-theme-default .a0-btn-small
     border 0
     border-radius 5px
-    background-color $panel
+    background-color $login-btn-bg-color
     color $login-btn-text-color
     font-size 11px
     &:hover
-      color $head-1-color
-      background-color hsla(0, 0, 0, .3 / $golden-ratio)
+      color $login-btn-text-hover
+      background-color $login-btn-bg-hover

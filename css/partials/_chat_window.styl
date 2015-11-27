@@ -10,7 +10,7 @@ section#ChatContainer
 	flex: 1 0
 
 
-chat-commander
+#ChatCommander
 	z-index: 1
 	min-height: 30px
 	display: flex
@@ -36,7 +36,7 @@ chat-commander
 		color: #ccc
 
 
-
+$chat-message-right-margin = 13px
 .message
 	display: flex
 	.container
@@ -143,11 +143,9 @@ chat-commander
 		margin-bottom: 3px
 		flex-direction: row
 		justify-content: space-between
-		//transition: all .3s;
 
 		.left
 			display: flex
-
 			.username
 				position: relative
 				font-family: PT, Consolas, "Lucida Console", monospace
@@ -167,9 +165,8 @@ chat-commander
 					font-size: 16px
 
 		.right
-
 			.real-time
-				margin-right: 5px
+				margin-right $chat-message-right-margin
 				font-size: 12px
 				color: $msg-realtime-color
 
@@ -263,7 +260,7 @@ chat-commander
 			color: $emote-msg-color
 
 		.real-time
-			margin-right: 5px
+			margin-right $chat-message-right-margin
 			text-align: right
 			font-size: 12px
 			color: $msg-timestamp-color
