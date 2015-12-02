@@ -118,9 +118,11 @@ export class MessageView {
   }
 
   getVerse(e: MouseEvent, verse: string) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.io.getBibleVerse(verse);
+    if (e.button == 0) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.io.getBibleVerse(verse);
+    }
   }
 
   wordType(type: string) {

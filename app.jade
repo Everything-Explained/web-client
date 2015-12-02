@@ -33,7 +33,7 @@ template
                 class='${nav.isActive ? "active" : ""} ${$parent.router.isNavigating && nav.isActive ? "page-loader" : ""}', 
                 innerhtml='${$parent.router.isNavigating && nav.isActive ? "&nbsp;" : nav.name}')
 
-      router-view#PageContent
+      router-view#PageContent.optiscroll
 
       section#TrayRight(class='buffer2 ${page.rightTray.className}')
 

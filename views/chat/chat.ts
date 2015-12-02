@@ -56,7 +56,7 @@ export class Chat {
 
 
   constructor(private body: HTMLElement) {
-
+    
     this.alias = (location.href.indexOf('localhost') > -1) ? 'Aedaeum' : null;
 
     // Initialize chat service

@@ -5,52 +5,52 @@ $changelog-title = $head-1-color
 
 
 section.changelog
-	display: flex
-	flex-flow: row wrap
-	border-top: 4px solid transparent
-	border-left: 4px solid transparent
+  display: flex
+  flex-flow: row wrap
+  border-top: 4px solid transparent
+  border-left: 4px solid transparent
+  padding-right 10px
 
-	.compartment
-		display: flex
-		min-width: 350px
-		max-width: 600px
-		flex-flow: column nowrap
-		margin-right: 10px
-		margin-bottom: 10px
-		flex: 1
-		align-self: flex-start
-		&:last-child
-			margin-right: 0
+  .compartment
+    display: flex
+    min-width: 350px
+    max-width: 600px
+    flex-flow: column nowrap
+    margin-right: 10px
+    margin-bottom: 10px
+    flex: 1
+    align-self: flex-start
+    &:last-child
+      margin-right: 0
 
-	.title
-		background $panel
-		width: 200px
-		padding: 5px 0
-		font-size: 20px
-		font-family: Comfort
-		color: $changelog-title
-		text-align: center
-		border-radius: 5px 5px 0 0
+  .title
+    background $panel
+    width: 200px
+    padding: 5px 0
+    font-size: 20px
+    font-family: Comfort
+    color: $changelog-title
+    text-align: center
+    border-radius: 5px 5px 0 0
 
-	article
-		display: flex
-		background: $panel
-		flex-flow: column nowrap
-		padding: 5px 5px 10px 0
-		border-radius: 0 5px 5px 5px
-		flex: 1
+  article
+    display: flex
+    background: $panel
+    flex-flow: column nowrap
+    padding: 5px 5px 10px 0
+    border-radius: 0 5px 5px 5px
+    flex: 1
 
-		ul
-			margin-top: 10px
-			&:first-child
-				margin-top: 0
-			li
-				margin-left: 27px
-				line-height: 20px
-			&.additions
-				color: $info
-			&.changes
-				color: $neutral
-			&.fixes
-				color: $attention
-
+    ul
+      margin-top: 10px
+      &:first-child
+        margin-top: 0
+      li
+        margin-left: 27px
+        line-height: 20px
+      &.additions
+        color: $info
+      &.changes
+        color: $neutral
+      &.fixes
+        color: $attention

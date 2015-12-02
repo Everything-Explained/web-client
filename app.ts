@@ -66,6 +66,8 @@ export class App {
 
   // Currently active navigation routes (Populated)
   activeRoutes = new Array<IRouterNavigationRoute>();
+  
+  private _scrollbars: IOptiscrollInstance
 
   constructor(private elem: Element, private _eva: EventAggregator) {
 
@@ -101,6 +103,20 @@ export class App {
 
 
     });
+    
+    this._eva.subscribe('router:navigation:complete', payload => {
+      if (this._scrollbars) this._scrollbars.destroy()
+      this._scrollbars = new Optiscroll(document.getElementById('PageContent'), {
+        autoUpdate: false
+      })
+      
+    })
+    
+    window.onresize = (ev: UIEvent) => {
+      this._scrollbars.update()
+    }
+    
+    
   }
 
 
@@ -204,9 +220,6 @@ export class App {
 
   /** DOM Ready (Called by Aurelia) */
   attached() {
-
-    // this.page.rightTray = new PageElement('TrayRight');
-
     let req = new XMLHttpRequest()
       , lights = localStorage.getItem('lights');
 

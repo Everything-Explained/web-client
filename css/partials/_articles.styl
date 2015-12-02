@@ -42,7 +42,6 @@ $content
 
 article.home
 	position relative
-	right 1px
 	display flex
 	-ms-flex-direction column
 	flex-direction column
@@ -53,10 +52,14 @@ article.home
 
 article[role='about']
 	border-top 4px solid transparent
-	border-left 6px solid transparent
+	border-left 4px solid transparent
+	margin-right 15px
 	p
 		@extend $content
+		margin-bottom 10px
 		margin-top 0
+		&:last-child
+			margin-bottom 50px
 
 
 article[role='rules']
