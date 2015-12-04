@@ -1,7 +1,14 @@
 
 template
+  //- MODAL CODE ONLY
+  div#overlay
+    div
+      aside.modal.bbl
+        header
+        section.content
+        a(href='javascript:void(0);', class='close')
+  //- MAIN PAGE CODE
   section#PageTop
-
     header.global
       form#LoginContainer(class='${loginActive? "active" : ""}')
         input(type='text', placeholder='username')
