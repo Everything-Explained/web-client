@@ -4,6 +4,7 @@ import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {Page, PageElement} from './helpers/page';
 import {$} from './helpers/domop';
+import * as ajax from 'nanoajax';
 
 interface IPageConfiguration {
   route: IRouterNavigationRoute;
@@ -243,6 +244,20 @@ export class App {
 
       console.info('User Logged In');
       console.log(profile);
+      console.log(token);
+      
+      setTimeout(() => {
+        ajax.ajax({
+          url: '/secured/test',
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        }, (code, res) => {
+          console.log(code);
+          console.log(res)
+        })
+      }, 2000);
+      
     });
 
     // let auth = new Auth0({
