@@ -5,6 +5,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {Page, PageElement} from './helpers/page';
 import {$} from './helpers/domop';
 import * as ajax from 'nanoajax';
+import * as encrypt from './helpers/cheap-encrypt';
 
 interface IPageConfiguration {
   route: IRouterNavigationRoute;
@@ -248,15 +249,33 @@ export class App {
       
       setTimeout(() => {
         ajax.ajax({
-          url: '/secured/test',
+          url: '/internal/loginrequest',
           headers: {
             'Authorization': 'Bearer ' + token
           }
         }, (code, res) => {
-          console.log(code);
-          console.log(res)
+          
+          let data = encrypt.encode(res, JSON.stringify({
+            user_id: profile.user_id,
+            picture: profile.picture,
+            email: profile.email,
+            nickname: profile.nickname
+          }))
+          
+          ajax.ajax({
+            url: '/internal/login',
+            method: 'POST',
+            body: data,
+            headers: {
+              'Authorization': 'Bearer ' + token,
+              'Content-Type': 'text/plain'
+            }
+          }, (code, res) => {
+            console.log(code, res);
+          })
+          
         })
-      }, 2000);
+      }, 500);
       
     });
 

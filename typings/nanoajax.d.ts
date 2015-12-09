@@ -7,7 +7,8 @@ declare module "nanoajax" {
   interface IAjaxOptions {
     url: string;
     method?: string;
-    body?: string;
+    body?: any;
+    data?: string;
     headers?: any;
     cors?: boolean;
   }
