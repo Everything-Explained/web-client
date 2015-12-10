@@ -28,7 +28,7 @@ module CheapEncrypt {
       i = (i < keyNums.length) ? i : 0;
       let pos = c.charCodeAt(0) + keyNums[i++];
 
-      if (pos > 126) {
+      if (pos > limit) {
         encodedStr += String.fromCharCode((pos - limit) + offset);
       } else {
         encodedStr += String.fromCharCode(pos);

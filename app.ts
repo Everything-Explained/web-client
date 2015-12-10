@@ -234,50 +234,78 @@ export class App {
 
   login() {
     
-
-    let lock = new Auth0Lock('VOhiMrFfTsx2SSgoGOr25G8qa3J6W0yj', 'aedaeum.auth0.com');
-
-    lock.show((err, profile, token) => {
-      if (err) {
-        console.error(err.message);
-        return;
+    ajax.ajax({
+      url: '/internal/loginrequest'
+    }, (a,b,c) => {
+      let header = c.getResponseHeader('WWW-Authenticate');
+      console.log(header);
+      let data = atob(header);
+      console.log(data);
+      
+      let decoded = ''
+        , salt = parseInt(data.substr(-2), 16)
+        , saltRamp = parseInt(data.substr(-4, 2), 16) / 100
+      
+      // Clean footers
+      data = data.slice(0, -4);
+      let testData = '';
+      for(let i = 0, s = salt; i < data.length; i+=2) {
+        
+        // Convert to ASCII code
+        let alldata = parseInt(data[i] + data[i + 1], 16);
+        testData += alldata + ',';
+        // Convert to char
+        decoded += String.fromCharCode(alldata - s);
+        s = Math.floor(s * saltRamp);
       }
+      console.log(testData);
+      console.log(decoded);
+      
+    })
 
-      console.info('User Logged In');
-      console.log(profile);
-      console.log(token);
+    // let lock = new Auth0Lock('VOhiMrFfTsx2SSgoGOr25G8qa3J6W0yj', 'aedaeum.auth0.com');
+
+    // lock.show((err, profile, token) => {
+    //   if (err) {
+    //     console.error(err.message);
+    //     return;
+    //   }
+
+    //   console.info('User Logged In');
+    //   console.log(profile);
+    //   console.log(token);
       
-      setTimeout(() => {
-        ajax.ajax({
-          url: '/internal/loginrequest',
-          headers: {
-            'Authorization': 'Bearer ' + token
-          }
-        }, (code, res) => {
+    //   setTimeout(() => {
+    //     ajax.ajax({
+    //       url: '/internal/loginrequest',
+    //       headers: {
+    //         'Authorization': 'Bearer ' + token
+    //       }
+    //     }, (code, res) => {
           
-          let data = encrypt.encode(res, JSON.stringify({
-            user_id: profile.user_id,
-            picture: profile.picture,
-            email: profile.email,
-            nickname: profile.nickname
-          }))
+    //       let data = encrypt.encode(res, JSON.stringify({
+    //         user_id: profile.user_id,
+    //         picture: profile.picture,
+    //         email: profile.email,
+    //         nickname: profile.nickname
+    //       }))
           
-          ajax.ajax({
-            url: '/internal/login',
-            method: 'POST',
-            body: data,
-            headers: {
-              'Authorization': 'Bearer ' + token,
-              'Content-Type': 'text/plain'
-            }
-          }, (code, res) => {
-            console.log(code, res);
-          })
+    //       ajax.ajax({
+    //         url: '/internal/login',
+    //         method: 'POST',
+    //         body: data,
+    //         headers: {
+    //           'Authorization': 'Bearer ' + token,
+    //           'Content-Type': 'text/plain'
+    //         }
+    //       }, (code, res) => {
+    //         console.log(code, res);
+    //       })
           
-        })
-      }, 500);
+    //     })
+    //   }, 500);
       
-    });
+    // });
 
     // let auth = new Auth0({
     //   domain: 'aedaeum.auth0.com',
