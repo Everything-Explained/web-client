@@ -183,10 +183,7 @@ export class Chat {
   showVerse(scriptures: IScriptures[]) {
 
     let s = displayVerse(scriptures)
-
-    this.modal.header = s.header;
-    this.modal.content = s.html;
-    this.modal.show();
+    this.modal.show('modals/bible.html', s.header, s.html);
   }
 
 

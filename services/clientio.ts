@@ -71,6 +71,7 @@ export class ClientIO {
 
   getBibleVerse(scriptures: string) {
     console.log('Sending EMIT');
+    this._chat.modal.preload();
     this._sock.emit('find-verse', scriptures);
   }
 

@@ -16,8 +16,6 @@ export function displayVerse(scripts: IScriptures[]) {
 
   for (let script of scripts) {
 
-    console.log(script);
-
     if (script.title) {
       html += `<h2>${script.title}</h2>`;
     }

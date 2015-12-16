@@ -1,6 +1,5 @@
 
-
-class ModernModal {
+export class ModernModal {
 
   private _overlay: HTMLElement;
   private _preloader: HTMLElement;
@@ -62,7 +61,7 @@ class ModernModal {
       this._open();
 
     } else {
-      this.loadTemplate(url, (typeof contentObj === 'string') ? null : contentObj)
+      this._loadTemplate(url, (typeof contentObj === 'string') ? null : contentObj)
         .then((res: boolean) => {
 
           this._writeContent(contentObj);
@@ -73,6 +72,9 @@ class ModernModal {
             if (head) this._header.innerHTML = head;
           }, 100);
 
+        })
+        .catch((e) => {
+          console.error(e);
         })
     }
 
@@ -88,7 +90,7 @@ class ModernModal {
    * @param data A string array of classes or Object containing information
    *             about the elements you intend to update.
    */
-  public loadTemplate(url: string, data?: string[]|Object) {
+  private _loadTemplate(url: string, data?: string[]|Object) {
 
     // Track the last template
     this._lastURL = url;
@@ -112,6 +114,9 @@ class ModernModal {
         rs(true);
 
       })
+      .catch((e) => {
+        rj(e);
+      })
 
 
     })
@@ -126,7 +131,6 @@ class ModernModal {
    * is going to take a while to return.
    */
   public preload() {
-    this._clearPrevTemplate();
     this._preloader.classList.add('open');
     this._overlay.classList.add('open');
   }
