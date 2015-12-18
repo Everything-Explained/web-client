@@ -7,6 +7,7 @@ import {$} from './helpers/domop';
 import * as ajax from 'nanoajax';
 import * as encrypt from './helpers/cheap-encrypt';
 import {Login} from './app-login';
+import {ModernModal} from './helpers/modern-modal';
 
 interface IPageConfiguration {
   route: IRouterNavigationRoute;
@@ -22,7 +23,7 @@ export interface INav {
 }
 
 
-@inject(Element, EventAggregator)
+@inject(Element, EventAggregator, ModernModal)
 export class App {
 
   version = '0.4.0';
@@ -70,9 +71,10 @@ export class App {
   // Currently active navigation routes (Populated)
   activeRoutes = new Array<IRouterNavigationRoute>();
   
-  private _scrollbars: IOptiscrollInstance
+  private _scrollbars: IOptiscrollInstance;
+  private _modalOverlay: HTMLElement;
 
-  constructor(private elem: Element, private _eva: EventAggregator) {
+  constructor(private elem: Element, private _eva: EventAggregator, private _modal: ModernModal) {
 
     this._eva.subscribeOnce('router:navigation:complete', payload => {
 
@@ -225,6 +227,8 @@ export class App {
   attached() {
     let req = new XMLHttpRequest()
       , lights = localStorage.getItem('lights');
+      
+    this._modal.init('overlay')
 
     let light = (lights == 'off') ? 'light' : 'dark';
     req.open('GET', `css/themes/${light}/theme.css`, true);
@@ -235,9 +239,24 @@ export class App {
 
   login() {
     
-    let login = new Login()
+    // let login = new Login()
     
-    login.exec();
+    // login.exec();
+    
+    this._modal.show('modals/login.html', 'Account Setup', {
+      '.nick': {
+        events: [
+          {
+            name: 'keyup', 
+            trigger: (e: KeyboardEvent) => {
+              console.log(e);
+            }
+          }
+        ]
+        
+        
+      }
+    })
 
   }
 

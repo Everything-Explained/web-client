@@ -1,0 +1,23 @@
+template
+  div.modal-container
+    aside.modal.login
+      header
+      section.modal-content
+        table(cellspacing='7')
+          tr
+            td 
+              input.nick(type='text', placeholder='alias/nick', maxlength='20')
+            td
+              div.check.nick-check
+          tr
+            td
+              input(type='text', placeholder='email', maxlength='255')
+            td
+              div.check.invalid.email-check
+          tr
+            td
+              img(src='../css/themes/img/chat64d.png')
+          tr
+            td
+              button.save Save
+      a.modal-close(href='javascript:void(0)') &#10060;

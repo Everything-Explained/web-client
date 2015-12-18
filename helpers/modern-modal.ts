@@ -1,4 +1,15 @@
 
+interface IModalOptions {
+  html?: string;
+  events?: [
+    {
+      name: string;
+      trigger: () => void;
+    }
+  ]
+}
+
+
 export class ModernModal {
 
   private _overlay: HTMLElement;
@@ -9,6 +20,7 @@ export class ModernModal {
   private _content: HTMLElement;
 
   private _lastURL = '';
+  private _lastContent: string|Object;
   private _template: HTMLElement;
   private _workingClasses = new Object();
   private _browserChecked = false;
@@ -21,10 +33,20 @@ export class ModernModal {
     closeBtn: 'modal-close',
   }
 
-  constructor(overlayID: string) {
+  constructor() {
 
     this._browserCheck();
+    this._lastContent = null;
 
+  }
+
+
+  /**
+   * Initializes all available elements.
+   * This method should be used after the page is rendered
+   * with the modal overlay.
+   */
+  public init(overlayID: string) {
     this._overlay = document.getElementById(overlayID);
     this._preloader = this._overlay.querySelector('.' + this.classes.preloader) as HTMLElement;
 
@@ -39,7 +61,6 @@ export class ModernModal {
         this._close();
       }
     })
-
   }
 
 
@@ -51,14 +72,17 @@ export class ModernModal {
    * @param head The header of the modal window
    * @param contentObj The optional dynamic content to add based on class names
    */
-  public show(url: string, head: string, contentObj?: Object|string) {
+  public show(url: string, head: string, contentObj?: Object|string, callback?: (overlay: HTMLElement) => void) {
 
     this._preloader.classList.remove('open');
 
     if (url === this._lastURL && this._template) {
+      console.log('Using Existing Template')
       this._header.innerHTML = head;
-      this._writeContent(contentObj);
+      if (!this._compareObjs(this._lastContent, contentObj))
+        this._writeContent(contentObj);
       this._open();
+      if (callback) callback(this._overlay);
 
     } else {
       this._loadTemplate(url, (typeof contentObj === 'string') ? null : contentObj)
@@ -70,6 +94,7 @@ export class ModernModal {
           setTimeout(() => {
             this._open();
             if (head) this._header.innerHTML = head;
+            if (callback) callback(this._overlay);
           }, 100);
 
         })
@@ -169,15 +194,26 @@ export class ModernModal {
   /** Writes the dynamic user content to the specified objects HTML */
   private _writeContent(contentObj: Object|string) {
 
+    // Allows us to test if the same data is entered
+    this._lastContent = contentObj;
+
     if (typeof contentObj === 'string') {
       this._content.innerHTML = contentObj;
     }
     else if (typeof contentObj === 'object') {
+
       for(let c in contentObj) {
+
         if (this._workingClasses.hasOwnProperty(c)) {
           if (typeof contentObj[c] === 'object') {
-            this._workingClasses[c].innerHTML = contentObj[c].html;
-            this._workingClasses[c].addEventListener(contentObj[c].event, contentObj[c].trigger);
+            let obj = contentObj[c] as IModalOptions;
+            if (obj['html']) this._workingClasses[c].innerHTML = obj.html;
+            if (obj['events']) {
+              for(let e of obj.events) {
+                console.dir(this._workingClasses[c])
+                this._workingClasses[c].addEventListener(e.name, e.trigger)
+              }
+            }
           } else {
             this._workingClasses[c].innerHTML = contentObj[c];
           }
@@ -231,6 +267,51 @@ export class ModernModal {
 
     return template;
 
+  }
+
+
+  private _compareObjs(obj1: Object, obj2: Object) {
+
+    console.log('Comparing Objects', obj1, obj2);
+
+    // Rule out string
+    if (typeof obj1 == 'string' || typeof obj2 == 'string') {
+      return obj1 === obj2;
+    }
+
+    if (Object.keys(obj1).length !== Object.keys(obj2).length) return false;
+
+
+    for (let k in obj1) {
+
+      if (!obj2[k]) return false;
+
+      let o1 = obj1[k] as IModalOptions
+        , o2 = obj2[k] as IModalOptions;
+
+      // Assume if the HTML is identical that all events are as well
+      // TODO - When the need arises, do event checking
+      if (o1.html || o2.html) {
+
+        // Assume identical events with same html
+        if (o1.html == o2.html) continue
+        else return false;
+
+      } else if(o1.events || o2.events) {
+        if ((o1.events.length && o2.events.length) &&
+            (o1.events.length == o2.events.length)
+           ) continue;
+        else return false;
+
+        for(let i = 0; i < o1.events.length; i++) {
+          if (`${o1.events[i].trigger}` != `${o2.events[i].trigger}`) return false;
+        }
+
+
+      }
+      throw new Error('ModernModal::Objects have no HTML or EVENTS properties')
+    }
+    return true;
   }
 
 

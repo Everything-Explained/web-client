@@ -21,7 +21,7 @@ export interface CommanderData {
 
 
 
-@inject(Element)
+@inject(Element, ModernModal)
 export class Chat {
 
   // Socket IO instance
@@ -39,8 +39,6 @@ export class Chat {
 
   users = new Array<{name: string; isTyping: string}>();
 
-  modal: ModernModal;
-
 
   ports = {
     main: new Port('main', this),
@@ -55,7 +53,8 @@ export class Chat {
   private _activePort: Port;
 
 
-  constructor(private body: HTMLElement) {
+  constructor(private body: HTMLElement, public modal: ModernModal) {
+    
     
     this.alias = (location.href.indexOf('localhost') > -1) ? 'Aedaeum' : null;
 
@@ -122,8 +121,6 @@ export class Chat {
     this.ports.top.portContainer = document.getElementById('Pane0')
     this.ports.center.portContainer = document.getElementById('Pane1')
     this.ports.bottom.portContainer = document.getElementById('Pane2')
-
-    this.modal = new ModernModal('overlay')
 
   }
 
