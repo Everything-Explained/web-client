@@ -3,21 +3,46 @@ template
     aside.modal.login
       header
       section.modal-content
+      
         table(cellspacing='7')
           tr
             td 
               input.nick(type='text', placeholder='alias/nick', maxlength='20')
             td
-              div.check.nick-check
+              div.check.invalid.username-check
+              
           tr
             td
-              input(type='text', placeholder='email', maxlength='255')
-            td
+              input.email(type='text', placeholder='email', maxlength='255')
+            td(valign='center')
               div.check.invalid.email-check
+              
           tr
             td
-              img(src='../css/themes/img/chat64d.png')
+              div.img-container
+                img(src='../css/themes/img/chat64d.png')
+                div.radio-container
+                  input(type='radio', name='avatar', checked)
+                  
+              div.img-container
+                div.default-img 
+                  div.font-container &#128100;
+                div.radio-container
+                  input(type='radio', name='avatar')
           tr
-            td
+            td.username-error-container.login-status-container
+              div.login-status.error.username-error Username can only:
+                ul
+                  li Contain a-z, A-Z, and 0-9
+                  li Be 20 characters long
+            td.email-error-container.login-status-container
+              div.login-status.error.email-error Make sure your email:
+                ul
+                  li is formed properly: "me@somemail.com"
+                  li has no repeating periods (fullstops)
+            td.can-save-container.login-status-container
+              div.login-status.can-save It all looks good, hit save when you're ready :)
+          tr
+            td.save
               button.save Save
       a.modal-close(href='javascript:void(0)') &#10060;

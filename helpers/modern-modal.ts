@@ -4,7 +4,7 @@ interface IModalOptions {
   events?: [
     {
       name: string;
-      trigger: () => void;
+      trigger: (ev, overlay, objs) => void;
     }
   ]
 }
@@ -71,20 +71,25 @@ export class ModernModal {
    * @param url The location of the html template
    * @param head The header of the modal window
    * @param contentObj The optional dynamic content to add based on class names
+   * @param clalback Executed after a modal is shown
    */
-  public show(url: string, head: string, contentObj?: Object|string, callback?: (overlay: HTMLElement) => void) {
+  public show(url: string, head: string, contentObj?: Object|string) {
 
     this._preloader.classList.remove('open');
 
     if (url === this._lastURL && this._template) {
-      console.log('Using Existing Template')
+
       this._header.innerHTML = head;
-      if (!this._compareObjs(this._lastContent, contentObj))
+
+      if (!this._compareObjs(this._lastContent, contentObj)) {
+        console.log('Writing Anyway');
         this._writeContent(contentObj);
+      }
+
       this._open();
-      if (callback) callback(this._overlay);
 
     } else {
+
       this._loadTemplate(url, (typeof contentObj === 'string') ? null : contentObj)
         .then((res: boolean) => {
 
@@ -94,13 +99,13 @@ export class ModernModal {
           setTimeout(() => {
             this._open();
             if (head) this._header.innerHTML = head;
-            if (callback) callback(this._overlay);
           }, 100);
 
         })
         .catch((e) => {
           console.error(e);
         })
+
     }
 
 
@@ -132,7 +137,7 @@ export class ModernModal {
         this._content = this._overlay.querySelector('.' + this.classes.content) as HTMLElement;
         this._modal = this._overlay.querySelector('.' + this.classes.modal) as HTMLElement;
 
-        if ( data) {
+        if (data) {
           this._getElementsFromClasses(data);
         }
 
@@ -206,14 +211,27 @@ export class ModernModal {
 
         if (this._workingClasses.hasOwnProperty(c)) {
           if (typeof contentObj[c] === 'object') {
-            let obj = contentObj[c] as IModalOptions;
-            if (obj['html']) this._workingClasses[c].innerHTML = obj.html;
-            if (obj['events']) {
-              for(let e of obj.events) {
-                console.dir(this._workingClasses[c])
-                this._workingClasses[c].addEventListener(e.name, e.trigger)
+            if (!contentObj[c]) continue;
+
+            // Func scoped to retain value of 'c' (className)
+            ((cn: string) => {
+              let obj = contentObj[cn] as IModalOptions;
+              if (obj['html']) this._workingClasses[cn].innerHTML = obj.html;
+              if (obj['events']) {
+
+                obj.events.forEach((e) => {
+                  console.log('Adding Event', [this._workingClasses[cn], `${e.trigger}`]);
+                  this._workingClasses[cn]
+                      .addEventListener(
+                        e.name,
+                        (ev) => { e.trigger(ev, this._overlay, this._workingClasses)}
+                      )
+                })
               }
-            }
+            })(c);
+
+
+
           } else {
             this._workingClasses[c].innerHTML = contentObj[c];
           }
@@ -272,8 +290,6 @@ export class ModernModal {
 
   private _compareObjs(obj1: Object, obj2: Object) {
 
-    console.log('Comparing Objects', obj1, obj2);
-
     // Rule out string
     if (typeof obj1 == 'string' || typeof obj2 == 'string') {
       return obj1 === obj2;
@@ -284,10 +300,23 @@ export class ModernModal {
 
     for (let k in obj1) {
 
-      if (!obj2[k]) return false;
+      // Check for 0, null, undefined inequality
+      if (!obj2[k] || !obj1[k]) {
+        if (obj1[k] !== obj2[k]) {
+          console.info('MM::CompareObj::Null Unequal')
+          return false;
+        }
+        else continue;
+      }
+
 
       let o1 = obj1[k] as IModalOptions
         , o2 = obj2[k] as IModalOptions;
+
+      // Catch plain content updates
+      if (typeof o1 == 'string' || typeof o2 == 'string'){
+        return o1 === o2;
+      }
 
       // Assume if the HTML is identical that all events are as well
       // TODO - When the need arises, do event checking
@@ -295,22 +324,33 @@ export class ModernModal {
 
         // Assume identical events with same html
         if (o1.html == o2.html) continue
-        else return false;
+        else {
+          console.info('MM::CompareObj::Different HTML')
+          return false;
+        }
 
       } else if(o1.events || o2.events) {
         if ((o1.events.length && o2.events.length) &&
             (o1.events.length == o2.events.length)
-           ) continue;
-        else return false;
-
-        for(let i = 0; i < o1.events.length; i++) {
-          if (`${o1.events[i].trigger}` != `${o2.events[i].trigger}`) return false;
+           ) {
+          for(let i = 0; i < o1.events.length; i++) {
+            if (`${o1.events[i].trigger}` != `${o2.events[i].trigger}`) {
+              console.info('MM::CompareObj::Different Functions')
+              return false;
+            }
+          }
+          // No conflicts
+          continue;
+        }
+        else {
+          console.info('MM::CompareObj::Different Events')
+          return false;
         }
 
-
       }
-      throw new Error('ModernModal::Objects have no HTML or EVENTS properties')
+      throw new Error('MM::CompareObj::Objects have no HTML or EVENTS properties')
     }
+    console.info('MM::CompareObj::Objects Match')
     return true;
   }
 

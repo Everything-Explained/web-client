@@ -1,6 +1,11 @@
 import * as http from 'nanoajax';
+import {inject} from 'aurelia-framework';
 import * as encrypt from './helpers/cheap-encrypt';
+import {ModernModal} from './helpers/modern-modal';
+import * as validator from 'validator';
 
+
+@inject(ModernModal)
 export class Login {
   
   private _clientID = 'VOhiMrFfTsx2SSgoGOr25G8qa3J6W0yj';
@@ -8,6 +13,7 @@ export class Login {
   private _header = 'WWW-Authenticate';
   
   private _lock: Auth0LockStatic;
+  private _modal: ModernModal
   
   constructor() {
     this._lock = new Auth0Lock(this._clientID, this._domain);
@@ -101,13 +107,16 @@ export class Login {
         locale: profile.locale
       }))
       
+      console.log(data);
+      
       http.ajax({
         url: '/internal/login',
         method: 'POST',
-        body: data,
+        body: 'Hello World!',
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'text/plain'
+          'Content-Type': 'text/plain',
+          'WWW-Authenticate': data
         }
       }, (code, res, req) => {
         
@@ -117,6 +126,55 @@ export class Login {
       
     })
     
+  }
+  
+  
+  private _completeSignup() {
+    
+    this._modal.show('modals/login', 'Complete Login', {
+      '.nick': {
+        events: [
+          {
+            name: 'keyup',
+            trigger: this._validateUsername
+          }
+        ]
+      },
+      '.email': {
+        events: [
+          {
+            name: 'keyup',
+            trigger: this._validateEmail
+          }
+        ]
+      },
+      '.nick-check': null,
+      '.email-check': null
+    })
+    
+  }
+  private _validateUsername(e: KeyboardEvent, ol: HTMLElement, objs: any) {
+    let input = e.target as HTMLInputElement
+      , check = objs['.nick-check'] as HTMLElement;
+      
+    if (/[a-zA-Z0-9]+/g.test(input.value) && 
+                  input.value.length < 21 &&
+                  input.value.length > 4) 
+    {
+      check.classList.remove('invalid');
+    } else {
+      check.classList.add('invalid');
+    }
+  }
+  private _validateEmail(e: KeyboardEvent, ol: HTMLElement, objs: any) {
+    let input = (e.target as HTMLInputElement).value
+      , check = objs['.email-check'] as HTMLElement;
+    
+    if (validator.isEmail(input)) {
+      check.classList.remove('invalid');
+    } else {
+      check.classList.add('invalid');
+    }
   }
   
   

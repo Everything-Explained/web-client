@@ -65,7 +65,7 @@ module CheapEncrypt {
     seed = parseInt(keys.splice(-1)[0]);
 
     if (seed < 11 || seed >= chars) {
-      throw new Error('Seed must be greater than 10 and less than 94');
+      throw new Error('Seed must be greater than 10 and less than ' + chars);
     }
 
 
@@ -79,10 +79,10 @@ module CheapEncrypt {
 
       if (x >= chars) {
         let d = x - r;
-        if (d == 94 || d == 0) {
+        if (d == chars || d == 0) {
           // Make each seed unique
           seed = Math.floor(seed * seedRamp);
-          keyNums.push(94 - seed);
+          keyNums.push(chars - seed);
 
         } else {
 

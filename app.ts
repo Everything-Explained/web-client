@@ -239,24 +239,103 @@ export class App {
 
   login() {
     
-    // let login = new Login()
+    let login = new Login()
     
-    // login.exec();
+    login.exec();
     
-    this._modal.show('modals/login.html', 'Account Setup', {
-      '.nick': {
-        events: [
-          {
-            name: 'keyup', 
-            trigger: (e: KeyboardEvent) => {
-              console.log(e);
-            }
-          }
-        ]
+    // let el = document.querySelector('#overlay') as HTMLElement;
+      
+      
+      
+    
+    // this._modal.show('modals/login.html', 'Account Setup', {
+    //   '.nick': {
+    //     events: [
+    //       {
+    //         name: 'keyup', 
+    //         trigger: (e: KeyboardEvent, ol, objs) => {
+    //           console.log('username event')
+    //           let input = e.target as HTMLInputElement
+    //             , check = objs['.username-check'] as HTMLElement
+    //             , ec = objs['.username-error-container'] as HTMLElement
+    //             , eu = objs['.username-error'] as HTMLElement;
+                
+    //           console.log(objs);
+    //           if (/[a-z0-9]+/g.test(input.value)) {
+    //             check.classList.remove('invalid');
+    //             ec.classList.add('open');
+    //             setTimeout(() => {
+    //               eu.classList.add('open');
+    //             }, 50);
+    //           } else {
+    //             check.classList.add('invalid')
+    //             ec.classList.remove('open');
+    //             eu.classList.remove('open')
+    //           }
+              
+    //         }
+    //       }
+    //     ]
         
         
-      }
-    })
+    //   },
+    //   '.email': {
+    //     events: [
+    //       {
+    //         name: 'keyup',
+    //         trigger: (e: KeyboardEvent, ol, objs) => {
+    //           console.log('email event')
+    //           let input = (e.target as HTMLInputElement).value
+    //             , check = objs['.email-check'] as HTMLElement
+    //             , ec = objs['.email-error-container'] as HTMLElement
+    //             , ee = objs['.email-error'] as HTMLElement;
+                
+    //           if (input.length > 0) {
+    //             ec.classList.add('open');
+    //             setTimeout(() => {
+    //               ee.classList.add('open');
+    //             }, 50);
+    //             check.classList.remove('invalid');
+    //           } else {
+    //             check.classList.add('invalid')
+    //             ec.classList.remove('open');
+    //             ee.classList.remove('open');
+    //           }
+    //         }
+    //       }
+    //     ]
+    //   },
+    //   '.save': {
+    //     events: [
+    //       {
+    //         name: 'click',
+    //         trigger: (e: KeyboardEvent, ol, objs) => {
+    //           let input = (e.target as HTMLInputElement).value
+    //             , sc = objs['.can-save-container'] as HTMLElement
+    //             , ss = objs['.can-save'] as HTMLElement;
+                
+    //           if (ss.classList.contains('open')) {
+    //             sc.classList.remove('open');
+    //             ss.classList.remove('open');
+    //           } else {
+    //             sc.classList.add('open');
+    //             setTimeout(() => {
+    //               ss.classList.add('open');
+    //             }, 50);
+    //           }
+    //         }
+    //       }
+    //     ]
+    //   },
+    //   '.can-save-container': null,
+    //   '.can-save': null,
+    //   '.email-check': null,
+    //   '.username-check': null,
+    //   '.username-error': null,
+    //   '.username-error-container': null,
+    //   '.email-error': null,
+    //   '.email-error-container': null
+    // })
 
   }
 

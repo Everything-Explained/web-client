@@ -21,9 +21,9 @@ section#ChatContainer
 .chat-input-container
 	color: $msg-color
 	background-color: $panel
+	background-clip padding-box
 	font-size: 18px
 	padding: 7px 5px
-	border: 2px solid transparent
 	border-left: 2px solid $win-divider-border-color
 	border-top: 2px solid $win-divider-border-color
 	border-bottom-right-radius: 13px
@@ -360,6 +360,7 @@ section#MainWindow
 	#MainPort
 		position: relative
 		background-color: $panel
+		background-clip padding-box
 		border-left: 2px solid $win-divider-border-color
 		border-top: 2px solid $win-divider-border-color
 		border-top-left-radius: 7px
@@ -461,6 +462,7 @@ aside#UserList
 	transition: all .3s
 
 	&.active
+		background-clip padding-box
 		border-left: 2px solid $win-divider-border-color
 		border-top: 2px solid $win-divider-border-color
 		padding-top: 3px

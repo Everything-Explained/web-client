@@ -25,6 +25,7 @@ System.config({
     "moment": "github:moment/moment@2.10.6",
     "nanoajax": "npm:nanoajax@0.4.0",
     "socketio": "socket.io/socket.io",
+    "validator": "npm:validator@4.4.0",
     "github:aurelia/animator-css@0.18.0": {
       "aurelia-metadata": "github:aurelia/metadata@0.10.1",
       "aurelia-pal": "github:aurelia/pal@0.3.0",
@@ -233,6 +234,9 @@ System.config({
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:validator@4.4.0": {
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
     "npm:velocity-animate@1.2.3": {
       "jquery": "npm:jquery@2.1.4",
