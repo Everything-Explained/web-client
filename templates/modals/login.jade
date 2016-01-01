@@ -9,13 +9,13 @@ template
             td 
               input.nick(type='text', placeholder='alias/nick', maxlength='20')
             td
-              div.check.invalid.username-check
+              div.check.nick-check
               
           tr
             td
               input.email(type='text', placeholder='email', maxlength='255')
             td(valign='center')
-              div.check.invalid.email-check
+              div.check.email-check
               
           tr
             td
@@ -30,8 +30,8 @@ template
                 div.radio-container
                   input(type='radio', name='avatar')
           tr
-            td.username-error-container.login-status-container
-              div.login-status.error.username-error Username can only:
+            td.nick-error-container.login-status-container
+              div.login-status.error.nick-error Username can only:
                 ul
                   li Contain a-z, A-Z, and 0-9
                   li Be 20 characters long
@@ -41,7 +41,7 @@ template
                   li is formed properly: "me@somemail.com"
                   li has no repeating periods (fullstops)
             td.can-save-container.login-status-container
-              div.login-status.can-save It all looks good, hit save when you're ready :)
+              div.login-status.can-save Hit save when you're ready :)
           tr
             td.save
               button.save Save

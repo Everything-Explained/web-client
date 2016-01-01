@@ -1,6 +1,7 @@
 
 interface IModalOptions {
   html?: string;
+  value?: string;
   events?: [
     {
       name: string;
@@ -216,6 +217,7 @@ export class ModernModal {
             // Func scoped to retain value of 'c' (className)
             ((cn: string) => {
               let obj = contentObj[cn] as IModalOptions;
+              if (obj['value']) this._workingClasses[cn].value = obj.value
               if (obj['html']) this._workingClasses[cn].innerHTML = obj.html;
               if (obj['events']) {
 
