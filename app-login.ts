@@ -19,11 +19,39 @@ export class Login {
   private _clientID = 'VOhiMrFfTsx2SSgoGOr25G8qa3J6W0yj';
   private _domain = 'aedaeum.auth0.com';
   private _header = 'WWW-Authenticate';
+  
+  private _objs = new Object() as {
+    email: HTMLInputElement;
+    nick: HTMLInputElement;
+    cansave: HTMLElement;
+    cansavec: HTMLElement;
+    emailcheck: HTMLElement;
+    emailerror: HTMLElement;
+    emailerrorc: HTMLElement;
+    nickcheck: HTMLElement;
+    nickerror: HTMLElement;
+    nickerrorc: HTMLElement;
+  }
+  
+  private _classes = [
+    '.nick',
+    '.email',
+    '.can-save-container',
+    '.can-save',
+    '.email-check',
+    '.email-error',
+    '.email-error-container',
+    '.nick-check',
+    '.nick-error',
+    '.nick-error-container'
+  ]
 
   private _lock: Auth0LockStatic;
 
   constructor(private _modal: ModernModal) {
     this._lock = new Auth0Lock(this._clientID, this._domain);
+    
+    
   }
 
   exec() {
@@ -156,7 +184,7 @@ export class Login {
         events: [
           {
             name: 'keyup',
-            trigger: (e, ol, objs) => this._validateUsername(e, ol, objs)
+            trigger: (e, ol, objs) => this._validateNick(e, ol, objs)
           }
         ]
       },
@@ -169,14 +197,9 @@ export class Login {
           }
         ]
       },
-      '.can-save-container': null,
-      '.can-save': null,
-      '.email-check': null,
-      '.nick-check': null,
-      '.nick-error': null,
-      '.nick-error-container': null,
-      '.email-error': null,
-      '.email-error-container': null,
+      objs: this._classes
+    }, (objs) => {
+      this._populateLoginObjs(objs);
     })
 
   }
@@ -187,21 +210,18 @@ export class Login {
   /**
    * Validate Username/Nick during account setup
    */
-  private _validateUsername(e: KeyboardEvent, ol: HTMLElement, objs: any) {
-    let input = e.target as HTMLInputElement
-      , check = objs['.nick-check'] as HTMLElement
-      , stc = objs['.nick-error-container'] as HTMLElement
-      , sto = objs['.nick-error'] as HTMLElement;
+  private _validateNick(e: KeyboardEvent, ol: HTMLElement, objs: any) {
+    let input = e.target as HTMLInputElement;
 
 
-    if (vtor.matches(input.value, /[a-zA-Z0-9]+/g) &&
+    if (vtor.matches(input.value, /^[a-zA-Z0-9]+$/g) &&
         vtor.isLength(input.value, 4, 21))
     {
-      check.classList.remove('invalid');
-      this._setLoginStatus(stc, sto, false);
+      this._objs.nickcheck.classList.remove('invalid');
+      this._setLoginStatus(this._objs.nickerrorc, this._objs.nickerror, false);
     } else {
-      check.classList.add('invalid');
-      this._setLoginStatus(stc, sto, true);
+      this._objs.nickcheck.classList.add('invalid');
+      this._setLoginStatus(this._objs.nickerrorc, this._objs.nickerror, true);
     }
     this._canUserSave(objs);
   }
@@ -213,17 +233,14 @@ export class Login {
    * Validate email during account setup.
    */
   private _validateEmail(e: KeyboardEvent, ol: HTMLElement, objs: any) {
-    let input = (e.target as HTMLInputElement).value
-      , check = objs['.email-check'] as HTMLElement
-      , stc = objs['.email-error-container'] as HTMLElement
-      , sto = objs['.email-error'] as HTMLElement;
+    let input = (e.target as HTMLInputElement).value;
 
     if (vtor.isEmail(input)) {
-      check.classList.remove('invalid');
-      this._setLoginStatus(stc, sto, false);
+      this._objs.emailcheck.classList.remove('invalid');
+      this._setLoginStatus(this._objs.emailerrorc, this._objs.emailerror, false);
     } else {
-      check.classList.add('invalid');
-      this._setLoginStatus(stc, sto, true);
+      this._objs.emailcheck.classList.add('invalid');
+      this._setLoginStatus(this._objs.emailerrorc, this._objs.emailerror, true);
     }
     this._canUserSave(objs);
   }
@@ -235,12 +252,14 @@ export class Login {
    * Hide/Show the specified Account Setup status.
    */
   private _setLoginStatus(stc: HTMLElement, sto: HTMLElement, status: boolean) {
+    
     if (status && !stc.classList.contains('open')) {
       stc.classList.add('open');
       setTimeout(() => {
         sto.classList.add('open');
       }, 50);
-    } else if(!status && stc.classList.contains('open')) {
+    } 
+    else if(!status && stc.classList.contains('open')) {
       stc.classList.remove('open');
       sto.classList.remove('open');
     }
@@ -250,22 +269,46 @@ export class Login {
 
 
   /**
-   * Check if the user can save their changes based
+   * Check if the user can save their changes
    * based on the username and email validation.
    */
   private _canUserSave(objs: any) {
-    let statusEmail = objs['.email-check'] as HTMLElement
-      , statusUsern = objs['.nick-check'] as HTMLElement
-      , csc = objs['.can-save-container'] as HTMLElement
-      , csv = objs['.can-save'] as HTMLElement;
 
-    if (statusEmail.classList.contains('invalid') ||
-        statusUsern.classList.contains('invalid')) {
-      this._setLoginStatus(csc, csv, false);
+    if (this._objs.emailcheck.classList.contains('invalid') ||
+        this._objs.nickcheck.classList.contains('invalid')) {
+      this._setLoginStatus(this._objs.cansavec, this._objs.cansave, false);
     } else {
-      this._setLoginStatus(csc, csv, true);
+      this._setLoginStatus(this._objs.cansavec, this._objs.cansave, true);
     }
 
+  }
+  
+  
+  private _populateLoginObjs(objs: any) {
+    for(let o in objs) {
+      switch(vtor.ltrim(o,'.')) {
+        case 'email': this._objs['email'] = objs[o]; break;
+        case 'nick': this._objs['nick'] = objs[o]; break;
+        case 'can-save': this._objs['cansave'] = objs[o]; break;
+        case 'can-save-container': this._objs['cansavec'] = objs[o]; break;
+        case 'email-check': this._objs['emailcheck'] = objs[o]; break;
+        case 'email-error': this._objs['emailerror'] = objs[o]; break;
+        case 'email-error-container': this._objs['emailerrorc'] = objs[o]; break;
+        case 'nick-check': this._objs['nickcheck'] = objs[o]; break;
+        case 'nick-error': this._objs['nickerror'] = objs[o];  break;
+        case 'nick-error-container': this._objs['nickerrorc'] = objs[o]; break;
+        
+        default: 
+          throw new Error("AppLogin::PopulateLoginObjs::Can't find '" + o + "' in object list.")
+      }
+    }
+    
+    let i = 0;
+    for(let k in this._objs) i++;
+    if (i != this._classes.length) {
+      throw new Error('AppLogin::populateLoginObjs::Available Classes and Objs do not match')
+    }
+    
   }
 
 

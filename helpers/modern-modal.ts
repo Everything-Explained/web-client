@@ -74,7 +74,7 @@ export class ModernModal {
    * @param contentObj The optional dynamic content to add based on class names
    * @param clalback Executed after a modal is shown
    */
-  public show(url: string, head: string, contentObj?: Object|string) {
+  public show(url: string, head: string, contentObj?: Object|string, callback?: (obj: any) => void) {
 
     this._preloader.classList.remove('open');
 
@@ -83,11 +83,11 @@ export class ModernModal {
       this._header.innerHTML = head;
 
       if (!this._compareObjs(this._lastContent, contentObj)) {
-        console.log('Writing Anyway');
         this._writeContent(contentObj);
       }
 
       this._open();
+      if (callback) callback(this._workingClasses);
 
     } else {
 
@@ -100,6 +100,7 @@ export class ModernModal {
           setTimeout(() => {
             this._open();
             if (head) this._header.innerHTML = head;
+            if (callback) callback(this._workingClasses);
           }, 100);
 
         })
@@ -139,7 +140,7 @@ export class ModernModal {
         this._modal = this._overlay.querySelector('.' + this.classes.modal) as HTMLElement;
 
         if (data) {
-          this._getElementsFromClasses(data);
+          this._setElementsFromClasses(data);
         }
 
         rs(true);
@@ -246,17 +247,48 @@ export class ModernModal {
 
 
   /** Caches the DOM elements from the provided classes */
-  private _getElementsFromClasses(classes: string[]|Object) {
+  private _setElementsFromClasses(classes: string[]|Object) {
     if (classes instanceof Array) {
-      let els = Array.prototype.slice.call(this._overlay.querySelectorAll(classes.join(','))) as HTMLElement[];
-      for(let e of els) {
-        this._workingClasses['.' + e.className] = e;
-      }
+      this._setElementsFromArray(classes);
     } else {
       for(let c in classes) {
-        this._workingClasses[c] = this._overlay.querySelector(c);
+        if (classes[c] instanceof Array) {
+          this._setElementsFromArray(classes[c]);
+        } else {
+          this._workingClasses[c] = this._overlay.querySelector(c);
+        }
       }
     }
+  }
+
+
+
+  /** Caches elements from an array of classes */
+  private _setElementsFromArray(data: string[]) {
+
+    let els = Array.prototype.slice.call(
+                this._overlay.querySelectorAll(data.join(','))
+              ) as HTMLElement[];
+
+    for(let e of els) {
+      let realClass = ""
+      if (e.className.indexOf(' ') > -1) {
+        let classes = e.className.split(' ');
+        for(let c of classes) {
+          for(let d of data) {
+            if (c == d.substr(1)) {
+              realClass = c;
+              break;
+            }
+          }
+          if (realClass) break;
+        }
+      } else {
+        realClass = e.className;
+      }
+      this._workingClasses['.' + realClass] = e;
+    }
+
   }
 
 
@@ -316,8 +348,21 @@ export class ModernModal {
         , o2 = obj2[k] as IModalOptions;
 
       // Catch plain content updates
-      if (typeof o1 == 'string' || typeof o2 == 'string'){
+      if (typeof o1 == 'string' || typeof o2 == 'string') {
         return o1 === o2;
+      }
+
+      // Catch array of objs
+      if (o1 instanceof Array || o2 instanceof Array) {
+        if (o1 instanceof Array && o2 instanceof Array) {
+          for(let i = 0; i < o1.length; i++) {
+            if (o1[i] !== o2[i]) {
+              return false;
+            }
+          }
+        }
+        else return false;
+        return true;
       }
 
       // Assume if the HTML is identical that all events are as well
