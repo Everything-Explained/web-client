@@ -177,6 +177,7 @@ export class Login {
 
 
   private _completeSignup(data: ILoginData) {
+    
 
     this._modal.show('modals/login', 'Complete Login', {
       '.nick': {

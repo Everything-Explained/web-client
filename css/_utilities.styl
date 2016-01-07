@@ -41,6 +41,9 @@ $golden-ratio = 1.61803
 text-outline($sz, $clr)
 	text-shadow 1px 0 $sz $clr, 0 1px $sz $clr, -1px 0 $sz $clr, 0 -1px $sz $clr, -1px -1px $sz $clr, 1px 1px $sz $clr
 
+outline($sz, $clr)
+  return "1px 0 $sz $clr, 0 1px $sz $clr, -1px 0 $sz $clr, 0 -1px $sz $clr, -1px -1px $sz $clr, 1px 1px $sz $clr"
+
 placeholder($clr)
 	::-webkit-input-placeholder
 		color: $clr

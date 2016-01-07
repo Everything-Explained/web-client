@@ -7,8 +7,6 @@ template
   section#PageTop
     header.global
       form#LoginContainer(class='${loginActive? "active" : ""}')
-        input(type='text', placeholder='username')
-        input(type='password', placeholder='password')
         button#LoginButton(onsubmit='return false', mousedown.delegate='login()') Login
       
       a.theme-selector(mousedown.delegate='lightsOnOff($event)', 
