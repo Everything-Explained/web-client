@@ -13,57 +13,81 @@ interface ILoginData {
   locale: string;
 }
 
+interface ILoginStatusObjs {
+  sto: HTMLElement;
+  stc: HTMLElement;
+  chk?: HTMLElement;
+}
+
 
 export class Login {
 
   private _clientID = 'VOhiMrFfTsx2SSgoGOr25G8qa3J6W0yj';
   private _domain = 'aedaeum.auth0.com';
   private _header = 'WWW-Authenticate';
-  
+
+  private _validationTimeout = 0;
+
   private _objs = new Object() as {
+    avatar: HTMLImageElement;
     email: HTMLInputElement;
     nick: HTMLInputElement;
     cansave: HTMLElement;
     cansavec: HTMLElement;
-    emailcheck: HTMLElement;
-    emailerror: HTMLElement;
-    emailerrorc: HTMLElement;
-    nickcheck: HTMLElement;
-    nickerror: HTMLElement;
-    nickerrorc: HTMLElement;
+    emailCheck: HTMLElement;
+    emailInvalid: HTMLElement;
+    emailErrorc: HTMLElement;
+    nickCheck: HTMLElement;
+    nickInvalid: HTMLElement;
+    nickErrorc: HTMLElement;
+    invite: HTMLInputElement;
+    inviteCheck: HTMLElement;
+    inviteInvalid: HTMLElement;
+    inviteErrorc: HTMLElement;
+    saveButton: HTMLBaseElement;
   }
-  
+
   private _classes = [
+    '.avatar',
     '.nick',
+    '.nick-check',
+    '.nick-invalid',
+    '.nick-error-container',
     '.email',
+    '.email-check',
+    '.email-invalid',
+    '.email-error-container',
+    '.invite',
+    '.invite-check',
+    '.invite-invalid',
+    '.invite-error-container',
     '.can-save-container',
     '.can-save',
-    '.email-check',
-    '.email-error',
-    '.email-error-container',
-    '.nick-check',
-    '.nick-error',
-    '.nick-error-container'
+    '.save'
   ]
 
   private _lock: Auth0LockStatic;
 
   constructor(private _modal: ModernModal) {
     this._lock = new Auth0Lock(this._clientID, this._domain);
-    
-    
+
+
   }
 
   exec() {
-    
-    let data = { 
-      user_id: 'facebook|10156229933700346',
-      picture: 'https://scontent.xx.fbcdn.net/hprofile-xfa1/v/t1.0-1/c15.0.50.50/p50x50/10354686_10150004552801856_220367501106153455_n.jpg?oh=d55c8b6987279516ff0d4abf9872a816&oe=570F2B2F',
-      email: 'aelumen@gmail.com',
-      nickname: 'aelumen',
-      locale: 'en_US' 
+
+    let data = {
+      email: "aelumen@gmail.com",
+      locale: "en",
+      nickname: "aelumen",
+      picture: "https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAWQ/6K_OsI87w4g/photo.jpg",
+      user_id: "google-oauth2|113221828266023013722"
     }
-    
+
+    if (data.user_id.indexOf('google') > -1) {
+      data.picture = data.picture.split('photo.jpg')[0] + 's64-c-mo/photo.jpg';
+    }
+
     this._completeSignup(data);
 
     // this._lock.show((err, profile, token) => {
@@ -177,7 +201,7 @@ export class Login {
 
 
   private _completeSignup(data: ILoginData) {
-    
+
 
     this._modal.show('modals/login', 'Complete Login', {
       '.nick': {
@@ -185,7 +209,7 @@ export class Login {
         events: [
           {
             name: 'keyup',
-            trigger: (e, ol, objs) => this._validateNick(e, ol, objs)
+            trigger: (e, ol, objs) => this._validateNick(e)
           }
         ]
       },
@@ -194,15 +218,148 @@ export class Login {
         events: [
           {
             name: 'keyup',
-            trigger: (e, ol, objs) => this._validateEmail(e, ol, objs)
+            trigger: (e, ol, objs) => this._validateEmail(e)
+          }
+        ]
+      },
+      '.invite': {
+        events: [
+          {
+            name: 'keyup',
+            trigger: (e, ol, obj) => this._validateSignup(e, 'invite')
+          }
+        ]
+      },
+      '.save': {
+        events: [
+          {
+            name: 'click',
+            trigger: () => console.log('Temporary')
           }
         ]
       },
       objs: this._classes
     }, (objs) => {
       this._populateLoginObjs(objs);
+
+      this._objs.avatar.src = data.picture;
+      this._canUserSave();
+
     })
 
+  }
+
+
+  private _validateSignup(e: KeyboardEvent, type: string) {
+
+    // SHIFT, CTRL, CAPSLOCK
+    if (e.which == 16 || e.which == 17 || e.which == 20) {
+      return;
+    }
+
+    clearTimeout(this._validationTimeout);
+
+    this._validationTimeout = setTimeout(() => {
+
+      // In case the timing failed
+      clearTimeout(this._validationTimeout);
+
+      let input = (e.target as HTMLInputElement).value;
+
+      switch(type) {
+
+        case 'email': break;
+
+
+
+        case 'nick': break;
+
+
+
+        case 'invite':
+          let objs = {
+                stc: this._objs.inviteErrorc,
+                sto: this._objs.inviteInvalid,
+                chk: this._objs.inviteCheck
+              }
+            , invalid = 'Invalid Invite Code'
+            , exists = 'That invite code is already in use.';
+
+          this
+            ._validateInvite(input)
+              .then((res: { valid: boolean; exists: boolean; }) => {
+                if (res.valid) {
+
+                  if (res.exists)
+                    this._setLoginStatus(objs, false, exists);
+                  else
+                    this._setLoginStatus(objs, true);
+
+                } else {
+                  this._setLoginStatus(objs, false, invalid);
+                }
+                this._canUserSave();
+              })
+              .catch(() => {
+                this._setLoginStatus(objs, false, invalid)
+                this._canUserSave();
+              })
+        break;
+
+
+
+        default:
+          throw new Error('AppLogin::validateSignup::Invalid Validation Type')
+
+      }
+
+
+    }, 500);
+
+
+
+
+
+
+  }
+
+
+  /**
+   * Hide/Show the specified Account Setup status.
+   *
+   * @param objs - Container, Output, and Checkmark objects
+   * @param status - Whether the status should be success or fail
+   */
+  private _setLoginStatus(objs: ILoginStatusObjs, status: boolean, content?: string) {
+
+    let { stc, sto, chk } = objs;
+
+    if (!status && !stc.classList.contains('open')) {
+      if (content) {
+        sto.innerText = content;
+      }
+      if (chk) chk.classList.add('invalid');
+      stc.classList.add('open');
+      setTimeout(() => {
+        sto.classList.add('open');
+      }, 50);
+    }
+    else if(status && stc.classList.contains('open')) {
+      if (chk) chk.classList.remove('invalid');
+      stc.classList.remove('open');
+      sto.classList.remove('open');
+    }
+    else if (content && content != sto.innerText) {
+      sto.classList.remove('open');
+      setTimeout(() => {
+        sto.innerText = content;
+        sto.classList.add('open');
+      }, 350);
+    } else if (chk && status) {
+      chk.classList.remove('invalid');
+    } else if (chk && !status) {
+      chk.classList.add('invalid');
+    }
   }
 
 
@@ -211,20 +368,18 @@ export class Login {
   /**
    * Validate Username/Nick during account setup
    */
-  private _validateNick(e: KeyboardEvent, ol: HTMLElement, objs: any) {
-    let input = e.target as HTMLInputElement;
+  private _validateNick(val: string) {
 
-
-    if (vtor.matches(input.value, /^[a-zA-Z0-9]+$/g) &&
-        vtor.isLength(input.value, 4, 21))
+    if (vtor.matches(val, /^[a-zA-Z0-9]+$/g) &&
+        vtor.isLength(val, 4, 21))
     {
-      this._objs.nickcheck.classList.remove('invalid');
-      this._setLoginStatus(this._objs.nickerrorc, this._objs.nickerror, false);
+      this._objs.nickCheck.classList.remove('invalid');
+      // this._setLoginStatus(this._objs.nickErrorc, this._objs.nickInvalid, false);
     } else {
-      this._objs.nickcheck.classList.add('invalid');
-      this._setLoginStatus(this._objs.nickerrorc, this._objs.nickerror, true);
+      this._objs.nickCheck.classList.add('invalid');
+      // this._setLoginStatus(this._objs.nickErrorc, this._objs.nickInvalid, true);
     }
-    this._canUserSave(objs);
+    this._canUserSave();
   }
 
 
@@ -233,83 +388,124 @@ export class Login {
   /**
    * Validate email during account setup.
    */
-  private _validateEmail(e: KeyboardEvent, ol: HTMLElement, objs: any) {
-    let input = (e.target as HTMLInputElement).value;
+  private _validateEmail(val: string) {
 
-    if (vtor.isEmail(input)) {
-      this._objs.emailcheck.classList.remove('invalid');
-      this._setLoginStatus(this._objs.emailerrorc, this._objs.emailerror, false);
+    if (vtor.isEmail(val)) {
+      this._objs.emailCheck.classList.remove('invalid');
+      // this._setLoginStatus(this._objs.emailErrorc, this._objs.emailInvalid, false);
     } else {
-      this._objs.emailcheck.classList.add('invalid');
-      this._setLoginStatus(this._objs.emailerrorc, this._objs.emailerror, true);
+      this._objs.emailCheck.classList.add('invalid');
+      // this._setLoginStatus(this._objs.emailErrorc, this._objs.emailInvalid, true);
     }
-    this._canUserSave(objs);
+    this._canUserSave();
   }
-
 
 
 
   /**
-   * Hide/Show the specified Account Setup status.
+   * Validates the invite code
+   *
+   * TODO - Prevent control keys from doubling output
+   * TODO - Set delay for typed input
    */
-  private _setLoginStatus(stc: HTMLElement, sto: HTMLElement, status: boolean) {
-    
-    if (status && !stc.classList.contains('open')) {
-      stc.classList.add('open');
-      setTimeout(() => {
-        sto.classList.add('open');
-      }, 50);
-    } 
-    else if(!status && stc.classList.contains('open')) {
-      stc.classList.remove('open');
-      sto.classList.remove('open');
-    }
+  private _validateInvite(val: string) {
+
+    return new Promise((rs, rj) => {
+
+      if (vtor.matches(val, /^[a-zA-Z0-9]{8,9}$/g)) {
+
+        http.ajax({
+          url: '/internal/validinvite',
+          method: 'POST',
+          body: val,
+          headers: {
+            //'Authorization': `Bearer ${token}`,
+            'Content-Type': 'text/plain'
+          }
+        }, (code, res, req) => {
+          let rtn = JSON.parse(res) as { valid: boolean; };
+          rs(rtn);
+        })
+
+      } else {
+        rj({ valid: false });
+      }
+
+    })
+
+
+
   }
+
+
+
+
+
 
 
 
 
   /**
    * Check if the user can save their changes
-   * based on the username and email validation.
+   * based on the username, email, and invite validation.
    */
-  private _canUserSave(objs: any) {
+  private _canUserSave() {
 
-    if (this._objs.emailcheck.classList.contains('invalid') ||
-        this._objs.nickcheck.classList.contains('invalid')) {
-      this._setLoginStatus(this._objs.cansavec, this._objs.cansave, false);
+    let objs = {
+      stc: this._objs.cansavec,
+      sto: this._objs.cansave
+    }
+    
+    if (this._objs.emailCheck.classList.contains('invalid') ||
+        this._objs.nickCheck.classList.contains('invalid') ||
+        this._objs.inviteCheck.classList.contains('invalid')) {
+      this._setLoginStatus(objs, true);
+      this._objs.saveButton.disabled = true;
     } else {
-      this._setLoginStatus(this._objs.cansavec, this._objs.cansave, true);
+      this._setLoginStatus(objs, false);
+      this._objs.saveButton.disabled = false;
     }
 
   }
-  
-  
+
+
   private _populateLoginObjs(objs: any) {
     for(let o in objs) {
       switch(vtor.ltrim(o,'.')) {
+        case 'avatar': this._objs['avatar'] = objs[o]; break;
         case 'email': this._objs['email'] = objs[o]; break;
         case 'nick': this._objs['nick'] = objs[o]; break;
         case 'can-save': this._objs['cansave'] = objs[o]; break;
         case 'can-save-container': this._objs['cansavec'] = objs[o]; break;
-        case 'email-check': this._objs['emailcheck'] = objs[o]; break;
-        case 'email-error': this._objs['emailerror'] = objs[o]; break;
-        case 'email-error-container': this._objs['emailerrorc'] = objs[o]; break;
-        case 'nick-check': this._objs['nickcheck'] = objs[o]; break;
-        case 'nick-error': this._objs['nickerror'] = objs[o];  break;
-        case 'nick-error-container': this._objs['nickerrorc'] = objs[o]; break;
-        
-        default: 
+        case 'email-check': this._objs['emailCheck'] = objs[o]; break;
+        case 'email-invalid': this._objs['emailInvalid'] = objs[o]; break;
+        case 'email-error-container': this._objs['emailErrorc'] = objs[o]; break;
+        case 'nick-check': this._objs['nickCheck'] = objs[o]; break;
+        case 'nick-invalid': this._objs['nickInvalid'] = objs[o];  break;
+        case 'nick-error-container': this._objs['nickErrorc'] = objs[o]; break;
+        case 'invite': this._objs['invite'] = objs[o]; break;
+        case 'invite-check': this._objs['inviteCheck'] = objs[o]; break;
+        case 'invite-invalid': this._objs['inviteInvalid'] = objs[o]; break;
+        case 'invite-error-container': this._objs['inviteErrorc'] = objs[o]; break;
+        case 'save': this._objs['saveButton'] = objs[o]; break;
+
+        default:
           throw new Error("AppLogin::PopulateLoginObjs::Can't find '" + o + "' in object list.")
       }
     }
-    
-    let i = 0;
-    for(let k in this._objs) i++;
+
+    let i = 0
+      , test = [] as string[];
+    for(let k in this._objs) {
+      test.push(k);
+      i++;
+    }
     if (i != this._classes.length) {
+      console.log(test);
+      console.log(this._classes);
       throw new Error('AppLogin::populateLoginObjs::Available Classes and Objs do not match')
     }
-    
+
   }
 
 

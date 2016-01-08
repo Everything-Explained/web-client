@@ -3,43 +3,53 @@ template
     aside.modal.login
       header
       section.modal-content
-      
+
         table(cellspacing='7')
           tr
-            td 
+            td
               input.nick(type='text', placeholder='alias/nick', maxlength='20')
             td
               div.check.nick-check
-              
+
           tr
             td
               input.email(type='text', placeholder='email', maxlength='255')
-            td(valign='center')
+            td
               div.check.email-check
-              
+          tr
+            td
+              input.invite(type='text', placeholder='Invite Code')
+            td
+              div.check.invite-check.invalid
+
           tr
             td
               div.img-container
-                img(src='../css/themes/img/chat64d.png')
+                img.avatar
                 div.radio-container
                   input(type='radio', name='avatar', checked)
-                  
+
               div.img-container
-                div.default-img 
+                div.default-img
                   div.font-container &#128100;
                 div.radio-container
                   input(type='radio', name='avatar')
           tr
             td.nick-error-container.login-status-container
-              div.login-status.error.nick-error Username can only:
+              div.login-status.error.nick-invalid Username can only:
                 ul
                   li Contain a-z, A-Z, and 0-9
                   li Be 20 characters long
+
             td.email-error-container.login-status-container
-              div.login-status.error.email-error Make sure your email:
+              div.login-status.error.email-invalid Make sure your email:
                 ul
                   li is formed properly: "me@somemail.com"
                   li has no repeating periods (fullstops)
+
+            td.login-status-container.invite-error-container
+              div.login-status.error.invite-invalid Invalid Invite Code
+
             td.can-save-container.login-status-container
               div.login-status.can-save Hit save when you're ready :)
           tr
