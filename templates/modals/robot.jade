@@ -1,0 +1,11 @@
+template
+  div.modal-container
+    aside.modal.robot
+      header
+      section.modal-content
+        div.text-container Click the circles in the order they blink.
+        div#NodeContainer
+          each val in [0, 1, 2, 3]
+            div.node
+        button.try-again Try Again
+      a.modal-close(href='javascript:void(0)') &#10060;

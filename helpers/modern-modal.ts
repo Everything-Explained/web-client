@@ -74,7 +74,7 @@ export class ModernModal {
    * @param contentObj The optional dynamic content to add based on class names
    * @param clalback Executed after a modal is shown
    */
-  public show(url: string, head: string, contentObj?: Object|string, callback?: (obj: any) => void) {
+  public show(url: string, head: string, contentObj?: Object|string, callback?: (obj: any, loaded: boolean) => void) {
 
     this._preloader.classList.remove('open');
 
@@ -87,7 +87,7 @@ export class ModernModal {
       }
 
       this._open();
-      if (callback) callback(this._workingClasses);
+      if (callback) callback(this._workingClasses, true);
 
     } else {
 
@@ -100,7 +100,7 @@ export class ModernModal {
           setTimeout(() => {
             this._open();
             if (head) this._header.innerHTML = head;
-            if (callback) callback(this._workingClasses);
+            if (callback) callback(this._workingClasses, false);
           }, 100);
 
         })
@@ -324,7 +324,10 @@ export class ModernModal {
 
   private _compareObjs(obj1: Object, obj2: Object) {
 
-    // Rule out string
+    // Test for undefined content
+    if (obj1 === obj2) return true;
+
+    // Test for string values
     if (typeof obj1 == 'string' || typeof obj2 == 'string') {
       return obj1 === obj2;
     }

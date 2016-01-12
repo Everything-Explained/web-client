@@ -87,7 +87,6 @@ aside.modal
 		font-family: Delius
 		font-size: 18px
 		padding: 13px
-		padding-right: 5px
 		min-height: 100px
 		color $modal-content-color
 		background-color $modal-content-bg-color
@@ -251,6 +250,67 @@ aside.modal.bbl
 		color $modal-bbl-content-header-color
 	b
 		color $modal-bbl-number-color
+
+
+
+aside.modal.robot
+	width 400px;
+	text-align center
+
+	.modal-content
+		font-family Verdana
+		font-size 18px
+
+	#NodeContainer
+		display block
+		text-align center
+		background-color $modal-robot-container-bg
+		padding 17px 0 10px 0
+		border-radius 13px
+
+	.text-container
+		padding-bottom 10px;
+		&.error
+			color #ff3838
+
+	.try-again
+		position relative
+		padding 5px 13px
+		margin-top 21px
+		margin-bottom 13px
+		cursor pointer
+		border-radius 5px
+		text-shadow 1px 1px 1px lighten($head-1-color, 70%)
+		background -webkit-linear-gradient(top, #fff86b, #a88c00)
+		background linear-gradient(top,  #fff86b, #a88c00)
+		box-shadow 0 0 0 1px #111
+		&:active
+			background -webkit-linear-gradient(bottom, #fff86b, #a88c00)
+			color #eee
+			text-shadow 1px 1px 0 #111
+			top 1px
+			left 1px
+
+	.node
+		display inline-block
+		margin-right 17px
+		width 55px
+		height @width
+		border-radius @width
+		background-clip padding-box
+		border: 5px solid $modal-robot-node-border
+		background-color $modal-robot-node-bg
+		box-shadow inset 0 0 10px 2px $modal-robot-boxshadow
+		cursor pointer
+		transition background .3s
+		&.active
+			background-color $modal-robot-node-active-bg
+		&.success
+			background-color #a5ffab
+		&.error
+			background-color #ffb7b7
+
+
 
 
 

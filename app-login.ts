@@ -2,6 +2,7 @@ import * as http from 'nanoajax';
 import {inject} from 'aurelia-framework';
 import * as encrypt from './helpers/cheap-encrypt';
 import {ModernModal} from './helpers/modern-modal';
+import {IRobot} from './helpers/robot-check';
 import * as vtor from 'validator';
 
 
@@ -25,6 +26,7 @@ export class Login {
   private _clientID = 'VOhiMrFfTsx2SSgoGOr25G8qa3J6W0yj';
   private _domain = 'aedaeum.auth0.com';
   private _header = 'WWW-Authenticate';
+  private _robot: IRobot;
 
   private _validationTimeout = 0;
 
@@ -76,19 +78,54 @@ export class Login {
 
   exec() {
 
-    let data = {
-      email: "aelumen@gmail.com",
-      locale: "en",
-      nickname: "aelumen",
-      picture: "https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAWQ/6K_OsI87w4g/photo.jpg",
-      user_id: "google-oauth2|113221828266023013722"
-    }
+    this._modal.show('modals/robot', 'I Robot Test', {
+      objs: ['.try-again', '.text-container']
+    }, (o: any, loaded: boolean) => {
+      
+      console.log(this._robot);
+      
+      if (!this._robot) {
+        let objs = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[]
+          , content = o['.text-container'] as HTMLElement
+          , button = o['.try-again'] as HTMLElement;
+        
+        this._robot = new IRobot(objs, (res) => {
 
-    if (data.user_id.indexOf('google') > -1) {
-      data.picture = data.picture.split('photo.jpg')[0] + 's64-c-mo/photo.jpg';
-    }
+          if (res) {
 
-    this._completeSignup(data);
+          } else {
+            content.classList.add('error');
+            content.innerText = "Sorry, try again!";
+          }
+
+        });
+        
+        setTimeout(() => {
+          this._robot.start(600);
+          button.addEventListener('click', () => {
+            content.classList.remove('error');
+            content.innerText = "Click the circles in the order they blink.";
+            this._robot.restart(600);
+          })
+        }, 700);
+      }
+
+      
+    })
+
+    // let data = {
+    //   email: "aelumen@gmail.com",
+    //   locale: "en",
+    //   nickname: "aelumen",
+    //   picture: "https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAWQ/6K_OsI87w4g/photo.jpg",
+    //   user_id: "google-oauth2|113221828266023013722"
+    // }
+
+    // if (data.user_id.indexOf('google') > -1) {
+    //   data.picture = data.picture.split('photo.jpg')[0] + 's64-c-mo/photo.jpg';
+    // }
+
+    // this._completeSignup(data);
 
     // this._lock.show((err, profile, token) => {
 
@@ -98,6 +135,8 @@ export class Login {
     //   }
 
     //   console.info(profile);
+
+    //   localStorage.setItem('userToken', token);
 
     //   this._requestLogin(token).then((key: string) => {
 
@@ -455,7 +494,7 @@ export class Login {
       stc: this._objs.cansavec,
       sto: this._objs.cansave
     }
-    
+
     if (this._objs.emailCheck.classList.contains('invalid') ||
         this._objs.nickCheck.classList.contains('invalid') ||
         this._objs.inviteCheck.classList.contains('invalid')) {

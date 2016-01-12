@@ -73,6 +73,7 @@ export class App {
   
   private _scrollbars: IOptiscrollInstance;
   private _modalOverlay: HTMLElement;
+  private _login: Login;
 
   constructor(private elem: Element, private _eva: EventAggregator, private _modal: ModernModal) {
 
@@ -105,6 +106,8 @@ export class App {
         }
 
       }
+      
+      this._login = new Login(this._modal);
 
 
     });
@@ -239,9 +242,7 @@ export class App {
 
   login() {
     
-    let login = new Login(this._modal);
-    
-    login.exec();
+    this._login.exec();
 
   }
 

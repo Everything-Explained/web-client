@@ -86,6 +86,11 @@ export class ClientIO {
   }
 
   connect(reconnect = false) {
+    
+    if (!localStorage.getItem('userToken')) {
+      this._chat.addMessage('You must sign in to use this feature', MessageType.SERVER);
+      return;
+    }
 
     if (reconnect && this._connected) {
       this._chat.addMessage('Server is Already connected', MessageType.CLIENT);
@@ -95,20 +100,33 @@ export class ClientIO {
     if (reconnect) {
       this._sock = io({forceNew: true});
     }
+    
+    this._sock.on('connect', () => {
+      this._sock
+        .on('authenticated', () => {
+          this._chat.addMessage('Connected Successfully', MessageType.SERVER);
+        })
+        .on('unauthorized', (data) => {
+          console.error(data);
+          this._chat.addMessage('Invalid Login Token', MessageType.SERVER);
+        })
+        .emit('authenticate', { token: localStorage.getItem('userToken')})
+    })
+    
 
-    this._sock.on('client-connected',    ()    => this.authClient())
-    this._sock.on('auth-success',        data  => this.onConnection(data));
-    this._sock.on('disconnect',          ()    => this.onLostConnection());
-    this._sock.on('connect_error',       ()    => this.onFailedConnection())
-    this._sock.on('broadcast',           msg   => this.onBroadcast(msg))
-    this._sock.on('user-joined',         user  => this.onUserJoin(user))
-    this._sock.on('user-left',           user  => this.onUserDisconnect(user))
-    this._sock.on('users-online',        users => this.populateUsers(users))
-    this._sock.on('user-is-typing',      user  => this.onUserTyping(user))
-    this._sock.on('user-stopped-typing', user  => this.onStoppedTyping(user));
-    this._sock.on('user-paused-typing',  user  => this.onUserPausedTyping(user));
-    this._sock.on('bible-verse',         data  => this.showBibleVerse(data));
-    this._sock.on('private-msg',         data  => this.onPrivateMessage(data))
+    // this._sock.on('client-connected',    ()    => this.authClient())
+    // this._sock.on('auth-success',        data  => this.onConnection(data));
+    // this._sock.on('disconnect',          ()    => this.onLostConnection());
+    // this._sock.on('connect_error',       ()    => this.onFailedConnection())
+    // this._sock.on('broadcast',           msg   => this.onBroadcast(msg))
+    // this._sock.on('user-joined',         user  => this.onUserJoin(user))
+    // this._sock.on('user-left',           user  => this.onUserDisconnect(user))
+    // this._sock.on('users-online',        users => this.populateUsers(users))
+    // this._sock.on('user-is-typing',      user  => this.onUserTyping(user))
+    // this._sock.on('user-stopped-typing', user  => this.onStoppedTyping(user));
+    // this._sock.on('user-paused-typing',  user  => this.onUserPausedTyping(user));
+    // this._sock.on('bible-verse',         data  => this.showBibleVerse(data));
+    // this._sock.on('private-msg',         data  => this.onPrivateMessage(data))
   }
 
   showBibleVerse(verses: IScriptures[]) {
