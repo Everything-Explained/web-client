@@ -7,14 +7,17 @@
         "indent": [true,
             "spaces"
         ],
-        "one-line": [true,
-            "check-open-brace"
-        ],
         "no-unreachable": true,
         "no-use-before-declare": true,
         "no-var-keyword": true,
+        "no-var-requires": true,
         "quotemark": [true,
-            "single"
+            "single",
+            "avoid-escape"
+        ],
+        "trailing-comma": [true,
+          "mutliline",
+          "singleline" 
         ],
         "semicolon": true,
         "whitespace": [true,

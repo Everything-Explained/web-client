@@ -58,16 +58,16 @@ export class Logger {
 
   info(...msg: any[]) {
 
-    var trace = this._findExecutionOrigin(new Error().stack);
+    // var trace = this._findExecutionOrigin(new Error().stack);
 
-    console.groupCollapsed(`%cINFO%c${trace.name}%c:%c${trace.path}%c@%c${trace.line}`,
-      Logger._headerStyle,
-      Logger._itemStyle,
-      Logger._separator,
-      Logger._itemStyle,
-      Logger._separator,
-      Logger._itemStyle
-    );
+    // console.groupCollapsed(`%cINFO%c${trace.name}%c:%c${trace.path}%c@%c${trace.line}`,
+    //   Logger._headerStyle,
+    //   Logger._itemStyle,
+    //   Logger._separator,
+    //   Logger._itemStyle,
+    //   Logger._separator,
+    //   Logger._itemStyle
+    // );
     console.log(msg);
     console.groupEnd();
   }

@@ -1,5 +1,5 @@
 
-import {Router, IRouterNavigationRoute, IRoute, IRouterConfig} from 'aurelia-router';
+import {Router, NavModel, RouterConfiguration } from 'aurelia-router';
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {Page, PageElement} from './helpers/page';
@@ -10,16 +10,16 @@ import {Login} from './app-login';
 import {ModernModal} from './helpers/modern-modal';
 
 interface IPageConfiguration {
-  route: IRouterNavigationRoute;
+  route: NavModel;
 }
 
 export interface INav {
   name: string;
   pages: string[];
   def: string;
-  defRoute?: IRouterNavigationRoute;
+  defRoute?: NavModel;
   isActive: boolean;
-  routes?: IRouterNavigationRoute[];
+  routes?: NavModel[];
 }
 
 
@@ -43,7 +43,7 @@ export class App {
       def: 'About',
       isActive: false,
       defRoute: null,
-      routes: new Array<IRouterNavigationRoute>()
+      routes: new Array<NavModel>()
     },
     {
       name: 'Chat',
@@ -51,7 +51,7 @@ export class App {
       def: null,
       isActive: false,
       defRoute: null,
-      routes: new Array<IRouterNavigationRoute>()
+      routes: new Array<NavModel>()
     },
     {
       name: 'Changelog',
@@ -59,7 +59,7 @@ export class App {
       def: null,
       isActive: false,
       defRoute: null,
-      routes: new Array<IRouterNavigationRoute>()
+      routes: new Array<NavModel>()
     }
   ];
 
@@ -69,7 +69,7 @@ export class App {
   loginActive = false;
 
   // Currently active navigation routes (Populated)
-  activeRoutes = new Array<IRouterNavigationRoute>();
+  activeRoutes = new Array<NavModel>();
   
   private _scrollbars: IOptiscrollInstance;
   private _modalOverlay: HTMLElement;
@@ -113,23 +113,23 @@ export class App {
     });
     
     this._eva.subscribe('router:navigation:complete', payload => {
-      if (this._scrollbars) this._scrollbars.destroy()
+      if (this._scrollbars) this._scrollbars.destroy();
       this._scrollbars = new Optiscroll(document.getElementById('PageContent'), {
         autoUpdate: false
-      })
+      });
       
-    })
+    });
     
     window.onresize = (ev: UIEvent) => {
-      this._scrollbars.update()
-    }
+      this._scrollbars.update();
+    };
     
     
   }
 
 
   /** Aurelia router configuration */
-  configureRouter(config: IRouterConfig, router: Router) {
+  configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Webaeble';
     this.createRoutes(this.navList, config);
     this.router = router;
@@ -195,7 +195,7 @@ export class App {
    * @param navList List of navigation objects
    * @param config The Aurelia router configuration variable
    */
-  private createRoutes(navList: INav[], config: IRouterConfig) {
+  private createRoutes(navList: INav[], config: RouterConfiguration) {
 
     let routes = [];
 
@@ -231,7 +231,7 @@ export class App {
     let req = new XMLHttpRequest()
       , lights = localStorage.getItem('lights');
       
-    this._modal.init('overlay')
+    this._modal.init('overlay');
 
     let light = (lights == 'off') ? 'light' : 'dark';
     req.open('GET', `css/themes/${light}/theme.css`, true);

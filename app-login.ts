@@ -47,7 +47,7 @@ export class Login {
     inviteInvalid: HTMLElement;
     inviteErrorc: HTMLElement;
     saveButton: HTMLBaseElement;
-  }
+  };
 
   private _classes = [
     '.avatar',
@@ -66,7 +66,7 @@ export class Login {
     '.can-save-container',
     '.can-save',
     '.save'
-  ]
+  ];
 
   private _lock: Auth0LockStatic;
 
@@ -78,40 +78,40 @@ export class Login {
 
   exec() {
 
-    this._modal.show('modals/robot', 'I Robot Test', {
-      objs: ['.try-again', '.text-container']
-    }, (o: any, loaded: boolean) => {
+    // this._modal.show('modals/robot', 'I Robot Test', {
+    //   objs: ['.try-again', '.text-container']
+    // }, (o: any, loaded: boolean) => {
       
-      console.log(this._robot);
+    //   console.log(this._robot);
       
-      if (!this._robot) {
-        let objs = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[]
-          , content = o['.text-container'] as HTMLElement
-          , button = o['.try-again'] as HTMLElement;
+    //   if (!this._robot) {
+    //     let objs = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[]
+    //       , content = o['.text-container'] as HTMLElement
+    //       , button = o['.try-again'] as HTMLElement;
         
-        this._robot = new IRobot(objs, (res) => {
+    //     this._robot = new IRobot(objs, (res) => {
 
-          if (res) {
+    //       if (res) {
 
-          } else {
-            content.classList.add('error');
-            content.innerText = "Sorry, try again!";
-          }
+    //       } else {
+    //         content.classList.add('error');
+    //         content.innerText = "Sorry, try again!";
+    //       }
 
-        });
+    //     });
         
-        setTimeout(() => {
-          this._robot.start(600);
-          button.addEventListener('click', () => {
-            content.classList.remove('error');
-            content.innerText = "Click the circles in the order they blink.";
-            this._robot.restart(600);
-          })
-        }, 700);
-      }
+    //     setTimeout(() => {
+    //       this._robot.start(600);
+    //       button.addEventListener('click', () => {
+    //         content.classList.remove('error');
+    //         content.innerText = "Click the circles in the order they blink.";
+    //         this._robot.restart(600);
+    //       })
+    //     }, 700);
+    //   }
 
       
-    })
+    // })
 
     // let data = {
     //   email: "aelumen@gmail.com",
@@ -121,11 +121,22 @@ export class Login {
     //   user_id: "google-oauth2|113221828266023013722"
     // }
 
-    // if (data.user_id.indexOf('google') > -1) {
-    //   data.picture = data.picture.split('photo.jpg')[0] + 's64-c-mo/photo.jpg';
-    // }
+    let data = {
+      email: 'aelumen@gmail.com',
+      locale: 'en',
+      nickname: 'aelumen',
+      picture: 'https://scontent.xx.fbcdn.net/hprofile-xtl1/v/t1.0-1/p50x50/1909949_10156451943195346_4119065300640329697_n.jpg?oh=ceef56f378b2dd26ad06dd418e3fe9bf&oe=56FC1166',
+      user_id: 'facebook|10156229933700346'
+    };
 
-    // this._completeSignup(data);
+    if (data.user_id.indexOf('google') > -1) {
+      data.picture = data.picture.split('photo.jpg')[0] + 's64-c-mo/photo.jpg';
+    }
+    else if (data.user_id.indexOf('facebook') > -1) {
+      data.picture = 'https://graph.facebook.com/' + data.user_id.split('|')[1] + '/picture?width=64';
+    }
+
+    this._completeSignup(data);
 
     // this._lock.show((err, profile, token) => {
 
@@ -173,7 +184,7 @@ export class Login {
           , salt = parseInt(data.substr(-2), 16)
 
           // Decode 2 chars before last 2 chars
-          , saltRamp = parseInt(data.substr(-4, 2), 16) / 100
+          , saltRamp = parseInt(data.substr(-4, 2), 16) / 100;
 
 
         // Clean footers
@@ -181,7 +192,7 @@ export class Login {
 
 
         let decoded = '';
-        for(let i = 0, s = salt; i < data.length; i+=2) {
+        for (let i = 0, s = salt; i < data.length; i += 2) {
 
           // Convert to ASCII code
           let alldata = parseInt(data[i] + data[i + 1], 16);
@@ -193,9 +204,9 @@ export class Login {
 
         rs(decoded);
 
-      })
+      });
 
-    })
+    });
 
 
 
@@ -242,7 +253,7 @@ export class Login {
   private _completeSignup(data: ILoginData) {
 
 
-    this._modal.show('modals/login', 'Complete Login', {
+    this._modal.show('modals/login', 'Complete Signup', {
       '.nick': {
         value: data.nickname,
         events: [
@@ -257,7 +268,7 @@ export class Login {
         events: [
           {
             name: 'keyup',
-            trigger: (e, ol, objs) => this._validateEmail(e)
+            trigger: (e, ol, objs) => this._validateSignup(e, 'email')
           }
         ]
       },
@@ -297,6 +308,8 @@ export class Login {
     }
 
     clearTimeout(this._validationTimeout);
+    
+    let objs: { stc: HTMLElement, sto: HTMLElement, chk: HTMLElement };
 
     this._validationTimeout = setTimeout(() => {
 
@@ -307,7 +320,23 @@ export class Login {
 
       switch(type) {
 
-        case 'email': break;
+        case 'email':
+          objs = {
+            stc: this._objs.emailErrorc,
+            sto: this._objs.emailInvalid,
+            chk: this._objs.emailCheck
+          }
+          
+          if(input.length < 1 || !input) {
+            this._setLoginStatus(objs, false, 'Please enter an email address.')
+          }
+          else if (vtor.isEmail(input)) {
+            this._setLoginStatus(objs, true);
+          } else {
+            this._setLoginStatus(objs, false, 'That email is not correctly formatted.')
+          } 
+        
+        break;
 
 
 
@@ -316,12 +345,13 @@ export class Login {
 
 
         case 'invite':
-          let objs = {
-                stc: this._objs.inviteErrorc,
-                sto: this._objs.inviteInvalid,
-                chk: this._objs.inviteCheck
-              }
-            , invalid = 'Invalid Invite Code'
+          objs = {
+            stc: this._objs.inviteErrorc,
+            sto: this._objs.inviteInvalid,
+            chk: this._objs.inviteCheck
+          }
+            
+          let invalid = 'Invalid Invite Code'
             , exists = 'That invite code is already in use.';
 
           this
@@ -353,7 +383,7 @@ export class Login {
       }
 
 
-    }, 500);
+    }, 1000);
 
 
 
@@ -375,7 +405,7 @@ export class Login {
 
     if (!status && !stc.classList.contains('open')) {
       if (content) {
-        sto.innerText = content;
+        sto.innerHTML = content;
       }
       if (chk) chk.classList.add('invalid');
       stc.classList.add('open');
@@ -391,7 +421,7 @@ export class Login {
     else if (content && content != sto.innerText) {
       sto.classList.remove('open');
       setTimeout(() => {
-        sto.innerText = content;
+        sto.innerHTML = content;
         sto.classList.add('open');
       }, 350);
     } else if (chk && status) {
@@ -407,11 +437,12 @@ export class Login {
   /**
    * Validate Username/Nick during account setup
    */
-  private _validateNick(val: string) {
+  private _validateNick(ev: KeyboardEvent) {
+    
+    let val = ((ev.target) as HTMLInputElement).value
 
     if (vtor.matches(val, /^[a-zA-Z0-9]+$/g) &&
-        vtor.isLength(val, 4, 21))
-    {
+        vtor.isLength(val, 4, 21)) {
       this._objs.nickCheck.classList.remove('invalid');
       // this._setLoginStatus(this._objs.nickErrorc, this._objs.nickInvalid, false);
     } else {
@@ -427,7 +458,8 @@ export class Login {
   /**
    * Validate email during account setup.
    */
-  private _validateEmail(val: string) {
+  private _validateEmail(ev: KeyboardEvent) {
+    let val = ((ev.target) as HTMLInputElement).value;
 
     if (vtor.isEmail(val)) {
       this._objs.emailCheck.classList.remove('invalid');
@@ -458,19 +490,19 @@ export class Login {
           method: 'POST',
           body: val,
           headers: {
-            //'Authorization': `Bearer ${token}`,
+            // 'Authorization': `Bearer ${token}`,
             'Content-Type': 'text/plain'
           }
         }, (code, res, req) => {
           let rtn = JSON.parse(res) as { valid: boolean; };
           rs(rtn);
-        })
+        });
 
       } else {
         rj({ valid: false });
       }
 
-    })
+    });
 
 
 
@@ -490,10 +522,11 @@ export class Login {
    */
   private _canUserSave() {
 
-    let objs = {
+    let objs = 
+    {
       stc: this._objs.cansavec,
       sto: this._objs.cansave
-    }
+    };
 
     if (this._objs.emailCheck.classList.contains('invalid') ||
         this._objs.nickCheck.classList.contains('invalid') ||
@@ -509,8 +542,8 @@ export class Login {
 
 
   private _populateLoginObjs(objs: any) {
-    for(let o in objs) {
-      switch(vtor.ltrim(o,'.')) {
+    for (let o in objs) {
+      switch (vtor.ltrim(o, '.')) {
         case 'avatar': this._objs['avatar'] = objs[o]; break;
         case 'email': this._objs['email'] = objs[o]; break;
         case 'nick': this._objs['nick'] = objs[o]; break;
@@ -529,20 +562,20 @@ export class Login {
         case 'save': this._objs['saveButton'] = objs[o]; break;
 
         default:
-          throw new Error("AppLogin::PopulateLoginObjs::Can't find '" + o + "' in object list.")
+          throw new Error('AppLogin::PopulateLoginObjs::Can\'t find ' + o + '\' in object list.');
       }
     }
 
     let i = 0
       , test = [] as string[];
-    for(let k in this._objs) {
+    for (let k in this._objs) {
       test.push(k);
       i++;
     }
     if (i != this._classes.length) {
       console.log(test);
       console.log(this._classes);
-      throw new Error('AppLogin::populateLoginObjs::Available Classes and Objs do not match')
+      throw new Error('AppLogin::populateLoginObjs::Available Classes and Objs do not match');
     }
 
   }
@@ -566,8 +599,8 @@ export class Login {
 
         if (code == 200) rs((res == 'true') ? true : false);
         else             rj(res);
-      })
-    })
+      });
+    });
 
   }
 

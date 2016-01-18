@@ -12,9 +12,10 @@ export class ClientIO {
   private _connected = false;
   private _chat: Chat;
 
-  private _rooms = {
+  private _rooms =
+  {
     main: null
-  }
+  };
 
 
   constructor(private _hasConnected: () => void, private _populate: (msg: Message) => void, chat: Chat) {
@@ -45,7 +46,7 @@ export class ClientIO {
 
   sendServerMsg(room: string, msg: string) {
     if (typeof this._rooms[room] !== 'undefined') {
-      this._sock.emit(this._rooms[room], { content: msg, type: MessageType.SERVER})
+      this._sock.emit(this._rooms[room], { content: msg, type: MessageType.SERVER});
     }
   }
 
@@ -66,7 +67,7 @@ export class ClientIO {
     this._sock.emit('private-msg', {
       to,
       text
-    })
+    });
   }
 
   getBibleVerse(scriptures: string) {
@@ -108,10 +109,14 @@ export class ClientIO {
         })
         .on('unauthorized', (data) => {
           console.error(data);
-          this._chat.addMessage('Invalid Login Token', MessageType.SERVER);
+          if (data.message.indexOf('expired') > 0) {
+            this._chat.addMessage('Your session has expired. Please login again.', MessageType.SERVER);
+          } else {
+            this._chat.addMessage('Invalid Login Token', MessageType.SERVER);            
+          }
         })
-        .emit('authenticate', { token: localStorage.getItem('userToken')})
-    })
+        .emit('authenticate', { token: localStorage.getItem('userToken')});
+    });
     
 
     // this._sock.on('client-connected',    ()    => this.authClient())
@@ -151,8 +156,8 @@ export class ClientIO {
   populateUsers(users: string[]) {
     this._chat.userlistActive = true;
     let convertedUsers = [];
-    for(let u of users) {
-      convertedUsers.push({ name: u, isTyping: ''})
+    for (let u of users) {
+      convertedUsers.push({ name: u, isTyping: ''});
     }
     this._chat.users = convertedUsers;
   }
@@ -191,30 +196,42 @@ export class ClientIO {
 
 
   onUserTyping(user: string) {
-    let index = _.findIndex(this._chat.users, 'name', user);
+    let index = _.findIndex(this._chat.users, o => {
+      return o.name == user;
+    });
     this._chat.users[index].isTyping = 'is-typing';
   }
 
   onStoppedTyping(user: string) {
-    let index = _.findIndex(this._chat.users, 'name', user);
+    let index = _.findIndex(this._chat.users, o => {
+      return o.name == user;
+    });
     this._chat.users[index].isTyping = '';
   }
 
   onUserPausedTyping(user: string) {
-    let index = _.findIndex(this._chat.users, 'name', user);
+    let index = _.findIndex(this._chat.users, o => {
+      return o.name == user;
+    });
     this._chat.users[index].isTyping = 'paused-typing';
   }
 
   onUserResumedTyping(user: string) {
-    let index = _.findIndex(this._chat.users, 'name', user);
+    let index = _.findIndex(this._chat.users, o => {
+      return o.name == user;
+    });
     this._chat.users[index].isTyping = 'is-typing';
   }
 
 
   onLostConnection() {
+    
     if (this._serverShuttingDown) return;
+    
     console.error('Server Shutdown or Lost Connection');
-    this._chat.ports.main.addMessage(new Message({
+    
+    this._chat.ports.main.addMessage(new Message(
+    {
       username: 'Server',
       message: 'Server Shutdown or Lost Connection',
       realTimeFixed: Date.now(),
@@ -222,8 +239,10 @@ export class ClientIO {
       scale: 'large',
       type: MessageType.SERVER,
       severity: MessageSeverity.ATTENTION
-    }))
+    }));
+    
     this._sock.disconnect();
+    
     this._connected = false;
   }
 

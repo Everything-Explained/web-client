@@ -1,4 +1,4 @@
-import 'aurelia-animator-velocity'
+import 'aurelia-animator-velocity';
 
 export function configure(aurelia) {
   aurelia.use
