@@ -1,5 +1,26 @@
+import {ModernModal} from './modern-modal';
+import {inject} from 'aurelia-framework';
 
 
+interface Error {
+  name: string;
+  message: string;
+  stack: string;
+}
+
+interface Console {
+  groupCollapsed: (title: string, ...optionalArgs) => void;
+  info: (msg: string, ...optionalArgs) => void;
+  log: (msg: string, ...optionalArgs) => void;
+}
+
+interface Trace {
+  path: string;
+  line: string;
+  name: string;
+  href: string;
+  stack: string;
+}
 
 enum LogLevels {
   INFO,
@@ -8,66 +29,111 @@ enum LogLevels {
   OFF
 }
 
-
+@inject(ModernModal)
 export class Logger {
 
   static _logLevel = LogLevels.INFO;
 
   static _headerStyle =
     `font-size: 12px;
-     padding: 4px;
-     background: blue;
-     color: yellow;
+     padding: 1px 7px 1px 7px;
+     background: #111;
      font-weight: bold;
      line-height: 25px;
-     border-radius: 5px;`
+     border-radius: 3px;`;
+
+  static _headerStyleInfo =
+    `color: yellow;`;
+
+  static _headerStyleError =
+    `color: #ff7070`;
 
   static _itemStyle =
     `font-size: 12px;
-     padding: 4px;
+     padding: 1px 7px 1px 7px;
      margin-left: 4px;
      left: 2px;
-     background: #777;
-     color: white;
+     background: #333;
+     color: #aaa;
      font-weight: bold;
-     border-radius: 5px;`
+     border-radius: 3px;`;
 
   static _separator =
     `font-weight: bold;
      margin-left: 4px;
      font-size: 16px;
-     color: black;
-     font-family: Consolas, monospace;`
+     color: #88cc88;
+     font-family: Consolas, monospace;`;
 
   static set logLevel(val: LogLevels) {
     // TODO: Do some type-checking
     Logger._logLevel = val;
   }
 
+  private _errorListStyle = {
+    position: 'absolute',
+    display: 'block',
+    bottom: '20px',
+    right: '20px',
+    zIndex: '1000'
+  };
+
+  private _closeButtonStyle = {
+    display: 'inline-block',
+    float: 'right',
+    cursor: 'pointer'
+  };
+
+  private _obj: HTMLElement;
+
+  constructor(private _modal: ModernModal) {
+
+    let log   = console.info
+      , error = console.error
+      , self  = this;
+
+    console.info = (args) => {
+      this.info(args);
+    };
 
 
-  constructor() {
+    console.error = function() {
+      // error.apply(this, Array.prototype.slice.call(arguments, 0));
+      self.error(Array.prototype.slice.call(arguments, 0));
+    };
 
-    var log = console.info;
-    console.info = function() {
-      log.apply(this, Array.prototype.slice.call(arguments, 0))
+    this._obj = document.createElement('div');
+    this._obj.classList.add('log-error-list');
+
+    for (let i in this._errorListStyle) {
+      if (this._obj.style[i] != 'undefined') {
+        this._obj.style[i] = this._errorListStyle[i];
+      }
     }
+
+    let body = document.querySelector('body');
+
+    body.appendChild(this._obj);
 
   }
 
 
   info(...msg: any[]) {
 
-    // var trace = this._findExecutionOrigin(new Error().stack);
+    let error = new Error() as Error
+      , trace = this._findExecutionOrigin(error.stack)
+      , con   = console as Console;
 
-    // console.groupCollapsed(`%cINFO%c${trace.name}%c:%c${trace.path}%c@%c${trace.line}`,
-    //   Logger._headerStyle,
-    //   Logger._itemStyle,
-    //   Logger._separator,
-    //   Logger._itemStyle,
-    //   Logger._separator,
-    //   Logger._itemStyle
-    // );
+    con.groupCollapsed(`%cINFO%c${trace.name}%c:%c${trace.path}%c@%c${trace.line}`,
+      Logger._headerStyle + Logger._headerStyleInfo,
+      Logger._itemStyle,
+      Logger._separator,
+      Logger._itemStyle,
+      Logger._separator,
+      Logger._itemStyle
+    );
+
+    // this._addMessage(LogLevels.INFO, 'this is a test');
     console.log(msg);
     console.groupEnd();
   }
@@ -76,32 +142,128 @@ export class Logger {
 
   debug() {}
 
-  error() {}
+  error(msg: any[]) {
+
+    let error = new Error() as Error
+      , trace = this._findExecutionOrigin(error.stack)
+      , con   = console as Console;
+
+    if (!msg[0] || typeof msg[0] != 'string') {
+      throw 'ERROR logs must contain a message string';
+    }
+
+    con.groupCollapsed(`%cERROR%c${trace.name}%c:%c${trace.path}%c@%c${trace.line}`,
+      Logger._headerStyle + Logger._headerStyleError,
+      Logger._itemStyle,
+      Logger._separator,
+      Logger._itemStyle,
+      Logger._separator,
+      Logger._itemStyle
+    );
+
+    console.log('');
+    console.log(msg);
+    console.log('');
+    console.groupEnd();
+
+    this._addMessage(LogLevels.ERROR, {
+      msg: msg[0],
+      trace
+    });
+
+  }
+
+
+  private _addMessage(type: LogLevels, data: {msg: string; trace: Trace}) {
+
+    let msgContainer = document.createElement('div')
+      , msg          = document.createElement('div')
+      , close        = document.createElement('div');
+
+    msg.style.display      = 'inline-block';
+    msg.style.paddingRight = '10px';
+    close.innerHTML        = '&#10060;';
+
+    close.classList.add('log-close-button');
+
+    close.addEventListener('mousedown', (e) => {
+      if (e.buttons == 1) {
+        this._obj.removeChild(msgContainer);
+      }
+    });
+
+    let stackLines = data.trace.stack.split(' at ');
+
+    // First line is always "error"
+    stackLines.splice(0, 1);
+
+    stackLines.forEach((v, i) => {
+      let parts = v.split('/');
+
+      if (stackLines[i].trim().indexOf('http') != 0) {
+
+        stackLines[i] = stackLines[i]
+          .split('(')[0] + '(' +
+                  parts[parts.length - 2] + '/' +
+                  parts[parts.length - 1];
+      } else {
+        stackLines[i] = '(' + parts[parts.length - 2] + '/' + parts[parts.length - 1] + ')';
+      }
+
+    });
+
+    data.trace.stack = stackLines.join('<br/>');
+
+    msg.addEventListener('mousedown', (e) => {
+      if (e.buttons == 1) {
+        this._modal.show('modals/exception', 'ERROR::' + data.msg,
+        `<b>Line: </b>${data.trace.line}<br/>
+         <b>Method: </b>${data.trace.name}<br/>
+         <b>Stack: </b><br/>
+         <div class='stack'>${data.trace.stack}</div>`);
+      }
+    });
+
+    for (let k in this._closeButtonStyle) {
+      if (close.style[k] != 'undefined') close.style[k] = this._closeButtonStyle[k];
+    }
+
+    if (type == LogLevels.INFO) {
+      msgContainer.classList.add('log-info');
+      msg.innerText = data.msg;
+    }
+
+    else if (type == LogLevels.ERROR) {
+      msgContainer.classList.add('log-error');
+      msg.innerText = data.msg;
+    }
+
+    this._obj.appendChild(msgContainer);
+    msgContainer.appendChild(msg);
+    msgContainer.appendChild(close);
+
+  }
+
 
 
   private _findExecutionOrigin(stack: string) {
 
-    console.log(stack);
+    let extractPath  = new RegExp('(/[0-9a-zA-Z#]+)+.js', 'g')
+      , splitStack   = stack.split('\n')
+      , origin       = splitStack[3].trim()     // Should be the original execution line
+      , originTokens = origin.split(' ')
+      , stackURL     = origin.split('://')[1]   // Removed domain
+      , href         = originTokens[originTokens.length - 1]
 
-    var extractPath = new RegExp('(/[0-9a-zA-Z#]+)+.js', 'g');
+      , methodName =
+          origin.indexOf(' new ') > -1 ?
+            `new ${originTokens[2]}` : `${originTokens[1]}()`
 
-    var splitStack = stack.split('\n'),
-        origin = splitStack[2].trim(),      // Should be the original execution line
-        originTokens = origin.split(' '),
-        stackURL = origin.split('://')[1];  // Removed domain
+      , relativePath = extractPath.exec(stackURL)[0]
+      , lineNumber   = stackURL.split(':').pop().replace(')', '');
 
-    var href = originTokens[originTokens.length - 1];
 
-    var methodName =
-      origin.indexOf(' new ') > -1 ?
-        `new ${originTokens[2]}` : `${originTokens[1]}`;
-
-    var relativePath = extractPath.exec(stackURL)[0];
-
-    var lineNumber = stackURL.split(relativePath)[1].split(':')[1];
-    console.log(methodName, relativePath, lineNumber, href);
-
-    return { name: methodName, path: relativePath, line: lineNumber, href }
+    return { name: methodName, path: relativePath, line: lineNumber, href, stack };
 
   }
 

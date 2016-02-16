@@ -7,10 +7,6 @@ table.login(cellspacing='7')
   tr
     td: input.email(type='text', placeholder='email', maxlength='255')
     td: div.check.email-check
-    
-  tr
-    td: input.invite(type='text', placeholder='Invite Code')
-    td: div.check.invite-check.invalid
 
   tr: td
     div.img-container
@@ -25,17 +21,14 @@ table.login(cellspacing='7')
         input(type='radio', name='avatar')
   tr
     td.nick-error-container.login-status-container
-      div.login-status.error.nick-invalid Username can only:
+      div.login-status.error.nick-invalid Nickname Rules:
         ul
-          li Contain a-z, A-Z, and 0-9
-          li Be 20 characters long
+          li Must be between 4 and 20 characters long
+          li Must only contain a-z, A-Z, and 0-9
 
     td.email-error-container.login-status-container
       div.login-status.error.email-invalid.
         That email is not correctly formatted.
-
-    td.login-status-container.invite-error-container
-      div.login-status.error.invite-invalid Invalid Invite Code
 
     td.can-save-container.login-status-container
       div.login-status.can-save Hit save when you're ready :)

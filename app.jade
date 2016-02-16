@@ -6,8 +6,8 @@ template
   //- MAIN PAGE CODE
   section#PageTop
     header.global
-      form#LoginContainer(class='${loginActive? "active" : ""}')
-        button#LoginButton(onsubmit='return false', mousedown.delegate='login()') Login
+      div.ribbon
+      button#LoginButton(onsubmit='return false', mousedown.delegate='login()') Login
       
       a.theme-selector(mousedown.delegate='lightsOnOff($event)', 
                        href='javascript:void(0)', 

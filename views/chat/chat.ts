@@ -9,6 +9,7 @@ import {Message, MessageType, MessageSeverity, MessageAvatar} from './message';
 import {displayVerse, IScriptures} from './display-verse';
 import {ClientIO} from '../../services/clientio';
 import {ModernModal} from '../../helpers/modern-modal';
+import {Logger} from '../../helpers/logger';
 
 
 
@@ -40,12 +41,13 @@ export class Chat {
   users = new Array<{name: string; isTyping: string}>();
 
 
-  ports = {
+  ports =
+  {
     main: new Port('main', this),
     top: new Port('top', this),
     center: new Port('center', this),
     bottom: new Port('bottom', this)
-  }
+  };
 
   // Are we connected to the socket?
   private _isConnected = false;
@@ -54,14 +56,16 @@ export class Chat {
 
 
   constructor(private body: HTMLElement, public modal: ModernModal) {
-    
-    
+
+    new Logger().info('This is a CHAT Test');
+
+
     this.alias = (location.href.indexOf('localhost') > -1) ? 'Aedaeum' : null;
 
     // Initialize chat service
     this.io = new ClientIO(() => {
 
-      this.addMessage('IO Connected', MessageType.SERVER)
+      this.addMessage('IO Connected', MessageType.SERVER);
 
       if (!this.alias) {
         this.addMessage('Please enter a Nickname with no spaces or special characters.', MessageType.CLIENT);
@@ -104,10 +108,11 @@ export class Chat {
 
   // AURELIA: Activates on data binding
   bind() {
-    this.data = {
+    this.data =
+    {
       sock: this.io,
       chatView: this
-    }
+    };
   }
 
   // AURELIA: Activates on DOMReady
@@ -118,9 +123,9 @@ export class Chat {
     // this.page.rightTray.setSize({ w: '200px'})
 
     this.ports.main.portContainer = document.getElementById('MainWindow');
-    this.ports.top.portContainer = document.getElementById('Pane0')
-    this.ports.center.portContainer = document.getElementById('Pane1')
-    this.ports.bottom.portContainer = document.getElementById('Pane2')
+    this.ports.top.portContainer = document.getElementById('Pane0');
+    this.ports.center.portContainer = document.getElementById('Pane1');
+    this.ports.bottom.portContainer = document.getElementById('Pane2');
 
   }
 
@@ -138,12 +143,12 @@ export class Chat {
   setMsgPortFocus(port: Port) {
     this._activePort = port;
 
-    for(var p in this.ports) {
+    for (var p in this.ports) {
       if (this.ports[p] !== port) {
         (<Port>this.ports[p]).active = false;
       }
     }
-    this.addMessage(`${port.name} port is now receiving input.`, MessageType.CLIENT)
+    this.addMessage(`${port.name} port is now receiving input.`, MessageType.CLIENT);
     port.active = true;
   }
 
@@ -151,7 +156,7 @@ export class Chat {
 
     let username = '';
 
-    switch(type) {
+    switch (type) {
       case MessageType.NORMAL:
       case MessageType.EMOTE: username = this.alias; break;
       case MessageType.CLIENT: username = 'Client'; break;
@@ -164,7 +169,7 @@ export class Chat {
       break;
 
       default:
-        throw new Error('ADDMESSAGE::Invalid Message Type')
+        throw new Error('ADDMESSAGE::Invalid Message Type');
     }
 
     this.ports.main.addMessage(new Message({
@@ -174,12 +179,12 @@ export class Chat {
       avatar: MessageAvatar.DEFAULT,
       type,
       severity
-    }))
+    }));
   }
 
   showVerse(scriptures: IScriptures[]) {
 
-    let s = displayVerse(scriptures)
+    let s = displayVerse(scriptures);
     this.modal.show('modals/bible.html', s.header, s.html);
   }
 
@@ -193,11 +198,11 @@ export class Chat {
 
   changeAlias(alias: string) {
     if (!/^[a-zA-Z0-9]+$/.test(alias)) {
-      this.addMessage('Invalid Alias, Try Again.', MessageType.CLIENT)
+      this.addMessage('Invalid Alias, Try Again.', MessageType.CLIENT);
     }
 
     else {
-      this.addMessage(`Your alias has been changed to "${alias}"`, MessageType.CLIENT)
+      this.addMessage(`Your alias has been changed to "${alias}"`, MessageType.CLIENT);
       this.alias = alias;
     }
   }
@@ -205,7 +210,7 @@ export class Chat {
   get hasAvatar() {
 
     if (location.href.indexOf('localhost') > -1)
-      return MessageAvatar.AEDAEUM
+      return MessageAvatar.AEDAEUM;
 
     if (location.href.indexOf('192.168.1.119') > -1)
       return MessageAvatar.MOM;
@@ -221,7 +226,7 @@ export class Chat {
   }
 
   removeUser(user: string) {
-    for(let i = 0; i < this.users.length; i++) {
+    for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].name === user) {
         this.users.splice(i, 1);
         break;
@@ -237,7 +242,7 @@ export class Chat {
     if (!from.messages.length && !to.messages.length)
       return;
 
-    var msgsFrom = from.transferMessages()
+    let msgsFrom = from.transferMessages()
       , msgsTo   = to.messages.length ? to.transferMessages() : [];
 
     if (from.messages.length) from.clear(false);

@@ -17,7 +17,7 @@
         ],
         "trailing-comma": [true,
           "mutliline",
-          "singleline" 
+          "singleline"
         ],
         "semicolon": true,
         "whitespace": [true,
@@ -32,6 +32,7 @@
             "parameter": "nospace",
             "property-declaration": "nospace",
             "variable-declaration": "nospace"
-        }]
+        }],
+        "interface-name": false
   }
 }

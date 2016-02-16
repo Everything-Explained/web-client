@@ -8,6 +8,9 @@ import * as ajax from 'nanoajax';
 import * as encrypt from './helpers/cheap-encrypt';
 import {Login} from './app-login';
 import {ModernModal} from './helpers/modern-modal';
+import {Logger} from './helpers/logger';
+
+
 
 interface IPageConfiguration {
   route: NavModel;
@@ -23,7 +26,7 @@ export interface INav {
 }
 
 
-@inject(Element, EventAggregator, ModernModal)
+@inject(Element, EventAggregator, ModernModal, Logger)
 export class App {
 
   version = '0.4.0';
@@ -65,17 +68,15 @@ export class App {
 
   // page = Page;
 
-  // Bound to login modal
-  loginActive = false;
-
   // Currently active navigation routes (Populated)
   activeRoutes = new Array<NavModel>();
-  
+
   private _scrollbars: IOptiscrollInstance;
   private _modalOverlay: HTMLElement;
   private _login: Login;
 
   constructor(private elem: Element, private _eva: EventAggregator, private _modal: ModernModal) {
+
 
     this._eva.subscribeOnce('router:navigation:complete', payload => {
 
@@ -106,25 +107,25 @@ export class App {
         }
 
       }
-      
+
       this._login = new Login(this._modal);
 
 
     });
-    
+
     this._eva.subscribe('router:navigation:complete', payload => {
       if (this._scrollbars) this._scrollbars.destroy();
       this._scrollbars = new Optiscroll(document.getElementById('PageContent'), {
         autoUpdate: false
       });
-      
+
     });
-    
+
     window.onresize = (ev: UIEvent) => {
       this._scrollbars.update();
     };
-    
-    
+
+
   }
 
 
@@ -135,14 +136,6 @@ export class App {
     this.router = router;
   }
 
-
-  /** Activate login drop down on click */
-  loginDropDown() {
-
-    this.loginActive = !this.loginActive;
-    // this.page.overlay = !this.page.overlay;
-
-  }
 
   lightsOnOff(ev: MouseEvent) {
 
@@ -230,18 +223,18 @@ export class App {
   attached() {
     let req = new XMLHttpRequest()
       , lights = localStorage.getItem('lights');
-      
+
     this._modal.init('overlay');
 
     let light = (lights == 'off') ? 'light' : 'dark';
     req.open('GET', `css/themes/${light}/theme.css`, true);
     req.send();
-
+    console.error('Attached Method', req);
   }
 
 
   login() {
-    
+
     this._login.exec();
 
   }

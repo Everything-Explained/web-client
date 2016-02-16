@@ -65,7 +65,7 @@ export class Message {
 
   get messageType() {
 
-    switch(this.type) {
+    switch (this.type) {
       case MessageType.EMOTE: return 'emote';
 
       case MessageType.NORMAL:
@@ -99,21 +99,21 @@ export class Message {
 
   setTypeClass(el: HTMLElement) {
 
-    switch(this.type) {
+    switch (this.type) {
 
       case MessageType.NORMAL:
-        el.classList.add('animated')
-        el.classList.add('flipInX')
-        el.classList.add('delay5')
+        el.classList.add('animated');
+        el.classList.add('flipInX');
+        el.classList.add('delay5');
         break;
 
 
       case MessageType.SERVER:
       case MessageType.CLIENT:
       case MessageType.EMOTE:
-        el.classList.add('animated')
-        el.classList.add('zoomIn')
-        el.classList.add('delay3')
+        el.classList.add('animated');
+        el.classList.add('zoomIn');
+        el.classList.add('delay3');
         break;
 
     }

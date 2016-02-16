@@ -7,11 +7,11 @@ import * as vtor from 'validator';
 
 
 interface ILoginData {
-  user_id: string;
-  picture: string;
-  email: string;
+  user_id:  string;
+  picture:  string;
+  email:    string;
   nickname: string;
-  locale: string;
+  locale:   string;
 }
 
 interface ILoginStatusObjs {
@@ -24,29 +24,25 @@ interface ILoginStatusObjs {
 export class Login {
 
   private _clientID = 'VOhiMrFfTsx2SSgoGOr25G8qa3J6W0yj';
-  private _domain = 'aedaeum.auth0.com';
-  private _header = 'WWW-Authenticate';
+  private _domain   = 'aedaeum.auth0.com';
+  private _header   = 'WWW-Authenticate';
   private _robot: IRobot;
 
   private _validationTimeout = 0;
 
   private _objs = new Object() as {
-    avatar: HTMLImageElement;
-    email: HTMLInputElement;
-    nick: HTMLInputElement;
-    cansave: HTMLElement;
-    cansavec: HTMLElement;
-    emailCheck: HTMLElement;
+    avatar:       HTMLImageElement;
+    email:        HTMLInputElement;
+    nick:         HTMLInputElement;
+    cansave:      HTMLElement;
+    cansavec:     HTMLElement;
+    emailCheck:   HTMLElement;
     emailInvalid: HTMLElement;
-    emailErrorc: HTMLElement;
-    nickCheck: HTMLElement;
-    nickInvalid: HTMLElement;
-    nickErrorc: HTMLElement;
-    invite: HTMLInputElement;
-    inviteCheck: HTMLElement;
-    inviteInvalid: HTMLElement;
-    inviteErrorc: HTMLElement;
-    saveButton: HTMLBaseElement;
+    emailErrorc:  HTMLElement;
+    nickCheck:    HTMLElement;
+    nickInvalid:  HTMLElement;
+    nickErrorc:   HTMLElement;
+    saveButton:   HTMLBaseElement;
   };
 
   private _classes = [
@@ -59,10 +55,6 @@ export class Login {
     '.email-check',
     '.email-invalid',
     '.email-error-container',
-    '.invite',
-    '.invite-check',
-    '.invite-invalid',
-    '.invite-error-container',
     '.can-save-container',
     '.can-save',
     '.save'
@@ -81,37 +73,35 @@ export class Login {
     // this._modal.show('modals/robot', 'I Robot Test', {
     //   objs: ['.try-again', '.text-container']
     // }, (o: any, loaded: boolean) => {
-      
-    //   console.log(this._robot);
-      
+
     //   if (!this._robot) {
     //     let objs = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[]
     //       , content = o['.text-container'] as HTMLElement
     //       , button = o['.try-again'] as HTMLElement;
-        
+
     //     this._robot = new IRobot(objs, (res) => {
 
     //       if (res) {
 
     //       } else {
     //         content.classList.add('error');
-    //         content.innerText = "Sorry, try again!";
+    //         content.innerText = 'Sorry, try again!';
     //       }
 
     //     });
-        
+
     //     setTimeout(() => {
     //       this._robot.start(600);
     //       button.addEventListener('click', () => {
     //         content.classList.remove('error');
-    //         content.innerText = "Click the circles in the order they blink.";
+    //         content.innerText = 'Click the circles in the order they blink.';
     //         this._robot.restart(600);
-    //       })
+    //       });
     //     }, 700);
     //   }
 
-      
-    // })
+
+    // });
 
     // let data = {
     //   email: "aelumen@gmail.com",
@@ -136,9 +126,16 @@ export class Login {
       data.picture = 'https://graph.facebook.com/' + data.user_id.split('|')[1] + '/picture?width=64';
     }
 
-    this._completeSignup(data);
+    this._test(data);
 
-    // this._lock.show((err, profile, token) => {
+    // this._completeSignup(data);
+
+
+    // this._askForInvite();
+
+    // this._lock.show({
+    //   rememberLastLogin: true
+    // }, (err, profile, token) => {
 
     //   if (err) {
     //     console.log(err);
@@ -153,11 +150,24 @@ export class Login {
 
     //     this._login(token, key, profile).then((res: [number, string]) => {
     //       console.log(res);
-    //     })
+    //     });
 
-    //   })
+    //   });
 
-    // })
+    // });
+  }
+
+
+  private _test(profile) {
+
+    this._validateAPIURL('verifylogin', profile)
+      .then((res) => {
+        console.log('Success', res);
+      })
+      .catch((e) => {
+        console.log('Error', e);
+      });
+
   }
 
 
@@ -167,10 +177,7 @@ export class Login {
     return new Promise((rs, rj) => {
 
       http.ajax({
-        url: '/internal/loginrequest',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        url: '/internal/loginrequest'
       },
 
       (code, res, req) => {
@@ -213,6 +220,54 @@ export class Login {
   }
 
 
+  private _validateAPIURL(url: string, data: string, token = '', hidden = false) {
+
+    let headers = (token)
+      ? {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'text/plain'
+        }
+      : {
+          'Content-Type': 'text/plain'
+        }
+      , newData = '';
+
+    url = `/internal/${url}`;
+
+    return new Promise((rs, rj) => {
+
+      if (hidden) {
+        headers['WWW-Authenticate'] = data;
+        newData = 'Hello World';
+      }
+      else newData = data;
+
+      let ajaxOptions = {
+        url,
+        headers
+      };
+
+      if (newData) ajaxOptions['body'] = JSON.stringify(newData);
+
+      http.ajax(ajaxOptions, (code, res, req) => {
+
+        console.log(code, res);
+        if (code == 200) {
+          rs([code, JSON.parse(res)]);
+        } else {
+          rj(res);
+        }
+
+      });
+
+
+    });
+
+
+
+  }
+
+
 
   private _login(token: string, key: string, profile: Auth0UserProfile) {
 
@@ -224,7 +279,7 @@ export class Login {
         email: profile.email,
         nickname: profile.nickname,
         locale: profile.locale
-      }))
+      }));
 
       console.log(data);
 
@@ -241,9 +296,44 @@ export class Login {
 
         rs([code, res]);
 
-      })
+      });
 
-    })
+    });
+
+  }
+
+
+
+  private _askForInvite() {
+
+    this._modal.show('modals/invite', 'Enter Invite Code', {
+      '.invite-input': {
+        events: [
+          {
+            name: 'keyup',
+            trigger: (e, ol, objs) => {
+
+            }
+          }
+        ]
+      },
+      '.submit': {
+        events: [
+          {
+            name: 'click',
+            trigger: (e, ol, objs) => {
+
+              this
+                ._validateAPIURL('/validinvite', objs['.invite-input'].value)
+                  .then((res) => {
+                    console.log(res);
+                  });
+
+            }
+          }
+        ]
+      }
+    });
 
   }
 
@@ -259,7 +349,7 @@ export class Login {
         events: [
           {
             name: 'keyup',
-            trigger: (e, ol, objs) => this._validateNick(e)
+            trigger: (e, ol, objs) => this._validateSignup(e, 'nick')
           }
         ]
       },
@@ -269,14 +359,6 @@ export class Login {
           {
             name: 'keyup',
             trigger: (e, ol, objs) => this._validateSignup(e, 'email')
-          }
-        ]
-      },
-      '.invite': {
-        events: [
-          {
-            name: 'keyup',
-            trigger: (e, ol, obj) => this._validateSignup(e, 'invite')
           }
         ]
       },
@@ -295,7 +377,7 @@ export class Login {
       this._objs.avatar.src = data.picture;
       this._canUserSave();
 
-    })
+    });
 
   }
 
@@ -308,7 +390,7 @@ export class Login {
     }
 
     clearTimeout(this._validationTimeout);
-    
+
     let objs: { stc: HTMLElement, sto: HTMLElement, chk: HTMLElement };
 
     this._validationTimeout = setTimeout(() => {
@@ -318,72 +400,61 @@ export class Login {
 
       let input = (e.target as HTMLInputElement).value;
 
-      switch(type) {
+      switch (type) {
 
         case 'email':
-          objs = {
+          objs =
+          {
             stc: this._objs.emailErrorc,
             sto: this._objs.emailInvalid,
             chk: this._objs.emailCheck
-          }
-          
-          if(input.length < 1 || !input) {
-            this._setLoginStatus(objs, false, 'Please enter an email address.')
+          };
+
+          if (input.length < 1 || !input) {
+            this._setLoginStatus(objs, false, 'Please enter an email address.');
           }
           else if (vtor.isEmail(input)) {
             this._setLoginStatus(objs, true);
           } else {
-            this._setLoginStatus(objs, false, 'That email is not correctly formatted.')
-          } 
-        
-        break;
-
-
-
-        case 'nick': break;
-
-
-
-        case 'invite':
-          objs = {
-            stc: this._objs.inviteErrorc,
-            sto: this._objs.inviteInvalid,
-            chk: this._objs.inviteCheck
+            this._setLoginStatus(objs, false, 'That email is not correctly formatted.');
           }
-            
-          let invalid = 'Invalid Invite Code'
-            , exists = 'That invite code is already in use.';
 
-          this
-            ._validateInvite(input)
-              .then((res: { valid: boolean; exists: boolean; }) => {
-                if (res.valid) {
-
-                  if (res.exists)
-                    this._setLoginStatus(objs, false, exists);
-                  else
-                    this._setLoginStatus(objs, true);
-
-                } else {
-                  this._setLoginStatus(objs, false, invalid);
-                }
-                this._canUserSave();
-              })
-              .catch(() => {
-                this._setLoginStatus(objs, false, invalid)
-                this._canUserSave();
-              })
         break;
 
+
+
+        case 'nick':
+          objs =
+          {
+            stc: this._objs.nickErrorc,
+            sto: this._objs.nickInvalid,
+            chk: this._objs.nickCheck
+          };
+
+          if (input.length < 1 || !input) {
+            this._setLoginStatus(objs, false);
+          }
+          if (input.length < 4) {
+            this._setLoginStatus(objs, false);
+          }
+          else if (vtor.matches(input, /^[a-zA-Z0-9]+$/g)) {
+            this._setLoginStatus(objs, true);
+          } else {
+            console.log('invalid');
+            this._setLoginStatus(objs, false);
+          }
+        break;
 
 
         default:
-          throw new Error('AppLogin::validateSignup::Invalid Validation Type')
+          throw 'AppLogin::validateSignup::Invalid Validation Type';
 
       }
 
+      this._canUserSave();
 
-    }, 1000);
+
+    }, 500);
 
 
 
@@ -413,7 +484,7 @@ export class Login {
         sto.classList.add('open');
       }, 50);
     }
-    else if(status && stc.classList.contains('open')) {
+    else if (status && stc.classList.contains('open')) {
       if (chk) chk.classList.remove('invalid');
       stc.classList.remove('open');
       sto.classList.remove('open');
@@ -435,102 +506,19 @@ export class Login {
 
 
   /**
-   * Validate Username/Nick during account setup
-   */
-  private _validateNick(ev: KeyboardEvent) {
-    
-    let val = ((ev.target) as HTMLInputElement).value
-
-    if (vtor.matches(val, /^[a-zA-Z0-9]+$/g) &&
-        vtor.isLength(val, 4, 21)) {
-      this._objs.nickCheck.classList.remove('invalid');
-      // this._setLoginStatus(this._objs.nickErrorc, this._objs.nickInvalid, false);
-    } else {
-      this._objs.nickCheck.classList.add('invalid');
-      // this._setLoginStatus(this._objs.nickErrorc, this._objs.nickInvalid, true);
-    }
-    this._canUserSave();
-  }
-
-
-
-
-  /**
-   * Validate email during account setup.
-   */
-  private _validateEmail(ev: KeyboardEvent) {
-    let val = ((ev.target) as HTMLInputElement).value;
-
-    if (vtor.isEmail(val)) {
-      this._objs.emailCheck.classList.remove('invalid');
-      // this._setLoginStatus(this._objs.emailErrorc, this._objs.emailInvalid, false);
-    } else {
-      this._objs.emailCheck.classList.add('invalid');
-      // this._setLoginStatus(this._objs.emailErrorc, this._objs.emailInvalid, true);
-    }
-    this._canUserSave();
-  }
-
-
-
-  /**
-   * Validates the invite code
-   *
-   * TODO - Prevent control keys from doubling output
-   * TODO - Set delay for typed input
-   */
-  private _validateInvite(val: string) {
-
-    return new Promise((rs, rj) => {
-
-      if (vtor.matches(val, /^[a-zA-Z0-9]{8,9}$/g)) {
-
-        http.ajax({
-          url: '/internal/validinvite',
-          method: 'POST',
-          body: val,
-          headers: {
-            // 'Authorization': `Bearer ${token}`,
-            'Content-Type': 'text/plain'
-          }
-        }, (code, res, req) => {
-          let rtn = JSON.parse(res) as { valid: boolean; };
-          rs(rtn);
-        });
-
-      } else {
-        rj({ valid: false });
-      }
-
-    });
-
-
-
-  }
-
-
-
-
-
-
-
-
-
-  /**
    * Check if the user can save their changes
    * based on the username, email, and invite validation.
    */
   private _canUserSave() {
 
-    let objs = 
+    let objs =
     {
       stc: this._objs.cansavec,
       sto: this._objs.cansave
     };
 
     if (this._objs.emailCheck.classList.contains('invalid') ||
-        this._objs.nickCheck.classList.contains('invalid') ||
-        this._objs.inviteCheck.classList.contains('invalid')) {
+        this._objs.nickCheck.classList.contains('invalid')) {
       this._setLoginStatus(objs, true);
       this._objs.saveButton.disabled = true;
     } else {
@@ -555,10 +543,6 @@ export class Login {
         case 'nick-check': this._objs['nickCheck'] = objs[o]; break;
         case 'nick-invalid': this._objs['nickInvalid'] = objs[o];  break;
         case 'nick-error-container': this._objs['nickErrorc'] = objs[o]; break;
-        case 'invite': this._objs['invite'] = objs[o]; break;
-        case 'invite-check': this._objs['inviteCheck'] = objs[o]; break;
-        case 'invite-invalid': this._objs['inviteInvalid'] = objs[o]; break;
-        case 'invite-error-container': this._objs['inviteErrorc'] = objs[o]; break;
         case 'save': this._objs['saveButton'] = objs[o]; break;
 
         default:

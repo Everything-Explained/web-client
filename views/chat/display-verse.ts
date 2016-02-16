@@ -21,14 +21,15 @@ export function displayVerse(scripts: IScriptures[]) {
     }
 
     html += `<span><b>${script.chapter}:${script.verse}</b>` +
-                 `${script.text}</span>`
+                 `${script.text}</span>`;
 
   }
 
-  let formattedVerse = {
+  let formattedVerse = 
+  {
     header: `${book} ${notation}`,
     html
-  }
+  };
 
   return formattedVerse;
 

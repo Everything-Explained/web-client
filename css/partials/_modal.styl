@@ -83,6 +83,41 @@ aside.modal
 		border-bottom $modal-separator-border
 		border-top-right-radius: 5px
 		border-top-left-radius: 5px
+
+	input[type='text']
+		margin 0 auto
+		width $modal-login-width - 100px
+		background-clip padding-box
+		margin-bottom 10px
+		background $modal-login-input-bg
+		border 7px solid $modal-login-input-border // hsla(125, 100%, 82%, .13) hsla(328, 92%, 54%, .21)
+		border-radius 5px
+		color $modal-login-input
+		box-shadow inset 0 0 0 2px $modal-login-input-boxshadow
+		&::-webkit-input-placeholder
+			color $modal-login-placeholder
+
+	button
+		position relative
+		padding 5px 7px
+		cursor pointer
+		border-radius 5px
+		text-shadow 1px 1px 1px lighten($head-1-color, 70%)
+		background -webkit-linear-gradient(top, #fff86b, #a88c00)
+		background linear-gradient(top,  #fff86b, #a88c00)
+		box-shadow 0 0 0 1px #000
+		&:active
+			background -webkit-linear-gradient(bottom, #fff86b, #a88c00)
+			color #eee
+			text-shadow 1px 1px 0 #111
+			top 1px
+			left 1px
+		&:disabled
+			background #777
+			text-shadow 1px 1px 0 #aaa
+			color #555
+			cursor not-allowed
+
 	.modal-content
 		font-family: Delius
 		font-size: 18px
@@ -159,19 +194,6 @@ aside.modal.login
 		width 17px
 		height 17px
 
-	input[type='text']
-		margin 0 auto
-		width $modal-login-width - 100px
-		background-clip padding-box
-		margin-bottom 10px
-		background $modal-login-input-bg
-		border 7px solid $modal-login-input-border // hsla(125, 100%, 82%, .13) hsla(328, 92%, 54%, .21)
-		border-radius 5px
-		color $modal-login-input
-		box-shadow inset 0 0 0 2px $modal-login-input-boxshadow
-		&::-webkit-input-placeholder
-			color $modal-login-placeholder
-
 	img
 		position relative
 		left 2px
@@ -221,28 +243,12 @@ aside.modal.login
 	.can-save
 		color $modal-login-status-success
 
-	button
-		position relative
-		padding 5px 7px
-		cursor pointer
-		border-radius 5px
-		text-shadow 1px 1px 1px lighten($head-1-color, 70%)
-		background -webkit-linear-gradient(top, #fff86b, #a88c00)
-		background linear-gradient(top,  #fff86b, #a88c00)
-		box-shadow 0 0 0 1px #000
-		&:active
-			background -webkit-linear-gradient(bottom, #fff86b, #a88c00)
-			color #eee
-			text-shadow 1px 1px 0 #111
-			top 1px
-			left 1px
-		&:disabled
-			background #777
-			text-shadow 1px 1px 0 #aaa
-			color #555
-			cursor not-allowed
 
-
+aside.modal.invite
+	width 340px
+	.modal-content
+		button
+			float right
 
 
 aside.modal.bbl
@@ -309,6 +315,26 @@ aside.modal.robot
 			background-color #a5ffab
 		&.error
 			background-color #ffb7b7
+
+
+aside.modal.exception
+	header
+		background-color #ff5f5f
+		color white
+	.modal-content
+		font-family consolas
+
+		.stack
+			font-size 12px
+			background-color rgba(255,255,255, 0.2)
+			color #FF5f5f
+			margin-left 17px
+			padding 10px
+			text-shadow none
+			line-height 20px
+			border-radius 5px
+
+
 
 
 

@@ -103,7 +103,7 @@ export class ChatCommander {
 
   keyHandler(e: KeyboardEvent) {
 
-    var obj = <HTMLElement>e.target,
+    let obj = <HTMLElement>e.target,
         input = this._obj.textContent;
 
     if (this._obj.textContent.length > 0 && this._obj.lastChild === this._ffFix) {
@@ -114,14 +114,14 @@ export class ChatCommander {
     if (Keys.BACKSPACE == e.which) {
 
       // Prevents space buffer from being removed
-      if(input.length - 1 == 0) {
-        console.log('APPENDING::BACKSPACE')
+      if (input.length - 1 == 0) {
+        console.log('APPENDING::BACKSPACE');
         this._obj.innerHTML = '';
         this._obj.appendChild(this._ffFix);
       }
 
       if (this.activeCompletion) {
-        console.log('Active Completion BACKSPACE CLEAR')
+        console.log('Active Completion BACKSPACE CLEAR');
         this._clearSuggestion();
       }
 
@@ -194,10 +194,12 @@ export class ChatCommander {
   // TODO - Corrective typing logic when space is removed (RARE)
   commandHandler(e: KeyboardEvent) {
 
-    var obj      = <HTMLElement> e.target
+    let obj      = <HTMLElement> e.target
       , input    = (this._obj.childNodes[0].textContent + String.fromCharCode(e.which))
-      , rawInput = input
-      , input    = input.replace(/\s/g, ' ').trim();  // Remove NL, EOL, and BOL chars
+      , rawInput = input;
+      
+    // Remove NL, EOL, and BOL chars
+    input = input.replace(/\s/g, ' ').trim();  
 
     if (e.which === Keys.ENTER) {
 
@@ -283,37 +285,40 @@ export class ChatCommander {
 
   }
 
+
+
   private _correctSpelling(input: string, trim = false) {
 
     let storeInput = input
       , res = null;
 
-    input = input.replace(/\steh|\shte/g, ' the');
-    input = input.replace(/\sint he|\sint the/g, ' in the');
-    input = input.replace(/^int he|int the/, 'in the')
-    input = input.replace(/\sadn/g, ' and');
-    input = input.replace(/\ssays ometh/g, ' say someth');
-    input = input.replace(/\syoru/g, ' your');
-    input = input.replace(/\shwo/g, ' how');
-    input = input.replace(/hwo\s/g, 'how ');
-    input = input.replace(/^hre\s/, 'here ');
-    input = input.replace(/\shre\s/g, ' here ');
-    input = input.replace(/\si\s/g, ' I ');
-    input = input.replace(/\si\'ll/g, ' I\'ll');
-    input = input.replace(/\si\'d/g, ' I\'d');
-    input = input.replace(/\si\'ve/g, ' I\'ve');
-    input = input.replace(/\su\s/g, ' you ');
-    input = input.replace(/\sr\s/g, ' are ')
-    input = input.replace(/\sheres\s/g, ' here\'s ');
-    input = input.replace(/^heres\s/g, 'here\'s ');
-    input = input.replace(/\sdont\s/g, ' don\'t ');
-    input = input.replace(/^dont\s/g, 'don\'t ');
-    input = input.replace(/\stheres\s/g, ' there\'s ');
-    input = input.replace(/^theres\s/g, 'there\'s ');
-    input = input.replace(/^ones\s/, 'one\'s ');
-    input = input.replace(/\sones\s/g, ' one\'s ');
-
-    input = input.replace(/\sgod\s/g, ' God ');
+    input = 
+      input
+        .replace(/\steh|\shte/g, ' the')
+        .replace(/\sint he|\sint the/g, ' in the')
+        .replace(/^int he|int the/, 'in the')
+        .replace(/\sadn/g, ' and')
+        .replace(/\ssays ometh/g, ' say someth')
+        .replace(/\syoru/g, ' your')
+        .replace(/\shwo/g, ' how')
+        .replace(/hwo\s/g, 'how ')
+        .replace(/^hre\s/, 'here ')
+        .replace(/\shre\s/g, ' here ')
+        .replace(/\si\s/g, ' I ')
+        .replace(/\si\'ll/g, ' I\'ll')
+        .replace(/\si\'d/g, ' I\'d')
+        .replace(/\si\'ve/g, ' I\'ve')
+        .replace(/\su\s/g, ' you ')
+        .replace(/\sr\s/g, ' are ')
+        .replace(/\sheres\s/g, ' here\'s ')
+        .replace(/^heres\s/g, 'here\'s ')
+        .replace(/\sdont\s/g, ' don\'t ')
+        .replace(/^dont\s/g, 'don\'t ')
+        .replace(/\stheres\s/g, ' there\'s ')
+        .replace(/^theres\s/g, 'there\'s ')
+        .replace(/^ones\s/, 'one\'s ')
+        .replace(/\sones\s/g, ' one\'s ')
+        .replace(/\sgod\s/g, ' God ');
 
     // Capitalize first letter
     input =
@@ -337,6 +342,8 @@ export class ChatCommander {
 
     return input != storeInput;
   }
+
+
 
   private _isValidAlias(input: string) {
 
@@ -414,7 +421,7 @@ export class ChatCommander {
     // Next Command
     if (!up) {
       if (this._cmdHistoryPos >= this._cmdHistory.length - 1) {
-        this._obj.textContent = ''
+        this._obj.textContent = '';
         this._cmdHistoryPos = null;
       }
 
@@ -475,12 +482,12 @@ export class ChatCommander {
    */
   private _placeCaret(start: boolean, el: HTMLElement) {
       el.focus();
-      if (typeof window.getSelection != "undefined"
-              && typeof document.createRange != "undefined") {
-          var range = document.createRange();
+      if (typeof window.getSelection != 'undefined'
+              && typeof document.createRange != 'undefined') {
+          let range = document.createRange();
           range.selectNodeContents(el);
           range.collapse(start);
-          var sel = window.getSelection();
+          let sel = window.getSelection();
           sel.removeAllRanges();
           sel.addRange(range);
       } else {
@@ -518,11 +525,12 @@ export class ChatCommander {
        (this._obj.textContent.length && this._obj.textContent[0] == '/'))
           return setTimeout(() => { this.pollTyping()}, 500);
 
-    if(this._obj.textContent.length > 0 && !this._isTyping) {
+    if (this._obj.textContent.length > 0 && !this._isTyping) {
       this._isTyping = true;
       this._sock.sendUserIsTyping(this._chatView.alias);
-      console.log('is-typing')
-    } else if(this._isTyping && this._obj.textContent.length === 0) {
+      console.log('is-typing');
+    } 
+    else if (this._isTyping && this._obj.textContent.length === 0) {
       this._isTyping = false;
       this._sock.sendUserStoppedTyping(this._chatView.alias);
       console.log('finished-typing');

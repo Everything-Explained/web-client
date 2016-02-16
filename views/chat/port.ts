@@ -26,7 +26,7 @@ export class Port {
 
   set messages(msgs: Message[]) {
     if (this._view.length > 0) {
-      throw new Error('You need to transfer existing messages before overwriting')
+      throw new Error('You need to transfer existing messages before overwriting');
     }
 
     msgs.forEach(m => m.scale = this._scale);
@@ -50,7 +50,7 @@ export class Port {
     this._oPort = <HTMLElement> obj.children[0];
     this._oTray = <HTMLElement> this._oPort.children[0];
 
-    if(this.name == 'main') {
+    if (this.name == 'main') {
       this._scrollObj = new Optiscroll(this._oPort, {
         autoUpdate: false
       });
@@ -60,7 +60,7 @@ export class Port {
 
   set messageScale(val: MessageScale) {
 
-    switch(val) {
+    switch (val) {
       case MessageScale.LARGE: this._scale = 'large'; break;
       case MessageScale.MEDIUM: this._scale = 'medium'; break;
       case MessageScale.SMALL: this._scale = 'small'; break;
@@ -68,10 +68,10 @@ export class Port {
       default: throw new Error('Invalid Message Scale');
     }
 
-    for(let msg of this._view)
+    for (let msg of this._view)
       msg.scale = this._scale;
 
-    this._chatView.addMessage(`${this.name} port scale set to ${val}`, MessageType.CLIENT)
+    this._chatView.addMessage(`${this.name} port scale set to ${val}`, MessageType.CLIENT);
   }
 
   set active(val: boolean) {
@@ -126,7 +126,7 @@ export class Port {
 
   // Clears the port and returns the messages
   transferMessages() {
-    var messages = this.messages;
+    let messages = this.messages;
     return messages;
   }
 

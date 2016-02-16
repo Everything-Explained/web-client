@@ -87,11 +87,6 @@ export class ClientIO {
   }
 
   connect(reconnect = false) {
-    
-    if (!localStorage.getItem('userToken')) {
-      this._chat.addMessage('You must sign in to use this feature', MessageType.SERVER);
-      return;
-    }
 
     if (reconnect && this._connected) {
       this._chat.addMessage('Server is Already connected', MessageType.CLIENT);
@@ -101,23 +96,26 @@ export class ClientIO {
     if (reconnect) {
       this._sock = io({forceNew: true});
     }
-    
+
     this._sock.on('connect', () => {
       this._sock
-        .on('authenticated', () => {
-          this._chat.addMessage('Connected Successfully', MessageType.SERVER);
+        .on('auth-success', () => {
+          this._chat.addMessage(
+            'Connected Successfully', 
+            MessageType.SERVER);
         })
-        .on('unauthorized', (data) => {
-          console.error(data);
-          if (data.message.indexOf('expired') > 0) {
-            this._chat.addMessage('Your session has expired. Please login again.', MessageType.SERVER);
-          } else {
-            this._chat.addMessage('Invalid Login Token', MessageType.SERVER);            
+        .on('auth-fail', (data) => {
+          if (data == 'invite') {
+            this._chat.addMessage(
+              'You need an invite to use this feature', 
+              MessageType.SERVER);
           }
+          
         })
-        .emit('authenticate', { token: localStorage.getItem('userToken')});
-    });
-    
+        .emit('authenticate', 'Hello World!');
+    })
+    .on('disconnect', () => this.onLostConnection());
+
 
     // this._sock.on('client-connected',    ()    => this.authClient())
     // this._sock.on('auth-success',        data  => this.onConnection(data));
@@ -225,11 +223,11 @@ export class ClientIO {
 
 
   onLostConnection() {
-    
+
     if (this._serverShuttingDown) return;
-    
+
     console.error('Server Shutdown or Lost Connection');
-    
+
     this._chat.ports.main.addMessage(new Message(
     {
       username: 'Server',
@@ -240,9 +238,9 @@ export class ClientIO {
       type: MessageType.SERVER,
       severity: MessageSeverity.ATTENTION
     }));
-    
+
     this._sock.disconnect();
-    
+
     this._connected = false;
   }
 

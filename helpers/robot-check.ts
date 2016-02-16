@@ -39,7 +39,7 @@ export class IRobot {
       return;
     }
 
-    for(let o = 0; o < this._objs.length; o++) {
+    for (let o = 0; o < this._objs.length; o++) {
 
       if (pos == this._seq[o]) {
 
@@ -56,7 +56,7 @@ export class IRobot {
             this._blink(pos + 1);
           }, this._speed);
 
-        })(o, pos)
+        })(o, pos);
 
       }
 
@@ -82,7 +82,7 @@ export class IRobot {
         return;
       }
       obj.classList.add('success');
-      this._evtPos++
+      this._evtPos++;
     } else {
       obj.classList.add('error');
       this._inError = true;
@@ -92,7 +92,7 @@ export class IRobot {
   }
 
   private _clearNodes() {
-    for(let o of this._objs) {
+    for (let o of this._objs) {
       o.classList.remove('success');
       o.classList.remove('error');
     }
@@ -104,14 +104,20 @@ export class IRobot {
   private _getRandomSequence() {
 
     let seq = [] as number[];
-    for(let i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       seq.push(i);
     }
 
     let randSeq = [] as number[];
-    while(seq.length) {
+    while (seq.length) {
       let pos = Math.floor(Math.random() * seq.length);
       randSeq.push(seq.splice(pos, 1)[0]);
+    }
+    
+    // Prevent sequential pattern
+    for (let i = 0; i < randSeq.length; i++) {
+      if (randSeq[i] != i) break;
+      return this._getRandomSequence();
     }
 
     return randSeq;
