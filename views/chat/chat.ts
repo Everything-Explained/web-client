@@ -43,8 +43,8 @@ export class Chat {
 
   ports =
   {
-    main: new Port('main', this),
-    top: new Port('top', this),
+    main:   new Port('main', this),
+    top:    new Port('top', this),
     center: new Port('center', this),
     bottom: new Port('bottom', this)
   };
@@ -56,8 +56,6 @@ export class Chat {
 
 
   constructor(private body: HTMLElement, public modal: ModernModal) {
-
-    new Logger().info('This is a CHAT Test');
 
 
     this.alias = (location.href.indexOf('localhost') > -1) ? 'Aedaeum' : null;
@@ -122,8 +120,8 @@ export class Chat {
     // this.page.userList.setClass('active');
     // this.page.rightTray.setSize({ w: '200px'})
 
-    this.ports.main.portContainer = document.getElementById('MainWindow');
-    this.ports.top.portContainer = document.getElementById('Pane0');
+    this.ports.main.portContainer   = document.getElementById('MainWindow');
+    this.ports.top.portContainer    = document.getElementById('Pane0');
     this.ports.center.portContainer = document.getElementById('Pane1');
     this.ports.bottom.portContainer = document.getElementById('Pane2');
 
@@ -158,14 +156,14 @@ export class Chat {
 
     switch (type) {
       case MessageType.NORMAL:
-      case MessageType.EMOTE: username = this.alias; break;
-      case MessageType.CLIENT: username = 'Client'; break;
-      case MessageType.SERVER: username = 'Server'; break;
+      case MessageType.EMOTE:    username = this.alias; break;
+      case MessageType.CLIENT:   username = 'Client'; break;
+      case MessageType.SERVER:   username = 'Server'; break;
       case MessageType.IMPLICIT: username = ''; break;
       case MessageType.INLINE:
         let parts = msg.split(';', 2);
-        username = parts[0].trim();
-        msg = parts[1];
+        username  = parts[0].trim();
+        msg       = parts[1];
       break;
 
       default:

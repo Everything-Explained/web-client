@@ -142,17 +142,23 @@ export class Logger {
 
   debug() {}
 
-  error(msg: any[]) {
-
-    let error = new Error() as Error
-      , trace = this._findExecutionOrigin(error.stack)
-      , con   = console as Console;
+  public error(msg: any[], oError?: Error) {
 
     if (!msg[0] || typeof msg[0] != 'string') {
-      throw 'ERROR logs must contain a message string';
+      throw new Error('ERROR logs must contain a message string');
     }
 
-    con.groupCollapsed(`%cERROR%c${trace.name}%c:%c${trace.path}%c@%c${trace.line}`,
+    // Handle Aurelia life-cycle promise rejection Exceptions
+    if (msg.length > 1 && ~msg[0].indexOf('promise rejection') && msg[1] instanceof Error) {
+      oError = msg[1] as Error;
+    }
+
+    let error = (oError) ? oError : new Error() as Error
+      , trace = this._findExecutionOrigin(error.stack, !!oError)
+      , con   = console as Console;
+
+
+    con.groupCollapsed(`%cERROR::${msg[0]}%c${trace.name}%c:%c${trace.path}%c@%c${trace.line}`,
       Logger._headerStyle + Logger._headerStyleError,
       Logger._itemStyle,
       Logger._separator,
@@ -161,10 +167,13 @@ export class Logger {
       Logger._itemStyle
     );
 
-    console.log('');
-    console.log(msg);
-    console.log('');
+    if (msg.length > 1) {
+      console.log('');
+      console.log(msg);
+      console.log('');
+    }
     console.groupEnd();
+
 
     this._addMessage(LogLevels.ERROR, {
       msg: msg[0],
@@ -182,6 +191,7 @@ export class Logger {
 
     msg.style.display      = 'inline-block';
     msg.style.paddingRight = '10px';
+    msg.style.cursor       = 'pointer';
     close.innerHTML        = '&#10060;';
 
     close.classList.add('log-close-button');
@@ -235,7 +245,7 @@ export class Logger {
 
     else if (type == LogLevels.ERROR) {
       msgContainer.classList.add('log-error');
-      msg.innerText = data.msg;
+      msg.innerText = 'Exception::' + data.msg;
     }
 
     this._obj.appendChild(msgContainer);
@@ -246,16 +256,18 @@ export class Logger {
 
 
 
-  private _findExecutionOrigin(stack: string) {
+  private _findExecutionOrigin(stack: string, root = false) {
 
     let extractPath  = new RegExp('(/[0-9a-zA-Z#]+)+.js', 'g')
       , splitStack   = stack.split('\n')
-      , origin       = splitStack[3].trim()     // Should be the original execution line
+      , origin       = (root) ? splitStack[1].trim() : splitStack[3].trim()     // Should be the original execution line
       , originTokens = origin.split(' ')
       , stackURL     = origin.split('://')[1]   // Removed domain
-      , href         = originTokens[originTokens.length - 1]
+      , href         = originTokens[originTokens.length - 1];
 
-      , methodName =
+      console.log(stackURL);
+
+      let methodName =
           origin.indexOf(' new ') > -1 ?
             `new ${originTokens[2]}` : `${originTokens[1]}()`
 

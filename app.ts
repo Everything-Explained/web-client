@@ -9,6 +9,7 @@ import * as encrypt from './helpers/cheap-encrypt';
 import {Login} from './app-login';
 import {ModernModal} from './helpers/modern-modal';
 import {Logger} from './helpers/logger';
+import {ErrorHandler} from './helpers/errorHandler';
 
 
 
@@ -26,7 +27,7 @@ export interface INav {
 }
 
 
-@inject(Element, EventAggregator, ModernModal, Logger)
+@inject(Element, EventAggregator, ModernModal, Logger, ErrorHandler)
 export class App {
 
   version = '0.4.0';
@@ -75,8 +76,12 @@ export class App {
   private _modalOverlay: HTMLElement;
   private _login: Login;
 
-  constructor(private elem: Element, private _eva: EventAggregator, private _modal: ModernModal) {
-
+  constructor(private elem:          Element,
+              private _eva:          EventAggregator,
+              private _modal:        ModernModal,
+              private _log:          Logger,
+              private _errorHandler: ErrorHandler)
+  {
 
     this._eva.subscribeOnce('router:navigation:complete', payload => {
 
@@ -221,6 +226,9 @@ export class App {
 
   /** DOM Ready (Called by Aurelia) */
   attached() {
+
+     this._errorHandler.init();
+
     let req = new XMLHttpRequest()
       , lights = localStorage.getItem('lights');
 
@@ -229,11 +237,12 @@ export class App {
     let light = (lights == 'off') ? 'light' : 'dark';
     req.open('GET', `css/themes/${light}/theme.css`, true);
     req.send();
-    console.error('Attached Method', req);
+
   }
 
 
   login() {
+    throw new Error('This is an Error');
 
     this._login.exec();
 

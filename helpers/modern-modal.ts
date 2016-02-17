@@ -7,32 +7,33 @@ interface IModalOptions {
       name: string;
       trigger: (ev, overlay, objs) => void;
     }
-  ]
+  ];
 }
 
 
 export class ModernModal {
 
-  private _overlay: HTMLElement;
-  private _preloader: HTMLElement;
+  private _overlay:    HTMLElement;
+  private _preloader:  HTMLElement;
   private _openButton: HTMLElement;
-  private _header: HTMLElement;
-  private _modal: HTMLElement;
-  private _content: HTMLElement;
+  private _header:     HTMLElement;
+  private _modal:      HTMLElement;
+  private _content:    HTMLElement;
 
-  private _lastURL = '';
-  private _lastContent: string|Object;
-  private _template: HTMLElement;
+  private _lastURL        = '';
+  private _lastContent:   string|Object;
+  private _template:      HTMLElement;
   private _workingClasses = new Object();
   private _browserChecked = false;
 
-  public classes = {
+  public classes =
+  {
     modalContainer: 'modal-container',
-    modal: 'modal',
-    preloader: 'modal-preloader',
-    content: 'modal-content',
-    closeBtn: 'modal-close',
-  }
+    modal:          'modal',
+    preloader:      'modal-preloader',
+    content:        'modal-content',
+    closeBtn:       'modal-close',
+  };
 
   constructor() {
 
@@ -54,14 +55,14 @@ export class ModernModal {
     // Apply default mouse events
     this._overlay.addEventListener('mousedown', (ev) => {
       let t = ev.target as HTMLElement;
-      if(t.className == this.classes.closeBtn) {
+      if (t.className == this.classes.closeBtn) {
         this._close();
       }
 
-      if(t.id == overlayID || t.className == this.classes.modalContainer) {
+      if (t.id == overlayID || t.className == this.classes.modalContainer) {
         this._close();
       }
-    })
+    });
   }
 
 
@@ -106,7 +107,7 @@ export class ModernModal {
         })
         .catch((e) => {
           console.error(e);
-        })
+        });
 
     }
 
@@ -148,10 +149,10 @@ export class ModernModal {
       })
       .catch((e) => {
         rj(e);
-      })
+      });
 
 
-    })
+    });
 
 
   }
@@ -172,7 +173,7 @@ export class ModernModal {
   /** Clears the previously loaded template. */
   private _clearPrevTemplate() {
     if (this._template) {
-      let node = this._overlay.getElementsByClassName(this.classes.modalContainer)[0] as HTMLElement
+      let node = this._overlay.getElementsByClassName(this.classes.modalContainer)[0] as HTMLElement;
       node.parentNode.removeChild(node);
       this._template = null;
     }
@@ -187,7 +188,7 @@ export class ModernModal {
       throw new Error('Your browser does not support native promises');
 
     if (!(window['DOMParser'] && new DOMParser()['parseFromString']))
-      throw new Error('Your browser does not support the DOMParser methods')
+      throw new Error('Your browser does not support the DOMParser methods');
 
     if (!document['importNode'])
       throw new Error('Your browser does not support templates');
@@ -209,7 +210,7 @@ export class ModernModal {
     }
     else if (typeof contentObj === 'object') {
 
-      for(let c in contentObj) {
+      for (let c in contentObj) {
 
         if (this._workingClasses.hasOwnProperty(c)) {
           if (typeof contentObj[c] === 'object') {
@@ -218,7 +219,7 @@ export class ModernModal {
             // Func scoped to retain value of 'c' (className)
             ((cn: string) => {
               let obj = contentObj[cn] as IModalOptions;
-              if (obj['value']) this._workingClasses[cn].value = obj.value
+              if (obj['value']) this._workingClasses[cn].value = obj.value;
               if (obj['html']) this._workingClasses[cn].innerHTML = obj.html;
               if (obj['events']) {
 
@@ -227,9 +228,9 @@ export class ModernModal {
                   this._workingClasses[cn]
                       .addEventListener(
                         e.name,
-                        (ev) => { e.trigger(ev, this._overlay, this._workingClasses)}
-                      )
-                })
+                        (ev) => { e.trigger(ev, this._overlay, this._workingClasses); }
+                      );
+                });
               }
             })(c);
 
@@ -251,7 +252,7 @@ export class ModernModal {
     if (classes instanceof Array) {
       this._setElementsFromArray(classes);
     } else {
-      for(let c in classes) {
+      for (let c in classes) {
         if (classes[c] instanceof Array) {
           this._setElementsFromArray(classes[c]);
         } else {
@@ -270,12 +271,12 @@ export class ModernModal {
                 this._overlay.querySelectorAll(data.join(','))
               ) as HTMLElement[];
 
-    for(let e of els) {
-      let realClass = ""
+    for (let e of els) {
+      let realClass = '';
       if (e.className.indexOf(' ') > -1) {
         let classes = e.className.split(' ');
-        for(let c of classes) {
-          for(let d of data) {
+        for (let c of classes) {
+          for (let d of data) {
             if (c == d.substr(1)) {
               realClass = c;
               break;
@@ -299,13 +300,13 @@ export class ModernModal {
       let req = new XMLHttpRequest();
       req.addEventListener('load', (res) => {
         rs(req.response);
-      })
+      });
       req.onerror = (e) => {
         rj(new Error('Error getting template'));
-      }
+      };
       req.open('GET', url, true);
       req.send();
-    })
+    });
 
   }
 
@@ -315,7 +316,7 @@ export class ModernModal {
 
     let parser = new DOMParser()
       , dom = parser.parseFromString(html, 'text/html')
-      , template = dom.querySelector('template')['content'] as HTMLElement
+      , template = dom.querySelector('template')['content'] as HTMLElement;
 
     return template;
 
@@ -340,7 +341,7 @@ export class ModernModal {
       // Check for 0, null, undefined inequality
       if (!obj2[k] || !obj1[k]) {
         if (obj1[k] !== obj2[k]) {
-          console.info('MM::CompareObj::Null Unequal')
+          console.info('MM::CompareObj::Null Unequal');
           return false;
         }
         else continue;
@@ -358,7 +359,7 @@ export class ModernModal {
       // Catch array of objs
       if (o1 instanceof Array || o2 instanceof Array) {
         if (o1 instanceof Array && o2 instanceof Array) {
-          for(let i = 0; i < o1.length; i++) {
+          for (let i = 0; i < o1.length; i++) {
             if (o1[i] !== o2[i]) {
               return false;
             }
@@ -373,19 +374,19 @@ export class ModernModal {
       if (o1.html || o2.html) {
 
         // Assume identical events with same html
-        if (o1.html == o2.html) continue
+        if (o1.html == o2.html) continue;
         else {
-          console.info('MM::CompareObj::Different HTML')
+          console.info('MM::CompareObj::Different HTML');
           return false;
         }
 
-      } else if(o1.events || o2.events) {
+      } else if (o1.events || o2.events) {
         if ((o1.events.length && o2.events.length) &&
             (o1.events.length == o2.events.length)
            ) {
-          for(let i = 0; i < o1.events.length; i++) {
+          for (let i = 0; i < o1.events.length; i++) {
             if (`${o1.events[i].trigger}` != `${o2.events[i].trigger}`) {
-              console.info('MM::CompareObj::Different Functions')
+              console.info('MM::CompareObj::Different Functions');
               return false;
             }
           }
@@ -393,14 +394,14 @@ export class ModernModal {
           continue;
         }
         else {
-          console.info('MM::CompareObj::Different Events')
+          console.info('MM::CompareObj::Different Events');
           return false;
         }
 
       }
-      throw new Error('MM::CompareObj::Objects have no HTML or EVENTS properties')
+      throw new Error('MM::CompareObj::Objects have no HTML or EVENTS properties');
     }
-    console.info('MM::CompareObj::Objects Match')
+    console.info('MM::CompareObj::Objects Match');
     return true;
   }
 

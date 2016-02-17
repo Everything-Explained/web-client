@@ -1,0 +1,25 @@
+.log-debug, .log-error, .log-info
+  display block
+  padding 5px 10px
+  margin-bottom 13px
+  background-color hsla(0, 0, 0, 0.1);
+  border-radius 5px;
+  box-shadow 0 0 10px 0 #999
+
+.log-info
+  background-color #91d3f2
+
+.log-error
+  color $logger-error
+  background-color $logger-error-bg
+  box-shadow 1px 1px 6px 0px #333
+  font-family consolas
+  font-size 16px
+
+.log-close-button
+  position relative
+  top -1px
+  &:before
+    top -1px
+    position relative
+    content '| '
