@@ -20,6 +20,7 @@ interface Trace {
   name: string;
   href: string;
   stack: string;
+  errorType: string;
 }
 
 enum LogLevels {
@@ -142,7 +143,13 @@ export class Logger {
 
   debug() {}
 
+
+
+
   public error(msg: any[], oError?: Error) {
+
+    let message = ''
+      , header  = '';
 
     if (!msg[0] || typeof msg[0] != 'string') {
       throw new Error('ERROR logs must contain a message string');
@@ -153,9 +160,30 @@ export class Logger {
       oError = msg[1] as Error;
     }
 
-    let error = (oError) ? oError : new Error() as Error
-      , trace = this._findExecutionOrigin(error.stack, !!oError)
-      , con   = console as Console;
+    if (~msg[0].indexOf('app-router')) {
+      if (~msg[1].message.indexOf('404 Not Found')) {
+        header = 'Aurelia::[app-router] 404 Not Found';
+      }
+      message = msg[1].message;
+      oError = msg[1];                        // SET Inner Error
+    }
+
+    if (~msg[0].indexOf('event-aggregator')) {
+      header = 'Aurelia::[event-aggregator]';
+      message = msg[1].message;
+      oError = msg[1];                        // SET Inner Error
+    }
+
+    if (!header) header = msg[0];
+    if (!message) message = msg[0];
+
+
+    let error   = (oError) ? oError : new Error() as Error
+      , trace   = this._findExecutionOrigin(error.stack, !!oError)
+      , con     = console as Console;
+
+
+
 
 
     con.groupCollapsed(`%cERROR::${msg[0]}%c${trace.name}%c:%c${trace.path}%c@%c${trace.line}`,
@@ -172,18 +200,22 @@ export class Logger {
       console.log(msg);
       console.log('');
     }
+    else console.log(msg);
     console.groupEnd();
 
 
     this._addMessage(LogLevels.ERROR, {
-      msg: msg[0],
+      header,
+      message,
       trace
     });
 
   }
 
 
-  private _addMessage(type: LogLevels, data: {msg: string; trace: Trace}) {
+
+
+  private _addMessage(type: LogLevels, data: {header: string; message: string, trace: Trace}) {
 
     let msgContainer = document.createElement('div')
       , msg          = document.createElement('div')
@@ -219,16 +251,16 @@ export class Logger {
       } else {
         stackLines[i] = '(' + parts[parts.length - 2] + '/' + parts[parts.length - 1] + ')';
       }
-
     });
 
     data.trace.stack = stackLines.join('<br/>');
 
     msg.addEventListener('mousedown', (e) => {
       if (e.buttons == 1) {
-        this._modal.show('modals/exception', 'ERROR::' + data.msg,
+        this._modal.show('modals/exception', data.header,
         `<b>Line: </b>${data.trace.line}<br/>
          <b>Method: </b>${data.trace.name}<br/>
+         <b>Message: </b>${data.message}<br/>
          <b>Stack: </b><br/>
          <div class='stack'>${data.trace.stack}</div>`);
       }
@@ -240,12 +272,12 @@ export class Logger {
 
     if (type == LogLevels.INFO) {
       msgContainer.classList.add('log-info');
-      msg.innerText = data.msg;
+      msg.innerText = data.header;
     }
 
     else if (type == LogLevels.ERROR) {
       msgContainer.classList.add('log-error');
-      msg.innerText = 'Exception::' + data.msg;
+      msg.innerText = 'Exception::' + data.header;
     }
 
     this._obj.appendChild(msgContainer);
@@ -256,26 +288,27 @@ export class Logger {
 
 
 
-  private _findExecutionOrigin(stack: string, root = false) {
 
-    let extractPath  = new RegExp('(/[0-9a-zA-Z#]+)+.js', 'g')
+  private _findExecutionOrigin(stack: string, root = false): Trace {
+
+    let extractPath  = new RegExp('(/[0-9a-zA-Z#@\.\-]+)+.js', 'g')
       , splitStack   = stack.split('\n')
+      , errorType    = (splitStack[0] == 'Error') ? 'GenericError' : splitStack[0]
       , origin       = (root) ? splitStack[1].trim() : splitStack[3].trim()     // Should be the original execution line
       , originTokens = origin.split(' ')
       , stackURL     = origin.split('://')[1]   // Removed domain
       , href         = originTokens[originTokens.length - 1];
 
-      console.log(stackURL);
 
-      let methodName =
-          origin.indexOf(' new ') > -1 ?
-            `new ${originTokens[2]}` : `${originTokens[1]}()`
+    let methodName =
+        ~origin.indexOf(' new ') ?
+          `new ${originTokens[2]}` : `${originTokens[1]}()`
 
       , relativePath = extractPath.exec(stackURL)[0]
       , lineNumber   = stackURL.split(':').pop().replace(')', '');
 
 
-    return { name: methodName, path: relativePath, line: lineNumber, href, stack };
+    return { name: methodName, path: relativePath, line: lineNumber, errorType,  href, stack };
 
   }
 

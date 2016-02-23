@@ -36,6 +36,8 @@ export class App {
 
   page = Page;
 
+  appLoaded = false;
+
   lightsTimeout = 0;
   lightsOnTimeout = false;
 
@@ -123,6 +125,18 @@ export class App {
       this._scrollbars = new Optiscroll(document.getElementById('PageContent'), {
         autoUpdate: false
       });
+
+      // Execute only if routes have been populated
+      // Toggles the tabs on back/forward
+      if (this.navList[0].routes.length) {
+        this.navList.forEach(n => {
+          n.isActive = n.name == payload.instruction.config.navName;
+          if (n.isActive) {
+            this.populateRoutes(n, null, false);
+          }
+        });
+      }
+
 
     });
 
@@ -227,7 +241,7 @@ export class App {
   /** DOM Ready (Called by Aurelia) */
   attached() {
 
-     this._errorHandler.init();
+    this._errorHandler.init();
 
     let req = new XMLHttpRequest()
       , lights = localStorage.getItem('lights');
@@ -238,11 +252,12 @@ export class App {
     req.open('GET', `css/themes/${light}/theme.css`, true);
     req.send();
 
+    this.appLoaded = true;
+
   }
 
 
   login() {
-    throw new Error('This is an Error');
 
     this._login.exec();
 
@@ -259,9 +274,15 @@ export class App {
    */
   populateRoutes(nav: INav, e?: MouseEvent, toggleNav = false) {
 
-    if (typeof e !== 'undefined') {
-      if (e.button !== 0) return;
+    // TODO - This is a hack and should exist in the router configuration
+    if (!nav.routes.length) {
+      let href = location.href.split('http://')[1].split('/')[0];
+      this.goTo('http://' + href);
     }
+
+    // if (e && typeof e != 'undefined') {
+    //   if (e.button != 0) return;
+    // }
 
     // Don't populate tabs without default tab
     if (nav.def)
@@ -275,7 +296,6 @@ export class App {
         n.isActive = n === nav;
       });
 
-      console.log(nav.routes[0].href);
       this.goTo(nav.def ? nav.defRoute.href : nav.routes[0].href);
     }
   }

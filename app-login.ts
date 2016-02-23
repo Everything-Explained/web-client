@@ -30,7 +30,7 @@ export class Login {
 
   private _validationTimeout = 0;
 
-  private _objs = new Object() as {
+  private _objs: {
     avatar:       HTMLImageElement;
     email:        HTMLInputElement;
     nick:         HTMLInputElement;
@@ -42,7 +42,7 @@ export class Login {
     nickCheck:    HTMLElement;
     nickInvalid:  HTMLElement;
     nickErrorc:   HTMLElement;
-    saveButton:   HTMLBaseElement;
+    saveButton:   HTMLButtonElement;
   };
 
   private _classes = [
@@ -126,12 +126,12 @@ export class Login {
       data.picture = 'https://graph.facebook.com/' + data.user_id.split('|')[1] + '/picture?width=64';
     }
 
-    this._test(data);
+    // this._test(data);
 
     // this._completeSignup(data);
 
 
-    // this._askForInvite();
+    this._askForInvite();
 
     // this._lock.show({
     //   rememberLastLogin: true
