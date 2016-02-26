@@ -2,8 +2,9 @@
 // Project: http://auth0.com
 // Definitions by: Robert McLaws <https://github.com/advancedrei>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
+/* tslint:disable */
+/// <reference path="auth0.d.ts" />
 
-/// <reference path="../auth0/auth0.d.ts" />
 
 interface Auth0LockPopupOptions {
     width: number;
@@ -50,6 +51,11 @@ interface Auth0LockConstructorOptions {
 interface Auth0LockStatic {
     new (clientId: string, domain: string, options?: Auth0LockConstructorOptions): Auth0LockStatic;
 
+    on(event: string, callback: () => void): void;
+    once(event: string, callback: () => void): void;
+    removeAllListeners(event: string): void;
+    removeListener(event: string): void;
+
     show(): void;
     show(options: Auth0LockOptions): void;
     show(callback: (error?: Auth0Error, profile?: Auth0UserProfile, token?: string) => void) : void;
@@ -72,10 +78,12 @@ interface Auth0LockStatic {
 
     hide(callback: () => void): void;
     logout(callback: () => void): void;
+
+    getClient(): Auth0Static;
 }
 
 declare var Auth0Lock: Auth0LockStatic;
 
-declare module "Auth0Lock" {
+declare module 'Auth0Lock' {
     export = Auth0Lock;
 }

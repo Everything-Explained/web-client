@@ -9,7 +9,8 @@ $speed = .2s
 	left: 0
 	right: 0
 	bottom: 0
-	background-color $modal-overlay-bg-color
+	background: -webkit-radial-gradient(center, ellipse cover, hsla(0,0%,65%,0.59) 0%,hsla(0,0%,25%,0.9) 100%); 
+	// background: radial-gradient(ellipse at center, hsla(0,0%,0%,0) 0%,hsla(0,0%,0%,0.65) 100%);
 	opacity: 0
 	visibility: hidden
 	z-index: 1000
@@ -38,7 +39,6 @@ $speed = .2s
 
 aside.modal
 	position: relative
-	top 100px
 	margin: 0 auto
 	width: 50%
 	background $modal-bg
@@ -245,7 +245,9 @@ aside.modal.login
 
 
 aside.modal.invite
+	top -70px
 	width 340px
+
 	.modal-content
 		button
 			float right

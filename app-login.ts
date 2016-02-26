@@ -7,11 +7,13 @@ import * as vtor from 'validator';
 
 
 interface ILoginData {
-  user_id:  string;
-  picture:  string;
-  email:    string;
-  nickname: string;
-  locale:   string;
+  google_id?: string;
+  facebook_id?: string;
+  picture: string;
+  email: string;
+  email_verified?: boolean;
+  nick: string;
+  locale: string;
 }
 
 interface ILoginStatusObjs {
@@ -68,7 +70,19 @@ export class Login {
 
   }
 
-  exec() {
+  signup() {
+    this._lock.once('signup success', () => {
+
+    })
+    this._lock.showSignup({
+
+    }, () => {
+
+    })
+
+  }
+
+  signIn() {
 
     // this._modal.show('modals/robot', 'I Robot Test', {
     //   objs: ['.try-again', '.text-container']
@@ -133,7 +147,8 @@ export class Login {
 
     this._askForInvite();
 
-    // this._lock.show({
+
+    // this._lock.showSignin({
     //   rememberLastLogin: true
     // }, (err, profile, token) => {
 
@@ -324,9 +339,12 @@ export class Login {
             trigger: (e, ol, objs) => {
 
               this
-                ._validateAPIURL('/validinvite', objs['.invite-input'].value)
+                ._validateAPIURL('validinvite', objs['.invite-input'].value)
                   .then((res) => {
                     console.log(res);
+                  })
+                  .catch(res => {
+                    console.error(res);
                   });
 
             }

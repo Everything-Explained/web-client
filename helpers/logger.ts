@@ -156,8 +156,15 @@ export class Logger {
     }
 
     // Handle Aurelia life-cycle promise rejection Exceptions
-    if (msg.length > 1 && ~msg[0].indexOf('promise rejection') && msg[1] instanceof Error) {
-      oError = msg[1] as Error;
+    if (msg.length > 1 && ~msg[0].indexOf('promise rejection')) {
+      if (msg[1] instanceof Error) {
+        oError = msg[1] as Error;
+        header = (msg[1] as Error).message;
+      }
+      else {
+        header = msg[1];
+      }
+
     }
 
     if (~msg[0].indexOf('app-router')) {
@@ -181,9 +188,6 @@ export class Logger {
     let error   = (oError) ? oError : new Error() as Error
       , trace   = this._findExecutionOrigin(error.stack, !!oError)
       , con     = console as Console;
-
-
-
 
 
     con.groupCollapsed(`%cERROR::${msg[0]}%c${trace.name}%c:%c${trace.path}%c@%c${trace.line}`,

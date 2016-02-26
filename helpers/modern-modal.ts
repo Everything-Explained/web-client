@@ -13,21 +13,21 @@ interface IModalOptions {
 
 export class ModernModal {
 
-  private _overlay:    HTMLElement;
-  private _preloader:  HTMLElement;
-  private _openButton: HTMLElement;
-  private _header:     HTMLElement;
-  private _modal:      HTMLElement;
-  private _content:    HTMLElement;
+  private _overlay:     HTMLElement;
+  private _valign:      HTMLElement;
+  private _preloader:   HTMLElement;
+  private _openButton:  HTMLElement;
+  private _header:      HTMLElement;
+  private _modal:       HTMLElement;
+  private _content:     HTMLElement;
 
-  private _lastURL        = '';
-  private _lastContent:   string|Object;
-  private _template:      HTMLElement;
+  private _lastURL      = '';
+  private _lastContent: string|Object;
+  private _template:    HTMLElement;
   private _workingClasses = new Object();
   private _browserChecked = false;
 
-  public classes =
-  {
+  public classes = {
     modalContainer: 'modal-container',
     modal:          'modal',
     preloader:      'modal-preloader',
@@ -50,7 +50,18 @@ export class ModernModal {
    */
   public init(overlayID: string) {
     this._overlay = document.getElementById(overlayID);
+    this._valign = document.createElement('div');
     this._preloader = this._overlay.querySelector('.' + this.classes.preloader) as HTMLElement;
+
+    this._overlay.style.display = 'table';
+    this._overlay.style.height = '100%';
+    this._overlay.style.width = '100%';
+    this._valign.style.display = 'table-cell';
+    this._valign.style.verticalAlign = 'middle';
+    this._valign.style.height = '100%';
+    this._valign.style.width = '100%';
+
+    this._overlay.appendChild(this._valign);
 
     // Apply default mouse events
     this._overlay.addEventListener('mousedown', (ev) => {
@@ -135,7 +146,7 @@ export class ModernModal {
       this._getTemplate(url).then((res: string) => {
 
         this._template = this._parseTemplate(res);
-        this._overlay.appendChild(document.importNode(this._template, true));
+        this._valign.appendChild(document.importNode(this._template, true));
         this._header = this._overlay.querySelector('header') as HTMLElement;
         this._content = this._overlay.querySelector('.' + this.classes.content) as HTMLElement;
         this._modal = this._overlay.querySelector('.' + this.classes.modal) as HTMLElement;

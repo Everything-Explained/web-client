@@ -36,8 +36,6 @@ export class App {
 
   page = Page;
 
-  appLoaded = false;
-
   lightsTimeout = 0;
   lightsOnTimeout = false;
 
@@ -252,14 +250,24 @@ export class App {
     req.open('GET', `css/themes/${light}/theme.css`, true);
     req.send();
 
-    this.appLoaded = true;
+  }
+
+
+  signIn(e: MouseEvent) {
+
+    if (e.buttons == 1) {
+      this._login.signIn();
+    }
 
   }
 
 
-  login() {
+  signUp(e: MouseEvent) {
 
-    this._login.exec();
+    if (e.buttons == 1) {
+      this._login.signup();
+
+    }
 
   }
 
@@ -280,9 +288,9 @@ export class App {
       this.goTo('http://' + href);
     }
 
-    // if (e && typeof e != 'undefined') {
-    //   if (e.button != 0) return;
-    // }
+    if (e && typeof e != 'undefined') {
+      if (e.button != 0) return;
+    }
 
     // Don't populate tabs without default tab
     if (nav.def)
