@@ -76,7 +76,7 @@ export class Logger {
     display: 'block',
     bottom: '20px',
     right: '20px',
-    zIndex: '1000'
+    zIndex: '100000'
   };
 
   private _closeButtonStyle = {

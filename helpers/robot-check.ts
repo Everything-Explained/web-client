@@ -113,10 +113,10 @@ export class IRobot {
       let pos = Math.floor(Math.random() * seq.length);
       randSeq.push(seq.splice(pos, 1)[0]);
     }
-    
+
     // Prevent sequential pattern
     for (let i = 0; i < randSeq.length; i++) {
-      if (randSeq[i] != i) break;
+      if ( (randSeq[i] != i) && (randSeq[i] != randSeq.length - (i + 1)) ) break;
       return this._getRandomSequence();
     }
 

@@ -9,7 +9,7 @@ $speed = .2s
 	left: 0
 	right: 0
 	bottom: 0
-	background: -webkit-radial-gradient(center, ellipse cover, hsla(0,0%,65%,0.59) 0%,hsla(0,0%,25%,0.9) 100%); 
+	background: -webkit-radial-gradient(center, ellipse cover, hsla(0,0%,65%,0.59) 0%,hsla(0,0%,25%,0.9) 100%);
 	// background: radial-gradient(ellipse at center, hsla(0,0%,0%,0) 0%,hsla(0,0%,0%,0.65) 100%);
 	opacity: 0
 	visibility: hidden
@@ -146,6 +146,7 @@ aside.modal
 
 
 
+
 $modal-login-width = 450px
 aside.modal.login
 	width $modal-login-width
@@ -244,6 +245,8 @@ aside.modal.login
 		color $modal-login-status-success
 
 
+
+
 aside.modal.invite
 	top -70px
 	width 340px
@@ -251,6 +254,30 @@ aside.modal.invite
 	.modal-content
 		button
 			float right
+		.error-container
+			display none
+			padding 0
+			transition max-height .3s ease
+			&.open
+				display block
+
+		.error
+			display block
+			padding 7px 0 7px 7px
+			margin-bottom 7px
+			border-radius 5px
+			background-color rgba(255, 100, 100, 0.3)
+			font-family consolas
+			text-shadow none
+			font-size 14px
+			overflow hidden
+			opacity 0
+			transition opacity .3s ease-in-out
+			&.open
+				opacity 1
+
+
+
 
 
 aside.modal.bbl

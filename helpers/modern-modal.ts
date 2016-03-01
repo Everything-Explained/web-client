@@ -186,6 +186,7 @@ export class ModernModal {
     if (this._template) {
       let node = this._overlay.getElementsByClassName(this.classes.modalContainer)[0] as HTMLElement;
       node.parentNode.removeChild(node);
+      this._workingClasses = {};
       this._template = null;
     }
   }

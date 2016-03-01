@@ -6,7 +6,7 @@ import {IRobot} from './helpers/robot-check';
 import * as vtor from 'validator';
 
 
-interface ILoginData {
+interface LoginData {
   google_id?: string;
   facebook_id?: string;
   picture: string;
@@ -16,23 +16,14 @@ interface ILoginData {
   locale: string;
 }
 
-interface ILoginStatusObjs {
+interface LoginStatusObjs {
   sto: HTMLElement;
   stc: HTMLElement;
   chk?: HTMLElement;
 }
 
 
-export class Login {
-
-  private _clientID = 'VOhiMrFfTsx2SSgoGOr25G8qa3J6W0yj';
-  private _domain   = 'aedaeum.auth0.com';
-  private _header   = 'WWW-Authenticate';
-  private _robot: IRobot;
-
-  private _validationTimeout = 0;
-
-  private _objs: {
+interface LoginObjs {
     avatar:       HTMLImageElement;
     email:        HTMLInputElement;
     nick:         HTMLInputElement;
@@ -45,7 +36,19 @@ export class Login {
     nickInvalid:  HTMLElement;
     nickErrorc:   HTMLElement;
     saveButton:   HTMLButtonElement;
-  };
+}
+
+
+export class Login {
+
+  private _clientID = 'VOhiMrFfTsx2SSgoGOr25G8qa3J6W0yj';
+  private _domain   = 'aedaeum.auth0.com';
+  private _header   = 'WWW-Authenticate';
+  private _robot: IRobot;
+
+  private _validationTimeout = 0;
+
+  private _objs = {} as LoginObjs;
 
   private _classes = [
     '.avatar',
@@ -64,58 +67,66 @@ export class Login {
 
   private _lock: Auth0LockStatic;
 
+  private _isRobot = true;
+
   constructor(private _modal: ModernModal) {
     this._lock = new Auth0Lock(this._clientID, this._domain);
-
 
   }
 
   signup() {
-    this._lock.once('signup success', () => {
 
-    })
-    this._lock.showSignup({
+    if (!this._isRobot) {
+      this._askForInvite();
+      return;
+    }
 
-    }, () => {
+    this._modal.show('modals/robot', 'I Robot Test', {
+      objs: ['.try-again', '.text-container']
+    }, (o: any, loaded: boolean) => {
 
-    })
+      if (!this._robot) {
+        let objs = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[]
+          , content = o['.text-container'] as HTMLElement
+          , button = o['.try-again'] as HTMLElement;
+
+        this._robot = new IRobot(objs, (res) => {
+
+          if (res) {
+            this._askForInvite();
+            this._isRobot = false;
+          } else {
+            content.classList.add('error');
+            content.innerText = 'Sorry, try again!';
+          }
+
+        });
+
+        setTimeout(() => {
+          this._robot.start(600);
+          button.addEventListener('click', () => {
+            content.classList.remove('error');
+            content.innerText = 'Click the circles in the order they blink.';
+            this._robot.restart(600);
+          });
+        }, 700);
+      }
+    });
+
+
+
+    // this._lock.once('signup success', () => {
+
+    // })
+    // this._lock.showSignup({
+
+    // }, () => {
+
+    // })
 
   }
 
   signIn() {
-
-    // this._modal.show('modals/robot', 'I Robot Test', {
-    //   objs: ['.try-again', '.text-container']
-    // }, (o: any, loaded: boolean) => {
-
-    //   if (!this._robot) {
-    //     let objs = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[]
-    //       , content = o['.text-container'] as HTMLElement
-    //       , button = o['.try-again'] as HTMLElement;
-
-    //     this._robot = new IRobot(objs, (res) => {
-
-    //       if (res) {
-
-    //       } else {
-    //         content.classList.add('error');
-    //         content.innerText = 'Sorry, try again!';
-    //       }
-
-    //     });
-
-    //     setTimeout(() => {
-    //       this._robot.start(600);
-    //       button.addEventListener('click', () => {
-    //         content.classList.remove('error');
-    //         content.innerText = 'Click the circles in the order they blink.';
-    //         this._robot.restart(600);
-    //       });
-    //     }, 700);
-    //   }
-
-
-    // });
 
     // let data = {
     //   email: "aelumen@gmail.com",
@@ -128,7 +139,7 @@ export class Login {
     let data = {
       email: 'aelumen@gmail.com',
       locale: 'en',
-      nickname: 'aelumen',
+      nick: 'aelumen',
       picture: 'https://scontent.xx.fbcdn.net/hprofile-xtl1/v/t1.0-1/p50x50/1909949_10156451943195346_4119065300640329697_n.jpg?oh=ceef56f378b2dd26ad06dd418e3fe9bf&oe=56FC1166',
       user_id: 'facebook|10156229933700346'
     };
@@ -142,10 +153,10 @@ export class Login {
 
     // this._test(data);
 
-    // this._completeSignup(data);
+    this._completeSignup(data);
 
 
-    this._askForInvite();
+    // this._askForInvite();
 
 
     // this._lock.showSignin({
@@ -235,17 +246,19 @@ export class Login {
   }
 
 
-  private _validateAPIURL(url: string, data: string, token = '', hidden = false) {
+  private _validateAPIURL(url: string, data: string|Object, token = '', hidden = false) {
+
+    let contentType = (typeof data === 'string') ? 'text/plain' : 'application/json';
 
     let headers = (token)
       ? {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'text/plain'
+          'Content-Type': contentType
         }
       : {
-          'Content-Type': 'text/plain'
+          'Content-Type': contentType
         }
-      , newData = '';
+      , newData: string|Object;
 
     url = `/internal/${url}`;
 
@@ -255,22 +268,24 @@ export class Login {
         headers['WWW-Authenticate'] = data;
         newData = 'Hello World';
       }
-      else newData = data;
+      else newData =
+        (typeof data === 'string' || typeof data === 'number')
+          ? data
+          : JSON.stringify(data);
 
       let ajaxOptions = {
         url,
         headers
       };
 
-      if (newData) ajaxOptions['body'] = JSON.stringify(newData);
+      if (newData) ajaxOptions['body'] = newData;
 
       http.ajax(ajaxOptions, (code, res, req) => {
 
-        console.log(code, res);
         if (code == 200) {
-          rs([code, JSON.parse(res)]);
+          rs(JSON.parse(res));
         } else {
-          rj(res);
+          rj([code, res]);
         }
 
       });
@@ -321,49 +336,75 @@ export class Login {
 
   private _askForInvite() {
 
-    this._modal.show('modals/invite', 'Enter Invite Code', {
-      '.invite-input': {
-        events: [
-          {
-            name: 'keyup',
-            trigger: (e, ol, objs) => {
+    return new Promise((rs, rj) => {
 
+      this._modal.show('modals/invite', 'Enter Invite Code', {
+        '.invite-input': {
+          events: [
+            {
+              name: 'keyup',
+              trigger: (e, ol, objs) => {
+
+              }
             }
-          }
-        ]
-      },
-      '.submit': {
-        events: [
-          {
-            name: 'click',
-            trigger: (e, ol, objs) => {
+          ]
+        },
+        '.submit': {
+          events: [
+            {
+              name: 'click',
+              trigger: (e, ol, objs) => {
 
-              this
-                ._validateAPIURL('validinvite', objs['.invite-input'].value)
-                  .then((res) => {
-                    console.log(res);
-                  })
-                  .catch(res => {
-                    console.error(res);
-                  });
-
+                this
+                  ._validateAPIURL('validinvite', objs['.invite-input'].value)
+                    .then((res: any) => {
+                      console.log(res);
+                      if (res.valid) {
+                        if (res.expired) {
+                          this._setModalStatus({
+                            stc: objs['.error-container'],
+                            sto: objs['.error']
+                          }, false, 'Sorry, that invite has expired');
+                          console.log('exists');
+                          rs(false);
+                        } else {
+                          console.log('success');
+                          rs(true);
+                        }
+                      } else {
+                        this._setModalStatus({
+                          stc: objs['.error-container'],
+                          sto: objs['.error']
+                        }, false, 'Invalid Invite');
+                        rs(false);
+                      }
+                    })
+                    .catch(res => {
+                      console.error(res);
+                    });
+              }
             }
-          }
-        ]
-      }
+          ]
+        },
+        objs: ['.error', '.error-container']
+      });
+
+
     });
+
+
 
   }
 
 
 
 
-  private _completeSignup(data: ILoginData) {
+  private _completeSignup(data: LoginData) {
 
 
     this._modal.show('modals/login', 'Complete Signup', {
       '.nick': {
-        value: data.nickname,
+        value: data.nick,
         events: [
           {
             name: 'keyup',
@@ -384,7 +425,12 @@ export class Login {
         events: [
           {
             name: 'click',
-            trigger: () => console.log('Temporary')
+            trigger: () => {
+              this._validateAPIURL('verifylogin', data)
+              .catch((er) => {
+                console.error(er);
+              });
+            }
           }
         ]
       },
@@ -429,12 +475,12 @@ export class Login {
           };
 
           if (input.length < 1 || !input) {
-            this._setLoginStatus(objs, false, 'Please enter an email address.');
+            this._setModalStatus(objs, false, 'Please enter an email address.');
           }
           else if (vtor.isEmail(input)) {
-            this._setLoginStatus(objs, true);
+            this._setModalStatus(objs, true);
           } else {
-            this._setLoginStatus(objs, false, 'That email is not correctly formatted.');
+            this._setModalStatus(objs, false, 'That email is not correctly formatted.');
           }
 
         break;
@@ -450,16 +496,16 @@ export class Login {
           };
 
           if (input.length < 1 || !input) {
-            this._setLoginStatus(objs, false);
+            this._setModalStatus(objs, false);
           }
           if (input.length < 4) {
-            this._setLoginStatus(objs, false);
+            this._setModalStatus(objs, false);
           }
           else if (vtor.matches(input, /^[a-zA-Z0-9]+$/g)) {
-            this._setLoginStatus(objs, true);
+            this._setModalStatus(objs, true);
           } else {
             console.log('invalid');
-            this._setLoginStatus(objs, false);
+            this._setModalStatus(objs, false);
           }
         break;
 
@@ -488,7 +534,7 @@ export class Login {
    * @param objs - Container, Output, and Checkmark objects
    * @param status - Whether the status should be success or fail
    */
-  private _setLoginStatus(objs: ILoginStatusObjs, status: boolean, content?: string) {
+  private _setModalStatus(objs: LoginStatusObjs, status: boolean, content?: string) {
 
     let { stc, sto, chk } = objs;
 
@@ -537,10 +583,10 @@ export class Login {
 
     if (this._objs.emailCheck.classList.contains('invalid') ||
         this._objs.nickCheck.classList.contains('invalid')) {
-      this._setLoginStatus(objs, true);
+      this._setModalStatus(objs, true);
       this._objs.saveButton.disabled = true;
     } else {
-      this._setLoginStatus(objs, false);
+      this._setModalStatus(objs, false);
       this._objs.saveButton.disabled = false;
     }
 
@@ -552,7 +598,10 @@ export class Login {
       switch (vtor.ltrim(o, '.')) {
         case 'avatar': this._objs['avatar'] = objs[o]; break;
         case 'email': this._objs['email'] = objs[o]; break;
-        case 'nick': this._objs['nick'] = objs[o]; break;
+        case 'nick':
+          console.log(objs, this._objs);
+          this._objs['nick'] = objs[o];
+        break;
         case 'can-save': this._objs['cansave'] = objs[o]; break;
         case 'can-save-container': this._objs['cansavec'] = objs[o]; break;
         case 'email-check': this._objs['emailCheck'] = objs[o]; break;
@@ -564,7 +613,7 @@ export class Login {
         case 'save': this._objs['saveButton'] = objs[o]; break;
 
         default:
-          throw new Error('AppLogin::PopulateLoginObjs::Can\'t find ' + o + '\' in object list.');
+          throw new Error('AppLogin::PopulateLoginObjs::Can\'t find \'' + o + '\' in object list.');
       }
     }
 
