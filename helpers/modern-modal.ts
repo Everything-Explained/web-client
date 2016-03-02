@@ -67,11 +67,11 @@ export class ModernModal {
     this._overlay.addEventListener('mousedown', (ev) => {
       let t = ev.target as HTMLElement;
       if (t.className == this.classes.closeBtn) {
-        this._close();
+        this.close();
       }
 
       if (t.id == overlayID || t.className == this.classes.modalContainer) {
-        this._close();
+        this.close();
       }
     });
   }
@@ -306,7 +306,7 @@ export class ModernModal {
 
 
   /** Retrieves the working template HTML from the specified URL */
-  private _getTemplate(url: string): Promise<string> {
+  private _getTemplate(url: string) {
 
     return new Promise((rs, rj) => {
       let req = new XMLHttpRequest();
@@ -419,7 +419,7 @@ export class ModernModal {
 
 
 
-  private _close() {
+  public close() {
     this._overlay.classList.remove('open');
     this._modal.classList.remove('open');
   }

@@ -38,6 +38,13 @@ interface LoginObjs {
     saveButton:   HTMLButtonElement;
 }
 
+enum LoginState {
+  NONE = 1,
+  ISHUMAN = 2,
+  ISINVITED = 4,
+  ISSIGNEDIN = 8
+}
+
 
 export class Login {
 
@@ -67,7 +74,9 @@ export class Login {
 
   private _lock: Auth0LockStatic;
 
-  private _isRobot = true;
+  private _loginState = LoginState.NONE;
+  private _profile = {} as LoginData;
+  private _inviteSecret = null as string;
 
   constructor(private _modal: ModernModal) {
     this._lock = new Auth0Lock(this._clientID, this._domain);
@@ -76,53 +85,92 @@ export class Login {
 
   signup() {
 
-    if (!this._isRobot) {
+    if (this._loginState & LoginState.ISSIGNEDIN) {
+
+    }
+
+    if (this._loginState & LoginState.ISINVITED) {
+      this._showSignup();
+      return;
+    }
+
+    if (this._loginState & LoginState.ISHUMAN) {
       this._askForInvite();
       return;
     }
 
-    this._modal.show('modals/robot', 'I Robot Test', {
-      objs: ['.try-again', '.text-container']
-    }, (o: any, loaded: boolean) => {
 
-      if (!this._robot) {
-        let objs = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[]
-          , content = o['.text-container'] as HTMLElement
-          , button = o['.try-again'] as HTMLElement;
+    this
+      ._showRobotTest()
+      .then(() => this._askForInvite())
+      .then((res: any) => {
+        this._modal.close();
+        return this._showSignup(this._inviteSecret = res);
+      })
+      .then((data: any) => {
+        console.log('hello');
+      });
 
-        this._robot = new IRobot(objs, (res) => {
+  }
 
-          if (res) {
-            this._askForInvite();
-            this._isRobot = false;
-          } else {
-            content.classList.add('error');
-            content.innerText = 'Sorry, try again!';
-          }
 
-        });
+  private _showSignup(secret?: string) {
 
-        setTimeout(() => {
-          this._robot.start(600);
-          button.addEventListener('click', () => {
-            content.classList.remove('error');
-            content.innerText = 'Click the circles in the order they blink.';
-            this._robot.restart(600);
-          });
-        }, 700);
-      }
+    return new Promise((rs, rj) => {
+      this._loginState =
+        (secret || this._inviteSecret)
+          ? LoginState.ISINVITED
+          : this._loginState;
+
+      this._lock.showSignup({
+
+      }, () => {
+
+      });
+
     });
 
 
+  }
 
-    // this._lock.once('signup success', () => {
 
-    // })
-    // this._lock.showSignup({
+  private _showRobotTest() {
 
-    // }, () => {
+    return new Promise((rs, rj) => {
+      console.log(this);
+      this._modal.show('modals/robot', 'I Robot Test', {
+        objs: ['.try-again', '.text-container']
+      }, (o: any, loaded: boolean) => {
 
-    // })
+        if (!this._robot) {
+          let objs = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[]
+            , content = o['.text-container'] as HTMLElement
+            , button = o['.try-again'] as HTMLElement;
+
+          this._robot = new IRobot(objs, (res) => {
+
+            if (res) {
+              rs(true);
+              this._loginState = LoginState.ISHUMAN;
+            } else {
+              content.classList.add('error');
+              content.innerText = 'Sorry, try again!';
+            }
+
+          });
+
+          setTimeout(() => {
+            this._robot.start(600);
+            button.addEventListener('click', () => {
+              content.classList.remove('error');
+              content.innerText = 'Click the circles in the order they blink.';
+              this._robot.restart(600);
+            });
+          }, 700);
+        }
+      });
+
+    });
 
   }
 
@@ -285,7 +333,7 @@ export class Login {
         if (code == 200) {
           rs(JSON.parse(res));
         } else {
-          rj([code, res]);
+          rj(res);
         }
 
       });
@@ -339,59 +387,54 @@ export class Login {
     return new Promise((rs, rj) => {
 
       this._modal.show('modals/invite', 'Enter Invite Code', {
-        '.invite-input': {
-          events: [
-            {
-              name: 'keyup',
-              trigger: (e, ol, objs) => {
-
-              }
-            }
-          ]
-        },
         '.submit': {
-          events: [
-            {
-              name: 'click',
-              trigger: (e, ol, objs) => {
-
-                this
-                  ._validateAPIURL('validinvite', objs['.invite-input'].value)
-                    .then((res: any) => {
-                      console.log(res);
-                      if (res.valid) {
-                        if (res.expired) {
-                          this._setModalStatus({
-                            stc: objs['.error-container'],
-                            sto: objs['.error']
-                          }, false, 'Sorry, that invite has expired');
-                          console.log('exists');
-                          rs(false);
-                        } else {
-                          console.log('success');
-                          rs(true);
-                        }
-                      } else {
-                        this._setModalStatus({
-                          stc: objs['.error-container'],
-                          sto: objs['.error']
-                        }, false, 'Invalid Invite');
-                        rs(false);
-                      }
-                    })
-                    .catch(res => {
-                      console.error(res);
-                    });
-              }
+          events:
+          [{
+            name: 'click',
+            trigger: (e, ol, objs) => {
+              this._validateInvite(objs)
+                .then(rs)
+                .catch(rj);
             }
-          ]
+          }]
         },
-        objs: ['.error', '.error-container']
+        objs: ['.error', '.error-container', '.invite-input']
       });
-
 
     });
 
+  }
+
+
+
+  private _validateInvite(objs: any) {
+
+    return new Promise((rs, rj) => {
+      this
+        ._validateAPIURL('validinvite', objs['.invite-input'].value)
+          .then((res: any) => {
+
+            if (!res.valid) {
+              this._setModalStatus({
+                stc: objs['.error-container'],
+                sto: objs['.error']
+              }, false, 'Invalid Invite');
+              return;
+            }
+
+            if (res.expired) {
+              this._setModalStatus({
+                stc: objs['.error-container'],
+                sto: objs['.error']
+              }, false, 'Sorry, that invite has expired');
+              return;
+            }
+
+            rs(res);
+
+          })
+          .catch(rj);
+    });
 
 
   }
@@ -636,7 +679,7 @@ export class Login {
   /**
    * Check if the specified nick already exists.
    */
-  private checkUsername(name: string): Promise<boolean> {
+  private checkUsername(name: string) {
 
     return new Promise((rs, rj) => {
       http.ajax({
