@@ -44,6 +44,9 @@ interface Auth0UserProfile {
     family_name: string;
     gender: string;
     given_name: string;
+    email_verified: boolean;
+    country: string;
+    timezone: number;
     locale: string;
     name: string;
     nickname: string;

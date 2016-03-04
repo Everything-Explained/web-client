@@ -68,8 +68,8 @@ interface Auth0LockStatic {
 
     showSignup(): void;
     showSignup(options: Auth0LockOptions): void;
-    showSignup(callback: (error?: Auth0Error) => void) : void;
-    showSignup(options: Auth0LockOptions, callback: (error?: Auth0Error) => void) : void;
+    showSignup(callback: (error?: Auth0Error, profile?: Auth0UserProfile, token?: string) => void) : void;
+    showSignup(options: Auth0LockOptions, callback: (error?: Auth0Error, profile?: Auth0UserProfile, token?: string) => void) : void;
 
     showReset(): void;
     showReset(options: Auth0LockOptions): void;

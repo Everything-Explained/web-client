@@ -77,6 +77,7 @@ export class Login {
   private _loginState = LoginState.NONE;
   private _profile = {} as LoginData;
   private _inviteSecret = null as string;
+  private _userProfile: Auth0UserProfile;
 
   constructor(private _modal: ModernModal) {
     this._lock = new Auth0Lock(this._clientID, this._domain);
@@ -85,30 +86,29 @@ export class Login {
 
   signup() {
 
-    if (this._loginState & LoginState.ISSIGNEDIN) {
-
-    }
-
-    if (this._loginState & LoginState.ISINVITED) {
-      this._showSignup();
-      return;
-    }
-
-    if (this._loginState & LoginState.ISHUMAN) {
-      this._askForInvite();
-      return;
-    }
-
-
-    this
-      ._showRobotTest()
-      .then(() => this._askForInvite())
-      .then((res: any) => {
-        this._modal.close();
-        return this._showSignup(this._inviteSecret = res);
+    Promise.resolve(null)
+      .then<any>(() => {
+        return+
+          (this._loginState & LoginState.ISHUMAN)
+            ? Promise.resolve()
+            : this._showRobotTest();
       })
-      .then((data: any) => {
-        console.log('hello');
+      .then<any>(() => {
+        return+
+          (this._loginState & LoginState.ISINVITED)
+            ? Promise.resolve()
+            : this._askForInvite();
+      })
+      .then<any>((res: any) => {
+
+        let state = this._loginState & LoginState.ISSIGNEDIN;
+
+        if (!state) this._modal.close();
+
+        return+
+          (state)
+            ? Promise.resolve()
+            : this._showSignup(this._inviteSecret = res);
       });
 
   }
@@ -117,16 +117,38 @@ export class Login {
   private _showSignup(secret?: string) {
 
     return new Promise((rs, rj) => {
-      this._loginState =
+      this._loginState |=
         (secret || this._inviteSecret)
           ? LoginState.ISINVITED
-          : this._loginState;
+          : 0;
 
-      this._lock.showSignup({
+      let data = {
+        country: 'United States',
+        email: 'aelumen@gmail.com',
+        email_verified: true,
+        family_name: 'Numen',
+        gender: 'male',
+        is_verified: false,
+        locale: 'en_US',
+        name: 'Aeli Numen',
+        nickname: 'aelumen',
+        picture: 'https://scontent.xx.fbcdn.net/hprofile-xap1/v/t1.0-1/p50x50/1909949_10156451943195346_4119065300640329697_n.jpg?oh=aaa3c7dca038d4fd07fd61f34f4bd271&oe=574B2B66',
+        timezone: -8,
+        user_id: 'facebook|10156229933700346',
+        verified: true
+      };
 
-      }, () => {
+      // this._lock.showSignup({
+      //   socialBigButtons: true
 
-      });
+      // }, (err, profile, token) => {
+      //   if (err) {
+      //     console.error(err.message);
+      //     this._userProfile = profile;
+      //   }
+
+      //   console.log(profile);
+      // });
 
     });
 
@@ -151,7 +173,8 @@ export class Login {
 
             if (res) {
               rs(true);
-              this._loginState = LoginState.ISHUMAN;
+              this._loginState |= LoginState.ISHUMAN;
+              console.log(this._loginState & LoginState.ISHUMAN);
             } else {
               content.classList.add('error');
               content.innerText = 'Sorry, try again!';
