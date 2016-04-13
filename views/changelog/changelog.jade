@@ -1,131 +1,14 @@
 template
   section.changelog.optiscroll-content
-    section.compartment
-      label.title Sep 10, 2015
+    section.compartment(repeat.for='section of sections')
+      label.title ${section.date}
       article
-        ul.additions
-          li Command completion on Enter key
-          li Added typing notification to user list
-          li Added paused typing notifications to user list
-        ul.changes
-          li Links now look prettier
-          li Chat commander (input box) input is now programmatically controlled
-        ul.fixes
-          li Fixed the majority of FireFox issues (hopefully)
+        ul.additions(if='section.additions.length')
+          li(repeat.for='add of section.additions') ${add}
 
-    section.compartment
-      label.title Sep 8, 2015
-      article
-        ul.additions
-          li Added scrollbar
-        ul.fixes
-          li Fixed all FireFox-related issues (what a major pain that was)
+        ul.changes(if='section.changes.length')
+          li(repeat.for='chg of section.changes') ${chg}
 
-    section.compartment
-      label.title Sep 3, 2015
-      article
-        ul.additions
-          li Added "Alpha" version watermark
-          li User list is now moderately functional
-        ul.changes
-          li Users can be added/removed from the userlist (internally)
-        ul.fixes
-          li Fixed caret placing bug in FireFox
-          li Fixed long chat input overflowing input box
-          li Fixed filtering functions not returning properly
+        ul.fixes(if='section.fixes.length')
+          li(repeat.for='fix of section.fixes') ${fix}
 
-    section.compartment
-      label.title Sep 2, 2015
-      article
-        ul.additions
-         li Added joined/left messages when a user leaves/joins
-         li Added temporary auth step to server side
-        ul.changes
-         li Added implicit messages to message types
-         li Server now properly removes clients from rooms
-        ul.fixes
-         li Fixed large embeded images overflowing container
-
-    section.compartment
-      label.title Sep 1, 2015
-      article
-        ul.additions
-          li Added link filtering
-          li Added image filtering
-        ul.changes
-          li Links beyond 30 chars will be truncated
-          li Added more spelling corrections
-        ul.fixes
-          li Fixed pasted text retaining formatting
-          li Fixed pasted text not being trimmed
-          li Fixed pasted text being pasted as HTML instead of plain text
-          li Fixed filtering methods interfering with each other
-          li Fixed scrolling when message images are still loading
-          li Fixed filters ignoring https links
-
-    section.compartment
-      label.title Aug 31, 2015
-      article
-        ul.additions
-          li Added Changelog page
-          li Added spellcheck while typing
-          li Added custom avatar for #[b Femmbyte]
-          li Increased 'large scale' messages font size
-          li Increased left tray min-width and applied flex styles
-          li Brightened up the light theme with a pattern underlay
-          li Added 'nick' or 'alias' command to allow changing of your alias
-          li Added more spellcheck corrections
-          li Added temporary hard-coded avatars
-        ul.changes
-          li Finished main 'light theme' components
-          li Added default message level color variables to _base_theme.scss
-          li Applied global default 'label' style
-          li When setting your nick for the first time, it now displays what you typed (#[b Femmbyte])
-        ul.fixes
-          li Fixed some non-global CSS applying global styles
-          li Fixed emote text being invisible
-          li Fixed emote not being spaced from comment
-          li Fixed emote to send proper message data
-          li Fixed command input to use pre, which preserves spaces properly
-          li Fixed spellcheck corrections partial-matching words
-          li Blank messages can no longer be sent
-
-    section.compartment
-      label.title Aug 30, 2015
-      article
-        ul.additions
-          li Added nickname auth (for testing only)
-        ul.changes
-          li All ports default to 'medium' scale
-          li Avatar now defaults by default unless localhost
-          li _showSuggestion() now uses indexOf instead of slower regex test
-          li Assigned proper interfaces for sent messages
-          li Removed temp interface 'UserMessage'
-          li Page container is no longer absolute
-        ul.fixes
-          li Fixed minor script references
-          li Fixed default avatar color
-          li Fixed _showSuggestion() not clearing invalid results
-          li Fixed chat data being sent arbitrarily
-          li Fixed the layout breaking when contents are larger than visible area
-          li Fixed chat messages forcing the layout to expand
-          li Fixed incorrect avatar logic
-
-    section.compartment
-      label.title Aug 29, 2015
-      article
-        ul.additions
-          li Added message severity
-          li Added light theme as primary theme
-          li Added connect command
-        ul.changes
-          li Re-factored the connection logic into their own respective methods
-          li Handled connection failed event for client
-          li Moved Message class into its own file under the Chat view
-          li Added flexPort param to Port.clear()
-          li Removed clear() call from Port.transferMessages()
-          li Adjusted the Chat.transferMessages() to reflect the above changes
-          li Removed a bunch of unnecessary bars and erroneous CSS
-        ul.fixes
-          li Fixed duplicate command history logging
-          li Fixed navigation to respond only to left click

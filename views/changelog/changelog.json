@@ -1,0 +1,155 @@
+
+[
+  {"date": "Sep 10, 2015", "timeStamp": null,
+   "additions": [
+     "Command completion on Enter key",
+     "Added typing notification to user list",
+     "Added paused typing notifications to user list"
+   ],
+   "changes": [
+     "Links now look prettier",
+     "Chat commander (input box) input is now programmatically controlled"
+   ],
+   "fixes": [
+     "Fixed the majority of Firefox issues (hopefully)"
+   ]
+  },
+
+
+  {"date": "Sep 8, 2015", "timeStamp": null,
+    "additions": [
+      "Added scrollbar"
+    ],
+    "changes": [],
+    "fixes": [
+      "Fixed all FireFox-related issues (what a major pain that was)"
+    ]
+  },
+
+
+  {"date": "Sep 3, 2015", "timeStamp": null,
+    "additions": [
+      "Added \"Alpha\" version watermark",
+      "User list is now moderately functional"
+    ],
+    "changes": [
+      "Users can be added/removed from the userlist (internally)"
+    ],
+    "fixes": [
+      "Fixed caret placing bug in FireFox",
+      "Fixed long chat input overflowing input box",
+      "Fixed filtering functions not returning properly"
+    ]
+  },
+
+
+  {"date": "Sep 2, 2015", "timeStamp": null,
+    "additions": [
+      "Added joined/left messages when a user leaves/joins",
+      "Added temporary auth step to server side"
+    ],
+    "changes": [
+      "Added implicit messages to message types",
+      "Server now properly removes clients from rooms"
+    ],
+    "fixes": [
+      "Fixed large embeded images overflowing container"
+    ]
+  },
+
+
+  {"date": "Sep 1, 2015", "timeStamp": null,
+    "additions": [
+      "Added link filtering",
+      "Added image filtering"
+    ],
+    "changes": [
+      "Links beyond 30 chars will be truncated",
+      "Added more spelling corrections"
+    ],
+    "fixes": [
+      "Fixed pasted text retaining formatting",
+      "Fixed pasted text not being trimmed",
+      "Fixed pasted text being pasted as HTML instead of plain text",
+      "Fixed filtering methods interfering with each other",
+      "Fixed scrolling when message images are still loading",
+      "Fixed filters ignoring https links"
+    ]
+  },
+
+
+  {"date": "Aug 31, 2015", "timeStamp": null,
+    "additions": [
+      "Added Changelog page",
+      "Added spellcheck while typing",
+      "Added custom avatar for #[b Femmbyte]",
+      "Increased 'large scale' messages font size",
+      "Increased left tray min-width and applied flex styles",
+      "Brightened up the light theme with a pattern underlay",
+      "Added 'nick' or 'alias' command to allow changing of your alias",
+      "Added more spellcheck corrections",
+      "Added temporary hard-coded avatars"
+    ],
+    "changes": [
+      "Finished main 'light theme' components",
+      "Added default message level color variables to _base_theme.scss",
+      "Applied global default 'label' style",
+      "When setting your nick for the first time, it now displays what you typed (#[b Femmbyte])"
+    ],
+    "fixes": [
+      "Fixed some non-global CSS applying global styles",
+      "Fixed emote text being invisible",
+      "Fixed emote not being spaced from comment",
+      "Fixed emote to send proper message data",
+      "Fixed command input to use pre, which preserves spaces properly",
+      "Fixed spellcheck corrections partial-matching words",
+      "Blank messages can no longer be sent"
+    ]
+  },
+
+
+  {"date": "Aug 30, 2015", "timeStamp": null,
+    "additions": [
+      "Added nickname auth (for testing only)"
+    ],
+    "changes": [
+      "All ports default to 'medium' scale",
+      "Avatar now defaults by default unless localhost",
+      "_showSuggestion() now uses indexOf instead of slower regex test",
+      "Assigned proper interfaces for sent messages",
+      "Removed temp interface 'UserMessage'",
+      "Page container is no longer absolute"
+    ],
+    "fixes": [
+      "Fixed minor script references",
+      "Fixed default avatar color",
+      "Fixed _showSuggestion() not clearing invalid results",
+      "Fixed chat data being sent arbitrarily",
+      "Fixed the layout breaking when contents are larger than visible area",
+      "Fixed chat messages forcing the layout to expand",
+      "Fixed incorrect avatar logic"
+    ]
+  },
+
+
+  {"date": "Aug 29, 2015", "timeStamp": null,
+    "additions": [
+      "Added message severity",
+      "Added light theme as primary theme",
+      "Added connect command"
+    ],
+    "changes": [
+      "Re-factored the connection logic into their own respective methods",
+      "Handled connection failed event for client",
+      "Moved Message class into its own file under the Chat view",
+      "Added flexPort param to Port.clear()",
+      "Removed clear() call from Port.transferMessages()",
+      "Adjusted the Chat.transferMessages() to reflect the above changes",
+      "Removed a bunch of unnecessary bars and erroneous CSS"
+    ],
+    "fixes": [
+      "Fixed duplicate command history logging",
+      "Fixed navigation to respond only to left click"
+    ]
+  }
+]
