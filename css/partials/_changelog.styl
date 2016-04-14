@@ -7,6 +7,7 @@ $changelog-title = $head-1-color
 section.changelog
   display: flex
   flex-flow: row wrap
+  align-content: flex-start;
   border-top: 4px solid transparent
   border-left: 4px solid transparent
   padding-right 10px
@@ -14,12 +15,11 @@ section.changelog
   .compartment
     display: flex
     min-width: 350px
-    height 200px
     flex-flow: column nowrap
     margin-right: 10px
     margin-bottom: 10px
     flex: 1
-    align-self: flex-start
+    align-self: stretch;
     overflow: hidden;
     &:last-child
       margin-right: 0

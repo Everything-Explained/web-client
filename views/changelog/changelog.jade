@@ -3,12 +3,11 @@ template
     section.compartment(repeat.for='section of sections')
       label.title ${section.date}
       article
-        ul.additions(if='section.additions.length')
-          li(repeat.for='add of section.additions') ${add}
+        ul.additions(if.bind='section.additions.length')
+          li ${section.additions[0]}...
 
-        ul.changes(if='section.changes.length')
-          li(repeat.for='chg of section.changes') ${chg}
+        ul.changes(if.bind='section.changes.length')
+          li ${section.changes[0]}...
 
-        ul.fixes(if='section.fixes.length')
-          li(repeat.for='fix of section.fixes') ${fix}
-
+        ul.fixes(if.bind='section.fixes.length')
+          li ${section.fixes[0]}...

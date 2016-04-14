@@ -11,12 +11,12 @@
     "directories": {},
     "dependencies": {
       "adamschwartz/log": "github:adamschwartz/log@^0.2.0",
-      "aurelia-animator-css": "github:aurelia/animator-css@^0.18.0",
-      "aurelia-animator-velocity": "npm:aurelia-animator-velocity@^1.0.0-beta.1",
-      "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0-beta.1.0.2",
-      "aurelia-framework": "npm:aurelia-framework@^1.0.0-beta.1.0.8",
+      "aurelia-animator-velocity": "npm:aurelia-animator-velocity@^1.0.0-beta.1.2.0",
+      "aurelia-bootstrapper": "npm:aurelia-bootstrapper@^1.0.0-beta.1.2.0",
+      "aurelia-event-aggregator": "npm:aurelia-event-aggregator@^1.0.0-beta.1.2.0",
+      "aurelia-framework": "npm:aurelia-framework@^1.0.0-beta.1.2.2",
       "gsap": "npm:gsap@^1.16.1",
-      "moment": "github:moment/moment@^2.10.2",
+      "moment": "npm:moment@^2.12.0",
       "nanoajax": "npm:nanoajax@^0.4.0",
       "validator": "npm:validator@^4.4.0"
     },
