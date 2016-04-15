@@ -240,6 +240,7 @@ export class App {
   attached() {
 
     this._errorHandler.init();
+    this._log.init();
 
     let req = new XMLHttpRequest()
       , lights = localStorage.getItem('lights');

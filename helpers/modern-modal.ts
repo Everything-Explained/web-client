@@ -236,7 +236,7 @@ export class ModernModal {
               if (obj['events']) {
 
                 obj.events.forEach((e) => {
-                  console.log('Adding Event', [this._workingClasses[cn], `${e.trigger}`]);
+                  // console.log('Adding Event', [this._workingClasses[cn], `${e.trigger}`]);
                   this._workingClasses[cn]
                       .addEventListener(
                         e.name,

@@ -103,6 +103,9 @@ export class Logger {
       self.error(Array.prototype.slice.call(arguments, 0));
     };
 
+  }
+
+  init() {
     this._obj = document.createElement('div');
     this._obj.classList.add('log-error-list');
 
@@ -115,7 +118,6 @@ export class Logger {
     let body = document.querySelector('body');
 
     body.appendChild(this._obj);
-
   }
 
 
@@ -151,35 +153,45 @@ export class Logger {
     let message = ''
       , header  = '';
 
-    if (!msg[0] || typeof msg[0] != 'string') {
-      throw new Error('ERROR logs must contain a message string');
-    }
 
-    // Handle Aurelia life-cycle promise rejection Exceptions
-    if (msg.length > 1 && ~msg[0].indexOf('promise rejection')) {
-      if (msg[1] instanceof Error) {
-        oError = msg[1] as Error;
-        header = (msg[1] as Error).message;
+    if (typeof msg[0] == 'string') {
+
+      // Handle Aurelia life-cycle promise rejection Exceptions
+      if (msg.length > 1 && ~msg[0].indexOf('promise rejection')) {
+        if (msg[1] instanceof Error) {
+          oError = msg[1] as Error;
+          header = (msg[1] as Error).message;
+        }
+        else {
+          header = msg[1];
+        }
+
       }
-      else {
-        header = msg[1];
+
+      if (~msg[0].indexOf('app-router')) {
+        if (~msg[1].message.indexOf('404 Not Found')) {
+          header = 'Aurelia::[app-router] 404 Not Found';
+        }
+        message = msg[1].message;
+        oError = msg[1];                        // SET Inner Error
+      }
+
+      if (~msg[0].indexOf('event-aggregator')) {
+        header = 'Aurelia::[event-aggregator]';
+        message = msg[1].message;
+        oError = msg[1];                        // SET Inner Error
       }
 
     }
 
-    if (~msg[0].indexOf('app-router')) {
-      if (~msg[1].message.indexOf('404 Not Found')) {
-        header = 'Aurelia::[app-router] 404 Not Found';
-      }
-      message = msg[1].message;
-      oError = msg[1];                        // SET Inner Error
+    if (msg[0] instanceof Error) {
+
+      let err = msg[0] as Error;
+      header = err.message;
+      message = err.message;
+      oError = err;
     }
 
-    if (~msg[0].indexOf('event-aggregator')) {
-      header = 'Aurelia::[event-aggregator]';
-      message = msg[1].message;
-      oError = msg[1];                        // SET Inner Error
-    }
 
     if (!header) header = msg[0];
     if (!message) message = msg[0];

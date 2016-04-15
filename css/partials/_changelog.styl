@@ -12,17 +12,25 @@ section.changelog
   border-left: 4px solid transparent
   padding-right 10px
 
+
   .compartment
     display: flex
     min-width: 350px
+    max-width 500px
     flex-flow: column nowrap
     margin-right: 10px
     margin-bottom: 10px
     flex: 1
     align-self: stretch;
     overflow: hidden;
+    cursor: pointer;
     &:last-child
       margin-right: 0
+    &:hover article
+      background lighten($panel, 70%)
+
+    &:hover .title
+      background lighten($panel, 70%)
 
   .title
     background $panel
@@ -33,6 +41,13 @@ section.changelog
     color: $changelog-title
     text-align: center
     border-radius: 5px 5px 0 0
+    transition: background .3s
+    sub
+      padding-left 7px
+      padding-right: 5px
+      font-family: consolas;
+      color #d6a8ff
+
 
   article
     display: flex
@@ -41,17 +56,16 @@ section.changelog
     padding: 5px 5px 10px 0
     border-radius: 0 5px 5px 5px
     flex: 1
+    transition: background .3s
+
+    sup
+      color #d6a8ff
 
     ul
       margin-top: 10px
-      &:first-child
-        margin-top: 0
+      color #aaa
       li
         margin-left: 27px
         line-height: 20px
-      &.additions
-        color: $info
-      &.changes
-        color: $neutral
-      &.fixes
-        color: $attention
+      sup
+        padding-left: 7px

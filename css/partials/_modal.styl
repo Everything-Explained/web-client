@@ -246,7 +246,6 @@ aside.modal.login
 
 
 
-
 aside.modal.invite
 	top -70px
 	width 340px
@@ -275,8 +274,6 @@ aside.modal.invite
 			transition opacity .3s ease-in-out
 			&.open
 				opacity 1
-
-
 
 
 
@@ -346,6 +343,7 @@ aside.modal.robot
 			background-color #ffb7b7
 
 
+
 aside.modal.exception
 	header
 		background-color $modal-exception-header-bg
@@ -365,6 +363,18 @@ aside.modal.exception
 
 
 
+aside.modal.changelog
+	ul
+		font-family: consolas;
+		padding-left: 13px;
+		margin-bottom: 10px;
+
+		&.additions
+			color $modal-changelog-add
+		&.changes
+			color $modal-changelog-chg
+		&.fixes
+			color $modal-changelog-fix
 
 
 
