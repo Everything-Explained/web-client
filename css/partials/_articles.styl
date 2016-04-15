@@ -55,10 +55,14 @@ article[role='about']
 	margin-right 15px
 	p
 		@extend $content
-		margin-bottom 10px
+		margin-bottom 7px
 		margin-top 0
+		padding 23px 10px
+		transition: background .3s
 		&:last-child
 			margin-bottom 50px
+		&:hover
+			background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio)
 
 
 article[role='rules']
@@ -69,8 +73,9 @@ article[role='rules']
 	.rules-container
 		@extend $content
 		position relative
+		margin-bottom: 5px
 		display flex
-		margin-top 5px
+		background-color: transparent
 		border-top-right-radius 0
 		border-top-left-radius 0
 		padding 0
@@ -82,18 +87,29 @@ article[role='rules']
 		&:last-child
 			border-bottom-right-radius 7px
 
+		&:hover .rule, &:hover .def
+			background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio)
+		&:hover .rule
+			color $head-1-color
+
 		.rule
+			display: flex
+			justify-content: center;
+			flex-direction: column;
 			flex 4
 			padding 13px 8px
 			text-align center
 			font-size 21px
+			background-color: $panel
 			color $article-subheader-color
-			align-self center
+			transition: background .3s, color .3s
 
 		.def
+			margin-left: 5px
 			flex 10
-			border-left 5px solid $article-rule-separator-color
+			background-color: $panel
 			padding 13px 8px
+			transition: background .3s
 
 
 article[role='FAQ']
