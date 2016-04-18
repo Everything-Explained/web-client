@@ -113,34 +113,34 @@ article[role='rules']
 
 
 article[role='FAQ']
+	input[type='text']
+		color #d6a8ff
 	.qablock
 		position relative
-		margin-top 5px
+		margin 17px 0 0 7px
 		width 100%
 		display flex
 		flex-direction column
-
+		
 		.question
 			@extend $content
-			padding 13px 0 7px 5px
-			width 49.4%
+			padding 7px 13px
 			color $article-question-color
 			font-family Comfort, sans-serif
 			font-size 20px
 			letter-spacing 1px
 			background $article-question-bg-color
 			border-color $article-question-border-color
-			align-self flex-end
-			border-radius 13px 0 13px 0
+			align-self flex-start
+			border-radius: 0
 			transition background .3s
 
 		.answer
 			@extend $content
-			margin-top 2px
 			width 80%
 			align-self flex-start
+			border-radius: 0
 			transition background .3s
-			border-radius 13px 0 13px 0
 
 	.textbox-container
 		position absolute

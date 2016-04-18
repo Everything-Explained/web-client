@@ -27,10 +27,16 @@ section.changelog
     &:last-child
       margin-right: 0
     &:hover article
-      background lighten($panel, 70%)
+      background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio) // lighten($panel, 70%)
 
     &:hover .title
-      background lighten($panel, 70%)
+      background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio) // lighten($panel, 70%)
+
+    &:hover .title sub, &:hover article sup
+      color $head-1-color
+
+    &:hover .title
+      color #d6a8ff
 
   .title
     background $panel
@@ -41,12 +47,13 @@ section.changelog
     color: $changelog-title
     text-align: center
     border-radius: 5px 5px 0 0
-    transition: background .3s
+    transition: background .3s, color .3s
     sub
       padding-left 7px
       padding-right: 5px
       font-family: consolas;
-      color #d6a8ff
+      color #dea5ff
+      transition: color .3s
 
 
   article
@@ -60,10 +67,11 @@ section.changelog
 
     sup
       color #d6a8ff
+      transition: color .3s
 
     ul
       margin-top: 10px
-      color #aaa
+      color hsla(0, 0, 100%, 0.5)
       li
         margin-left: 27px
         line-height: 20px

@@ -1,0 +1,54 @@
+export class FAQ {
+
+  private _page: HTMLElement;
+  private _questions: HTMLElement[];
+  private _answers: HTMLElement[];
+  private _timeout = 0;
+
+  constructor() {}
+
+  attached() {
+    this._page = document.querySelector('article.faq') as HTMLElement;
+    this._questions = this.nodeToArray(this._page.querySelectorAll('div.question'));
+  }
+
+  nodeToArray(nodes: NodeList) {
+    return Array.prototype.slice.call(nodes);
+  }
+
+  seek(ev: KeyboardEvent) {
+
+    clearTimeout(this._timeout);
+    let input = (ev.target as HTMLInputElement).value;
+    if (!input || input.length < 3) {
+      this._questions.forEach((v) => {
+        v.parentElement.style.display = 'flex';
+      })
+      return true;
+    }
+
+    this._timeout = setTimeout(() => {
+      let words = (~input.indexOf(' ')) ? input.split(' ' ) : [input];
+
+      this._questions.forEach((v) => {
+        let i = 0
+          , j = 0;
+
+        for (; i < words.length; i++) {
+          if (~v.innerText.toLowerCase().indexOf(`${words[i].toLowerCase()}`)) {
+            ++j;
+            v.parentElement.style.display = 'flex';
+          } else {
+            v.parentElement.style.display = 'none';
+          }
+        }
+        console.log(j , words.length);
+        if (j == words.length) console.log(v.innerText);
+      });
+    }, 300);
+
+    return true;
+  }
+}
+
+

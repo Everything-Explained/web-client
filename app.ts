@@ -43,7 +43,7 @@ export class App {
   navList = [
     {
       name: 'Home',
-      pages: ['About', 'Rules', 'Register', 'FAQ'],
+      pages: ['About', 'Rules', 'FAQ'],
       def: 'About',
       isActive: false,
       defRoute: null,
