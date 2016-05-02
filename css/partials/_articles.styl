@@ -22,8 +22,9 @@ $content
 	display block
 	padding 13px 8px
 	background $panel
-	font-size 17px
-	font-family $ff-monospace
+	font-size 18px
+	word-spacing: 2px
+	font-family $ff-ubunto
 	color $article-content-color
 	border-top-right-radius 6.5px
 	border-top-left-radius 3.5px
@@ -121,7 +122,7 @@ article[role='FAQ']
 		width 100%
 		display flex
 		flex-direction column
-		
+
 		.question
 			@extend $content
 			padding 7px 13px
@@ -141,6 +142,22 @@ article[role='FAQ']
 			align-self flex-start
 			border-radius: 0
 			transition background .3s
+			span
+				display: block;
+			.list-outer
+				margin-top 13px
+				li
+					margin-bottom 13px
+			.list-inner
+				li
+					margin-bottom: 0
+					&:first-child
+						margin-top: 3px;
+
+		ul
+			margin-left: 20px;
+			li
+				color $article-list-color
 
 	.textbox-container
 		position absolute
