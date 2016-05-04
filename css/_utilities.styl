@@ -50,10 +50,6 @@ placeholder($clr)
 		color: $clr
 
 opacify($color, $opacity)
-	$a = alpha($color)
-	$c = hue($color), saturation($color), luminosity($color)
-
-	if ($a + $opacity > 1.0)
-		return hsla($c, 1.0)
-
-	return hsla($c, $a + $opacity)
+	$h = hue($color)
+	$c = 0, saturation($color), lightness($color)
+	return hue(hsla($c, $opacity), $h)

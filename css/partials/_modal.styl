@@ -1,383 +1,386 @@
-
+@import '../_utilities'
 
 $speed = .2s
 
 
 #overlay
-	position: fixed
-	top: 0
-	left: 0
-	right: 0
-	bottom: 0
-	background: -webkit-radial-gradient(center, ellipse cover, hsla(0,0%,65%,0.59) 0%,hsla(0,0%,25%,0.9) 100%);
-	// background: radial-gradient(ellipse at center, hsla(0,0%,0%,0) 0%,hsla(0,0%,0%,0.65) 100%);
-	opacity: 0
-	visibility: hidden
-	z-index: 1000
-	transition: all $speed
+  position fixed
+  top 0
+  left 0
+  right 0
+  bottom 0
+  background hsla(0, 0, 0, 0.7)
+  // -webkit-radial-gradient(center, ellipse cover, hsla(0,0%,65%,0.59) 0%,hsla(0,0%,25%,0.9) 100%)
+  // background radial-gradient(ellipse at center, hsla(0,0%,0%,0) 0%,hsla(0,0%,0%,0.65) 100%)
+  opacity 0
+  visibility hidden
+  z-index 1000
+  transition all $speed
 
-	& > div
-		perspective: 500px
+  & > div
+    perspective 500px
 
-	&.open
-		visibility: visible
-		opacity: 1
+  &.open
+    visibility visible
+    opacity 1
 
-	.modal-preloader
-		position fixed
-		top 0
-		left 0
-		bottom 0
-		right 0
-		visibility hidden
-		background url($modal-preloader) no-repeat center 37%
-		&.open
-			visibility visible
+  .modal-preloader
+    position fixed
+    top 0
+    left 0
+    bottom 0
+    right 0
+    visibility hidden
+    background url($modal-preloader) no-repeat center 37%
+    &.open
+      visibility visible
+
 
 
 
 
 aside.modal
-	position: relative
-	margin: 0 auto
-	width: 50%
-	background $modal-bg
-	box-shadow $modal-boxshadow
-	color $modal-default-color
-	border-radius: 5px
-	visibility hidden
-	transform: rotateX(-55deg)
-	transition: all $speed ease-in-out
+  position relative
+  margin 0 auto
+  width 50%
+  background $modal-bg
+  padding 2px 3px 3px 3px
+  border 8px solid hsla($transient-trans, 0.4)
+  box-shadow inset 0 0 0 10px transparent
+  background-clip padding-box
+  //box-shadow $modal-boxshadow
+  color $modal-default-color
+  border-radius 5px
+  visibility hidden
+  transform rotateX(-55deg)
+  transition all $speed ease-in-out
 
-	&.open
-		visibility visible
-		transform: rotateX(0deg) rotateZ(360deg)
+  &.open
+    visibility visible
+    transform rotateX(0deg) rotateZ(360deg)
 
-	a.modal-close:visited,
-	a.modal-close:active,
-	a.modal-close:link
-		position: absolute
-		right: -13px
-		top: -13px
-		border-radius: 50%
-		font-size: 20px
-		padding: 3px 8px 5px 8px
-		font-weight: bold
-		text-decoration: none
-		color: $modal-close-btn-color
-		background $modal-close-btn-bg
-		box-shadow $modal-close-btn-boxshadow
-		transition: all $speed ease-in-out
+  a.modal-close:visited,
+  a.modal-close:active,
+  a.modal-close:link
+    position absolute
+    right -13px
+    top -13px
+    border-radius 50%
+    font-size 20px
+    padding 3px 8px 5px 8px
+    font-weight bold
+    text-decoration none
+    color $modal-close-btn-color
+    background $modal-close-btn-bg
+    box-shadow $modal-close-btn-boxshadow
+    transition all $speed ease-in-out
 
-	a.modal-close:hover
-		background $modal-close-btn-hover-bg
-		color $modal-close-btn-hover-color
+  a.modal-close:hover
+    background $modal-close-btn-hover-bg
+    color $modal-close-btn-hover-color
 
-	header
-		text-align: center
-		padding: 7px 0
-		font-size: 24px
-		font-family: Verdana
-		color $modal-header-color
-		background $modal-header-bg-color
-		border-bottom $modal-separator-border
-		border-top-right-radius: 5px
-		border-top-left-radius: 5px
+  header
+    text-align center
+    padding 7px 0
+    font-size 24px
+    font-family Verdana
+    color $modal-header-color
+    background $modal-header-bg-color
+    border-bottom $modal-separator-border
 
-	input[type='text']
-		margin 0 auto
-		width $modal-login-width - 100px
-		background-clip padding-box
-		margin-bottom 10px
-		background $modal-login-input-bg
-		border 7px solid $modal-login-input-border // hsla(125, 100%, 82%, .13) hsla(328, 92%, 54%, .21)
-		border-radius 5px
-		color $modal-login-input
-		box-shadow inset 0 0 0 2px $modal-login-input-boxshadow
-		&::-webkit-input-placeholder
-			color $modal-login-placeholder
+  input[type='text']
+    margin 0 auto
+    width $modal-login-width - 100px
+    background-clip padding-box
+    margin-bottom 10px
+    background $modal-login-input-bg
+    border 7px solid $modal-login-input-border // hsla(125, 100%, 82%, .13) hsla(328, 92%, 54%, .21)
+    border-radius 5px
+    color $modal-login-input
+    box-shadow inset 0 0 0 2px $modal-login-input-boxshadow
+    &::-webkit-input-placeholder
+      color $modal-login-placeholder
 
-	button
-		position relative
-		padding 5px 7px
-		cursor pointer
-		border-radius 5px
-		text-shadow 1px 1px 1px lighten($head-1-color, 70%)
-		background -webkit-linear-gradient(top, #fff86b, #a88c00)
-		background linear-gradient(top,  #fff86b, #a88c00)
-		box-shadow 0 0 0 1px #000
-		&:active
-			background -webkit-linear-gradient(bottom, #fff86b, #a88c00)
-			color #eee
-			text-shadow 1px 1px 0 #111
-			top 1px
-			left 1px
-		&:disabled
-			background #777
-			text-shadow 1px 1px 0 #aaa
-			color #555
-			cursor not-allowed
+  button
+    position relative
+    padding 5px 7px
+    cursor pointer
+    border-radius 5px
+    text-shadow 1px 1px 1px lighten($head-1-color, 70%)
+    background -webkit-linear-gradient(top, #fff86b, #a88c00)
+    background linear-gradient(top,  #fff86b, #a88c00)
+    box-shadow 0 0 0 1px #000
+    &:active
+      background -webkit-linear-gradient(bottom, #fff86b, #a88c00)
+      color #eee
+      text-shadow 1px 1px 0 #111
+      top 1px
+      left 1px
+    &:disabled
+      background #777
+      text-shadow 1px 1px 0 #aaa
+      color #555
+      cursor not-allowed
 
-	.modal-content
-		font-family: Delius
-		font-size: 18px
-		padding: 13px
-		min-height: 100px
-		color $modal-content-color
-		background-color $modal-content-bg-color
-		text-outline($modal-content-outline-size, $modal-content-outline-color)
-		border-bottom-left-radius: 5px
-		border-bottom-right-radius: 5px
-		overflow-y: auto
-		h2
-			margin-top: 20px
-			font-size: 20px
-			margin-bottom: 15px
+  .modal-content
+    font-family Delius
+    font-size 18px
+    padding 13px
+    min-height 100px
+    color $modal-content-color
+    background-color $modal-content-bg-color
+    text-outline($modal-content-outline-size, $modal-content-outline-color)
+    box-shadow inset 0 0 10px -1px #000
+    overflow-y auto
+    h2
+      margin-top 20px
+      font-size 20px
+      margin-bottom 15px
 
-			&:first-child
-				margin-top: 0
-		span
-			position: relative
-			display: block
-			padding-bottom: 7px
-		b
-			padding-right: 7px
-			font-family: Consolas, monospace
+      &:first-child
+        margin-top 0
+    span
+      position relative
+      display block
+      padding-bottom 7px
+    b
+      padding-right 7px
+      font-family Consolas, monospace
 
 
 
 
 $modal-login-width = 450px
 aside.modal.login
-	width $modal-login-width
+  width $modal-login-width
 
-	.modal-content
-		padding 17px 0
-		min-height auto
+  .modal-content
+    padding 17px 0
+    min-height auto
 
-	table
-		margin 0 auto
-		width $modal-login-width - 100px
+  table
+    margin 0 auto
+    width $modal-login-width - 100px
 
-	td.save
-		text-align right
+  td.save
+    text-align right
 
-	.img-container
-		display inline-block
-		height 64px + 14px
-		width 94px + 14px + 5px
-		background-clip padding-box
-		background $modal-login-img-bg
-		border 7px solid $modal-login-img-border
-		box-shadow inset 0 0 0 2px $modal-login-img-inner-boxshadow
-		border-top-left-radius 5px
-		border-bottom-left-radius 5px
-		border-top-right-radius 21px
-		border-bottom-right-radius 21px
-		overflow hidden
-		&:first-child
-			width 94px + 14px + 10px
-		&:first-child .radio-container
-			padding-left 12px
-		&:last-child .radio-container
-			padding-left 3px
-		&:last-child
-			float right
+  .img-container
+    display inline-block
+    height 64px + 14px
+    width 94px + 14px + 5px
+    background-clip padding-box
+    background $modal-login-img-bg
+    border 7px solid $modal-login-img-border
+    box-shadow inset 0 0 0 2px $modal-login-img-inner-boxshadow
+    border-top-left-radius 5px
+    border-bottom-left-radius 5px
+    border-top-right-radius 21px
+    border-bottom-right-radius 21px
+    overflow hidden
+    &:first-child
+      width 94px + 14px + 10px
+    &:first-child .radio-container
+      padding-left 12px
+    &:last-child .radio-container
+      padding-left 3px
+    &:last-child
+      float right
 
-	.radio-container
-		display inline-block
-		height 100%
-		width 20px
-		padding-bottom 17px
+  .radio-container
+    display inline-block
+    height 100%
+    width 20px
+    padding-bottom 17px
 
-	input[type='radio']
-		top 50%
-		width 17px
-		height 17px
+  input[type='radio']
+    top 50%
+    width 17px
+    height 17px
 
-	img
-		position relative
-		left 2px
-		top -2px
-		height 64px
-		width 64px
-		box-sizing border-box
+  img
+    position relative
+    left 2px
+    top -2px
+    height 64px
+    width 64px
+    box-sizing border-box
 
-	.default-img
-		display inline-block
-		height 64px
-		width 64px
-		color $modal-login-default-img-color
-		overflow hidden
-		.font-container
-			position relative
-			top -8px
-			font-size 64px
+  .default-img
+    display inline-block
+    height 64px
+    width 64px
+    color $modal-login-default-img-color
+    overflow hidden
+    .font-container
+      position relative
+      top -8px
+      font-size 64px
 
-	.login-status-container
-		display none
-		padding 0
-		transition max-height .3s ease
-		&.open
-			display block
+  .login-status-container
+    display none
+    padding 0
+    transition max-height .3s ease
+    &.open
+      display block
 
-	.login-status
-		display block
-		padding 7px 0 7px 7px
-		margin-bottom 7px
-		border-radius 5px
-		background-color $modal-login-status-bg
-		font-family consolas
-		text-shadow none
-		font-size 14px
-		overflow hidden
-		opacity 0
-		transition opacity .3s ease-in-out
-		&.open
-			opacity 1
-		li
-			margin-left 20px
+  .login-status
+    display block
+    padding 7px 0 7px 7px
+    margin-bottom 7px
+    border-radius 5px
+    background-color $modal-login-status-bg
+    font-family consolas
+    text-shadow none
+    font-size 14px
+    overflow hidden
+    opacity 0
+    transition opacity .3s ease-in-out
+    &.open
+      opacity 1
+    li
+      margin-left 20px
 
-	.error
-		color $modal-login-status-error
+  .error
+    color $modal-login-status-error
 
-	.can-save
-		color $modal-login-status-success
+  .can-save
+    color $modal-login-status-success
 
 
 
 aside.modal.invite
-	top -70px
-	width 340px
+  top -70px
+  width 340px
 
-	.modal-content
-		button
-			float right
-		.error-container
-			display none
-			padding 0
-			transition max-height .3s ease
-			&.open
-				display block
+  .modal-content
+    button
+      float right
+    .error-container
+      display none
+      padding 0
+      transition max-height .3s ease
+      &.open
+        display block
 
-		.error
-			display block
-			padding 7px 0 7px 7px
-			margin-bottom 7px
-			border-radius 5px
-			background-color rgba(255, 100, 100, 0.3)
-			font-family consolas
-			text-shadow none
-			font-size 14px
-			overflow hidden
-			opacity 0
-			transition opacity .3s ease-in-out
-			&.open
-				opacity 1
+    .error
+      display block
+      padding 7px 0 7px 7px
+      margin-bottom 7px
+      border-radius 5px
+      background-color rgba(255, 100, 100, 0.3)
+      font-family consolas
+      text-shadow none
+      font-size 14px
+      overflow hidden
+      opacity 0
+      transition opacity .3s ease-in-out
+      &.open
+        opacity 1
 
 
 
 aside.modal.bbl
-	h2
-		color $modal-bbl-content-header-color
-	b
-		color $modal-bbl-number-color
+  h2
+    color $modal-bbl-content-header-color
+  b
+    color $modal-bbl-number-color
 
 
 
 aside.modal.robot
-	width 400px;
-	text-align center
+  width 400px
+  text-align center
 
-	.modal-content
-		font-family Verdana
-		font-size 18px
+  .modal-content
+    font-family Verdana
+    font-size 18px
 
-	#NodeContainer
-		display block
-		text-align center
-		background-color $modal-robot-container-bg
-		padding 17px 0 10px 0
-		border-radius 13px
+  #NodeContainer
+    display block
+    text-align center
+    background-color $modal-robot-container-bg
+    padding 17px 0 10px 0
+    border-radius 13px
 
-	.text-container
-		padding-bottom 10px;
-		&.error
-			color #ff3838
+  .text-container
+    padding-bottom 10px
+    &.error
+      color #ff3838
 
-	.try-again
-		position relative
-		padding 5px 13px
-		margin-top 21px
-		margin-bottom 13px
-		cursor pointer
-		border-radius 5px
-		text-shadow 1px 1px 1px lighten($head-1-color, 70%)
-		background -webkit-linear-gradient(top, #fff86b, #a88c00)
-		background linear-gradient(top,  #fff86b, #a88c00)
-		box-shadow 0 0 0 1px #111
-		&:active
-			background -webkit-linear-gradient(bottom, #fff86b, #a88c00)
-			color #eee
-			text-shadow 1px 1px 0 #111
-			top 1px
-			left 1px
+  .try-again
+    position relative
+    padding 5px 13px
+    margin-top 21px
+    margin-bottom 13px
+    cursor pointer
+    border-radius 5px
+    text-shadow 1px 1px 1px lighten($head-1-color, 70%)
+    background -webkit-linear-gradient(top, #fff86b, #a88c00)
+    background linear-gradient(top,  #fff86b, #a88c00)
+    box-shadow 0 0 0 1px #111
+    &:active
+      background -webkit-linear-gradient(bottom, #fff86b, #a88c00)
+      color #eee
+      text-shadow 1px 1px 0 #111
+      top 1px
+      left 1px
 
-	.node
-		display inline-block
-		margin-right 17px
-		width 55px
-		height @width
-		border-radius @width
-		background-clip padding-box
-		border: 5px solid $modal-robot-node-border
-		background-color $modal-robot-node-bg
-		box-shadow inset 0 0 10px 2px $modal-robot-boxshadow
-		cursor pointer
-		transition background .3s
-		&.active
-			background-color $modal-robot-node-active-bg
-		&.success
-			background-color #a5ffab
-		&.error
-			background-color #ffb7b7
+  .node
+    display inline-block
+    margin-right 17px
+    width 55px
+    height @width
+    border-radius @width
+    background-clip padding-box
+    border 5px solid $modal-robot-node-border
+    background-color $modal-robot-node-bg
+    box-shadow inset 0 0 10px 2px $modal-robot-boxshadow
+    cursor pointer
+    transition background .3s
+    &.active
+      background-color $modal-robot-node-active-bg
+    &.success
+      background-color #a5ffab
+    &.error
+      background-color #ffb7b7
 
 
 
 aside.modal.exception
-	header
-		background-color $modal-exception-header-bg
-		color $modal-exception-header
-	.modal-content
-		font-family consolas
+  header
+    background-color $modal-exception-header-bg
+    color $modal-exception-header
+  .modal-content
+    font-family consolas
 
-		.stack
-			font-size 12px
-			background-color $modal-exception-stack-bg
-			color $modal-exception-stack
-			margin-left 17px
-			padding 10px
-			text-shadow none
-			line-height 20px
-			border-radius 5px
+    .stack
+      font-size 12px
+      background-color $modal-exception-stack-bg
+      color $modal-exception-stack
+      margin-left 17px
+      padding 10px
+      text-shadow none
+      line-height 20px
+      border-radius 5px
 
 
 
 aside.modal.changelog
-	header
-		text-outline(0, #000)
-	ul
-		font-family: consolas;
-		font-size 14px
-		padding-left: 13px;
-		margin-bottom: 10px;
+  header
+    text-outline(0, #000)
+  ul
+    font-family consolas
+    font-size 14px
+    padding-left 13px
+    margin-bottom 10px
 
-		&.additions
-			color $modal-changelog-add
-		&.changes
-			color $modal-changelog-chg
-		&.fixes
-			color $modal-changelog-fix
+    &.additions
+      color $modal-changelog-add
+    &.changes
+      color $modal-changelog-chg
+    &.fixes
+      color $modal-changelog-fix
 
 
 
@@ -386,42 +389,42 @@ $green = $head-1-color
 $cwidth = 20px
 $cheight = 35px
 .check
-	position relative
-	top -4px
-	display block
-	width $cwidth
-	height $cheight
-	&:before
-		position relative
-		display block
-		content ''
-		left 100%
-		width 4px
-		height $cheight
-		background $modal-login-check
-		transform rotateZ(33deg)
-		border-radius 10px
-		transition all .3s
-	&:after
-		position relative
-		display block
-		content ''
-		top -11px
-		left -4px
-		width $cwidth
-		height 4px
-		background $modal-login-check
-		transform rotateZ(33deg)
-		transition all .3s
-		border-radius 10px
-	&.invalid
-		left -7px
-		&:before
-			transform rotateZ(225deg)
-			background $modal-login-check-invalid
-		&:after
-			top -($cheight / 2) - 2px
-			left ($cwidth / 2) - 4px
-			width $cheight
-			background $modal-login-check-invalid
-			transform rotateZ(225deg)
+  position relative
+  top -4px
+  display block
+  width $cwidth
+  height $cheight
+  &:before
+    position relative
+    display block
+    content ''
+    left 100%
+    width 4px
+    height $cheight
+    background $modal-login-check
+    transform rotateZ(33deg)
+    border-radius 10px
+    transition all .3s
+  &:after
+    position relative
+    display block
+    content ''
+    top -11px
+    left -4px
+    width $cwidth
+    height 4px
+    background $modal-login-check
+    transform rotateZ(33deg)
+    transition all .3s
+    border-radius 10px
+  &.invalid
+    left -7px
+    &:before
+      transform rotateZ(225deg)
+      background $modal-login-check-invalid
+    &:after
+      top -($cheight / 2) - 2px
+      left ($cwidth / 2) - 4px
+      width $cheight
+      background $modal-login-check-invalid
+      transform rotateZ(225deg)
