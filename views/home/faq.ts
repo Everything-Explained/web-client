@@ -4,16 +4,38 @@ export class FAQ {
   private _questions: HTMLElement[];
   private _answers: HTMLElement[];
   private _timeout = 0;
+  private _eAnswer: HTMLElement;
+  private _scrollBar: IOptiscrollInstance;
 
   constructor() {}
 
   attached() {
     this._page = document.querySelector('article.faq') as HTMLElement;
     this._questions = this.nodeToArray(this._page.querySelectorAll('div.question'));
+
+    this._eAnswer = document.getElementById('Answers');
+
+    this._scrollBar = new Optiscroll(document.getElementById('Questions'), {
+      autoUpdate: false
+    });
   }
 
   nodeToArray(nodes: NodeList) {
     return Array.prototype.slice.call(nodes);
+  }
+
+  getAnswer(ev: MouseEvent) {
+    let el = (ev.target as HTMLElement).parentElement.querySelector('.answer') as HTMLElement;
+
+    this._eAnswer.innerHTML = `<h1>${(ev.target as HTMLElement).innerText}</h1>`;
+
+    if (el.childNodes[0].nodeName == 'SPAN') {
+      this._eAnswer.innerHTML += el.innerHTML;
+    }
+    else {
+      this._eAnswer.innerHTML += `<span>${el.innerHTML}</span>`;
+    }
+
   }
 
   seek(ev: KeyboardEvent) {
@@ -23,7 +45,8 @@ export class FAQ {
     if (!input || input.length < 3) {
       this._questions.forEach((v) => {
         v.parentElement.style.display = 'flex';
-      })
+      });
+      this._scrollBar.update();
       return true;
     }
 
@@ -45,6 +68,7 @@ export class FAQ {
         console.log(j , words.length);
         if (j == words.length) console.log(v.innerText);
       });
+      this._scrollBar.update();
     }, 300);
 
     return true;

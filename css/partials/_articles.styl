@@ -1,210 +1,275 @@
 @import '../_utilities'
 
 $header
-	position relative
-	right 12px
-	align-self flex-end
-	margin-top 34px
-	padding 2px 13px
-	content attr(role)
-	text-transform capitalize
-	color $article-header-color
-	text-shadow $article-header-text-shadow
-	width 34%
-	font-size 34px
-	font-family Comfort, monospace
-	text-align center
-	background $panel
-	border-top-left-radius 13px
-	border-top-right-radius 13px
+  position relative
+  right 12px
+  align-self flex-end
+  margin-top 34px
+  padding 2px 13px
+  content attr(role)
+  text-transform capitalize
+  color $article-header-color
+  text-shadow $article-header-text-shadow
+  width 34%
+  font-size 34px
+  font-family Comfort, monospace
+  text-align center
+  background $panel
+  border-top-left-radius 13px
+  border-top-right-radius 13px
 
 $content
-	display block
-	padding 13px 8px
-	background $panel
-	font-size 18px
-	word-spacing: 2px
-	font-family $ff-ubunto
-	color $article-content-color
-	border-top-right-radius 6.5px
-	border-top-left-radius 3.5px
+  display block
+  padding 13px 8px
+  background $panel
+  font-size 18px
+  word-spacing: 2px
+  font-family $ff-ubunto
+  color $article-content-color
+  border-top-right-radius 6.5px
+  border-top-left-radius 3.5px
 
 
 #articles
-	position absolute
-	display block
-	top 0
-	bottom 0
-	left 150px
-	right 30px
-	transition opacity .3s
+  position absolute
+  display block
+  top 0
+  bottom 0
+  left 150px
+  right 30px
+  transition opacity .3s
 
 
 article.home
-	position relative
-	display flex
-	-ms-flex-direction column
-	flex-direction column
-	margin 0 auto
-	b, i, em
-		color $text-emphasis
+  position relative
+  display flex
+  -ms-flex-direction column
+  flex-direction column
+  margin 0 auto
+  b, i, em
+    color $text-emphasis
 
 
 article[role='about']
-	border-top 4px solid transparent
-	border-left 4px solid transparent
-	margin-right 15px
-	#Email
-		color $article-email-color
-		cursor pointer
-	p
-		@extend $content
-		margin-bottom 7px
-		margin-top 0
-		padding 23px 10px
-		transition: background .3s
-		&:last-child
-			margin-bottom 50px
-		&:hover
-			background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio)
+  border-top 4px solid transparent
+  border-left 4px solid transparent
+  margin-right 15px
+  #Email
+    color $article-email-color
+    cursor pointer
+  p
+    @extend $content
+    margin-bottom 7px
+    margin-top 0
+    padding 23px 10px
+    transition: background .3s
+    &:last-child
+      margin-bottom 50px
+    &:hover
+      background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio)
 
 
 
 article[role='rules']
-	position relative
-	border-top 4px solid transparent
-	border-left 6px solid transparent
+  position relative
+  border-top 4px solid transparent
+  border-left 6px solid transparent
 
-	.rules-container
-		@extend $content
-		position relative
-		margin-bottom: 5px
-		display flex
-		background-color: transparent
-		border-top-right-radius 0
-		border-top-left-radius 0
-		padding 0
+  .rules-container
+    @extend $content
+    position relative
+    margin-bottom: 5px
+    display flex
+    background-color: transparent
+    border-top-right-radius 0
+    border-top-left-radius 0
+    padding 0
 
-		&:first-child
-			margin-top 0
-			border-top-left-radius 3.5px
-		// 3.5
-		&:last-child
-			border-bottom-right-radius 7px
+    &:first-child
+      margin-top 0
+      border-top-left-radius 3.5px
+    // 3.5
+    &:last-child
+      border-bottom-right-radius 7px
 
-		&:hover .rule, &:hover .def
-			background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio)
-		&:hover .rule
-			color $head-1-color
+    &:hover .rule, &:hover .def
+      background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio)
+    &:hover .rule
+      color $head-1-color
 
-		.rule
-			display: flex
-			justify-content: center;
-			flex-direction: column;
-			flex 4
-			padding 13px 8px
-			text-align center
-			font-size 21px
-			background-color: $panel
-			color $article-subheader-color
-			transition: background .3s, color .3s
+    .rule
+      display: flex
+      justify-content: center;
+      flex-direction: column;
+      flex 4
+      padding 13px 8px
+      text-align center
+      font-size 21px
+      background-color: $panel
+      color $article-subheader-color
+      transition: background .3s, color .3s
 
-		.def
-			margin-left: 5px
-			flex 10
-			background-color: $panel
-			padding 13px 8px
-			transition: background .3s
+    .def
+      margin-left: 5px
+      flex 10
+      background-color: $panel
+      padding 13px 8px
+      transition: background .3s
 
 
 article[role='FAQ']
-	input[type='text']
-		color #d6a8ff
-	.qablock
-		position relative
-		margin 17px 0 0 7px
-		width 100%
-		display flex
-		flex-direction column
+  position absolute
+  top 0
+  right 0
+  left 0
+  bottom 0
 
-		.question
-			@extend $content
-			padding 7px 13px
-			color $article-question-color
-			font-family Comfort, sans-serif
-			font-size 20px
-			letter-spacing 1px
-			background $article-question-bg-color
-			border-color $article-question-border-color
-			align-self flex-start
-			border-radius: 0
-			transition background .3s
+  input[type='text']
+    color #d6a8ff
 
-		.answer
-			@extend $content
-			width 80%
-			align-self flex-start
-			border-radius: 0
-			transition background .3s
-			span
-				display: block;
-			.list-outer
-				margin-top 13px
-				li
-					margin-bottom 13px
-			.list-inner
-				li
-					margin-bottom: 0
-					&:first-child
-						margin-top: 3px;
+  .qa-container
+    display flex
+    height 100%
+    flex-direction row
 
-		ul
-			margin-left: 20px;
-			li
-				color $article-list-color
+  .scroller
+    padding-right 15px
 
-	.textbox-container
-		position absolute
-		width 45%
+  #Questions
+    width 350px
+    margin-left 7px
+
+  #Answers
+    flex 1
+    background-color #1f1f1f
+    padding-left 5px
+    h1
+      font-size 24px
+      font-family 'Ubuntu'
+      word-spacing 2px
+      letter-spacing 1px
+      color $article-question-color
+      margin 5px 0 5px 5px
+      text-shadow: -2px -2px 0 #000, -2px 0 0 #000, 0 -2px 0 #000
+    span
+      @extend $content
+      color hsla($white-trans, 0.6)
+      background-color hsla(278, 70%, 40%, 0.3 / $golden-ratio)
+      align-self flex-start
+      border-radius 3px
+      background-clip padding-box
+      box-shadow 3px 3px 21px 0 #000
+      transition background .3s
+      margin 17px 13px 27px 21px
+
+    .none
+      background-color transparent
+      border none
+      box-shadow none
+      text-shadow 2px 2px 0 #000, 2px 0 0 #000, 0 2px 0 #000
+      margin-top -10px
+      em
+        color hsl(50, 45%, 70%)
+
+    .list-outer
+      margin-top 13px
+      li
+        margin-bottom 13px
+    .list-inner
+      li
+        margin-bottom: 0
+        &:first-child
+          margin-top: 3px;
+    ul
+      margin-left: 44px;
+      font-size 18px
+      font-family $ff-ubunto
+      li
+        text-shadow 2px 2px 0 #000, 2px 0 0 #000, 0 2px 0 #000
+        color hsl(0, 30%, 77%)
+      em
+        position relative
+        top -3px
+        left -1px
+        text-shadow 1px 1px 0 hsl(50, 70%, 20%), 2px 2px 0 hsl(50, 70%, 20%)
+        color hsl(50, 70%, 50%)
+
+
+  .qablock
+    position relative
+    margin-bottom 7px
+    width 100%
+    display flex
+    flex-direction column
+    box-sizing border-box
+    &:first-child
+      margin-top 13px
+    &:last-child
+      margin-bottom 13px
+
+    .question
+      @extend $content
+      padding 7px 13px
+      color hsl(124, 20%, 70%)
+      font-family Comfort, sans-serif
+      font-size 16px
+      text-align center
+      letter-spacing 1px
+      background hsl(124, 12%, 13%)
+      border-color $article-question-border-color
+      align-self center
+      border-radius: 0
+      cursor pointer
+      transition background .3s
+
+    .answer
+      display none
+
+
+
+
+  .textbox-container
+    position absolute
+    width 45%
 
 
 article[role='register']
-	position relative
-	&:first-child
-		margin-top 10px
-	.form-block
-		position relative
-		display flex
-		margin-top 55px
-		width 100%
-		flex-direction row
-		&:first-child
-			margin-top 0 !important
+  position relative
+  &:first-child
+    margin-top 10px
+  .form-block
+    position relative
+    display flex
+    margin-top 55px
+    width 100%
+    flex-direction row
+    &:first-child
+      margin-top 0 !important
 
-		.description
-			@extend $content
-			background $panel
-			border-left none
-			border-color $accent-color
-			padding 13px 5px 13px 8px
-			border-radius 0 13px 0 0
-			flex 1
+    .description
+      @extend $content
+      background $panel
+      border-left none
+      border-color $accent-color
+      padding 13px 5px 13px 8px
+      border-radius 0 13px 0 0
+      flex 1
 
-		.input
-			text-align center
-			width 377px
-		.textbox-container.textarea
-			display block
-			margin 0 auto
-			width 97% !important
+    .input
+      text-align center
+      width 377px
+    .textbox-container.textarea
+      display block
+      margin 0 auto
+      width 97% !important
 
-		textarea
-			display block
-			width 100% !important
-			text-align left !important
-			height 233px
-			resize none
-			&.area
-				display block
-			.char-count
-				color black
+    textarea
+      display block
+      width 100% !important
+      text-align left !important
+      height 233px
+      resize none
+      &.area
+        display block
+      .char-count
+        color black

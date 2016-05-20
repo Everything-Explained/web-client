@@ -120,9 +120,16 @@ export class App {
 
     this._eva.subscribe('router:navigation:complete', payload => {
       if (this._scrollbars) this._scrollbars.destroy();
-      this._scrollbars = new Optiscroll(document.getElementById('PageContent'), {
-        autoUpdate: false
-      });
+
+      let content = document.getElementById('PageContent');
+
+      // Only activate scrollbar if the page contains the optiscroll class
+      if (content.querySelector('section.optiscroll-content')) {
+        this._scrollbars = new Optiscroll(content, {
+          autoUpdate: false
+        });
+      }
+
 
       // Execute only if routes have been populated
       // Toggles the tabs on back/forward
@@ -139,7 +146,8 @@ export class App {
     });
 
     window.onresize = (ev: UIEvent) => {
-      this._scrollbars.update();
+      if (this._scrollbars)
+        this._scrollbars.update();
     };
 
 
