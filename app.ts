@@ -224,14 +224,26 @@ export class App {
         routes.push({ route: '', redirect: nav.pages[0].toLowerCase() });
       }
 
+      // TODO - Don't hardcode route params (FAQ/:query)
+      // TODO - Won't highlight proper tab or child tabs on first load (FAQ/:query)
       for (let title of nav.pages) {
-        routes.push({
-          route: title.toLowerCase(),
-          moduleId: `./${nav.name.toLowerCase() }/${title}`,
-          nav: true,
-          title,
-          navName: nav.name
-        });
+        if (title.toLowerCase() == 'faq') {
+          routes.push({
+            route: [title.toLowerCase(), title.toLowerCase() + ((title.toLowerCase() == 'faq') ? '/:query' : '')],
+            moduleId: `./${nav.name.toLowerCase() }/${title}`,
+            nav: true,
+            title,
+            navName: nav.name
+          });
+        } else {
+          routes.push({
+            route: title.toLowerCase(),
+            moduleId: `./${nav.name.toLowerCase() }/${title}`,
+            nav: true,
+            title,
+            navName: nav.name
+          });
+        }
       }
     }
 

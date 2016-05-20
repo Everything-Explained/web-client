@@ -6,6 +6,7 @@ export class FAQ {
   private _timeout = 0;
   private _eAnswer: HTMLElement;
   private _scrollBar: IOptiscrollInstance;
+  private _searchParam: string;
 
   constructor() {}
 
@@ -18,6 +19,19 @@ export class FAQ {
     this._scrollBar = new Optiscroll(document.getElementById('Questions'), {
       autoUpdate: false
     });
+
+    if (this._searchParam) {
+      let ev = document.createEvent('HTMLEvents')
+        , el = document.getElementById('Search') as HTMLInputElement;
+
+      ev.initEvent('keyup', true, false);
+      el.value = this._searchParam;
+      el.dispatchEvent(ev);
+    }
+  }
+
+  activate(params) {
+    this._searchParam = params.query || null;
   }
 
   nodeToArray(nodes: NodeList) {
