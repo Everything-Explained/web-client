@@ -10,10 +10,10 @@ template
       button#LoginButton(onsubmit='return false', mousedown.delegate='signIn($event)') Login
       button#SignupButton(onsubmit='return false', mousedown.delegate='signUp($event)') Signup
 
-      a.theme-selector(mousedown.delegate='lightsOnOff($event)',
-                       href='javascript:void(0)',
-                       title='Turn lights on/off',
-                       class='${lights ? "light" : "dark"}')
+      //- a.theme-selector(mousedown.delegate='lightsOnOff($event)',
+      //-                  href='javascript:void(0)',
+      //-                  title='Turn lights on/off',
+      //-                  class='${lights ? "light" : "dark"}')
 
 
     div#PageTransition(class='${page.overlay? "active" : ""}')

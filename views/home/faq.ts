@@ -14,10 +14,14 @@ export class FAQ {
     this._page = document.querySelector('article.faq') as HTMLElement;
     this._questions = this.nodeToArray(this._page.querySelectorAll('div.question'));
 
-    this._eAnswer = document.getElementById('Answers');
+    this._eAnswer = document.getElementById('Answers').firstChild as HTMLElement;
 
     this._scrollBar = new Optiscroll(document.getElementById('Questions'), {
       autoUpdate: false
+    });
+
+    new Optiscroll(document.getElementById('Answers'), {
+      autoUpdate: true
     });
 
     if (this._searchParam) {

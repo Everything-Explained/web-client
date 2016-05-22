@@ -11,6 +11,7 @@ template
       div.qa-container
         div#Questions.optiscroll
           div.scroller.optiscroll-content
+
             div.qablock
               div.question(mousedown.delegate='getAnswer($event)') Why did you create this site?
               div.answer You should check out the !{about} page.
@@ -19,9 +20,9 @@ template
             div.qablock
               div.question(mousedown.delegate='getAnswer($event)') What does Amenaeble mean?
               div.answer.
-                Amenaeble comes from the word "Amenable", which by definition means:
-                !{amenable}
-                Like: !{servant}
+                Amenaeble comes from the word "Amenable", which by definition means:#[br]#[br]
+                !{amenable}#[br]#[br]
+                Like: !{servant}#[br]#[br]
                 In other words, we are the clay our Father is using to shape His will. The reason
                 I added the "e" for the "ae" is because it is Scottish for "one". We are all one under
                 the title of His clay. Not a single person is alienated from His grasp and His
@@ -176,14 +177,17 @@ template
                     are not substantial. Some of the most wise words can be said very succinctly, but
                     the Renown system is designed to procure substantial contribution over long periods
                     of time.
-                span !{families}
+                span.none !{families}
 
 
             div.qablock
               div.question(mousedown.delegate='getAnswer($event)') What is renown?
-              div.answer.
+              div.answer
+                span.
                     Renown is an abstract calculation of a users impact on the site. It can be increased
                     through not only activity on the site, but various interactions between users.
+                span.
+                    Generally, you will aquire renown through Messages, Respect, Likes, Love, etc...
 
 
             div.qablock
@@ -314,4 +318,6 @@ template
                 span.none.
                   #[em No bans will be given out unless absolutely necessary].
 
-        div#Answers
+        div#Answers.optiscroll
+          div.optiscroll-content
+            div.answer-placeholder Click a Question on the Left

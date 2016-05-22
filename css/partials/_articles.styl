@@ -47,7 +47,7 @@ article.home
   flex-direction column
   margin 0 auto
   b, i, em
-    color $text-emphasis
+    color hsl(50, 50%, 50%)
 
 
 article[role='about']
@@ -124,10 +124,15 @@ article[role='FAQ']
   left 0
   bottom 0
 
+
   input[type='text']
     color #d6a8ff
+    background-color hsla(278, 20%, 50%, 0.4 / $golden-ratio)
+    background-clip padding-box
+    border 4px solid transparent
+    border-right none
 
-  .qa-container
+  .qa-container, .asdf
     display flex
     height 100%
     flex-direction row
@@ -136,13 +141,14 @@ article[role='FAQ']
     padding-right 15px
 
   #Questions
-    width 350px
+    min-width 350px
     margin-left 7px
 
   #Answers
     flex 1
     background-color #1f1f1f
     padding-left 5px
+    min-width 400px
     h1
       font-size 24px
       font-family 'Ubuntu'
@@ -162,11 +168,22 @@ article[role='FAQ']
       transition background .3s
       margin 17px 13px 27px 21px
 
+    .answer-placeholder
+      position relative
+      display block
+      text-align center
+      font-size 30px
+      text-shadow 1px 1px 1px #777, -1px -1px 0 #000, -2px 0 0 #000, 0 -2px 0 #000
+      font-family 'Delius'
+      letter-spacing 1px
+      margin-top 170px
+      color #555
+
     .none
       background-color transparent
       border none
       box-shadow none
-      text-shadow 2px 2px 0 #000, 2px 0 0 #000, 0 2px 0 #000
+      text-shadow 1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000
       margin-top -10px
       em
         color hsl(50, 45%, 70%)
@@ -185,7 +202,7 @@ article[role='FAQ']
       font-size 18px
       font-family $ff-ubunto
       li
-        text-shadow 2px 2px 0 #000, 2px 0 0 #000, 0 2px 0 #000
+        text-shadow 1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000
         color hsl(0, 30%, 77%)
       em
         position relative
