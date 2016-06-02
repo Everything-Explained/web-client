@@ -1,19 +1,13 @@
 
 template
-  //- MODAL CODE ONLY
   div#overlay
     div.modal-preloader
-  //- MAIN PAGE CODE
+
   section#PageTop
     header.global
       div.ribbon
-      button#LoginButton(onsubmit='return false', mousedown.delegate='signIn($event)') Login
-      button#SignupButton(onsubmit='return false', mousedown.delegate='signUp($event)') Signup
 
-      //- a.theme-selector(mousedown.delegate='lightsOnOff($event)',
-      //-                  href='javascript:void(0)',
-      //-                  title='Turn lights on/off',
-      //-                  class='${lights ? "light" : "dark"}')
+
 
 
     div#PageTransition(class='${page.overlay? "active" : ""}')
@@ -24,16 +18,18 @@ template
         ul
           li( repeat.for='route of activeRoutes',
               mousedown.delegate='$parent.goTo(route.href)',
-              class='${route.isActive ? "active" : ""}') ${route.title}
+              class='${route.isActive ? "active" : ""} ' +
+                    '${route.title == "Signin" ? "login icon-login" : ""}') ${route.title}
 
     section#PageMiddle
       section#TrayLeft(class='buffer2 ${utils.page.leftTray.className}')
         menu#MainMenu
           ul
-            li( repeat.for='nav of navList',
-                mousedown.delegate='$parent.populateRoutes(nav, $event, true)',
-                class='${nav.isActive ? "active" : ""} ${$parent.router.isNavigating && nav.isActive ? "page-loader" : ""}',
-                innerhtml='${$parent.router.isNavigating && nav.isActive ? "&nbsp;" : nav.name}')
+            li( repeat.for='item of mainMenu'
+                mousedown.delegate='$parent.populateRoutes(item, $event, true)'
+                class='${item.isActive ? "active" : ""} ' +
+                      '${$parent.router.isNavigating && item.isActive ? "page-loader" : ""}',
+                innerhtml='${$parent.router.isNavigating && item.isActive ? "&nbsp;" : item.name}')
 
       router-view#PageContent.optiscroll
 

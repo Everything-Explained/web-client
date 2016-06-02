@@ -13,17 +13,24 @@ import {ErrorHandler} from './helpers/errorHandler';
 
 
 
-interface IPageConfiguration {
+interface PageConfiguration {
   route: NavModel;
 }
 
-export interface INav {
+export interface MenuItem {
   name: string;
-  pages: string[];
+  pages: TabPage[];
   def: string;
   defRoute?: NavModel;
   isActive: boolean;
   routes?: NavModel[];
+}
+
+// TODO - Potential for recursive functionality
+export interface TabPage {
+  name: string;
+  hidden?: boolean;
+  subPages?: TabPage[];
 }
 
 
@@ -39,31 +46,67 @@ export class App {
   lightsTimeout = 0;
   lightsOnTimeout = false;
 
+  public mainMenu = [
+    {
+      name:     'Home',
+      pages: [
+        {name: 'About'},
+        {name: 'Rules'},
+        {name: 'FAQ'},
+        {name: 'Signin', subPages: [
+            {name: 'Invite'},
+            {name: 'Signup'}
+          ]
+        }
+      ],
+      def:      'About',
+      isActive: false,
+      defRoute: null,
+      routes:   new Array<NavModel>()
+    },
+    {
+      name:     'Chat',
+      pages:    [{name: 'Chat'}],
+      def:      null,
+      isActive: false,
+      defRoute: null,
+      routes:   new Array<NavModel>()
+    },
+    {
+      name:     'Changelog',
+      pages:    [{name: 'Changelog'}],
+      def:      null,
+      isActive: false,
+      defRoute: null,
+      routes:   new Array<NavModel>()
+    }
+  ];
+
   // Navigation menu list
   navList = [
     {
-      name: 'Home',
-      pages: ['About', 'Rules', 'FAQ'],
-      def: 'About',
+      name:     'Home',
+      pages:    ['About', 'Rules', 'FAQ', 'Signin'],
+      def:      'About',
       isActive: false,
       defRoute: null,
-      routes: new Array<NavModel>()
+      routes:   new Array<NavModel>()
     },
     {
-      name: 'Chat',
-      pages: ['Chat'],
-      def: null,
+      name:     'Chat',
+      pages:    ['Chat'],
+      def:      null,
       isActive: false,
       defRoute: null,
-      routes: new Array<NavModel>()
+      routes:   new Array<NavModel>()
     },
     {
-      name: 'Changelog',
-      pages: ['Changelog'],
-      def: null,
+      name:     'Changelog',
+      pages:    ['Changelog'],
+      def:      null,
       isActive: false,
       defRoute: null,
-      routes: new Array<NavModel>()
+      routes:   new Array<NavModel>()
     }
   ];
 
@@ -72,9 +115,9 @@ export class App {
   // Currently active navigation routes (Populated)
   activeRoutes = new Array<NavModel>();
 
-  private _scrollbars: IOptiscrollInstance;
+  private _scrollbars:   IOptiscrollInstance;
   private _modalOverlay: HTMLElement;
-  private _login: Login;
+  private _login:        Login;
 
   constructor(private elem:          Element,
               private _eva:          EventAggregator,
@@ -83,32 +126,50 @@ export class App {
               private _errorHandler: ErrorHandler)
   {
 
+    this._initFirstMenuItem();
+
+
+    window.onresize = (ev: UIEvent) => {
+      if (this._scrollbars)
+        this._scrollbars.update();
+    };
+
+
+  }
+
+
+  /**
+   * Makes sure that the proper menu/page elements are higlighted
+   * when the site is loaded for the first time.
+   */
+  private _initFirstMenuItem() {
+
     this._eva.subscribeOnce('router:navigation:complete', payload => {
 
-      let activePage = this.router.history.location.hash.replace(/#?\/?/g, '');
-      console.log(this.router.history.location, activePage);
+      let activePage = payload.instruction.fragment.substr(1).toLowerCase();
 
-      for (var nav of this.navList) {
+      for (var item of this.mainMenu) {
 
         this.router.navigation.forEach(route => {
-          if (nav.name === route.config['navName']) {
 
-            // Set active INav obj based on page URL
+          if (item.name.toLowerCase() === route.config['navName']) {
+
+            // Set active MenuItem obj based on page URL
             if (route.title.toLowerCase() === activePage)
-              nav.isActive = true;
+              item.isActive = true;
 
             // Set the default route object
-            if (nav.def === route.title) {
-              nav.defRoute = route;
+            if (item.def === route.title) {
+              item.defRoute = route;
             }
 
             // Add routes to INav template obj
-            nav.routes.push(route);
+            item.routes.push(route);
           }
         });
 
-        if (nav.isActive) {
-          this.populateRoutes(nav);
+        if (item.isActive) {
+          this.populateRoutes(item);
         }
 
       }
@@ -117,8 +178,19 @@ export class App {
 
 
     });
+  }
+
+
+  /**
+   * Sets up an event that fires on every successful page
+   * navigation.
+   */
+  private _setupNavigationCallbackHandler() {
 
     this._eva.subscribe('router:navigation:complete', payload => {
+
+      // ############   HANDLE PAGE SCROLLBARS   ############ //
+      // Make sure there are no active scrollbars
       if (this._scrollbars) this._scrollbars.destroy();
 
       let content = document.getElementById('PageContent');
@@ -130,11 +202,11 @@ export class App {
         });
       }
 
-
+      // ############   HANDLE TAB POPULATION   ############ //
       // Execute only if routes have been populated
       // Toggles the tabs on back/forward
-      if (this.navList[0].routes.length) {
-        this.navList.forEach(n => {
+      if (this.mainMenu[0].routes.length) {
+        this.mainMenu.forEach(n => {
           n.isActive = n.name == payload.instruction.config.navName;
           if (n.isActive) {
             this.populateRoutes(n, null, false);
@@ -142,14 +214,7 @@ export class App {
         });
       }
 
-
     });
-
-    window.onresize = (ev: UIEvent) => {
-      if (this._scrollbars)
-        this._scrollbars.update();
-    };
-
 
   }
 
@@ -157,8 +222,9 @@ export class App {
   /** Aurelia router configuration */
   configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Webaeble';
-    this.createRoutes(this.navList, config);
+    this.createRoutes(this.mainMenu, config);
     this.router = router;
+    console.log(this.router);
   }
 
 
@@ -213,35 +279,35 @@ export class App {
    * @param navList List of navigation objects
    * @param config The Aurelia router configuration variable
    */
-  private createRoutes(navList: INav[], config: RouterConfiguration) {
+  private createRoutes(menuItems: MenuItem[], config: RouterConfiguration) {
 
     let routes = [];
 
-    for (let nav of navList) {
+    for (let item of menuItems) {
 
       // Add default route
-      if (nav.def) {
-        routes.push({ route: '', redirect: nav.pages[0].toLowerCase() });
+      if (item.def) {
+        routes.push({ route: '', redirect: item.pages[0].name.toLowerCase() });
       }
 
       // TODO - Don't hardcode route params (FAQ/:query)
       // TODO - Won't highlight proper tab or child tabs on first load (FAQ/:query)
-      for (let title of nav.pages) {
-        if (title.toLowerCase() == 'faq') {
+      for (let page of item.pages) {
+        if (page.name.toLowerCase() == 'faq') {
           routes.push({
-            route: [title.toLowerCase(), title.toLowerCase() + ((title.toLowerCase() == 'faq') ? '/:query' : '')],
-            moduleId: `./${nav.name.toLowerCase() }/${title}`,
+            route: [page.name.toLowerCase(), page.name.toLowerCase() + ((page.name.toLowerCase() == 'faq') ? '/:query' : '')],
+            moduleId: `./${item.name.toLowerCase() }/${page.name}`,
             nav: true,
-            title,
-            navName: nav.name
+            title: page.name,
+            navName: item.name
           });
         } else {
           routes.push({
-            route: title.toLowerCase(),
-            moduleId: `./${nav.name.toLowerCase() }/${title}`,
+            route: page.name.toLowerCase(),
+            moduleId: `./${item.name.toLowerCase() }/${page.name}`,
             nav: true,
-            title,
-            navName: nav.name
+            title: page.name,
+            navName: item.name
           });
         }
       }
@@ -267,28 +333,9 @@ export class App {
 
     this._modal.init('overlay');
 
-    let light = (lights == 'off') ? 'light' : 'dark';
-    req.open('GET', `css/themes/${light}/theme.css`, true);
-    req.send();
-
-  }
-
-
-  signIn(e: MouseEvent) {
-
-    if (e.buttons == 1) {
-      this._login.signIn();
-    }
-
-  }
-
-
-  signUp(e: MouseEvent) {
-
-    if (e.buttons == 1) {
-      this._login.signup();
-
-    }
+    // let light = (lights == 'off') ? 'light' : 'dark';
+    // req.open('GET', `css/themes/${light}/theme.css`, true);
+    // req.send();
 
   }
 
@@ -301,31 +348,32 @@ export class App {
    * @param nav A navigation object
    * @param toggleNav Toggle the isActive property on the INav objects
    */
-  populateRoutes(nav: INav, e?: MouseEvent, toggleNav = false) {
+  populateRoutes(item: MenuItem, e?: MouseEvent, toggleNav = false) {
 
-    // TODO - This is a hack and should exist in the router configuration
-    if (!nav.routes.length) {
-      let href = location.href.split('http://')[1].split('/')[0];
-      this.goTo('http://' + href);
-    }
-
+    // Only activate on left-click
     if (e && typeof e != 'undefined') {
       if (e.button != 0) return;
     }
 
+    // TODO - This is a hack and should exist in the router configuration
+    if (!item.routes.length) {
+      let href = location.href.split('http://')[1].split('/')[0];
+      this.goTo('http://' + href);
+    }
+
     // Don't populate tabs without default tab
-    if (nav.def)
-      this.activeRoutes = nav.routes;
+    if (item.def)
+      this.activeRoutes = item.routes;
     else
       this.activeRoutes = [];
 
 
     if (toggleNav) {
-      this.navList.forEach(n => {
-        n.isActive = n === nav;
+      this.mainMenu.forEach(i => {
+        i.isActive = i === item;
       });
 
-      this.goTo(nav.def ? nav.defRoute.href : nav.routes[0].href);
+      this.goTo(item.def ? item.defRoute.href : item.routes[0].href);
     }
   }
 
