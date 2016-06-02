@@ -1,41 +1,147 @@
-@font-face {
-	font-family: 'icomoon';
-	src: url('icomoon.ttf?33mgyn') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
 
-[class^="icon-"], [class*=" icon-"] {
-	font-family: 'icomoon';
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-@import url(https://fonts.googleapis.com/css?family=Delius);
 
 @font-face {
-	font-family: Comfort;
-	src: url(Comfortaa-Regular.ttf);
+  font-family: iconify;
+  src: url(iconify.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-@font-face {
-	font-family: 'PT';
-	src: url(PT.ttf);
-}
 
 @font-face {
-	font-family: 'ShareTech';
-	src: url(ShareTechMono-Regular.ttf);
+    font-family: 'icomoon';
+    src: url('icomoon.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-@font-face {
-	font-family: 'Delius';
-	src: url(Delius-Regular.ttf);
+[class^='icon-']:before, [class*=' icon-']:before {
+  font-family: 'iconify';
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  letter-spacing: 0;
+
+  font-variant: normal;
+  text-transform: none;
 }
+
+.icon-envelope-o:before {
+    content: "\f003";
+}
+.icon-heart:before {
+    content: "\f004";
+}
+.icon-check:before {
+    content: "\f00c";
+}
+.icon-close:before {
+    content: "\f00d";
+}
+.icon-remove:before {
+    content: "\f00d";
+}
+.icon-cog:before {
+    content: "\f013";
+}
+.icon-gear:before {
+    content: "\f013";
+}
+.icon-trash-o:before {
+    content: "\f014";
+}
+.icon-clock-o:before {
+    content: "\f017";
+}
+.icon-plus:before {
+    content: "\f067";
+}
+.icon-exclamation-triangle:before {
+    content: "\f071";
+}
+.icon-warning:before {
+    content: "\f071";
+}
+.icon-google-plus:before {
+    content: "\f0d5";
+}
+.icon-envelope:before {
+    content: "\f0e0";
+}
+.icon-github:before {
+    content: "\f113";
+}
+.icon-thumbs-up:before {
+    content: "\f164";
+}
+.icon-thumbs-down:before {
+    content: "\f165";
+}
+.icon-google:before {
+    content: "\f1a0";
+}
+.icon-wechat:before {
+    content: "\f1d7";
+}
+.icon-weixin:before {
+    content: "\f1d7";
+}
+.icon-trash:before {
+    content: "\f1f8";
+}
+.icon-user-secret:before {
+    content: "\f21b";
+}
+.icon-user-plus:before {
+    content: "\f234";
+}
+.icon-user-times:before {
+    content: "\f235";
+}
+.icon-bubbles:before {
+    content: "\e96c";
+}
+.icon-cog2:before {
+    content: "\e994";
+}
+.icon-warning2:before {
+    content: "\ea07";
+}
+.icon-enter:before {
+    content: "\ea13";
+}
+.icon-exit:before {
+    content: "\ea14";
+}
+.icon-facebook:before {
+    content: "\ea90";
+}
+
+
+
+.icon-menu:before { content: '\30'; } /* '0' */
+.icon-menu-outline:before { content: '\31'; } /* '1' */
+.icon-login:before { content: '\32'; } /* '2' */
+.icon-logout:before { content: '\33'; } /* '3' */
+.icon-emo-happy:before { content: '\61'; } /* 'a' */
+.icon-emo-wink:before { content: '\62'; } /* 'b' */
+.icon-emo-wink2:before { content: '\63'; } /* 'c' */
+.icon-emo-unhappy:before { content: '\64'; } /* 'd' */
+.icon-emo-sleep:before { content: '\65'; } /* 'e' */
+.icon-emo-thumbsup:before { content: '\66'; } /* 'f' */
+.icon-emo-devil:before { content: '\67'; } /* 'g' */
+.icon-emo-surprised:before { content: '\68'; } /* 'h' */
+.icon-emo-tongue:before { content: '\69'; } /* 'i' */
+.icon-emo-coffee:before { content: '\6a'; } /* 'j' */
+.icon-emo-sunglasses:before { content: '\6b'; } /* 'k' */
+.icon-emo-displeased:before { content: '\6c'; } /* 'l' */
+.icon-emo-beer:before { content: '\6d'; } /* 'm' */
+.icon-emo-grin:before { content: '\6e'; } /* 'n' */
+.icon-emo-angry:before { content: '\6f'; } /* 'o' */
+.icon-emo-saint:before { content: '\70'; } /* 'p' */
+.icon-emo-cry:before { content: '\71'; } /* 'q' */
+.icon-emo-squint:before { content: '\72'; } /* 'r' */
+.icon-emo-laugh:before { content: '\73'; } /* 's' */
+.icon-gplus-squared:before { content: '\74'; } /* 't' */
+.icon-facebook-squared:before { content: '\75'; } /* 'u' */
