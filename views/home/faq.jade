@@ -6,7 +6,7 @@
 template
   section
     article.home.faq.au-animate(role='FAQ')
-      input#Search(type='text', placeholder='Search', keyup.delegate='seek($event)')
+      input#Search(type='text', placeholder='Search', keyup.delegate='seek($event) & debounce:300')
 
       div.qa-container
         div#Questions.optiscroll

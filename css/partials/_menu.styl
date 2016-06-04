@@ -2,7 +2,7 @@
 menu#MainMenu
   margin-top: 15px
   font-size: 29px
-  font-family: Comfort, sans-serif
+  font-family: Comfortaa, sans-serif
   display: flex
   justify-content: flex-end
 
@@ -54,16 +54,18 @@ menu#TabMenu
   left: 200px
 
   ul
-    position: absolute
-    bottom: 0
+    position absolute
+    left 0
+    right 0
+    bottom 0
     list-style: none
 
     li
       display: inline-block
       margin-right: 7px
       padding: 7px 13px
-      font-family: Comfort, sans-serif
-      font-size: 20px
+      font-family: Karla, sans-serif
+      font-size: 22px
       color: $menusub-item-color
       text-transform: capitalize
       border-top-left-radius: 13px
@@ -82,3 +84,21 @@ menu#TabMenu
       &:hover
         opacity: 1
         color: $menusub-item-active-color
+
+    .icon-login::before
+      margin-right 4px
+
+    .login
+      position absolute
+      right 233px
+      bottom 0
+      font-size 24px
+      color hsl(50, 60%, 53%)
+      opacity 1
+
+      &.active
+        border-color hsl(127, 60%, 53%)
+        color hsl(127, 60%, 53%)
+
+      &:hover
+        color hsl(127, 60%, 53%) !important

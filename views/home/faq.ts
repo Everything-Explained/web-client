@@ -3,7 +3,6 @@ export class FAQ {
   private _page: HTMLElement;
   private _questions: HTMLElement[];
   private _answers: HTMLElement[];
-  private _timeout = 0;
   private _eAnswer: HTMLElement;
   private _scrollBar: IOptiscrollInstance;
   private _searchParam: string;
@@ -58,7 +57,6 @@ export class FAQ {
 
   seek(ev: KeyboardEvent) {
 
-    clearTimeout(this._timeout);
     let input = (ev.target as HTMLInputElement).value;
     if (!input || input.length < 3) {
       this._questions.forEach((v) => {
@@ -68,26 +66,24 @@ export class FAQ {
       return true;
     }
 
-    this._timeout = setTimeout(() => {
-      let words = (~input.indexOf(' ')) ? input.split(' ' ) : [input];
+    let words = (~input.indexOf(' ')) ? input.split(' ' ) : [input];
 
-      this._questions.forEach((v) => {
-        let i = 0
-          , j = 0;
+    this._questions.forEach((v) => {
+      let i = 0
+        , j = 0;
 
-        for (; i < words.length; i++) {
-          if (~v.innerText.toLowerCase().indexOf(`${words[i].toLowerCase()}`)) {
-            ++j;
-            v.parentElement.style.display = 'flex';
-          } else {
-            v.parentElement.style.display = 'none';
-          }
+      for (; i < words.length; i++) {
+        if (~v.innerText.toLowerCase().indexOf(`${words[i].toLowerCase()}`)) {
+          ++j;
+          v.parentElement.style.display = 'flex';
+        } else {
+          v.parentElement.style.display = 'none';
         }
-        console.log(j , words.length);
-        if (j == words.length) console.log(v.innerText);
-      });
-      this._scrollBar.update();
-    }, 300);
+      }
+      console.log(j , words.length);
+      if (j == words.length) console.log(v.innerText);
+    });
+    this._scrollBar.update();
 
     return true;
   }

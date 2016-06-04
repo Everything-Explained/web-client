@@ -1,0 +1,148 @@
+@import '../_utilities'
+
+#SignInPage
+  h1
+    color hsl(278, 35%, 67%)
+    font-family 'Delius'
+    font-size 20px
+    line-height 20px
+
+  h2
+    margin-top 20px
+    font-family 'Delius'
+    color hsl(50, 50%, 50%)
+    font-size 16px
+
+  #SignInContent
+    position relative
+    display none
+    width 100%
+    height 100%
+    text-align center
+
+    #GoogleSigninButton, #FacebookSigninButton
+      display block
+      margin 10px auto 0 auto
+      width 264px
+      height 40px
+
+      &:hover
+        cursor pointer
+      &:hover .icon-google-plus, &:hover .icon-facebook
+        background-color hsla($dark-trans, 0.3 / $golden-ratio)
+        color hsl(50, 60%, 55%)
+      &:hover .icon-google-plus::before
+        color hsl(0, 90%, 64%)
+        background-color hsla($white-trans, 0.9)
+      &:hover .icon-facebook::before
+        color white
+        background-color hsl(220, 45%, 42%)
+
+    .icon-google-plus, .icon-facebook
+      position relative
+      display inline-block
+      width 260px
+      top 3px
+      left 4px
+      background-color $panel
+      color hsl(0, 0, 60%)
+      padding 9px 0 8px 60px
+      font-size 20px
+      font-family Karla
+      letter-spacing -1px
+      word-spacing 3px
+      text-align left
+      border-radius 7px 0 0 7px
+
+      transition .3s background, .3s color
+
+    .icon-google-plus::before, .icon-facebook::before
+      position absolute
+      top 0
+      left 0
+      padding 4px 4px 3px 7px
+      font-family 'icomoon'
+      line-height normal
+      color hsl(50, 50%, 50%)
+      border-radius 7px 0 0 7px
+      background-color hsla($dark-trans, .15 / $golden-ratio)
+      font-size 32px
+      transition .3s background, .3s color
+
+    .icon-facebook::before
+      padding 4px 6px 3px 13px
+
+
+  #InviteContent
+    position relative
+    display block
+    width 100%
+    height 100%
+    text-align center
+
+    #NodeContainer
+      display block
+      margin 0 auto
+      width 400px
+      text-align center
+      background-color $modal-robot-container-bg
+      padding 17px 0 10px 0
+      border-radius 13px
+
+    .node
+      display inline-block
+      margin-right 17px
+      width 55px
+      height @width
+      border-radius @width
+      background-clip padding-box
+      border 5px solid $modal-robot-node-border
+      background-color $modal-robot-node-bg
+      box-shadow inset 0 0 13px 2px $modal-robot-boxshadow
+      cursor pointer
+      transition background .3s
+      &.active
+        background-color hsl(50, 60%, 50%)
+      &.success
+        background-color #99e89d
+      &.error
+        background-color hsl(0, 80%, 65%)
+
+    .error-text
+      display none
+      margin-bottom 5px
+      color #ffa4aa
+    .visible
+      display block
+
+    $baseColor = hsl(50, 100%, 30%)
+    .try-again
+      position relative
+      display inline-block
+      border-radius 8px
+      margin-top 20px
+      background-color transparent
+      padding-bottom -10px
+      cursor pointer
+      border-radius 5px
+      letter-spacing 1px
+      color #bbb
+      font-family 'Karla'
+      text-shadow -1px -1px 0 #000
+      box-shadow 0 9px 0 hsla(0, 0%, 100%, 0.35), 0 10px 0 2px $baseColor
+      &:hover span
+        color hsl(50, 80%, 50%)
+      &:active
+        transform translate(0, 3px)
+        box-shadow 0 6px 0 hsla(0, 0%, 100%, 0.35), 0 7px 0 2px $baseColor
+      &:active span
+        box-shadow 0 2px 0 #2c2c2c
+        transform translate(0, 3px)
+      & span
+        display inline-block
+        background-color #474747
+        padding 7px 13px
+        border-radius 5px
+        box-shadow 0 8px 0 #2c2c2c
+        transition color .3s
+

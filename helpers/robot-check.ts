@@ -1,22 +1,32 @@
 export class IRobot {
 
-  private _hasEvents = false;
-  private _evtPos = 0;
-  private _speed = 400;
-  private _seq: number[];
+  private _hasEvents  = false;
+  private _evtPos     = 0;
+  private _speed      = 400;
   private _inProgress = false;
-  private _inError = false;
+  public inError      = false;
+  public started      = false;
+
+  private _seq: number[];
 
   constructor(private _objs: HTMLElement[], private _callback: (result: boolean) => void) {}
 
 
   public start(speed: number, delay = 0) {
+
+    // Prevent overwriting events
+    if (this.started) {
+      this.restart(speed);
+      return;
+    }
+
     if (this._inProgress) return;
+
     this._clearNodes();
     this._speed = speed;
     this._seq = this._getRandomSequence();
     this._blink(0);
-    this._inProgress = true;
+    this._inProgress = this.started = true;
   }
 
   public restart(delay = 300) {
@@ -66,11 +76,11 @@ export class IRobot {
 
   private _click(e: MouseEvent) {
 
-    if (this._inError || this._inProgress) return;
+    if (this.inError || this._inProgress) return;
 
 
     let obj = (e.target) as HTMLElement
-    , pos = parseInt(obj.getAttribute('data-pos'));
+      , pos = parseInt(obj.getAttribute('data-pos'));
 
 
     if (pos == this._evtPos) {
@@ -85,7 +95,7 @@ export class IRobot {
       this._evtPos++;
     } else {
       obj.classList.add('error');
-      this._inError = true;
+      this.inError = true;
       this._callback(false);
     }
 
@@ -97,7 +107,7 @@ export class IRobot {
       o.classList.remove('error');
     }
     this._evtPos = 0;
-    this._inError = false;
+    this.inError = false;
   }
 
 

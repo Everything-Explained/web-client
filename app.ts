@@ -146,13 +146,15 @@ export class App {
 
     this._eva.subscribeOnce('router:navigation:complete', payload => {
 
+      console.log('Frist Activation');
+
       let activePage = payload.instruction.fragment.substr(1).toLowerCase();
 
       for (var item of this.mainMenu) {
 
         this.router.navigation.forEach(route => {
 
-          if (item.name.toLowerCase() === route.config['navName']) {
+          if (item.name === route.config['menuName']) {
 
             // Set active MenuItem obj based on page URL
             if (route.title.toLowerCase() === activePage)
@@ -207,7 +209,7 @@ export class App {
       // Toggles the tabs on back/forward
       if (this.mainMenu[0].routes.length) {
         this.mainMenu.forEach(n => {
-          n.isActive = n.name == payload.instruction.config.navName;
+          n.isActive = n.name == payload.instruction.config.menuName;
           if (n.isActive) {
             this.populateRoutes(n, null, false);
           }
@@ -224,7 +226,7 @@ export class App {
     config.title = 'Webaeble';
     this.createRoutes(this.mainMenu, config);
     this.router = router;
-    console.log(this.router);
+    console.log(router);
   }
 
 
@@ -299,16 +301,32 @@ export class App {
             moduleId: `./${item.name.toLowerCase() }/${page.name}`,
             nav: true,
             title: page.name,
-            navName: item.name
+            menuName: item.name,
+            subItem: false
           });
         } else {
+
           routes.push({
             route: page.name.toLowerCase(),
             moduleId: `./${item.name.toLowerCase() }/${page.name}`,
             nav: true,
             title: page.name,
-            navName: item.name
+            menuName: item.name,
+            subItem: false
           });
+
+          if (page.subPages) {
+            for (let subpage of page.subPages) {
+              routes.push({
+                route: subpage.name.toLowerCase(),
+                moduleId: `./${item.name.toLowerCase()}/${subpage.name}`,
+                nav: true,
+                title: subpage.name,
+                menuName: item.name,
+                subItem: true
+              });
+            }
+          }
         }
       }
     }
@@ -350,6 +368,8 @@ export class App {
    */
   populateRoutes(item: MenuItem, e?: MouseEvent, toggleNav = false) {
 
+    console.log('hello');
+
     // Only activate on left-click
     if (e && typeof e != 'undefined') {
       if (e.button != 0) return;
@@ -362,8 +382,12 @@ export class App {
     }
 
     // Don't populate tabs without default tab
-    if (item.def)
-      this.activeRoutes = item.routes;
+    if (item.def) {
+      let routes = item.routes.filter((v) => {
+        return !v.config['subItem'];
+      });
+      this.activeRoutes = routes;
+    }
     else
       this.activeRoutes = [];
 
@@ -378,8 +402,10 @@ export class App {
   }
 
   // Activate the router manually
+  // TODO - use route.navigateToRoute
   goTo(href: string) {
     location.href = href;
+
   }
 
 

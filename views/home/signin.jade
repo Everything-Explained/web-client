@@ -1,0 +1,26 @@
+
+- var signup = "<a href='javascript:void(0);' click.delegate='signUp()'>Sign Up!</a>";
+
+template
+  div#SignInPage
+    div#SignInContent
+
+      h1 Select a sign-in method.
+
+      div#GoogleSignin(click.delegate='signIn()')
+        span.icon-google-plus Sign-in with Google
+      div#FacebookSignin
+        span.icon-facebook Sign-in with Facebook
+
+      h2 Don't have an account? #[br] !{signup}
+
+
+    div#InviteContent
+      h1 Click the circles in the order they blink
+      div#NodeContainer
+        each val in [0, 1, 2, 3]
+          div.node
+      h1.error-text(class='${isRobotError ? "visible" : ""}') Sorry, Try Again!
+      button.try-again(click.delegate='activateRobot()')
+        span ${robotButtonText}
+

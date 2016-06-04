@@ -1,4 +1,6 @@
 
+
+
 export class About {
 
   private _email = this._toArray('exanix@gmail.com') as string[];
@@ -10,7 +12,7 @@ export class About {
 
 
 
-  public test(ev: MouseEvent) {
+  public decode(ev: MouseEvent) {
     if (this._emailVisible) return;
     let el = (ev.target) as HTMLElement;
     this._emailVisible = true;
@@ -19,6 +21,7 @@ export class About {
 
 
   }
+
 
   private _till(char: number, pos: number, el: HTMLElement) {
 

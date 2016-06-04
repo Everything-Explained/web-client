@@ -1,29 +1,31 @@
 @import "../_utilities"
 
 body, html
-  font: 14px Verdana, Geneva, Tahoma, sans-serif
-  // background: url($body-bg-image) repeat fixed
+  font 14px 'Verdana', 'Geneva', 'Tahoma', sans-serif
+  // background url($body-bg-image) repeat fixed
   background-color #111
-  overflow-x: hidden
-  height: 100%
+  overflow-x hidden
+  height 100%
+  -webkit-font-smoothing antialiased;
+  -moz-osx-font-smoothing grayscale;
 
 
 body, div, article, span, ul, menu, input,
 textarea, section, a, p, header, footer,
 button, form, aside, #PageContent, label,
 pre
-  padding: 0
-  margin: 0
-  line-height: normal
+  padding 0
+  margin 0
+  line-height normal
   outline none
-  border: none
-  box-sizing: border-box
+  border none
+  box-sizing border-box
 
 a:link, a:visited, a:active, a:hover
   color #c691ff
-  text-decoration: none;
+  text-decoration none;
   border-bottom 1px dashed hsl(50, 60%, 50%)
-  transition: color .3s
+  transition color .3s
 
 a:hover
   color $transient-light
@@ -31,84 +33,86 @@ a:hover
 
 @keyframes myFadeIn
   0%
-    opacity: 0
+    opacity 0
   100%
-    opacity: 1
+    opacity 1
+
+
 
 
 
 .au-enter-active
-  animation: myFadeIn 0.7s
+  animation myFadeIn 0.7s
 
 
 .body-loader
-  position: fixed
-  top: 0
-  right: 0
-  left: 0
-  bottom: 0
+  position fixed
+  top 0
+  right 0
+  left 0
+  bottom 0
 
   &:before
-    position: relative
-    display: block
-    top: 200px
-    height: 128px
-    width: 128px
-    margin: 0 auto
+    position relative
+    display block
+    top 200px
+    height 128px
+    width 128px
+    margin 0 auto
     background $body-loader
-    content: ''
+    content ''
 
   &:after
-    position: relative
-    top: 220px
-    display: block
-    margin: 0 auto
-    width: 300px
-    text-align: center
-    content: attr(data-message)
-    font-family: PT, Consolas, "Lucida Console", monospace
-    font-size: 20px
-    color: $head-1-color
+    position relative
+    top 220px
+    display block
+    margin 0 auto
+    width 300px
+    text-align center
+    content attr(data-message)
+    font-family $ff-mono
+    font-size 20px
+    color $head-1-color
 
 
 
 ::selection
-  background: $body-selection
+  background $body-selection
 
 
 ::-moz-selection
-  background: opacify($panel, 0.3)
+  background opacify($panel, 0.3)
 
 
 input
-  border: none
-  font-size: 17px
+  border none
+  font-size 17px
 
 
 main
-  position: absolute
-  display: block
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  z-index: 1
+  position absolute
+  display block
+  top 0
+  left 0
+  right 0
+  bottom 0
+  z-index 1
 
 button
-  font-size: 21px
+  font-size 21px
 
 #PageTransition
-  position: absolute
-  top: 0
-  bottom: 0
-  right: 0
-  left: 0
-  background-color: black
-  opacity: 0
-  z-index: 20
-  pointer-events: none
-  transition: opacity .3s
+  position absolute
+  top 0
+  bottom 0
+  right 0
+  left 0
+  background-color black
+  opacity 0
+  z-index 20
+  pointer-events none
+  transition opacity .3s
 
   &.active
-    opacity: 0.5
-    pointer-events: auto
+    opacity 0.5
+    pointer-events auto
