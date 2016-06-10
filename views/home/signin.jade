@@ -1,7 +1,7 @@
 
 template
   div#SignInPage
-    div#SignInContent.login-content.hide(ref='signInContent')
+    div#SignInContent.login-content(ref='signInContent')
 
       h1 Select a sign-in method.
 
@@ -26,21 +26,23 @@ template
 
     div#InviteContent.login-content.hide(ref='inviteContent')
       h1 Enter your Invite Code
-      input(type='text')
+      input(type='text' maxlength='12')
 
-    div#SignupContent.login-content(ref='signupContent')
+    div#SignupContent.login-content.hide(ref='signUpContent')
       h1 Select a sign-in method.
       div.selection-container
         div.selector.selected(ref='buttonSSO' mousedown.delegate='selectSignUp("sso")') Single Sign-On
         div.selector(ref='buttonDB' mousedown.delegate='selectSignUp("db")') Database
 
-      div.content-container.sso-container.hide
+      div.content-container.sso-container(ref='elSSO')
         div#GoogleSigninButton.social-button(click.delegate='')
           span.icon-google-plus Sign-Up with Google
         div#FacebookSigninButton.social-button
           span.icon-facebook Sign-Up with Facebook
 
-      div.content-container.db-container
+      div.content-container.db-container.hide(ref='elDB')
+        h2.demo For DEMO Only!
+        h2.demo Use Single-Sign On to Login
         div.input-container.icon-check-circle-o
           input(type='text'
                 placeholder='Enter Nickname'

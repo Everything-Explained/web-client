@@ -14,6 +14,7 @@ export class Signin {
 
   // *** *** *** FROM VIEW *** *** ***
   public signInContent: HTMLElement;
+  public signUpContent: HTMLElement;
   public robotContent: HTMLElement;
   public inviteContent: HTMLElement;
   public buttonRobot: HTMLElement;
@@ -24,6 +25,8 @@ export class Signin {
   public elCPassword: HTMLInputElement;
   public elEmail: HTMLInputElement;
   public elCEmail: HTMLInputElement;
+  public elSSO: HTMLElement;
+  public elDB: HTMLElement;
 
   public robotButtonText = 'Start!';
 
@@ -130,6 +133,9 @@ export class Signin {
       // *** ENTER INVITE ***
       .then<any>(() => {
         return this.askForInvite();
+      })
+      .then<any>(() => {
+        return this.beginSignup();
       });
   }
 
@@ -166,17 +172,29 @@ export class Signin {
     });
   }
 
+  public beginSignup() {
+    this.inviteContent.classList.add('hide');
+    this.signUpContent.classList.remove('hide');
+
+    return new Promise((rs, rj) => {
+      rs(true);
+    });
+  }
 
   public selectSignUp(type: string) {
     if (type === 'sso' && !this.buttonSSO.classList.contains('selected')) {
       this.buttonDB.classList.remove('selected');
       this.buttonSSO.classList.add('selected');
+      this.elSSO.classList.remove('hide');
+      this.elDB.classList.add('hide');
       return;
     }
 
     if (type === 'db' && !this.buttonDB.classList.contains('selected')) {
       this.buttonSSO.classList.remove('selected');
       this.buttonDB.classList.add('selected');
+      this.elDB.classList.remove('hide');
+      this.elSSO.classList.add('hide');
       return;
     }
   }
