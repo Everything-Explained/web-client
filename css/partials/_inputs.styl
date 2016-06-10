@@ -1,15 +1,31 @@
 
-
+$inputBackground = #333
+$shadowColor = darken($inputBackground, 33%)
+$shadowHoverColor = lighten($shadowColor, 7%)
 input, textarea
-	position: relative
-	display: block
-	width: 100%
-	background: $panel
-	font-size: 21px
-	font-family: Verdana, Geneva, Tahoma, sans-serif
-	padding: 5px
-	border: 2px solid #000
-	transition: color .3s
+  position relative
+  display block
+  width 100%
+  background $inputBackground
+  color hsl(50, 33%, 50%)
+  font-size 22px
+  font-family "karla"
+  padding 7px
+  // border 2px solid #000
+  box-shadow box3d(5, $shadowColor)
+  transition all .3s
+  // TODO - Textboxes should have a nice transition
+  // &:hover, &:focus
+  //   color hsl(50, 50%, 50%)
+  //   background hsl(50, 33%, 20%)
+  //   box-shadow box3d(5, darken(@background, 33%))
+  //   &::-webkit-input-placeholder
+  //     color lighten(#606060, 10%)
+
+  &::-webkit-input-placeholder
+    color #606060
+    transition all .3s
+
 
 
 

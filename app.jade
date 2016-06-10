@@ -19,7 +19,7 @@ template
           li( repeat.for='route of activeRoutes',
               mousedown.delegate='$parent.goTo(route.href)',
               class='${route.isActive ? "active" : ""} ' +
-                    '${route.title == "Signin" ? "login icon-login" : ""}') ${route.title}
+                    '${route.title == "Signin" ? "login icon-enter" : ""}') ${route.title}
 
     section#PageMiddle
       section#TrayLeft(class='buffer2 ${utils.page.leftTray.className}')

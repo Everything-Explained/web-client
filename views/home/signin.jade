@@ -1,26 +1,76 @@
 
-- var signup = "<a href='javascript:void(0);' click.delegate='signUp()'>Sign Up!</a>";
-
 template
   div#SignInPage
-    div#SignInContent
+    div#SignInContent.login-content.hide(ref='signInContent')
 
       h1 Select a sign-in method.
 
-      div#GoogleSignin(click.delegate='signIn()')
+      div#GoogleSigninButton(click.delegate='')
         span.icon-google-plus Sign-in with Google
-      div#FacebookSignin
+      div#FacebookSigninButton
         span.icon-facebook Sign-in with Facebook
 
-      h2 Don't have an account? #[br] !{signup}
+      h2 Don't have an account? #[br]
+        a(href='javascript:void(0)' click.delegate='signUp()') Sign-Up!
 
 
-    div#InviteContent
+    div#RobotContent.login-content.hide(ref='robotContent')
       h1 Click the circles in the order they blink
       div#NodeContainer
         each val in [0, 1, 2, 3]
           div.node
-      h1.error-text(class='${isRobotError ? "visible" : ""}') Sorry, Try Again!
-      button.try-again(click.delegate='activateRobot()')
+      h1.error-text(class='${isRobotError ? "visible" : ""}' ref='robotButton') Sorry, Try Again!
+      button.try-again(click.delegate='startRobotTest()')
         span ${robotButtonText}
+
+
+    div#InviteContent.login-content.hide(ref='inviteContent')
+      h1 Enter your Invite Code
+      input(type='text')
+
+    div#SignupContent.login-content(ref='signupContent')
+      h1 Select a sign-in method.
+      div.selection-container
+        div.selector.selected(ref='buttonSSO' mousedown.delegate='selectSignUp("sso")') Single Sign-On
+        div.selector(ref='buttonDB' mousedown.delegate='selectSignUp("db")') Database
+
+      div.content-container.sso-container.hide
+        div#GoogleSigninButton.social-button(click.delegate='')
+          span.icon-google-plus Sign-Up with Google
+        div#FacebookSigninButton.social-button
+          span.icon-facebook Sign-Up with Facebook
+
+      div.content-container.db-container
+        div.input-container.icon-check-circle-o
+          input(type='text'
+                placeholder='Enter Nickname'
+                keyup.delegate='isNickValid($event) & debounce:500'
+                maxlength='20'
+                ref='elNickname')
+          div.input-length
+            span(class='${nickLength < 4 ? "invalid" : "valid"}').
+                ${nickLength < 4 ? nickLength : 4}
+            span :
+            span(class='${nickLength < 20 ? "valid" : "invalid"}').
+                ${(20 - nickLength) < 10 ? "0" + (20 - nickLength) : 20 - nickLength}
+
+        div.input-container.icon-check-circle-o
+          input(type='password' ref='elPassword' placeholder='Enter Password')
+
+        div.input-container.icon-check-circle-o
+          input(type='password'
+                ref='elCPassword'
+                keyup.delegate='checkConfirm(elPassword, elCPassword)'
+                blur.trigger='checkConfirm(elPassword, elCPassword, true)'
+                placeholder='Confirm Password')
+
+        div.input-container.icon-check-circle-o
+          input(type='text' ref='elEmail' placeholder='Enter E-mail')
+
+        div.input-container.icon-check-circle-o
+          input(type='text'
+                ref='elCEmail'
+                keyup.delegate='checkConfirm(elEmail, elCEmail)'
+                blur.trigger='checkConfirm(elEmail, elCEmail, true)'
+                placeholder='Confirm E-mail')
 

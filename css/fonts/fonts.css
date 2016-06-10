@@ -1,11 +1,11 @@
 
 
-@font-face {
+/*@font-face {
   font-family: iconify;
   src: url(iconify.woff) format('woff');
   font-weight: normal;
   font-style: normal;
-}
+}*/
 
 
 @font-face {
@@ -16,7 +16,7 @@
 }
 
 [class^='icon-']:before, [class*=' icon-']:before {
-  font-family: 'iconify';
+  font-family: 'icomoon';
   font-style: normal;
   font-weight: normal;
   speak: none;
@@ -53,6 +53,18 @@
 }
 .icon-clock-o:before {
     content: "\f017";
+}
+.icon-times-circle:before {
+    content: "\f057";
+}
+.icon-check-circle:before {
+    content: "\f058";
+}
+.icon-times-circle-o:before {
+    content: "\f05c";
+}
+.icon-check-circle-o:before {
+    content: "\f05d";
 }
 .icon-plus:before {
     content: "\f067";
@@ -117,31 +129,3 @@
 .icon-facebook:before {
     content: "\ea90";
 }
-
-
-
-.icon-menu:before { content: '\30'; } /* '0' */
-.icon-menu-outline:before { content: '\31'; } /* '1' */
-.icon-login:before { content: '\32'; } /* '2' */
-.icon-logout:before { content: '\33'; } /* '3' */
-.icon-emo-happy:before { content: '\61'; } /* 'a' */
-.icon-emo-wink:before { content: '\62'; } /* 'b' */
-.icon-emo-wink2:before { content: '\63'; } /* 'c' */
-.icon-emo-unhappy:before { content: '\64'; } /* 'd' */
-.icon-emo-sleep:before { content: '\65'; } /* 'e' */
-.icon-emo-thumbsup:before { content: '\66'; } /* 'f' */
-.icon-emo-devil:before { content: '\67'; } /* 'g' */
-.icon-emo-surprised:before { content: '\68'; } /* 'h' */
-.icon-emo-tongue:before { content: '\69'; } /* 'i' */
-.icon-emo-coffee:before { content: '\6a'; } /* 'j' */
-.icon-emo-sunglasses:before { content: '\6b'; } /* 'k' */
-.icon-emo-displeased:before { content: '\6c'; } /* 'l' */
-.icon-emo-beer:before { content: '\6d'; } /* 'm' */
-.icon-emo-grin:before { content: '\6e'; } /* 'n' */
-.icon-emo-angry:before { content: '\6f'; } /* 'o' */
-.icon-emo-saint:before { content: '\70'; } /* 'p' */
-.icon-emo-cry:before { content: '\71'; } /* 'q' */
-.icon-emo-squint:before { content: '\72'; } /* 'r' */
-.icon-emo-laugh:before { content: '\73'; } /* 's' */
-.icon-gplus-squared:before { content: '\74'; } /* 't' */
-.icon-facebook-squared:before { content: '\75'; } /* 'u' */

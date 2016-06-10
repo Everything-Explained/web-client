@@ -39,16 +39,26 @@ $ease-io-back = cubic-bezier(0.68, -0.55, 0.265, 1.55)
 $golden-ratio = 1.61803
 
 text-outline($sz, $clr)
-	text-shadow 1px 0 $sz $clr, 0 1px $sz $clr, -1px 0 $sz $clr, 0 -1px $sz $clr, -1px -1px $sz $clr, 1px 1px $sz $clr
-
-outline($sz, $clr)
-  return "1px 0 $sz $clr, 0 1px $sz $clr, -1px 0 $sz $clr, 0 -1px $sz $clr, -1px -1px $sz $clr, 1px 1px $sz $clr"
+  text-shadow 1px 0 $sz $clr, 0 1px $sz $clr, -1px 0 $sz $clr, 0 -1px $sz $clr, -1px -1px $sz $clr, 1px 1px $sz $clr
 
 placeholder($clr)
-	::-webkit-input-placeholder
-		color: $clr
+  ::-webkit-input-placeholder
+    color: $clr
+
+
+box3d($sz, $clr)
+  val = ''
+  for num in (1..$sz)
+    val += '-' + num + 'px ' + num + 'px 0 1px ' + $clr + ','
+  return unquote(replace(',$','', val))
+
+text3d($sz, $clr)
+  val = ''
+  for num in (1..$sz)
+    val += '-' + num + 'px ' + num + 'px 0 ' + $clr + ','
+  return unquote(replace(',$','', val))
 
 opacify($color, $opacity)
-	$h = hue($color)
-	$c = 0, saturation($color), lightness($color)
-	return hue(hsla($c, $opacity), $h)
+  $h = hue($color)
+  $c = 0, saturation($color), lightness($color)
+  return hue(hsla($c, $opacity), $h)

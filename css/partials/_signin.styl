@@ -4,7 +4,7 @@
   h1
     color hsl(278, 35%, 67%)
     font-family 'Delius'
-    font-size 20px
+    font-size 22px
     line-height 20px
 
   h2
@@ -13,72 +13,76 @@
     color hsl(50, 50%, 50%)
     font-size 16px
 
-  #SignInContent
-    position relative
-    display none
-    width 100%
-    height 100%
-    text-align center
+  .show
+    visibility visible
+    opacity 1
 
-    #GoogleSigninButton, #FacebookSigninButton
-      display block
-      margin 10px auto 0 auto
-      width 264px
-      height 40px
+  .hide
+    opacity 0
+    visibility hidden
 
-      &:hover
-        cursor pointer
-      &:hover .icon-google-plus, &:hover .icon-facebook
-        background-color hsla($dark-trans, 0.3 / $golden-ratio)
-        color hsl(50, 60%, 55%)
-      &:hover .icon-google-plus::before
-        color hsl(0, 90%, 64%)
-        background-color hsla($white-trans, 0.9)
-      &:hover .icon-facebook::before
-        color white
-        background-color hsl(220, 45%, 42%)
-
-    .icon-google-plus, .icon-facebook
-      position relative
-      display inline-block
-      width 260px
-      top 3px
-      left 4px
-      background-color $panel
-      color hsl(0, 0, 60%)
-      padding 9px 0 8px 60px
-      font-size 20px
-      font-family Karla
-      letter-spacing -1px
-      word-spacing 3px
-      text-align left
-      border-radius 7px 0 0 7px
-
-      transition .3s background, .3s color
-
-    .icon-google-plus::before, .icon-facebook::before
-      position absolute
-      top 0
-      left 0
-      padding 4px 4px 3px 7px
-      font-family 'icomoon'
-      line-height normal
-      color hsl(50, 50%, 50%)
-      border-radius 7px 0 0 7px
-      background-color hsla($dark-trans, .15 / $golden-ratio)
-      font-size 32px
-      transition .3s background, .3s color
-
-    .icon-facebook::before
-      padding 4px 6px 3px 13px
-
-
-  #InviteContent
-    position relative
+  .login-content
+    position absolute
     display block
     width 100%
     height 100%
     text-align center
+    transition all .4s
+
+  #GoogleSigninButton, #FacebookSigninButton
+    display block
+    margin 10px auto 0 auto
+    width 264px
+    height 40px
+
+    &:hover
+      cursor pointer
+    &:hover .icon-google-plus, &:hover .icon-facebook
+      background-color hsla($dark-trans, 0.3 / $golden-ratio)
+      color hsl(50, 60%, 55%)
+    &:hover .icon-google-plus::before
+      color hsl(0, 90%, 64%)
+      background-color hsla($white-trans, 0.9)
+    &:hover .icon-facebook::before
+      color white
+      background-color hsl(220, 45%, 42%)
+
+  .icon-google-plus, .icon-facebook
+    position relative
+    display inline-block
+    width 260px
+    top 3px
+    left 4px
+    background-color $panel
+    color hsl(0, 0, 60%)
+    padding 9px 0 8px 60px
+    font-size 20px
+    font-family Karla
+    letter-spacing -1px
+    word-spacing 3px
+    text-align left
+    border-radius 7px 0 0 7px
+
+    transition .3s background, .3s color
+
+  .icon-google-plus::before, .icon-facebook::before
+    position absolute
+    top 0
+    left 0
+    padding 4px 4px 3px 7px
+    font-family 'icomoon'
+    line-height normal
+    color hsl(50, 50%, 50%)
+    border-radius 7px 0 0 7px
+    background-color hsla($dark-trans, .15 / $golden-ratio)
+    font-size 32px
+    transition .3s background, .3s color
+
+  .icon-facebook::before
+    padding 4px 6px 3px 13px
+
+
+  #RobotContent
 
     #NodeContainer
       display block
@@ -146,3 +150,105 @@
         box-shadow 0 8px 0 #2c2c2c
         transition color .3s
 
+  #InviteContent
+    input[type='text']
+      margin 0 auto
+      width 217px
+      font-size 28px
+      text-align center
+      font-family monospace, Courier New, Courier
+
+  #SignupContent
+    .selector
+      display inline-block
+      width 300px
+      padding 7px 0
+      text-align center
+      font-family "comfortaa"
+      color hsl(50, 55%, 40%)
+      font-size 18px
+      border 1px solid hsl(50, 50%, 27%)
+      cursor pointer
+      transition all .3s
+      &:hover
+        color hsl(0, 0%, 80%)
+      &:first-child
+        border-radius 5px 0 0 5px
+        border-right none
+      &:last-child
+        border-radius 0 5px 5px 0
+        border-left none
+
+    .selected
+      background hsl(50, 50%, 27%)
+      color hsl(0, 0%, 80%)
+
+    .hide
+      visibility hidden
+      opacity 0
+
+    .content-container
+      position absolute
+      top 133px
+      width 100%
+      height 100%
+      text-align center
+
+    .social-button
+      margin-top 20px
+
+    input[type='text'], input[type='password']
+      width 333px
+      padding-left 40px
+      margin 0 auto
+      margin-bottom 17px
+
+    .input-container
+      position relative
+      width 100%
+      text-align center
+      &:first-child
+        margin-top 20px
+        margin-bottom 37px
+      &:nth-child(3)
+        margin-bottom 37px
+
+    .input-length
+      position absolute
+      top 0
+      left 277px
+      right 0
+      margin 0 auto
+      color #aaa
+      font-family monospace
+      font-size 18px
+      -moz-user-select none
+      -webkit-user-select none
+      user-select none
+      pointer-events none
+    .valid
+      color hsl(127, 35%, 65%)
+    .invalid
+      color hsl(0, 80%, 75%)
+
+    .icon-check-circle-o::before, .icon-times-circle::before
+      position absolute
+      top 5px
+      left -290px
+      right 0
+      margin 0 auto
+      z-index 10
+      color hsl(0, 0, 27%)
+      font-size 30px
+      -moz-user-select none
+      -webkit-user-select none
+      user-select none
+      pointer-events none
+      transition color .3s
+
+    .icon-times-circle::before
+      color hsl(0, 60%, 63%)
+      text-shadow 0 0 4px hsl(0, 0, 17%)
+
+    .valid-input::before
+      color hsl(127, 40%, 47%)
