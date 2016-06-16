@@ -82,34 +82,6 @@ export class App {
     }
   ];
 
-  // Navigation menu list
-  navList = [
-    {
-      name:     'Home',
-      pages:    ['About', 'Rules', 'FAQ', 'Signin'],
-      def:      'About',
-      isActive: false,
-      defRoute: null,
-      routes:   new Array<NavModel>()
-    },
-    {
-      name:     'Chat',
-      pages:    ['Chat'],
-      def:      null,
-      isActive: false,
-      defRoute: null,
-      routes:   new Array<NavModel>()
-    },
-    {
-      name:     'Changelog',
-      pages:    ['Changelog'],
-      def:      null,
-      isActive: false,
-      defRoute: null,
-      routes:   new Array<NavModel>()
-    }
-  ];
-
   // page = Page;
 
   // Currently active navigation routes (Populated)
@@ -127,6 +99,8 @@ export class App {
   {
 
     this._initFirstMenuItem();
+
+    this._setupNavigationCallbackHandler();
 
 
     window.onresize = (ev: UIEvent) => {
@@ -367,8 +341,6 @@ export class App {
    * @param toggleNav Toggle the isActive property on the INav objects
    */
   populateRoutes(item: MenuItem, e?: MouseEvent, toggleNav = false) {
-
-    console.log('hello');
 
     // Only activate on left-click
     if (e && typeof e != 'undefined') {
