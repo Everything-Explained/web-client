@@ -34,7 +34,7 @@ export interface TabPage {
 }
 
 
-@inject(Element, EventAggregator, ModernModal, Logger, ErrorHandler)
+@inject(Element, EventAggregator, ModernModal, Logger, ErrorHandler, Login)
 export class App {
 
   version = '0.4.0';
@@ -89,19 +89,20 @@ export class App {
 
   private _scrollbars:   IOptiscrollInstance;
   private _modalOverlay: HTMLElement;
-  private _login:        Login;
 
   constructor(private elem:          Element,
               private _eva:          EventAggregator,
               private _modal:        ModernModal,
               private _log:          Logger,
-              private _errorHandler: ErrorHandler)
+              private _errorHandler: ErrorHandler,
+              private _login: Login)
   {
+
+    // console.log('Logged In', this._login.isSignedIn);
 
     this._initFirstMenuItem();
 
     this._setupNavigationCallbackHandler();
-
 
     window.onresize = (ev: UIEvent) => {
       if (this._scrollbars)
@@ -149,9 +150,6 @@ export class App {
         }
 
       }
-
-      this._login = new Login(this._modal);
-
 
     });
   }
@@ -324,6 +322,9 @@ export class App {
       , lights = localStorage.getItem('lights');
 
     this._modal.init('overlay');
+
+
+    this._login.initAuthLibs();
 
     // let light = (lights == 'off') ? 'light' : 'dark';
     // req.open('GET', `css/themes/${light}/theme.css`, true);

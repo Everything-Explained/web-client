@@ -5,9 +5,9 @@ template
 
       h1 Select a sign-in method.
 
-      div#GoogleSigninButton(click.delegate='')
+      div.google-button(click.delegate='SignIn("google")')
         span.icon-google-plus Sign-in with Google
-      div#FacebookSigninButton
+      div.facebook-button(click.delegate='SignIn("facebook")')
         span.icon-facebook Sign-in with Facebook
 
       h2 Don't have an account? #[br]
@@ -20,13 +20,15 @@ template
         each val in [0, 1, 2, 3]
           div.node
       h1.error-text(class='${isRobotError ? "visible" : ""}' ref='robotButton') Sorry, Try Again!
-      button.try-again(click.delegate='startRobotTest()')
+      button(click.delegate='startRobotTest()')
         span ${robotButtonText}
 
 
     div#InviteContent.login-content.hide(ref='inviteContent')
       h1 Enter your Invite Code
-      input(type='text' maxlength='12')
+      input(type='text' maxlength='12' ref='elInviteContent')
+      button(ref='elInviteButton')
+        span(click.delegate='askForInvite()') Validate
 
     div#SignupContent.login-content.hide(ref='signUpContent')
       h1 Select a sign-in method.
@@ -35,9 +37,9 @@ template
         div.selector(ref='buttonDB' mousedown.delegate='selectSignUp("db")') Database
 
       div.content-container.sso-container(ref='elSSO')
-        div#GoogleSigninButton.social-button(click.delegate='')
+        div.google-button.social-button(click.delegate='SignUp("google")')
           span.icon-google-plus Sign-Up with Google
-        div#FacebookSigninButton.social-button
+        div.facebook-button.social-button(click.delegate='SignUp("facebook")')
           span.icon-facebook Sign-Up with Facebook
 
       div.content-container.db-container.hide(ref='elDB')

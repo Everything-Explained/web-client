@@ -30,7 +30,6 @@ export class Changelog {
           v.changes.length   +
           v.fixes.length;
       });
-      console.log(this.sections);
     });
 
   }
@@ -63,7 +62,6 @@ export class Changelog {
         fix.innerHTML += `<li>${v}</li>`;
       });
 
-      console.log(obj);
     });
   }
 }

@@ -3,7 +3,17 @@ const apiKey = 'AIzaSyAJTuseZ8KbSzREwbs4lcTu4icoMIKhYQY';
 const scope = 'https://www.googleapis.com/auth/plus.me';
 
 import {IRobot} from '../../helpers/robot-check';
+import {inject} from 'aurelia-framework';
+import {Login} from '../../app-login';
+import * as http from 'nanoajax';
 
+enum SignupStatus {
+  NONE = 1,
+  ROBOT = 2,
+  INVITE = 4
+}
+
+@inject(Login)
 export class Signin {
 
   private _auth2: gapi.auth2.GoogleAuth;
@@ -27,12 +37,16 @@ export class Signin {
   public elCEmail: HTMLInputElement;
   public elSSO: HTMLElement;
   public elDB: HTMLElement;
+  public elInviteButton: HTMLElement;
+  public elInviteContent: HTMLInputElement;
 
   public robotButtonText = 'Start!';
 
   private _nickLength = 0;
 
-  constructor(private _el) {
+  private _signupState = SignupStatus.NONE;
+
+  constructor(private _login: Login) {
   }
 
     public test() {
@@ -135,13 +149,16 @@ export class Signin {
         return this.askForInvite();
       })
       .then<any>(() => {
-        return this.beginSignup();
+        return this.showSignup();
       });
   }
 
   public showRobot() {
     this.signInContent.classList.add('hide');
     this.robotContent.classList.remove('hide');
+    if (!(this._signupState & SignupStatus.ROBOT)) {
+      this._signupState |= SignupStatus.ROBOT;
+    }
 
     return new Promise((rs, rj) => {
       this._robot = new IRobot(this._robotNodes, res => {
@@ -165,20 +182,81 @@ export class Signin {
   public askForInvite() {
     this.robotContent.classList.add('hide');
     this.inviteContent.classList.remove('hide');
+
     return new Promise((rs, rj) => {
-      setTimeout(function() {
-        rs(true);
-      }, 1000);
+
+      if (! (this._signupState & SignupStatus.INVITE)) {
+        this._signupState |= SignupStatus.INVITE;
+        this.elInviteButton.addEventListener('click', () => {
+
+          http.ajax({
+            method: 'POST',
+            url: '/internal/validinvite',
+            body: 'asdf',
+            headers: {
+              'Content-Type': 'text/plain'
+            }
+          }, (code, res, req) => {
+            console.log(code, res);
+          });
+        });
+      }
+
     });
   }
 
-  public beginSignup() {
+  public showSignup() {
     this.inviteContent.classList.add('hide');
     this.signUpContent.classList.remove('hide');
+  }
 
-    return new Promise((rs, rj) => {
-      rs(true);
-    });
+  public SignUp(type: string) {
+
+    if (type === 'google') {
+      this._auth2.signIn()
+        .then(d => {
+          console.log(d.getAuthResponse());
+        })
+        .catch(err => {
+          console.error(err);
+        });
+
+      return;
+    }
+
+    if (type === 'facebook') {
+      return;
+    }
+
+  }
+
+  public SignIn(type: string) {
+
+    if (type === 'google') {
+      this._login.signIn('google');
+      return;
+    }
+
+    if (type === 'facebook') {
+      FB.getLoginStatus(res => {
+        if (res.status == 'connected') {
+          console.log(res.authResponse.accessToken);
+        }
+
+        if (res.status === 'not_authorized') {
+          FB.login(res => {
+            console.dir(res.authResponse.accessToken);
+          }, {
+            scope: 'email,public_profile',
+            return_scopes: true
+          });
+        }
+      });
+      return;
+    }
+
+
+
   }
 
   public selectSignUp(type: string) {
@@ -206,27 +284,15 @@ export class Signin {
     });
   }
 
-  signIn() {
-    // this._auth2.signIn()
-    //   .then((d) => {
-    //     console.log(d.getAuthResponse());
-    //   });
-    // auth2.attachClickHandler(el, {}, (user) => {
-    //   console.log(user.getBasicProfile().getId());
-    // },
-    // (error) => {
-    //   console.log(error);
-    // });
-  }
-
 
   attached() {
-    // gapi.load('auth2', () => {
-    //   this._auth2 = gapi.auth2.init({
-    //     client_id
-    //   });
-    //   // this.attachSignin(document.getElementById('test'), auth2);
-    // });
+
+    // INIT Google Signon
+    gapi.load('auth2', () => {
+      this._auth2 = gapi.auth2.init({
+        client_id
+      });
+    });
 
     this._robotNodes = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[];
 

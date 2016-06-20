@@ -29,7 +29,7 @@
     text-align center
     transition all .4s
 
-  #GoogleSigninButton, #FacebookSigninButton
+  .google-button, .facebook-button
     display block
     margin 10px auto 0 auto
     width 264px
@@ -118,37 +118,6 @@
       color #ffa4aa
     .visible
       display block
-
-    $baseColor = hsl(50, 100%, 30%)
-    .try-again
-      position relative
-      display inline-block
-      border-radius 8px
-      margin-top 20px
-      background-color transparent
-      padding-bottom -10px
-      cursor pointer
-      border-radius 5px
-      letter-spacing 1px
-      color #bbb
-      font-family 'Karla'
-      text-shadow -1px -1px 0 #000
-      box-shadow 0 9px 0 hsla(0, 0%, 100%, 0.35), 0 10px 0 2px $baseColor
-      &:hover span
-        color hsl(50, 80%, 50%)
-      &:active
-        transform translate(0, 3px)
-        box-shadow 0 6px 0 hsla(0, 0%, 100%, 0.35), 0 7px 0 2px $baseColor
-      &:active span
-        box-shadow 0 2px 0 #2c2c2c
-        transform translate(0, 3px)
-      & span
-        display inline-block
-        background-color #474747
-        padding 7px 13px
-        border-radius 5px
-        box-shadow 0 8px 0 #2c2c2c
-        transition color .3s
 
   #InviteContent
     input[type='text']
