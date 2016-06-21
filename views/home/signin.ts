@@ -232,30 +232,7 @@ export class Signin {
 
   public SignIn(type: string) {
 
-    if (type === 'google') {
-      this._login.signIn('google');
-      return;
-    }
-
-    if (type === 'facebook') {
-      FB.getLoginStatus(res => {
-        if (res.status == 'connected') {
-          console.log(res.authResponse.accessToken);
-        }
-
-        if (res.status === 'not_authorized') {
-          FB.login(res => {
-            console.dir(res.authResponse.accessToken);
-          }, {
-            scope: 'email,public_profile',
-            return_scopes: true
-          });
-        }
-      });
-      return;
-    }
-
-
+    this._login.signIn(type);
 
   }
 

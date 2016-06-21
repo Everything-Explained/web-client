@@ -105,41 +105,45 @@ export class Login {
   public signIn(type: string) {
 
     if (type === 'google') {
-
-      Web.POST('/internal/login', {
-        fields: {
-          token: 'testing',
-        }
-      }, (err, code, data) => {
-        console.log(err, code, data);
-      });
-      // this._auth2.signIn()
-      //   .then(d => {
-      //     let token = d.getAuthResponse().id_token;
-      //     http.ajax({
-      //       url: '/internal/login',
-      //       headers: {
-      //         'Content-Type': 'text/plain'
-      //       },
-      //       body: `${token}`
-      //     }, (code, res, req) => {
-      //       console.log(JSON.parse(res));
-      //     });
-      //   });
+      this._auth2.signIn()
+        .then(d => {
+          let token = d.getAuthResponse().id_token;
+          this._logInWith('google', token);
+        });
 
       return;
     }
 
     if (type === 'facebook') {
-      FB.login(res => {
-        console.dir(res);
-      }, {
-        scope: 'email,public_profile'
+
+      FB.getLoginStatus(res => {
+
+        if (res.status == 'connected') {
+          this._logInWith('facebook', res.authResponse.accessToken);
+        }
+
+        if (res.status == 'not_authorized') {
+          FB.login(res => {
+            this._logInWith('facebook', res.authResponse.accessToken);
+          });
+        }
+
       });
-      return;
+
     }
 
 
+  }
+
+  private _logInWith(auth_type: string, token: string) {
+    Web.POST('/internal/login', {
+      fields: {
+        token,
+        auth_type
+      }
+    }, (err, code, data) => {
+      console.log(err, code, data);
+    });
   }
 
 
