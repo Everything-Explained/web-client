@@ -41,8 +41,8 @@
       background-color hsla($dark-trans, 0.3 / $golden-ratio)
       color hsl(50, 60%, 55%)
     &:hover .icon-google-plus::before
-      color hsl(0, 90%, 64%)
-      background-color hsla($white-trans, 0.9)
+      color hsla($white-trans, 0.9)
+      background-color hsl(0, 90%, 64%)
     &:hover .icon-facebook::before
       color white
       background-color hsl(220, 45%, 42%)
@@ -62,7 +62,6 @@
     word-spacing 3px
     text-align left
     border-radius 7px 0 0 7px
-
     transition .3s background, .3s color
 
   .icon-google-plus::before, .icon-facebook::before
@@ -165,7 +164,7 @@
 
     .content-container
       position absolute
-      top 133px
+      top 120px
       width 100%
       height 100%
       text-align center
@@ -180,6 +179,9 @@
       margin 0 auto
       margin-bottom 17px
 
+    #SSONickname
+      padding-bottom 20px
+
     .input-container
       position relative
       width 100%
@@ -190,7 +192,8 @@
       &:nth-child(3)
         margin-bottom 37px
 
-    .input-length
+
+    .input-length, .input-response
       position absolute
       top 0
       left 277px
@@ -207,6 +210,17 @@
       color hsl(127, 35%, 65%)
     .invalid
       color hsl(0, 80%, 75%)
+
+    .input-response
+      width 300px
+      top 33px
+      left 50px
+      font-size 14px
+      font-weight bold
+      text-align left
+      color hsl(0, 0, 50%)
+      span
+        transition all .3s
 
     .icon-check-circle-o::before, .icon-times-circle::before
       position absolute
@@ -227,5 +241,5 @@
       color hsl(0, 60%, 63%)
       text-shadow 0 0 4px hsl(0, 0, 17%)
 
-    .valid-input::before
+    .valid::before
       color hsl(127, 40%, 47%)

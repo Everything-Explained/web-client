@@ -3,6 +3,7 @@ const apiKey = 'AIzaSyAJTuseZ8KbSzREwbs4lcTu4icoMIKhYQY';
 const scope = 'https://www.googleapis.com/auth/plus.me';
 
 import {IRobot} from '../../helpers/robot-check';
+import {Web} from '../../helpers/web';
 import {inject} from 'aurelia-framework';
 import {Login} from '../../app-login';
 import * as http from 'nanoajax';
@@ -13,7 +14,16 @@ enum SignupStatus {
   INVITE = 4
 }
 
-@inject(Login)
+enum InputStates {
+  DEFAULT,
+  VALID,
+  INVALID,
+  NICKDEFAULT,
+  NICKVALID,
+  NICKINVALID
+}
+
+@inject(Login, Web)
 export class Signin {
 
   private _auth2: gapi.auth2.GoogleAuth;
@@ -31,6 +41,8 @@ export class Signin {
   public buttonSSO: HTMLElement;
   public buttonDB: HTMLElement;
   public elNickname: HTMLInputElement;
+  public elSSONickname: HTMLInputElement;
+  public elNickInputResponse: HTMLInputElement;
   public elPassword: HTMLInputElement;
   public elCPassword: HTMLInputElement;
   public elEmail: HTMLInputElement;
@@ -46,7 +58,9 @@ export class Signin {
 
   private _signupState = SignupStatus.NONE;
 
-  constructor(private _login: Login) {
+  private _nickInputResponse = '';
+
+  constructor(private _login: Login, private _web: Web) {
   }
 
     public test() {
@@ -76,18 +90,61 @@ export class Signin {
 
   }
 
-  public isNickValid(ev: KeyboardEvent) {
+  get nickInputResponse() {
+    return this._nickInputResponse;
+  }
+
+  public validateNick(ev: KeyboardEvent) {
     let obj = ev.target as HTMLInputElement
       , validInput = obj.value.match(/^[a-zA-Z0-9]+$/g);
 
-    if (obj.value.length < 4)
-      return this.setInputState(obj, null);
-
-    if (!validInput) {
-      return this.setInputState(obj, 'invalid');
+    if (!obj.value.length) {
+      this._nickInputResponse = 'You need a Nickname to Sign Up';
+      this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
+      this.setInputState(obj, InputStates.INVALID);
+      return;
     }
 
-    this.setInputState(obj, 'valid');
+    if (obj.value.length < 4 && obj.value.length) {
+      this._nickInputResponse = 'Nickname too Short';
+      this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
+      this.setInputState(obj, InputStates.INVALID);
+      return;
+    }
+
+    if (!validInput) {
+      this._nickInputResponse = 'Only 0-9, a-z, & A-Z are Allowed';
+      this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
+      this.setInputState(obj, InputStates.INVALID);
+      return;
+    }
+
+    Web.POST('/internal/validnick', {
+      data: obj.value
+    }, (err, code, data) => {
+
+      if (code == 200) {
+        if (~data.indexOf('Available')) {
+
+          this._nickInputResponse = 'Nick Available!';
+          this.setInputState(obj, InputStates.VALID);
+          this.setInputState(this.elNickInputResponse, InputStates.NICKVALID);
+          return;
+
+        }
+
+        this._nickInputResponse = 'Nick not Available.';
+        this.setInputState(obj, InputStates.INVALID);
+        this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
+        return;
+
+      }
+
+      this._nickInputResponse = 'Server Error! Try Again Later!';
+      this.setInputState(obj, InputStates.INVALID);
+      this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
+
+    });
 
   }
 
@@ -96,43 +153,61 @@ export class Signin {
     if (in1.value.length == 0 && in2.value.length == 0) return;
 
     if (in1.value === in2.value) {
-      this.setInputState(in1, 'valid');
-      this.setInputState(in2, 'valid');
+      this.setInputState(in1, InputStates.VALID);
+      this.setInputState(in2, InputStates.VALID);
       return;
     }
 
     if (onblur == true && (!in1.value.length || in1.value !== in2.value)) {
-      this.setInputState(in1, 'invalid');
-      this.setInputState(in2, 'invalid');
+      this.setInputState(in1, InputStates.INVALID);
+      this.setInputState(in2, InputStates.INVALID);
       return;
     }
 
-    this.setInputState(in1, null);
-    this.setInputState(in2, null);
+    this.setInputState(in1, InputStates.DEFAULT);
+    this.setInputState(in2, InputStates.DEFAULT);
 
   }
 
 
-  setInputState(el: HTMLInputElement, valid: string) {
+  setInputState(el: HTMLInputElement, valid: InputStates) {
 
     switch (valid) {
-      case 'valid':
+      case InputStates.VALID:
         el.parentElement.classList.remove('icon-times-circle');
         el.parentElement.classList.add('icon-check-circle-o');
-        el.parentElement.classList.add('valid-input');
+        el.parentElement.classList.add('valid');
         break;
 
-      case 'invalid':
+      case InputStates.INVALID:
         el.parentElement.classList.remove('icon-check-circle-o');
-        el.parentElement.classList.remove('valid-input');
+        el.parentElement.classList.remove('valid');
         el.parentElement.classList.add('icon-times-circle');
         break;
 
-      default:
+      case InputStates.DEFAULT:
         el.parentElement.classList.remove('icon-times-circle');
         el.parentElement.classList.add('icon-check-circle-o');
-        el.parentElement.classList.remove('valid-input');
+        el.parentElement.classList.remove('valid');
         break;
+
+      case InputStates.NICKVALID:
+        el.classList.remove('invalid');
+        el.classList.add('valid');
+        break;
+
+      case InputStates.NICKINVALID:
+        el.classList.remove('valid');
+        el.classList.add('invalid');
+        break;
+
+      case InputStates.NICKDEFAULT:
+        el.classList.remove('valid');
+        el.classList.remove('invalid');
+        break;
+
+      default:
+        throw new Error('Invalid Input State');
     }
 
   }
@@ -192,7 +267,7 @@ export class Signin {
           http.ajax({
             method: 'POST',
             url: '/internal/validinvite',
-            body: 'asdf',
+            body: this.elInviteContent.value,
             headers: {
               'Content-Type': 'text/plain'
             }
@@ -261,6 +336,10 @@ export class Signin {
     });
   }
 
+  public test3() {
+    console.log('testing 3');
+  }
+
 
   attached() {
 
@@ -275,6 +354,11 @@ export class Signin {
 
     // Track nick length
     this.elNickname.addEventListener('keyup', (ev) => {
+      let obj = ev.target as HTMLInputElement;
+      this._nickLength = obj.value.length;
+    });
+
+    this.elSSONickname.addEventListener('keyup', ev => {
       let obj = ev.target as HTMLInputElement;
       this._nickLength = obj.value.length;
     });

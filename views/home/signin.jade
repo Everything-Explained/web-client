@@ -1,7 +1,7 @@
 
 template
   div#SignInPage
-    div#SignInContent.login-content(ref='signInContent')
+    div#SignInContent.login-content.hide(ref='signInContent')
 
       h1 Select a sign-in method.
 
@@ -30,17 +30,36 @@ template
       button(ref='elInviteButton')
         span(click.delegate='askForInvite()') Validate
 
-    div#SignupContent.login-content.hide(ref='signUpContent')
+    div#SignupContent.login-content(ref='signUpContent')
       h1 Select a sign-in method.
       div.selection-container
         div.selector.selected(ref='buttonSSO' mousedown.delegate='selectSignUp("sso")') Single Sign-On
         div.selector(ref='buttonDB' mousedown.delegate='selectSignUp("db")') Database
 
+
       div.content-container.sso-container(ref='elSSO')
+        div.input-container.icon-check-circle-o
+          input(type='text'
+                id='SSONickname'
+                placeholder='_______________'
+                keyup.delegate='validateNick($event) & debounce:700'
+                maxlength='20'
+                ref='elSSONickname')
+          div.input-length
+            span(class='${nickLength < 4 ? "invalid" : "valid"}').
+                ${nickLength < 4 ? nickLength : 4}
+            span :
+            span(class='${nickLength < 20 ? "valid" : "invalid"}').
+                ${(20 - nickLength) < 10 ? "0" + (20 - nickLength) : 20 - nickLength}
+          div.input-response
+              span(ref='elNickInputResponse').
+                  ${nickInputResponse.length ? nickInputResponse : "Enter a Nickname"}
+
         div.google-button.social-button(click.delegate='SignUp("google")')
           span.icon-google-plus Sign-Up with Google
         div.facebook-button.social-button(click.delegate='SignUp("facebook")')
           span.icon-facebook Sign-Up with Facebook
+
 
       div.content-container.db-container.hide(ref='elDB')
         h2.demo For DEMO Only!
@@ -48,7 +67,7 @@ template
         div.input-container.icon-check-circle-o
           input(type='text'
                 placeholder='Enter Nickname'
-                keyup.delegate='isNickValid($event) & debounce:500'
+                keyup.delegate='validateNick($event) & debounce:500'
                 maxlength='20'
                 ref='elNickname')
           div.input-length
@@ -57,6 +76,7 @@ template
             span :
             span(class='${nickLength < 20 ? "valid" : "invalid"}').
                 ${(20 - nickLength) < 10 ? "0" + (20 - nickLength) : 20 - nickLength}
+
 
         div.input-container.icon-check-circle-o
           input(type='password' ref='elPassword' placeholder='Enter Password')
