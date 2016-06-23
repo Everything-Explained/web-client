@@ -148,6 +148,7 @@ export class Signin {
 
   }
 
+
   public checkConfirm(in1: HTMLInputElement, in2: HTMLInputElement, onblur = false) {
 
     if (in1.value.length == 0 && in2.value.length == 0) return;
@@ -213,7 +214,7 @@ export class Signin {
   }
 
 
-  public signUp() {
+  public beginSignUpProcess() {
     Promise.resolve(null)
       // *** ROBOT TEST ***
       .then<any>(() => {
@@ -285,29 +286,17 @@ export class Signin {
     this.signUpContent.classList.remove('hide');
   }
 
-  public SignUp(type: string) {
+  public signUp(type: string) {
 
-    if (type === 'google') {
-      this._auth2.signIn()
-        .then(d => {
-          console.log(d.getAuthResponse());
-        })
-        .catch(err => {
-          console.error(err);
-        });
-
-      return;
-    }
-
-    if (type === 'facebook') {
-      return;
-    }
+    // this._login.signUp(this.elSSONickname.value, type);
+    console.log(this._login.isSignedIn);
+    // this._auth2.signOut();
 
   }
 
-  public SignIn(type: string) {
+  public signIn(type: string) {
 
-    this._login.signIn(type);
+    // this._login.signIn(type);
 
   }
 

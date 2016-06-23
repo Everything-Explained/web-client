@@ -53,6 +53,7 @@ export class Login {
     window['fbAsyncInit'] = () => {
       FB.init({
         appId: '1682404772003204',
+        status: true,
         xfbml: false,
         cookie: true,
         version: 'v2.5'
@@ -85,20 +86,20 @@ export class Login {
 
   private _isUserSignedIn() {
 
-    // Handle auto returning Google Signin
+    // Google Signin Status
     if (this._auth2.isSignedIn.get()) {
       console.info('User Already Signed in with Google');
       this._loggedInWith |= LoginTypes.GOOGLE;
       return;
     }
 
-    // Handle auto returning Facebook Signin
-    FB.getLoginStatus(res => {
-      if (res.status === 'connected') {
-        console.info('User Already Signed in with Facebook');
-        this._loggedInWith |= LoginTypes.FACEBOOK;
-      }
-    });
+    // Facebook Signin Status
+    let fbAuth = FB.getAuthResponse();
+    if (fbAuth && fbAuth.accessToken) {
+      console.info('User Signed in with Facebook');
+      this._loggedInWith |= LoginTypes.FACEBOOK;
+      return;
+    }
   }
 
 
@@ -132,7 +133,42 @@ export class Login {
 
     }
 
+  }
 
+
+  public signUp(nick: string, type: string) {
+    if (type === 'google') {
+      this._auth2.signIn()
+        .then(d => {
+          let token = d.getAuthResponse().id_token;
+          this._signUpWith(nick, 'google', token);
+        });
+      return;
+    }
+
+    if (type === 'facebook') {
+
+      FB.getLoginStatus(res => {
+
+        if (res.status == 'connected') {
+          this._logInWith('facebook', res.authResponse.accessToken);
+        }
+
+        if (res.status == 'not_authorized') {
+          FB.login(res => {
+            if (res.status == 'connected') {
+              console.log('Singing up With', res.authResponse.accessToken);
+
+              // facebook needs time to update
+              setTimeout(() => {
+                this._signUpWith(nick, 'facebook', res.authResponse.accessToken);
+              }, 500);
+
+            }
+          }, {scope: 'email'});
+        }
+      });
+    }
   }
 
   private _logInWith(auth_type: string, token: string) {
@@ -146,22 +182,49 @@ export class Login {
     });
   }
 
+  private _signUpWith(nick: string, auth_type: string, token: string) {
+
+    Web.POST('/internal/signup', {
+      fields: {
+        token,
+        auth_type,
+        alias: nick
+      }
+    }, (err, code, data) => {
+      console.log(err, code, data);
+    });
+
+  }
+
 
   public signOut() {
 
-    if (this._loggedInWith & LoginTypes.GOOGLE) {
-      console.log('Signing out with Google');
-      this._loggedInWith &= ~LoginTypes.GOOGLE;
-      this._auth2.signOut();
-      return;
-    }
+    // if (this._loggedInWith & LoginTypes.GOOGLE) {
+    //   console.log('Signing out with Google');
+    //   this._loggedInWith &= ~LoginTypes.GOOGLE;
+    //   this._auth2.signOut();
+    //   return;
+    // }
 
-    if (this._loggedInWith & LoginTypes.FACEBOOK) {
-      console.log('Signing out with Facebook');
-      FB.logout((res) => {
-        console.log(res);
-      });
-    }
+    // if (this._loggedInWith & LoginTypes.FACEBOOK) {
+    //   console.log('Signing out with Facebook');
+    //   FB.logout((res) => {
+    //     console.log(res);
+    //   });
+    // }
+    FB.getLoginStatus(res => {
+      if (res.status == 'connected') {
+        // console.log(res.authResponse.accessToken);
+        // Web.POST('/internal/logout', {
+        //   data: res.authResponse.accessToken
+        // }, (err, code, data) => {
+        //   console.log(err, code, data);
+        // });
+        console.log('connected');
+      }
+      else console.log('hello');
+    });
+
 
   }
 

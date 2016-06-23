@@ -15,10 +15,8 @@ declare namespace facebook {
         /**
          * The method FB.getAuthResponse() is a synchronous accessor for the current authResponse.
          * The synchronous nature of this method is what sets it apart from the other login methods.
-         *
-         * @param callback function to handle the response.
          */
-        getAuthResponse(callback: (response: AuthResponse) => void): void;
+        getAuthResponse(): AuthObject;
         /**
          * FB.getLoginStatus() allows you to determine if a user is
          * logged in to Facebook and has authenticated your app.
@@ -86,5 +84,12 @@ declare namespace facebook {
             signedRequest: string;
             userID: string;
         }
+    }
+
+    interface AuthObject {
+        accessToken: string;
+        expiresIn: number;
+        signedRequest: string;
+        userID: string;
     }
 }
