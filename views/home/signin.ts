@@ -60,6 +60,8 @@ export class Signin {
 
   private _nickInputResponse = '';
 
+  private _socialActive = false;
+
   constructor(private _login: Login, private _web: Web) {
   }
 
@@ -92,6 +94,10 @@ export class Signin {
 
   get nickInputResponse() {
     return this._nickInputResponse;
+  }
+
+  get socialActive() {
+    return this._socialActive;
   }
 
   public validateNick(ev: KeyboardEvent) {
@@ -129,6 +135,7 @@ export class Signin {
           this._nickInputResponse = 'Nick Available!';
           this.setInputState(obj, InputStates.VALID);
           this.setInputState(this.elNickInputResponse, InputStates.NICKVALID);
+          this._socialActive = true;
           return;
 
         }
@@ -288,8 +295,11 @@ export class Signin {
 
   public signUp(type: string) {
 
-    // this._login.signUp(this.elSSONickname.value, type);
-    console.log(this._login.isSignedIn);
+    // Do not signup if users are messing around
+    if (!this._socialActive) return;
+
+    this._login.signUp(this.elSSONickname.value, type);
+    // console.log(this._login.isSignedIn);
     // this._auth2.signOut();
 
   }
@@ -350,6 +360,7 @@ export class Signin {
     this.elSSONickname.addEventListener('keyup', ev => {
       let obj = ev.target as HTMLInputElement;
       this._nickLength = obj.value.length;
+      this._socialActive = false;
     });
 
 

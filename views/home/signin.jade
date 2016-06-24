@@ -55,10 +55,11 @@ template
               span(ref='elNickInputResponse').
                   ${nickInputResponse.length ? nickInputResponse : "Enter a Nickname"}
 
-        div.google-button.social-button(click.delegate='signUp("google")')
-          span.icon-google-plus Sign-Up with Google
-        div.facebook-button.social-button(click.delegate='signUp("facebook")')
-          span.icon-facebook Sign-Up with Facebook
+        div.button-container(class='${socialActive ? "show" : "hide"}')
+          div.google-button.social-button(click.delegate='signUp("google")')
+            span.icon-google-plus Sign-Up with Google
+          div.facebook-button.social-button(click.delegate='signUp("facebook")')
+            span.icon-facebook Sign-Up with Facebook
 
 
       div.content-container.db-container.hide(ref='elDB')

@@ -222,6 +222,15 @@
       span
         transition all .3s
 
+    .button-container
+      transition all .3s ease-in-out
+      .hide
+        visibility hidden
+        opacity 0
+      .show
+        visibility visible
+        opacity 1
+
     .icon-check-circle-o::before, .icon-times-circle::before
       position absolute
       top 5px

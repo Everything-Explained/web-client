@@ -117,20 +117,16 @@ export class Login {
 
     if (type === 'facebook') {
 
-      FB.getLoginStatus(res => {
+      let fbAuth = FB.getAuthResponse();
 
-        if (res.status == 'connected') {
-          this._logInWith('facebook', res.authResponse.accessToken);
-        }
+      // Already logged in
+      if (fbAuth) return;
 
-        if (res.status == 'not_authorized') {
-          FB.login(res => {
-            this._logInWith('facebook', res.authResponse.accessToken);
-          });
-        }
-
+      FB.login(res => {
+        this._logInWith('facebook', res.authResponse.accessToken);
       });
 
+      return;
     }
 
   }
@@ -148,26 +144,23 @@ export class Login {
 
     if (type === 'facebook') {
 
-      FB.getLoginStatus(res => {
+      let fbAuth = FB.getAuthResponse();
 
+      // Already logged in
+      if (fbAuth) return;
+
+      FB.login(res => {
         if (res.status == 'connected') {
-          this._logInWith('facebook', res.authResponse.accessToken);
+          console.log('Singing up With', res.authResponse.accessToken);
+
+          // facebook needs time to update
+          setTimeout(() => {
+            this._signUpWith(nick, 'facebook', res.authResponse.accessToken);
+          }, 500);
+
         }
-
-        if (res.status == 'not_authorized') {
-          FB.login(res => {
-            if (res.status == 'connected') {
-              console.log('Singing up With', res.authResponse.accessToken);
-
-              // facebook needs time to update
-              setTimeout(() => {
-                this._signUpWith(nick, 'facebook', res.authResponse.accessToken);
-              }, 500);
-
-            }
-          }, {scope: 'email'});
-        }
-      });
+      }, {scope: 'email'});
+      return;
     }
   }
 
