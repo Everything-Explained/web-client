@@ -62,6 +62,8 @@ export class Signin {
 
   private _socialActive = false;
 
+  private _signInResponse = null;
+
   constructor(private _login: Login, private _web: Web) {
   }
 
@@ -272,6 +274,11 @@ export class Signin {
         this._signupState |= SignupStatus.INVITE;
         this.elInviteButton.addEventListener('click', () => {
 
+          // TODO - Add a message to UI on failure conditions
+          if (!this.elInviteContent.value ||
+              !this.elInviteContent.value.length ||
+              !/^[A-Z0-9]+$/g.test(this.elInviteContent.value)) return;
+
           http.ajax({
             method: 'POST',
             url: '/internal/validinvite',
@@ -280,7 +287,12 @@ export class Signin {
               'Content-Type': 'text/plain'
             }
           }, (code, res, req) => {
-            console.log(code, res);
+            if (code == 200) {
+              let obj = JSON.parse(res);
+              // TODO - Add UI response on expired
+              if (obj.expired) return;
+              rs(true);
+            }
           });
         });
       }
@@ -296,17 +308,26 @@ export class Signin {
   public signUp(type: string) {
 
     // Do not signup if users are messing around
-    if (!this._socialActive) return;
+    if (!this._socialActive ||
+        !this.elSSONickname.value ||
+        !this.elSSONickname.value.length) return;
 
     this._login.signUp(this.elSSONickname.value, type);
-    // console.log(this._login.isSignedIn);
-    // this._auth2.signOut();
 
+  }
+
+  get signInResponse() {
+    return this._signInResponse;
   }
 
   public signIn(type: string) {
 
-    // this._login.signIn(type);
+    this._login.signIn(type, (err, code, data) => {
+      if (err) {
+        console.log('here');
+        this._signInResponse = err;
+      }
+    });
 
   }
 

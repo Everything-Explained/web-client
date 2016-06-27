@@ -103,13 +103,17 @@ export class Login {
   }
 
 
-  public signIn(type: string) {
+  public signIn(type: string, cb?: (err, code, data) => void) {
 
     if (type === 'google') {
+
+      if (this._auth2.isSignedIn.get()) return;
+
       this._auth2.signIn()
         .then(d => {
           let token = d.getAuthResponse().id_token;
-          this._logInWith('google', token);
+          console.log(token);
+          this._logInWith('google', token, cb ? cb : null);
         });
 
       return;
@@ -120,11 +124,12 @@ export class Login {
       let fbAuth = FB.getAuthResponse();
 
       // Already logged in
-      if (fbAuth) return;
+      // if (fbAuth) return;
+      this._logInWith('facebook', fbAuth.accessToken, cb ? cb : null);
 
-      FB.login(res => {
-        this._logInWith('facebook', res.authResponse.accessToken);
-      });
+      // FB.login(res => {
+      //   this._logInWith('facebook', res.authResponse.accessToken);
+      // });
 
       return;
     }
@@ -164,7 +169,7 @@ export class Login {
     }
   }
 
-  private _logInWith(auth_type: string, token: string) {
+  private _logInWith(auth_type: string, token: string, cb?: (err, code, data) => void) {
     Web.POST('/internal/login', {
       fields: {
         token,
@@ -172,6 +177,7 @@ export class Login {
       }
     }, (err, code, data) => {
       console.log(err, code, data);
+      if (cb) cb(err, code, data);
     });
   }
 

@@ -60,7 +60,7 @@ export class App {
         }
       ],
       def:      'About',
-      isActive: false,
+      isActive: true,
       defRoute: null,
       routes:   new Array<NavModel>()
     },
@@ -307,6 +307,8 @@ export class App {
 
   }
 
+
+
   get lights() {
     return localStorage.getItem('lights') == 'on';
   }
@@ -373,6 +375,8 @@ export class App {
       this.goTo(item.def ? item.defRoute.href : item.routes[0].href);
     }
   }
+
+
 
   // Activate the router manually
   // TODO - use route.navigateToRoute
