@@ -10,17 +10,22 @@ html
     script(src='https://apis.google.com/js/api.js' async defer)
     script(src='../libs/live.js')
 
-    // script(src='helpers/lightsOnOff.js')
-    script findTheLights()
+    //- script(src='helpers/lightsOnOff.js')
+    //- script findTheLights()
     script(src='../libs/lodash.min.js')
     script(src='../libs/optiscroll.min.js')
     //- script(src='../helpers/globals.js')
     //- script(src='../controllers/errorhandler.js')
 
+    //- Load Session
+    script(type='text/javascript').
+      var session = "#{session.invite}"
+
   body(aurelia-app='app-config')
-    script.
-      var title = 'pickles';
     div.body-loader(data-message='Loading Amenaeble Alpha')
+    noscript
+      div#cover
+        div.noscript you must enable #[span javascript] for this site to run.
 
     script(src='jspm_packages/system.js')
     script(src='config.js')
