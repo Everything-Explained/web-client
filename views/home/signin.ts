@@ -142,7 +142,14 @@ export class Signin {
 
         }
 
-        this._nickInputResponse = 'Nick not Available.';
+        if (~data.indexOf('In Use')) {
+          this._nickInputResponse = 'Nick not Available.';
+          this.setInputState(obj, InputStates.INVALID);
+          this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
+          return;
+        }
+
+        this._nickInputResponse = data;
         this.setInputState(obj, InputStates.INVALID);
         this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
         return;
@@ -324,7 +331,6 @@ export class Signin {
 
     this._login.signIn(type, (err, code, data) => {
       if (err) {
-        console.log('here');
         this._signInResponse = err;
       }
     });

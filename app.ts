@@ -195,7 +195,7 @@ export class App {
 
   /** Aurelia router configuration */
   configureRouter(config: RouterConfiguration, router: Router) {
-    config.title = 'Webaeble';
+    config.title = 'Noumenae';
     this.createRoutes(this.mainMenu, config);
     this.router = router;
     console.log(router);

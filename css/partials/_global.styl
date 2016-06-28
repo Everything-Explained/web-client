@@ -125,6 +125,7 @@ button
   right 0
   bottom 0
   background-color #111
+  z-index 10000
 
   .response
     display block
@@ -143,3 +144,56 @@ button
     top -10px
     color hsl(126, 70%, 70%)
 
+  .container
+    position relative
+    display block
+    margin-top 77px
+    text-align center
+
+  a:link, a:hover, a:active, a:visited
+    text-decoration none !important
+    border none !important
+
+  .fail
+    position relative
+    top 10px
+    color hsl(324, 100%, 75%)
+
+  .icon
+    display inline-block
+    width 180px
+    height 128px
+    background-position center center
+    background-repeat no-repeat
+    &:before
+      position absolute
+      display block
+      width 180px
+      font-family 'comfortaa';
+      letter-spacing 1px
+      word-spacing 2px
+      font-size 20px
+      opacity 0
+      color hsl(126, 70%, 70%)
+      text-align center
+      top 100%
+      box-sizing border-box
+      white-space pre
+      transition all .3s
+    &:hover:before
+      opacity 1
+
+  .firefox
+    background-image url('http://img04.deviantart.net/1fbf/i/2004/09/3/5/firefox_dock_icon_v3.png')
+    &:before
+      content 'Try \a FireFox!'
+
+  .chrome
+    background-image url('http://icons.iconarchive.com/icons/franksouza183/fs/128/Apps-google-chrome-icon.png')
+    &:before
+      content 'Try \a Google Chrome!'
+
+  .opera
+    background-image url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/128px-Opera_2015_icon.svg.png')
+    &:before
+      content 'Try \a Opera!'

@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title!= title
+    title Noumenae
     link(href='https://fonts.googleapis.com/css?family=Karla|Delius|Comfortaa' rel='stylesheet' type='text/css')
     link(rel="stylesheet" href="../css/fonts/fonts.css")
     link(rel='stylesheet' href='../css/optiscroll.css')
@@ -23,16 +23,27 @@ html
 
   body(aurelia-app='app-config')
 
-    div.body-loader(data-message='Loading Amenaeble Alpha')
-
     noscript
       div.cover(style='display: inline-block')
         div.response you must enable #[span javascript] for this site to run
 
+    div.body-loader(data-message='Loading Amenaeble Alpha')
+
     div#cookie.cover
       div.response you must enable #[span cookies] for this site to run
 
+    div#failure.cover
+      div.response your #[span browser] has #[span.fail failed] you
+      div.container
+        a.chrome.icon(href='https://chrome.google.com')
+        a.firefox.icon(href='https://www.mozilla.com')
+        a.opera.icon(href='http://www.opera.com')
+
+    script(data-src='jspm_packages/system.js')
+    script(data-src='../libs/optiscroll.min.js')
+    script(data-src='config.js')
     script(src='bootstrap.js')
+
 
 
 

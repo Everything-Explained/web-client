@@ -107,14 +107,17 @@ export class Login {
 
     if (type === 'google') {
 
-      if (this._auth2.isSignedIn.get()) return;
+      if (!this._auth2.isSignedIn.get()) {
+        cb('You do not have an account', null, null);
+        return;
+      }
 
-      this._auth2.signIn()
-        .then(d => {
-          let token = d.getAuthResponse().id_token;
-          console.log(token);
-          this._logInWith('google', token, cb ? cb : null);
-        });
+      // this._auth2.signIn()
+      //   .then(d => {
+      //     let token = d.getAuthResponse().id_token;
+      //     console.log(token);
+      //     this._logInWith('google', token, cb ? cb : null);
+      //   });
 
       return;
     }
@@ -124,8 +127,12 @@ export class Login {
       let fbAuth = FB.getAuthResponse();
 
       // Already logged in
-      // if (fbAuth) return;
-      this._logInWith('facebook', fbAuth.accessToken, cb ? cb : null);
+      if (fbAuth) {
+        cb('You have an account', null, null);
+        return;
+      }
+      cb('You do not have an account', null, null);
+      // this._logInWith('facebook', fbAuth.accessToken, cb ? cb : null);
 
       // FB.login(res => {
       //   this._logInWith('facebook', res.authResponse.accessToken);
@@ -139,6 +146,10 @@ export class Login {
 
   public signUp(nick: string, type: string) {
     if (type === 'google') {
+
+      // TODO - UI should log this
+      if (this._auth2.isSignedIn.get()) return;
+
       this._auth2.signIn()
         .then(d => {
           let token = d.getAuthResponse().id_token;
@@ -151,6 +162,7 @@ export class Login {
 
       let fbAuth = FB.getAuthResponse();
 
+      // TODO - UI Should log this
       // Already logged in
       if (fbAuth) return;
 

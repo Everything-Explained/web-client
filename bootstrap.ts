@@ -1,31 +1,56 @@
 
 
+let needBrowser = !navigator['cookieEnabled'] &&
+                  !window['Promise'] &&
+                  !window['DOMParser'] &&
+                  !document.body.dataset &&
+                  !new DOMParser()['parseFromString'] &&
+                  !document['importNode'];
+
 let cookiesEnabled = navigator.cookieEnabled || undefined;
 
-let needBrowser = typeof cookiesEnabled === undefined;
-
-let scripts = [
-    '../libs/optiscroll.min.js',
-    'jspm_packages/system.js',
-    'config.js'
-  ];
+let scripts = [] as HTMLScriptElement[];
 
 function initScripts() {
+
   if (!scripts.length) {
+    if (!window['System']) {
+      let obj = document.getElementById('failure');
+      obj.style.display = 'inline-block';
+      return;
+    }
     System.import('aurelia-bootstrapper');
     return;
   }
-  let obj = document.createElement('script');
-  obj.src = scripts.shift();
-  document.body.appendChild(obj);
+
+  let obj = scripts.shift();
+  obj.src = obj.dataset['src'];
+  obj.async = false;
   obj.onload = initScripts;
+
+}
+
+if (needBrowser) {
+  let obj = document.getElementById('failure');
+  obj.style.display = 'inline-block';
 }
 
 if (cookiesEnabled && !needBrowser) {
-    initScripts();
+
+  scripts =
+      Array.prototype.slice.call(document.querySelectorAll('script')) as HTMLScriptElement[];
+
+  scripts = scripts.filter(v => {
+    return !!v.dataset['src'];
+  });
+
+  initScripts();
+
+
 }
 
-if (!cookiesEnabled) {
+
+if (!cookiesEnabled && !needBrowser) {
   let obj = document.getElementById('cookie');
   obj.style.display = 'inline-block';
 }
