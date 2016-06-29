@@ -1,10 +1,10 @@
 
 
-let needBrowser = !navigator['cookieEnabled'] &&
-                  !window['Promise'] &&
-                  !window['DOMParser'] &&
-                  !document.body.dataset &&
-                  !new DOMParser()['parseFromString'] &&
+let needBrowser = !navigator['cookieEnabled'] ||
+                  !window['Promise'] ||
+                  !window['DOMParser'] ||
+                  !document.body.dataset ||
+                  !new DOMParser()['parseFromString'] ||
                   !document['importNode'];
 
 let cookiesEnabled = navigator.cookieEnabled || undefined;
@@ -29,6 +29,7 @@ function initScripts() {
   obj.onload = initScripts;
 
 }
+
 
 if (needBrowser) {
   let obj = document.getElementById('failure');
