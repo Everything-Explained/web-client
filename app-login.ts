@@ -108,7 +108,7 @@ export class Login {
     if (type === 'google') {
 
       if (!this._auth2.isSignedIn.get()) {
-        cb('You do not have an account', null, null);
+        cb('you do not have a <span>google</span> account.', null, null);
         return;
       }
 
@@ -128,10 +128,10 @@ export class Login {
 
       // Already logged in
       if (fbAuth) {
-        cb('You have an account', null, null);
+        cb('you already have a <span>facebook</span> account', null, null);
         return;
       }
-      cb('You do not have an account', null, null);
+      cb('you do not have a <span>facebook</span> account.', null, null);
       // this._logInWith('facebook', fbAuth.accessToken, cb ? cb : null);
 
       // FB.login(res => {

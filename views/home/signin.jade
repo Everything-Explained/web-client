@@ -1,7 +1,7 @@
 
 template
   div#SignInPage
-    div#SignInContent.login-content.hide(ref='signInContent')
+    div#SignInContent.login-content(ref='signInContent')
 
       h1 Select a sign-in method.
 
@@ -9,7 +9,8 @@ template
         span.icon-google-plus Sign-in with Google
       div.facebook-button(click.delegate='signIn("facebook")')
         span.icon-facebook Sign-in with Facebook
-      span.signin-response ${signInResponse}
+      span.signin-response(css='display: ${isResponseActive ? "block" : "none"}'
+                          innerHTML.bind='signInResponse')
       h2 Don't have an account? #[br]
         a(href='javascript:void(0)' click.delegate='beginSignUpProcess()') Sign-Up!
 
@@ -30,7 +31,7 @@ template
       button(ref='elInviteButton')
         span(click.delegate='askForInvite()') Validate
 
-    div#SignupContent.login-content(ref='signUpContent')
+    div#SignupContent.login-content.hide(ref='signUpContent')
       h1 Select a sign-in method.
       div.selection-container
         div.selector.selected(ref='buttonSSO' mousedown.delegate='selectSignUp("sso")') Single Sign-On

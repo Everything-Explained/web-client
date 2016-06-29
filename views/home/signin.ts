@@ -64,6 +64,8 @@ export class Signin {
 
   private _signInResponse = null;
 
+  private _isResponseActive = false;
+
   constructor(private _login: Login, private _web: Web) {
   }
 
@@ -100,6 +102,10 @@ export class Signin {
 
   get socialActive() {
     return this._socialActive;
+  }
+
+  get isResponseActive() {
+    return !!this._signInResponse;
   }
 
   public validateNick(ev: KeyboardEvent) {
