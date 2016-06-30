@@ -30,6 +30,7 @@ export interface MenuItem {
 export interface TabPage {
   name: string;
   hidden?: boolean;
+  classes?: string;
   subPages?: TabPage[];
 }
 
@@ -48,15 +49,23 @@ export class App {
 
   public mainMenu = [
     {
-      name:     'Home',
+      name:     'home',
       pages: [
         {name: 'About'},
         {name: 'Rules'},
         {name: 'FAQ'},
-        {name: 'Signin', subPages: [
+        {
+          name: 'Signin',
+          subPages: [
             {name: 'Invite'},
             {name: 'Signup'}
-          ]
+          ],
+          classes: 'login icon-enter'
+        },
+        {
+          name: 'Settings',
+          hidden: true,
+          classes: 'settings icon-cog2'
         }
       ],
       def:      'About',
@@ -65,7 +74,7 @@ export class App {
       routes:   new Array<NavModel>()
     },
     {
-      name:     'Chat',
+      name:     'chat',
       pages:    [{name: 'Chat'}],
       def:      null,
       isActive: false,
@@ -73,14 +82,14 @@ export class App {
       routes:   new Array<NavModel>()
     },
     {
-      name:     'Changelog',
+      name:     'changelog',
       pages:    [{name: 'Changelog'}],
       def:      null,
       isActive: false,
       defRoute: null,
       routes:   new Array<NavModel>()
     }
-  ];
+  ] as MenuItem[];
 
   // page = Page;
 
@@ -99,6 +108,19 @@ export class App {
   {
 
     // console.log('Logged In', this._login.isSignedIn);
+
+    console.log(window['session'], window['secret']);
+
+    if (window['session'] && window['secret']) {
+      for (let p of this.mainMenu[0].pages) {
+        if (p.name.toLowerCase() == 'signin') {
+          p.hidden = true;
+        }
+        if (p.name.toLowerCase() == 'settings') {
+          p.hidden = false;
+        }
+      }
+    }
 
     this._initFirstMenuItem();
 
@@ -121,9 +143,9 @@ export class App {
 
     this._eva.subscribeOnce('router:navigation:complete', payload => {
 
-      console.log('Frist Activation');
-
       let activePage = payload.instruction.fragment.substr(1).toLowerCase();
+
+      console.log(activePage, this.router.navigation);
 
       for (var item of this.mainMenu) {
 
@@ -274,31 +296,36 @@ export class App {
             nav: true,
             title: page.name,
             menuName: item.name,
-            subItem: false
+            subItem: false,
+            classes: page.classes || '',
+            hidden: page.hidden || false
           });
         } else {
 
-          routes.push({
+          let route = {
             route: page.name.toLowerCase(),
             moduleId: `./${item.name.toLowerCase() }/${page.name}`,
             nav: true,
             title: page.name,
             menuName: item.name,
-            subItem: false
-          });
+            subItem: false,
+            classes: page.classes || '',
+            hidden: page.hidden || false
+          };
+          routes.push(route);
 
-          if (page.subPages) {
-            for (let subpage of page.subPages) {
-              routes.push({
-                route: subpage.name.toLowerCase(),
-                moduleId: `./${item.name.toLowerCase()}/${subpage.name}`,
-                nav: true,
-                title: subpage.name,
-                menuName: item.name,
-                subItem: true
-              });
-            }
-          }
+          // if (page.subPages) {
+          //   for (let subpage of page.subPages) {
+          //     routes.push({
+          //       route: subpage.name.toLowerCase(),
+          //       moduleId: `./${item.name.toLowerCase()}/${subpage.name}`,
+          //       nav: true,
+          //       title: subpage.name,
+          //       menuName: item.name,
+          //       subItem: true
+          //     });
+          //   }
+          // }
         }
       }
     }
@@ -359,9 +386,11 @@ export class App {
     // Don't populate tabs without default tab
     if (item.def) {
       let routes = item.routes.filter((v) => {
-        return !v.config['subItem'];
+        return !v.config['subItem'] && !v.config['hidden']
       });
+
       this.activeRoutes = routes;
+      console.log(this.activeRoutes);
     }
     else
       this.activeRoutes = [];

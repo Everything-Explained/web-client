@@ -14,12 +14,15 @@ template
 
     section#TrayTop.buffer
       aside.watermark Alpha: ${version}
+      //- aside.settings.icon-cog2
+
       menu#TabMenu
         ul
           li( repeat.for='route of activeRoutes',
               mousedown.delegate='$parent.goTo(route.href)',
               class='${route.isActive ? "active" : ""} ' +
-                    '${route.title == "Signin" ? "login icon-enter" : ""}') ${route.title}
+                    '${route.config.classes ? route.config.classes : ""} ')
+                ${route.title}
 
     section#PageMiddle
       section#TrayLeft(class='buffer2 ${utils.page.leftTray.className}')
