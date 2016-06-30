@@ -109,7 +109,6 @@ export class App {
 
     // console.log('Logged In', this._login.isSignedIn);
 
-    console.log(window['session'], window['secret']);
 
     if (window['session'] && window['secret']) {
       for (let p of this.mainMenu[0].pages) {
@@ -144,8 +143,6 @@ export class App {
     this._eva.subscribeOnce('router:navigation:complete', payload => {
 
       let activePage = payload.instruction.fragment.substr(1).toLowerCase();
-
-      console.log(activePage, this.router.navigation);
 
       for (var item of this.mainMenu) {
 
@@ -220,7 +217,10 @@ export class App {
     config.title = 'Noumenae';
     this.createRoutes(this.mainMenu, config);
     this.router = router;
-    console.log(router);
+    this.router.handleUnknownRoutes({
+      route: '',
+      moduleId: './error/F404'
+    });
   }
 
 
@@ -332,6 +332,7 @@ export class App {
 
     config.map(routes);
 
+
   }
 
 
@@ -390,7 +391,6 @@ export class App {
       });
 
       this.activeRoutes = routes;
-      console.log(this.activeRoutes);
     }
     else
       this.activeRoutes = [];

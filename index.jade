@@ -18,8 +18,12 @@ html
     //- script(src='../controllers/errorhandler.js')
 
     //- Load Session
-    script(type='text/javascript').
-      var session = "#{session.invite}"
+    if session.authed
+      script.
+        var session = "#{session.authed}";
+        var secret = "#{session.secret}";
+    else
+      script var session = null;
 
 
   body(aurelia-app='app-config')
