@@ -144,16 +144,16 @@ export class Login {
   }
 
 
-  public signUp(nick: string, type: string) {
+  public signUp(nick: string, type: string, cb: (err, code, data) => void) {
     if (type === 'google') {
 
       // TODO - UI should log this
-      if (this._auth2.isSignedIn.get()) return;
+      // if (this._auth2.isSignedIn.get()) return;
 
       this._auth2.signIn()
         .then(d => {
           let token = d.getAuthResponse().id_token;
-          this._signUpWith(nick, 'google', token);
+          this._signUpWith(nick, 'google', token, cb);
         });
       return;
     }
@@ -172,7 +172,7 @@ export class Login {
 
           // facebook needs time to update
           setTimeout(() => {
-            this._signUpWith(nick, 'facebook', res.authResponse.accessToken);
+            // this._signUpWith(nick, 'facebook', res.authResponse.accessToken);
           }, 500);
 
         }
@@ -193,7 +193,7 @@ export class Login {
     });
   }
 
-  private _signUpWith(nick: string, auth_type: string, token: string) {
+  private _signUpWith(nick: string, auth_type: string, token: string, cb: (err, code, data) => void) {
 
     Web.POST('/internal/signup', {
       fields: {
@@ -203,6 +203,7 @@ export class Login {
       }
     }, (err, code, data) => {
       console.log(err, code, data);
+      cb(err, code, data);
     });
 
   }

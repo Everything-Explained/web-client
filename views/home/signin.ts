@@ -5,8 +5,10 @@ const scope = 'https://www.googleapis.com/auth/plus.me';
 import {IRobot} from '../../helpers/robot-check';
 import {Web} from '../../helpers/web';
 import {inject} from 'aurelia-framework';
+import {Router} from 'aurelia-router';
 import {Login} from '../../app-login';
 import * as http from 'nanoajax';
+import {Session} from '../../app-session';
 
 enum SignupStatus {
   NONE = 1,
@@ -23,7 +25,7 @@ enum InputStates {
   NICKINVALID
 }
 
-@inject(Login, Web)
+@inject(Login, Web, Router, Session)
 export class Signin {
 
   private _auth2: gapi.auth2.GoogleAuth;
@@ -66,7 +68,10 @@ export class Signin {
 
   private _isResponseActive = false;
 
-  constructor(private _login: Login, private _web: Web) {
+  constructor(private _login:   Login,
+              private _web:     Web,
+              private _router:  Router,
+              private _session: Session) {
   }
 
     public test() {
@@ -325,7 +330,14 @@ export class Signin {
         !this.elSSONickname.value ||
         !this.elSSONickname.value.length) return;
 
-    this._login.signUp(this.elSSONickname.value, type);
+    this._login.signUp(this.elSSONickname.value, type, (err, code, data) => {
+
+      if (code == 200) {
+        this._session.isFirstSignin = true;
+        this._router.navigate('settings');
+      }
+
+    });
 
   }
 

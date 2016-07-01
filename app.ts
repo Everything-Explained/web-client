@@ -10,6 +10,7 @@ import {Login} from './app-login';
 import {ModernModal} from './helpers/modern-modal';
 import {Logger} from './helpers/logger';
 import {ErrorHandler} from './helpers/errorHandler';
+import {Session} from './app-session';
 
 
 
@@ -35,7 +36,7 @@ export interface TabPage {
 }
 
 
-@inject(Element, EventAggregator, ModernModal, Logger, ErrorHandler, Login)
+@inject(Element, EventAggregator, ModernModal, Logger, ErrorHandler, Login, Session)
 export class App {
 
   version = '0.4.0';
@@ -104,13 +105,11 @@ export class App {
               private _modal:        ModernModal,
               private _log:          Logger,
               private _errorHandler: ErrorHandler,
-              private _login: Login)
+              private _login: Login,
+              private _session: Session)
   {
 
-    // console.log('Logged In', this._login.isSignedIn);
-
-
-    if (window['session'] && window['secret']) {
+    if (this._session.authed) {
       for (let p of this.mainMenu[0].pages) {
         if (p.name.toLowerCase() == 'signin') {
           p.hidden = true;
@@ -195,6 +194,19 @@ export class App {
         });
       }
 
+      if (this._session.isFirstSignin) {
+        for (let r of this.mainMenu[0].routes) {
+          if (r.config.route == 'signin') {
+            r.config['hidden'] = true;
+          }
+
+          if (r.config.route == 'settings') {
+            r.config['hidden'] = false;
+          }
+        }
+        this._session.isFirstSignin = false;
+      }
+
       // ############   HANDLE TAB POPULATION   ############ //
       // Execute only if routes have been populated
       // Toggles the tabs on back/forward
@@ -202,7 +214,11 @@ export class App {
         this.mainMenu.forEach(n => {
           n.isActive = n.name == payload.instruction.config.menuName;
           if (n.isActive) {
-            this.populateRoutes(n, null, false);
+            if (window.loggedin) {
+              this.populateRoutes(n);
+            } else {
+              this.populateRoutes(n, null, false);
+            }
           }
         });
       }
@@ -387,7 +403,7 @@ export class App {
     // Don't populate tabs without default tab
     if (item.def) {
       let routes = item.routes.filter((v) => {
-        return !v.config['subItem'] && !v.config['hidden']
+        return !v.config['subItem'] && !v.config['hidden'];
       });
 
       this.activeRoutes = routes;
