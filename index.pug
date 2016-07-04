@@ -18,10 +18,9 @@ html
     //- script(src='../controllers/errorhandler.js')
 
     //- Load Session
-    if session.authed
+    if session
       script.
-        var session = "#{session.authed}";
-        var secret = "#{session.secret}";
+        var session = !{JSON.stringify(session)};
     else
       script var session = null;
 
