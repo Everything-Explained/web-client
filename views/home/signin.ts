@@ -1,5 +1,3 @@
-const client_id = '15334727358-lehq7huis9fm49iee7i03l15sj6g8r68.apps.googleusercontent.com';
-const apiKey = 'AIzaSyAJTuseZ8KbSzREwbs4lcTu4icoMIKhYQY';
 const scope = 'https://www.googleapis.com/auth/plus.me';
 
 import {IRobot} from '../../helpers/robot-check';
@@ -349,10 +347,24 @@ export class Signin {
 
     this._login.signIn(type, (err, code, data) => {
       if (err) {
-        this._signInResponse = err;
+        this._signInResponse = err.msg;
+      }
+      if (code == 200) {
+        this._session.isFirstSignin = true;
+        this._router.navigate('settings');
       }
     });
 
+  }
+
+
+  public signOut() {
+    this._login.signOut((err, code, data) => {
+      if (code == 200) {
+        this._router.navigate('signin');
+        return;
+      }
+    });
   }
 
   public selectSignUp(type: string) {
@@ -374,7 +386,7 @@ export class Signin {
   }
 
   public test2() {
-    gapi.auth.authorize({ client_id, scope, immediate: true}, (result) => {
+    gapi.auth.authorize({ scope, immediate: true}, (result) => {
       console.log('hello there');
       console.log(result);
     });
@@ -387,11 +399,12 @@ export class Signin {
 
   attached() {
 
+    let obj = document.querySelector('#SignInPage') as HTMLElement;
+    window.session = JSON.parse(obj.dataset['session']);
+
     // INIT Google Signon
     gapi.load('auth2', () => {
-      this._auth2 = gapi.auth2.init({
-        client_id
-      });
+      this._auth2 = gapi.auth2.init();
     });
 
     this._robotNodes = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[];

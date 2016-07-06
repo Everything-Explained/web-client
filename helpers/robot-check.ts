@@ -74,10 +74,10 @@ export class IRobot {
 
   }
 
+  // TODO - Send relevent event props to server to verify
   private _click(e: MouseEvent) {
 
     if (this.inError || this._inProgress) return;
-
 
     let obj = (e.target) as HTMLElement
       , pos = parseInt(obj.getAttribute('data-pos'));

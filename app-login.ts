@@ -105,19 +105,23 @@ export class Login {
 
   public signIn(type: string, cb?: (err, code, data) => void) {
 
+    let defMsg = {msg:
+      '<span class="fail">error logging in</span><br/>' +
+      `are you <span>signed in</span> with <span>${type}?</span><br/>` +
+      ' do you have a <span>noumenae</span> account?'};
+
     if (type === 'google') {
 
       if (!this._auth2.isSignedIn.get()) {
-        cb('you do not have a <span>google</span> account.', null, null);
+        cb(defMsg, null, null);
         return;
       }
 
-      // this._auth2.signIn()
-      //   .then(d => {
-      //     let token = d.getAuthResponse().id_token;
-      //     console.log(token);
-      //     this._logInWith('google', token, cb ? cb : null);
-      //   });
+      this._auth2.signIn()
+        .then(d => {
+          let token = d.getAuthResponse().id_token;
+          this._logInWith('google', token, cb ? cb : null);
+        });
 
       return;
     }
@@ -125,23 +129,26 @@ export class Login {
     if (type === 'facebook') {
 
       let fbAuth = FB.getAuthResponse();
+      let session = window.session;
 
       // Already logged in
-      if (fbAuth) {
-        cb('you already have a <span>facebook</span> account', null, null);
+      if (fbAuth && session.authed) {
+        cb({msg: 'you\'re already signed into <span>noumenae</span>'}, null, null);
         return;
       }
-      cb('you do not have a <span>facebook</span> account.', null, null);
-      // this._logInWith('facebook', fbAuth.accessToken, cb ? cb : null);
 
-      // FB.login(res => {
-      //   this._logInWith('facebook', res.authResponse.accessToken);
-      // });
+      if (fbAuth && !session.authed) {
+        this._logInWith('facebook', fbAuth.accessToken, cb ? cb : null);
+        return;
+      }
+
+      cb({msg: defMsg}, null, null);
 
       return;
     }
 
   }
+
 
 
   public signUp(nick: string, type: string, cb: (err, code, data) => void) {
@@ -172,7 +179,7 @@ export class Login {
 
           // facebook needs time to update
           setTimeout(() => {
-            // this._signUpWith(nick, 'facebook', res.authResponse.accessToken);
+            this._signUpWith(nick, 'facebook', res.authResponse.accessToken, cb);
           }, 500);
 
         }
@@ -180,6 +187,8 @@ export class Login {
       return;
     }
   }
+
+
 
   private _logInWith(auth_type: string, token: string, cb?: (err, code, data) => void) {
     Web.POST('/internal/login', {
@@ -189,9 +198,12 @@ export class Login {
       }
     }, (err, code, data) => {
       console.log(err, code, data);
+      err = (err) ? JSON.parse(err) : null;
       if (cb) cb(err, code, data);
     });
   }
+
+
 
   private _signUpWith(nick: string, auth_type: string, token: string, cb: (err, code, data) => void) {
 
@@ -209,32 +221,17 @@ export class Login {
   }
 
 
-  public signOut() {
 
-    // if (this._loggedInWith & LoginTypes.GOOGLE) {
-    //   console.log('Signing out with Google');
-    //   this._loggedInWith &= ~LoginTypes.GOOGLE;
-    //   this._auth2.signOut();
-    //   return;
-    // }
+  public signOut(cb: (err, code, data) => void) {
 
-    // if (this._loggedInWith & LoginTypes.FACEBOOK) {
-    //   console.log('Signing out with Facebook');
-    //   FB.logout((res) => {
-    //     console.log(res);
-    //   });
-    // }
-    FB.getLoginStatus(res => {
-      if (res.status == 'connected') {
-        // console.log(res.authResponse.accessToken);
-        // Web.POST('/internal/logout', {
-        //   data: res.authResponse.accessToken
-        // }, (err, code, data) => {
-        //   console.log(err, code, data);
-        // });
-        console.log('connected');
+    Web.POST('/internal/logout', {
+      fields: {
+        secret: window.session.secret
       }
-      else console.log('hello');
+    },
+    (err, code, data) => {
+      console.log(err, code, data);
+      cb(err, code, data);
     });
 
 
