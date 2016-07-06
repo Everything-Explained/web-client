@@ -316,7 +316,8 @@ export class App {
             classes: page.classes || '',
             hidden: page.hidden || false
           });
-        } else {
+        }
+        else {
 
           let route = {
             route: page.name.toLowerCase(),
@@ -328,6 +329,21 @@ export class App {
             classes: page.classes || '',
             hidden: page.hidden || false
           };
+
+          if (page.name.toLowerCase() == 'settings') {
+            if (!window.session.authed) {
+              route['redirect'] = 'signin';
+            }
+          }
+
+          if (page.name.toLowerCase() == 'signin') {
+            if (window.session.authed) {
+              route['redirect'] = 'settings';
+            }
+          }
+
+
+
           routes.push(route);
 
           // if (page.subPages) {

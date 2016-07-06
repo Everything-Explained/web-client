@@ -343,19 +343,23 @@ export class Signin {
     return this._signInResponse;
   }
 
+
+
   public signIn(type: string) {
 
     this._login.signIn(type, (err, code, data) => {
       if (err) {
+        console.log(err, err.msg);
         this._signInResponse = err.msg;
+        return;
       }
       if (code == 200) {
-        this._session.isFirstSignin = true;
-        this._router.navigate('settings');
+        window.location.reload();
       }
     });
 
   }
+
 
 
   public signOut() {
@@ -366,6 +370,8 @@ export class Signin {
       }
     });
   }
+
+
 
   public selectSignUp(type: string) {
     if (type === 'sso' && !this.buttonSSO.classList.contains('selected')) {
@@ -384,6 +390,8 @@ export class Signin {
       return;
     }
   }
+
+
 
   public test2() {
     gapi.auth.authorize({ scope, immediate: true}, (result) => {

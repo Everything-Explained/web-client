@@ -142,7 +142,7 @@ export class Login {
         return;
       }
 
-      cb({msg: defMsg}, null, null);
+      cb(defMsg, null, null);
 
       return;
     }
