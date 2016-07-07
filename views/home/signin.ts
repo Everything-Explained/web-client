@@ -66,6 +66,8 @@ export class Signin {
 
   private _isResponseActive = false;
 
+  public inviteResponse = '';
+
   constructor(private _login:   Login,
               private _web:     Web,
               private _router:  Router,
@@ -239,6 +241,7 @@ export class Signin {
   }
 
 
+
   public beginSignUpProcess() {
     Promise.resolve(null)
       // *** ROBOT TEST ***
@@ -253,6 +256,8 @@ export class Signin {
         return this.showSignup();
       });
   }
+
+
 
   public showRobot() {
     this.signInContent.classList.add('hide');
@@ -272,6 +277,8 @@ export class Signin {
     });
   }
 
+
+
   public startRobotTest() {
     if (this._robot.started) {
       this._robot.restart();
@@ -279,6 +286,7 @@ export class Signin {
       this._robot.start(700, 300);
     }
   }
+
 
   public askForInvite() {
     this.robotContent.classList.add('hide');
@@ -306,7 +314,20 @@ export class Signin {
             if (code == 200) {
               let obj = JSON.parse(res);
               // TODO - Add UI response on expired
-              if (obj.expired) return;
+              if (!obj.valid) {
+                this.inviteResponse = 'that is an <span>invalid</span> invite';
+                return;
+              }
+
+              if (obj.expired) {
+                this.inviteResponse = 'that <span>invite</span> has <span>expired</span>';
+                return;
+              }
+
+              if (!obj.validated) {
+                this.inviteResponse = 'did you <span>misspell</span> the invite?';
+                return;
+              }
               rs(true);
             }
           });
@@ -316,10 +337,13 @@ export class Signin {
     });
   }
 
+
   public showSignup() {
     this.inviteContent.classList.add('hide');
     this.signUpContent.classList.remove('hide');
   }
+
+
 
   public signUp(type: string) {
 
@@ -332,12 +356,14 @@ export class Signin {
 
       if (code == 200) {
         this._session.isFirstSignin = true;
-        this._router.navigate('settings');
+        location.reload();
       }
 
     });
 
   }
+
+
 
   get signInResponse() {
     return this._signInResponse;
@@ -391,18 +417,6 @@ export class Signin {
     }
   }
 
-
-
-  public test2() {
-    gapi.auth.authorize({ scope, immediate: true}, (result) => {
-      console.log('hello there');
-      console.log(result);
-    });
-  }
-
-  public test3() {
-    console.log('testing 3');
-  }
 
 
   attached() {
