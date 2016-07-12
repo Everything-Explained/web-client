@@ -20,4 +20,8 @@ export class Settings {
     let obj = document.querySelector('#Settings') as HTMLElement;
     window.session = JSON.parse(obj.dataset['session']);
   }
+
+  getViewStrategy() {
+    return 'views/home/settings';
+  }
 }

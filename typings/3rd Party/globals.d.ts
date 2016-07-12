@@ -7,3 +7,5 @@ interface Window {
   };
   loggedin: boolean;
 }
+
+declare var require: (url: any) => any;

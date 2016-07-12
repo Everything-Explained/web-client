@@ -4,7 +4,6 @@ import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {Page, PageElement} from './helpers/page';
 import {$} from './helpers/domop';
-import * as ajax from 'nanoajax';
 import * as encrypt from './helpers/cheap-encrypt';
 import {Login} from './app-login';
 import {ModernModal} from './helpers/modern-modal';
@@ -52,14 +51,14 @@ export class App {
     {
       name:     'home',
       pages: [
-        {name: 'About'},
-        {name: 'Rules'},
-        {name: 'FAQ'},
+        {name: 'about'},
+        {name: 'rules'},
+        {name: 'faq'},
         {
-          name: 'Signin',
+          name: 'signin',
           subPages: [
-            {name: 'Invite'},
-            {name: 'Signup'}
+            {name: 'invite'},
+            {name: 'signup'}
           ],
           classes: 'login icon-enter'
         },
@@ -69,14 +68,14 @@ export class App {
           classes: 'settings icon-cog2'
         }
       ],
-      def:      'About',
+      def:      'about',
       isActive: true,
       defRoute: null,
       routes:   new Array<NavModel>()
     },
     {
       name:     'chat',
-      pages:    [{name: 'Chat'}],
+      pages:    [{name: 'chat'}],
       def:      null,
       isActive: false,
       defRoute: null,
@@ -84,7 +83,7 @@ export class App {
     },
     {
       name:     'changelog',
-      pages:    [{name: 'Changelog'}],
+      pages:    [{name: 'changelog'}],
       def:      null,
       isActive: false,
       defRoute: null,
@@ -150,11 +149,11 @@ export class App {
           if (item.name === route.config['menuName']) {
 
             // Set active MenuItem obj based on page URL
-            if (route.title.toLowerCase() === activePage)
+            if (route.name === activePage)
               item.isActive = true;
 
             // Set the default route object
-            if (item.def === route.title) {
+            if (item.def === route.name) {
               item.defRoute = route;
             }
 
@@ -233,56 +232,57 @@ export class App {
     config.title = 'Noumenae';
     this.createRoutes(this.mainMenu, config);
     this.router = router;
+    console.log(this.router);
     this.router.handleUnknownRoutes({
       route: '',
-      moduleId: './error/F404'
+      moduleId: './views/error/F404'
     });
   }
 
 
-  lightsOnOff(ev: MouseEvent) {
+  // lightsOnOff(ev: MouseEvent) {
 
 
-    if (ev.button == 0) {
+  //   if (ev.button == 0) {
 
-      if (this.lightsOnTimeout) return;
-      this.lightsOnTimeout = true;
+  //     if (this.lightsOnTimeout) return;
+  //     this.lightsOnTimeout = true;
 
-      let obj = <HTMLElement>ev.target
-        , transition = document.createElement('style')
-        , timeoutSpeed = 750;
+  //     let obj = <HTMLElement>ev.target
+  //       , transition = document.createElement('style')
+  //       , timeoutSpeed = 750;
 
-      let transHTML =
-        '<style id="Transition">' +
-        '* { transition: all .5s !important; }' +
-        '</style>';
+  //     let transHTML =
+  //       '<style id="Transition">' +
+  //       '* { transition: all .5s !important; }' +
+  //       '</style>';
 
-      $('head')[0].insertAdjacentHTML('afterbegin', transHTML);
+  //     $('head')[0].insertAdjacentHTML('afterbegin', transHTML);
 
-      if (obj.classList.contains('light')) {
-        localStorage.setItem('lights', 'off');
-        obj.classList.remove('light');
-        obj.classList.add('dark');
-        $('#Theme')[0].setAttribute('href', '../css/themes/dark/theme.css');
-        this.lightsTimeout = setTimeout(() => {
-          $('head')[0].removeChild($('#Transition')[0]);
-          this.lightsOnTimeout = false;
-        }, timeoutSpeed);
+  //     if (obj.classList.contains('light')) {
+  //       localStorage.setItem('lights', 'off');
+  //       obj.classList.remove('light');
+  //       obj.classList.add('dark');
+  //       $('#Theme')[0].setAttribute('href', '../css/themes/dark/theme.css');
+  //       this.lightsTimeout = setTimeout(() => {
+  //         $('head')[0].removeChild($('#Transition')[0]);
+  //         this.lightsOnTimeout = false;
+  //       }, timeoutSpeed);
 
-      }
-      else {
-        localStorage.setItem('lights', 'on');
-        obj.classList.remove('dark');
-        obj.classList.add('light');
-        $('#Theme')[0].setAttribute('href', '../css/themes/light/theme.css');
-        this.lightsTimeout = setTimeout(() => {
-          $('head')[0].removeChild($('#Transition')[0]);
-          this.lightsOnTimeout = false;
-        }, timeoutSpeed);
-      }
-    }
+  //     }
+  //     else {
+  //       localStorage.setItem('lights', 'on');
+  //       obj.classList.remove('dark');
+  //       obj.classList.add('light');
+  //       $('#Theme')[0].setAttribute('href', '../css/themes/light/theme.css');
+  //       this.lightsTimeout = setTimeout(() => {
+  //         $('head')[0].removeChild($('#Transition')[0]);
+  //         this.lightsOnTimeout = false;
+  //       }, timeoutSpeed);
+  //     }
+  //   }
 
-  }
+  // }
 
 
   /**
@@ -305,25 +305,26 @@ export class App {
       // TODO - Don't hardcode route params (FAQ/:query)
       // TODO - Won't highlight proper tab or child tabs on first load (FAQ/:query)
       for (let page of item.pages) {
-        if (page.name.toLowerCase() == 'faq') {
+        if (page.name == 'faq') {
           routes.push({
-            route: [page.name.toLowerCase(), page.name.toLowerCase() + ((page.name.toLowerCase() == 'faq') ? '/:query' : '')],
-            moduleId: `./${item.name.toLowerCase() }/${page.name}`,
+            route: [`${page.name}`, `${page.name}/:query`],
+            moduleId: `views/${item.name}/${page.name}`,
             nav: true,
-            title: page.name,
+            name: page.name,
             menuName: item.name,
             subItem: false,
             classes: page.classes || '',
             hidden: page.hidden || false
           });
+
         }
         else {
 
           let route = {
-            route: page.name.toLowerCase(),
-            moduleId: `./${item.name.toLowerCase() }/${page.name}`,
+            route: page.name,
+            moduleId: `views/${item.name}/${page.name}`,
             nav: true,
-            title: page.name,
+            name: page.name,
             menuName: item.name,
             subItem: false,
             classes: page.classes || '',
@@ -342,8 +343,6 @@ export class App {
             }
           }
 
-
-
           routes.push(route);
 
           // if (page.subPages) {
@@ -360,6 +359,8 @@ export class App {
           // }
         }
       }
+      console.log(routes);
+
     }
 
     config.map(routes);
@@ -386,12 +387,16 @@ export class App {
     this._modal.init('overlay');
 
 
-    this._login.initAuthLibs();
+    // this._login.initAuthLibs();
 
     // let light = (lights == 'off') ? 'light' : 'dark';
     // req.open('GET', `css/themes/${light}/theme.css`, true);
     // req.send();
 
+  }
+
+  getViewStrategy() {
+    return 'app';
   }
 
 
@@ -412,8 +417,8 @@ export class App {
 
     // TODO - This is a hack and should exist in the router configuration
     if (!item.routes.length) {
-      let href = location.href.split('http://')[1].split('/')[0];
-      this.goTo('http://' + href);
+      let href = location.href.split('https://')[1].split('/')[0];
+      this.goTo('https://' + href);
     }
 
     // Don't populate tabs without default tab
@@ -421,7 +426,6 @@ export class App {
       let routes = item.routes.filter((v) => {
         return !v.config['subItem'] && !v.config['hidden'];
       });
-
       this.activeRoutes = routes;
     }
     else

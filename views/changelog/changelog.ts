@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
-import * as ajax from 'nanoajax';
 import {ModernModal} from '../../helpers/modern-modal';
+import {Web} from '../../helpers/web';
 
 interface Section {
   date:         string;
@@ -19,11 +19,10 @@ export class Changelog {
 
   constructor(private _modal: ModernModal) {
 
-    ajax.ajax({
-      url: '/changelog',
-      method: 'GET'
-    }, (code, res, req) => {
-      this.sections = JSON.parse(res);
+    Web.GET('/changelog', {},
+
+    (err, code, data) => {
+      this.sections = JSON.parse(data);
       this.sections.forEach((v) => {
         v.totalChanges =
           v.additions.length +
@@ -31,6 +30,8 @@ export class Changelog {
           v.fixes.length;
       });
     });
+
+
 
   }
 
@@ -64,7 +65,13 @@ export class Changelog {
 
     });
   }
+
+  getViewStrategy() {
+    return 'views/changelog/changelog';
+  }
 }
+
+
 
 /*
 {"date": "asdf", "timeStamp": null,

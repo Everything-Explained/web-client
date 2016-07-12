@@ -6,3 +6,5 @@ app-config.js
 /node_modules
 /app-login.js
 .idea
+build
+dist

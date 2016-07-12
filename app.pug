@@ -21,7 +21,7 @@ template
           li( repeat.for='route of activeRoutes',
               mousedown.delegate='$parent.goTo(route.href)',
               class='${route.isActive ? "active" : ""} ' +
-                    '${route.config.classes ? route.config.classes : ""} ') ${route.title}
+                    '${route.config.classes ? route.config.classes : ""} ') ${route.config.name}
 
     section#PageMiddle
       section#TrayLeft(class='buffer2 ${utils.page.leftTray.className}')

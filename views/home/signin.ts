@@ -5,7 +5,6 @@ import {Web} from '../../helpers/web';
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Login} from '../../app-login';
-import * as http from 'nanoajax';
 import {Session} from '../../app-session';
 
 enum SignupStatus {
@@ -303,16 +302,14 @@ export class Signin {
               !this.elInviteContent.value.length ||
               !/^[A-Z0-9]+$/g.test(this.elInviteContent.value)) return;
 
-          http.ajax({
-            method: 'POST',
-            url: '/internal/validinvite',
-            body: this.elInviteContent.value,
+          Web.POST('/internal/validinvite', {
+            data: this.elInviteContent.value,
             headers: {
               'Content-Type': 'text/plain'
             }
-          }, (code, res, req) => {
+          }, (err, code, data) => {
             if (code == 200) {
-              let obj = JSON.parse(res);
+              let obj = JSON.parse(data);
               // TODO - Add UI response on expired
               if (!obj.valid) {
                 this.inviteResponse = 'that is an <span>invalid</span> invite';

@@ -1,6 +1,4 @@
 
-
-
 export class About {
 
   private _email = this._toArray('exanix@gmail.com') as string[];
@@ -59,8 +57,11 @@ export class About {
 
   }
 
+  getViewStrategy() {
+    return 'views/home/about';
+  }
+
   private _toArray(val: Node|string) {
     return Array.prototype.slice.call(val);
   }
-
 }

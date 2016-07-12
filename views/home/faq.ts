@@ -1,4 +1,4 @@
-export class FAQ {
+export class Faq {
 
   private _page: HTMLElement;
   private _questions: HTMLElement[];
@@ -86,6 +86,10 @@ export class FAQ {
     this._scrollBar.update();
 
     return true;
+  }
+
+  getViewStrategy() {
+    return 'views/home/faq';
   }
 }
 

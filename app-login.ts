@@ -1,4 +1,3 @@
-import * as http from 'nanoajax';
 import {inject} from 'aurelia-framework';
 import * as encrypt from './helpers/cheap-encrypt';
 import {ModernModal} from './helpers/modern-modal';

@@ -1,4 +1,3 @@
-import * as http from 'nanoajax';
 
 interface URIProperties {
   raw?: string;
