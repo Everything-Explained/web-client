@@ -19,6 +19,7 @@ export class Login {
   private _auth2: gapi.auth2.GoogleAuth;
   private _loggedInWith = LoginTypes.NONE;
   private _calledSignin = false;
+  private _isReady = false;
 
 
   constructor(private _web: Web) {
@@ -28,14 +29,15 @@ export class Login {
 
   public initAuthLibs() {
 
+    if (this._isReady) return;
     this._initGoogleAuth();
     this._initFacebookAuth();
-
+    this._isReady = true;
   }
 
   private _initGoogleAuth() {
 
-    if (!gapi || !gapi.auth2 || !gapi.auth2.getAuthInstance()) {
+    if (!window['gapi'] || !gapi.auth2 || !gapi.auth2.getAuthInstance()) {
       setTimeout(() => {
         this._initGoogleAuth();
       }, 133);
@@ -47,7 +49,6 @@ export class Login {
   }
 
   private _initFacebookAuth() {
-
     // INIT Facebook API
     window['fbAsyncInit'] = () => {
       FB.init({
@@ -111,11 +112,6 @@ export class Login {
 
     if (type === 'google') {
 
-      if (!this._auth2.isSignedIn.get()) {
-        cb(defMsg, null, null);
-        return;
-      }
-
       this._auth2.signIn()
         .then(d => {
           let token = d.getAuthResponse().id_token;
@@ -130,6 +126,7 @@ export class Login {
       let fbAuth = FB.getAuthResponse();
       let session = window.session;
 
+
       // Already logged in
       if (fbAuth && session.authed) {
         cb({msg: 'you\'re already signed into <span>noumenae</span>'}, null, null);
@@ -141,7 +138,14 @@ export class Login {
         return;
       }
 
-      cb(defMsg, null, null);
+      FB.login(res => {
+          this._logInWith('facebook', res.authResponse.accessToken, cb ? cb : null);
+          return;
+        },
+        {scope: 'email'}
+      );
+
+      // cb(defMsg, null, null);
 
       return;
     }

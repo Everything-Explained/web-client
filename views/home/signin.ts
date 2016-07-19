@@ -418,13 +418,19 @@ export class Signin {
 
   attached() {
 
-    let obj = document.querySelector('#SignInPage') as HTMLElement;
-    window.session = JSON.parse(obj.dataset['session']);
+    let obj = document.querySelector('#SignInPage') as HTMLElement
+      // , head = document.getElementsByTagName('head')[0] as HTMLHeadElement
+      // , script = document.createElement('script');
+
+    // script.src = 'https://apis.google.com/js/api.js';
+    // head.appendChild(script);
+    // window.session = JSON.parse(obj.dataset['session']);
 
     // INIT Google Signon
     gapi.load('auth2', () => {
       this._auth2 = gapi.auth2.init();
     });
+
 
     this._robotNodes = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[];
 
@@ -440,6 +446,7 @@ export class Signin {
       this._socialActive = false;
     });
 
+    // this._login.initAuthLibs();
 
   }
 

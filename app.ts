@@ -47,6 +47,7 @@ export class App {
   lightsTimeout = 0;
   lightsOnTimeout = false;
 
+  // TODO - Routes are dirty
   public mainMenu = [
     {
       name:     'home',
@@ -69,7 +70,7 @@ export class App {
         }
       ],
       def:      'about',
-      isActive: true,
+      isActive: false,
       defRoute: null,
       routes:   new Array<NavModel>()
     },
@@ -140,7 +141,8 @@ export class App {
 
     this._eva.subscribeOnce('router:navigation:complete', payload => {
 
-      let activePage = payload.instruction.fragment.substr(1).toLowerCase();
+      let activePage = payload.instruction.fragment.substr(1).toLowerCase()
+        , foundActiveItem = false;
 
       for (var item of this.mainMenu) {
 
@@ -149,7 +151,7 @@ export class App {
           if (item.name === route.config['menuName']) {
 
             // Set active MenuItem obj based on page URL
-            if (route.name === activePage)
+            if (route.config.name === activePage)
               item.isActive = true;
 
             // Set the default route object
@@ -164,8 +166,12 @@ export class App {
 
         if (item.isActive) {
           this.populateRoutes(item);
+          foundActiveItem = true;
         }
 
+      }
+      if (!foundActiveItem) {
+        this.populateRoutes(this.mainMenu[0]);
       }
 
     });
@@ -387,7 +393,7 @@ export class App {
     this._modal.init('overlay');
 
 
-    // this._login.initAuthLibs();
+    this._login.initAuthLibs();
 
     // let light = (lights == 'off') ? 'light' : 'dark';
     // req.open('GET', `css/themes/${light}/theme.css`, true);
@@ -437,14 +443,15 @@ export class App {
         i.isActive = i === item;
       });
 
-      this.goTo(item.def ? item.defRoute.href : item.routes[0].href);
+      let def = item.def || item.routes[0].href;
+      this.router.navigate(def);
     }
   }
 
 
 
   // Activate the router manually
-  // TODO - use route.navigateToRoute
+  // TODO - use route.navigate
   goTo(href: string) {
     location.href = href;
 

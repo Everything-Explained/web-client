@@ -101,18 +101,13 @@ export class ClientIO {
       this._sock
         .on('auth-success', () => {
           this._chat.addMessage(
-            'Connected Successfully', 
+            'Connected Successfully',
             MessageType.SERVER);
         })
-        .on('auth-fail', (data) => {
-          if (data == 'invite') {
-            this._chat.addMessage(
-              'You need an invite to use this feature', 
-              MessageType.SERVER);
-          }
-          
+        .on('auth-fail', (msg) => {
+          this._chat.addMessage(msg, MessageType.SERVER);
         })
-        .emit('authenticate', 'Hello World!');
+        .emit('authenticate');
     })
     .on('disconnect', () => this.onLostConnection());
 

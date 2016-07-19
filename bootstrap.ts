@@ -16,6 +16,7 @@ function initScripts() {
   if (!scripts.length) {
     if (!window['System']) {
       let obj = document.getElementById('failure');
+
       obj.style.display = 'inline-block';
       return;
     }

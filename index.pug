@@ -4,8 +4,8 @@ html
     title Noumenae
     link(href='https://fonts.googleapis.com/css?family=Karla|Delius|Comfortaa' rel='stylesheet' type='text/css')
     link(rel='stylesheet' href='../css/themes/dark/theme.css')
-    meta(name='google-signin-client_id' content='15334727358-lehq7huis9fm49iee7i03l15sj6g8r68.apps.googleusercontent.com')
-    //- script(src='https://apis.google.com/js/api.js' async defer)
+    meta(name='google-signin-client_id' content='307312730681-l12c0r4a669fb6vmmvg4seq1uebqq1fd.apps.googleusercontent.com')
+    script(src='https://apis.google.com/js/api.js' async defer)
     //- script(src='libs/live.js')
 
     //- script(src='helpers/lightsOnOff.js')
@@ -41,10 +41,11 @@ html
         a.firefox.icon(href='https://www.mozilla.com')
         a.opera.icon(href='http://www.opera.com')
 
-    script(src='jspm_packages/system.js')
-    script(src='config.js')
-    script(src='libs/optiscroll.min.js')
-    script System.import('aurelia-bootstrapper');
+    script(data-src='jspm_packages/system.js')
+    script(data-src='config.js')
+    script(data-src='libs/optiscroll.min.js')
+    script(src='bootstrap.js')
+    //- script System.import('aurelia-bootstrapper');
 
 
 
