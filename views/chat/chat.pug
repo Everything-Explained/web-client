@@ -29,7 +29,7 @@ template
               message-view.message(repeat.for='msg of ports.bottom._view',
                                     cfg.bind='msg')
 
-      aside#UserList(class='${userlistActive === true ? "active" : ""}')
+      aside#UserList(class='${userlistActive ? "active" : ""}')
         ul
           li(repeat.for='user of users', class='${user.isTyping}') ${user.name}
 

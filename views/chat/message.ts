@@ -23,12 +23,6 @@ export enum MessageScale {
   SMALL
 }
 
-export enum MessageAvatar {
-  AEDAEUM,
-  MOM,
-  DEFAULT
-}
-
 export interface IMessage {
   username: string;
   message: string;
@@ -36,7 +30,7 @@ export interface IMessage {
   scale?: string;
   severity?: MessageSeverity;
   type: MessageType;
-  avatar: MessageAvatar;
+  avatar: string;
 }
 
 export class Message {
@@ -47,7 +41,7 @@ export class Message {
   scale: string;
   severity: string;
   type: MessageType;
-  avatar: MessageAvatar;
+  avatar: string;
 
   /** A message object ready for the message view */
   constructor(ops: IMessage) {

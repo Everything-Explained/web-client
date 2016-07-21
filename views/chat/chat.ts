@@ -5,7 +5,7 @@ import {Port} from './port';
 import {inject} from 'aurelia-framework';
 import * as io from 'socketio';
 import * as moment from 'moment';
-import {Message, MessageType, MessageSeverity, MessageAvatar} from './message';
+import {Message, MessageType, MessageSeverity} from './message';
 import {displayVerse, IScriptures} from './display-verse';
 import {ClientIO} from '../../services/clientio';
 import {ModernModal} from '../../helpers/modern-modal';
@@ -31,8 +31,8 @@ export class Chat {
   // Data to send to the input commander
   data: CommanderData;
 
-  // For testing only (will be removed for auth later)
   alias: string;
+  avatar: string = null;
 
   userlistActive = false;
 
@@ -41,8 +41,7 @@ export class Chat {
   users = new Array<{name: string; isTyping: string}>();
 
 
-  ports =
-  {
+  ports = {
     main:   new Port('main', this),
     top:    new Port('top', this),
     center: new Port('center', this),
@@ -57,17 +56,13 @@ export class Chat {
 
   constructor(private body: HTMLElement, public modal: ModernModal) {
 
-
-    this.alias = (location.href.indexOf('localhost') > -1) ? 'Aedaeum' : null;
-
     // Initialize chat service
-    this.io = new ClientIO(() => {
+    this.io = new ClientIO((data) => {
 
-      this.addMessage('IO Connected', MessageType.SERVER);
+      this.alias = data.alias;
+      this.avatar = data.picture;
 
-      if (!this.alias) {
-        this.addMessage('Please enter a Nickname with no spaces or special characters.', MessageType.CLIENT);
-      }
+      this.addMessage('You are now authenticated, enjoy the chat!', MessageType.SERVER);
 
     },
     // Executes on every message
@@ -157,9 +152,9 @@ export class Chat {
     switch (type) {
       case MessageType.NORMAL:
       case MessageType.EMOTE:    username = this.alias; break;
-      case MessageType.CLIENT:   username = 'Client'; break;
-      case MessageType.SERVER:   username = 'Server'; break;
-      case MessageType.IMPLICIT: username = ''; break;
+      case MessageType.CLIENT:   username = 'Client';   break;
+      case MessageType.SERVER:   username = 'Server';   break;
+      case MessageType.IMPLICIT: username = '';         break;
       case MessageType.INLINE:
         let parts = msg.split(';', 2);
         username  = parts[0].trim();
@@ -174,7 +169,7 @@ export class Chat {
       message: msg,
       username,
       realTimeFixed: Date.now(),
-      avatar: MessageAvatar.DEFAULT,
+      avatar: this.avatar || null,
       type,
       severity
     }));
@@ -204,19 +199,6 @@ export class Chat {
       this.alias = alias;
     }
   }
-
-  get hasAvatar() {
-
-    if (location.href.indexOf('localhost') > -1)
-      return MessageAvatar.AEDAEUM;
-
-    if (location.href.indexOf('192.168.1.119') > -1)
-      return MessageAvatar.MOM;
-
-    return MessageAvatar.DEFAULT;
-
-  }
-
 
   addUser(user: string) {
     console.log('ADDING USER', this.users);

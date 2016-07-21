@@ -148,8 +148,8 @@ export class ChatCommander {
     if (Keys.TAB == e.which) {
 
       // Auto-complete suggestion
-      if(this.activeCompletion) {
-        console.log('Active Completion TAB CLEAR')
+      if (this.activeCompletion) {
+        console.log('Active Completion TAB CLEAR');
         this._clearSuggestion('/' + this.activeCompletion);
         this._placeCaret(false, this._obj);
       }
@@ -197,9 +197,9 @@ export class ChatCommander {
     let obj      = <HTMLElement> e.target
       , input    = (this._obj.childNodes[0].textContent + String.fromCharCode(e.which))
       , rawInput = input;
-      
+
     // Remove NL, EOL, and BOL chars
-    input = input.replace(/\s/g, ' ').trim();  
+    input = input.replace(/\s/g, ' ').trim();
 
     if (e.which === Keys.ENTER) {
 
@@ -215,12 +215,6 @@ export class ChatCommander {
       }
 
 
-      if(!this._isValidAlias(input)) {
-        this._obj.textContent = '';
-        this._obj.appendChild(this._ffFix);
-        return false;
-      }
-
       if (input[0] === '/') {
 
         let inputSplit = input.substr(1).split(' ')
@@ -229,13 +223,13 @@ export class ChatCommander {
 
         console.info('Executing Command::"' + usrCmd + '"', inputSplit);
 
-        for(let cmd of this._commands) {
+        for (let cmd of this._commands) {
           if (cmd.alias.find(c => c === usrCmd)) {
             if (cmd.isAdmin && this._isAdmin) {
               cmd.execute(msg);
               this._addCommmandToHistory(usrCmd);
             }
-            else if(!cmd.isAdmin) {
+            else if (!cmd.isAdmin) {
               cmd.execute(msg);
               this._addCommmandToHistory(
                 (!msg) ? usrCmd : usrCmd + ' ' + msg
@@ -253,7 +247,7 @@ export class ChatCommander {
           type: MessageType.NORMAL,
           message: input,
           realTimeFixed: Date.now(),
-          avatar: this._chatView.hasAvatar
+          avatar: this._chatView.avatar
         });
 
       }
@@ -266,13 +260,13 @@ export class ChatCommander {
 
 
 
-    if(input[0] === '/' && input.length > 1) {
+    if (input[0] === '/' && input.length > 1) {
       // No commands have spaces
       // TODO - don't block spell correction
-      if(/\s/g.test(rawInput)  ||
+      if (/\s/g.test(rawInput)  ||
          input.indexOf(' ') > -1) return true;
 
-      console.log('Executing Suggestion')
+      console.log('Executing Suggestion');
       this._showSuggestion(rawInput.substr(1));
     }
 
@@ -292,7 +286,7 @@ export class ChatCommander {
     let storeInput = input
       , res = null;
 
-    input = 
+    input =
       input
         .replace(/\steh|\shte/g, ' the')
         .replace(/\sint he|\sint the/g, ' in the')
@@ -329,7 +323,7 @@ export class ChatCommander {
     // Capitalize first letter of a sentence after a period
     let matches = /\.\s[a-z]/.exec(input);
     if (matches) {
-      input = input.replace(matches[0], matches[0].substr(0, 2) + matches[0].substr(2).toUpperCase())
+      input = input.replace(matches[0], matches[0].substr(0, 2) + matches[0].substr(2).toUpperCase());
     }
 
     if (input != storeInput) {
@@ -343,28 +337,6 @@ export class ChatCommander {
     return input != storeInput;
   }
 
-
-
-  private _isValidAlias(input: string) {
-
-    if (!this.chatData.chatView.alias) {
-      if (/^[a-zA-Z0-9]+$/g.test(input)) {
-        this.chatData.chatView.alias = input;
-        this.chatData.chatView.addMessage(
-          `Your new nick-name is ${input}!! You can change it using the /nick command at any time.`,
-          MessageType.CLIENT
-        )
-        this.chatData.chatView.io.authClient();
-        return false;
-      } else {
-        this.chatData.chatView.addMessage("Sorry, that's an invalid Nickname. Try again.", MessageType.CLIENT);
-        return false;
-      }
-    }
-
-    return true;
-
-  }
 
   /**
    * Add a command to the command history array.
@@ -442,10 +414,10 @@ export class ChatCommander {
   private _showSuggestion(input: string) {
     let suggestion = this._suggestionElement.textContent;
 
-    for(let cmd of this._commands) {
-      for(let a of cmd.alias) {
+    for (let cmd of this._commands) {
+      for (let a of cmd.alias) {
         if (a.indexOf(input.replace(suggestion, '')) == 0) {
-          if(!this.activeCompletion) this._obj.appendChild(this._suggestionElement);
+          if (!this.activeCompletion) this._obj.appendChild(this._suggestionElement);
           this._suggestionElement.textContent = a.replace(input, '');
           this.activeCompletion = a;
           if (a == input) this._clearSuggestion();
@@ -454,7 +426,7 @@ export class ChatCommander {
       }
     }
 
-    console.log('SHOWSUGGESTION::CLEARING')
+    console.log('SHOWSUGGESTION::CLEARING');
     this._clearSuggestion();
   }
 
@@ -465,7 +437,7 @@ export class ChatCommander {
    * @param input Optional string to set the input content.
    */
   private _clearSuggestion(input?: string) {
-    console.warn('Calling Clear Suggestion')
+    console.warn('Calling Clear Suggestion');
     this.suggestion = this.activeCompletion = null;
     this._obj.removeChild(this._suggestionElement);
     if (typeof input !== 'undefined') {
@@ -491,7 +463,7 @@ export class ChatCommander {
           sel.removeAllRanges();
           sel.addRange(range);
       } else {
-        throw new Error('Browser Too Old for caret Placement')
+        throw new Error('Browser Too Old for caret Placement');
       }
   }
 
@@ -514,7 +486,7 @@ export class ChatCommander {
       if (this._obj.textContent.length == 0) this._obj.removeChild(this._ffFix);
       let data = e.clipboardData.getData('text/plain');
       document.execCommand('insertText', false, data.trim());
-    }
+    };
 
     this._suggestionElement.classList.add('suggestion');
   }
@@ -523,13 +495,13 @@ export class ChatCommander {
 
     if (this.activeCompletion ||
        (this._obj.textContent.length && this._obj.textContent[0] == '/'))
-          return setTimeout(() => { this.pollTyping()}, 500);
+          return setTimeout(() => this.pollTyping(), 500);
 
     if (this._obj.textContent.length > 0 && !this._isTyping) {
       this._isTyping = true;
       this._sock.sendUserIsTyping(this._chatView.alias);
       console.log('is-typing');
-    } 
+    }
     else if (this._isTyping && this._obj.textContent.length === 0) {
       this._isTyping = false;
       this._sock.sendUserStoppedTyping(this._chatView.alias);
@@ -537,7 +509,7 @@ export class ChatCommander {
       clearTimeout(this._pausedTypingTimeout);
     }
 
-    return setTimeout(() => {this.pollTyping()}, 500)
+    return setTimeout(() => this.pollTyping(), 500);
   }
 
   pollPausedTyping() {
@@ -549,7 +521,7 @@ export class ChatCommander {
       this._sock.sendUserPausedTyping(this._chatView.alias);
       this._pausedTyping = true;
     }
-    this._pausedTypingTimeout = setTimeout(() => this.pollPausedTyping(), this._pausedTypingSpeed)
+    this._pausedTypingTimeout = setTimeout(() => this.pollPausedTyping(), this._pausedTypingSpeed);
 
   }
 
@@ -570,7 +542,7 @@ export class ChatCommander {
         isAdmin: false,
         execute: (msg) => {
           let parts = msg.split(' ');
-          for(let user of this._chatView.users) {
+          for (let user of this._chatView.users) {
             if (parts[0] === user.name) {
               let username = parts.splice(0, 1);
               this._sock.sendPrivateMsg(parts.join(' '), username);
@@ -590,14 +562,14 @@ export class ChatCommander {
             message: msg,
             realTimeFixed: Date.now(),
             scale: 'large',
-            avatar: this._chatView.hasAvatar,
+            avatar: this._chatView.avatar,
             type: MessageType.EMOTE
           });
         }
       },
       {
         /** SERVER */
-        alias: ['serv','server'],
+        alias: ['serv', 'server'],
         isAdmin: false,
         execute: (msg) => {
           this._sock.sendServerMsg('main', msg);
@@ -624,7 +596,7 @@ export class ChatCommander {
           this._chatView.transferPorts(
             this._chatView.ports.top,
             this._chatView.ports.main
-          )
+          );
         }
       },
       {
@@ -642,7 +614,7 @@ export class ChatCommander {
           this._chatView.transferPorts(
             this._chatView.ports.main,
             this._chatView.ports.top
-          )
+          );
         }
       },
       {
@@ -653,7 +625,7 @@ export class ChatCommander {
           this._chatView.transferPorts(
             this._chatView.ports.main,
             this._chatView.ports.center
-          )
+          );
         }
       },
       {
@@ -664,7 +636,7 @@ export class ChatCommander {
           this._chatView.transferPorts(
             this._chatView.ports.main,
             this._chatView.ports.bottom
-          )
+          );
         }
       },
       {
@@ -723,7 +695,7 @@ export class ChatCommander {
           this._chatView.reconnect();
         }
       }
-    ]
+    ];
 
   }
 

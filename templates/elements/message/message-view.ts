@@ -1,8 +1,8 @@
 
-import {bindable, inject} from "aurelia-framework";
+import {bindable, inject} from 'aurelia-framework';
 import * as moment from 'moment';
 import {PageElement} from '../../../helpers/page';
-import {Message, IMessage, MessageType, MessageAvatar} from '../../../views/chat/message';
+import {Message, IMessage, MessageType} from '../../../views/chat/message';
 import {Chat} from '../../../views/chat/chat';
 import {ClientIO} from '../../../services/clientio';
 import {BibleVerseFilter} from '../../elements/message/bible-verse-filter';
@@ -37,6 +37,7 @@ export class MessageView {
 
   defClass = '';
   modClass = '';
+  avatar = '';
   isDefault = false;
 
 
@@ -44,7 +45,7 @@ export class MessageView {
   private _verseFilter: BibleVerseFilter;
 
   constructor(private el: Element) {
-    this._verseFilter = new BibleVerseFilter()
+    this._verseFilter = new BibleVerseFilter();
   }
 
 
@@ -63,7 +64,7 @@ export class MessageView {
 
       let words = this._verseFilter.filter(this.cfg.message);
 
-      for(let word of words) {
+      for (let word of words) {
 
         if (typeof word !== 'string') {
           this.words.push(word);
@@ -72,15 +73,15 @@ export class MessageView {
 
         let filteredWord = null;
 
-        filteredWord = this._filterWord(word)
+        filteredWord = this._filterWord(word);
 
         if (filteredWord) {
-          this.words.push(filteredWord)
+          this.words.push(filteredWord);
         } else {
           this.words.push({
             type: WordType.NONE,
             text: word
-          })
+          });
         }
       }
 
@@ -105,9 +106,13 @@ export class MessageView {
   }
 
   bind() {
-    this.defClass = this._setCustomAvatar(this.cfg.avatar);
-    this.isDefault = this.cfg.avatar === MessageAvatar.DEFAULT
-    var el = <HTMLElement> this.el;
+    this.isDefault = !this.cfg.avatar;
+
+    if (this.cfg.avatar)
+      this.avatar = this.normalizeImage(this.cfg.avatar);
+
+
+    let el = <HTMLElement> this.el;
     // this.cfg.setTypeClass(el);
     this.modClass = this.cfg.messageType;
 
@@ -125,25 +130,26 @@ export class MessageView {
     }
   }
 
+  normalizeImage(img: string) {
+
+    if (~img.indexOf('google')) {
+      return `${img}?sz=64`;
+    }
+
+    console.warn('Avatar was not normalized');
+    return img;
+
+  }
+
   wordType(type: string) {
 
-    switch(type) {
+    switch (type) {
       case 'none': return WordType.NONE;
       case 'link': return WordType.LINK;
       case 'image': return WordType.IMAGE;
       case 'verse': return WordType.VERSE;
       default:
         return null;
-    }
-
-  }
-
-  private _setCustomAvatar(avatar: MessageAvatar) {
-
-    switch(avatar) {
-      case MessageAvatar.AEDAEUM: return 'aedaeum';
-      case MessageAvatar.MOM: return 'mom';
-      default: return 'default';
     }
 
   }
@@ -163,16 +169,16 @@ export class MessageView {
             link: null,
             invalid: false
           }
-        }
+        };
 
-    for(let p of msg) {
+    for (let p of msg) {
       if (match = (/http[s]?:\/\/([a-zA-Z0-9/+-_]\.?)+(\.[a-z]{2,3})?$/g).exec(p)) {
         if (match[0] == p) {
           let link = p.replace(/^http[s]?:\/\/[w]{3}?\.?/, '');
           input = input.replace(p,
             `<a target="_blank" title="${p}" ` +
             `href="${p}">${(link.length > 40) ? link.substr(0, 40) + '...' : link}</a>`
-          )
+          );
           result.text = (link.length > 40) ? link.substr(0, 40) + '...' : link;
           result.data.link = p;
         } else {
@@ -200,10 +206,10 @@ export class MessageView {
           data: {
             invalid: false
           }
-        }
+        };
 
 
-    for(let p of msg) {
+    for (let p of msg) {
       if (match = (/http[s]?:\/\/([a-zA-Z0-9/+-_]\.?)+\.(png|jpg|jpeg|gif)$/g.exec(p))) {
         if (match[0] == p) {
           result.text = p;
@@ -224,7 +230,7 @@ export class MessageView {
     // Only NORMAL messages will poll
     if (this.cfg.type > 0) return;
 
-    var rt = moment(this._relativeTime),
+    let rt = moment(this._relativeTime),
         now = moment(Date.now());
 
     this.relativeTime = rt.fromNow();

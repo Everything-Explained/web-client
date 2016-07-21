@@ -1,7 +1,9 @@
 template
   //- &#128100; .default
-  aside(if.bind='modClass === "normal"', class='${cfg.scale} ${defClass} ${modClass}')
-    span(class='avatar ${defClass}') ${isDefault? "&#128100;" : ""}
+  aside(if.bind='modClass === "normal"', class='${cfg.scale} ${modClass}')
+    span(if.bind='isDefault' class='avatar'
+         css='background-image: ${avatar}') ${isDefault? "&#128100;" : ""}
+    img(if.bind='!isDefault' class='avatar' src.bind='avatar')
     span.real-time ${realTime}
   div(if.bind='modClass === "normal"', class='container ${modClass}')
 

@@ -1,8 +1,9 @@
 
 import * as io from 'socketio';
-import {Message, MessageType, MessageSeverity, IMessage, MessageAvatar} from '../views/chat/message';
+import {Message, MessageType, MessageSeverity, IMessage} from '../views/chat/message';
 import {IScriptures} from '../views/chat/display-verse';
 import {Chat} from '../views/chat/chat';
+import {Utils} from '../helpers/utils';
 
 
 export class ClientIO {
@@ -12,13 +13,12 @@ export class ClientIO {
   private _connected = false;
   private _chat: Chat;
 
-  private _rooms =
-  {
+  private _rooms = {
     main: null
   };
 
 
-  constructor(private _hasConnected: () => void, private _populate: (msg: Message) => void, chat: Chat) {
+  constructor(private _hasConnected: (data: any) => void, private _populate: (msg: Message) => void, chat: Chat) {
 
     this._chat = chat;
     this.connect();
@@ -86,6 +86,8 @@ export class ClientIO {
 
   }
 
+
+
   connect(reconnect = false) {
 
     if (reconnect && this._connected) {
@@ -99,11 +101,7 @@ export class ClientIO {
 
     this._sock.on('connect', () => {
       this._sock
-        .on('auth-success', () => {
-          this._chat.addMessage(
-            'Connected Successfully',
-            MessageType.SERVER);
-        })
+        .on('auth-success', (data) => this.completeAuthentication(data))
         .on('auth-fail', (msg) => {
           this._chat.addMessage(msg, MessageType.SERVER);
         })
@@ -112,39 +110,52 @@ export class ClientIO {
     .on('disconnect', () => this.onLostConnection());
 
 
-    // this._sock.on('client-connected',    ()    => this.authClient())
-    // this._sock.on('auth-success',        data  => this.onConnection(data));
-    // this._sock.on('disconnect',          ()    => this.onLostConnection());
-    // this._sock.on('connect_error',       ()    => this.onFailedConnection())
-    // this._sock.on('broadcast',           msg   => this.onBroadcast(msg))
-    // this._sock.on('user-joined',         user  => this.onUserJoin(user))
-    // this._sock.on('user-left',           user  => this.onUserDisconnect(user))
-    // this._sock.on('users-online',        users => this.populateUsers(users))
-    // this._sock.on('user-is-typing',      user  => this.onUserTyping(user))
-    // this._sock.on('user-stopped-typing', user  => this.onStoppedTyping(user));
-    // this._sock.on('user-paused-typing',  user  => this.onUserPausedTyping(user));
-    // this._sock.on('bible-verse',         data  => this.showBibleVerse(data));
+    this._sock.on('disconnect',          ()    => this.onLostConnection());
+    this._sock.on('connect_error',       ()    => this.onFailedConnection());
+    this._sock.on('broadcast',           msg   => this.onBroadcast(msg));
+    this._sock.on('user-joined',         user  => this.onUserJoin(user));
+    this._sock.on('user-left',           user  => this.onUserDisconnect(user));
+    this._sock.on('users-online',        users => this.populateUsers(users));
+    this._sock.on('user-is-typing',      user  => this.onUserTyping(user));
+    this._sock.on('user-stopped-typing', user  => this.onStoppedTyping(user));
+    this._sock.on('user-paused-typing',  user  => this.onUserPausedTyping(user));
+    this._sock.on('bible-verse',         data  => this.showBibleVerse(data));
     // this._sock.on('private-msg',         data  => this.onPrivateMessage(data))
   }
+
+
+
+  completeAuthentication(data) {
+    this._chat.addMessage(
+        'Connected Successfully', MessageType.SERVER);
+
+    if (!this._connected) {
+      this._hasConnected(data);
+      this._connected = true;
+    }
+
+    // Setup room hash event
+    this._rooms[data.room] = data.hash;
+
+    // Setup message population event
+    this._sock.on(this._rooms.main, (msg) => {
+      this._populate(msg);
+    });
+  }
+
+
 
   showBibleVerse(verses: IScriptures[]) {
     this._chat.showVerse(verses);
   }
 
 
+
   onPrivateMessage(data: any) {
     this._chat.addMessage(`${data.from};${data.text}`, MessageType.INLINE);
   }
 
-  authClient() {
-    if (!this._connected) {
-      this._hasConnected();
-      this._connected = true;
-    }
-    if (!this._chat.alias) return;
-    console.log('calling emit');
-    this._sock.emit('auth', this._chat.alias);
-  }
+
 
   populateUsers(users: string[]) {
     this._chat.userlistActive = true;
@@ -189,28 +200,28 @@ export class ClientIO {
 
 
   onUserTyping(user: string) {
-    let index = _.findIndex(this._chat.users, o => {
+    let index = Utils.findIndex(this._chat.users, o => {
       return o.name == user;
     });
     this._chat.users[index].isTyping = 'is-typing';
   }
 
   onStoppedTyping(user: string) {
-    let index = _.findIndex(this._chat.users, o => {
+    let index = Utils.findIndex(this._chat.users, o => {
       return o.name == user;
     });
     this._chat.users[index].isTyping = '';
   }
 
   onUserPausedTyping(user: string) {
-    let index = _.findIndex(this._chat.users, o => {
+    let index = Utils.findIndex(this._chat.users, o => {
       return o.name == user;
     });
     this._chat.users[index].isTyping = 'paused-typing';
   }
 
   onUserResumedTyping(user: string) {
-    let index = _.findIndex(this._chat.users, o => {
+    let index = Utils.findIndex(this._chat.users, o => {
       return o.name == user;
     });
     this._chat.users[index].isTyping = 'is-typing';
@@ -228,7 +239,7 @@ export class ClientIO {
       username: 'Server',
       message: 'Server Shutdown or Lost Connection',
       realTimeFixed: Date.now(),
-      avatar: MessageAvatar.DEFAULT,
+      avatar: null,
       scale: 'large',
       type: MessageType.SERVER,
       severity: MessageSeverity.ATTENTION
