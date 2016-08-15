@@ -450,4 +450,8 @@ export class Signin {
 
   }
 
+  getViewStrategy() {
+    return 'views/home/signin';
+  }
+
 }

@@ -9,15 +9,16 @@ div {
 }
 
 h1 {
-  margin-top: 50px;
+  margin-top: 30px;
   font-family: 'comfortaa';
   font-variant: small-caps;
   letter-spacing: 2px;
   word-spacing: 2px;
   color: hsl(278, 50%, 80%);
 }
-h1:first-child {
-  margin-top: 100px;
+
+img {
+  margin-top: 30px;
 }
 
 span {

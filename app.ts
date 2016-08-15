@@ -64,7 +64,7 @@ export class App {
           classes: 'login icon-enter'
         },
         {
-          name: 'Settings',
+          name: 'settings',
           hidden: true,
           classes: 'settings icon-cog2'
         }

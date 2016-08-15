@@ -1,0 +1,1 @@
+cloc --exclude-lang=JavaScript,XML,HTML,CSS --exclude-dir=node_modules,.git,typings,jspm_packages,.vscode client

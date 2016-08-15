@@ -6,7 +6,7 @@ template
   section#PageTop
     header.global
       div.ribbon
-
+      aside.logo
 
 
 
@@ -14,7 +14,6 @@ template
 
     section#TrayTop.buffer
       aside.watermark Alpha: ${version}
-      //- aside.settings.icon-cog2
 
       menu#TabMenu
         ul
@@ -31,7 +30,7 @@ template
                 mousedown.delegate='$parent.populateRoutes(item, $event, true)'
                 class='${item.isActive ? "active" : ""} ' +
                       '${$parent.router.isNavigating && item.isActive ? "page-loader" : ""}',
-                innerhtml='${$parent.router.isNavigating && item.isActive ? "&nbsp;" : item.name}')
+                innerhtml='${$parent.router.isNavigating && item.isActive ? "&nbsp;" : "<span>" + item.name + "</span>"}')
 
       router-view#PageContent.optiscroll
 

@@ -1,6 +1,6 @@
 
 menu#MainMenu
-  margin-top 15px
+  margin-top 27px
   font-size 32px
   font-family Comfortaa, sans-serif
   font-variant small-caps
@@ -14,10 +14,15 @@ menu#MainMenu
     list-style none
     width 95%
 
+    span
+      position: relative
+      top -8px
+
     li
       position relative
-      padding 0 5px 5px 0
+      padding 2px 5px 1px 0
       display block
+      height 33px
       text-align right
       color $menu-item-color
       text-shadow $menu-text-shadow
@@ -54,7 +59,7 @@ menu#MainMenu
 menu#TabMenu
   position relative
   height 100%
-  left 200px
+  left 307px
 
   ul
     position absolute
@@ -94,7 +99,7 @@ menu#TabMenu
 
     .login, .settings
       position absolute
-      right 233px
+      right 333px
       bottom 0
       font-size 24px
       color hsl(50, 60%, 53%)

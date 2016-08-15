@@ -6,11 +6,14 @@
     "declaration": false,
     "noImplicitAny": false,
     "removeComments": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "noResolve": true,
     "noLib": true,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
     "experimentalDecorators": true
-  }
+  },
+  "exclude": [
+    "build"
+  ]
 }
