@@ -125,10 +125,6 @@ $chat-message-right-margin = 13px
         height: 36px
         width: 36px
         font-size: 36px
-      .aedaeum
-        background-image: url("../img/chat32.png")
-      .mom
-        background-image: url("../img/flowers32.png")
       .default
         top: -3px
       .real-time
@@ -148,7 +144,7 @@ $chat-message-right-margin = 13px
       display: flex
       .username
         position: relative
-        font-family: PT, Consolas, "Lucida Console", monospace
+        font-family: 'PT Sans'
         color: $msg-username-color
         text-shadow: $msg-username-text-shadow
         margin-right: 20px
@@ -242,14 +238,14 @@ $chat-message-right-margin = 13px
       text-shadow: none
       &:before
         position: absolute
-        top: -9px
+        top: -11px
         left: -17px
         content: '\2022'
         font-size: 30px
         font-style: normal
         color: $emote-username-color
         text-shadow: $emote-msg-bullet-textshadow
-        font-family: PT, Consolas, "Lucida Console", monospace
+        font-family: 'Source Code Pro'
       &:after
         content: '\00a0'
 
@@ -257,6 +253,7 @@ $chat-message-right-margin = 13px
       flex: 1
       font-style: italic
       font-size: 14px
+      font-family: 'Source Code Pro'
       color: $emote-msg-color
 
     .real-time
@@ -269,19 +266,20 @@ $chat-message-right-margin = 13px
   // SERVER
   div.client,
   div.server
+    margin-bottom 5px
     .username
       padding-top: 2px
       margin-left: 19px
       margin-right: 15px
       color: $server-username-color
       text-shadow: $server-username-text-shadow
-      font-family: PT, Consolas, "Lucida Console", monospace
+      font-family: 'Source Code Pro'
       &:before
         color: $server-username-color
         text-shadow: $server-msg-bullet-textshadow
       // TODO: Use border to create triangle (all browser support)
       &:after
-        top: -9px
+        top: -11px
         left: 52px
         position: absolute
         content: '\2022'

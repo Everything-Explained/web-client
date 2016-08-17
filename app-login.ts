@@ -43,7 +43,11 @@ export class Login {
       })
       .then(() => {
         this._auth2 = gapi.auth2.getAuthInstance();
-        console.log(this._auth2.currentUser.get().getBasicProfile().getImageUrl());
+        if (this._auth2.isSignedIn.get()) {
+          console.log(`LOGGED-IN with Google`);
+        } else {
+          console.log('NOT logged in with Google');
+        }
       },
       (fail) => {
         console.error(fail);
@@ -57,10 +61,16 @@ export class Login {
     window['fbAsyncInit'] = () => {
       FB.init({
         appId: '1682404772003204',
-        status: true,
         xfbml: false,
         cookie: true,
         version: 'v2.5'
+      });
+      FB.getLoginStatus((res) => {
+        if (res.status == 'connected') {
+          console.log('LOGGED-IN with Facebook');
+        } else {
+          console.log('NOT logged in with Facebook');
+        }
       });
     };
 
@@ -177,7 +187,10 @@ export class Login {
 
       // TODO - UI Should log this
       // Already logged in
-      if (fbAuth) return;
+      if (fbAuth) {
+        console.log('Already Logged In');
+        return;
+      }
 
       FB.login(res => {
         if (res.status == 'connected') {
@@ -230,15 +243,30 @@ export class Login {
 
   public signOut(cb: (err, code, data) => void) {
 
-    Web.POST('/internal/logout', {
-      fields: {
-        secret: window.session.secret
-      }
-    },
-    (err, code, data) => {
-      console.log(err, code, data);
-      cb(err, code, data);
-    });
+    let logout = () => {
+      Web.POST('/internal/logout', {
+        fields: {
+          secret: window.session.secret
+        }
+      },
+      (err, code, data) => {
+        console.log(err, code, data);
+        cb(err, code, data);
+      });
+    };
+
+    if (this._auth2.isSignedIn.get()) {
+      this._auth2.signOut();
+      logout();
+    }
+
+    if (FB.getAuthResponse()) {
+      FB.logout((e) => {
+        logout();
+      });
+    }
+
+
 
 
   }

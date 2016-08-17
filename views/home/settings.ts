@@ -18,6 +18,7 @@ export class Settings {
 
   attached() {
     let obj = document.querySelector('#Settings') as HTMLElement;
+    if (!obj) return;
     window.session = JSON.parse(obj.dataset['session']);
   }
 
