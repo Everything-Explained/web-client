@@ -238,7 +238,6 @@ export class App {
     config.title = 'Noumenae';
     this.createRoutes(this.mainMenu, config);
     this.router = router;
-    console.log(this.router);
     this.router.handleUnknownRoutes({
       route: '',
       moduleId: './views/error/F404'
@@ -365,7 +364,6 @@ export class App {
           // }
         }
       }
-      console.log(routes);
 
     }
 

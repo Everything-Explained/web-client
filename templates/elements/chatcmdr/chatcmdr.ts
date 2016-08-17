@@ -527,6 +527,7 @@ export class ChatCommander {
 
 
   // todo - Test for conflicting aliases
+  // TODO - Refactor into a proper commands file(s)
   initCommands() {
 
     this._commands = [

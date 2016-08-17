@@ -37,14 +37,18 @@ export class Login {
 
   private _initGoogleAuth() {
 
-    if (!window['gapi'] || !gapi.auth2 || !gapi.auth2.getAuthInstance()) {
-      setTimeout(() => {
-        this._initGoogleAuth();
-      }, 133);
-      return;
-    }
-
-    this._auth2 = gapi.auth2.getAuthInstance();
+    gapi.load('auth2', () => {
+      gapi.auth2.init({
+        fetch_basic_profile: true
+      })
+      .then(() => {
+        this._auth2 = gapi.auth2.getAuthInstance();
+        console.log(this._auth2.currentUser.get().getBasicProfile().getImageUrl());
+      },
+      (fail) => {
+        console.error(fail);
+      });
+    });
 
   }
 
@@ -117,7 +121,6 @@ export class Login {
           let token = d.getAuthResponse().id_token;
           this._logInWith('google', token, cb ? cb : null);
         });
-
       return;
     }
 

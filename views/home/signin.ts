@@ -426,11 +426,6 @@ export class Signin {
     // head.appendChild(script);
     // window.session = JSON.parse(obj.dataset['session']);
 
-    // INIT Google Signon
-    gapi.load('auth2', () => {
-      this._auth2 = gapi.auth2.init();
-    });
-
 
     this._robotNodes = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[];
 

@@ -2,9 +2,13 @@
 app-config.js
 app.js
 app-config.js
+app-session.js
+bootstrap.js
 /jspm_packages
 /node_modules
 /app-login.js
+test.js
+test.ts
 .idea
-build
 dist
+/css/fonts/iconify.woff
