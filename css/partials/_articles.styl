@@ -199,8 +199,8 @@ article[role='FAQ']
           margin-top: 3px;
     ul
       margin-left: 44px;
-      font-size 18px
-      font-family $ff-monospace
+      font-size 16px
+      font-family monospace
       li
         text-shadow 1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000
         color hsl(0, 30%, 77%)
@@ -226,12 +226,14 @@ article[role='FAQ']
 
     .question
       @extend $content
-      padding 7px 13px
+      padding 3px 11px
+      width 100%
       color hsl(124, 20%, 70%)
       font-family Comfortaa, sans-serif
-      font-size 16px
+      font-variant: small-caps
+      font-size 20px
       text-align center
-      letter-spacing 1px
+      letter-spacing 2px
       background hsl(124, 12%, 13%)
       border-color $article-question-border-color
       align-self center
