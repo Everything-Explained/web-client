@@ -7,6 +7,7 @@ import * as replace from 'gulp-replace';
 let bundle = require('aurelia-bundler').bundle;
 
 let srcServer = ['../server/**/**.js', '../server/**/**.json', '!../server/node_modules/**', '../server/**/**.pem']
+
   , srcClient = [
       '**/**.js',
       '**/**.css',
@@ -22,8 +23,10 @@ let srcServer = ['../server/**/**.js', '../server/**/**.json', '!../server/node_
       '**/**.png',
       '**/**.gif',
       '**/**.woff',
+      '**/**.woff2',
       '**/changelog.json'
-    ]
+  ]
+
   , srcDist = [
     'dist/**/theme.css',
     'dist/**/**/fonts.css',
@@ -95,9 +98,7 @@ gulp.task('copyClient', () => {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('copy', ['copyClient']);
-
-gulp.task('build', ['copy'], () => {
+gulp.task('build', ['copyClient', 'copyServer'], () => {
   del(['dist/app-build.js', 'dist/aurelia-build.js'])
   return bundle(config);
 })
