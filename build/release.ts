@@ -20,20 +20,12 @@ let srcServer = ['../server/**/**.js', '../server/**/**.json', '!../server/node_
       '!config.js',
       '!test.js',
       '**/**.pug',
-      '**/**.png',
-      '**/**.gif',
-      '**/**.woff',
-      '**/**.woff2',
       '**/changelog.json'
   ]
 
   , srcDist = [
     'dist/**/theme.css',
     'dist/**/**/fonts.css',
-    'dist/**/**.woff',
-    'dist/**/**.png',
-    'dist/**/**.gif',
-
     'dist/**/**.pug',
     'dist/aurelia-build.js',
     'dist/app-build.js',
@@ -41,6 +33,15 @@ let srcServer = ['../server/**/**.js', '../server/**/**.json', '!../server/node_
     'dist/bootstrap.js',
     '**/system.js',
     '!node_modules/**'
+  ]
+
+  , srcAssets = [
+    '!dist',
+    '**/**.woff2',
+    '**/**.woff',
+    '**/**.gif',
+    '**/**.png',
+    'dist/**/changelog.json'
   ]
 
   , config = {
@@ -98,7 +99,12 @@ gulp.task('copyClient', () => {
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('build', ['copyClient', 'copyServer'], () => {
+gulp.task('copyAssets', () => {
+  return gulp.src(srcAssets)
+    .pipe(gulp.dest('../release/client'))
+})
+
+gulp.task('build', ['copyClient', 'copyServer', 'copyAssets'], () => {
   del(['dist/app-build.js', 'dist/aurelia-build.js'])
   return bundle(config);
 })
