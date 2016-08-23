@@ -6,7 +6,7 @@
 - var kantianism = "<a href='https://en.wikipedia.org/wiki/Immanuel_Kant' target='_blank'>Kantianism</a>"
 
 template
-  section
+  section(class='${router.isNavigating ? "hidden" : "visible"}')
     article.home.faq.au-animate(role='FAQ')
       input#Search(type='text', placeholder='Search', keyup.delegate='seek($event) & debounce:300')
 
@@ -319,3 +319,7 @@ template
         div#Answers.optiscroll
           div.optiscroll-content
             div.answer-placeholder Click a Question on the Left
+
+  div.cssload-container(if.bind='router.isNavigating')
+    div.cssload-circle
+    div.cssload-circle

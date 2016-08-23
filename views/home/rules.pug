@@ -1,5 +1,5 @@
 ﻿template
-  section.optiscroll-content
+  section.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
     article.home.au-animate(role='rules')
       div.rules-container.content
         span.rule Love
@@ -44,3 +44,6 @@
               Don't you think it's our duty to at least attempt a fraction of this kind of selfless love
               towards each other?
 
+  div.cssload-container(if.bind='router.isNavigating')
+    div.cssload-circle
+    div.cssload-circle

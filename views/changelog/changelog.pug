@@ -1,5 +1,5 @@
 template
-  section.changelog.optiscroll-content
+  section.changelog.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
     section.compartment(repeat.for='section of sections', mousedown.delegate='open($event, section)')
       label.title ${section.date}
         sub ${section.totalChanges}
@@ -11,3 +11,8 @@ template
             sup(if.bind='section.changes.length > 1') (${section.changes.length})
           li(if.bind='section.fixes.length') ${section.fixes[0]}
             sup(if.bind='section.fixes.length > 1') (${section.fixes.length})
+
+
+  div.cssload-container(if.bind='router.isNavigating')
+    div.cssload-circle
+    div.cssload-circle

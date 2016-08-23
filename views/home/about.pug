@@ -5,8 +5,7 @@
 - var email = "<span id='Email' mousedown.delegate='decode($event)'>Click Here</span>";
 - var noumenae = "<a href='#/faq/noumenon'>Here</a>"
 template
-
-  section.optiscroll-content
+  section.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
     article.home.optiscroll-content.au-animate(role='about')
       p.
        Welcome home! Noumenae seeks to enlighten itself, as well as its members. Everyone
@@ -36,3 +35,8 @@ template
 
       p.
        Let's create this enduring family together because we can't do it alone!
+
+
+  div.cssload-container(if.bind='router.isNavigating')
+    div.cssload-circle
+    div.cssload-circle

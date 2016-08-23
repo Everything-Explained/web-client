@@ -3,8 +3,7 @@ template
   require(from='elements/message/message-view')
   require(from='elements/chatcmdr/chatcmdr')
 
-
-  section.anim-container.optiscroll-content
+  section.anim-container.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
     section#ChatContainer
       section#MainWindow
         div#MainPort.optiscroll
@@ -35,4 +34,6 @@ template
 
     chat-commander#ChatCommander.au-animate(chat-data.bind='data')
 
-
+  div.cssload-container(if.bind='router.isNavigating')
+    div.cssload-circle
+    div.cssload-circle
