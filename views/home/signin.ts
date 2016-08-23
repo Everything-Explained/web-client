@@ -67,10 +67,18 @@ export class Signin {
 
   public inviteResponse = '';
 
+  public authLibsLoaded = false;
+
   constructor(private _login:   Login,
               private _web:     Web,
               private _router:  Router,
-              private _session: Session) {
+              private _session: Session)
+  {
+
+    this._login.initAuthLibs(() => {
+      this.authLibsLoaded = true;
+    });
+
   }
 
     public test() {
@@ -418,15 +426,6 @@ export class Signin {
 
   attached() {
 
-    let obj = document.querySelector('#SignInPage') as HTMLElement
-      // , head = document.getElementsByTagName('head')[0] as HTMLHeadElement
-      // , script = document.createElement('script');
-
-    // script.src = 'https://apis.google.com/js/api.js';
-    // head.appendChild(script);
-    // window.session = JSON.parse(obj.dataset['session']);
-
-
     this._robotNodes = Array.prototype.slice.call(document.querySelectorAll('.node')) as HTMLElement[];
 
     // Track nick length
@@ -440,9 +439,6 @@ export class Signin {
       this._nickLength = obj.value.length;
       this._socialActive = false;
     });
-
-    // this._login.initAuthLibs();
-
   }
 
   getViewStrategy() {

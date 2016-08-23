@@ -391,7 +391,7 @@ export class App {
     this._modal.init('overlay');
 
 
-    this._login.initAuthLibs();
+    // this._login.initAuthLibs();
 
     // let light = (lights == 'off') ? 'light' : 'dark';
     // req.open('GET', `css/themes/${light}/theme.css`, true);

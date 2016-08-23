@@ -1,6 +1,10 @@
 
 template
-  div#SignInPage(data-session=session)
+  div.cssload-container(if.bind='!authLibsLoaded')
+    div.cssload-circle
+    div.cssload-circle
+
+  div#SignInPage(css='display: ${authLibsLoaded ? "block" : "none"}' data-session=session)
     div#SignInContent.login-content(ref='signInContent')
 
       h1 Select a sign-in method.

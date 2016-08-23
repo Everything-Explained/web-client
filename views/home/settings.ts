@@ -20,6 +20,9 @@ export class Settings {
     let obj = document.querySelector('#Settings') as HTMLElement;
     if (!obj) return;
     window.session = JSON.parse(obj.dataset['session']);
+    this._login.initAuthLibs(() => {
+
+    });
   }
 
   getViewStrategy() {

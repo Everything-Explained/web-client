@@ -4,7 +4,8 @@ System.config({
   paths: {
     "*": "*",
     "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
+    "npm:*": "jspm_packages/npm/*",
+    "elements/*": "templates/elements/*"
   },
   map: {
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0-rc.1.0.0",
@@ -212,5 +213,5 @@ System.config({
     "npm:vm-browserify@0.0.4": {
       "indexof": "npm:indexof@0.0.1"
     }
-  }
+  },
 });

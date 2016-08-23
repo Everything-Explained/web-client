@@ -20,6 +20,8 @@ export class Login {
   private _loggedInWith = LoginTypes.NONE;
   private _calledSignin = false;
   private _isReady = false;
+  private _googleReady = false;
+  private _fbReady = false;
 
 
   constructor(private _web: Web) {
@@ -27,32 +29,42 @@ export class Login {
 
   }
 
-  public initAuthLibs() {
-
-    if (this._isReady) return;
+  public initAuthLibs(cb: () => void) {
+    if (this._isReady) return cb();
+    this._checkReadyStates(cb);
     this._initGoogleAuth();
     this._initFacebookAuth();
+    this._loadAuthScripts();
+    console.log('Loading APIs');
     this._isReady = true;
   }
 
   private _initGoogleAuth() {
 
-    gapi.load('auth2', () => {
-      gapi.auth2.init({
-        fetch_basic_profile: true
-      })
-      .then(() => {
-        this._auth2 = gapi.auth2.getAuthInstance();
-        if (this._auth2.isSignedIn.get()) {
-          console.log(`LOGGED-IN with Google`);
-        } else {
-          console.log('NOT logged in with Google');
-        }
-      },
-      (fail) => {
-        console.error(fail);
+    if (!window['gapi']) {
+      setTimeout(() => {
+        this._initGoogleAuth();
+      }, 150);
+    } else {
+      gapi.load('auth2', () => {
+        gapi.auth2.init({
+          fetch_basic_profile: true
+        })
+        .then(() => {
+          this._auth2 = gapi.auth2.getAuthInstance();
+          if (this._auth2.isSignedIn.get()) {
+            console.log(`LOGGED-IN with Google`);
+          } else {
+            console.log('NOT logged in with Google');
+          }
+          this._googleReady = true;
+        },
+        (fail) => {
+          console.error(fail);
+        });
       });
-    });
+    }
+
 
   }
 
@@ -71,16 +83,39 @@ export class Login {
         } else {
           console.log('NOT logged in with Facebook');
         }
+        this._fbReady = true;
       });
     };
 
-    (function(d, s, id) {
-      let js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = '//connect.facebook.net/en_US/sdk.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+  }
+
+
+  private _loadAuthScripts() {
+
+    let s = document.getElementsByTagName('script')[0] as HTMLElement
+      , gel = document.createElement('script')
+      , fel = document.createElement('script');
+
+    gel.async = fel.async = true;
+    gel.src = '//apis.google.com/js/api.js';
+    fel.src = '//connect.facebook.net/en_US/sdk.js';
+
+    s.parentNode.insertBefore(gel, s);
+    s.parentNode.insertBefore(fel, s);
+
+  }
+
+
+  private _checkReadyStates(cb: () => void) {
+
+    if (this._googleReady && this._fbReady) {
+      cb();
+    }
+    else {
+      setTimeout(() => {
+        this._checkReadyStates(cb);
+      }, 200);
+    }
 
   }
 
@@ -257,17 +292,16 @@ export class Login {
 
     if (this._auth2.isSignedIn.get()) {
       this._auth2.signOut();
-      logout();
+      return logout();
     }
 
     if (FB.getAuthResponse()) {
       FB.logout((e) => {
-        logout();
+        return logout();
       });
     }
 
-
-
+    // TODO - Failure to logout should be posted to UI
 
   }
 

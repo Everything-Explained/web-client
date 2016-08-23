@@ -1,0 +1,139 @@
+.cssload-container
+  display block
+  margin 40px auto
+  width 70px
+
+.cssload-container *, .cssload-container *:before, .cssload-container *:after
+  box-sizing border-box
+  -o-box-sizing border-box
+  -ms-box-sizing border-box
+  -webkit-box-sizing border-box
+  -moz-box-sizing border-box
+
+$animDuration = 1.13s;
+$colorOne = hsl(50, 80%, 40%)
+$colorTwo = $panel
+$size = 133px
+$easeMethod = $ease-io-sine
+
+$animation
+  animation-name cssload-explode
+  -o-animation-name cssload-explode
+  -ms-animation-name cssload-explode
+  -webkit-animation-name cssload-explode
+  -moz-animation-name cssload-explode
+  animation-duration $animDuration
+  -o-animation-duration $animDuration
+  -ms-animation-duration $animDuration
+  -webkit-animation-duration $animDuration
+  -moz-animation-duration $animDuration
+  animation-timing-function $easeMethod
+  -o-animation-timing-function $easeMethod
+  -ms-animation-timing-function $easeMethod
+  -webkit-animation-timing-function $easeMethod
+  -moz-animation-timing-function $easeMethod
+  animation-iteration-count infinite
+  -o-animation-iteration-count infinite
+  -ms-animation-iteration-count infinite
+  -webkit-animation-iteration-count infinite
+  -moz-animation-iteration-count infinite
+
+.cssload-circle
+  position absolute
+  top 20%
+  left 50%
+  width 0
+  height 0
+  border-radius 50%
+  z-index 1
+  transform translate(-50%, -50%)
+  -o-transform translate(-50%, -50%)
+  -ms-transform translate(-50%, -50%)
+  -webkit-transform translate(-50%, -50%)
+  -moz-transform translate(-50%, -50%)
+  transition all 230ms ease
+  -o-transition all 230ms ease
+  -ms-transition all 230ms ease
+  -webkit-transition all 230ms ease
+  -moz-transition all 230ms ease
+
+.cssload-circle:nth-child(1)
+  z-index 2
+  background $colorOne
+  @extends $animation
+  animation-delay 0
+  -o-animation-delay 0
+  -ms-animation-delay 0
+  -webkit-animation-delay 0
+  -moz-animation-delay 0
+
+.cssload-circle:nth-child(2)
+  background $colorTwo
+  @extends $animation
+  animation-delay 0.58s
+  -o-animation-delay 0.58s
+  -ms-animation-delay 0.58s
+  -webkit-animation-delay 0.58s
+  -moz-animation-delay 0.58s
+
+
+
+@keyframes cssload-explode
+  0%
+    width 0
+    height 0
+    z-index 1
+  50%
+    width $size
+    height $size
+    z-index 1
+  100%
+    display none
+
+@-o-keyframes cssload-explode
+  0%
+    width 0
+    height 0
+    z-index 1
+  50%
+    width $size
+    height $size
+    z-index 1
+  100%
+    display none
+
+@-ms-keyframes cssload-explode
+  0%
+    width 0
+    height 0
+    z-index 1
+  50%
+    width $size
+    height $size
+    z-index 1
+  100%
+    display none
+
+@-webkit-keyframes cssload-explode
+  0%
+    width 0
+    height 0
+    z-index 1
+  50%
+    width $size
+    height $size
+    z-index 1
+  100%
+    display none;
+
+@-moz-keyframes cssload-explode
+  0%
+    width 0
+    height 0
+    z-index 1
+  50%
+    width $size
+    height $size
+    z-index 1
+  100%
+    display none;
