@@ -58,7 +58,7 @@ export class About {
   }
 
   getViewStrategy() {
-    return 'views/home/about';
+    return 'views/home/about.html';
   }
 
   private _toArray(val: Node|string) {

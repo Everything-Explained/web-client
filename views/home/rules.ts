@@ -6,7 +6,7 @@ export class Rules {
   }
 
   getViewStrategy() {
-    return 'views/home/rules';
+    return 'views/home/rules.html';
   }
 
 }

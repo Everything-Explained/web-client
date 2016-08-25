@@ -136,6 +136,9 @@ export class MessageView {
       return `${img}?sz=64`;
     }
 
+    if (~img.indexOf('facebook')) {
+      return `${img}?width=64`;
+    }
     console.warn('Avatar was not normalized');
     return img;
 

@@ -89,7 +89,7 @@ export class Faq {
   }
 
   getViewStrategy() {
-    return 'views/home/faq';
+    return 'views/home/faq.html';
   }
 }
 

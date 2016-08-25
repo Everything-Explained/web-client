@@ -400,7 +400,7 @@ export class App {
   }
 
   getViewStrategy() {
-    return 'app';
+    return 'app.html';
   }
 
 

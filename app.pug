@@ -28,8 +28,8 @@ template
           ul
             li( repeat.for='item of mainMenu'
                 mousedown.delegate='$parent.populateRoutes(item, $event, true)'
-                class='${item.isActive ? "active" : ""} ',
-                innerhtml='${$parent.router.isNavigating && item.isActive ? "&nbsp;" : "<span>" + item.name + "</span>"}')
+                class='${item.isActive ? "active" : ""}'
+                innerhtml='<span>${item.name}</span>')
 
       router-view#PageContent.optiscroll
 
