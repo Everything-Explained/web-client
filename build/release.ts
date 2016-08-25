@@ -24,6 +24,7 @@ let srcServer = ['../server/**/**.js', '../server/**/**.json', '!../server/node_
   ]
 
   , srcDist = [
+    '!node_modules/**',
     'dist/**/theme.css',
     'dist/**/**/fonts.css',
     'dist/**/**.pug',
@@ -31,16 +32,18 @@ let srcServer = ['../server/**/**.js', '../server/**/**.json', '!../server/node_
     'dist/app-build.js',
     'config.js',
     'dist/bootstrap.js',
-    '**/system.js',
-    '!node_modules/**'
+    '**/system.js'
   ]
 
   , srcAssets = [
-    '!dist',
-    '**/**.woff2',
-    '**/**.woff',
+    '!dist/**',
     '**/**.gif',
     '**/**.png',
+    'favicon.ico',
+    'robots.txt',
+    'run.bat',
+    '!node_modules/**',
+    '!jspm_modules/**',
     'dist/**/changelog.json'
   ]
 
