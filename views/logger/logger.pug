@@ -1,0 +1,17 @@
+doctype html
+
+html
+  head
+    title Logger
+    link(rel='stylesheet' href='views/logger/logger.css')
+    script(src='../helpers/web.js')
+    script(src='views/logger/logger.js')
+    script(src='../libs/live.js')
+    script.
+      w = Web;
+
+  body
+    div#container
+      div#content
+      button#Refresh Refresh
+      input#Length(type='number' min='10' max='1020' value='10' step='20')
