@@ -3,48 +3,49 @@ import * as gulp from 'gulp';
 import * as gc from 'gulp-changed';
 import * as del from 'del';
 import * as replace from 'gulp-replace';
+import * as fs from 'fs';
 
 let bundle = require('aurelia-bundler').bundle;
 
-let srcServer = ['../server/**/**.js', '../server/**/**.json', '!../server/node_modules/**', '../server/**/**.pem']
+let srcServer = [
+      '!../server/node_modules/**',
+      '!../server/.vscode/**',
+      '../server/**/**.js',
+      '../server/**/**.json',
+      '../server/**/**.pem'
+  ]
 
   , srcClient = [
+      '!node_modules/**',
+      '!jspm_packages/**',
+      '!build/**',
+      '!.vscode/**',
+      '!dist/**',
       '**/**.js',
       '**/**.css',
+      '!gulpfile.js',
+      '!config.js',
+      '!test.js',
+      '**/**.pug',
+      '**/changelog.json',
+      'robots.txt'
+  ]
+
+  , srcClientAssets = [
       '!node_modules/**',
       '!jspm_packages/**',
       '!dist/**',
       '!build/**',
       '!.vscode/**',
-      '!gulpfile.js',
-      '!config.js',
-      '!test.js',
-      '**/**.pug',
-      '**/changelog.json'
+      '**/**.png',
+      '**/**.gif',
+      '**/**.ico'
   ]
 
   , srcDist = [
-    '!node_modules/**',
-    'dist/**/theme.css',
-    'dist/**/**/fonts.css',
-    'dist/**/**.pug',
-    'dist/aurelia-build.js',
-    'dist/app-build.js',
+    'dist/**/**.**',
     'config.js',
-    'dist/bootstrap.js',
     '**/system.js'
-  ]
-
-  , srcAssets = [
-    '!dist/**',
-    '**/**.gif',
-    '**/**.png',
-    'favicon.ico',
-    'robots.txt',
-    'run.bat',
-    '!node_modules/**',
-    '!jspm_modules/**',
-    'dist/**/changelog.json'
   ]
 
   , config = {
@@ -89,33 +90,60 @@ let srcServer = ['../server/**/**.js', '../server/**/**.json', '!../server/node_
     }
   };
 
+
+
 gulp.task('copyServer', () => {
     return gulp.src(srcServer)
-      .pipe(gc('../release/server'))
-      .pipe(gulp.dest('../release/server'))
+              .pipe(gc('../release/server'))
+              .pipe(gulp.dest('../release/server'))
 });
+
+
 
 gulp.task('copyClient', () => {
-
   return gulp.src(srcClient)
-    .pipe(gc('./dist'))
-    .pipe(gulp.dest('./dist'));
+            .pipe(gc('./dist'))
+            .pipe(gulp.dest('./dist'));
 });
 
+
+
 gulp.task('copyAssets', () => {
-  return gulp.src(srcAssets)
-    .pipe(gulp.dest('../release/client'))
+  return gulp.src(srcClientAssets)
+            .pipe(gulp.dest('./dist'));
 })
 
-gulp.task('build', ['copyClient', 'copyServer', 'copyAssets'], () => {
+
+gulp.task('readyConfig', () => {
+  del(['../release/client/config.js'])
+  let configFile = fs.readFileSync('config.js', 'ASCII');
+  fs.writeFileSync('config.js.tmp', configFile);
+
+  configFile = configFile.replace(': "*"', ': "dist/*"')
+  fs.writeFileSync('config.js', configFile);
+  return true;
+})
+
+
+
+gulp.task('build', ['readyConfig', 'copyClient', 'copyServer', 'copyAssets'], () => {
   del(['dist/app-build.js', 'dist/aurelia-build.js'])
   return bundle(config);
 })
 
-gulp.task('release', ['build'], () => {
-  del(['../release/client/config.js'])
+
+
+gulp.task('releaseFiles', ['build'], () => {
   return gulp.src(srcDist)
-    .pipe(gc('../release/client'))
-    .pipe(replace(': "dist/*"', ': "*"'))
-    .pipe(gulp.dest('../release/client'));
+            .pipe(replace(': "dist/*"', ': "*"'))
+            .pipe(gulp.dest('../release/client'));
+})
+
+
+
+gulp.task('release', ['releaseFiles'], () => {
+  let configFile = fs.readFileSync('config.js.tmp', 'ASCII');
+  fs.writeFileSync('config.js', configFile);
+  del(['config.js.tmp']);
+  return true;
 });
