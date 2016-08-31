@@ -145,8 +145,10 @@ export class Signin {
       return;
     }
 
-    Web.POST('/internal/validnick', {
-      data: obj.value
+    Web.GET('/internal/validnick', {
+      fields: {
+        nick: obj.value
+      }
     }, (err, code, data) => {
 
       if (code == 200) {
