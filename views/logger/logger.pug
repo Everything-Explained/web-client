@@ -2,8 +2,12 @@ doctype html
 
 html
   head
-    title Logger
+    title= logs
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css')
     link(rel='stylesheet' href='views/logger/logger.css')
+    script(src='https://code.jquery.com/jquery-2.1.1.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js')
     script(src='../helpers/web.js')
     script(src='views/logger/logger.js')
     script(src='../libs/live.js')
@@ -12,6 +16,26 @@ html
 
   body
     div#container
+      div.input-field
+        select#SelectFile.deep-purple-text.text-darken-1(onchange='selectChanged()')
+          each val in logs
+            option= val
+        label Available Logs
+      div.input-field.number
+        label Length
+        input#Length.deep-purple-text.text-darken-1(type='number' min='10' max='1020' value='100' step='20' onchange='getRealLength()')
+      div.input-field.number
+        label Multiplier
+        input#LengthMultiplier.deep-purple-text.text-darken-1(type='number' min='1' max='10' value='1' step='1' onchange='getRealLength()')
+      div.field
+        label Actual Length
+        span#LogLength.pink-text.text-accent-2
+      div.field.req-length.green-text.text-darken-1
+        label Req Length
+        span#ReqLength 100
       div#content
-      button#Refresh Refresh
-      input#Length(type='number' min='10' max='1020' value='100' step='20')
+      button#Refresh.waves-effect.waves-light.deep-purple.lighten-1.btn Refresh
+      div.field.time.green-text.text-darken-1
+        label Render Time
+        span#RenderTime
+

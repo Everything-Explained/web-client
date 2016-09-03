@@ -1466,6 +1466,7 @@ declare function parseFloat(string: string): number;
   * @param number A numeric value.
   */
 declare function isNaN(number: number): boolean;
+declare function isNaN(string: string): boolean;
 
 /**
   * Determines whether a supplied number is finite.
