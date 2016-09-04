@@ -8,7 +8,7 @@ interface URIProperties {
 }
 
 
-export class Web {
+class Web {
 
 
   constructor() {  }

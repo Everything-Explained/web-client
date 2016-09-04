@@ -8,9 +8,9 @@ html
     link(rel='stylesheet' href='views/logger/logger.css')
     script(src='https://code.jquery.com/jquery-2.1.1.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js')
-    script(src='../helpers/web.js')
+    script(src='views/logger/web.js')
     script(src='views/logger/logger.js')
-    script(src='../libs/live.js')
+    //- script(src='../libs/live.js')
     script.
       w = Web;
 
@@ -19,7 +19,11 @@ html
       div.input-field
         select#SelectFile.deep-purple-text.text-darken-1(onchange='selectChanged()')
           each val in logs
-            option= val
+            if val == 'noumenae.one'
+              options(selected)= val
+            else
+              option= val
+
         label Available Logs
       div.input-field.number
         label Length
@@ -35,6 +39,7 @@ html
         span#ReqLength 100
       div#content
       button#Refresh.waves-effect.waves-light.deep-purple.lighten-1.btn Refresh
+      button#Delete.waves-effect.waves-light.red.darken-1.btn Delete
       div.field.time.green-text.text-darken-1
         label Render Time
         span#RenderTime

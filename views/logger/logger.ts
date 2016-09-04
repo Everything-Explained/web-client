@@ -15,7 +15,8 @@ interface IData {
 }
 
 let contentObj: HTMLElement
-  , btnRefresh: HTMLElement
+  , btnRefresh: HTMLButtonElement
+  , btnDelete: HTMLButtonElement
   , txtLength: HTMLInputElement
   , selFile: HTMLSelectElement
   , lenObj: HTMLElement
@@ -27,7 +28,8 @@ let contentObj: HTMLElement
 
 document.addEventListener('DOMContentLoaded', () => {
   contentObj = document.getElementById('content');
-  btnRefresh = document.getElementById('Refresh');
+  btnRefresh = document.getElementById('Refresh') as HTMLButtonElement;
+  btnDelete = document.getElementById('Delete') as HTMLButtonElement;
   txtLength = document.getElementById('Length') as HTMLInputElement;
   selFile  = document.getElementById('SelectFile') as HTMLSelectElement;
   lenObj = document.getElementById('LogLength');
@@ -36,11 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
   reqLenObj = document.getElementById('ReqLength');
 
   $('select').material_select();
-  selFile.selectedIndex = 0;
+  selectChanged(true);
 
   btnRefresh.addEventListener('click', () => {
     getLog(selFile.options[selFile.selectedIndex].textContent, (parseInt(txtLength.value) || 100));
   });
+  btnDelete.addEventListener('click', onDelete);
   getLog(selFile.options[selFile.selectedIndex].textContent);
 });
 
@@ -89,9 +92,9 @@ function getLog(filename: string, length = 100) {
       methodEl.innerText = ` ${msg.split(' ', 2)[1]} `;
 
       // Strip method from main message
-      msg = msg.replace('POST', '').replace('GET', '');
+      msg = msg.replace('POST', '').replace('GET', '').replace('DELETE', '');
 
-      if (~msg.indexOf('/internal') && msg.match(/\/internal\/[a-zA-Z]+\s/)) {
+      if (~msg.indexOf('/internal') && msg.match(/\/internal\/.+\s/)) {
         msg = msg.split(' ').filter(v => {
                 if (~v.indexOf('internal')) return false;
                 return true;
@@ -134,10 +137,8 @@ function getLog(filename: string, length = 100) {
     contentObj.scrollTop = contentObj.scrollHeight;
     performance.mark('EndRenderLog');
     performance.measure('LogRenderTime', 'RenderLog', 'EndRenderLog');
-    console.log(performance.getEntriesByName('LogRenderTime')[0]);
 
     let timing = (performance.getEntriesByName('LogRenderTime')[0].duration).toFixed('0');
-
     renderObj.innerText = timing + 'ms';
   });
 }
@@ -152,15 +153,33 @@ function refresh() {
   getLog(selFile.options[selFile.selectedIndex].textContent, length);
 }
 
-function selectChanged() {
-  refresh();
+function selectChanged(buttonOnly = false) {
+  let file = selFile.options[selFile.selectedIndex].textContent;
+  if (file == 'requests.log' || file == 'noumenae.log')
+    btnDelete.disabled = true;
+  else
+    btnDelete.removeAttribute('disabled');
+
+  if (!buttonOnly)
+    refresh();
+}
+
+function onDelete() {
+  let file = selFile.options[selFile.selectedIndex].textContent;
+  w.DELETE(`/internal/logger/${file}`, {}, (err, code, data) => {
+    if (err) {
+      console.error(err.message);
+    }
+    selFile.options[selFile.selectedIndex].remove();
+    $('select').material_select();
+    selectChanged(true);
+  });
+
 }
 
 function getRealLength() {
   let mult = parseInt(lenMultiObj.value)
     , len = parseInt(txtLength.value);
-
-  console.log('here', mult, len);
 
   reqLenObj.innerText = (len * mult).toString();
 }
