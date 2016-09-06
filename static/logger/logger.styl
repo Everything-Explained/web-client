@@ -1,0 +1,189 @@
+body
+  margin 0
+  padding 0
+  font-family: monospace
+  background-color: #f0f0f0
+
+#container
+  position: relative
+  display block
+  width 90%
+  left: 50%
+  height 100%
+  transform: translate(-50%, 0%)
+
+#content
+  position: relative
+  display: block
+  margin-bottom 20px
+  padding 5px
+  height 400px
+  background-color #333
+  border-radius 7px
+  font-size: 14px
+  overflow: auto
+  color: #ccc
+  & > div
+    margin 5px 0
+    padding-right 5px
+
+  div > span
+    margin-right 5px
+
+  .info
+    color #bbb
+
+  .internal
+    color #c0ff4c
+    background-color #404930
+
+  .warn
+    color #ffc532
+    background-color #443e2f
+
+  .error
+    color #ff8ebd
+    background-color: #442431
+
+  .data
+    color #db9eff
+
+  .identity
+    color #ddca89
+
+  .time
+    color #888
+
+
+input[type='number']
+  position: relative
+  display inline-block
+  height 3rem
+  text-align: center
+  font-size 18px
+  width 57px
+  &::-webkit-inner-spin-button, ::-webkit-outer-spin-button
+    opacity 1
+    background-color transparent
+
+input
+  font-size 18px !important
+  &:focus
+    border-bottom 1px solid #5e35b1 !important
+    box-shadow: 0 1px 0 0 #5e35b1 !important
+
+.input-field
+  display: inline-block
+  margin-left 10px
+  margin-right 20px
+  margin-top 30px
+  height 60px
+  width 200px
+  vertical-align: middle
+  &.number
+    width 70px
+    margin-right 10px
+
+.div-field
+  position: absolute
+  right 20px
+  margin-top 7px
+  display: inline-block
+  text-align: center
+  height 60px
+  font-size 20px
+  font-family: monospace
+  span
+    display block
+    height 35px
+    border-bottom: 1px solid #9e9e9e
+    cursor default
+    transition all .3s
+  &:hover span
+    border-bottom 1px solid #5e35b1
+    box-shadow: 0 1px 0 0 #5e35b1
+
+.time
+  bottom 0
+
+.req-length
+  right 140px
+
+
+.select-dropdown
+  span
+    color #7e57c2 !important
+
+label
+  font-size 14px !important
+
+
+button
+  margin-right 20px
+
+
+
+
+h5
+  display block
+  margin-bottom 5px
+  font-size 30px
+  .url
+    font-size 16px
+    margin-left 13px
+
+
+.modal
+  .content-container
+    & > :nth-child(2)
+      margin-top 7px
+  header
+    border-bottom 1px solid #ccc
+  pre
+    margin 0
+    display inline-block
+
+table
+  border-collapse: collapse
+  td
+    padding 0
+    vertical-align: top
+    padding-bottom 10px
+    &:first-child
+      padding 0 10px 0 0
+      width 50px
+      text-align: right
+    // &:nth-child(2)
+    //   width 40px
+    //   color #bbb
+    //   text-align: center
+
+.inner td
+  padding 0 !important
+  &:first-child
+    padding 0 3px !important
+    background-color: #efe9e1
+    border-bottom 3px solid #FAFAFA
+  &:last-child
+    padding-left 5px !important
+
+.inner tr
+  margin-top 10px
+
+.method-label
+  color #28a4ed
+  text-shadow: 1px 2px 1px #ccc
+
+.field-label
+  color #ed9428
+  text-shadow: 1px 2px 1px #ccc
+
+.body-label
+  color #9957e5
+  text-shadow: 1px 2px 1px #ccc
+
+#Fields
+  span
+    display block
+    &:nth-child(even)
+      padding-top 0
