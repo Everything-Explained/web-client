@@ -14,44 +14,26 @@ html
       W = Web;
 
   body
-    section#MainContent
+    section#MainContent(v-bind:class='{"ready": isVueReady }')
       div#modal1.modal
         div.modal-content
           div.content-container
             header
-              h5.green-text.text-darken-1 REQ
-                span.url
-            table
-              tr
-                td.method-label.small.material-icons label
-                td#URL
-                  span /internal/logger
-              tr
-                td.field-label.small.material-icons label
-                td
-                  table.inner
-                    tr
-                      td filename
-                      td requests.log
-                    tr
-                      td test
-                      td value
-              tr
-                td.body-label.small.material-icons label
-                td#Body
-                  span asdf908123rojfpasiudf812
-              tr
-                td
-
-          div.content-container
-            header
-              h5.orange-text.text-darken-1 RES
-            table
-              tr
-                td.method-label.small.material-icons label
-                td 404
-              tr
-                td
+              h5 {{ logEntryData.time }}
+              h5.uid {{ logEntryData.uid }}
+            div.row
+              div.col.col1.method-label.material-icons label
+              div.col.col2.value {{ logEntryData.rawMethod }}
+            div.row(v-if='logEntryData.fields')
+              div.col.col1.body-label.material-icons label
+              div.col.col2.value Fields
+                div.row.field-table(v-for='(key, val) in logEntryData.fields')
+                  div.col.col4 {{ key }}
+                  div.col.col4 {{ val }}
+              div.col.
+            div.row
+              div.col.col1.material-icons(class='{{ logEntryData.msgLabelClass }}') label
+              div.col.col2(class='{{ logEntryData.msgValueClass }}') {{ logEntryData.msg }}
         div.modal-footer
           a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href='#!') Close
 
@@ -69,38 +51,37 @@ html
           label Available Logs
         div.input-field.number
           label Length
-          input#Length.deep-purple-text.text-darken-1(
+          input.deep-purple-text.text-darken-1(
               type='number' min='10' max='1020' v-model='userLength' step='20')
         div.input-field.number
           label Multiplier
-          input#LengthMultiplier.deep-purple-text.text-darken-1(
+          input.deep-purple-text.text-darken-1(
               type='number' min='1' max='10' v-model='multiplier' step='1')
         div.div-field
           label Actual Length
-          span#LogLength.pink-text.text-accent-2 {{ logLength }}
+          span.pink-text.text-accent-2 {{ logLength }}
         div.div-field.req-length.green-text.text-darken-1
           label Req Length
-          span#ReqLength(v-text='reqLength')
+          span(v-text='reqLength')
 
         div#content(v-el:content)
           div(v-for='log in logLines'
               track-by='uid'
-              class='{{* log.classes }}')
+              class='{{* log.classes }} log'
+              v-on:mousedown='showLogEntry(log)')
             span.time {{* log.time }}
             span.identity {{* log.identity }}
             span.method(v-if='log.method') {{* log.method }}
-            span.data(v-if='log.data') {{* log.data }}
+            span.data(v-if='log.dataString') {{* log.dataString }}
             span.msg {{* log.msg }}
 
-        button#Refresh.waves-effect.waves-light.deep-purple.lighten-1.btn(
+        button.waves-effect.waves-light.deep-purple.lighten-1.btn(
           v-bind:class='{ "orange": isLogPolling, "darken-1": isLogPolling}'
           v-on:click='toggleLogPolling($event)') {{ pollingText }}
-        button#Delete.waves-effect.waves-light.red.darken-1.btn(v-on:click='deleteLog' v-el:btnDelete) Delete
-        button#Test.waves-effect.waves-light.blue.darken-1.btn.modal-trigger(
-            data-target='modal1') Test
-        div.div-field.time.green-text.text-darken-1
+        button.waves-effect.waves-light.red.darken-1.btn(v-on:click='deleteLog' v-el:btnDelete) Delete
+        div.div-field.time.div-field-relative.green-text.text-darken-1
           label Render Time
-          span#RenderTime {{ renderTime }}
+          span {{ renderTime }}
 
     script(src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.13/vue.min.js')
     script(src='static/logger/v-logger.js')

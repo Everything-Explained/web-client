@@ -6,12 +6,16 @@ interface IData {
   identity?: string;
   req_type?: string;
   method?: string;
+  rawMethod?: string;
   msg?: string;
   time?: string;
   uid?: string;
   rawTime?: string;
   classes?: string;
-  data?: Object;
+  data?: any;
+  dataString?: string;
+  msgLabelClass?: string;
+  msgValueClass?: string;
 }
 
 declare var W: typeof Web;
@@ -33,7 +37,22 @@ let vm = new Vue({
     initialized: false,
     isLogPolling: false,
     isForcedStopPolling: false,
-    logPollingInterval: 0
+    isVueReady: false,
+    logPollingInterval: 0,
+    logEntryData: {
+      method: null,
+      uid: null,
+      rawMethod: null,
+      time: null,
+      fields: {
+        filename: null,
+        length: null,
+      },
+      body: null,
+      msgLabelClass: null,
+      msgValueClass: null,
+      msg: null
+    }
   },
 
   computed: {
@@ -58,11 +77,13 @@ let vm = new Vue({
     this.initSelect();
     $('.modal-trigger').leanModal({
       in_duration: 230,
-      out_duration: 170,
-      starting_top: '5%',
-      ending_top: '20%'
+      out_duration: 170
     });
     this.getLog();
+  },
+
+  ready: function() {
+    this.isVueReady = true;
   },
 
   methods: {
@@ -85,45 +106,27 @@ let vm = new Vue({
                 (entry.req_type)
                   ? `${entry.req_type} ${entry.msg}`
                   : entry.msg
-            , req = '/?'
+            , req = null;
 
           entry.classes = '';
-          entry.method = `${msg.split(' ', 2)[0]}`;
-          msg = msg.replace(/POST|GET|DELETE/g, '')
+          entry.method = `${msg.split(' ', 2)[0]}`.trim();
+          entry.rawMethod = [entry.method, msg.split(' ', 2)[1]].join(' ');
+          msg = msg.replace(/POST|GET|DELETE/g, '');
 
-          if (~msg.indexOf('/internal') && msg.match(/\/internal\/.+\s/)) {
-            msg = msg.split(' ').filter(v => {
-                    if (~v.indexOf('internal')) return false;
-                    return true;
-                  }).join(' ');
+          [req, msg] = this.getAPIReference(msg, entry);
 
-
-            if (entry.data) {
-              for (let d in entry.data) {
-                req += `${d}=${entry.data[d]}`;
-              }
-            }
-            entry.method = 'RTN'
-            entry.classes = 'internal ';
-            entry.data = (req.length > 2) ? ` ${req.replace(/\&$/, '')} ` : '';
-          }
-
-          if (entry.level == 30) {
-            entry.classes += 'info'
-          }
-          else if (entry.level == 40) {
-            entry.classes += 'warn'
-          }
-          else if (entry.level == 50) {
-            entry.classes += 'error';
-          }
+          this.setEntryLevel(entry);
+          d.msgLabelClass = entry.msgLabelClass;
+          d.msgValueClass = entry.msgValueClass;
 
           d.classes = entry.classes;
-          d.time = time.toLocaleDateString() + time.toLocaleTimeString();
+          d.time = [time.toLocaleDateString(), time.toLocaleTimeString()].join(' ');
           d.uid = entry.uid;
           d.identity = entry.identity;
-          d.method = entry.method
-          if (entry.data) d.data = req;
+          d.method = entry.method;
+          d.rawMethod = entry.rawMethod;
+          d.dataString = req;
+          if (entry.data) d.data = entry.data;
           d.msg = msg.trim();
           sanitized.push(d);
         }
@@ -134,6 +137,52 @@ let vm = new Vue({
       })
     },
 
+    getAPIReference: function(msg: string, entry: IData) {
+      let req = '/?'
+      if (~msg.indexOf('/internal') && msg.match(/\/internal\/.+\s/)) {
+        msg = msg.split(' ').filter(v => {
+                if (~v.indexOf('internal')) return false;
+                return true;
+              }).join(' ');
+
+        if (entry.data) {
+          for (let key in entry.data) {
+            req += `${key}=${entry.data[key]}`;
+          }
+        }
+
+        entry.classes = 'internal';
+        req = (req.length > 2) ? `${req.replace(/\&$/, '')} ` : null;
+        return [req, msg]
+      } else {
+        msg = msg.trim();
+        if (~msg.indexOf('/') && ~msg.indexOf(' ')) {
+          msg = msg.substr(msg.indexOf(' ') + 1);
+        }
+      }
+      return [null, msg];
+
+    },
+
+
+    setEntryLevel: function(entry: IData) {
+
+      let setData = (type: string) => {
+        entry.classes += ` ${type}`;
+        entry.msgLabelClass = `${type}-label`;
+        entry.msgValueClass = `${type}-value`;
+      };
+
+      switch (entry.level) {
+        case 30: setData('success'); break;
+        case 40: setData('warn'); break;
+        case 50: setData('error'); break;
+        default:
+          throw new Error(`Oops, log level "${entry.level}" has no code paths.`);
+      }
+    },
+
+
     deleteLog: function() {
       W.DELETE(`/internal/logger/${this.logFile}`, {}, (err, code, data) => {
         if (err) {
@@ -142,19 +191,22 @@ let vm = new Vue({
         }
         this.$els.select.options[this.$els.select.selectedIndex].remove();
         this.initSelect();
-        this.logLines = [];
+        this.onLogChange();
       });
     },
+
 
     initSelect: function() {
       $('select').material_select();
     },
+
 
     stopLogPolling: function(force = false) {
       clearInterval(this.logPollingInterval)
       this.isLogPolling = false;
       this.isForcedStopPolling = force;
     },
+
 
     startLogPolling: function() {
       this.isLogPolling = true;
@@ -174,6 +226,7 @@ let vm = new Vue({
         this.startLogPolling();
       }
     },
+
 
     onLogChange: function(buttonOnly = false) {
       let select = this.$els['select'] as HTMLSelectElement
@@ -199,9 +252,24 @@ let vm = new Vue({
         this.getLog();
 
       }
+    },
+
+
+    showLogEntry: function(data: IData) {
+      let d = {
+        time: data.time,
+        uid: data.uid,
+        rawMethod: data.rawMethod,
+        fields: (data.data) ? data.data : null,
+        body: null,
+        msg: data.msg,
+        msgLabelClass: data.msgLabelClass,
+        msgValueClass: data.msgValueClass
+      }
+      this.logEntryData = d;
+      $('#modal1').openModal();
+
     }
-
-
 
   }
 

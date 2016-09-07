@@ -1,15 +1,31 @@
 body
   margin 0
   padding 0
+  height 100%
+  width 100%
   font-family: monospace
   background-color: #f0f0f0
+
+#MainContent
+  position: absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+  visibility: hidden
+  opacity 0
+  transition: all .3s
+  &.ready
+    visibility visible
+    opacity 1
 
 #container
   position: relative
   display block
   width 90%
   left: 50%
-  height 100%
+  height 80%
+  overflow: visible
   transform: translate(-50%, 0%)
 
 #content
@@ -17,7 +33,7 @@ body
   display: block
   margin-bottom 20px
   padding 5px
-  height 400px
+  height 83%
   background-color #333
   border-radius 7px
   font-size: 14px
@@ -30,7 +46,7 @@ body
   div > span
     margin-right 5px
 
-  .info
+  .success
     color #bbb
 
   .internal
@@ -53,6 +69,9 @@ body
 
   .time
     color #888
+
+  .log
+    cursor pointer
 
 
 input[type='number']
@@ -103,12 +122,18 @@ input
     border-bottom 1px solid #5e35b1
     box-shadow: 0 1px 0 0 #5e35b1
 
+.div-field-relative
+  position: relative
+  margin-top 0
+  right 20px
+  top -20px
+  float right
+
 .time
   bottom 0
 
 .req-length
   right 140px
-
 
 .select-dropdown
   span
@@ -117,7 +142,6 @@ input
 label
   font-size 14px !important
 
-
 button
   margin-right 20px
 
@@ -125,65 +149,91 @@ button
 
 
 h5
-  display block
+  display inline-block
   margin-bottom 5px
-  font-size 30px
+  font-size 24px
+  color #a0936e
   .url
     font-size 16px
     margin-left 13px
 
 
 .modal
+  color #777
   .content-container
     & > :nth-child(2)
       margin-top 7px
   header
     border-bottom 1px solid #ccc
-  pre
-    margin 0
-    display inline-block
 
-table
-  border-collapse: collapse
-  td
-    padding 0
-    vertical-align: top
-    padding-bottom 10px
-    &:first-child
-      padding 0 10px 0 0
-      width 50px
-      text-align: right
-    // &:nth-child(2)
-    //   width 40px
-    //   color #bbb
-    //   text-align: center
+  .uid
+    position: relative
+    float right
+    letter-spacing: 1px
+    color #a0936e
 
-.inner td
-  padding 0 !important
-  &:first-child
-    padding 0 3px !important
-    background-color: #efe9e1
-    border-bottom 3px solid #FAFAFA
-  &:last-child
-    padding-left 5px !important
+  .value
+    padding-left 0
 
-.inner tr
-  margin-top 10px
+  .method-label
+    color #28a4ed
+    text-shadow: 1px 2px 1px #ccc
 
-.method-label
-  color #28a4ed
-  text-shadow: 1px 2px 1px #ccc
+  .return-label
+    color #ed9428
+    text-shadow: 1px 2px 1px #ccc
 
-.field-label
-  color #ed9428
-  text-shadow: 1px 2px 1px #ccc
+  .body-label
+    color #9957e5
+    text-shadow: 1px 2px 1px #ccc
 
-.body-label
-  color #9957e5
-  text-shadow: 1px 2px 1px #ccc
+  .return-value
+    color #9b7e61
+    background-color: #f2ede8
+    border-radius: 5px
 
-#Fields
-  span
-    display block
-    &:nth-child(even)
-      padding-top 0
+  .success-label
+    color #2cd649
+    text-shadow: 1px 2px 1px #ccc
+
+  .success-value
+    background-color: #e8f2e9
+    color: #5e9961
+    border-radius: 5px
+
+  .warn-label
+    color #ff8c00
+    text-shadow: 1px 2px 1px #ccc
+
+  .warn-value
+    background-color: #f4e5d2
+    color #b56300
+    border-radius: 5px
+
+  .error-label
+    color #d32c2c
+    text-shadow: 1px 2px 1px #ccc
+
+  .error-value
+    color #995e5e
+    background-color: #efe6e6
+    border-radius: 5px
+
+  .row
+    margin-bottom 13px
+
+  .field-table
+    margin-bottom 0
+    .col
+      width 88px
+      &:first-child
+        margin-bottom 3px
+        margin-left 15px
+        background-color #efe8f4
+        border-bottom-left-radius: 7px
+        border-top-left-radius: 7px
+        text-align: center
+        color #82609b
+      &:last-child
+        padding-left 3px
+
