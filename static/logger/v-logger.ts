@@ -12,10 +12,13 @@ interface IData {
   uid?: string;
   rawTime?: string;
   classes?: string;
+  fields?: any;
+  body?: string;
   data?: any;
   dataString?: string;
   msgLabelClass?: string;
   msgValueClass?: string;
+  modalClass?: string;
 }
 
 declare var W: typeof Web;
@@ -33,6 +36,7 @@ let vm = new Vue({
     logFile: '',
     logLength: 0,
     renderTime: '0ms',
+    requestTime: '0ms',
     logLines: [],
     initialized: false,
     isLogPolling: false,
@@ -51,9 +55,13 @@ let vm = new Vue({
       body: null,
       msgLabelClass: null,
       msgValueClass: null,
+      modalClass: null,
       msg: null
     }
   },
+
+
+
 
   computed: {
     reqLength: function() {
@@ -63,10 +71,13 @@ let vm = new Vue({
     pollingText: function() {
       return+
         (this.isLogPolling)
-          ? "Stop Polling"
-          : "Poll Log";
+          ? 'Stop Polling'
+          : 'Poll Log';
     }
   },
+
+
+
 
   attached: function() {
     let select = this.$els.select as HTMLSelectElement;
@@ -82,20 +93,30 @@ let vm = new Vue({
     this.getLog();
   },
 
+
+
+
   ready: function() {
     this.isVueReady = true;
   },
+
+
+
 
   methods: {
     getLog: function() {
       performance.clearMeasures();
       performance.mark('RenderLog');
+      performance.mark('AjaxDelay');
       W.GET('/internal/logger', {
         fields: {
           length: this.reqLength,
           filename: this.logFile
         }
       }, (err, code, data) => {
+        performance.mark('EndAjaxDelay');
+        this.requestTime = this.measurePerformance('AjaxDelay', 'EndAjaxDelay');
+
         let logLines = JSON.parse(data) as IData[]
           , sanitized = [] as IData[];
 
@@ -113,32 +134,31 @@ let vm = new Vue({
           entry.rawMethod = [entry.method, msg.split(' ', 2)[1]].join(' ');
           msg = msg.replace(/POST|GET|DELETE/g, '');
 
-          [req, msg] = this.getAPIReference(msg, entry);
+          // Set msg and and method data
+          this.getAPIReference(msg, entry, d);
 
-          this.setEntryLevel(entry);
-          d.msgLabelClass = entry.msgLabelClass;
-          d.msgValueClass = entry.msgValueClass;
+          // Set all classes for entry log level
+          this.setEntryLevel(entry, d);
 
-          d.classes = entry.classes;
           d.time = [time.toLocaleDateString(), time.toLocaleTimeString()].join(' ');
           d.uid = entry.uid;
           d.identity = entry.identity;
           d.method = entry.method;
           d.rawMethod = entry.rawMethod;
-          d.dataString = req;
-          if (entry.data) d.data = entry.data;
-          d.msg = msg.trim();
+          d.fields = (entry.data) ? entry.data : null;
+          d.body = null;
+          d.msg = d.msg.trim();
           sanitized.push(d);
         }
 
         this.logLines = sanitized;
         this.logLength = sanitized.length;
 
-      })
+      });
     },
 
-    getAPIReference: function(msg: string, entry: IData) {
-      let req = '/?'
+    getAPIReference: function(msg: string, entry: IData, saveObj: IData) {
+      let req = '/?';
       if (~msg.indexOf('/internal') && msg.match(/\/internal\/.+\s/)) {
         msg = msg.split(' ').filter(v => {
                 if (~v.indexOf('internal')) return false;
@@ -151,26 +171,32 @@ let vm = new Vue({
           }
         }
 
-        entry.classes = 'internal';
-        req = (req.length > 2) ? `${req.replace(/\&$/, '')} ` : null;
-        return [req, msg]
+        saveObj.classes = 'internal';
+        saveObj.dataString = (req.length > 2) ? `${req.replace(/\&$/, '')}` : null;
+        saveObj.msg = msg;
+        return;
       } else {
         msg = msg.trim();
         if (~msg.indexOf('/') && ~msg.indexOf(' ')) {
           msg = msg.substr(msg.indexOf(' ') + 1);
         }
       }
-      return [null, msg];
+      saveObj.dataString = null;
+      saveObj.msg = msg;
 
     },
 
 
-    setEntryLevel: function(entry: IData) {
+    setEntryLevel: function(entry: IData, save: IData) {
 
       let setData = (type: string) => {
-        entry.classes += ` ${type}`;
-        entry.msgLabelClass = `${type}-label`;
-        entry.msgValueClass = `${type}-value`;
+        save.classes =
+          (save.classes)
+            ? `${save.classes} ${type}`
+            : `${type}`;
+        save.msgLabelClass = `${type}-label`;
+        save.msgValueClass = `${type}-value`;
+        save.modalClass = `${type}`;
       };
 
       switch (entry.level) {
@@ -202,7 +228,7 @@ let vm = new Vue({
 
 
     stopLogPolling: function(force = false) {
-      clearInterval(this.logPollingInterval)
+      clearInterval(this.logPollingInterval);
       this.isLogPolling = false;
       this.isForcedStopPolling = force;
     },
@@ -255,19 +281,30 @@ let vm = new Vue({
     },
 
 
-    showLogEntry: function(data: IData) {
-      let d = {
-        time: data.time,
-        uid: data.uid,
-        rawMethod: data.rawMethod,
-        fields: (data.data) ? data.data : null,
-        body: null,
-        msg: data.msg,
-        msgLabelClass: data.msgLabelClass,
-        msgValueClass: data.msgValueClass
+    measurePerformance: function (start: string, end: string) {
+
+      // Create random unique name
+      let rng = ((Math.random() * 1337) + 1).toFixed(3);
+      performance.measure(rng, start, end);
+
+      let timing = (performance.getEntriesByName(rng)[0].duration);
+
+      // Benchmarks should never be over a minute
+      return+
+        (timing > 1000)
+          ? (timing /= 1000).toFixed(2) + 's'
+          : timing.toFixed(0) + 'ms';
+
+
+    },
+
+
+    showLogEntry: function(data: IData, e: MouseEvent) {
+      if (e.buttons == 1) {
+        this.logEntryData = data;
+        $('#modal1').openModal();
       }
-      this.logEntryData = d;
-      $('#modal1').openModal();
+
 
     }
 
@@ -295,9 +332,8 @@ vm.$watch('logLines', function() {
 
   // Mark the performance after all operations are completed
   performance.mark('EndRenderLog');
-  performance.measure('LogRenderTime', 'RenderLog', 'EndRenderLog');
-  let timing = (performance.getEntriesByName('LogRenderTime')[0].duration).toFixed('0');
-  this.renderTime = timing + 'ms';
+
+  this.renderTime = this.measurePerformance('RenderLog', 'EndRenderLog');
 });
 
 

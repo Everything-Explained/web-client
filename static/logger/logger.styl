@@ -128,6 +128,8 @@ input
   right 20px
   top -20px
   float right
+  &:last-child
+    right 44px
 
 .time
   bottom 0
@@ -160,9 +162,14 @@ h5
 
 .modal
   color #777
+
+  &.warn
+    background-color: #f7f2e6
+
   .content-container
     & > :nth-child(2)
       margin-top 7px
+
   header
     border-bottom 1px solid #ccc
 
