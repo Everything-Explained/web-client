@@ -144,8 +144,14 @@ let vm = new Vue({
 
           if (entry.err) {
             let newStack =
-              entry.err.stack.split('\n').filter(v => {
-                return !~v.indexOf('node_modules');
+              entry.err.stack.split('\n').filter((v, i) => {
+                if (i == 0) return true;
+                return+
+                  ~v.indexOf('node_modules')
+                    ? false
+                  : !~v.indexOf('\\')
+                    ? false
+                  : true;
               })
               .map((v) => {
                 if (!~v.indexOf('.js')) return v;
@@ -161,7 +167,6 @@ let vm = new Vue({
           d.time = [time.toLocaleDateString(), time.toLocaleTimeString()].join(' ');
           d.uid = entry.uid;
           d.identity = entry.identity;
-          d.method = entry.method;
           d.rawMethod = entry.rawMethod;
           d.fields = entry.data || null;
           d.err = entry.err || null;
@@ -186,13 +191,15 @@ let vm = new Vue({
 
         if (entry.data) {
           for (let key in entry.data) {
-            req += `${key}=${entry.data[key]}`;
+            req += `${key}=${entry.data[key]},`;
           }
         }
+        req = req.substr(0, req.length - 1);
 
         saveObj.classes = 'internal';
         saveObj.dataString = (req.length > 2) ? `${req.replace(/\&$/, '')}` : null;
         saveObj.msg = msg;
+        saveObj.method = 'RTN';
         return;
       } else {
         msg = msg.trim();
@@ -202,6 +209,7 @@ let vm = new Vue({
       }
       saveObj.dataString = null;
       saveObj.msg = msg;
+      saveObj.method = entry.method;
 
     },
 
