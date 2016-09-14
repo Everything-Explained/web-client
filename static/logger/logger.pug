@@ -24,16 +24,20 @@ html
             div.row
               div.col.col1.method-label.material-icons label
               div.col.col2.value {{ logEntryData.rawMethod }}
+
             div.row(v-if='logEntryData.fields')
               div.col.col1.body-label.material-icons label
               div.col.col2.value Fields
                 div.row.field-table(v-for='(key, val) in logEntryData.fields')
                   div.col.col4 {{ key }}
                   div.col.col4 {{ val }}
-              div.col.
-            div.row
+            div.row(v-if='!logEntryData.err')
               div.col.col1.material-icons(class='{{ logEntryData.msgLabelClass }}') label
               div.col.col2(class='{{ logEntryData.msgValueClass }}') {{ logEntryData.msg }}
+            div.row(v-if='logEntryData.err')
+              div.col.col1.material-icons(class='{{ logEntryData.msgLabelClass }}') label
+              div.col.col10(class='{{ logEntryData.msgValueClass }}')
+                pre.col10 {{ logEntryData.err.stack }}
         div.modal-footer
           a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href='#!') Close
 

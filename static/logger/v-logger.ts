@@ -15,6 +15,7 @@ interface IData {
   fields?: any;
   body?: string;
   data?: any;
+  err?: Error;
   dataString?: string;
   msgLabelClass?: string;
   msgValueClass?: string;
@@ -52,6 +53,7 @@ let vm = new Vue({
         filename: null,
         length: null,
       },
+      err: null,
       body: null,
       msgLabelClass: null,
       msgValueClass: null,
@@ -140,12 +142,29 @@ let vm = new Vue({
           // Set all classes for entry log level
           this.setEntryLevel(entry, d);
 
+          if (entry.err) {
+            let newStack =
+              entry.err.stack.split('\n').filter(v => {
+                return !~v.indexOf('node_modules');
+              })
+              .map((v) => {
+                if (!~v.indexOf('.js')) return v;
+
+                let parts = v.split('\\');
+                return `    (@) /${parts[parts.length - 2]}/${parts[parts.length - 1]}`;
+              })
+              .join('\n');
+
+            entry.err.stack = newStack;
+          }
+
           d.time = [time.toLocaleDateString(), time.toLocaleTimeString()].join(' ');
           d.uid = entry.uid;
           d.identity = entry.identity;
           d.method = entry.method;
           d.rawMethod = entry.rawMethod;
-          d.fields = (entry.data) ? entry.data : null;
+          d.fields = entry.data || null;
+          d.err = entry.err || null;
           d.body = null;
           d.msg = d.msg.trim();
           sanitized.push(d);
