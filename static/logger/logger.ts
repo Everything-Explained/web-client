@@ -1,33 +1,11 @@
-import {Web} from '../libs/web';
+/// <reference path="../typings/globalLib.d.ts" />
 
-interface IData {
-  level?: number;
-  country?: string;
-  identity?: string;
-  req_type?: string;
-  method?: string;
-  rawMethod?: string;
-  msg?: string;
-  time?: string;
-  uid?: string;
-  rawTime?: string;
-  classes?: string;
-  fields?: any;
-  body?: string;
-  data?: any;
-  err?: Error;
-  dataString?: string;
-  msgLabelClass?: string;
-  msgValueClass?: string;
-  modalClass?: string;
-}
 
-declare var W: typeof Web;
+
 declare var $: any;
 
 
-
-let vm = new Vue({
+let vmLogger = new Vue({
   el: '#MainContent',
 
 
@@ -110,7 +88,7 @@ let vm = new Vue({
       performance.clearMeasures();
       performance.mark('RenderLog');
       performance.mark('AjaxDelay');
-      W.GET('/internal/logger', {
+      Web.GET('/internal/logger', {
         fields: {
           length: this.reqLength,
           filename: this.logFile
@@ -237,7 +215,7 @@ let vm = new Vue({
 
 
     deleteLog: function() {
-      W.DELETE(`/internal/logger/${this.logFile}`, {}, (err, code, data) => {
+      Web.DELETE(`/internal/logger/${this.logFile}`, {}, (err, code, data) => {
         if (err) {
           console.error(err.message);
           return;
@@ -298,7 +276,7 @@ let vm = new Vue({
       if (!buttonOnly) {
 
         // Force polling to stop when changing files
-        if (vm.$data.isLogPolling)
+        if (vmLogger.$data.isLogPolling)
           this.stopLogPolling(true);
 
         // Get new file
@@ -342,7 +320,7 @@ let vm = new Vue({
 
 
 
-vm.$watch('logLines', function() {
+vmLogger.$watch('logLines', function() {
 
   // After log is populated, scroll to bottom
   let contentObj = this.$els.content as HTMLElement;

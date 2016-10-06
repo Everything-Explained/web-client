@@ -5,13 +5,12 @@ html
     title= logs
     link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css')
-    link(rel='stylesheet' href='static/logger/logger.css')
+    link(rel='stylesheet' href='logger/logger.css')
+    link(rel='stylesheet' href='libs/style.css')
     script(src='https://code.jquery.com/jquery-2.1.1.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js')
-    script(src='static/libs/web.js')
-    script(src='../libs/live.js')
-    script.
-      W = Web;
+    script(src='libs/web.js')
+    //- script(src='../../libs/live.js')
 
   body
     section#MainContent(v-bind:class='{"ready": isVueReady }')
@@ -45,7 +44,7 @@ html
 
       div#container
         div.input-field
-          select#SelectFile.deep-purple-text.text-darken-1(v-el:select onchange='vm.$get("onLogChange")()')
+          select#SelectFile.deep-purple-text.text-darken-1(v-el:select onchange='vmLogger.$get("onLogChange")()')
             each val in logs
               if val == 'noumenae.one'
                 options(selected)= val
@@ -91,5 +90,5 @@ html
           span {{ requestTime }}
 
     script(src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.13/vue.min.js')
-    script(src='static/logger/v-logger.js')
+    script(src='logger/logger.js')
 

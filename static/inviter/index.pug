@@ -1,0 +1,50 @@
+doctype html
+html
+  title Inviter
+  head
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css')
+    link(rel='stylesheet' href='inviter/inviter.css')
+    link(rel='stylesheet' href='libs/style.css')
+    script(src='../../libs/live.js')
+    script(src='libs/web.js')
+    script(src='https://code.jquery.com/jquery-2.1.1.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js')
+
+  body
+    div.invite-form
+      div.row
+        div.input-field.col.s6
+          input(type='text' v-model='inviteCode' readonly)
+          label Invite Code
+        div.input-field.col.s3
+          input.days(type='number'
+                     min='0'
+                     max='30'
+                     step='1'
+                     v-model='days'
+                     v-bind:class='{ zero: days == 0}'
+                     v-on:change='rangeChanged($event)')
+          label.active(v-bind:class="{ zero: days == 0 }").
+            {{ days == 0 ? "10 Years" : "Days" }}
+          div.infinite.material-icons(v-if='days == 0') loop
+
+        div.input-field.col.s3
+          input.uses(type='number'
+                     min='0'
+                     step='1'
+                     v-bind:class="{ zero: uses == 0 }"
+                     v-model='uses'
+                     v-on:change='rangeChanged($event)')
+          label.active(v-bind:class="{ zero: uses == 0 }").
+            {{ uses == 0 ? "Infinite Uses" : "Uses" }}
+          div.infinite.material-icons(v-if='uses == 0') loop
+
+      div.row
+        div.col.s6
+          button.waves-effect.waves-light.deep-purple.lighten-1.btn(v-on:click='generate') Generate
+        div.col.s6
+          button.waves-effect.waves-light.green.darken-1.btn.right(v-on:click='save') Save
+
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.13/vue.min.js')
+    script(src='inviter/inviter.js')
