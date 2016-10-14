@@ -73,8 +73,8 @@ export class Web {
 
   static buildURI(fields = null, raw = null): string {
 
-      let path     = ''
-        , fieldStr = '';
+    let path     = ''
+      , fieldStr = '';
 
     if (fields) {
       for (let f in fields) {

@@ -19,7 +19,7 @@ section#ChatContainer
 
 
 .chat-input-container
-  color: $msg-color
+  color: $chat-input-color
   background-color: $panel
   background-clip padding-box
   font-size: 18px
@@ -61,8 +61,8 @@ $chat-message-right-margin = 13px
     display: flex
     flex-direction: column
     align-items: center
-    margin-right: 2px
-    margin-left: 3px
+    margin-right: 7px
+    margin-left: 7px
     //transition: all .3s;
 
     &.emote,
@@ -93,8 +93,8 @@ $chat-message-right-margin = 13px
         width: 55px
         margin-right: 0
       .avatar
-        height: 68px
-        width: 68px
+        height: 64px
+        width: 64px
         font-size: 66px
       .aedaeum
         background-image: url("../img/chat64d.png")
@@ -104,12 +104,11 @@ $chat-message-right-margin = 13px
     &.medium
       width: 50px
       height: 60px
-      margin-right: 4px
       &.default
         width: 40px
       .avatar
-        height: 52px
-        width: 52px
+        height: 48px
+        width: 48px
         font-size: 50px
       .aedaeum
         background-image: url("../img/chat48b.png")
@@ -144,13 +143,16 @@ $chat-message-right-margin = 13px
       display: flex
       .username
         position: relative
-        font-family: monospace
+        top -3px
+        font-family: Delius
+        letter-spacing: 1px
         color: $msg-username-color
         text-shadow: $msg-username-text-shadow
         margin-right: 20px
 
       .relative-time
         position: relative
+        top 3px
         font-size: 12px
         color: $msg-timestamp-color
         &:before
@@ -174,14 +176,16 @@ $chat-message-right-margin = 13px
 
     &.medium
       .username
-        font-size: 16px
+        font-size: 18px
 
     &.small
       margin-bottom: 0
       margin-left: 2px
       .left
         .username
-          font-size: 13px
+          font-size: 14px
+        .relative-time
+          display none
 
 
   // DEFAULT Message Content
@@ -194,6 +198,7 @@ $chat-message-right-margin = 13px
     text-shadow: none
     padding-right: 5px
     font-size: 16px
+    font-family: 'Source Code Pro'
 
     a:visited,
     a:active,
@@ -216,6 +221,8 @@ $chat-message-right-margin = 13px
       max-width: 100%
     &.large
       font-size: 18px
+    &.medium
+      font-size: 16px
     &.small
       top: -3px
       font-size: 14px
@@ -227,33 +234,34 @@ $chat-message-right-margin = 13px
     display: flex
     flex: 1
     margin-top: 3px
-    margin-bottom: 13px
+    margin-bottom: 5px
 
     .username
       position: relative
       margin-left: 19px
+      padding-left: 5px
       color: $emote-username-color
-      font-family: Verdana, Geneva, sans-serif
-      font-style: italic
-      text-shadow: none
+      font-size: 16px
+      font-family: 'Delius'
       &:before
         position: absolute
-        top: -11px
-        left: -17px
-        content: '\2022'
-        font-size: 30px
+        top: -8px
+        left: -14px
+        content: '\21D2'
+        font-size: 26px
         font-style: normal
-        color: $emote-username-color
+        color: $emote-icon-color
         text-shadow: $emote-msg-bullet-textshadow
         font-family: 'Source Code Pro'
-      &:after
-        content: '\00a0'
+        text-outline(0, #000)
 
     .content
+      position: relative
       flex: 1
-      font-style: italic
-      font-size: 14px
-      font-family: 'Source Code Pro'
+      margin-left: 5px
+      word-spacing: 3px
+      font-size: 16px
+      font-family: delius
       color: $emote-msg-color
 
     .real-time
@@ -268,18 +276,23 @@ $chat-message-right-margin = 13px
   div.server
     margin-bottom 5px
     .username
-      padding-top: 2px
       margin-left: 19px
       margin-right: 15px
+      padding-left: 0
+      font-size: 14px
       color: $server-username-color
       text-shadow: $server-username-text-shadow
       font-family: 'Source Code Pro'
       &:before
+        top: -13px
+        left -18px
+        font-size: 30px
+        content '\2022'
         color: $server-username-color
         text-shadow: $server-msg-bullet-textshadow
       // TODO: Use border to create triangle (all browser support)
       &:after
-        top: -11px
+        top: -13px
         left: 52px
         position: absolute
         content: '\2022'
@@ -294,7 +307,12 @@ $chat-message-right-margin = 13px
     .content
       color: $server-msg-color
       text-shadow: $server-msg-textshadow
+      font-family: 'Source Code Pro'
+      font-size: 14px
+      word-spacing: normal
       margin-left: 6px
+      &:after
+        content ''
 
     &.attention
       .username

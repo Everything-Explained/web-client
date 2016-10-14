@@ -71,7 +71,7 @@ export class Port {
     for (let msg of this._view)
       msg.scale = this._scale;
 
-    this._chatView.addMessage(`${this.name} port scale set to ${val}`, MessageType.CLIENT);
+    // this._chatView.addMessage(`${this.name} port scale set to ${val}`, MessageType.CLIENT);
   }
 
   set active(val: boolean) {

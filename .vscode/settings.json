@@ -3,6 +3,7 @@
   "files.trimTrailingWhitespace": true,
   "editor.insertSpaces": true,
   "files.exclude": {
-    "build/**": true
+    "build/**": true,
+    "static/**": true
    }
 }
