@@ -8,12 +8,15 @@
     "removeComments": true,
     "sourceMap": false,
     "noResolve": true,
-    "noLib": true,
+    "noLib": false,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
     "experimentalDecorators": true
   },
   "exclude": [
-    "build"
+    "build",
+    "node_modules",
+    "static",
+    "gulpfile.ts"
   ]
 }

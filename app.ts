@@ -144,8 +144,7 @@ export class App {
       let activePage = payload.instruction.fragment.substr(1).toLowerCase()
         , foundActiveItem = false;
 
-      for (var item of this.mainMenu) {
-
+      for (let item of this.mainMenu) {
         this.router.navigation.forEach(route => {
 
           if (item.name === route.config['menuName']) {
@@ -389,6 +388,7 @@ export class App {
       , lights = localStorage.getItem('lights');
 
     this._modal.init('overlay');
+
 
 
     // this._login.initAuthLibs();

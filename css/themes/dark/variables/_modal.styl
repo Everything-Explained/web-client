@@ -11,14 +11,14 @@ $contentcolor = hsl(274, 13%, 20%)
 // MAIN
 // $modal-bg = url($body-bg-image)
 $modal-default-color = #eee
-$modal-boxshadow = 0 1px 23px 3px #000
-$modal-header-color = $head-1-color
-$modal-header-bg-color = #281c35
+$modal-boxshadow = 0 1px 23px 5px #000
+$modal-header-color = #000
+$modal-header-bg-color = hsla(52, 100%, 50%, 1)
 $modal-separator-border = transparent
 $modal-content-color = #ccc
-$modal-content-bg-color = #222
-$modal-content-outline-size = 0
-$modal-content-outline-color = #f00
+$modal-content-bg-color = hsla(0, 0, 7%, 0.7)
+$modal-content-outline-size = 1px
+$modal-content-outline-color = #000
 
 // CLOSE BUTTON
 $modal-close-btn-color = #000
@@ -31,9 +31,9 @@ $modal-close-bg-color = transparent
 
 
 // BIBLE VERSE
-$modal-bbl-number-color = $head-1-color
-$modal-bbl-content-header-color = #ddd
-$modal-bbl-default-color = none
+$modal-bbl-number-color = hsla(278, 80%, 80%, 0.83)
+$modal-bbl-content-header-color = $purple
+$modal-bbl-color = #aaa
 
 
 // LOGIN
@@ -69,8 +69,9 @@ $modal-changelog-chg = #aaa
 $modal-changelog-fix = #e5c0c0
 
 
+$exc-saturation = 60%
 // EXCEPTION
-$modal-exception-header = white
-$modal-exception-header-bg = #FF5F5F
-$modal-exception-stack = $modal-exception-header-bg
-$modal-exception-stack-bg = rgba(255,255,255, 0.2)
+$modal-exception-header = hsl(52, 70%, 70%)
+$modal-exception-header-bg = linear-gradient(to right, hsla(0,0%,0%,0.3) 0%,hsla(0,100%,$exc-saturation,1) 50%,hsla(0,0%,0%,0.3) 100%);
+$modal-exception-stack = $modal-exception-header
+$modal-exception-stack-bg = hsl(0, 30%, 13%)

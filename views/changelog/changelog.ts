@@ -39,7 +39,7 @@ export class Changelog {
 
     if (ev.buttons != 1) return;
 
-    this._modal.show('modals/changes.jade', section.date,
+    this._modal.show('modals/changes', section.date,
     {
       obj: ['.changes', '.additions', '.fixes']
     },

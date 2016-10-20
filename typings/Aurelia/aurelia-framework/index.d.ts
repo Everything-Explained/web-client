@@ -17,10 +17,6 @@ import {
   ViewEngine
 } from 'aurelia-templating';
 import {
-  DOM,
-  PLATFORM
-} from 'aurelia-pal';
-import {
   relativeToFile,
   join
 } from 'aurelia-path';
@@ -238,7 +234,6 @@ export * from 'aurelia-templating';
 export * from 'aurelia-loader';
 export * from 'aurelia-task-queue';
 export * from 'aurelia-path';
-export * from 'aurelia-pal';
 /**
  * The log manager.
  */

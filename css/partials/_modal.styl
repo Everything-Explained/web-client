@@ -9,7 +9,7 @@ $speed = .2s
   left 0
   right 0
   bottom 0
-  background hsla(0, 0, 0, 0.7)
+  background hsla(0, 0, 4%, 0.7)
   // -webkit-radial-gradient(center, ellipse cover, hsla(0,0%,65%,0.59) 0%,hsla(0,0%,25%,0.9) 100%)
   // background radial-gradient(ellipse at center, hsla(0,0%,0%,0) 0%,hsla(0,0%,0%,0.65) 100%)
   opacity 0
@@ -44,11 +44,11 @@ aside.modal
   margin 0 auto
   width 50%
   // background $modal-bg
-  padding 2px 3px 3px 3px
-  border 8px solid hsla($transient-trans, 0.4)
+  padding 2px 0 0 0
+  border 8px solid hsla(52, 100%, 60%, 0.3 / $golden-ratio)
   box-shadow inset 0 0 0 10px transparent
   background-clip padding-box
-  //box-shadow $modal-boxshadow
+  box-shadow $modal-boxshadow, inset 0 0 0 10px transparent
   color $modal-default-color
   border-radius 5px
   visibility hidden
@@ -63,8 +63,8 @@ aside.modal
   a.modal-close:active,
   a.modal-close:link
     position absolute
-    right -13px
-    top -13px
+    bottom -20px
+    right -20px
     border-radius 50%
     font-size 20px
     padding 3px 8px 5px 8px
@@ -85,7 +85,7 @@ aside.modal
     font-size 24px
     font-family Verdana
     color $modal-header-color
-    background $modal-header-bg-color
+    background linear-gradient(to right, hsla(0,0%,0%,0.3) 0%,hsla(51,100%,40%,1) 50%,hsla(0,0%,0%,0.3) 100%);
     border-bottom $modal-separator-border
 
   input[type='text']
@@ -125,10 +125,11 @@ aside.modal
     font-size 18px
     padding 13px
     min-height 100px
+    max-height 500px
     color $modal-content-color
     background-color $modal-content-bg-color
     text-outline($modal-content-outline-size, $modal-content-outline-color)
-    box-shadow inset 0 0 10px -1px #000
+    // box-shadow inset 0 0 10px -1px #000
     overflow-y auto
     h2
       margin-top 20px
@@ -152,26 +153,34 @@ aside.modal
 
 
 aside.modal.bbl
+  span
+    margin-bottom: 5px
+    letter-spacing: 1px
+    word-spacing: 1px
+    color $modal-bbl-color
   h2
     color $modal-bbl-content-header-color
   b
     color $modal-bbl-number-color
+    text-shadow: none
 
 
 
 aside.modal.exception
   header
-    background-color $modal-exception-header-bg
+    background: $modal-exception-header-bg
     color $modal-exception-header
+    text-outline(0, #000)
   .modal-content
-    font-family consolas
-
-    .stack
-      font-size 12px
-      background-color $modal-exception-stack-bg
+    font-family 'Source Code Pro'
+    b
       color $modal-exception-stack
-      margin-left 17px
-      padding 10px
+    .stack
+      font-size 14px
+      background $modal-exception-stack-bg
+      color $modal-exception-stack
+      margin 7px 0 0 17px
+      padding  3px 15px 5px 10px
       text-shadow none
       line-height 20px
       border-radius 5px
@@ -180,10 +189,10 @@ aside.modal.exception
 
 aside.modal.changelog
   header
-    text-outline(0, #000)
+    // text-outline(0, #000)
   ul
     font-family consolas
-    font-size 14px
+    font-size 16px
     padding-left 13px
     margin-bottom 10px
 
