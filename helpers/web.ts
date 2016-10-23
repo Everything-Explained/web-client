@@ -43,30 +43,44 @@ export class Web {
       forms = Web.buildURI(fields, raw);
     }
 
-    req.open(props.method, (!forms) ? url : url + forms);
-
     req.onload = () => {
+
+      let data: any = null;
+      data =
+        (~req.getResponseHeader('Content-Type').indexOf('application/json'))
+          ? data = JSON.parse(req.responseText)
+          : req.responseText;
+
       if (req.status >= 200 && req.status < 400) {
-        cb(null, req.status, req.responseText);
+        cb(null, req.status, data);
       }
       else {
-        cb(req.responseText, req.status, null);
+        cb(data, req.status, null);
       }
     };
-
-
 
     req.onerror = (ev) => {
       cb(ev, -1, null);
     };
 
-    if (props.headers) {
-      for (let h in props.headers) {
-        req.setRequestHeader(h, props.headers[h]);
-      }
+    // if (props.headers) {
+    //   for (let h in props.headers) {
+    //     req.setRequestHeader(h, props.headers[h]);
+    //   }
+    // }
+
+    if (props.method == 'POST' && forms) {
+      req.open(props.method, url);
+      req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      let data = encodeURI(forms.substr(1));
+      req.send(data);
+    }
+    else {
+      req.open(props.method, (!forms) ? url : url + forms);
+      req.send((forms) ? null : props.data);
     }
 
-    req.send((forms) ? null : props.data);
+    // req.send((forms) ? null : props.data);
 
 
   }

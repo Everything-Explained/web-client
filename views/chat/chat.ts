@@ -10,6 +10,7 @@ import {displayVerse, IScriptures} from './display-verse';
 import {ClientIO} from '../../services/clientio';
 import {ModernModal} from '../../helpers/modern-modal';
 import {Logger} from '../../helpers/logger';
+import {Web} from '../../helpers/web';
 
 
 
@@ -190,14 +191,28 @@ export class Chat {
   }
 
   changeAlias(alias: string) {
-    if (!/^[a-zA-Z0-9]+$/.test(alias)) {
-      this.addMessage('Invalid Alias, Try Again.', MessageType.CLIENT);
-    }
 
-    else {
-      this.addMessage(`Your alias has been changed to "${alias}"`, MessageType.CLIENT);
-      this.alias = alias;
-    }
+    Web.POST('/internal/alias', {
+      fields: {
+        from: this.alias,
+        to: alias
+      }
+    }, (err, code, data) => {
+      console.log(err, code, data);
+      if (err) {
+        this.addMessage(`"${alias}" is ` + err.msg, MessageType.SERVER, MessageSeverity.ATTENTION);
+        return;
+      }
+      this.addMessage(`Your alias has been changed to ${alias}`, MessageType.SERVER, MessageSeverity.INFO);
+    });
+    // if (!/^[a-zA-Z0-9]+$/.test(alias)) {
+    //   this.addMessage('Invalid Alias, Try Again.', MessageType.CLIENT);
+    // }
+
+    // else {
+    //   this.addMessage(`Your alias has been changed to "${alias}"`, MessageType.CLIENT);
+    //   this.alias = alias;
+    // }
   }
 
   addUser(user: string) {

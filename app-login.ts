@@ -13,7 +13,6 @@ enum LoginTypes {
   FACEBOOK = 4
 }
 
-@inject(Web)
 export class Login {
 
   private _auth2: gapi.auth2.GoogleAuth;
@@ -24,10 +23,7 @@ export class Login {
   private _fbReady = false;
 
 
-  constructor(private _web: Web) {
-
-
-  }
+  constructor() {}
 
   public initAuthLibs(cb: () => void) {
     if (this._isReady) return cb();
@@ -252,7 +248,7 @@ export class Login {
       }
     }, (err, code, data) => {
       console.log(err, code, data);
-      err = (err) ? JSON.parse(err) : null;
+      err = err || null;
       if (cb) cb(err, code, data);
     });
   }

@@ -18,7 +18,10 @@ template
     span.content(class='${cfg.scale}')
       span(repeat.for='word of words') ${word.type == $parent.wordType('none') ? word.text + '&#32;' : ''}
 
-        a(if.bind='word.type == $parent.wordType("link")', title='${word.data.link}' href='${word.data.link}' target='_blank') ${word.text}&#32;
+        a(if.bind='word.type == $parent.wordType("link")',
+          title='${word.data.link}'
+          href='${word.data.link}'
+          target='_blank') ${word.text}&#32;
 
         a.verse(if.bind='word.type == $parent.wordType("verse")',
                 href='javascript:void(0);', title='Click to View Scripture',

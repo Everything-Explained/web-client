@@ -4,7 +4,7 @@
 - var servant = "<em>\"An amenable servant\"</em>"
 - var definition = "<a href='http://www.dictionary.com/browse/noumenon' target='_blank'>Dictionary Definition of Noumenon</a>"
 - var kantianism = "<a href='https://en.wikipedia.org/wiki/Immanuel_Kant' target='_blank'>Kantianism</a>"
-
+- var test = "<a href='javascript:void(0);' mousedown.delegate='getAnswer($event)'>Test</a>"
 template
   section(class='${router.isNavigating ? "hidden" : "visible"}')
     article.home.faq.au-animate(role='FAQ')
@@ -16,7 +16,8 @@ template
 
             div.qablock
               div.question(mousedown.delegate='getAnswer($event)') why did you create this site
-              div.answer You should check out the !{about} page.
+              div.answer.
+                You should check out the !{about} page.
 
 
 
@@ -166,7 +167,19 @@ template
                 span.none !{families}
 
 
-
+            div.qablock
+              div.question(mousedown.delegate='getAnswer($event)') what is a notice
+              div.answer
+                span.
+                  When sending a normal message to a channel, everyone in that channel can see the message.
+                  Sending a "notice" means you've specified one person to send a message to. This message will
+                  still be sent to the channel you're on, but instead of everyone seeing it, only the person
+                  you specified will see it.
+                span.
+                  You can think of it like an inline private message to someone. It's not sent to an inbox or a
+                  special window; it's sent directly to the channel like all messages. The difference being that
+                  only the person you specified will see it, because their socket (connection) is the only one that
+                  will have access to it.
             div.qablock
               div.question(mousedown.delegate='getAnswer($event)') what is renown
               div.answer
