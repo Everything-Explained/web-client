@@ -4,76 +4,79 @@
 $changelog-title = $head-1-color
 
 
-section.changelog
-  display: flex
+#ChangeList
+  position: absolute
   flex-flow: row wrap
   align-content: flex-start;
   border-top: 4px solid transparent
   border-left: 4px solid transparent
   padding-right 10px
-
-
-  .compartment
-    display: flex
-    min-width: 350px
-    max-width 500px
-    flex-flow: column nowrap
-    margin-right: 10px
-    margin-bottom: 10px
-    flex: 1
-    align-self: stretch;
-    overflow: hidden;
-    cursor: pointer;
-    &:last-child
-      margin-right: 0
-    &:hover article
-      background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio) // lighten($panel, 70%)
-
-    &:hover .title
-      background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio) // lighten($panel, 70%)
-
-    &:hover .title sub, &:hover article sup
-      color $head-1-color
-
-    &:hover .title
-      color #d6a8ff
+  transition: all .3s linear
 
   .title
-    background $panel
-    width: 200px
-    padding: 5px 0
-    font-size: 20px
-    font-family: Comfort
-    color: $changelog-title
+    margin 0 7px 5px 0
+    display: inline-block
+    padding: 10px 20px
+    background-color $panel
+    color $head-1-color
     text-align: center
-    border-radius: 5px 5px 0 0
-    transition: background .3s, color .3s
-    sub
-      padding-left 7px
-      padding-right: 5px
-      font-family: consolas;
-      color #dea5ff
-      transition: color .3s
+    border-radius: 5px 0 13px 0
+    cursor: pointer
 
+  .date
+    font-size: 20px
 
-  article
-    display: flex
-    background: $panel
-    flex-flow: column nowrap
-    padding: 5px 5px 10px 0
-    border-radius: 0 5px 5px 5px
-    flex: 1
-    transition: background .3s
+  .description
+    color hsl(128, 50%, 60%)
+    font-family: 'Source Code Pro'
+    font-size 18px
 
-    sup
-      color #d6a8ff
-      transition: color .3s
+#Changes
+  position: absolute
+  transition: all .3s linear
+  .title
+    margin 20px 0 0 5px
+    padding 3px 13px 5px 13px
+    display: inline-block
+    color hsl(278, 30%, 70%)
+    background-color $panel
+    font-size: 28px
+    font-family: 'Source Code Pro'
+    font-variant: small-caps
+    border-radius: 5px 0 13px 0
+    &:first-child
+      margin-top 5px
+  i
+    font-style: normal
+    color hsl(278, 30%, 75%)
+  li
+    position: relative
+    margin-left 10px
+    padding 5px 5px 5px 20px
+    color #aaa
+    font-size: 16px
+    font-family: 'Delius'
+    letter-spacing: 1px
+    word-spacing: 1px
+    &:before
+      position: absolute
+      top -3px
+      left 0
+      content '\2022'
+      color hsl(52, 50%, 50%)
+      font-size: 28px
+  ul
+    list-style none
+    &:last-child li:last-child
+      margin-bottom 70px
 
-    ul
-      margin-top: 10px
-      color hsla(0, 0, 100%, 0.5)
-      li
-        margin-left: 27px
-        line-height: 20px
-      sup
-        padding-left: 7px
+.changelog .close
+  position: fixed
+  top 121px
+  right 33px
+  padding 1px 13px
+  font-size: 40px
+  color hsl(0, 80%, 63%)
+  border-radius 3px
+  background-color: $panel
+  cursor: pointer

@@ -38,7 +38,7 @@ export interface TabPage {
 @inject(Element, EventAggregator, ModernModal, Logger, ErrorHandler, Login, Session)
 export class App {
 
-  version = '0.4.0';
+  version = '0.7.0';
 
   router: Router;
 
@@ -124,11 +124,6 @@ export class App {
 
     this._setupNavigationCallbackHandler();
 
-    window.onresize = (ev: UIEvent) => {
-      if (this._scrollbars)
-        this._scrollbars.update();
-    };
-
 
   }
 
@@ -194,7 +189,7 @@ export class App {
       // Only activate scrollbar if the page contains the optiscroll class
       if (content.querySelector('section.optiscroll-content')) {
         this._scrollbars = new Optiscroll(content, {
-          autoUpdate: false
+          autoUpdate: true
         });
       }
 
@@ -452,7 +447,6 @@ export class App {
   // TODO - use route.navigate
   goTo(href: string) {
     location.href = href;
-
   }
 
 

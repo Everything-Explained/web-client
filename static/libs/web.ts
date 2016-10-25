@@ -43,8 +43,6 @@ class Web {
       forms = Web.buildURI(fields, raw);
     }
 
-
-
     req.onload = () => {
 
       let data: any = null;
@@ -60,8 +58,6 @@ class Web {
         cb(data, req.status, null);
       }
     };
-
-
 
     req.onerror = (ev) => {
       cb(ev, -1, null);
@@ -85,8 +81,6 @@ class Web {
     }
 
     // req.send((forms) ? null : props.data);
-
-
   }
 
   static buildURI(fields = null, raw = null): string {

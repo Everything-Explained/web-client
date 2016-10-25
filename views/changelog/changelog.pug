@@ -1,16 +1,17 @@
+- var notice = "<a href='/#/faq/notice'>notices</a>";
+
 template
   section.changelog.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
-    section.compartment(repeat.for='section of sections', mousedown.delegate='open($event, section)')
-      label.title ${section.date}
-        sub ${section.totalChanges}
-      article
-        ul
-          li(if.bind='section.additions.length') ${section.additions[0]}
-            sup(if.bind='section.additions.length > 1') (${section.additions.length})
-          li(if.bind='section.changes.length') ${section.changes[0]}
-            sup(if.bind='section.changes.length > 1') (${section.changes.length})
-          li(if.bind='section.fixes.length') ${section.fixes[0]}
-            sup(if.bind='section.fixes.length > 1') (${section.fixes.length})
+    section#ChangeList(repeat.for='log of logs', class='${clicked ? "hidden" : "visible"}')
+      span.title(click.delegate='open(log.timeStamp)')
+        div.date ${log.date}
+        div.description ${log.title}
+
+    article#Changes(innerhtml.bind='changes', class='${clicked ? "visible" : "hidden"}')
+
+    aside.close.icon-close(click.delegate='close()', class='${clicked ? "visible" : "hidden"}')
+
+
 
 
   div.cssload-container(if.bind='router.isNavigating')

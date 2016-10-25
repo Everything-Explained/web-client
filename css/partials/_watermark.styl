@@ -5,9 +5,13 @@ section#TrayTop .watermark
   bottom: 40px
   color: $watermark-color
   font-size: 16px
-  opacity: .7
-  font-family: monospace
+  opacity: 0.7
+  font-family: 'Source Code Pro'
   transform: rotate(45deg)
+  transition: opacity .3s linear
+  z-index: 1000
+  &:hover
+    opacity 1
 
   &:after
     position: absolute

@@ -2,19 +2,22 @@ import {inject} from 'aurelia-framework';
 import {ModernModal} from '../../helpers/modern-modal';
 import {Web} from '../../helpers/web';
 
-interface Section {
-  date:         string;
-  timeStamp:    string;
-  additions:    string[];
-  changes:      string[];
-  fixes:        string[];
-  totalChanges: number;
+interface Log {
+  date:      string;
+  title:     string;
+  timeStamp: string;
 }
 
 @inject(ModernModal)
 export class Changelog {
 
-  sections: Section[];
+  logs: Log[];
+  changes: string = '';
+  clicked: boolean = false;
+  history: {
+    id: string;
+    data: string;
+  } = null;
 
 
   constructor(private _modal: ModernModal) {
@@ -22,62 +25,47 @@ export class Changelog {
     Web.GET('/changelog', {},
 
     (err, code, data) => {
-      this.sections = JSON.parse(data);
-      this.sections.forEach((v) => {
-        v.totalChanges =
-          v.additions.length +
-          v.changes.length   +
-          v.fixes.length;
-      });
+      this.logs = data;
     });
 
 
 
   }
 
-  open(ev: MouseEvent, section: Section) {
+  open(timeStamp: string) {
+    if (this.clicked) return;
+    let id = timeStamp.replace(/\//g, '');
 
-    if (ev.buttons != 1) return;
+    if (this.history && this.history.id == id) {
+      this.updateChanges();
+      return;
+    }
 
-    this._modal.show('modals/changes', section.date,
-    {
-      obj: ['.changes', '.additions', '.fixes']
-    },
-    (obj: any) => {
-      let changes = [] as string[]
-        , add     = obj['.additions'] as HTMLElement
-        , chg     = obj['.changes'] as HTMLElement
-        , fix     = obj['.fixes'] as HTMLElement;
-
-      add.innerHTML = chg.innerHTML = fix.innerHTML = '';
-
-      section.additions.forEach((v) => {
-       add.innerHTML += `<li>${v}</li>`;
-      });
-
-      section.changes.forEach((v) => {
-        chg.innerHTML += `<li>${v}</li>`;
-      });
-
-      section.fixes.forEach((v) => {
-        fix.innerHTML += `<li>${v}</li>`;
-      });
-
+    Web.GET(`/views/changelog/logs/${id}`, {},
+    (err, code, data) => {
+      this.history = {
+        id,
+        data
+      };
+      this.updateChanges();
     });
+  }
+
+  close() {
+    this.clicked = false;
+    setTimeout(() => {
+      this.changes = '';
+    }, 350);
+  }
+
+  updateChanges() {
+    this.changes = this.history.data;
+    setTimeout(() => {
+      this.clicked = true;
+    }, 0);
   }
 
   getViewStrategy() {
     return 'views/changelog/changelog';
   }
 }
-
-
-
-/*
-{"date": "asdf", "timeStamp": null,
-    "additions": [],
-    "changes": [],
-    "fixes": []
-  }
-
-*/
