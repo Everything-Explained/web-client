@@ -151,30 +151,24 @@ export class Signin {
       }
     }, (err, code, data) => {
 
+
       if (code == 200) {
-        if (~data.indexOf('Available')) {
 
-          this._nickInputResponse = 'Nick Available!';
-          this.setInputState(obj, InputStates.VALID);
-          this.setInputState(this.elNickInputResponse, InputStates.NICKVALID);
-          this._socialActive = true;
-          return;
-
-        }
-
-        if (~data.indexOf('In Use')) {
-          this._nickInputResponse = 'Nick not Available.';
-          this.setInputState(obj, InputStates.INVALID);
-          this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
-          return;
-        }
-
-        this._nickInputResponse = data;
-        this.setInputState(obj, InputStates.INVALID);
-        this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
+        this._nickInputResponse = 'Nick Available!';
+        this.setInputState(obj, InputStates.VALID);
+        this.setInputState(this.elNickInputResponse, InputStates.NICKVALID);
+        this._socialActive = true;
         return;
 
       }
+
+      if (code == 409 || code == 400) {
+        this._nickInputResponse = err;
+        this.setInputState(obj, InputStates.INVALID);
+        this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
+        return;
+      }
+
 
       this._nickInputResponse = 'Server Error! Try Again Later!';
       this.setInputState(obj, InputStates.INVALID);
@@ -319,7 +313,7 @@ export class Signin {
             }
           }, (err, code, data) => {
             if (code == 200) {
-              let obj = JSON.parse(data);
+              let obj = data;
               // TODO - Add UI response on expired
               if (!obj.valid) {
                 this.inviteResponse = 'that is an <span>invalid</span> invite';
