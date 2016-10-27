@@ -65,15 +65,17 @@ html
             div.col.s4 timeout
         div.invite-list(v-bind:class='{ "list-active": invites.length }')
           div.row(v-for='iv in invites'
-                  v-bind:class='{master: iv.time_remaining > (365 * 24) && iv.max_uses == 0,' +
-                                'expired: iv.time_remaining == 0,' +
-                                'used: iv.uses == iv.max_uses && iv.uses > 0}')
+                  v-bind:class=`{master: iv.time_remaining > (365 * 24) && iv.max_uses == 0,
+                                expired: iv.time_remaining == 0,
+                                used: iv.uses == iv.max_uses && iv.uses > 0}`)
             div.col.s4 {{* iv.code }}
             div.col.s2 {{* iv.uses }}
             div.col.s2(v-bind:class='{ unlimited: iv.max_uses == 0 }').
               {{* iv.max_uses ? iv.max_uses : "Unlimited" }}
+
             div.col.s4(v-bind:class='iv.time_remaining | time | toClass').
               {{ iv.time_remaining | time }}
+              
             span.delete(v-on:dblclick='deleteInvite(iv.code)') delete_forever
 
     script(src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.13/vue.min.js')

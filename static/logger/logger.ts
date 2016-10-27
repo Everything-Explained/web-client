@@ -97,7 +97,7 @@ let vmLogger = new Vue({
         performance.mark('EndAjaxDelay');
         this.requestTime = this.measurePerformance('AjaxDelay', 'EndAjaxDelay');
 
-        let logLines = JSON.parse(data) as IData[]
+        let logLines = data as IData[]
           , sanitized = [] as IData[];
 
         for (let entry of logLines) {

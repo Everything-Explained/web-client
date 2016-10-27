@@ -1,0 +1,37 @@
+doctype html
+
+html
+  head
+    title User Management
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css')
+    link(rel='stylesheet' href='users/users.css')
+    link(rel='stylesheet' href='libs/style.css')
+    script(src='../../libs/live.js')
+    script(src='libs/web.js')
+    script(src='https://code.jquery.com/jquery-2.1.1.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js')
+    script.
+      var userData = !{JSON.stringify(users)}
+
+  body
+    section#Container
+      div.row
+        div.col.s3 Nick
+        div.col.s3 ID
+        div.col.s5 E-Mail
+        div.col.s1 Verified
+      div.row(v-for='user in users')
+        img.avatar(v-bind:src='user.picture')
+        div.col.s3 {{ user.alias | normalize }}
+        div.col.s3(v-if='user.google_id') {{ user.google_id }}
+        div.col.s3(v-if='user.facebook_id') {{ user.facebook_id }}
+        div.col.s5 {{ user.email }}
+        div.col.s1(v-bind:class=`
+                    {
+                      verified:   user.email_verified,
+                      unverified: !user.email_verified
+                    }`
+                  ) {{ user.email_verified }}
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.13/vue.min.js')
+    script(src='users/users.js')
