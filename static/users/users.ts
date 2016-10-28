@@ -35,7 +35,37 @@ let vmUsers = new Vue({
     normalize: (text: string) => {
       return text.toLowerCase();
     },
-    toLevelName: (level: number) => {
+    level: (level: number) => {
+      switch (level) {
+        case 1: return 'Guest';
+        case 2: return 'User';
+        case 4: return 'MOD';
+        case 8: return 'ADMIN';
+      }
+    }
+  },
+
+
+  methods: {
+    deleteUser: function (user: UserData) {
+      Web.POST('/internal/deleteuser', {
+        fields: {
+          alias: user.alias
+        }
+      }, (err, code, data) => {
+        console.log(err, code, data);
+
+      });
+    },
+
+    getLevel: function(level: number) {
+
+      switch (level) {
+        case 1: return 'guest';
+        case 2: return 'user';
+        case 4: return 'moderator';
+        case 8: return 'admin';
+      }
 
     }
   }

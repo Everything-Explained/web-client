@@ -1,6 +1,6 @@
 doctype html
 
-html
+html(lang='en')
   head
     title User Management
     link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
@@ -16,12 +16,14 @@ html
 
   body
     section#Container
-      div.row
+      div.row.header
         div.col.s3 Nick
         div.col.s3 ID
         div.col.s5 E-Mail
-        div.col.s1 Verified
-      div.row(v-for='user in users')
+        div.col.s1 Valid
+
+      div.row.data(v-for='user in users' v-bind:class='getLevel(user.access_level)')
+        span.delete(v-on:dblclick='deleteUser(user)') delete_forever
         img.avatar(v-bind:src='user.picture')
         div.col.s3 {{ user.alias | normalize }}
         div.col.s3(v-if='user.google_id') {{ user.google_id }}
@@ -33,5 +35,6 @@ html
                       unverified: !user.email_verified
                     }`
                   ) {{ user.email_verified }}
+
     script(src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.13/vue.min.js')
     script(src='users/users.js')
