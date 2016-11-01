@@ -1,5 +1,5 @@
 
-declare var Materialize: any;
+
 
 
 let vmInviter = new Vue({
@@ -14,7 +14,7 @@ let vmInviter = new Vue({
 
 
   attached: function() {
-    this.checkServerStatus();
+    this.checkServerStatus(0, null, true);
   },
 
 
@@ -69,7 +69,6 @@ let vmInviter = new Vue({
       this.$els.invitebox.classList.remove('invalid');
       this.$els.inviteerror.classList.remove('active');
 
-
       Web.GET('/internal/invite', {
         fields: {
           hours: this.hours
@@ -80,7 +79,6 @@ let vmInviter = new Vue({
         }
         else {
           this.inviteCode = data.code;
-          this.updateTextFields();
         }
       });
     },
@@ -114,11 +112,23 @@ let vmInviter = new Vue({
     },
 
 
-    // Textbox label does not animate on change
-    updateTextFields: function() {
+    copy: function(e: MouseEvent) {
+      window.getSelection().removeAllRanges();
+      let obj = e.target as HTMLElement
+        , range = document.createRange()
+        , overlay = this.$els.overlay as HTMLElement;
+
+      overlay.children[0].textContent = obj.textContent;
+      overlay.classList.add('copy-toggle');
       setTimeout(() => {
-        Materialize.updateTextFields();
-      }, 0);
+        overlay.classList.remove('copy-toggle');
+      }, 2000);
+
+      range.selectNode(obj);
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      window.getSelection().removeAllRanges();
+
     },
 
 
@@ -195,7 +205,7 @@ let vmInviter = new Vue({
     },
 
 
-    checkServerStatus: function(delay, loader: HTMLElement) {
+    checkServerStatus: function(delay, loader: HTMLElement, firstLoad = false) {
 
       if (loader) {
         loader.classList.add('rotate');
@@ -210,14 +220,16 @@ let vmInviter = new Vue({
         }
         if (err || code != 200) {
           form.classList.add('hide');
-          status.classList.remove('hide');
+          if (status.classList.contains('hide'))
+            status.classList.remove('hide');
           status.classList.add('active');
           return;
         }
         form.classList.remove('active');
         form.classList.remove('hide');
         form.classList.add('active');
-        status.classList.add('hide');
+        if (!firstLoad)
+          status.classList.add('hide');
         this.getInviteList(delay || 0);
       });
     },
