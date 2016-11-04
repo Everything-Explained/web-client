@@ -17,6 +17,7 @@ let srcServer = [
 
   , srcClient = [
       '!node_modules/**',
+      '!**/node_modules/**',
       '!jspm_packages/**',
       '!build/**',
       '!.vscode/**',
@@ -33,6 +34,7 @@ let srcServer = [
 
   , srcClientAssets = [
       '!node_modules/**',
+      '!**/node_modules/**',
       '!jspm_packages/**',
       '!dist/**',
       '!build/**',
@@ -40,6 +42,14 @@ let srcServer = [
       '**/**.png',
       '**/**.gif',
       '**/**.ico'
+  ]
+
+  , srcStatic = [
+      '!static/node_modules/**',
+      '!static/.vscode/**',
+      'static/**/**.css',
+      'static/**/**.js',
+      'static/**/**.pug'
   ]
 
   , srcDist = [
@@ -95,7 +105,7 @@ let srcServer = [
 gulp.task('copyServer', () => {
     return gulp.src(srcServer)
               .pipe(gc('../release/server'))
-              .pipe(gulp.dest('../release/server'))
+              .pipe(gulp.dest('../release/server'));
 });
 
 
@@ -106,30 +116,34 @@ gulp.task('copyClient', () => {
             .pipe(gulp.dest('./dist'));
 });
 
-
+gulp.task('copyStatic', () => {
+  return gulp.src(srcStatic)
+            .pipe(gc('../release/client/static'))
+            .pipe(gulp.dest('../release/client/static'));
+});
 
 gulp.task('copyAssets', () => {
   return gulp.src(srcClientAssets)
             .pipe(gulp.dest('./dist'));
-})
+});
 
 
 gulp.task('readyConfig', () => {
-  del(['../release/client/config.js'])
+  del(['../release/client/config.js']);
   let configFile = fs.readFileSync('config.js', 'ASCII');
   fs.writeFileSync('config.js.tmp', configFile);
 
-  configFile = configFile.replace(': "*"', ': "dist/*"')
+  configFile = configFile.replace(': "*"', ': "dist/*"');
   fs.writeFileSync('config.js', configFile);
   return true;
-})
+});
 
 
 
 gulp.task('build', ['readyConfig', 'copyClient', 'copyServer', 'copyAssets'], () => {
-  del(['dist/app-build.js', 'dist/aurelia-build.js'])
+  del(['dist/app-build.js', 'dist/aurelia-build.js']);
   return bundle(config);
-})
+});
 
 
 
@@ -137,7 +151,7 @@ gulp.task('releaseFiles', ['build'], () => {
   return gulp.src(srcDist)
             .pipe(replace(': "dist/*"', ': "*"'))
             .pipe(gulp.dest('../release/client'));
-})
+});
 
 
 

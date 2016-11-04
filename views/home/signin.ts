@@ -307,9 +307,8 @@ export class Signin {
               !/^[A-Z0-9]+$/g.test(this.elInviteContent.value)) return;
 
           Web.POST('/internal/validinvite', {
-            data: this.elInviteContent.value,
-            headers: {
-              'Content-Type': 'text/plain'
+            fields: {
+              invite: this.elInviteContent.value
             }
           }, (err, code, data) => {
             if (code == 200) {

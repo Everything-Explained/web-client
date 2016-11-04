@@ -177,7 +177,6 @@ export class Chat {
   }
 
   showVerse(scriptures: IScriptures[]) {
-
     let s = displayVerse(scriptures);
     this.modal.show('modals/bible.html', s.header, s.html);
   }
@@ -192,6 +191,10 @@ export class Chat {
 
   changeAlias(alias: string) {
 
+    if (!/^[a-zA-Z0-9]+$/.test(alias)) {
+      this.addMessage('Invalid Alias, Try Again.', MessageType.CLIENT);
+    }
+
     Web.POST('/internal/alias', {
       fields: {
         from: this.alias,
@@ -205,18 +208,9 @@ export class Chat {
       }
       this.addMessage(`Your alias has been changed to ${alias}`, MessageType.SERVER, MessageSeverity.INFO);
     });
-    // if (!/^[a-zA-Z0-9]+$/.test(alias)) {
-    //   this.addMessage('Invalid Alias, Try Again.', MessageType.CLIENT);
-    // }
-
-    // else {
-    //   this.addMessage(`Your alias has been changed to "${alias}"`, MessageType.CLIENT);
-    //   this.alias = alias;
-    // }
   }
 
   addUser(user: string) {
-    console.log('ADDING USER', this.users);
     this.users.push({name: user, isTyping: ''});
   }
 
@@ -227,7 +221,6 @@ export class Chat {
         break;
       }
     }
-    console.log('Pulling User', this.users, user);
   }
 
 

@@ -177,7 +177,6 @@ export class ChatCommander {
 
       clearTimeout(this._pausedTypingTimeout);
       if (this._pausedTyping) {
-        console.log('resumed-typing');
         this._sock.sendUserIsTyping(this._chatView.alias);
         this._pausedTyping = false;
       }
