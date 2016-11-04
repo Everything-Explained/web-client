@@ -17,12 +17,13 @@ let vmLogger = new Vue({
     renderTime: '0ms',
     requestTime: '0ms',
     logLines: [],
+    modal: MiniModal,
     initialized: false,
     isLogPolling: false,
     isForcedStopPolling: false,
     isVueReady: false,
     logPollingInterval: 0,
-    logEntryData: {
+    log: {
       method: null,
       uid: null,
       rawMethod: null,
@@ -31,6 +32,7 @@ let vmLogger = new Vue({
         filename: null,
         length: null,
       },
+      url: null,
       err: null,
       body: null,
       msgLabelClass: null,
@@ -49,10 +51,9 @@ let vmLogger = new Vue({
     },
 
     pollingText: function() {
-      return+
-        (this.isLogPolling)
-          ? 'Stop Polling'
-          : 'Poll Log';
+      return (this.isLogPolling)
+                ? 'Stop Polling'
+                : 'Poll Log';
     }
   },
 
@@ -65,11 +66,6 @@ let vmLogger = new Vue({
     // Setup log file and selected index
     this.logFile = select.options[select.selectedIndex].textContent;
 
-    this.initSelect();
-    $('.modal-trigger').leanModal({
-      in_duration: 230,
-      out_duration: 170
-    });
     this.getLog();
   },
 
@@ -77,7 +73,26 @@ let vmLogger = new Vue({
 
 
   ready: function() {
+    this.modal = new MiniModal();
     this.isVueReady = true;
+  },
+
+
+  filters: {
+    isStack: function(val: any) {
+      if (val.stack) {
+        return val.stack;
+      } else {
+        return val;
+      }
+    },
+    date: function(val: string) {
+      return val.split(' ')[0];
+    },
+    time: function(val: string) {
+      return val.split(' ')[1];
+    }
+
   },
 
 
@@ -121,35 +136,37 @@ let vmLogger = new Vue({
           this.setEntryLevel(entry, d);
 
           if (entry.err) {
-            let newStack =
-              entry.err.stack.split('\n').filter((v, i) => {
-                if (i == 0) return true;
-                return+
-                  ~v.indexOf('node_modules')
-                    ? false
-                  : !~v.indexOf('\\')
-                    ? false
-                  : true;
-              })
-              .map((v) => {
-                if (!~v.indexOf('.js')) return v;
+            if (entry.err instanceof Error) {
+              let newStack =
+                entry.err.stack.split('\n').filter((v, i) => {
+                  if (i == 0) return true;
+                  return ~v.indexOf('node_modules')
+                            ? false
+                          : !~v.indexOf('\\')
+                            ? false
+                          : true;
+                })
+                .map((v) => {
+                  if (!~v.indexOf('.js')) return v;
 
-                let parts = v.split('\\');
-                return `    (@) /${parts[parts.length - 2]}/${parts[parts.length - 1]}`;
-              })
-              .join('\n');
+                  let parts = v.split('\\');
+                  return `    (@) /${parts[parts.length - 2]}/${parts[parts.length - 1]}`;
+                })
+                .join('\n');
 
-            entry.err.stack = newStack;
+              entry.err.stack = newStack;
+            }
           }
 
           d.time = [time.toLocaleDateString(), time.toLocaleTimeString()].join(' ');
           d.uid = entry.uid;
+          d.url = entry.rawMethod.split(' ', 2)[1].trim();
           d.identity = entry.identity;
           d.rawMethod = entry.rawMethod;
           d.fields = entry.data || null;
           d.err = entry.err || null;
           d.body = null;
-          d.msg = d.msg.trim();
+          d.msg = (d.msg == d.url) ? '200 OK' : d.msg.trim();
           sanitized.push(d);
         }
 
@@ -177,7 +194,7 @@ let vmLogger = new Vue({
         saveObj.classes = 'internal';
         saveObj.dataString = (req.length > 2) ? `${req.replace(/\&$/, '')}` : null;
         saveObj.msg = msg;
-        saveObj.method = 'RTN';
+        saveObj.method = entry.method;
         return;
       } else {
         msg = msg.trim();
@@ -224,11 +241,6 @@ let vmLogger = new Vue({
         this.initSelect();
         this.onLogChange();
       });
-    },
-
-
-    initSelect: function() {
-      $('select').material_select();
     },
 
 
@@ -306,11 +318,25 @@ let vmLogger = new Vue({
 
     showLogEntry: function(data: IData, e: MouseEvent) {
       if (e.buttons == 1) {
-        this.logEntryData = data;
-        $('#modal1').openModal();
+        this.log = data;
+        setTimeout(() => {
+          this.modal.show('LogData');
+        }, 0);
+      }
+    },
+
+
+    getModalClass: function(val: string) {
+
+      if (~val.indexOf('warn')) {
+        return 'warn';
       }
 
+      if (~val.indexOf('internal')) {
+        return 'internal';
+      }
 
+      return val;
     }
 
   }

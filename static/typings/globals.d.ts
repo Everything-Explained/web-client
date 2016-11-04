@@ -14,7 +14,8 @@ interface IData {
   fields?: any;
   body?: string;
   data?: any;
-  err?: Error;
+  err?: Error|string;
+  url?: string;
   dataString?: string;
   msgLabelClass?: string;
   msgValueClass?: string;
