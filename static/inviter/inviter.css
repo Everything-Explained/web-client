@@ -1,0 +1,297 @@
+label {
+  overflow: visible !important;
+}
+
+#ServerStatus {
+  position: relative;
+  margin-top: 20px;
+  opacity: 0;
+  visibility: hidden;
+}
+#ServerStatus.hide {
+  animation: hide-me 1s forwards !important;
+}
+#ServerStatus.active {
+  animation: show-me 1s forwards;
+}
+
+#ServerStatus .status {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  padding: 5px;
+  font-size: 26px;
+  background-color: #fcfcfc;
+  border-radius: 5px;
+  color: #ff5454;
+  transform: translate(-50%, 0);
+}
+
+#ServerStatus .btn {
+  position: absolute;
+  font-size: 14px;
+  top: 70px;
+  left: 0;
+}
+#ServerStatus .loader {
+  position: absolute;
+  top: 65px;
+  left: -33px;
+  font-size: 32px;
+  font-family: 'Material Icons';
+}
+
+
+#FormContainer {
+  opacity: 0;
+  visibility: hidden;
+  transition: all .5s;
+}
+#FormContainer.hide {
+  animation: hide-me .8s forwards;
+}
+#FormContainer.active {
+  animation: show-me .8s forwards;
+}
+
+
+.invite-form {
+  width: 400px;
+  margin: 30px auto 0 auto;
+}
+
+.list-active {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+
+
+.table-container {
+  position: relative;
+  height: 400px;
+  width: 670px;
+  margin: 0 auto;
+  padding-left: 15px;
+  overflow-y: scroll;
+  overflow-x: visible;
+}
+.invite-table {
+  width: 614px;
+  height: 50%;
+  margin: 50px auto 0 auto;
+  border-spacing: 0 10px;
+}
+.invite-table:last-child{
+  margin-top: 0;
+}
+.invite-table td:nth-child(1),
+.invite-table th:nth-child(1) {
+  width: 200px;
+}
+.invite-table td:nth-child(2),
+.invite-table th:nth-child(2) {
+  width: 70px;
+}
+.invite-table td:nth-child(3),
+.invite-table th:nth-child(3) {
+  width: 130px;
+}
+.invite-table td:nth-child(4),
+.invite-table th:nth-child(4) {
+  width: 130px;
+}
+
+.invite-table thead th {
+  padding-bottom: 5px !important;
+  font-family: Verdana;
+  font-size: 20px;
+  font-variant: small-caps;
+  font-weight: normal !important;
+  text-align: center;
+  border-bottom: none !important;
+  color: #aaa;
+}
+.invite-table tr {
+  position: relative;
+}
+.invite-table td {
+  position: relative;
+  padding: 3px 0 !important;
+  text-align: center;
+  font-size: 18px;
+  border-bottom: 1px solid #ccc;
+  background: #fafafa;
+  color: #777;
+}
+.invite-table tr:hover .delete {
+  color: #ff5454;
+}
+.invite-table .used .delete,
+.invite-table .expired .delete {
+  color: #ff5454;
+}
+.invite-table tr.master td {
+  background-color: #fffde8;
+}
+.invite-table tr.expired td {
+  background-color: #e9e9e9;
+  border-bottom: none;
+  color: #c5c5c5;
+}
+.invite-table tr.used td {
+  background-color: #e5ffe8;
+  color: #7cb77f !important;
+}
+
+
+
+.invite-code {
+  cursor: pointer;
+}
+.overlay-container {
+  position: relative;
+  width: 670px;
+  margin: 0 auto;
+}
+.copy-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: hsla(200, 30%, 55%, 0.77);
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+}
+.copy-toggle {
+  animation: toggle-me 1s cubic-bezier(0.215, 0.61, 0.355, 1) 2 alternate;
+}
+.copy-text {
+  position: relative;
+  top: 120px;
+  display: block;
+  text-align: center;
+  font-size: 30px;
+  color: hsl(200, 80%, 90%);
+}
+.copy-text::before {
+  position: relative;
+  top: 20px;
+  font-family: 'Material Icons';
+  font-size: 60px;
+  color: hsl(128, 50%, 75%);
+  content: 'event_available'
+}
+.delete {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  font-family: 'Material Icons';
+  color: #ccc;
+  font-size: 25px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  transition: color .7s;
+}
+.invite-list .row:hover .delete {
+  color: #ff5454 !important;
+}
+
+
+.error-status {
+  position: absolute;
+  display: block;
+  top: 50px;
+  color: hsl(0, 80%, 60%) !important;
+  font-size: 14px;
+  opacity: 0;
+  transition: .5s;
+}
+.error-status.active {
+  opacity: 1;
+}
+
+@keyframes rotate-me {
+  from {
+    transform: rotate(0deg)
+  }
+
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes hide-me {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+}
+
+@keyframes show-me {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes toggle-me {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.refresh-list {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  font-family: 'Material Icons';
+  font-size: 30px;
+  color: #ff5454;
+  cursor: pointer;
+}
+.rotate {
+  animation: rotate-me .7s infinite forwards linear;
+}
+
+.infinite {
+  position: absolute;
+  top: 11px;
+  left: 23px;
+  color: #ff5454;
+  font-size: 40px;
+}
+
+.zero {
+  color: #ff5454 !important;
+}
+
+.long {
+  color: #0090ff !important;
+}
+
+.unlimited {
+  color: #df42ff !important;
+}

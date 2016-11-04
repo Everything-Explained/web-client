@@ -238,7 +238,6 @@ let vmLogger = new Vue({
           return;
         }
         this.$els.select.options[this.$els.select.selectedIndex].remove();
-        this.initSelect();
         this.onLogChange();
       });
     },

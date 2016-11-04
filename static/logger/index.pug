@@ -11,7 +11,7 @@ html
     link(rel='stylesheet' href='logger/logger.css')
     script(src='libs/web.js')
     script(src='libs/minimodal.js')
-    script(src='../../libs/live.js')
+    //- script(src='../../libs/live.js')
     script(src='//cdn.muicss.com/mui-0.9.3/js/mui.min.js' async)
 
   body
@@ -22,20 +22,22 @@ html
             h5 {{ log.time }}
             h5.mui--pull-right.uid {{ log.uid }}
           section
+            div.chevron-right
             div
-              div.chevron-right
               span.ip :: {{ log.identity }}
             div
-              span.method {{ log.method }}
-              span.url {{ log.url }}
-
-            div(v-if='log.fields')
-              div.fields.mui-container-fluid FIELDS
-                div.mui-row.field-table(v-for='(key, val) in log.fields')
-                  span.data.mui-col-md-2 {{ key }}
-                  span.data.mui-col-md-4 {{ val }}
-            div
-              div.chevron-left
+              table.field-table
+                tr
+                  td.method {{ log.method }}
+                  td.url {{ log.url }}
+                tr.field-content(v-if='log.fields')
+                  td
+                  td
+                    table.sub-table
+                      tr(v-for='(key, val) in log.fields')
+                        td.data {{ key }}
+                        td.data [{{ val }}]
+            div.chevron-left
             div.mui-container-fluid(v-if='log.err')
               div.error.mui-row Stack
               div.error.mui-row

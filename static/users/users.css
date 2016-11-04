@@ -1,0 +1,91 @@
+
+#Container {
+  margin: 20px auto 0 auto;
+  width: 800px;
+  text-align: center;
+}
+
+.row {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.row > .col {
+  padding-top: 5px;
+  background: #fbfbfb;
+  height: 35px;
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+  font-variant: small-caps;
+  color: #777;
+  border-bottom: 1px solid #ccc;
+}
+
+/* table HEADERS */
+.header:first-child > .col {
+  color: #aaa;
+  padding: 0;
+  height: 20px;
+  font-weight: bold;
+  font-variant: normal;
+  font-size: 18px;
+  text-shadow: -1px -1px 0 #fff, 1px 1px 0 #fff;
+  border: none;
+  background: transparent;
+}
+
+/* table ID data */
+.data > .col:nth-child(4n) {
+  padding-top: 10px;
+  font-size: 12px;
+}
+
+.row:hover .delete {
+  color: hsl(0, 100%, 67%);
+}
+
+.delete {
+  position: absolute;
+  top: -7px;
+  left: 0;
+  font-family: 'Material Icons';
+  font-size: 32px;
+  color: hsl(0, 0%, 85%);
+  transition: color .7s;
+  user-select: none;
+  cursor: pointer;
+}
+
+
+.avatar {
+  position: absolute;
+  top: 0;
+  left: -37px;
+}
+
+.verified {
+  background: #e2ffe8 !important;
+  color: hsl(128, 50%, 35%) !important;
+}
+
+.unverified {
+  background: hsl(0, 70%, 88%) !important;
+  color: hsl(0, 70%, 50%) !important;
+}
+
+.admin > .col {
+  background-color: hsl(278, 100%, 93%);
+  color: hsl(278, 100%, 60%);
+}
+.admin .delete {
+  color: hsl(278, 50%, 83%);
+}
+
+.moderator > .col {
+  background: hsl(200, 100%, 93%);
+  color: hsl(200, 100%, 45%);
+}
+.moderator .delete {
+  color: hsl(200, 50%, 80%);
+}
