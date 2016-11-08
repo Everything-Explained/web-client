@@ -3,6 +3,20 @@
 
 
 declare var $: any;
+let knownIPs = {
+  M$BOT: ['207.46.13.7', '207.46.13.210'],
+  CHINABOT: ['23.99.122.165'],
+  SHADOWSRV: ['184.105.139.68',
+              '184.105.247.196',
+              '216.218.206.66',
+              '216.218.206.67',
+              '74.82.47.5'],
+  AEDAEUM: ['107.185.40.53', '127.0.0.1'],
+  MISCBOT: ['137.116.71.170'],
+  BANNERGRAB: ['212.92.127.214',
+               '139.162.13.205',
+               '208.109.249.220']
+};
 
 
 let vmLogger = new Vue({
@@ -160,13 +174,14 @@ let vmLogger = new Vue({
 
           d.time = [time.toLocaleDateString(), time.toLocaleTimeString()].join(' ');
           d.uid = entry.uid;
-          d.url = entry.rawMethod.split(' ', 2)[1].trim();
-          d.identity = entry.identity;
+          d.url = decodeURIComponent(entry.rawMethod.split(' ', 2)[1].trim());
+
+          d.identity = this.checkForBots(entry.identity);
           d.rawMethod = entry.rawMethod;
           d.fields = entry.data || null;
           d.err = entry.err || null;
           d.body = null;
-          d.msg = (d.msg == d.url) ? '200 OK' : d.msg.trim();
+          d.msg = (decodeURIComponent(d.msg) == d.url) ? 'ACCEPTED REQUEST' : d.msg.trim();
           sanitized.push(d);
         }
 
@@ -316,12 +331,23 @@ let vmLogger = new Vue({
 
 
     showLogEntry: function(data: IData, e: MouseEvent) {
-      if (e.buttons == 1) {
+      if (e.buttons == 0) {
         this.log = data;
         setTimeout(() => {
           this.modal.show('LogData');
         }, 0);
       }
+    },
+
+    checkForBots: function(identity: string) {
+      for (let b in knownIPs) {
+        for (let ip of knownIPs[b]) {
+          if (ip == identity) {
+            return b;
+          }
+        }
+      }
+      return identity;
     },
 
 

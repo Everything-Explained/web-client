@@ -11,7 +11,7 @@ html
     link(rel='stylesheet' href='logger/logger.css')
     script(src='libs/web.js')
     script(src='libs/minimodal.js')
-    //- script(src='../../libs/live.js')
+    script(src='../../libs/live.js')
     script(src='//cdn.muicss.com/mui-0.9.3/js/mui.min.js' async)
 
   body
@@ -80,12 +80,12 @@ html
           div(v-for='log in logLines'
               track-by='uid'
               class='{{* log.classes }} log modal-trigger'
-              v-on:mousedown='showLogEntry(log, $event)')
-            span.time {{* log.time | date }}
-            span.identity {{* log.identity }}
-            span.method(v-if='log.method') {{* log.method }}
+              v-on:dblclick='showLogEntry(log, $event)')
+            div.time {{* log.time | date }}
+            div.identity {{* log.identity }}
+            div.method(v-if='log.method') {{* log.method }}
             //- span.data(v-if='log.dataString') {{* log.dataString }}
-            span.msg {{* (log.msg == '200 OK') ? log.url : log.msg }}
+            div.msg {{* (log.msg == 'ACCEPTED REQUEST') ? log.url : log.msg }}
 
       footer
         button.mui-btn.mui-btn--primary(

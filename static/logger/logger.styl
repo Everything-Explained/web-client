@@ -1,129 +1,5 @@
-body
-  margin 0
-  padding 0
-  height 100%
-  width 100%
-  font-family: monospace
-  background-color: #f0f0f0
-
-#MainContent
-  position: absolute
-  top 0
-  left 0
-  right 0
-  bottom 0
-  visibility: hidden
-  opacity 0
-  transition: all .3s
-  &.ready
-    visibility visible
-    opacity 1
-
-#container
-  position: relative
-  display block
-  width 90%
-  left: 50%
-  height 80%
-  overflow: visible
-  transform: translate(-50%, 0%)
-
-#content
-  position: relative
-  display: block
-  margin-bottom 20px
-  padding 5px
-  height 83%
-  background-color #333
-  border-radius 7px
-  font-size: 14px
-  overflow: auto
-  color: #ccc
-  & > div
-    margin 5px 0
-    padding-right 5px
-
-  div > span
-    margin-right 5px
-
-  .success
-    color #bbb
-
-  .internal
-    color #c0ff4c
-    background-color #404930
-
-  .warn
-    color #ffc532
-    background-color #443e2f
-
-  .error
-    color #ff8ebd
-    background-color: #442431
-
-  .data
-    color #db9eff
-
-  .identity
-    color #ddca89
-
-  .time
-    color #888
-
-  .log
-    cursor pointer
-
-
-input[type='number']
-  position: relative
-  display inline-block
-  height 3rem
-  text-align: center
-  font-size 18px
-  width 57px
-  &::-webkit-inner-spin-button, ::-webkit-outer-spin-button
-    opacity 1
-    background-color transparent
-
-input
-  font-size 18px !important
-  &:focus
-    border-bottom 1px solid #5e35b1 !important
-    box-shadow: 0 1px 0 0 #5e35b1 !important
-
-.input-field
-  display: inline-block
-  margin-left 10px
-  margin-right 20px
-  margin-top 30px
-  height 60px
-  width 200px
-  vertical-align: middle
-  &.number
-    width 70px
-    margin-right 10px
-
-.div-field
-  position: absolute
-  right 20px
-  margin-top 7px
-  display: inline-block
-  text-align: center
-  height 60px
-  font-size 20px
-  font-family: monospace
-  span
-    display block
-    height 35px
-    border-bottom: 1px solid #9e9e9e
-    cursor default
-    transition all .3s
-  &:hover span
-    border-bottom 1px solid #5e35b1
-    box-shadow: 0 1px 0 0 #5e35b1
-
 .div-field-relative
-  position: relative
+  position relative
   margin-top 0
   right 20px
   top -20px
@@ -131,119 +7,294 @@ input
   &:last-child
     right 44px
 
-.time
-  bottom 0
-
 .req-length
   right 140px
-
-.select-dropdown
-  span
-    color #7e57c2 !important
-
-label
-  font-size 14px !important
 
 button
   margin-right 20px
 
+input[type=number]
+  width 57px
+
+
+#MainContent
+  position absolute
+  display flex
+  top 0
+  left 0
+  right 0
+  bottom 0
+  padding 20px
+  visibility hidden
+  opacity 0
+  min-width 700px
+  flex-direction column
+  transition all 0.3s
+
+  &.ready
+    visibility visible
+    opacity 1
+// END MAIN CONTENT
 
 
 
-h5
-  display inline-block
-  margin-bottom 5px
-  font-size 24px
-  color #a0936e
-  .url
-    font-size 16px
-    margin-left 13px
+
+#content
+  position relative
+  display block
+  margin 10px 0 10px 0
+  font-size 14px
+  overflow auto
+
+  .inner-text
+    padding-right 5px
+    margin 0
+    & > div
+      margin 0 0 5px 0
+      width 100%
+      height 33px
+      padding-top 6px
+      background-color #f7f7f7
+      border-bottom 1px solid #ddd
+      border-left 4px solid #ccc
+      user-select none
+    div > div
+      display table-cell
+      margin-right 5px
+      vertical-align middle
+      padding-left 5px
+
+    .internal
+      border-left-color: hsl(128, 45%, 60%);
+    .warn
+      border-left-color: hsl(33, 90%, 65%);
+    .error
+      border-left-color: hsl(335, 80%, 73%);
+    .log
+      cursor: pointer;
+
+    .internal .msg
+      background: hsl(128, 50%, 90%);
+      color: hsl(128, 70%, 35%);
+    .warn .msg
+      background: hsl(33, 100%, 92%);
+      color: hsl(33, 85%, 45%);
+    .error .msg
+      background: hsl(335, 100%, 94%);
+      color: hsl(335, 100%, 60%);
+
+    .time
+      width: 77px;
+      color: #aaa;
+    .identity
+      min-width: 120px;
+      max-width: 120px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: hsl(200, 50%, 50%);
+      overflow: hidden;
+    .data
+      color: #707070;
+    .method
+      text-align center
+      width 66px
+      color #ccc
+    .msg
+      padding 2px 10px
+      border-radius 7px
+      color #707070
+// END CONTENT
 
 
-.modal
-  color #777
 
+
+
+.modal-overlay
+  background hsla(0, 0%, 0%, 0.5)
+
+.modal-container
+  width 55%
+  background #efefef
+  padding-bottom 10px
+  font-size 18px
+  border 1px solid hsl(200, 50%, 50%)
+  border-left 11px solid hsl(200, 100%, 70%)
+  &.internal
+    border-color hsl(128, 50%, 60%)
+    .msg-text
+      background hsl(128, 70%, 80%)
+      color hsl(128, 70%, 30%)
   &.warn
-    background-color: #f7f2e6
-
-  .content-container
-    & > :nth-child(2)
-      margin-top 7px
+    border-color hsl(33, 100%, 70%)
+    .msg-text
+      background hsl(33, 100%, 82%)
+      color hsl(33, 100%, 35%)
+  &.error
+    border-color hsl(340, 87%, 75%)
+    .msg-text
+      background hsl(335, 90%, 88%)
+      color hsl(335, 60%, 50%)
 
   header
-    border-bottom 1px solid #ccc
+    margin 0 10px 10px 10px
+    border-bottom 1px solid #ddd
 
-  pre
-    margin 0
+  h5
+    display inline-block
+    margin-bottom 5px
+    font-size 22px
+    font-family monospace
+    color #888
+    &:first-child
+      padding-left 5px
 
   .uid
-    position: relative
-    float right
-    letter-spacing: 1px
-    color #a0936e
+    padding-right 10px
 
-  .value
-    padding-left 0
+  section
+    & > div
+      position relative
+      padding-left 13px
+      margin-bottom 3px
 
-  .method-label
-    color #28a4ed
-    text-shadow: 1px 2px 1px #ccc
+  .method, .fields, .ip, .msg
+    position relative
+    display inline-block
+    padding-left 10px
+    font-weight bold
+    color #bbb
 
-  .return-label
-    color #ed9428
-    text-shadow: 1px 2px 1px #ccc
+  .method
+    color hsl(50, 37%, 60%)
 
-  .body-label
-    color #9957e5
-    text-shadow: 1px 2px 1px #ccc
+  .error
+    padding-left 27px
+    font-weight bold
+    color #bbb
+    margin-bottom 10px
+    pre
+      margin 0 0 0 15px
+      font-size 14px
+      padding 5px
+      width 95%
+      background #fafafa
+      color #777
+      border-radius 5px
+      overflow-x auto
 
-  .return-value
-    color #9b7e61
-    background-color: #f2ede8
-    border-radius: 5px
-
-  .success-label
-    color #2cd649
-    text-shadow: 1px 2px 1px #ccc
-
-  .success-value
-    background-color: #e8f2e9
-    color: #5e9961
-    border-radius: 5px
-
-  .warn-label
-    color #ff8c00
-    text-shadow: 1px 2px 1px #ccc
-
-  .warn-value
-    background-color: #f4e5d2
-    color #b56300
-    border-radius: 5px
-
-  .error-label
-    color #d32c2c
-    text-shadow: 1px 2px 1px #ccc
-
-  .error-value
-    color #995e5e
-    background-color: #efe6e6
-    border-radius: 5px
-
-  .row
-    margin-bottom 13px
+  .fields
+    width 100%
 
   .field-table
-    margin-bottom 0
-    .col
-      width 88px
+    margin 0
+    border-spacing 0
+
+  .data
+    position relative
+    font-weight normal
+    font-size 18px
+    color #777
+
+  .sub-table
+    td
       &:first-child
-        margin-bottom 3px
-        margin-left 15px
-        background-color #efe8f4
-        border-bottom-left-radius: 7px
-        border-top-left-radius: 7px
-        text-align: center
-        color #82609b
+        margin 0 0 5px 0
+        padding 0
+        text-align right
+        font-weight bold
+        padding-right 10px
+        padding-left 7px
+        color #bbb
+        &::before
+          position absolute
+          content '\2022'
+          top -8px
+          left -23px
+          font-size 32px
+          font-weight normal
+          color hsl(50, 37%, 60%)
       &:last-child
-        padding-left 3px
+        color hsl(278, 30%, 60%)
+
+  .chevron-left, .chevron-right
+    position relative
+    display block
+    height 20px
+    width 20px
+    margin-bottom 3px
+    &::before
+      position absolute
+      top 0
+      left 0
+      font-family 'Material Icons'
+      font-size 34px
+
+  .chevron-left
+    height 25px
+    &::before
+      content 'chevron_left'
+      color hsl(33, 100%, 50%)
+
+  .chevron-right
+    &::before
+      content 'chevron_right'
+      color hsl(128, 90%, 40%)
+
+  .url
+    padding-left 10px
+    color #777
+
+  .msg-text
+    position relative
+    display block
+    padding 3px 10px
+    border-radius 3px
+    margin 10px 0 0 16px
+    background hsl(200, 80%, 82%)
+    color hsl(200, 90%, 45%)
+// END MODAL CONTENT
+
+
+
+
+// MISC
+.inline
+  display inline-block !important
+
+input[type='number'], .number
+  width 90px
+  text-align center
+
+.number
+  position absolute
+  right 44px
+  input
+    text-align center
+  &.req-length
+    right 155px
+  &.req-time
+    right 155px
+
+.mui-textfield
+  & > input
+    height 32px !important
+
+input, .mui-select
+  margin-right 20px !important
+  cursor auto !important
+
+input, select
+  font-size 18px !important
+  color hsl(200, 100%, 43%) !important
+
+.center
+  text-align center
+
+.green
+  input
+    color hsl(128, 100%, 30%) !important
+
+.pink
+  input
+    color hsl(300, 100%, 40%) !important
 

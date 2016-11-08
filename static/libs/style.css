@@ -13,6 +13,8 @@ body {
 label {
   pointer-events: none;
   overflow: hidden !important;
+  font-size: 14px !important;
+  color: #aaa !important;
 }
 
 

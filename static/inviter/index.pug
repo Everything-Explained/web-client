@@ -8,7 +8,7 @@ html(lang='en')
     link(rel='stylesheet' href='//cdn.muicss.com/mui-0.9.3/css/mui.min.css' type='text/css' media='screen')
     link(rel='stylesheet' href='inviter/inviter.css')
     link(rel='stylesheet' href='libs/style.css')
-    //- script(src='../../libs/live.js')
+    script(src='../../libs/live.js')
     script(src='libs/web.js')
     script(src='//cdn.muicss.com/mui-0.9.3/js/mui.min.js' async)
   body
@@ -69,7 +69,7 @@ html(lang='en')
           div.copy-overlay(v-el:overlay)
             span.copy-text ONEMUYR11Q4
           div.table-container(aria-label='Double Click to Copy')
-            table.mui-table.invite-table
+            table.mui-table.invite-table(cellpadding='0')
               tr(v-for='iv in invites'
                 v-bind:class=`{
                   master:  iv.time_remaining > (365 * 24) && iv.max_uses == 0,
