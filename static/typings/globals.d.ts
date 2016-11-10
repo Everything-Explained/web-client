@@ -20,6 +20,8 @@ interface IData {
   msgLabelClass?: string;
   msgValueClass?: string;
   modalClass?: string;
+  returnCount?: number;
+  reqCount?: number;
 }
 
 

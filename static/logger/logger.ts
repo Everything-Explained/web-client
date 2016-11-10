@@ -3,6 +3,8 @@
 
 
 declare var $: any;
+
+
 let knownIPs = {
   M$BOT: ['207.46.13.7', '207.46.13.210'],
   CHINABOT: ['23.99.122.165'],
@@ -123,6 +125,7 @@ let vmLogger = new Vue({
           filename: this.logFile
         }
       }, (err, code, data) => {
+        console.log('CALLED GETLOG');
         performance.mark('EndAjaxDelay');
         this.requestTime = this.measurePerformance('AjaxDelay', 'EndAjaxDelay');
 
@@ -175,7 +178,6 @@ let vmLogger = new Vue({
           d.time = [time.toLocaleDateString(), time.toLocaleTimeString()].join(' ');
           d.uid = entry.uid;
           d.url = decodeURIComponent(entry.rawMethod.split(' ', 2)[1].trim());
-
           d.identity = this.checkForBots(entry.identity);
           d.rawMethod = entry.rawMethod;
           d.fields = entry.data || null;
@@ -185,10 +187,67 @@ let vmLogger = new Vue({
           sanitized.push(d);
         }
 
-        this.logLines = sanitized;
+        this.logLines = this.filterDuplicates(sanitized);
         this.logLength = sanitized.length;
 
+        // this.filterDuplicates(sanitized);
+
       });
+    },
+
+    filterDuplicates: function(data: IData[]) {
+      let filtered: IData[] = [];
+
+      for (let d of data) {
+        d.returnCount = 0;
+        d.reqCount = 0;
+
+        let isFiltered = false;
+        for (let l = 0; l < filtered.length; l++) {
+          let flog = filtered[l];
+
+          if (flog.url === d.url &&
+              flog.msg !== d.msg)
+          {
+            if (~flog.msg.indexOf('ACCEPTED REQUEST'))
+              d.reqCount = flog.reqCount;
+            else d.reqCount = ++flog.reqCount;
+
+            filtered[l] = d;
+            isFiltered = true;
+            continue;
+          }
+
+          // Catch default requests
+          if (flog.url === d.url && ~d.msg.indexOf('ACCEPTED REQUEST')) {
+            flog.reqCount += 1;
+            isFiltered = true;
+            continue;
+          }
+
+          if (flog.url === d.url && !~d.msg.indexOf('ACCEPTED REQUEST')) {
+            d.reqCount = ++flog.reqCount;
+            filtered[l] = d;
+            isFiltered = true;
+            continue;
+          }
+
+          if (flog.url === d.url && flog.msg === d.msg) {
+            flog.reqCount += 1;
+            isFiltered = true;
+            continue;
+          }
+        }
+        if (!isFiltered) {
+          ++d.reqCount;
+          filtered.push(d);
+        }
+      }
+
+      return filtered;
+
+      // return data.filter((v) => { v.reqCount = 0; return true;})
+
     },
 
     getAPIReference: function(msg: string, entry: IData, saveObj: IData) {
@@ -376,11 +435,6 @@ vmLogger.$watch('logLines', function() {
   // After log is populated, scroll to bottom
   let contentObj = this.$els.content as HTMLElement;
   contentObj.scrollTop = contentObj.scrollHeight;
-
-  if (!this.isInitialized) {
-    this.onLogChange();
-    this.isInitialized = true;
-  }
 
   if (this.isForcedStopPolling) {
     this.startLogPolling();
