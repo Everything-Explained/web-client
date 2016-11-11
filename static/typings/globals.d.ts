@@ -22,6 +22,7 @@ interface IData {
   modalClass?: string;
   returnCount?: number;
   reqCount?: number;
+  reqLink?: string;
 }
 
 

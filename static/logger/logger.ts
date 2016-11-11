@@ -184,6 +184,7 @@ let vmLogger = new Vue({
           d.err = entry.err || null;
           d.body = null;
           d.msg = (decodeURIComponent(d.msg) == d.url) ? 'ACCEPTED REQUEST' : d.msg.trim();
+          d.reqLink = entry.reqLink;
           sanitized.push(d);
         }
 
@@ -206,37 +207,29 @@ let vmLogger = new Vue({
         for (let l = 0; l < filtered.length; l++) {
           let flog = filtered[l];
 
+
           if (flog.url === d.url &&
-              flog.msg !== d.msg)
-          {
-            if (~flog.msg.indexOf('ACCEPTED REQUEST'))
+              flog.identity === d.identity &&
+              flog.method === d.method) {
+
+            // Filter Default Pairs
+            if (flog.reqLink === d.reqLink && flog.msg !== d.msg) {
               d.reqCount = flog.reqCount;
-            else d.reqCount = ++flog.reqCount;
+              filtered[l] = d;
+              isFiltered = true;
+              break;
+            }
 
-            filtered[l] = d;
-            isFiltered = true;
-            continue;
+            // Combine identical requests
+            if (flog.msg === d.msg &&
+                flog.dataString === d.dataString) {
+              flog.reqCount += 1;
+              isFiltered = true;
+              break;
+            }
+
           }
 
-          // Catch default requests
-          if (flog.url === d.url && ~d.msg.indexOf('ACCEPTED REQUEST')) {
-            flog.reqCount += 1;
-            isFiltered = true;
-            continue;
-          }
-
-          if (flog.url === d.url && !~d.msg.indexOf('ACCEPTED REQUEST')) {
-            d.reqCount = ++flog.reqCount;
-            filtered[l] = d;
-            isFiltered = true;
-            continue;
-          }
-
-          if (flog.url === d.url && flog.msg === d.msg) {
-            flog.reqCount += 1;
-            isFiltered = true;
-            continue;
-          }
         }
         if (!isFiltered) {
           ++d.reqCount;
