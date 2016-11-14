@@ -72,11 +72,21 @@ class Web {
     if (props.method == 'POST' && forms) {
       req.open(props.method, url);
       req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      if (props.headers) {
+        for (let key in props.headers) {
+          req.setRequestHeader(key, props.headers[key]);
+        }
+      }
       let data = encodeURI(forms.substr(1));
       req.send(data);
     }
     else {
       req.open(props.method, (!forms) ? url : url + forms);
+      if (props.headers) {
+        for (let key in props.headers) {
+          req.setRequestHeader(key, props.headers[key]);
+        }
+      }
       req.send((forms) ? null : props.data);
     }
 

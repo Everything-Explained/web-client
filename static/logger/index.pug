@@ -26,6 +26,7 @@ html
             div.chevron-right
             div
               span.ip :: {{ log.identity }}
+                span(v-if='log.country') &nbsp;:: {{ log.country }}
             div
               table.field-table
                 tr
@@ -88,8 +89,7 @@ html
             //- span.data(v-if='log.dataString') {{* log.dataString }}
             div.msg {{* (log.msg == 'ACCEPTED REQUEST') ? log.url : log.msg }}
             aside
-              div.repeat(v-if='log.reqCount > 1') {{* log.reqCount }}
-                span(v-if='log.returnCount') +{{* log.returnCount }}
+              div.repeat(v-if='log.reqCount > 1') {{ log.reqCount }}
 
       footer
         button.mui-btn.mui-btn--primary(
