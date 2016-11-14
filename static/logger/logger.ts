@@ -39,6 +39,7 @@ let vmLogger = new Vue({
     isForcedStopPolling: false,
     isVueReady: false,
     logPollingInterval: 0,
+    lastETag: null,
     log: {
       method: null,
       uid: null,
@@ -124,8 +125,8 @@ let vmLogger = new Vue({
           length: this.reqLength,
           filename: this.logFile
         }
-      }, (err, code, data) => {
-        console.log('CALLED GETLOG');
+      }, (err, code, data, h) => {
+        this.lastETag = h.ETag;
         performance.mark('EndAjaxDelay');
         this.requestTime = this.measurePerformance('AjaxDelay', 'EndAjaxDelay');
 
@@ -185,6 +186,7 @@ let vmLogger = new Vue({
           d.body = null;
           d.msg = (decodeURIComponent(d.msg) == d.url) ? 'ACCEPTED REQUEST' : d.msg.trim();
           d.reqLink = entry.reqLink;
+          d.country = entry.country;
           sanitized.push(d);
         }
 
@@ -321,8 +323,17 @@ let vmLogger = new Vue({
       this.isLogPolling = true;
       this.isForcedStopPolling = false;
       this.logPollingInterval = setInterval(() => {
-        this.getLog();
-      }, 1500);
+        Web.HEAD('/internal/logger', {
+          fields: {
+            length: this.reqLength,
+            filename: this.logFile
+          }
+        }, (err, code, data, headers) => {
+          if (this.lastETag !== headers.ETag) {
+            this.getLog();
+          }
+        });
+      }, 1700);
     },
 
 
