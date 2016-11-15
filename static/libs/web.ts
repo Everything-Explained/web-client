@@ -14,24 +14,30 @@ class Web {
   constructor() {  }
 
 
-  static GET(url: string, props: URIProperties, cb: (error: any, code: number, data) => void) {
+  static GET(url: string, props: URIProperties, cb: (error: any, code: number, data, headers: any) => void) {
     props.method = 'GET';
     Web.sendRequest(url, props, cb);
   }
 
 
-  static POST(url: string, props: URIProperties, cb: (error: any, code: number, data) => void) {
+  static HEAD(url: string, props: URIProperties, cb: (error: any, code: number, data: any, headers: any) => void) {
+    props.method = 'HEAD';
+    Web.sendRequest(url, props, cb);
+  }
+
+
+  static POST(url: string, props: URIProperties, cb: (error: any, code: number, data, headers: any) => void) {
     props.method = 'POST';
     Web.sendRequest(url, props, cb);
   }
 
-  static DELETE(url: string, props: URIProperties, cb: (error: any, code: number, data) => void) {
+  static DELETE(url: string, props: URIProperties, cb: (error: any, code: number, data, headers: any) => void) {
     props.method = 'DELETE';
     Web.sendRequest(url, props, cb);
   }
 
 
-  static sendRequest(url: string, props: URIProperties, cb: (error, code: number, data) => void) {
+  static sendRequest(url: string, props: URIProperties, cb: (error, code: number, data, headers: any) => void) {
     let req = new XMLHttpRequest()
       , fields = props.fields || null
       , raw = props.raw || null
@@ -48,26 +54,27 @@ class Web {
       let data: any = null;
       data =
         (~req.getResponseHeader('Content-Type').indexOf('application/json'))
-          ? data = JSON.parse(req.responseText)
+          ? data =
+            (req.responseText.length)
+              ? JSON.parse(req.responseText)
+              : null
           : req.responseText;
 
+      let headers = {
+        ETag: req.getResponseHeader('ETag')
+      };
+
       if (req.status >= 200 && req.status < 400) {
-        cb(null, req.status, data);
+        cb(null, req.status, data, headers);
       }
       else {
-        cb(data, req.status, null);
+        cb(data, req.status, null, headers);
       }
     };
 
     req.onerror = (ev) => {
-      cb(ev, -1, null);
+      cb(ev, -1, null, null);
     };
-
-    // if (props.headers) {
-    //   for (let h in props.headers) {
-    //     req.setRequestHeader(h, props.headers[h]);
-    //   }
-    // }
 
     if (props.method == 'POST' && forms) {
       req.open(props.method, url);
@@ -90,7 +97,6 @@ class Web {
       req.send((forms) ? null : props.data);
     }
 
-    // req.send((forms) ? null : props.data);
   }
 
   static buildURI(fields = null, raw = null): string {
