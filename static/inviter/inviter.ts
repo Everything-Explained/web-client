@@ -69,7 +69,7 @@ let vmInviter = new Vue({
       this.$els.invitebox.classList.remove('invalid');
       this.$els.inviteerror.classList.remove('active');
 
-      Web.GET('/internal/invite', {
+      Web.GET('/protected/invite', {
         fields: {
           hours: this.hours
         }
@@ -96,9 +96,8 @@ let vmInviter = new Vue({
         return;
       }
 
-      Web.POST('/internal/addinvite', {
+      Web.POST(`/protected/invite/${this.inviteCode}`, {
         fields: {
-          code: this.inviteCode,
           uses: this.uses
         }
       }, (err, code, data) => {
@@ -170,7 +169,7 @@ let vmInviter = new Vue({
 
     getInviteList: function(delay?: number) {
       setTimeout(() => {
-        Web.GET('/internal/listinvites', {}, (err, code, data: any[]) => {
+        Web.GET('/protected/allinvites', {}, (err, code, data: any[]) => {
           if (err) {
             console.log(err);
             return;
@@ -186,11 +185,9 @@ let vmInviter = new Vue({
 
 
     deleteInvite: function(code: string) {
-      Web.POST('/internal/deleteinvite', {
-        fields: {
-          code
-        }
-      }, (err, code, data) => {
+      Web.DELETE(`/protected/invite/${code}`,
+      {},
+      (err, code, data) => {
         if (err) {
           console.error(err);
           return;

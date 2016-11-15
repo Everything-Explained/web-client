@@ -120,10 +120,9 @@ let vmLogger = new Vue({
       performance.clearMeasures();
       performance.mark('RenderLog');
       performance.mark('AjaxDelay');
-      Web.GET('/internal/logger', {
+      Web.GET(`/protected/logger/${this.logFile}`, {
         fields: {
-          length: this.reqLength,
-          filename: this.logFile
+          length: this.reqLength
         }
       }, (err, code, data, h) => {
         this.lastETag = h.ETag;
@@ -198,6 +197,7 @@ let vmLogger = new Vue({
       });
     },
 
+
     filterDuplicates: function(data: IData[]) {
       let filtered: IData[] = [];
 
@@ -245,11 +245,12 @@ let vmLogger = new Vue({
 
     },
 
+
     getAPIReference: function(msg: string, entry: IData, saveObj: IData) {
       let req = '/?';
-      if (~msg.indexOf('/internal') && msg.match(/\/internal\/.+\s/)) {
+      if ((~msg.indexOf('/internal') || ~msg.indexOf('/protected')) && msg.match(/\/(internal|protected)\/.+\s/)) {
         msg = msg.split(' ').filter(v => {
-                if (~v.indexOf('internal')) return false;
+                if (~v.indexOf('internal') || ~v.indexOf('protected')) return false;
                 return true;
               }).join(' ');
 
