@@ -571,8 +571,11 @@ export class ChatCommander {
         /** SERVER */
         alias: ['serv', 'server'],
         isAdmin: false,
-        execute: (msg) => {
-          this._sock.sendServerMsg('main', msg);
+        execute: (msg: string) => {
+          this._sock.sendServerMsg('main', {
+            type: MessageType.SERVER,
+            message: msg
+          });
         }
       },
       {

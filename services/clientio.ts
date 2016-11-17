@@ -44,9 +44,9 @@ export class ClientIO {
   }
 
 
-  sendServerMsg(room: string, msg: string) {
+  sendServerMsg(room: string, msg: IMessage) {
     if (typeof this._rooms[room] !== 'undefined') {
-      this._sock.emit(this._rooms[room], { content: msg, type: MessageType.SERVER});
+      this._sock.emit(this._rooms[room], msg);
     }
   }
 
@@ -100,7 +100,9 @@ export class ClientIO {
     }
 
     this._sock.on('connect', () => {
+      this._chat.addMessage('Connected Successfully', MessageType.SERVER);
       this._sock
+        .on('server-msg', msg => this.onServerMessage(msg))
         .on('auth-success', (data) => this.completeAuthentication(data))
         .on('auth-fail', (msg) => {
           this._chat.addMessage(msg, MessageType.SERVER);
@@ -112,7 +114,7 @@ export class ClientIO {
 
     this._sock.on('disconnect',          ()    => this.onLostConnection());
     this._sock.on('connect_error',       ()    => this.onFailedConnection());
-    this._sock.on('broadcast',           msg   => this.onBroadcast(msg));
+    // this._sock.on('broadcast',           msg   => this.onBroadcast(msg));
     this._sock.on('user-joined',         user  => this.onUserJoin(user));
     this._sock.on('user-left',           user  => this.onUserDisconnect(user));
     this._sock.on('users-online',        users => this.populateUsers(users));
@@ -126,8 +128,6 @@ export class ClientIO {
 
 
   completeAuthentication(data) {
-    this._chat.addMessage(
-        'Connected Successfully', MessageType.SERVER);
 
     if (!this._connected) {
       this._hasConnected(data);
@@ -141,6 +141,11 @@ export class ClientIO {
     this._sock.on(this._rooms.main, (msg) => {
       this._populate(msg);
     });
+  }
+
+
+  onServerMessage(msg: string) {
+    this._chat.addMessage(msg, MessageType.SERVER);
   }
 
 

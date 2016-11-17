@@ -57,6 +57,21 @@ export class Chat {
 
   constructor(private body: HTMLElement, public modal: ModernModal) {
 
+  }
+
+  // AURELIA: Activates on data binding
+  bind() {
+    this.data =
+    {
+      sock: this.io,
+      chatView: this
+    };
+  }
+
+  // AURELIA: Activates on DOMReady
+  attached() {
+
+
     // Initialize chat service
     this.io = new ClientIO((data) => {
 
@@ -97,20 +112,6 @@ export class Chat {
 
 
     }, this);
-
-  }
-
-  // AURELIA: Activates on data binding
-  bind() {
-    this.data =
-    {
-      sock: this.io,
-      chatView: this
-    };
-  }
-
-  // AURELIA: Activates on DOMReady
-  attached() {
 
     // this.page.userList.show();
     // this.page.userList.setClass('active');

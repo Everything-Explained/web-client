@@ -312,11 +312,8 @@ export class Signin {
             return;
           }
 
-          Web.POST('/internal/validinvite', {
-            fields: {
-              invite: this.elInviteContent.value
-            }
-          }, (err, code, data) => {
+          Web.POST(`/internal/validateinvite/${this.elInviteContent}`,
+          {}, (err, code, data) => {
             if (code == 200) {
               let obj = data;
 

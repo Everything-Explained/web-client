@@ -24,13 +24,13 @@ export enum MessageScale {
 }
 
 export interface IMessage {
-  username: string;
+  username?: string;
   message: string;
-  realTimeFixed: number;
+  realTimeFixed?: number;
   scale?: string;
   severity?: MessageSeverity;
   type: MessageType;
-  avatar: string;
+  avatar?: string;
 }
 
 export class Message {
