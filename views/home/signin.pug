@@ -32,8 +32,8 @@ template
     div#InviteContent.login-content.hide(ref='inviteContent')
       h1 Enter your Invite Code
       input(type='text' maxlength='12' ref='elInviteContent')
-      span.response(css='display: ${inviteResponse.length ? "block" : "none"}'
-           innerHTML.bind='inviteResponse')
+      span.response(if.bind='inviteResponse.length'
+                    innerHTML.bind='inviteResponse')
       button(ref='elInviteButton')
         span Validate
 

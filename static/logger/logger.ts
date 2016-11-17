@@ -324,10 +324,9 @@ let vmLogger = new Vue({
       this.isLogPolling = true;
       this.isForcedStopPolling = false;
       this.logPollingInterval = setInterval(() => {
-        Web.HEAD('/internal/logger', {
+        Web.HEAD(`/protected/logger/${this.logFile}`, {
           fields: {
-            length: this.reqLength,
-            filename: this.logFile
+            length: this.reqLength
           }
         }, (err, code, data, headers) => {
           if (this.lastETag !== headers.ETag) {

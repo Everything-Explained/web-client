@@ -1,7 +1,15 @@
 
 export class About {
 
-  private _email = this._toArray('exanix@gmail.com') as string[];
+  private _emailName = this._toArray('noumenae') as string[];
+  private _emailExt = this._toArray('outlook') as string[];
+  private _email =
+    this._emailName.concat(
+      ['@'].concat(
+        this._emailExt
+      )
+      .concat(['.', 'c', 'o', 'm'])
+    );
   private _emailVisible = false;
 
   constructor() {
@@ -24,7 +32,7 @@ export class About {
   private _till(char: number, pos: number, el: HTMLElement) {
 
     // The amount of characters to flip through per iteration
-    let charFlipAmount = 15;
+    let charFlipAmount = 20;
 
     let charArray = this._toArray(el.innerText) as string[];
     if (charArray.length != char + 1) {
@@ -37,7 +45,7 @@ export class About {
         el.innerText = charArray.join('');
         setTimeout(() => {
           this._till(char, ++pos, el);
-        }, 10);
+        }, 3);
       }
       if (pos == charFlipAmount) {
         console.log(pos);

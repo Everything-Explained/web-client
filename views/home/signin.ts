@@ -301,10 +301,16 @@ export class Signin {
         this._signupState |= SignupStatus.INVITE;
         this.elInviteButton.addEventListener('click', () => {
 
+          this.inviteResponse = '';
+
           // TODO - Add a message to UI on failure conditions
           if (!this.elInviteContent.value ||
               !this.elInviteContent.value.length ||
-              !/^[A-Z0-9]+$/g.test(this.elInviteContent.value)) return;
+              !/^[A-Z0-9]+$/g.test(this.elInviteContent.value)) {
+
+            this.inviteResponse = `invalid invite: <span>codes are case-sensitive</span>`;
+            return;
+          }
 
           Web.POST('/internal/validinvite', {
             fields: {
@@ -313,19 +319,14 @@ export class Signin {
           }, (err, code, data) => {
             if (code == 200) {
               let obj = data;
-              // TODO - Add UI response on expired
-              if (!obj.valid) {
-                this.inviteResponse = 'that is an <span>invalid</span> invite';
-                return;
-              }
 
               if (obj.expired) {
                 this.inviteResponse = 'that <span>invite</span> has <span>expired</span>';
                 return;
               }
 
-              if (!obj.validated) {
-                this.inviteResponse = 'did you <span>misspell</span> the invite?';
+              if (!obj.validated || !obj.valid) {
+                this.inviteResponse = '<span>oops</span> did you <span>misspell</span> the invite?';
                 return;
               }
               rs(true);
