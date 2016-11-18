@@ -17,6 +17,7 @@ interface IData {
   err?: Error|string;
   url?: string;
   dataString?: string;
+  browser?: string;
   msgLabelClass?: string;
   msgValueClass?: string;
   modalClass?: string;

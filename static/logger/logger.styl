@@ -175,12 +175,28 @@ input[type=number]
       padding-left 13px
       margin-bottom 3px
 
-  .method, .fields, .ip, .msg
+  .data-container
+    max-height 0
+    opacity 0
+    transform scale(0.5)
+    transform-origin: left top
+    transition all .3s ease
+    & > div
+      margin-bottom: 3px
+    &.active
+      max-height 50px
+      opacity 1
+      transform scale(1)
+
+  .method, .fields, .ip, .msg, .neutral, .title
     position relative
     display inline-block
     padding-left 10px
     font-weight bold
     color #bbb
+
+  .identity
+    cursor: pointer;
 
   .method
     color hsl(50, 37%, 60%)

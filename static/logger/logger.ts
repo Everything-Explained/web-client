@@ -32,6 +32,7 @@ let vmLogger = new Vue({
     logLength: 0,
     renderTime: '0ms',
     requestTime: '0ms',
+    modalDataActive: false,
     logLines: [],
     modal: MiniModal,
     initialized: false,
@@ -49,6 +50,7 @@ let vmLogger = new Vue({
         filename: null,
         length: null,
       },
+      browser: null,
       url: null,
       err: null,
       body: null,
@@ -183,6 +185,7 @@ let vmLogger = new Vue({
           d.fields = entry.data || null;
           d.err = entry.err || null;
           d.body = null;
+          d.browser = (entry.browser) ? this.filterBrowser(entry.browser) : null;
           d.msg = (decodeURIComponent(d.msg) == d.url) ? 'ACCEPTED REQUEST' : d.msg.trim();
           d.reqLink = entry.reqLink;
           d.country = entry.country;
@@ -301,6 +304,14 @@ let vmLogger = new Vue({
     },
 
 
+    filterBrowser: function(browser: string) {
+      if (~browser.indexOf('UNKNOWN')) {
+        return browser.split(': ')[1].replace(/\[|\]/g, '');
+      }
+      return browser;
+    },
+
+
     deleteLog: function() {
       Web.DELETE(`/internal/logger/${this.logFile}`, {}, (err, code, data) => {
         if (err) {
@@ -402,6 +413,7 @@ let vmLogger = new Vue({
       }
     },
 
+
     checkForBots: function(identity: string) {
       for (let b in knownIPs) {
         for (let ip of knownIPs[b]) {
@@ -425,6 +437,12 @@ let vmLogger = new Vue({
       }
 
       return val;
+    },
+
+
+    toggleModalData: function() {
+      window.getSelection().removeAllRanges();
+      this.modalDataActive = !this.modalDataActive;
     }
 
   }

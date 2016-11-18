@@ -25,8 +25,12 @@ html
           section
             div.chevron-right
             div
-              span.ip :: {{ log.identity }}
-                span(v-if='log.country') &nbsp;:: {{ log.country }}
+              span.neutral.identity(v-on:dblclick='toggleModalData') :: {{ log.identity }}
+            div.data-container(v-bind:class='{"active": modalDataActive}')
+              div(v-if='log.country')
+                span.neutral :: {{ log.country }}
+              div(v-if='log.browser')
+                span.neutral :: {{ log.browser }}
             div
               table.field-table
                 tr
