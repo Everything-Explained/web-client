@@ -242,7 +242,7 @@ export class ChatCommander {
         if (!input) return false;
 
         this._sock.sendMsg('main', {
-          username: this.chatData.chatView.alias,
+          alias: this.chatData.chatView.alias,
           type: MessageType.NORMAL,
           message: input,
           realTimeFixed: Date.now(),
@@ -558,7 +558,7 @@ export class ChatCommander {
         isAdmin: false,
         execute: (msg) => {
           this._sock.sendEmote('main', {
-            username: this._chatView.alias,
+            alias: this._chatView.alias,
             message: msg,
             realTimeFixed: Date.now(),
             scale: 'large',

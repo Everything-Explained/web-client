@@ -4,9 +4,11 @@
 export enum MessageType {
   NORMAL,
   EMOTE,
+  INLINE,
+  PRIVATE,
+  PLUS,
   SERVER,
   CLIENT,
-  INLINE,
   IMPLICIT,
   AELO
 }
@@ -24,7 +26,7 @@ export enum MessageScale {
 }
 
 export interface IMessage {
-  username?: string;
+  alias?: string;
   message: string;
   realTimeFixed?: number;
   scale?: string;
@@ -35,7 +37,7 @@ export interface IMessage {
 
 export class Message {
 
-  username: string;
+  alias: string;
   message: string;
   realTimeFixed: number;
   scale: string;
@@ -46,7 +48,7 @@ export class Message {
   /** A message object ready for the message view */
   constructor(ops: IMessage) {
 
-    this.username = ops.username;
+    this.alias = ops.alias;
     this.message = ops.message;
     this.scale = ops.scale === undefined ? 'large' : ops.scale;
     this.type = ops.type;

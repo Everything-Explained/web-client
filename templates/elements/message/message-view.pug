@@ -10,7 +10,7 @@ template
     span.info-line(class='${cfg.scale}')
 
       span.left
-        span.username ${cfg.username}
+        span.username ${cfg.alias}
         span.relative-time ${relativeTime}
       span.right
         span.real-time ${realTime}
@@ -34,7 +34,7 @@ template
 
 
   div(if.bind='modClass !== "normal"', class='${modClass} ${cfg.severity}')
-    span.username ${cfg.username}
+    span.username ${cfg.alias}
     span.content ${cfg.message}
     span.real-time ${realTime}
 

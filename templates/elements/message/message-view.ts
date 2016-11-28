@@ -27,12 +27,12 @@ export class MessageView {
   @bindable cfg: Message;
   @bindable io: ClientIO;
 
-  content: string;
-  realTime: string;
+  content:       string;
+  realTime:      string;
   realTimeFixed: number;
-  relativeTime: string;
-  username: string;
-  scale: string;
+  relativeTime:  string;
+  alias:         string;
+  scale:         string;
   words = new Array<IWord>();
 
   defClass = '';
@@ -117,7 +117,7 @@ export class MessageView {
     this.modClass = this.cfg.messageType;
 
     if (this.cfg.type === MessageType.INLINE) {
-      this.cfg.username = this.cfg.username + ' Says: ';
+      this.cfg.alias = this.cfg.alias + ' Says: ';
     }
 
   }

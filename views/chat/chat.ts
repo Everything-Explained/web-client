@@ -57,22 +57,8 @@ export class Chat {
 
   constructor(private body: HTMLElement, public modal: ModernModal) {
 
-  }
-
-  // AURELIA: Activates on data binding
-  bind() {
-    this.data =
-    {
-      sock: this.io,
-      chatView: this
-    };
-  }
-
-  // AURELIA: Activates on DOMReady
-  attached() {
-
-
     // Initialize chat service
+    // DO NOT MOVE -- Dependancy of bind()
     this.io = new ClientIO((data) => {
 
       this.alias = data.alias;
@@ -102,16 +88,31 @@ export class Chat {
         this.addMessage(msg.message, MessageType.SERVER);
       } else {
         this.ports.main.addMessage(new Message({
-          username: msg.username,
+          alias: msg.alias,
           message: msg.message,
           realTimeFixed: msg.realTimeFixed,
           avatar: msg.avatar,
           type: msg.type
         }));
       }
-
-
     }, this);
+
+
+  }
+
+  // AURELIA: Activates on data binding
+  bind() {
+
+    // DO NOT MOVE -- Dependancy of Chat Commander Element
+    this.data =
+    {
+      sock: this.io,
+      chatView: this
+    };
+  }
+
+  // AURELIA: Activates on DOMReady
+  attached() {
 
     // this.page.userList.show();
     // this.page.userList.setClass('active');
@@ -149,17 +150,17 @@ export class Chat {
 
   addMessage(msg: string, type: MessageType, severity = MessageSeverity.NEUTRAL) {
 
-    let username = '';
+    let alias = '';
 
     switch (type) {
       case MessageType.NORMAL:
-      case MessageType.EMOTE:    username = this.alias; break;
-      case MessageType.CLIENT:   username = 'Client';   break;
-      case MessageType.SERVER:   username = 'Server';   break;
-      case MessageType.IMPLICIT: username = '';         break;
+      case MessageType.EMOTE:    alias = this.alias; break;
+      case MessageType.CLIENT:   alias = 'Client';   break;
+      case MessageType.SERVER:   alias = 'Server';   break;
+      case MessageType.IMPLICIT: alias = '';         break;
       case MessageType.INLINE:
         let parts = msg.split(';', 2);
-        username  = parts[0].trim();
+        alias  = parts[0].trim();
         msg       = parts[1];
       break;
 
@@ -169,7 +170,7 @@ export class Chat {
 
     this.ports.main.addMessage(new Message({
       message: msg,
-      username,
+      alias,
       realTimeFixed: Date.now(),
       avatar: this.avatar || null,
       type,

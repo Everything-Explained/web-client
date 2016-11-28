@@ -241,7 +241,7 @@ export class ClientIO {
 
     this._chat.ports.main.addMessage(new Message(
     {
-      username: 'Server',
+      alias: 'Server',
       message: 'Server Shutdown or Lost Connection',
       realTimeFixed: Date.now(),
       avatar: null,
