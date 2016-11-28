@@ -1,5 +1,5 @@
 
-import * as io from 'socketio';
+import * as io from 'socket.io-client';
 import {Message, MessageType, MessageSeverity, IMessage} from '../views/chat/message';
 import {IScriptures} from '../views/chat/display-verse';
 import {Chat} from '../views/chat/chat';
@@ -8,8 +8,10 @@ import {Utils} from '../helpers/utils';
 
 export class ClientIO {
 
-  private _sock = io({ forceNew: true });
-  private _serverShuttingDown = false;
+  private _sock = io({
+    forceNew: true,
+    reconnection: false
+  });
   private _connected = false;
   private _chat: Chat;
 
@@ -96,33 +98,29 @@ export class ClientIO {
     }
 
     if (reconnect) {
+      this._chat.addMessage('Connecting to server...', MessageType.CLIENT);
       this._sock = io({forceNew: true});
     }
 
-    this._sock.on('connect', () => {
+    this._sock.once('connect', () => {
       this._chat.addMessage('Connected Successfully', MessageType.SERVER);
-      this._sock
-        .on('server-msg', msg => this.onServerMessage(msg))
-        .on('auth-success', (data) => this.completeAuthentication(data))
-        .on('auth-fail', (msg) => {
-          this._chat.addMessage(msg, MessageType.SERVER);
-        })
-        .emit('authenticate');
     })
-    .on('disconnect', () => this.onLostConnection());
+    .on('server-msg',   msg => this.onServerMessage(msg))
+    .on('auth-success', data => this.completeAuthentication(data))
+    .on('auth-fail',    msg => {
+      this._chat.addMessage(msg, MessageType.SERVER);
+    })
+    .on('disconnect',          srv   => this.onDisconnect(srv))
+    .on('connect_error',       ()    => this.onFailedConnection())
+    .on('user-joined',         user  => this.onUserJoin(user))
+    .on('user-left',           user  => this.onUserDisconnect(user))
+    .on('users-online',        users => this.populateUsers(users))
+    .on('user-is-typing',      user  => this.onUserTyping(user))
+    .on('user-stopped-typing', user  => this.onStoppedTyping(user))
+    .on('user-paused-typing',  user  => this.onUserPausedTyping(user))
+    .on('bible-verse',         data  => this.showBibleVerse(data))
+    .emit('authenticate');
 
-
-    this._sock.on('disconnect',          ()    => this.onLostConnection());
-    this._sock.on('connect_error',       ()    => this.onFailedConnection());
-    // this._sock.on('broadcast',           msg   => this.onBroadcast(msg));
-    this._sock.on('user-joined',         user  => this.onUserJoin(user));
-    this._sock.on('user-left',           user  => this.onUserDisconnect(user));
-    this._sock.on('users-online',        users => this.populateUsers(users));
-    this._sock.on('user-is-typing',      user  => this.onUserTyping(user));
-    this._sock.on('user-stopped-typing', user  => this.onStoppedTyping(user));
-    this._sock.on('user-paused-typing',  user  => this.onUserPausedTyping(user));
-    this._sock.on('bible-verse',         data  => this.showBibleVerse(data));
-    // this._sock.on('private-msg',         data  => this.onPrivateMessage(data))
   }
 
 
@@ -199,7 +197,11 @@ export class ClientIO {
   }
 
   onFailedConnection() {
-    this._chat.addMessage('Server Connection Failed, Try Again Later', MessageType.CLIENT);
+    this._chat.addMessage(
+      'Server Connection Failed, Try Again Later',
+      MessageType.CLIENT,
+      MessageSeverity.ATTENTION
+    );
     this._sock.disconnect();
   }
 
@@ -210,21 +212,18 @@ export class ClientIO {
     });
     this._chat.users[index].isTyping = 'is-typing';
   }
-
   onStoppedTyping(user: string) {
     let index = Utils.findIndex(this._chat.users, o => {
       return o.name == user;
     });
     this._chat.users[index].isTyping = '';
   }
-
   onUserPausedTyping(user: string) {
     let index = Utils.findIndex(this._chat.users, o => {
       return o.name == user;
     });
     this._chat.users[index].isTyping = 'paused-typing';
   }
-
   onUserResumedTyping(user: string) {
     let index = Utils.findIndex(this._chat.users, o => {
       return o.name == user;
@@ -233,32 +232,30 @@ export class ClientIO {
   }
 
 
-  onLostConnection() {
+  onDisconnect(srv: string) {
 
-    if (this._serverShuttingDown) return;
-
-    console.error('Server Shutdown or Lost Connection');
-
-    this._chat.ports.main.addMessage(new Message(
-    {
+    let msgObj = {
       alias: 'Server',
-      message: 'Server Shutdown or Lost Connection',
       realTimeFixed: Date.now(),
       avatar: null,
-      scale: 'large',
+      message: '',
       type: MessageType.SERVER,
       severity: MessageSeverity.ATTENTION
-    }));
+    };
 
-    this._sock.disconnect();
-
-    this._connected = false;
+    if (srv && srv === 'io server disconnect') {
+      msgObj.message = 'Server Shutdown by Admin';
+    } else {
+      msgObj.message = 'Server Lost Connection';
+    }
+    this._chat.ports.main.addMessage(new Message(msgObj));
+    this.disconnect();
   }
 
 
   disconnect() {
-    this._serverShuttingDown = true;
-    this._sock.disconnect();
+    this._connected = false;
+    this._sock.close();
   }
 
 
