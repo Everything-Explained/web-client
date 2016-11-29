@@ -428,6 +428,10 @@ let vmLogger = new Vue({
 
     getModalClass: function(val: string) {
 
+      if (~val.indexOf('error')) {
+        return 'error';
+      }
+
       if (~val.indexOf('warn')) {
         return 'warn';
       }
