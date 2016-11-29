@@ -142,8 +142,13 @@ export class ClientIO {
   }
 
 
-  onServerMessage(msg: string) {
-    this._chat.addMessage(msg, MessageType.SERVER);
+  onServerMessage(out: {msg: string; type?: number}) {
+    if (!out.type) {
+      this._chat.addMessage(out.msg, MessageType.SERVER);
+    }
+    else {
+      this._chat.addMessage(out.msg, MessageType.SERVER, out.type);
+    }
   }
 
 

@@ -24,7 +24,7 @@ System.config({
     "gsap": "npm:gsap@1.18.2",
     "moment": "npm:moment@2.12.0",
     "optiscroll": "libs/optiscroll.min.js",
-    "socketio": "socket.io/socket.io",
+    "socket.io-client": "socket.io/socket.io",
     "text": "github:systemjs/plugin-text@0.0.8",
     "validator": "npm:validator@4.8.0",
     "github:jspm/nodelibs-assert@0.1.0": {
