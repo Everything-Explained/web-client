@@ -44,8 +44,7 @@ aside.modal
   margin 0 auto
   width 50%
   // background $modal-bg
-  padding 2px 0 0 0
-  border 8px solid hsla(52, 100%, 60%, 0.3 / $golden-ratio)
+
   box-shadow inset 0 0 0 10px transparent
   background-clip padding-box
   box-shadow $modal-boxshadow, inset 0 0 0 10px transparent
@@ -163,7 +162,7 @@ aside.modal.bbl
   b
     color $modal-bbl-number-color
     text-shadow: none
-
+// End bible
 
 
 aside.modal.exception
@@ -184,7 +183,7 @@ aside.modal.exception
       text-shadow none
       line-height 20px
       border-radius 5px
-
+// End Exception
 
 
 aside.modal.changelog
@@ -202,8 +201,86 @@ aside.modal.changelog
       color $modal-changelog-chg
     &.fixes
       color $modal-changelog-fix
+// End Changelog
 
 
+aside.modal-overlay
+  position fixed
+  content ' '
+  top 0
+  left 0
+  right 0
+  bottom 0
+  opacity 0
+  visibility hidden
+  background-color hsla(0, 0%, 0%, 0.6)
+  z-index 1000
+  transition all .35s
+  &.modal-open
+    opacity 1
+    visibility visible
+
+.modal-container
+  position absolute
+  display flex
+  flex-direction: column
+  left 50%
+  top 0
+  width 500px
+  max-height 70%
+  padding 2px 0 0 0
+  color $modal-default-color
+  background-color $modal-content-bg-color
+  border 8px solid hsla(52, 100%, 60%, 0.3 / $golden-ratio)
+  border-radius 5px
+  box-shadow $modal-boxshadow, inset 0 0 0 10px transparent
+  opacity 0
+  transform translate(-50%) scaleX(0.5)
+  transition all .35s
+
+  a.modal-close:visited,
+  a.modal-close:active,
+  a.modal-close:link
+    position absolute
+    bottom -20px
+    right -20px
+    border-radius 50%
+    font-size 20px
+    padding 3px 8px 5px 8px
+    font-weight bold
+    text-decoration none
+    color $modal-close-btn-color
+    background $modal-close-btn-bg
+    box-shadow $modal-close-btn-boxshadow
+    transition all $speed ease-in-out
+    &:hover
+      background $modal-close-btn-hover-bg
+      color $modal-close-btn-hover-color
+
+  header
+    text-align center
+    padding 7px 0
+    font-size 24px
+    font-family Verdana
+    color $modal-header-color
+    background linear-gradient(to right, hsla(0,0%,0%,0.3) 0%,hsla(51,100%,45%,1) 50%,hsla(0,0%,0%,0.3) 100%);
+    border-bottom $modal-separator-border
+
+  section
+    font-family $ff-comic
+    padding 13px
+    overflow auto
+    h2
+      margin 7px 0 7px 5px
+      font-size 20px
+  footer
+    height 10px
+
+
+.modal-open .modal-container
+  opacity 1
+  top 10%
+  transform translate(-50%) scaleX(1)
 
 
 $green = $head-1-color

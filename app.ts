@@ -10,7 +10,7 @@ import {ModernModal} from './helpers/modern-modal';
 import {Logger} from './helpers/logger';
 import {ErrorHandler} from './helpers/errorHandler';
 import {Session} from './app-session';
-
+import {MiniModal} from './helpers/minimodal';
 
 
 interface PageConfiguration {
@@ -41,6 +41,8 @@ export class App {
   version = '0.7.0';
 
   router: Router;
+
+  private _miniModal: MiniModal;
 
   page = Page;
 
@@ -125,6 +127,11 @@ export class App {
     this._setupNavigationCallbackHandler();
 
 
+  }
+
+
+  public test() {
+    this._miniModal.show('GenericModal');
   }
 
 
@@ -384,7 +391,7 @@ export class App {
 
     this._modal.init('overlay');
 
-
+    this._miniModal = new MiniModal();
 
     // this._login.initAuthLibs();
 

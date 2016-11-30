@@ -2,11 +2,22 @@
 template
   div#overlay
     div.modal-preloader
+  aside#GenericModal.modal-overlay
+    seciton.modal-container
+      header Test
+      section
+        h2 Test
+        span proident pariatur cupidatat exercitation cupidatat amet. Esse tempor aliqua ex fugiat elit laboris aliqua ad fugiat reprehenderit cupidatat reprehenderit. Velit enim ad sunt reprehenderit sit et laborum ea irure esse.
+        span proident pariatur cupidatat exercitation cupidatat amet. Esse tempor aliqua ex fugiat elit laboris aliqua ad fugiat reprehenderit cupidatat reprehenderit. Velit enim ad sunt reprehenderit sit et laborum ea irure esse.
+        span proident pariatur cupidatat exercitation cupidatat amet. Esse tempor aliqua ex fugiat elit laboris aliqua ad fugiat reprehenderit cupidatat reprehenderit. Velit enim ad sunt reprehenderit sit et laborum ea irure esse.
+        span proident pariatur cupidatat exercitation cupidatat amet. Esse tempor aliqua ex fugiat elit laboris aliqua ad fugiat reprehenderit cupidatat reprehenderit. Velit enim ad sunt reprehenderit sit et laborum ea irure esse.
+      footer
+      a.modal-close(href='javascript:void(0)') &#10060;
 
   section#PageTop
     header.global
       div.ribbon
-      aside.logo
+      aside.logo(click.delegate='test()')
 
 
 
@@ -19,8 +30,8 @@ template
         ul
           li( repeat.for='route of activeRoutes',
               mousedown.delegate='$parent.goTo(route.href)',
-              class='${route.isActive ? "active" : ""} ' +
-                    '${route.config.classes ? route.config.classes : ""} ') ${route.config.name}
+              class=`\${route.isActive ? "active" : ""}
+                     \${route.config.classes ? route.config.classes : ""} `) ${route.config.name}
 
     section#PageMiddle
       section#TrayLeft(class='buffer2 ${utils.page.leftTray.className}')
