@@ -47,9 +47,19 @@ menu#MainMenu
         opacity 1
         background $panel
         border-left 4px solid $accent-color
+// End MainMenu
 
 
-
+// FireFox Font rendering shinanigans
+@-moz-document url-prefix()
+  menu#MainMenu
+    font-size 28px
+    ul
+      li
+        padding 2px 3px 0 0
+      span
+        top -5px
+// End FireFox Hack
 
 
 menu#TabMenu
