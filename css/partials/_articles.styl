@@ -229,7 +229,7 @@ article[role='FAQ']
       padding 3px 11px
       width 100%
       color hsl(124, 20%, 70%)
-      font-family $ff-verdana
+      font-family comfortaa
       font-variant: small-caps
       font-size 20px
       text-align center
@@ -244,12 +244,17 @@ article[role='FAQ']
     .answer
       display none
 
-
-
-
   .textbox-container
     position absolute
     width 45%
+
+// FireFox font rendering shinanigans
+@-moz-document url-prefix()
+  article[role='FAQ']
+    .qablock .question
+      font-size 18px
+// End FireFox Hack
+
 
 
 article[role='register']
