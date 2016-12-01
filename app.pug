@@ -3,14 +3,28 @@ template
   div#overlay
     div.modal-preloader
   aside#GenericModal.modal-overlay
-    seciton.modal-container
-      header Test
+    div.modal-preload-container
+      div.preloader
+    section.modal-container
+      header #[span gen #[span.normal 1:1-2]]
       section
-        h2 Test
-        span proident pariatur cupidatat exercitation cupidatat amet. Esse tempor aliqua ex fugiat elit laboris aliqua ad fugiat reprehenderit cupidatat reprehenderit. Velit enim ad sunt reprehenderit sit et laborum ea irure esse.
-        span proident pariatur cupidatat exercitation cupidatat amet. Esse tempor aliqua ex fugiat elit laboris aliqua ad fugiat reprehenderit cupidatat reprehenderit. Velit enim ad sunt reprehenderit sit et laborum ea irure esse.
-        span proident pariatur cupidatat exercitation cupidatat amet. Esse tempor aliqua ex fugiat elit laboris aliqua ad fugiat reprehenderit cupidatat reprehenderit. Velit enim ad sunt reprehenderit sit et laborum ea irure esse.
-        span proident pariatur cupidatat exercitation cupidatat amet. Esse tempor aliqua ex fugiat elit laboris aliqua ad fugiat reprehenderit cupidatat reprehenderit. Velit enim ad sunt reprehenderit sit et laborum ea irure esse.
+        h2 The Creation of the World
+        div.legend
+          b.col1 1:1
+          span.col2 In the beginning God created the heavens and the earth.
+        div.legend
+          b.col1 1:2
+          span.col2 Now the earth was without shape and empty, and darkness was over the surface of the watery deep, but the Spirit of God was moving over the surface of the water.
+        div.legend
+          b.col1 11:31
+          span.col2 God said, “Let there be light.” And there was light!
+        div.legend
+          b.col1 1:4
+          span.col2 God saw that the light was good, so God separated the light from the darkness.
+        div.legend
+          b.col1 1:5
+          span.col2 God called the light “day” and the darkness “night.” There was evening, and there was morning, marking the first day.
+
       footer
       a.modal-close(href='javascript:void(0)') &#10060;
 
@@ -24,7 +38,7 @@ template
     div#PageTransition(class='${page.overlay? "active" : ""}')
 
     section#TrayTop.buffer
-      aside.watermark Alpha: ${version}
+      aside.watermark #[span alpha#[span.num v${version}]]
 
       menu#TabMenu
         ul

@@ -1,56 +1,54 @@
 export class MiniModal {
 
-  private _modals: HTMLElement[];
-  private _openModalBtns: HTMLElement[];
+  private _modals: HTMLElement[] = [];
+  private _escModalEvent: (ev: KeyboardEvent) => void;
 
+  constructor() {}
 
-  constructor(context?: HTMLElement) {
+  private _addModal(modal: HTMLElement) {
 
-    let obj = context || document;
+    // Add modal to modal list
+    this._modals.push(modal);
 
-    this._modals = this._toArray(obj.querySelectorAll('.modal-overlay'));
-    this._openModalBtns = this._toArray(obj.querySelectorAll('.modal-trigger'));
+    let closeBtn = modal.querySelector('.modal-close') as HTMLElement
+      , modalList = this._modals;
 
-    this._modals.forEach((modal) => {
-
-      let closeBtn = modal.querySelector('.modal-close') as HTMLElement;
-
-      if (closeBtn) {
-        closeBtn.addEventListener('click',
-          () => this._closeModal(modal));
-      } else {
-        // This is not a breaking condition
-        console.warn(`MiniModal ::: No close Button detected in: "${modal.id}"`);
-      }
-
-      // Closes modal on overlay click
-      modal.addEventListener('click',
+    if (closeBtn) {
+      closeBtn.addEventListener('click',
         () => this._closeModal(modal));
+    } else {
+      // This is not a breaking condition
+      console.warn(`MiniModal ::: No close Button detected in: "${modal.id}"`);
+    }
 
-      // Close on ESC Key
-      modal.addEventListener('keypress', ev => {
-        if (ev.keyCode == 27) {
-          this._closeModal(modal);
+    document.removeEventListener('keyup', this._escModalEvent);
+    let onKeyUp = (ev: KeyboardEvent) => {
+      if (ev.keyCode == 27) {
+        for (let m of modalList) {
+          m.classList.remove('modal-open');
         }
-      });
+      }
+    };
 
-      // Arbitrary clicks should not close the modal
-      modal.children[0].addEventListener('click',
-        (e: MouseEvent) => this._preventBubble(e));
-    });
+    // Closes modal on overlay click
+    modal.addEventListener('click',
+      () => this._closeModal(modal));
 
-    this._openModalBtns.forEach((btn) => {
-      let id = btn.dataset['trigger']
-        , modal = this._findModal(id);
 
-      if (!modal) throw new Error(`MiniModal ::: Incorrect Data on Button ::: (ID:"${id}")`);
+    // Arbitrary clicks should not close the modal
+    modal.children[0].addEventListener('click',
+      (e: MouseEvent) => this._preventBubble(e));
 
-      btn.addEventListener('click', () => {
-        this._show(modal);
-      });
-    });
+    modal.children[1].addEventListener('click',
+      (e: MouseEvent) => this._preventBubble(e));
+
+    document.addEventListener('keyup', onKeyUp);
+
+    this._escModalEvent = onKeyUp;
 
   }
+
+
 
   private _closeModal(modal: HTMLElement) {
     this._hide(modal);
@@ -64,30 +62,49 @@ export class MiniModal {
     e.cancelBubble = true;
   }
 
-  private _toArray(nodes: NodeList): any[] {
-    return Array.prototype.slice.call(nodes);
-  }
 
-
-  private _findModal(id: string) {
-    for (let e of this._modals) {
-      if (e.id == id) return e;
+  private _show(modal: HTMLElement, exists = false) {
+    if (exists) {
+      modal.classList.remove('modal-preloader');
+      return modal.classList.add('modal-open');
     }
-  }
 
-
-  private _show(modal: HTMLElement) {
+    this._addModal(modal);
     modal.classList.add('modal-open');
   }
 
   public _hide(modal: HTMLElement) {
-    modal.classList.remove('modal-open');
+    if (modal.classList.contains('modal-open')) {
+      modal.classList.remove('modal-open');
+      modal.classList.remove('modal-preloader');
+    }
+  }
+
+  public preload(id: string) {
+    let modal: HTMLElement = null;
+    for (let m of this._modals) {
+      if (m.id == id) {
+       return m.classList.add('modal-preloader');
+      }
+    }
+    modal = document.getElementById(id);
+    if (!modal) {
+      throw new Error(`MiniModal ::: Modal ID Does NOT Exist: "${id}"`);
+    }
+    this._addModal(modal);
+    modal.classList.add('modal-preloader');
   }
 
   public show(id: string) {
-    let modal = document.getElementById(id);
+    let modal: HTMLElement = null;
+    for (let m of this._modals) {
+      if (m.id === id) {
+        return this._show(m, true);
+      }
+    }
+    modal = document.getElementById(id);
     if (!modal) {
-      throw new Error(`MiniModal ::: Incorrect Modal ID:"${id}"`);
+      throw new Error(`MiniModal ::: Modal ID Does NOT Exist:"${id}"`);
     }
     this._show(modal);
   }

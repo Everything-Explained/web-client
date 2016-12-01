@@ -213,20 +213,39 @@ aside.modal-overlay
   bottom 0
   opacity 0
   visibility hidden
-  background-color hsla(0, 0%, 0%, 0.6)
+  background-color hsla(0, 0%, 0%, 0.55)
   z-index 1000
   transition all .35s
   &.modal-open
     opacity 1
     visibility visible
+  &.modal-open .modal-container
+    opacity 1
+    top 12%
+    transform translate(-50%) scale(1, 1)
+  &.modal-preloader
+    opacity 1
+    visibility visible
+  &.modal-preloader .modal-preload-container
+    opacity 1
+    visibility visible
+
+  .modal-preload-container
+    position: absolute
+    left 50%
+    top 50%
+    opacity 0
+    visibility: hidden
+    transform: translate(-50%, -80%)
+    transition: all .3s ease
 
 .modal-container
   position absolute
   display flex
   flex-direction: column
   left 50%
-  top 0
-  width 500px
+  top -20%
+  width 60%
   max-height 70%
   padding 2px 0 0 0
   color $modal-default-color
@@ -235,8 +254,8 @@ aside.modal-overlay
   border-radius 5px
   box-shadow $modal-boxshadow, inset 0 0 0 10px transparent
   opacity 0
-  transform translate(-50%) scaleX(0.5)
-  transition all .35s
+  transform translate(-50%) scale(0.3, 0.3)
+  transition all .4s ease
 
   a.modal-close:visited,
   a.modal-close:active,
@@ -259,28 +278,64 @@ aside.modal-overlay
 
   header
     text-align center
-    padding 7px 0
-    font-size 24px
-    font-family Verdana
+    padding 0
+    font-size 34px
+    height 37px
+    font-family comfortaa
+    font-variant: small-caps
     color $modal-header-color
     background linear-gradient(to right, hsla(0,0%,0%,0.3) 0%,hsla(51,100%,45%,1) 50%,hsla(0,0%,0%,0.3) 100%);
     border-bottom $modal-separator-border
 
+    span
+      position: relative
+      top -5px
+
+    span.normal
+      top 0
+      font-variant: normal
+      font-size 24px
+      letter-spacing: 4px
+
   section
     font-family $ff-comic
+    font-size 16px
+    letter-spacing 1px
     padding 13px
     overflow auto
+
     h2
-      margin 7px 0 7px 5px
-      font-size 20px
+      margin 7px 0 7px 7px
+      font-size 24px
+      color $modal-h2-color
+
+    b
+      color hsl(50, 60% 57%)
+
+    .legend
+      display flex
+      margin-bottom: 7px
+      .col1
+        margin-right 10px
+        font-family: Source Code Pro
+        font-weight: normal
+        width: 60px
+        text-align: right
+      .col2
+        flex 1
+
   footer
     height 10px
 
 
-.modal-open .modal-container
-  opacity 1
-  top 10%
-  transform translate(-50%) scaleX(1)
+
+// FireFox font rendering shinanigans
+@-moz-document url-prefix()
+  .modal-container header
+    font-size 30px
+    span
+      top -2px
+// End FireFox Hack
 
 
 $green = $head-1-color

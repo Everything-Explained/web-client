@@ -10,130 +10,114 @@
   -webkit-box-sizing border-box
   -moz-box-sizing border-box
 
-$animDuration = 1.13s;
-$colorOne = hsl(50, 80%, 40%)
-$colorTwo = $panel
-$size = 133px
-$easeMethod = $ease-io-sine
+$animDuration = 1.6s
+$stagger = 0.7s
+$size = 170px
+$hue = 278
 
-$animation
-  animation-name cssload-explode
-  -o-animation-name cssload-explode
-  -ms-animation-name cssload-explode
-  -webkit-animation-name cssload-explode
-  -moz-animation-name cssload-explode
-  animation-duration $animDuration
-  -o-animation-duration $animDuration
-  -ms-animation-duration $animDuration
-  -webkit-animation-duration $animDuration
-  -moz-animation-duration $animDuration
-  animation-timing-function $easeMethod
-  -o-animation-timing-function $easeMethod
-  -ms-animation-timing-function $easeMethod
-  -webkit-animation-timing-function $easeMethod
-  -moz-animation-timing-function $easeMethod
-  animation-iteration-count infinite
-  -o-animation-iteration-count infinite
-  -ms-animation-iteration-count infinite
-  -webkit-animation-iteration-count infinite
-  -moz-animation-iteration-count infinite
+.preloader
+  width $size
+  height $size
+  line-height $size
+  margin 56px auto
+  position relative
+  box-sizing border-box
+  text-align center
+  z-index 0
+  text-transform uppercase
+  -o-text-transform uppercase
+  -ms-text-transform uppercase
+  -webkit-text-transform uppercase
+  -moz-text-transform uppercase
+  &:after
+    z-index 1
+    animation ripple $animDuration infinite $stagger
+    -o-animation ripple $animDuration infinite $stagger
+    -ms-animation ripple $animDuration infinite $stagger
+    -webkit-animation ripple $animDuration infinite $stagger
+    -moz-animation ripple $animDuration infinite $stagger
+  &:before
+    z-index 2
+    animation ripple $animDuration infinite
+    -o-animation ripple $animDuration infinite
+    -ms-animation ripple $animDuration infinite
+    -webkit-animation ripple $animDuration infinite
+    -moz-animation ripple $animDuration infinite
 
-.cssload-circle
+.preloader:before,
+.preloader:after
+  opacity 0
+  box-sizing border-box
+  -o-box-sizing border-box
+  -ms-box-sizing border-box
+  -webkit-box-sizing border-box
+  -moz-box-sizing border-box
+  content "\0020"
   position absolute
-  top 20%
-  left 50%
-  width 0
-  height 0
-  border-radius 50%
-  z-index 1
-  transform translate(-50%, -50%)
-  -o-transform translate(-50%, -50%)
-  -ms-transform translate(-50%, -50%)
-  -webkit-transform translate(-50%, -50%)
-  -moz-transform translate(-50%, -50%)
-  transition all 230ms ease
-  -o-transition all 230ms ease
-  -ms-transition all 230ms ease
-  -webkit-transition all 230ms ease
-  -moz-transition all 230ms ease
-
-.cssload-circle:nth-child(1)
-  z-index 2
-  background $colorOne
-  @extends $animation
-  animation-delay 0
-  -o-animation-delay 0
-  -ms-animation-delay 0
-  -webkit-animation-delay 0
-  -moz-animation-delay 0
-
-.cssload-circle:nth-child(2)
-  background $colorTwo
-  @extends $animation
-  animation-delay 0.58s
-  -o-animation-delay 0.58s
-  -ms-animation-delay 0.58s
-  -webkit-animation-delay 0.58s
-  -moz-animation-delay 0.58s
+  top 0
+  left 0
+  width 100%
+  height 100%
+  border-radius 113px
+  border 6px solid hsl($hue, 50%, 50%)
+  box-shadow 0 0 56px hsl($hue, 100%, 39%), inset 0 0 56px hsl($hue, 50%, 60%)
 
 
-
-@keyframes cssload-explode
+@keyframes ripple
   0%
-    width 0
-    height 0
-    z-index 1
+    transform: scale(0);
+    opacity: 0;
   50%
-    width $size
-    height $size
-    z-index 1
+    opacity: 1;
   100%
-    display none
+    transform: scale(1);
+    opacity: 0;
 
-@-o-keyframes cssload-explode
-  0%
-    width 0
-    height 0
-    z-index 1
-  50%
-    width $size
-    height $size
-    z-index 1
-  100%
-    display none
 
-@-ms-keyframes cssload-explode
-  0%
-    width 0
-    height 0
-    z-index 1
-  50%
-    width $size
-    height $size
-    z-index 1
-  100%
-    display none
 
-@-webkit-keyframes cssload-explode
+@-o-keyframes ripple
   0%
-    width 0
-    height 0
-    z-index 1
+    -o-transform: scale(0);
+    opacity: 0;
   50%
-    width $size
-    height $size
-    z-index 1
+    opacity: 1;
   100%
-    display none;
+    -o-transform: scale(1);
+    opacity: 0;
 
-@-moz-keyframes cssload-explode
+
+
+@-ms-keyframes ripple
   0%
-    width 0
-    height 0
-    z-index 1
+    -ms-transform: scale(0);
+    opacity: 0;
   50%
-    width $size
-    height $size
-    z-index 1
+    opacity: 1;
   100%
-    display none;
+    -ms-transform: scale(1);
+    opacity: 0;
+
+
+
+@-webkit-keyframes ripple
+  0%
+    -webkit-transform: scale(0);
+    opacity: 0;
+  50%
+    opacity: 1;
+  100%
+    -webkit-transform: scale(1);
+    opacity: 0;
+
+
+
+@-moz-keyframes ripple
+  0%
+    -moz-transform: scale(0);
+    opacity: 0;
+  50%
+    opacity: 1;
+  100%
+    -moz-transform: scale(1);
+    opacity: 0;
+

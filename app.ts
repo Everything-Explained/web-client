@@ -131,7 +131,10 @@ export class App {
 
 
   public test() {
-    this._miniModal.show('GenericModal');
+    this._miniModal.preload('GenericModal');
+    setTimeout(() => {
+      this._miniModal.show('GenericModal');
+    }, 1000);
   }
 
 
