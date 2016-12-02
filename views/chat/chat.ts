@@ -3,12 +3,12 @@
 import {PageElement} from '../../helpers/page';
 import {Port} from './port';
 import {inject} from 'aurelia-framework';
-import * as io from 'socketio';
+import * as io from 'socket.io-client';
 import * as moment from 'moment';
 import {Message, MessageType, MessageSeverity} from './message';
-import {displayVerse, IScriptures} from './display-verse';
+import {aggregateVerses, IScriptures, IRawScriptures} from './display-verse';
 import {ClientIO} from '../../services/clientio';
-import {ModernModal} from '../../helpers/modern-modal';
+import {MiniModal} from '../../helpers/minimodal';
 import {Logger} from '../../helpers/logger';
 import {Web} from '../../helpers/web';
 
@@ -23,7 +23,7 @@ export interface CommanderData {
 
 
 
-@inject(Element, ModernModal)
+@inject(Element, MiniModal)
 export class Chat {
 
   // Socket IO instance
@@ -41,6 +41,8 @@ export class Chat {
 
   users = new Array<{name: string; isTyping: string}>();
 
+  scriptures: IScriptures;
+
 
   ports = {
     main:   new Port('main', this),
@@ -55,7 +57,7 @@ export class Chat {
   private _activePort: Port;
 
 
-  constructor(private body: HTMLElement, public modal: ModernModal) {
+  constructor(private body: HTMLElement, public modal: MiniModal) {
 
     // Initialize chat service
     // DO NOT MOVE -- Dependancy of bind()
@@ -130,7 +132,7 @@ export class Chat {
     // this.page.rightTray.resetSize();
     // this.page.userList.setClass('');
     // this.page.userList.hide();
-
+    this.modal.cleanup('VerseModal');
     this.io.disconnect();
   }
 
@@ -178,9 +180,16 @@ export class Chat {
     }));
   }
 
-  showVerse(scriptures: IScriptures[]) {
-    let s = displayVerse(scriptures);
-    this.modal.show('modals/bible.html', s.header, s.html);
+  showVerse(scriptures: IRawScriptures) {
+    let s = aggregateVerses(scriptures);
+    this.scriptures = {
+      book: s.book,
+      notation: s.notation,
+      chapters: s.chapters
+    };
+    setTimeout(() => {
+      this.modal.show('VerseModal');
+    }, 300);
   }
 
 

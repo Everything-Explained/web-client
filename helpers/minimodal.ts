@@ -49,37 +49,6 @@ export class MiniModal {
   }
 
 
-
-  private _closeModal(modal: HTMLElement) {
-    this._hide(modal);
-  }
-
-  /**
-   * Prevent child event bubbling to parent element
-   */
-  private _preventBubble(e: MouseEvent) {
-    e.preventDefault();
-    e.cancelBubble = true;
-  }
-
-
-  private _show(modal: HTMLElement, exists = false) {
-    if (exists) {
-      modal.classList.remove('modal-preloader');
-      return modal.classList.add('modal-open');
-    }
-
-    this._addModal(modal);
-    modal.classList.add('modal-open');
-  }
-
-  public _hide(modal: HTMLElement) {
-    if (modal.classList.contains('modal-open')) {
-      modal.classList.remove('modal-open');
-      modal.classList.remove('modal-preloader');
-    }
-  }
-
   public preload(id: string) {
     let modal: HTMLElement = null;
     for (let m of this._modals) {
@@ -108,6 +77,57 @@ export class MiniModal {
     }
     this._show(modal);
   }
+
+
+  /**
+   * Removes a modal by id, from the internal modal list.
+   * (Only use this if your modal HTML is removed from the DOM)
+   *
+   * @param {string} id The id of the modal element
+   *
+   * @memberOf MiniModal
+   */
+  public cleanup(id: string) {
+    for (let i = 0; i < this._modals.length; i++) {
+      if (this._modals[i].id == id) {
+        this._modals.splice(i, 1);
+        break;
+      }
+    }
+  }
+
+
+  private _closeModal(modal: HTMLElement) {
+    this._hide(modal);
+  }
+
+  /**
+   * Prevent child event bubbling to parent element
+   */
+  private _preventBubble(e: MouseEvent) {
+    e.preventDefault();
+    e.cancelBubble = true;
+  }
+
+
+  private _show(modal: HTMLElement, exists = false) {
+    if (exists) {
+      modal.classList.remove('modal-preloader');
+      return modal.classList.add('modal-open');
+    }
+
+    this._addModal(modal);
+    modal.classList.add('modal-open');
+  }
+
+  private _hide(modal: HTMLElement) {
+    if (modal.classList.contains('modal-open')) {
+      modal.classList.remove('modal-open');
+      modal.classList.remove('modal-preloader');
+    }
+  }
+
+
 
 
 

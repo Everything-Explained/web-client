@@ -1,7 +1,7 @@
 
 import * as io from 'socket.io-client';
 import {Message, MessageType, MessageSeverity, IMessage} from '../views/chat/message';
-import {IScriptures} from '../views/chat/display-verse';
+import {IRawScriptures} from '../views/chat/display-verse';
 import {Chat} from '../views/chat/chat';
 import {Utils} from '../helpers/utils';
 
@@ -73,8 +73,7 @@ export class ClientIO {
   }
 
   getBibleVerse(scriptures: string) {
-    console.log('Sending EMIT');
-    this._chat.modal.preload();
+    this._chat.modal.preload('VerseModal');
     this._sock.emit('find-verse', scriptures);
   }
 
@@ -153,7 +152,7 @@ export class ClientIO {
 
 
 
-  showBibleVerse(verses: IScriptures[]) {
+  showBibleVerse(verses: IRawScriptures) {
     this._chat.showVerse(verses);
   }
 

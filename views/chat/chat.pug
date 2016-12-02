@@ -2,8 +2,25 @@ template
 
   require(from='elements/message/message-view')
   require(from='elements/chatcmdr/chatcmdr')
+  aside#VerseModal.modal-overlay
+    div.modal-preload-container
+      div.preloader
+    section.modal-container
+      header
+        span ${scriptures.book.toLowerCase()}
+        span.normal &nbsp;${scriptures.notation}
+      section
+        span(repeat.for='chapter of scriptures.chapters')
+          template(repeat.for='verse of chapter.verses')
+            h2(if.bind='verse.title', innerhtml.bind='verse.title')
+            div.legend
+              b.col1 ${chapter.num}:${verse.num}
+              span.col2(innerhtml.bind='verse.text')
+      a.modal-close(href='javascript:void(0)') &#10060;
+
 
   section.anim-container.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
+
     section#ChatContainer
       section#MainWindow
         div#MainPort.optiscroll

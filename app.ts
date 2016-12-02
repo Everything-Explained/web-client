@@ -35,7 +35,7 @@ export interface TabPage {
 }
 
 
-@inject(Element, EventAggregator, ModernModal, Logger, ErrorHandler, Login, Session)
+@inject(Element, EventAggregator, MiniModal, Logger, ErrorHandler, Login, Session)
 export class App {
 
   version = '0.7.0';
@@ -104,7 +104,7 @@ export class App {
 
   constructor(private elem:          Element,
               private _eva:          EventAggregator,
-              private _modal:        ModernModal,
+              private _modal:        MiniModal,
               private _log:          Logger,
               private _errorHandler: ErrorHandler,
               private _login: Login,
@@ -129,13 +129,6 @@ export class App {
 
   }
 
-
-  public test() {
-    this._miniModal.preload('GenericModal');
-    setTimeout(() => {
-      this._miniModal.show('GenericModal');
-    }, 1000);
-  }
 
 
   /**
@@ -391,10 +384,6 @@ export class App {
 
     let req = new XMLHttpRequest()
       , lights = localStorage.getItem('lights');
-
-    this._modal.init('overlay');
-
-    this._miniModal = new MiniModal();
 
     // this._login.initAuthLibs();
 

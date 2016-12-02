@@ -1,36 +1,77 @@
 
-export interface IScriptures {
-  title?: string;
-  notation?: string;
-  bookname: string;
-  text: string;
-  chapter: string;
-  verse: string;
+export interface IRawScriptures {
+  book: string;
+  notation: string;
+  scriptures: {
+    chapter?: string;
+    text: string;
+    verse: string;
+    title?: string;
+  }[];
 }
 
-export function displayVerse(scripts: IScriptures[]) {
+export interface IScriptures {
+  book: string;
+  notation: string;
+  chapters: IChapter[];
+}
 
-  let book = scripts[0].bookname
-    , notation = scripts[0].notation
-    , html = '';
+export interface IChapter {
+  num: string;
+  verses: {
+    title: string;
+    num: string;
+    text: string;
+  }[];
+}
 
-  for (let script of scripts) {
+export interface IVerse {
+  title: string;
+  num: string;
+  text: string;
+}
 
-    if (script.title) {
-      html += `<h2>${script.title}</h2>`;
+export function aggregateVerses(scriptureList: IRawScriptures) {
+
+  let book = scriptureList.book
+    , notation = scriptureList.notation
+    , bibleObj = {
+        book,
+        notation,
+        chapters: [] as IChapter[]
+      }
+    , chapterTrack = ''
+    , titleTrack = null
+    , chapter = {
+        num: '',
+        verses: [] as IVerse[]
+      }
+    , firstIteration = true;
+
+
+  for (let s of scriptureList.scriptures) {
+    if (s.chapter && s.chapter != chapterTrack) {
+      if (!firstIteration) bibleObj.chapters.push({
+        num: chapterTrack,
+        verses: chapter.verses.slice()
+      });
+      chapterTrack = chapter.num = s.chapter;
+      titleTrack = s.title || null;
+      firstIteration = false;
+      chapter.verses = [];
     }
-
-    html += `<span><b>${script.chapter}:${script.verse}</b>` +
-                 `${script.text}</span>`;
-
+    chapter.verses.push({
+      title: s.title || null,
+      num: s.verse,
+      text: s.text
+    });
   }
+  bibleObj.chapters.push({
+    num: chapterTrack,
+    verses: chapter.verses.slice()
+  });
 
-  let formattedVerse = 
-  {
-    header: `${book} ${notation}`,
-    html
-  };
 
-  return formattedVerse;
+  return bibleObj;
 
 }
