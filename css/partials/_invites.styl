@@ -1,0 +1,75 @@
+
+article
+  border-top 4px solid transparent
+  border-left 4px solid transparent
+  margin-right 15px
+  p
+    display block
+    padding 13px 8px
+    background $panel
+    font-size 18px
+    word-spacing: 2px
+    font-family $ff-comic
+    color $article-content-color
+    border-top-right-radius 6.5px
+    border-top-left-radius 3.5px
+    margin-bottom 7px
+    margin-top 0
+    padding 23px 10px
+    transition: background .3s
+    &:last-child
+      margin-bottom 50px
+    &:hover
+      background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio)
+
+.preload-container
+  position: absolute
+  display: none;
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  opacity: 0
+  visibility: hidden
+  transition all .3s ease
+
+
+.form
+  position: relative
+  display: block
+  margin 0 auto
+  width 650px
+  opacity 1
+  visibility: visible
+  transition: all .3s ease
+
+
+  .name, .about-me
+    width 250px
+    font-family: Source Code Pro
+    color hsl(278, 17%, 67%)
+    word-spacing: -1px
+
+  .about-me
+    margin-top: 20px
+    width 650px
+    height 300px
+    &:disabled
+      opacity 0.5
+
+  .counter
+    position: relative
+    margin-left 20px
+    font-size small
+    color hsl(0, 0%, 50%)
+    span
+      color hsl(50, 50%, 50%)
+
+  .name-counter
+    position: absolute
+    top 10px
+    left 250px
+
+  .submit-counter
+    position: absolute
+    bottom 0

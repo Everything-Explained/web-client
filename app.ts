@@ -38,7 +38,7 @@ export interface TabPage {
 @inject(Element, EventAggregator, MiniModal, Logger, ErrorHandler, Login, Session)
 export class App {
 
-  version = '0.7.0';
+  version = '0.11.0';
 
   router: Router;
 
@@ -91,6 +91,14 @@ export class App {
       isActive: false,
       defRoute: null,
       routes:   new Array<NavModel>()
+    },
+    {
+      name: 'invites',
+      pages: [{name: 'invites'}],
+      def: null,
+      isActive: false,
+      defRoute: null,
+      routes: new Array<NavModel>()
     }
   ] as MenuItem[];
 

@@ -312,7 +312,7 @@ export class Signin {
             return;
           }
 
-          Web.POST(`/internal/validateinvite/${this.elInviteContent}`,
+          Web.POST(`/internal/validateinvite/${this.elInviteContent.value}`,
           {}, (err, code, data) => {
             if (code == 200) {
               let obj = data;
