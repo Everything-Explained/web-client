@@ -1,6 +1,6 @@
 template
   section.optiscroll-content(class='${router.isNavigating ? "Hidden" : "visible"}')
-    article
+    article()
       p.
         Here you can request an invite by telling a little about yourself and why you
         want to join this community. Make sure you've read the #[a(href='/#/about') About]
@@ -8,10 +8,13 @@ template
         you've read the #[a(href='/#/rules') Rules], as you will have to agree to them
         before signing up.
 
-    aside.preload-container
+    aside.preload-container(
+      class = `\${isLoading ? "show" : "hide"}
+               \${msgSent ? "hide" : ""}`
+    )
        div.preloader
 
-    section.form
+    section.form(class.bind='isLoading ? "hide" : "show"')
       input.name(type='text'
                 placeholder='Alias or First Name'
                 maxlength = '20'
@@ -29,7 +32,11 @@ template
             value='Submit'
             disabled.bind='msgLenDiff > 0 || nameLenDiff > 0'
             maxlength='20'
+            click.delegate='submit()'
       )
       span.counter.submit-counter(if.bind='msgLenDiff > 0 && nameLenDiff <= 0').
         Your message needs at least #[span ${msgLenDiff} more]
         char(s) until you can submit it.
+
+    section.success(class.bind='msgSent ? "show" : "hide"')
+      span Your #[b request] has been #[b sent]

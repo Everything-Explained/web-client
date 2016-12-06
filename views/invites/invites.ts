@@ -4,8 +4,11 @@ import {computedFrom} from 'aurelia-framework';
 
 export class Invites {
 
-  minMsgLen  = 150; // Characters needed to submit message
+  minMsgLen  = 10; // Characters needed to submit message
   minNameLen = 4;  // Characters needed to submit name
+
+  isLoading = false;
+  msgSent = false;
 
   elMsg: HTMLInputElement;
   elName: HTMLInputElement;
@@ -36,18 +39,22 @@ export class Invites {
 
 
   submit() {
-    Web.POST('/internal/invite', {
-      fields: {
-        name: this.elName.value,
-        message: this.elMsg.value
-      }
-    }, (err, data) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
+    this.isLoading = true;
+    setTimeout(() => {
+      this.msgSent = true;
+    }, 2000);
+    // Web.POST('/internal/requestinvite', {
+    //   fields: {
+    //     name: this.elName.value,
+    //     message: this.elMsg.value
+    //   }
+    // }, (err, data) => {
+    //   if (err) {
+    //     console.error(err);
+    //     return;
+    //   }
 
 
-    });
+    // });
   }
 }

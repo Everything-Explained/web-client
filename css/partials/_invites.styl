@@ -24,14 +24,23 @@ article
 
 .preload-container
   position: absolute
-  display: none;
-  top: 0
+  top: 100px
   left: 0
   right: 0
   bottom: 0
   opacity: 0
   visibility: hidden
   transition all .3s ease
+
+  &.hide
+    display: none !important
+    visibility: hidden !important
+    opacity 0 !important
+
+  &.show
+    display: block
+    visibility: visible
+    opacity 1
 
 
 .form
@@ -43,6 +52,13 @@ article
   visibility: visible
   transition: all .3s ease
 
+  &.hide
+    visibility: hidden
+    opacity 0
+
+  &.show
+    visibility: visible
+    opacity 1
 
   .name, .about-me
     width 250px
@@ -73,3 +89,32 @@ article
   .submit-counter
     position: absolute
     bottom 0
+// End Form
+
+
+.success
+  position: absolute
+  top 200px
+  left 0
+  right 0
+  bottom 0
+  color hsl(0, 0%, 50%)
+  font-size: large
+  text-align: center
+  font-family: 'source code pro'
+  transition all .3s
+  &.hide
+    visibility: hidden
+    opacity 0
+  &.show
+    visibility: visible
+    opacity: 1
+
+  span
+    padding-bottom: 4px
+    border-bottom: 4px double hsl(0, 0%, 30%)
+    border-radius 7px
+
+  b
+    font-weight: normal
+    color hsl(50, 50%, 50%)

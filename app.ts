@@ -120,6 +120,10 @@ export class App {
   {
 
     if (this._session.authed) {
+
+      // Remove invite page
+      this.mainMenu.pop();
+
       for (let p of this.mainMenu[0].pages) {
         if (p.name.toLowerCase() == 'signin') {
           p.hidden = true;
