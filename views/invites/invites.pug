@@ -20,13 +20,24 @@ template
                 maxlength = '20'
                 ref='elName'
       )
-      span.counter.name-counter(if.bind='nameLenDiff > 0').
+      span.counter.name-counter(class.bind='nameLenDiff > 0 ? "" : "hide"').
         Your name needs at least #[span ${nameLenDiff} more] char(s) to unlock the next form.
+
+      input.email(
+        type='email'
+        placeholder='Enter Email'
+        ref='elEmail'
+        keyup.delegate='validateEmail() & debounce: 100'
+        disabled.bind='nameLenDiff > 0'
+      )
+      span.counter.email-valid(class.bind='!isEmailValid && nameLenDiff <= 0 ? "" : "hide"').
+        Enter a #[span valid email] to unlock the next form.
+
       textarea.about-me(
         maxlength='500'
         placeholder='Why do you want to join Noumenae?'
         ref='elMsg'
-        disabled.bind='nameLenDiff > 0'
+        disabled.bind='!isEmailValid || nameLenDiff > 0'
       )
       input(type='button'
             value='Submit'
@@ -34,7 +45,7 @@ template
             maxlength='20'
             click.delegate='submit()'
       )
-      span.counter.submit-counter(if.bind='msgLenDiff > 0 && nameLenDiff <= 0').
+      span.counter.submit-counter(class.bind='msgLenDiff > 0 && isEmailValid ? "" : "hide"').
         Your message needs at least #[span ${msgLenDiff} more]
         char(s) until you can submit it.
 

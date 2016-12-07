@@ -10,8 +10,13 @@ export class Invites {
   isLoading = false;
   msgSent = false;
 
+  isEmailValid = false;
+
   elMsg: HTMLInputElement;
   elName: HTMLInputElement;
+  elEmail: HTMLInputElement;
+
+  exEmail = new RegExp('/^.+@.+\..+$/');
 
   constructor() {
 
@@ -36,7 +41,10 @@ export class Invites {
     return this.minNameLen - this.nameLen;
   }
 
-
+  validateEmail() {
+    this.isEmailValid = /^.+@.+\..+$/.test(this.elEmail.value);
+    return true;
+  }
 
   submit() {
     this.isLoading = true;

@@ -60,28 +60,39 @@ article
     visibility: visible
     opacity 1
 
-  .name, .about-me
+  .name, .about-me, .email
+    margin-top: 20px
     width 250px
     font-family: Source Code Pro
     color hsl(278, 17%, 67%)
     word-spacing: -1px
-
-  .about-me
-    margin-top: 20px
-    width 650px
-    height 300px
+    &:first-child
+      margin-top 0
     &:disabled
       opacity 0.5
+
+  .email
+    width 320px
+
+  .about-me
+    width 650px
+    height 300px
 
   .counter
     position: relative
     margin-left 20px
     font-size small
     color hsl(0, 0%, 50%)
+    opacity 1
+    visibility: visible
+    transition all .5s
+    &.hide
+      visibility: hidden
+      opacity 0
     span
       color hsl(50, 50%, 50%)
 
-  .name-counter
+  .name-counter, .email-valid
     position: absolute
     top 10px
     left 250px
@@ -89,7 +100,14 @@ article
   .submit-counter
     position: absolute
     bottom 0
+
+  .email-valid
+    top 87px
+    left 320px
+
+
 // End Form
+
 
 
 .success
@@ -117,4 +135,4 @@ article
 
   b
     font-weight: normal
-    color hsl(50, 50%, 50%)
+    color hsl(120, 33%, 50%)
