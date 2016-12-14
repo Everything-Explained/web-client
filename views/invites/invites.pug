@@ -9,16 +9,16 @@ template
         before signing up.
 
     aside.preload-container(
-      class = `\${isLoading ? "show" : "hide"}
-               \${msgSent ? "hide" : ""}`
+      class = `\${isLoading ? "show" : "hide"}`
     )
        div.preloader
 
-    section.form(class.bind='isLoading ? "hide" : "show"')
+    section.form(class.bind='msgStatusActive ? "hide" : "show"')
       input.name(type='text'
                 placeholder='Alias or First Name'
                 maxlength = '20'
                 ref='elName'
+                keydown.delegate='setNameLen() & debounce: 50'
       )
       span.counter.name-counter(class.bind='nameLenDiff > 0 ? "" : "hide"').
         Your name needs at least #[span ${nameLenDiff} more] char(s) to unlock the next form.
@@ -27,7 +27,7 @@ template
         type='email'
         placeholder='Enter Email'
         ref='elEmail'
-        keyup.delegate='validateEmail() & debounce: 100'
+        keydown.delegate='validateEmail() & debounce: 50'
         disabled.bind='nameLenDiff > 0'
       )
       span.counter.email-valid(class.bind='!isEmailValid && nameLenDiff <= 0 ? "" : "hide"').
@@ -38,16 +38,21 @@ template
         placeholder='Why do you want to join Noumenae?'
         ref='elMsg'
         disabled.bind='!isEmailValid || nameLenDiff > 0'
+        keydown.delegate='setMsgLen() & debounce: 50'
       )
       input(type='button'
             value='Submit'
-            disabled.bind='msgLenDiff > 0 || nameLenDiff > 0'
+            disabled.bind='!isEmailValid || msgLenDiff > 0 || nameLenDiff > 0'
             maxlength='20'
             click.delegate='submit()'
       )
-      span.counter.submit-counter(class.bind='msgLenDiff > 0 && isEmailValid ? "" : "hide"').
+      span.counter.submit-counter(class.bind='msgLenDiff > 0 && isEmailValid && nameLenDiff <= 0 ? "" : "hide"').
         Your message needs at least #[span ${msgLenDiff} more]
         char(s) until you can submit it.
 
-    section.success(class.bind='msgSent ? "show" : "hide"')
-      span Your #[b request] has been #[b sent]
+    section.request-status(class.bind='msgStatusActive ? "show" : "hide"')
+      span(if.bind='isMsgSent') Your #[b request] has been #[b sent].
+      span(if.bind='isMsgFailed') #[em Request Failed;] #[b Try Again Later!]
+      span(if.bind='isMsgLimited').
+        #[em Wait] another #[b ${msgLimits.hours} hour(s)]
+        and #[b ${msgLimits.minutes} minute(s)].

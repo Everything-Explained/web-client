@@ -25,12 +25,12 @@ class IPTools {
             if ((entryNums[i] <= toNums[i]) && (entryNums[i] >= fromNums[i])) {
               continue;
             }
-            return 'Invalid';
+            return false;
           }
-          return 'Valid';
+          return true;
         }
       }
-      return 'Invalid';
+      return false;
     }
   }
 
