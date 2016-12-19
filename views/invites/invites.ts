@@ -36,7 +36,6 @@ export class Invites {
 
 
   set isMsgFailed(val) {
-    console.log('here');
     if (val) this.isLoading = false;
     this._isMsgFailed = val;
   }
@@ -107,31 +106,50 @@ export class Invites {
   }
 
 
-  submit() {
+  async submit() {
     this.isLoading = true;
-    Web.POST('/internal/requestinvite',  {
-      fields: {
-        alias: this.name,
-        email: this.email,
-        message: this.message
-      }
-    }, (err, code, data) => {
-      if (err) {
-        console.warn(err);
-        this.isMsgFailed = true;
-        return;
-      }
+    let resp = null;
 
-      setTimeout(() => {
-        console.log(code);
-        if (code === 202) {
-          this.isMsgLimited = true;
-          this.msgLimits = data;
-        } else {
-          this.isMsgSent = true;
+    try {
+      resp = await this._requestInvite();
+    }
+    catch (err) { console.warn(err); }
+
+    if (!resp) {
+      this.isMsgFailed = true; return;
+    }
+
+    if (resp.code == 202) {
+      this.isMsgLimited = true;
+      this.msgLimits = resp.data;
+    }
+    else {
+      this.isMsgSent = true;
+    }
+
+  }
+
+  private _requestInvite() {
+
+    interface TimeLimit {
+      hours: number;
+      minutes: number;
+    }
+
+    return new Promise<{code: number, data: TimeLimit }>((rs, rj) => {
+      Web.POST('/internal/requestinvite',  {
+        fields: {
+          alias: this.name,
+          email: this.email,
+          message: this.message
         }
-      }, 1000);
+      }, (err, code, data) => {
+        if (err) {
+          rj(err);
+          return;
+        }
+        rs({code, data});
+      });
     });
-
   }
 }
