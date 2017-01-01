@@ -216,6 +216,7 @@ aside.modal-overlay
   background-color hsla(0, 0%, 0%, 0.55)
   z-index 1000
   transition all .35s
+  -webkit-transform translateZ(0)
   &.modal-open
     opacity 1
     visibility visible
@@ -256,6 +257,7 @@ aside.modal-overlay
   border-radius 5px
   box-shadow $modal-boxshadow, inset 0 0 0 10px transparent
   opacity 0
+  -webkit-transform translateZ(0)
   transform translate(-50%) scale(0.3, 0.3)
   transition all .4s ease
 
