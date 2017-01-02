@@ -6,10 +6,12 @@ class MiniModal {
   private _openModalBtns: HTMLElement[];
 
 
-  constructor() {
+  constructor(context?: HTMLElement) {
 
-    this._modals = this._toArray(document.querySelectorAll('.modal-overlay'));
-    this._openModalBtns = this._toArray(document.querySelectorAll('.modal-trigger'));
+    let obj = context || document;
+
+    this._modals = this._toArray(obj.querySelectorAll('.modal-overlay'));
+    this._openModalBtns = this._toArray(obj.querySelectorAll('.modal-trigger'));
 
     this._modals.forEach((modal) => {
 

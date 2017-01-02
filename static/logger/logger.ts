@@ -313,7 +313,7 @@ let vmLogger = new Vue({
 
 
     deleteLog: function() {
-      Web.DELETE(`/internal/logger/${this.logFile}`, {}, (err, code, data) => {
+      Web.DELETE(`/protected/logger/${this.logFile}`, {}, (err, code, data) => {
         if (err) {
           console.error(err.message);
           return;
@@ -408,7 +408,7 @@ let vmLogger = new Vue({
       if (e.buttons == 0) {
         this.log = data;
         setTimeout(() => {
-          this.modal.show('LogData');
+          this.modal.show('LogDataModal');
         }, 0);
       }
     },

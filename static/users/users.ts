@@ -48,10 +48,7 @@ let vmUsers = new Vue({
 
   methods: {
     deleteUser: function (user: UserData) {
-      Web.POST('/internal/deleteuser', {
-        fields: {
-          alias: user.alias
-        }
+      Web.DELETE(`/protected/user/${user.alias}`, {
       }, (err, code, data) => {
         console.log(err, code, data);
 

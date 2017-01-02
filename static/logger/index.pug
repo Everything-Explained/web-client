@@ -17,7 +17,7 @@ html
 
   body
     section#MainContent(v-bind:class='{"ready": isVueReady }')
-      aside#LogData.modal-overlay
+      aside#LogDataModal.modal-overlay
         section.modal-container(v-bind:class='getModalClass(log.classes)')
           header
             h5 {{ log.time }}
