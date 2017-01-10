@@ -1,5 +1,8 @@
 node_modules
 .idea
 .DS_STORE
-*.css
 *.map
+scripts
+src/global.css
+src/app.css
+src/style_utilities/themes/img/bg
