@@ -1,0 +1,106 @@
+.optiscroll
+  position relative
+  overflow hidden
+  &.vtrack-on
+    &:hover
+      & > .optiscroll-v
+        opacity 1
+  &.htrack-on
+    &:hover
+      & > .optiscroll-h
+        opacity 1
+
+.optiscroll-content
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+  overflow auto
+  z-index 1
+  -webkit-overflow-scrolling touch
+
+.optiscroll-v,
+.optiscroll-h
+  position absolute
+  z-index 2
+  -webkit-backface-visibility hidden
+  -webkit-user-select none
+  -moz-user-select none
+  -ms-user-select none
+  user-select none
+  background transparent
+  opacity 0
+  -webkit-transition opacity 0.2s ease 0s
+  -moz-transition opacity 0.2s ease 0s
+  -ms-transition opacity 0.2s ease 0s
+  -o-transition opacity 0.2s ease 0s
+  transition opacity 0.2s ease 0s
+
+.optiscroll-v
+  right 0
+  top 4px
+  bottom 4px
+  width 0
+
+.optiscroll-h
+  bottom 0
+  left 4px
+  right 4px
+  height 0
+
+.optiscroll-vtrack,
+.optiscroll-htrack
+  display block
+  position absolute
+  opacity 0
+  cursor default
+  -webkit-transform translate(0%, 0%)
+  -moz-transform translate(0%, 0%)
+  -ms-transform translate(0%, 0%)
+  -o-transform translate(0%, 0%)
+  transform translate(0%, 0%)
+  -webkit-box-sizing border-box
+  -moz-box-sizing border-box
+  box-sizing border-box
+  background rgba(0,0,0,0.3)
+  border-radius 2px
+  box-shadow 0 0 1px #FFF
+
+.vtrack-on
+  & > .optiscroll-v
+    .optiscroll-vtrack
+      opacity 1
+  &.htrack-on
+    & > .optiscroll-v
+      bottom 8px
+    & > .optiscroll-h
+      right 8px
+
+.htrack-on
+  & > .optiscroll-h
+    .optiscroll-htrack
+      opacity 1
+
+.optiscroll-vtrack:active:before,
+.optiscroll-htrack:active:before
+  content ''
+  position absolute
+  top -100px
+  left -100px
+  bottom -100px
+  right -100px
+  z-index 10000
+
+.optiscroll-vtrack
+  width 3px
+  right 4px
+
+.optiscroll-htrack
+  height 3px
+  bottom 4px
+
+.optiscroll-vtrack:active,
+.optiscroll-htrack:active
+  background rgba(0,0,0,0.5)
+

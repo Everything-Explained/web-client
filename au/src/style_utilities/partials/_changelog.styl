@@ -1,0 +1,81 @@
+
+
+$changelog-title = $head-1-color
+
+
+#ChangeList
+  position: absolute
+  flex-flow: row wrap
+  align-content: flex-start;
+  border-top: 4px solid transparent
+  border-left: 4px solid transparent
+  padding-right 10px
+  transition: all .3s linear
+
+  .title
+    margin 0 7px 5px 0
+    display: inline-block
+    padding: 10px 20px
+    background-color $panel
+    color $head-1-color
+    text-align: center
+    border-radius: 5px 0 13px 0
+    cursor: pointer
+
+  .date
+    font-size: 20px
+
+  .description
+    color hsl(128, 50%, 60%)
+    font-family: 'Source Code Pro'
+    font-size 18px
+
+#Changes
+  position: absolute
+  transition: all .3s linear
+  .title
+    margin 20px 0 0 5px
+    padding 3px 13px 5px 13px
+    display: inline-block
+    color hsl(278, 30%, 70%)
+    background-color $panel
+    font-size: 28px
+    font-family: 'Source Code Pro'
+    font-variant: small-caps
+    border-radius: 5px 0 13px 0
+    &:first-child
+      margin-top 5px
+  i
+    font-style: normal
+    color hsl(278, 30%, 75%)
+  li
+    position: relative
+    margin-left 10px
+    padding 5px 5px 5px 20px
+    color #aaa
+    font-size: 16px
+    font-family: 'Delius'
+    letter-spacing: 1px
+    word-spacing: 1px
+    &:before
+      position: absolute
+      top -3px
+      left 0
+      content '\2022'
+      color hsl(52, 50%, 50%)
+      font-size: 28px
+  ul
+    list-style none
+    &:last-child li:last-child
+      margin-bottom 70px
+
+.changelog .close
+  position: fixed
+  top 121px
+  right 33px
+  padding 1px 13px
+  font-size: 40px
+  color hsl(0, 80%, 63%)
+  border-radius 3px
+  background-color: $panel
+  cursor: pointer

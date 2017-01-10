@@ -1,0 +1,90 @@
+doctype html
+html(lang='en')
+  head
+    title Invite Panel
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet')
+    link(rel='stylesheet' href='//cdn.muicss.com/mui-0.9.3/css/mui.min.css' type='text/css' media='screen')
+    link(rel='stylesheet' href='inviter/inviter.css')
+    link(rel='stylesheet' href='libs/style.css')
+    script(src='../../libs/live.js')
+    script(src='libs/web.js')
+    script(src='//cdn.muicss.com/mui-0.9.3/js/mui.min.js' async)
+  body
+    section#Container
+      div#ServerStatus(v-el:serverstatus)
+        div.status Error Connecting to Server
+          button.mui-btn(v-on:click='refreshPage') refresh
+          div.loader(v-el:loader) loop
+      div#FormContainer(v-el:form)
+        aside.refresh-list(v-on:click='refreshInviteList($event)') loop
+        div.mui-container-fluid.invite-form
+          div.mui-row
+            div.mui-textfield.mui-col-md-6
+              input(type='text'
+                    v-model='inviteCode' v-el:invitebox readonly)
+              label Invite Code
+                span.error-status(v-el:inviteerror)
+
+            div.mui-textfield.mui-col-md-3
+              input.uses(type='number'
+                        min='0'
+                        step='1'
+                        v-bind:class="{ zero: uses == 0 }"
+                        v-model='uses'
+                        v-el:uses
+                        v-on:change='rangeChanged($event)')
+              label.active(v-bind:class="{ zero: uses == 0 }").
+                {{ uses == 0 ? "Infinite" : "Uses" }}
+              div.infinite.material-icons(v-if='uses == 0') loop
+
+            div.mui-textfield.mui-col-md-3
+              input.days(type='number'
+                        min='0'
+                        max='365'
+                        step='1'
+                        v-model='days'
+                        v-el:days
+                        v-bind:class='{ zero: days == 0}'
+                        v-on:change='rangeChanged($event)')
+              label.active(v-bind:class="{ zero: days == 0 }").
+                {{ days == 0 ? "10 Years" : "Days" }}
+              div.infinite.material-icons(v-if='days == 0') loop
+          div.mui-row
+            div.mui-col-md-6
+              button.mui-btn.mui-btn--primary(v-on:click='generate') Generate
+            div.mui-col-md-6
+              button.mui-btn.mui-btn--primary.mui--pull-right(v-on:click='save') Save
+
+        table.mui-table.invite-table(
+          v-bind:class='{ "list-active": invites.length }')
+          thead
+            tr
+              th invite code
+              th used
+              th uses
+              th timeout
+        div.overlay-container
+          div.copy-overlay(v-el:overlay)
+            span.copy-text ONEMUYR11Q4
+          div.table-container(aria-label='Double Click to Copy')
+            table.mui-table.invite-table(cellpadding='0')
+              tr(v-for='iv in invites'
+                v-bind:class=`{
+                  master:  iv.time_remaining > (365 * 24) && iv.max_uses == 0,
+                  expired: iv.time_remaining == 0,
+                  used:    iv.uses == iv.max_uses && iv.uses > 0}`)
+                td
+                  span.invite-code(
+                    v-on:dblclick='copy($event)') {{* iv.code }}
+                  span.delete(v-on:dblclick='deleteInvite(iv.code)') delete_forever
+                td {{* iv.uses }}
+                td(v-bind:class='{ unlimited: iv.max_uses == 0 }').
+                  {{* iv.max_uses ? iv.max_uses : "Unlimited" }}
+                td(v-bind:class='iv.time_remaining | time | toClass').
+                  {{* iv.time_remaining | time }}
+
+
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.13/vue.min.js')
+    script(src='inviter/inviter.js')

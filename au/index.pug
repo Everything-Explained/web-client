@@ -1,0 +1,439 @@
+doctype html
+html
+  head
+    //- link(rel='stylesheet' href='../css/themes/dark/theme.css')
+    link(
+      rel='stylesheet'
+      type='text/css'
+      href='https://fonts.googleapis.com/css?family=Nunito:300,400'
+    )
+    meta(
+      name='google-signin-client_id'
+      content='307312730681-l12c0r4a669fb6vmmvg4seq1uebqq1fd.apps.googleusercontent.com'
+    )
+    style.
+      body,
+      html {
+        font: 14px 'Verdana', 'Geneva', 'Tahoma', sans-serif;
+        background-color: #111;
+        overflow-x: hidden;
+        height: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      body,
+      div,
+      article,
+      span,
+      ul,
+      menu,
+      input,
+      textarea,
+      section,
+      a,
+      p,
+      header,
+      footer,
+      button,
+      form,
+      aside,
+      #PageContent,
+      label,
+      pre {
+        padding: 0;
+        margin: 0;
+        line-height: normal;
+        outline: none;
+        border: none;
+        box-sizing: border-box;
+      }
+      a:link,
+      a:visited,
+      a:active,
+      a:hover {
+        color: #c691ff;
+        text-decoration: none;
+        border-bottom: 1px dashed #ccb333;
+        transition: color 0.3s;
+      }
+      a:hover {
+        color: #d4bd2b;
+      }
+      .visible {
+        visibility: visible;
+        opacity: 1;
+        transition: all 0.3s;
+      }
+      .hidden {
+        visibility: hidden;
+        opacity: 0;
+      }
+      .au-enter-active {
+        animation: myFadeIn 0.7s;
+      }
+      .body-loader {
+        position: fixed;
+        top: 100px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        text-align: center;
+      }
+      .body-loader span {
+        position: relative;
+        top: -20px;
+        color: hsl(50, 50%, 50%);
+        font-size: 24px;
+        font-family: 'Roboto';
+      }
+      ::selection {
+        background: rgba(212,189,43,0.185);
+      }
+      ::-moz-selection {
+        background: rgba(170,170,170,0.3);
+      }
+      input {
+        border: none;
+        font-size: 17px;
+      }
+      main {
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+      }
+      button {
+        font-size: 21px;
+      }
+      #PageTransition {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: #000;
+        opacity: 0;
+        z-index: 20;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      #PageTransition.active {
+        opacity: 0.5;
+        pointer-events: auto;
+      }
+      .cover {
+        position: absolute;
+        display: none;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #111;
+        z-index: 10000;
+      }
+      .cover .response {
+        display: block;
+        width: 100%;
+        font-family: Comfortaa, Verdana, Geneva, sans-serif;
+        font-size: 28px;
+        font-variant: small-caps;
+        letter-spacing: 2px;
+        word-spacing: 1px;
+        color: #f5d63d;
+        padding-top: 100px;
+        text-align: center;
+      }
+      .cover span {
+        position: relative;
+        top: -10px;
+        color: #7de888;
+        lobster: pickles;
+      }
+      .cover .container {
+        position: relative;
+        display: block;
+        margin-top: 77px;
+        text-align: center;
+      }
+      .cover a:link,
+      .cover a:hover,
+      .cover a:active,
+      .cover a:visited {
+        text-decoration: none !important;
+        border: none !important;
+      }
+      .cover .fail {
+        position: relative;
+        top: 10px;
+        color: #ff80cc;
+      }
+      .cover .icon {
+        display: inline-block;
+        width: 180px;
+        height: 128px;
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+      .cover .icon:before {
+        position: absolute;
+        display: block;
+        width: 180px;
+        font-family: Comfortaa, Verdana, Geneva, sans-serif;
+        letter-spacing: 1px;
+        word-spacing: 2px;
+        font-size: 20px;
+        opacity: 0;
+        color: #7de888;
+        text-align: center;
+        top: 100%;
+        box-sizing: border-box;
+        white-space: pre;
+        transition: all 0.3s;
+      }
+      .cover .icon:hover:before {
+        opacity: 1;
+      }
+      .cover .firefox {
+        background-image: url("http://img04.deviantart.net/1fbf/i/2004/09/3/5/firefox_dock_icon_v3.png");
+      }
+      .cover .firefox:before {
+        content: 'Try \a FireFox!';
+      }
+      .cover .chrome {
+        background-image: url("http://icons.iconarchive.com/icons/franksouza183/fs/128/Apps-google-chrome-icon.png");
+      }
+      .cover .chrome:before {
+        content: 'Try \a Google Chrome!';
+      }
+      .cover .opera {
+        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/128px-Opera_2015_icon.svg.png");
+      }
+      .cover .opera:before {
+        content: 'Try \a Opera!';
+      }
+      .cssload-container {
+        display: block;
+        margin: 40px auto;
+        width: 70px;
+      }
+      .cssload-container *,
+      .cssload-container *:before,
+      .cssload-container *:after {
+        box-sizing: border-box;
+        -o-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+      }
+      .preloader {
+        width: 170px;
+        height: 170px;
+        line-height: 170px;
+        margin: 56px auto;
+        position: relative;
+        box-sizing: border-box;
+        text-align: center;
+        z-index: 0;
+        text-transform: uppercase;
+        -o-text-transform: uppercase;
+        -ms-text-transform: uppercase;
+        -webkit-text-transform: uppercase;
+        -moz-text-transform: uppercase;
+      }
+      .preloader:after {
+        z-index: 1;
+        animation: ripple 1.6s infinite 0.7s;
+        -o-animation: ripple 1.6s infinite 0.7s;
+        -ms-animation: ripple 1.6s infinite 0.7s;
+        -webkit-animation: ripple 1.6s infinite 0.7s;
+        -moz-animation: ripple 1.6s infinite 0.7s;
+      }
+      .preloader:before {
+        z-index: 2;
+        animation: ripple 1.6s infinite;
+        -o-animation: ripple 1.6s infinite;
+        -ms-animation: ripple 1.6s infinite;
+        -webkit-animation: ripple 1.6s infinite;
+        -moz-animation: ripple 1.6s infinite;
+      }
+      .preloader:before,
+      .preloader:after {
+        opacity: 0;
+        box-sizing: border-box;
+        -o-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        content: "\0020";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 113px;
+        border: 6px solid #9140bf;
+        box-shadow: 0 0 56px #7e00c7, inset 0 0 56px #a766cc;
+      }
+      @-o-keyframes ripple {
+        0% {
+          -o-transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          -o-transform: scale(1);
+          opacity: 0;
+        }
+      }
+      @-ms-keyframes ripple {
+        0% {
+          -ms-transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          -ms-transform: scale(1);
+          opacity: 0;
+        }
+      }
+      @-webkit-keyframes ripple {
+        0% {
+          -webkit-transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          -webkit-transform: scale(1);
+          opacity: 0;
+        }
+      }
+      @-moz-keyframes ripple {
+        0% {
+          -moz-transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          -moz-transform: scale(1);
+          opacity: 0;
+        }
+      }
+      @-moz-keyframes myFadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @-webkit-keyframes myFadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @-o-keyframes myFadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @keyframes myFadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @-moz-keyframes ripple {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0;
+        }
+      }
+      @-webkit-keyframes ripple {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0;
+        }
+      }
+      @-o-keyframes ripple {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0;
+        }
+      }
+      @keyframes ripple {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0;
+        }
+      }
+
+
+
+
+  body(aurelia-app='au-config')
+    noscript
+      div.cover(style='display: inline-block')
+        div.response you must enable #[span javascript] for this site to run
+
+    div.body-loader
+      div.preloader
+      span Loading Noumenae Alpha...
+
+    div#cookie.cover
+      div.response you must enable #[span cookies] for this site to run
+
+    div#failure.cover
+      div.response your #[span browser] has #[span.fail failed] you
+      div.container
+        a.chrome.icon(href='https://chrome.google.com')
+        a.firefox.icon(href='https://www.mozilla.com')
+        a.opera.icon(href='http://www.opera.com')
+
+    script(src="scripts/vendor-bundle.js" data-main="aurelia-bootstrapper")

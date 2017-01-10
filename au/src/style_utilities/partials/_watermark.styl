@@ -1,0 +1,37 @@
+
+section#TrayTop .watermark
+  position: fixed
+  left: 0
+  bottom: 50px
+  color: $watermark-color
+  font-size: 30px
+  opacity: 0.7
+  font-family: 'Source Code Pro'
+  font-variant: small-caps
+  transform: rotate(45deg)
+  transition: all .2s linear
+  cursor: crosshair
+  z-index: 1000
+  span
+    position: relative
+    top 5px
+  span.num
+    top 0
+    margin-left 7px
+    font-size 20px
+  &:hover
+    color $watermark-hover-color
+    opacity 1
+
+  &:after
+    position: absolute
+    left: -37px
+    bottom: -11px
+    width: 220px
+    height: 32px
+    background-color: $watermark-bg-color
+    content: ' '
+    z-index: -1
+    border-top: 4px double $watermark-border-color
+    border-bottom: 4px double $watermark-border-color
+    box-shadow: 0 0 1px 1px $watermark-boxshadow-color

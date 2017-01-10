@@ -1,0 +1,40 @@
+template
+  //- &#128100; .default
+  aside(if.bind='modClass === "normal"', class='${cfg.scale} ${modClass}')
+    span(if.bind='isDefault' class='avatar'
+         css='background-image: ${avatar}') ${isDefault? "&#128100;" : ""}
+    img(if.bind='!isDefault' class='avatar' src.bind='avatar')
+    span.real-time ${realTime}
+  div(if.bind='modClass === "normal"', class='container ${modClass}')
+
+    span.info-line(class='${cfg.scale}')
+
+      span.left
+        span.username ${cfg.alias}
+        span.relative-time ${relativeTime}
+      span.right
+        span.real-time ${realTime}
+
+    span.content(class='${cfg.scale}')
+      span(repeat.for='word of words') ${word.type == $parent.wordType('none') ? word.text + '&#32;' : ''}
+
+        a(if.bind='word.type == $parent.wordType("link")',
+          title='${word.data.link}'
+          href='${word.data.link}'
+          target='_blank') ${word.text}&#32;
+
+        a.verse(if.bind='word.type == $parent.wordType("verse")',
+                href='javascript:void(0);', title='Click to View Scripture',
+                mousedown.delegate='$parent.getVerse($event, word.text)') ${word.text}&#32;
+
+        a(if.bind='word.type == $parent.wordType("image") && !word.data.invalid', target='_blank' href='${word.text}')
+          img(src='${word.text ? word.text : ""}')
+
+        b.invalid-link(if.bind='word.data && word.data.invalid') ${word.text}&#32;
+
+
+  div(if.bind='modClass !== "normal"', class='${modClass} ${cfg.severity}')
+    span.username ${cfg.alias}
+    span.content ${cfg.message}
+    span.real-time ${realTime}
+

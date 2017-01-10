@@ -1,0 +1,58 @@
+template
+  section.optiscroll-content(class='${router.isNavigating ? "Hidden" : "visible"}')
+    article()
+      p.
+        Here you can request an invite by telling a little about yourself and why you
+        want to join this community. Make sure you've read the #[a(href='/#/about') About]
+        page and understand the base requirements for gaining an invite. Also, make sure
+        you've read the #[a(href='/#/rules') Rules], as you will have to agree to them
+        before signing up.
+
+    aside.preload-container(
+      class = `\${isLoading ? "show" : "hide"}`
+    )
+       div.preloader
+
+    section.form(class.bind='msgStatusActive ? "hide" : "show"')
+      input.name(type='text'
+                placeholder='Alias or First Name'
+                maxlength = '20'
+                ref='elName'
+                keydown.delegate='setNameLen() & debounce: 50'
+      )
+      span.counter.name-counter(class.bind='nameLenDiff > 0 ? "" : "hide"').
+        Your name needs at least #[span ${nameLenDiff} more] char(s) to unlock the next form.
+
+      input.email(
+        type='email'
+        placeholder='Enter Email'
+        ref='elEmail'
+        keydown.delegate='validateEmail() & debounce: 50'
+        disabled.bind='nameLenDiff > 0'
+      )
+      span.counter.email-valid(class.bind='!isEmailValid && nameLenDiff <= 0 ? "" : "hide"').
+        Enter a #[span valid email] to unlock the next form.
+
+      textarea.about-me(
+        maxlength='500'
+        placeholder='Why do you want to join Noumenae?'
+        ref='elMsg'
+        disabled.bind='!isEmailValid || nameLenDiff > 0'
+        keydown.delegate='setMsgLen() & debounce: 50'
+      )
+      input(type='button'
+            value='Submit'
+            disabled.bind='!isEmailValid || msgLenDiff > 0 || nameLenDiff > 0'
+            maxlength='20'
+            click.delegate='submit()'
+      )
+      span.counter.submit-counter(class.bind='msgLenDiff > 0 && isEmailValid && nameLenDiff <= 0 ? "" : "hide"').
+        Your message needs at least #[span ${msgLenDiff} more]
+        char(s) until you can submit it.
+
+    section.request-status(class.bind='msgStatusActive ? "show" : "hide"')
+      span(if.bind='isMsgSent') Your #[b request] has been #[b sent].
+      span(if.bind='isMsgFailed') #[em Request Failed;] #[b Try Again Later!]
+      span(if.bind='isMsgLimited').
+        #[em Wait] another #[b ${msgLimits.hours} hour(s)]
+        and #[b ${msgLimits.minutes} minute(s)].
