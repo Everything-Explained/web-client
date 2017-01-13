@@ -16,6 +16,7 @@ section#ChatContainer
   display: flex
   flex-direction: column
   justify-content: center
+  overflow: hidden
 
 
 .chat-input-container
@@ -28,6 +29,7 @@ section#ChatContainer
   border-top: 2px solid $win-divider-border-color
   border-bottom-right-radius: 13px
   word-wrap: break-word
+  overflow: hidden
   pre
     display: inline-block
     font-family: Verdana, Geneva, Tahoma, sans-serif
@@ -43,7 +45,7 @@ $chat-message-right-margin = 13px
     display: flex
     flex-direction: column
     flex: 1
-    margin-bottom: 13px
+    margin-bottom: 15px
     &.emote
       display: none
 
@@ -56,7 +58,10 @@ $chat-message-right-margin = 13px
     -moz-animation-duration: .25s
 
 
-  // DEFAULT Avatar
+
+  //////////////////////
+  //   Avatar
+  //////////////////////
   aside
     display: flex
     flex-direction: column
@@ -65,9 +70,7 @@ $chat-message-right-margin = 13px
     margin-left: 7px
     //transition: all .3s;
 
-    &.emote,
-    &.server,
-    &.client
+    &.emote, &.server, &.client
       display: none
 
     .avatar
@@ -96,10 +99,6 @@ $chat-message-right-margin = 13px
         height: 64px
         width: 64px
         font-size: 66px
-      .aedaeum
-        background-image: url("../img/chat64d.png")
-      .mom
-        background-image: url("../img/flowers64.png")
 
     &.medium
       width: 50px
@@ -110,10 +109,6 @@ $chat-message-right-margin = 13px
         height: 48px
         width: 48px
         font-size: 50px
-      .aedaeum
-        background-image: url("../img/chat48b.png")
-      .mom
-        background-image: url("../img/flowers48.png")
       .real-time
         display: none
 
@@ -129,10 +124,13 @@ $chat-message-right-margin = 13px
       .real-time
         display: none
 
+  //    END AVATAR
 
 
 
-  // DEFAULT Message
+  //////////////////////
+  //  Message INFO
+  //////////////////////
   .info-line
     display: flex
     margin-bottom: 3px
@@ -141,9 +139,10 @@ $chat-message-right-margin = 13px
 
     .left
       display: flex
+      justify-content: center
+      align-items: center
       .username
         position: relative
-        top -3px
         font-family: Delius
         letter-spacing: 1px
         color: $msg-username-color
@@ -152,7 +151,6 @@ $chat-message-right-margin = 13px
 
       .relative-time
         position: relative
-        top 3px
         font-size: 12px
         color: $msg-timestamp-color
         &:before
@@ -171,8 +169,6 @@ $chat-message-right-margin = 13px
     &.large
       .username
         font-size: 18px
-      .right
-        display: none
 
     &.medium
       .username
@@ -186,9 +182,13 @@ $chat-message-right-margin = 13px
           font-size: 14px
         .relative-time
           display none
+  // END MESSAGE INFO
 
 
-  // DEFAULT Message Content
+
+  /////////////////////////
+  //  Message CONTENT
+  /////////////////////////
   .content
     position: relative
     margin-left: 5px
@@ -220,12 +220,14 @@ $chat-message-right-margin = 13px
     img
       max-width: 100%
     &.large
-      font-size: 18px
+      font-size: large
     &.medium
-      font-size: 16px
+      font-size: medium
     &.small
       top: -3px
       font-size: 14px
+  // END CONTENT
+
 
 
   // EMOTE
@@ -321,6 +323,8 @@ $chat-message-right-margin = 13px
       .content
         color: $msg-attention
 
+  div.emote
+    margin-bottom 15px
 
   // CLIENT
   div.client

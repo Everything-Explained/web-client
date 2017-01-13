@@ -4,7 +4,7 @@ template
     span(if.bind='isDefault' class='avatar'
          css='background-image: ${avatar}') ${isDefault? "&#128100;" : ""}
     img(if.bind='!isDefault' class='avatar' src.bind='avatar')
-    span.real-time ${realTime}
+    //- span.real-time ${realTime}
   div(if.bind='modClass === "normal"', class='container ${modClass}')
 
     span.info-line(class='${cfg.scale}')

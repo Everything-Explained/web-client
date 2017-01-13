@@ -1,5 +1,4 @@
 import {inject} from 'aurelia-framework';
-import {ModernModal} from '../../helpers/modern-modal';
 import {Web} from '../../helpers/web';
 
 interface Log {
@@ -8,7 +7,6 @@ interface Log {
   timeStamp: string;
 }
 
-@inject(ModernModal)
 export class Changelog {
 
   logs: Log[];
@@ -20,7 +18,7 @@ export class Changelog {
   } = null;
 
 
-  constructor(private _modal: ModernModal) {
+  constructor() {
 
     Web.GET('/changelog', {},
 

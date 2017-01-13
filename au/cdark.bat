@@ -1,1 +1,1 @@
-stylus -m -w src/app.styl
+stylus -m -w src/app.styl --sourcemap-base src

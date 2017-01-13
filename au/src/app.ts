@@ -6,7 +6,6 @@ import {Page, PageElement} from './helpers/page';
 import {$} from './helpers/domop';
 import * as encrypt from './helpers/cheap-encrypt';
 import {Login} from './app-login';
-import {ModernModal} from './helpers/modern-modal';
 // import {Logger} from './helpers/logger';
 import {Session} from './app-session';
 import {MiniModal} from './helpers/minimodal';

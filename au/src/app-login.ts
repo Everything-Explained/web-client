@@ -1,6 +1,5 @@
 import {inject} from 'aurelia-framework';
 import * as encrypt from './helpers/cheap-encrypt';
-import {ModernModal} from './helpers/modern-modal';
 import {IRobot} from './helpers/robot-check';
 import * as vtor from 'validator';
 import {Web} from './helpers/web';

@@ -19,8 +19,7 @@ template
       a.modal-close(href='javascript:void(0)') &#10060;
 
 
-  section.anim-container.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
-
+  section.anim-container(class='${router.isNavigating ? "hidden" : "visible"}')
     section#ChatContainer
       section#MainWindow
         div#MainPort.optiscroll
@@ -49,7 +48,7 @@ template
         ul
           li(repeat.for='user of users', class='${user.isTyping}') ${user.name}
 
-    chat-commander#ChatCommander.au-animate(chat-data.bind='data')
+    chat-commander#ChatCommander(chat-data.bind='data')
 
   div.cssload-container(if.bind='router.isNavigating')
     div.cssload-circle
