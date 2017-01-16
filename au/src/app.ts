@@ -9,6 +9,7 @@ import {Login} from './app-login';
 // import {Logger} from './helpers/logger';
 import {Session} from './app-session';
 import {MiniModal} from './helpers/minimodal';
+import {Web} from './helpers/web';
 
 
 interface PageConfiguration {
@@ -406,16 +407,30 @@ export class App {
     this._isFirstNavigation = false;
 
 
+    let sse = new EventSource('/internal/sse');
+
+    sse.addEventListener('open', (e) => {
+      console.log('Connected');
+    });
+
+    sse.addEventListener('error', (e) => {
+      console.error(e);
+    });
+
+    sse.addEventListener('ping', (e) => {
+      console.log('ping');
+    });
+
+    sse.addEventListener('message', (e) => {
+      console.log(e.data);
+    });
+
     // this._login.initAuthLibs();
 
     // let light = (lights == 'off') ? 'light' : 'dark';
     // req.open('GET', `css/themes/${light}/theme.css`, true);
     // req.send();
 
-  }
-
-  getViewStrategy() {
-    return 'app.html';
   }
 
 
