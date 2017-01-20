@@ -57,6 +57,10 @@ export class App {
         {name: 'rules'},
         {name: 'faq'},
         {
+          name: 'blog',
+          hidden: true
+        },
+        {
           name: 'signin',
           subPages: [
             {name: 'invite'},
@@ -127,6 +131,9 @@ export class App {
           p.hidden = true;
         }
         if (p.name.toLowerCase() == 'settings') {
+          p.hidden = false;
+        }
+        if (p.name.toLowerCase() == 'blog') {
           p.hidden = false;
         }
       }
@@ -358,6 +365,12 @@ export class App {
             }
           }
 
+          if (page.name.toLowerCase() == 'blog') {
+            if (!window.session.authed) {
+              route['redirect'] = 'about';
+            }
+          }
+
           routes.push(route);
 
           // if (page.subPages) {
@@ -418,14 +431,12 @@ export class App {
     });
 
     sse.addEventListener('ping', (e) => {
-      console.log('ping');
     });
 
     sse.addEventListener('message', (e) => {
       console.log(e.data);
     });
 
-    // this._login.initAuthLibs();
 
     // let light = (lights == 'off') ? 'light' : 'dark';
     // req.open('GET', `css/themes/${light}/theme.css`, true);

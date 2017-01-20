@@ -1,8 +1,8 @@
-import {Aurelia} from 'aurelia-framework'
+import {Aurelia} from 'aurelia-framework';
 import environment from './environment';
 import {Web} from './helpers/web';
 
-//Configure Bluebird Promises.
+// Configure Bluebird Promises.
 (<any>Promise).config({
   longStackTraces: environment.debug,
   warnings: false
@@ -37,29 +37,20 @@ export function configure(aurelia: Aurelia) {
     return;
   }
 
-  Web.GET('/internal/session', {}, (err, code, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+  aurelia.use
+    .standardConfiguration()
+    .feature('resources')
+  ;
 
-    window.session = data;
+  if (environment.debug) {
+    aurelia.use.developmentLogging();
+  }
 
-    aurelia.use
-      .standardConfiguration()
-      .feature('resources');
+  if (environment.testing) {
+    aurelia.use.plugin('aurelia-testing');
+  }
 
-    if (environment.debug) {
-      aurelia.use.developmentLogging();
-    }
-
-    if (environment.testing) {
-      aurelia.use.plugin('aurelia-testing');
-    }
-
-    aurelia.start().then(() => aurelia.setRoot())
-  });
-
+  aurelia.start().then(() => aurelia.setRoot());
 
 
 }

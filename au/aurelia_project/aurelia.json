@@ -21,7 +21,10 @@
     "id": "none",
     "displayName": "None",
     "fileExtension": ".html",
-    "source": "src/**/*.pug"
+    "source": [
+      "!src/views/changelog/logs",
+      "src/**/*.pug"
+    ]
   },
   "cssProcessor": {
     "id": "css",
@@ -85,6 +88,7 @@
         "name": "vendor-bundle.js",
         "prepend": [
           "node_modules/bluebird/js/browser/bluebird.core.js",
+          "src/libs/markdownit.min.js",
           "node_modules/requirejs/require.js"
         ],
         "dependencies": [
@@ -136,7 +140,7 @@
           },
           {
             "name": "socket.io-client",
-            "path": "../src/libs/socket.io.min"
+            "path": "../node_modules/socket.io-client/socket.io.min"
           }
         ]
       }

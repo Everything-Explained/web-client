@@ -37,7 +37,7 @@ $changelog-title = $head-1-color
     margin 20px 0 0 5px
     padding 3px 13px 5px 13px
     display: inline-block
-    color hsl(278, 30%, 70%)
+    color hsl(278, 45%, 75%)
     background-color $panel
     font-size: 28px
     font-family: 'Source Code Pro'
@@ -47,23 +47,27 @@ $changelog-title = $head-1-color
       margin-top 5px
   i
     font-style: normal
-    color hsl(278, 30%, 75%)
+    color hsl(50, 55%, 70%)
+  b
+    font-weight: 400
+    color hsl(0, 0%, 75%)
   li
     position: relative
     margin-left 10px
     padding 5px 5px 5px 20px
-    color #aaa
+    max-width 70%
+    color hsl(0, 0%, 67%)
     font-size: 16px
-    font-family: 'Delius'
-    letter-spacing: 1px
+    font-family: 'Nunito'
+    font-weight: 300
     word-spacing: 1px
     &:before
       position: absolute
-      top -3px
+      top 7px
       left 0
       content '\2022'
       color hsl(52, 50%, 50%)
-      font-size: 28px
+      font-size: 12px
   ul
     list-style none
     &:last-child li:last-child

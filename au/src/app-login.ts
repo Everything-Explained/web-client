@@ -27,9 +27,9 @@ export class Login {
   public initAuthLibs(cb: () => void) {
     if (this._isReady) return cb();
     this._checkReadyStates(cb);
+    this._loadAuthScripts();
     this._initGoogleAuth();
     this._initFacebookAuth();
-    this._loadAuthScripts();
     console.log('Loading APIs');
     this._isReady = true;
   }

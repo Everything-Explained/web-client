@@ -12,9 +12,7 @@ export class About {
     );
   private _emailVisible = false;
 
-  constructor() {
-
-  }
+  constructor() {}
 
 
 

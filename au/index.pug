@@ -404,16 +404,19 @@ html
         }
       }
     link(rel='stylesheet' href='/au/src/app.css')
-    link(
-      rel='stylesheet'
-      type='text/css'
-      href='https://fonts.googleapis.com/css?family=Nunito:300,400'
-    )
     meta(
       name='google-signin-client_id'
       content='307312730681-l12c0r4a669fb6vmmvg4seq1uebqq1fd.apps.googleusercontent.com'
     )
-    script(src='/au/src/libs/live.js')
+    //- script(src='/au/src/libs/live.js')
+
+    //- ////////////////////////////////////////
+    //- SCRIPT TAG MANDATORY FOR AUTH LIBRARIES
+    //- ////////////////////////////////////////
+    if session
+      script var session = !{JSON.stringify(session)};
+    else
+      script var session = null;
 
   body(aurelia-app='au-config')
     noscript

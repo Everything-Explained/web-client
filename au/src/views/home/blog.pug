@@ -1,0 +1,4 @@
+template
+  div.preloader(if.bind='isLoading')
+  section.dev-blog(class.bind='isLoading ? "" : "is-loaded"'
+                   ref='devBlog')

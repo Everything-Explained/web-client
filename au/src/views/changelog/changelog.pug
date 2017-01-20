@@ -2,8 +2,10 @@
 
 template
   section.changelog.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
-    section#ChangeList(repeat.for='log of logs', class='${clicked ? "hidden" : "visible"}')
-      span.title(click.delegate='open(log.timeStamp)')
+    section#ChangeList
+      span.title(repeat.for='log of logs'
+                 class='${clicked ? "hidden" : "visible"}'
+                 click.delegate='open(log.timeStamp)')
         div.date ${log.date}
         div.description ${log.title}
 
