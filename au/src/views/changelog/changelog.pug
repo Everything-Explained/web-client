@@ -12,10 +12,3 @@ template
     article#Changes(innerhtml.bind='changes', class='${clicked ? "visible" : "hidden"}')
 
     aside.close.icon-close(click.delegate='close()', class='${clicked ? "visible" : "hidden"}')
-
-
-
-
-  div.cssload-container(if.bind='router.isNavigating')
-    div.cssload-circle
-    div.cssload-circle
