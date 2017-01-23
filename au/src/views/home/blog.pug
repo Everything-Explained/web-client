@@ -1,4 +1,6 @@
 template
+  require(from='../../resources/value-converters/markdown-format')
+  require(from='../../resources/value-converters/date-format')
   section.blog-container
     div.preloader(style.bind='isLoading ? "" : "display: none"')
     div.optiscroll(ref='eOptiscroll')
@@ -6,3 +8,9 @@ template
         class.bind='isLoading ? "" : "is-loaded"'
         ref='devBlog'
       )
+        div.container(repeat.for='item of entries.items')
+          div.separator
+          h1(data-date='${item.sys.createdAt | dateFormat}').
+            ${item.fields.title.toLowerCase()}
+          div.separator
+          article(innerHTML.bind='item.fields.body | markdown')
