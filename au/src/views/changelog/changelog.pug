@@ -1,12 +1,13 @@
 - var notice = "<a href='/#/faq/notice'>notices</a>";
 
 template
+  require(from='../../resources/value-converters/date-format')
   section.changelog.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
     section#ChangeList
       span.title(repeat.for='log of logs'
                  class='${clicked ? "hidden" : "visible"}'
                  click.delegate='open(log.timeStamp)')
-        div.date ${log.date}
+        div.date ${log.timeStamp | dateFormat: '@STD'}
         div.description ${log.title}
 
     article#Changes(innerhtml.bind='changes', class='${clicked ? "visible" : "hidden"}')

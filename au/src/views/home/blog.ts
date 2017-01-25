@@ -11,6 +11,7 @@ export class Blog {
 
 
   private _scriptsLoaded = false;
+  private _isFirstLoad = true;
   private _scrollBar: IOptiscrollInstance;
 
   public devBlog: HTMLElement;
@@ -44,12 +45,17 @@ export class Blog {
             autoUpdate: true
           });
           this.isLoading = false;
-        }, 100);
+        }, 200);
       });
   }
 
   attached() {
+    if (this._isFirstLoad) {
+      this._isFirstLoad = false;
+      return;
+    }
     if (this._scriptsLoaded) {
+      console.log('scripts loaded HOPEFULLY');
       this._scrollBar = new Optiscroll(this.eOptiscroll, {
         autoUpdate: true
       });

@@ -1,13 +1,11 @@
 
 [
   {
-    "timeStamp": "10/25/2016",
-    "date": "October 25, 2016",
-    "title": "The Biggest Update Forever"
+    "timeStamp": "2016-10-25T07:00:00.000Z",
+    "title": "The First Forever"
   },
   {
-    "timeStamp": "1/16/2017",
-    "date": "January 1st, 2017",
+    "timeStamp": "2017-01-16T08:00:00.000Z",
     "title": "v0.11.0 Alpha"
   }
 ]

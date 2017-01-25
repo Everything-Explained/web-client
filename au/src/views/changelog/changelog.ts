@@ -32,7 +32,12 @@ export class Changelog {
 
   open(timeStamp: string) {
     if (this.clicked) return;
-    let id = timeStamp.replace(/\//g, '');
+    let id =
+          timeStamp
+            .replace(/\//g, '')
+            .split('T')[0]
+            .replace(/\-/g, '')
+    ;
 
     if (this.history && this.history.id == id) {
       this.updateChanges();

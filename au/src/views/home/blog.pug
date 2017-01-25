@@ -10,7 +10,7 @@ template
       )
         div.container(repeat.for='item of entries.items')
           div.separator
-          h1(data-date='${item.sys.createdAt | dateFormat}').
+          h1(data-date='${item.sys.createdAt | dateFormat: "@STD"}').
             ${item.fields.title.toLowerCase()}
           div.separator
           article(innerHTML.bind='item.fields.body | markdown')
