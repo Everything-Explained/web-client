@@ -33,15 +33,23 @@ $changelog-title = $head-1-color
 #Changes
   position: absolute
   transition: all .3s linear
-  .title
-    margin 20px 0 0 5px
+
+  a:link, a:visited, a:active
+    border-bottom 1px dashed hsl(278, 27%, 55%)
+    color inherit
+  a:hover
+    color hsl(278, 70%, 75%)
+
+  h1
+    margin 25px 0 0 44px
     padding 3px 13px 5px 13px
     display: inline-block
     color hsl(278, 45%, 75%)
-    background-color $panel
-    font-size: 28px
-    font-family: 'Source Code Pro'
+    font-size: 32px
+    font-family: 'Comfortaa'
     font-variant: small-caps
+    font-weight: 300
+    letter-spacing: 1px
     border-radius: 5px 0 13px 0
     &:first-child
       margin-top 5px
@@ -50,28 +58,32 @@ $changelog-title = $head-1-color
     color hsl(50, 55%, 70%)
   b
     font-weight: 400
-    color hsl(0, 0%, 75%)
+    color hsl(0, 0%, 63%)
   li
     position: relative
-    margin-left 10px
+    left -12px
     padding 5px 5px 5px 20px
-    max-width 70%
-    color hsl(0, 0%, 67%)
-    font-size: 16px
+    margin 10px 0
+    color hsl(0, 0%, 55%)
+    font-size: 18px
     font-family: 'Nunito'
     font-weight: 300
+    line-height: 27px
     word-spacing: 1px
     &:before
       position: absolute
       top 7px
       left 0
       content '\2022'
-      color hsl(52, 50%, 50%)
+      color hsl(52, 100%, 30%)
       font-size: 12px
   ul
+    margin-left: 30px
+    width 80%
     list-style none
+    background-color: hsla(0, 100%, 100%, 0.05 / $golden-ratio)
     &:last-child li:last-child
-      margin-bottom 70px
+      margin-bottom 150px
 
 .changelog .close
   position: fixed

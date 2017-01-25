@@ -7,82 +7,81 @@
 - var aureliacli = 'http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/the-aurelia-cli';
 - var base64 = 'https://www.lifewire.com/base64-encoding-overview-1166412';
 - var pugg = 'https://pugjs.org/api/getting-started.html';
+- var blog = '/#/blog';
+- var promise = 'https://spring.io/understanding/javascript-promises';
 
 
 mixin link(href, name)
   a(href=href, target='_blank')= name
+mixin href(href, name)
+  a(href=href)= name
 
 
-span.title major changes
+h1 major changes
 ul
   li.
-    General site font changed to Nunito. The previous font was a little too
+    #[b New Font] - General site font changed to Nunito. The previous font was a little too
     "cursivey". This one looks a lot more professional.
   li.
-    This changelog has gotten some tweaks here and there
+    #[b New Changelog Look] - This changelog had seen better days. It was a bit too convoluted.
+    More spacing and margins, as well as a background color has given it a bit of a face-lift.
   li.
-    Invites are here!! That's right, you can now request an invite directly through
-    the site without needing to email anyone directly.
+    #[b Welcome to the Invite System!] - That's right, you can now request an invite
+    directly through the site without needing to email anyone directly. The invite system allows
+    #[b only 1 invite request per IP every 24 hours]. If you're thinking to yourself "I don't see
+    this invite page anywhere!" it's probably because you're logged in. Only guests can access
+    the invite page, for obvious reasons... #[i :P]
   li.
-    The chat interface has gotten some necessary love. Emotes and general messages
-    no longer collide as badly. This is a temporary adjustment as a more substantial
-    separation will come in the future.
+    #[b Want to Know how Development is Going?] - For registered members, you can check out the new
+    #[+href(blog, 'Development Blog')] page. I wanted a way to connect you directly to the
+    development process of this site, since Noumenae is not mine, but #[b ours]. You can expect
+    updates around 1 post per week or at minimum, 1 post a month. I will always try to keep you
+    apprised of new things.
   li.
-    The rules have been updated to reflect the necessity of legality. There is an
-    ongoing #[+link(githubDiscussion, 'Discussion')] about why the rules have been
-    expanded to include legality.
-    #[i Users will also need to agree to them before signing up].
+    #[b New Rules!] - Just what you always wanted, more rules!! There is an ongoing
+    #[+link(githubDiscussion, 'Discussion')] about why the rules have been expanded to include
+    legality. Signups are now an implicit agreement to these new legal rules. Don't worry though,
+    this has nothing to do with going after members; it's there to protect Noumenae and associated
+    persons.
   li.
-    A loader animation has been universalized (is that a word?) Well anyway, it just means
-    that there are no longer different animated gifs when you're waiting for a resource
-    to load. The new animation will look like a rippling pond.
+    #[b New Loader Animation!] A loader animation has been universalized (is that a word?). Well anyway,
+    it just means that there are no longer different animated GIFS when you're waiting for a resource
+    to load. The new animation will look like a purple rippling pond.
   li.
-    #[b Form controls]: Input boxes, text areas, and buttons...have a new look that compliments the layout.
-  li.
-    Updated FAQ with new layout.
-  li.
-    Fixed FireFox font rendering.
-  li.
-    Removed error UI notification. This is a big one because I know how annoying it could be.
+    #[b New Form Controls!] - Input boxes, text areas, and buttons...have a new look that blends
+    better with the flat minimalist style of the site.
 
-span.title under the hood
+h1 fixes
 ul
   li.
-    Modal code has been updated to be more responsive and less taxing on the browser.
+    #[b FAQ] - The FAQ has undergone a tiny face-lift as well, to fix the scrolling issue and add
+    some much needed readability updates.
   li.
-    Now using #[+link(aureliacli, "Aurelia's built-in CLI")] to bundle, which means no more
-    #[+link(systemjs, 'SystemJS')] or #[+link(jspm, 'JSPM')].
+    #[b Bad FireFox!!] - FireFox 'Comfortaa' font rendering has been a tough cookie, but I ate it
+    and it was goooooood.
   li.
-    Now using #[+link(bluebird, 'BlueBird')] promises. This came with the new Aurelia-CLI anyway, so it was
-    convenient.
+    #[b Annoying Errors] - There was a vestigial notification system built into the logging mechanism
+    which has now been removed. This was causing every error to popup a message - very annoying, even
+    for me as a developer.
   li.
-    Switched to #[b HTTP/2] protocol, which just means a bit more efficient website transfer and
-    features I might utilize like #[+link(push, 'Server Push')].
-  li.
-    #[b Inlining assets]. This means that html, images, fonts, and 3rd party libraries, where possible,
-    are appended within a resource and transported all at once instead of on-demand. Because of the
-    new Aurelia-CLI, old dependencies were removed and all script/html files are now bundled. A
-    server request (which can be time consuming) is no longer necessary to display a page as it's been
-    included when you visit the site for the first time.#[br]#[br]
-    For #[b v0.7.0] I decided it would be best to serve #[+link(pugg, 'PUG')] files, but I realized
-    I was mainly using it for it's succinct syntax over HTML, so I stripped PUG support
-    for #[b v0.11.0]. This means that all pages the used to be PUG, would now be normal HTML pages
-    which could now be bundled by the Aurelia-CLI.#[br]#[br]
-    There are caveats like this page (the changelog) where a server request is still necessary for
-    real-time updates. Let's say I forgot to add something to the changelog; if it was bundled with the
-    site, there would be no way to change it, but since the server still serves this page, it will
-    always be up-to-date.#[br]#[br]
-    #[i The best part about all this?] A #[b 1 - 1.5] second decrease in loading time.
-    Considering that the site @#[b v0.7.0] took ~3 seconds to load, that's an incredible boost in speed.
+    #[b Console Double Post] - When losing a socket connection, the console would double-log it,
+    as well as other events, whoops!
 
+h1 under the hood
+ul
   li.
-    Updated and added Admin facilities here and there.
+    #[b Lovely Modals] - I re-wrote the modal code, which means no more lag.
   li.
-    #[b FIX:] When losing a socket connection, the console would double-log it.
-
-span.title Performance
-  ul
-    li.
-      Within Alpha development there generally isn't a lot of time for performance tuning,
-      but given the nature of Web development, some things come before others and it just so
-      happens that bundling is a big part of this application.
+    #[b Aurelia CLI Build System] - Now using #[+link(aureliacli, "Aurelia's built-in CLI")] to bundle,
+    which means no more #[+link(systemjs, 'SystemJS')] or #[+link(jspm, 'JSPM')].
+  li.
+    #[b Fast Promises!] - Now using #[+link(bluebird, 'BlueBird')] promises. This came with the new Aurelia-CLI
+    anyway, so it was convenient. If you want to learn about promises, click #[+link(promise, 'HERE')].
+  li.
+    #[b Entering the Modern Age] - Switched to #[b HTTP/2] protocol, which just means a bit more
+    efficient website transfer and features I might utilize like #[+link(push, 'Server Push')].
+  li.
+    #[b Inlined Assets] - This means everything necessary to run the site is bundled and served when
+    a user requests the site. This means no loading times between pages, only one loading period when
+    the site is first requested. There are still some exceptions, like this page which requires a
+    server request for each changelog, but the delay is insignificant.
