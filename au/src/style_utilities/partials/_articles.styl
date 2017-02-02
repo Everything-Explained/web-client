@@ -19,13 +19,13 @@ $header
 
 $content
   display block
-  padding 13px 8px
-  background $panel
+  padding 13px 10px
+  background-color: hsla(0, 100%, 100%, 0.06 / $golden-ratio)
   font-size 18px
   word-spacing: 2px
   font-family 'Nunito'
   font-weight: 300
-  color $article-content-color
+  color hsl(0, 0%, 60%)
   border-top-right-radius 6.5px
   border-top-left-radius 3.5px
 
@@ -52,7 +52,7 @@ article.home
     word-spacing: -1px
     font-style: normal
     font-weight: 400
-    color hsl(0, 0%, 70%)
+    color hsl(0, 0%, 75%)
 
 
 article[role='about']
@@ -67,12 +67,11 @@ article[role='about']
     @extend $content
     margin-bottom 7px
     margin-top 0
-    padding 23px 10px
-    transition: background .3s
+    transition: background .3s, color .3s
     &:last-child
       margin-bottom 50px
     &:hover
-      background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio)
+      background-color: hsl(278, 33%, 12%)
     &:hover b, &:hover i, &:hover em
       color hsl(50, 50%, 50%)
 
@@ -98,7 +97,7 @@ article[role='rules']
     &:last-child
       border-bottom-right-radius 7px
     &:hover .rule, &:hover .def
-      background-color hsla(278, 40%, 37%, 0.7 / $golden-ratio)
+      background-color: hsl(278, 33%, 12%)
     &:hover b, &:hover i, &:hover em
       color hsl(50, 50%, 50%)
     &:hover .rule
@@ -112,7 +111,7 @@ article[role='rules']
     padding 13px 8px
     text-align center
     font-size 21px
-    background-color: $panel
+    background-color: hsla(0, 100%, 100%, 0.06 / $golden-ratio)
     color $article-subheader-color
     transition: background .3s, color .3s
 
@@ -120,7 +119,7 @@ article[role='rules']
     margin-left: 5px
     flex-direction: column
     flex 10
-    background-color: $panel
+    background-color: hsla(0, 100%, 100%, 0.06 / $golden-ratio)
     padding 13px 8px
     transition: background .3s
 
@@ -143,7 +142,7 @@ article[role='FAQ']
 
   input[type='text']
     margin 5px 0 10px 0
-    width 311px
+    width 318px
 
   .qa-container, .asdf
     display flex
@@ -170,10 +169,11 @@ article[role='FAQ']
     padding-left 5px
     min-width 400px
     h1
-      font-size 28px
+      font-size 30px
       font-family 'Comfortaa'
       word-spacing 2px
       font-variant: small-caps
+      word-spacing: normal
       font-weight: 300
       letter-spacing: 1px
       color $article-question-color
@@ -181,9 +181,9 @@ article[role='FAQ']
       text-shadow: -2px -2px 0 #000, -2px 0 0 #000, 0 -2px 0 #000
     span
       @extend $content
-      font-size: medium
+      font-size: 18px
       word-spacing: 2px
-      color hsl(0, 0%, 62%)
+      color hsl(0, 0%, 63%)
       // background-color hsla(278, 70%, 40%, 0.3 / $golden-ratio)
       background-color: #171717
       align-self flex-start
@@ -193,9 +193,8 @@ article[role='FAQ']
       // box-shadow 3px 3px 21px 0 #000
       transition background .3s
       margin 17px 13px 27px 21px
-      b
-        font-weight: 400
-        color hsl(0, 0%, 70%)
+      &:hover
+        background-color: hsl(278, 30%, 10%)
 
     .answer-placeholder
       position relative
@@ -229,15 +228,21 @@ article[role='FAQ']
     ul
       margin-left: 44px;
       font-size 16px
-      font-family monospace
+      font-family 'Source Code Pro'
       li
         text-shadow 1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000
-        color hsl(0, 30%, 77%)
+        color hsl(278, 17%, 67%)
       em
         position relative
-        top -3px
+        margin-right: -3px
+        font-family: 'comfortaa'
+        font-variant: small-caps
+        font-weight: 300
+        letter-spacing: 1px
+        font-size: 18px
+        top -5px
         left -1px
-        text-shadow 1px 1px 0 hsl(50, 70%, 20%), 2px 2px 0 hsl(50, 70%, 20%)
+        text-shadow none
         color hsl(50, 70%, 50%)
 
 
@@ -255,19 +260,22 @@ article[role='FAQ']
       @extend $content
       padding 3px 11px
       width 100%
-      color hsl(124, 20%, 70%)
+      color hsl(278, 0%, 70%)
       font-family 'Nunito'
       font-weight: 300
       font-variant: small-caps
-      font-size 18px
+      font-size 20px
       text-align center
       letter-spacing 1px
-      background hsl(124, 12%, 13%)
+      background-color: hsla(0, 100%, 100%, 0.08 / $golden-ratio)
       border-color $article-question-border-color
       align-self center
       border-radius: 0
       cursor pointer
-      transition background .3s
+      transition background .4s, color .4s
+      &:hover
+        background-color: hsl(50, 50%, 20%)
+        color hsl(0, 0%, 85%)
 
     .answer
       display none

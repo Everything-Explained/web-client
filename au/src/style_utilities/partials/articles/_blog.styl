@@ -56,6 +56,15 @@
       font-variant: normal
       font-weight: normal
       transform translateX(-50%)
+  h2
+    margin 0 0 0 7px
+    padding 17px 10px 0 27px
+    font-family: 'comfortaa'
+    font-weight: 300
+    font-variant: small-caps
+    letter-spacing: 1px
+    color hsl(50, 63%, 45%)
+    background-color: hsla(0, 100%, 100%, 0.06 / $golden-ratio)
 
 
   .separator
@@ -80,15 +89,15 @@
     font-size: 20px
     font-family: 'Delius'
     font-weight: normal
-    color hsl(50, 40%, 40%)
-    background-color: hsla(0, 100%, 100%, 0.05 / $golden-ratio)
+    color hsl(50, 50%, 43%)
+    background-color: hsla(0, 100%, 100%, 0.06 / $golden-ratio)
     &:before, &:after
       position: absolute
       content: ' '
       height 1px
       width 50%
       left 50%
-      background linear-gradient(to right, hsla(50,30%,20%,0) 0%,hsla(278,40%,30%,0.65) 50%,hsla(50,30%,20%,0) 100%);
+      background linear-gradient(to right, hsla(50,30%,43%,0) 0%,hsla(278,40%,43%,0.65) 50%,hsla(50,30%,43%,0) 100%);
       transform translateX(-50%)
     &:before
       top 10px
@@ -99,7 +108,8 @@
     margin-bottom: 150px;
 
    article
-    color hsl(0, 0%, 55%)
+    margin-bottom 100px
+    color hsl(0, 0%, 60%)
     padding-right: 70px
     font-size: 18px
     font-family: 'Nunito'
@@ -112,7 +122,7 @@
   p, .code
     margin-left 7px
     padding 10px 10px 10px 10px
-    background-color: hsla(0, 100%, 100%, 0.05 / $golden-ratio)
+    background-color: hsla(0, 100%, 100%, 0.06 / $golden-ratio)
     line-height: 30px
   pre
     background-color: hsl(0, 0%, 8%)
@@ -123,4 +133,4 @@
       background-color: inherit
   strong
     font-weight: 400
-    color hsl(278, 0%, 60%)
+    color hsl(0, 0%, 75%)
