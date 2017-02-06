@@ -15,7 +15,9 @@
   visibility: hidden
   padding-right 20px
 
-  a:link, a:visited, a:active
+  a:link,
+  a:visited,
+  a:active
     border-bottom 1px dashed hsl(278, 27%, 55%)
     color inherit
   a:hover
@@ -72,7 +74,11 @@
     height 1px
     width 60%
     left 50%
-    background: linear-gradient(to right, hsla(50,30%,20%,0) 0%,hsla(50,70%,20%,0.70) 50%,hsla(50,30%,20%,0) 100%);
+    background: linear-gradient(
+                  to right,
+                  hsla(50, 30%, 20%, 0)    0%,
+                  hsla(50, 70%, 20%, 0.70) 50%,
+                  hsla(50, 30%, 20%, 0)    100%);
     transform: translateX(-50%)
     &:first-child
       margin-top: 64px
@@ -97,7 +103,11 @@
       height 1px
       width 50%
       left 50%
-      background linear-gradient(to right, hsla(50,30%,43%,0) 0%,hsla(278,40%,43%,0.65) 50%,hsla(50,30%,43%,0) 100%);
+      background linear-gradient(
+                    to right,
+                    hsla(50, 30%, 43%,0)     0%,
+                    hsla(278, 40%, 43%,0.65) 50%,
+                    hsla(50, 30%, 43%,0)     100%);
       transform translateX(-50%)
     &:before
       top 10px
@@ -133,4 +143,7 @@
       background-color: inherit
   strong
     font-weight: 400
-    color hsl(0, 0%, 75%)
+    color hsl(0, 0%, 70%)
+  .greek
+    font-family: 'Source Code Pro'
+    font-size: 24px

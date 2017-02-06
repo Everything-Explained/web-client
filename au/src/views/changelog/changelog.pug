@@ -7,8 +7,8 @@ template
       span.title(repeat.for='log of logs'
                  class='${clicked ? "hidden" : "visible"}'
                  click.delegate='open(log.timeStamp)')
+        div.description(innerHTML.bind='log.title')
         div.date ${log.timeStamp | dateFormat: '@STD'}
-        div.description ${log.title}
 
     article#Changes(innerhtml.bind='changes', class='${clicked ? "visible" : "hidden"}')
 

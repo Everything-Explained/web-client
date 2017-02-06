@@ -408,6 +408,7 @@ export class App {
     let req = new XMLHttpRequest()
       , lights = localStorage.getItem('lights');
 
+
     if (this._isFirstNavigation) {
       let content = document.getElementById('PageContent');
 
