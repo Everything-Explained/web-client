@@ -49,7 +49,3 @@ template
           li(repeat.for='user of users', class='${user.isTyping}') ${user.name}
 
     chat-commander#ChatCommander(chat-data.bind='data')
-
-  div.cssload-container(if.bind='router.isNavigating')
-    div.cssload-circle
-    div.cssload-circle

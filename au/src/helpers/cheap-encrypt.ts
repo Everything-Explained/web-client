@@ -28,7 +28,7 @@ module CheapEncrypt {
 
 
     let i = 0;
-    for(let c of dataStr) {
+    for (let c of dataStr) {
 
       i = (i < keyNums.length) ? i : 0;
       let pos = c.charCodeAt(0) + keyNums[i++];
@@ -69,7 +69,7 @@ module CheapEncrypt {
     }
 
 
-    for(var k of keys) {
+    for (var k of keys) {
 
       let x = parseInt(k)
 
@@ -103,4 +103,4 @@ module CheapEncrypt {
 
 }
 
-export = CheapEncrypt
+export = CheapEncrypt;

@@ -3,6 +3,7 @@ import * as encrypt from './helpers/cheap-encrypt';
 import {IRobot} from './helpers/robot-check';
 import * as vtor from 'validator';
 import {Web} from './helpers/web';
+import environment from './environment';
 
 
 
@@ -27,9 +28,11 @@ export class Login {
   public initAuthLibs(cb: () => void) {
     if (this._isReady) return cb();
     this._checkReadyStates(cb);
+
+    // Facebook waits on window async function
+    this._initFacebookAuth();
     this._loadAuthScripts();
     this._initGoogleAuth();
-    this._initFacebookAuth();
     console.log('Loading APIs');
     this._isReady = true;
   }
@@ -66,8 +69,17 @@ export class Login {
   private _initFacebookAuth() {
     // INIT Facebook API
     window['fbAsyncInit'] = () => {
+      let ronan = true;
+      let appId =
+            (environment.debug)
+              ? (ronan)
+                  ? '694741017370139'
+                  : '951977694937280'
+              : '1682404772003204' ;
+
+      console.log(appId);
       FB.init({
-        appId: '1682404772003204',
+        appId,
         xfbml: false,
         cookie: true,
         version: 'v2.5'
@@ -246,7 +258,22 @@ export class Login {
         auth_type
       }
     }, (err, code, data) => {
+
+      // DEBUG
       console.log(err, code, data);
+
+      /*****************
+       * FACEBOOK ONLY
+       *
+       * Force logout if user tries to log in before
+       * signing up
+       *******************/
+      let authResp = FB.getAuthResponse();
+      if (authResp) {
+        FB.logout(resp => {
+          console.log(resp);
+        });
+      }
       err = err || null;
       if (cb) cb(err, code, data);
     });
@@ -263,6 +290,7 @@ export class Login {
         alias: nick
       }
     }, (err, code, data) => {
+      // DEBUG
       console.log(err, code, data);
       cb(err, code, data);
     });
