@@ -13,7 +13,7 @@ export class Invites {
     minutes: 0
   };
 
-  isLoading = false;
+  isLoading = true;
   private _isMsgSent = false;
   private _isMsgFailed = false;
   private _isMsgLimited = false;
@@ -26,7 +26,16 @@ export class Invites {
 
   exEmail = new RegExp('/^.+@.+\..+$/');
 
-  constructor() {}
+  constructor() {
+    Web.GET('/internal/canrequestinvite', {}, (err, code, data) => {
+      if (code == 202) {
+        this.isLoading = false;
+        this.isMsgLimited = true;
+        this.msgLimits = data;
+      }
+      this.isLoading = false;
+    });
+  }
 
   set isMsgSent(val) {
     if (val) this.isLoading = false;

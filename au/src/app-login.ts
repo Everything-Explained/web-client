@@ -69,7 +69,7 @@ export class Login {
   private _initFacebookAuth() {
     // INIT Facebook API
     window['fbAsyncInit'] = () => {
-      let ronan = true;
+      let ronan = false;
       let appId =
             (environment.debug)
               ? (ronan)
