@@ -4,7 +4,7 @@ import {computedFrom} from 'aurelia-framework';
 
 export class Invites {
 
-  minMsgLen  = 10; // Characters needed to submit message
+  minMsgLen  = 200; // Characters needed to submit message
   minNameLen = 4;  // Characters needed to submit name
   nameLen = 0;
   msgLen = 0;

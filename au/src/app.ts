@@ -37,7 +37,7 @@ export interface TabPage {
 @inject(Element, EventAggregator, MiniModal, Login, Session)
 export class App {
 
-  version = '0.11.0';
+  version = '11';
 
   router: Router;
 
@@ -421,22 +421,22 @@ export class App {
     this._isFirstNavigation = false;
 
 
-    let sse = new EventSource('/internal/sse');
+    // let sse = new EventSource('/internal/sse');
 
-    sse.addEventListener('open', (e) => {
-      console.log('Connected');
-    });
+    // sse.addEventListener('open', (e) => {
+    //   console.log('Connected');
+    // });
 
-    sse.addEventListener('error', (e) => {
-      console.error(e);
-    });
+    // sse.addEventListener('error', (e) => {
+    //   console.error(e);
+    // });
 
-    sse.addEventListener('ping', (e) => {
-    });
+    // sse.addEventListener('ping', (e) => {
+    // });
 
-    sse.addEventListener('message', (e) => {
-      console.log(e.data);
-    });
+    // sse.addEventListener('message', (e) => {
+    //   console.log(e.data);
+    // });
 
 
     // let light = (lights == 'off') ? 'light' : 'dark';

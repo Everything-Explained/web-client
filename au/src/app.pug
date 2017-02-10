@@ -11,7 +11,9 @@ template
     div#PageTransition(class='${page.overlay? "active" : ""}')
 
     section#TrayTop.buffer
-      aside.watermark #[span alpha#[span.num v${version}]]
+      aside.watermark
+        span alpha
+          span.num ${version}
 
       menu#TabMenu
         ul
