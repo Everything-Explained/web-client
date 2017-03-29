@@ -16,7 +16,7 @@ export default function processMarkup() {
   });
 
   return gulp.src(project.markupProcessor.source)
-    .pipe(changedInPlace({firstPass:true}))
+    .pipe(changedInPlace({firstPass: true}))
     .pipe(sourcemaps.init())
     .pipe(p)
     .pipe(build.bundle());

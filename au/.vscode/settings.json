@@ -3,7 +3,6 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "html.suggest.angular1": false,
   "html.suggest.ionic": false,
-  "files.autoSave": "onFocusChange",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
