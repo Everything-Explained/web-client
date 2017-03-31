@@ -3,8 +3,8 @@ import * as gulp from 'gulp';
 import * as changedInPlace from 'gulp-changed-in-place';
 import * as sourcemaps from 'gulp-sourcemaps';
 import * as pug from 'gulp-pug';
-import * as project from '../aurelia.json';
 import {build} from 'aurelia-cli';
+let project =  require('../aurelia.json');
 
 export default function processMarkup() {
 

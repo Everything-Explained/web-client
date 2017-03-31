@@ -70,7 +70,7 @@ export class ChatCommander {
 
   private _isTyping = false;
   private _pausedTyping = false;
-  private _pausedTypingTimeout = 0;
+  private _pausedTypingTimeout = null;
   private _pausedTypingSpeed = 2000;
 
 
@@ -84,19 +84,6 @@ export class ChatCommander {
     this._sock = this.chatData.sock;
     this._chatView = this.chatData.chatView;
     this.initCommands();
-  }
-
-  catchContent(e: KeyboardEvent) {
-
-    let input = this._obj.textContent;
-
-
-    if (input.length > 1 && !this.activeCompletion) {
-      this._obj.innerHTML = input.replace(' ', '&nbsp;');
-      this._placeCaret(false, this._obj);
-    }
-
-
   }
 
 
@@ -126,7 +113,8 @@ export class ChatCommander {
 
     }
 
-    if (Keys.DELETE == e.which || Keys.BACKSPACE == e.which) {
+    if (Keys.DELETE == e.which
+        || Keys.BACKSPACE == e.which) {
 
       let selection = window.getSelection().toString();
 
@@ -204,11 +192,6 @@ export class ChatCommander {
       if (this.activeCompletion) {
         this._clearSuggestion('/' + this.activeCompletion);
         this._placeCaret(false, this._obj);
-        return false;
-      }
-
-      if (rawInput.indexOf(' ') > 0) {
-        this._correctSpelling(rawInput, true);
         return false;
       }
 
@@ -478,13 +461,13 @@ export class ChatCommander {
 
     this.pollTyping();
 
-    this._obj.onpaste = (e: any) => {
-      e.preventDefault();
+    // this._obj.onpaste = (e: any) => {
+    //   e.preventDefault();
 
-      if (this._obj.textContent.length == 0) this._obj.removeChild(this._ffFix);
-      let data = e.clipboardData.getData('text/plain');
-      document.execCommand('insertText', false, data.trim());
-    };
+    //   if (this._obj.textContent.length == 0) this._obj.removeChild(this._ffFix);
+    //   let data = e.clipboardData.getData('text/plain');
+    //   document.execCommand('insertText', false, data.trim());
+    // };
 
     this._suggestionElement.classList.add('suggestion');
   }

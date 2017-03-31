@@ -31,7 +31,7 @@ export class BibleVerseFilter {
           '|1john|2john|3john|jude' +
           '|revelation)$';
 
-  chapverse = '(^[0-9]{1,2}|^[0-9]{1,2}:[0-9]{1,2})(\-[0-9]{1,2})?$'
+  chapverse = '(^[0-9]{1,2}|^[0-9]{1,2}:[0-9]{1,2})(\-[0-9]{1,2})?$';
 
 
   constructor() {}
@@ -39,22 +39,23 @@ export class BibleVerseFilter {
 
   filter(content: string) {
     let book = null
-      , words = content.split(' ')
+      , words = content.replace(/\>|\</g, ' ').split(' ')
       , matches = null
       , verses = []
-      , wordlist = []
-      , result = [];
+      , wordlist = [] as string[]
+      , result = []
+    ;
 
     // Make sure we have something to test
-    if (words.length < 2) return [content];
-    if (!words[1].length) return;
+    if (words.length < 2) return [];
+    if (!words[1].length) return [];
 
-    for(let word of words) {
+    for (let word of words) {
 
-      if(book) {
-        if(!/^[0-9]/.test(word)) {
+      if (book) {
+        if (!/^[0-9]/.test(word)) {
           book = null;
-          continue
+          continue;
         }
 
         if (word.indexOf(';') > -1) {
@@ -62,24 +63,18 @@ export class BibleVerseFilter {
           let parts = word.split(';')
             , text = '';
 
-          for(let part of parts) {
+          for (let part of parts) {
             let validate = new RegExp(this.chapverse);
             if (matches = validate.exec(part)) {
-              text += matches[0] + ';'
+              text += matches[0] + ';';
             }
           }
-          wordlist.push({
-            text: book + ' ' + text.substr(0, text.length - 1),
-            type: WordType.VERSE
-          });
+          wordlist.push(book + ' ' + text.substr(0, text.length - 1));
         }
         else {
           let validate = new RegExp(this.chapverse);
           if (matches = validate.exec(word)) {
-            wordlist.push({
-              text: book + ' ' + matches[0],
-              type: WordType.VERSE
-            })
+            wordlist.push(book + ' ' + matches[0]);
           }
         }
 
@@ -90,6 +85,7 @@ export class BibleVerseFilter {
 
       let abookEx = new RegExp(this.abooks, 'gi')
         , bookEx = new RegExp(this.books, 'gi')
+      ;
 
       if (abookEx.test(word)) {
         book = word;
@@ -100,8 +96,6 @@ export class BibleVerseFilter {
         book = word;
         continue;
       }
-
-      wordlist.push(word);
 
     }
 

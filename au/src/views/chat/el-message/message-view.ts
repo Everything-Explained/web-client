@@ -35,77 +35,48 @@ export class MessageView {
   alias:         string;
   scale:         string;
   words = new Array<IWord>();
+  md = window['markdownit']({
+    breaks: true,
+    linkify: true,
+    typographer: true,
+    quotes: '“”‘’'
+  });
 
   defClass = '';
   modClass = '';
   avatar = '';
   isDefault = false;
 
+  msgFormatted = '';
+
 
   private _relativeTime = Date.now();
-  private _verseFilter: BibleVerseFilter;
+  public verseFilter: BibleVerseFilter;
 
   constructor(private el: Element) {
-    this._verseFilter = new BibleVerseFilter();
+    this.verseFilter = new BibleVerseFilter();
+    this._filterLinks(this.md);
   }
 
 
-  /** Executed on DOM ready */
+  /*****************************
+   * Aurelia DOM Ready Method
+   */
   attached() {
 
+    this.pollRelativeTime();
 
-    // Only poll messages for normal type
-    if (this.cfg.type === MessageType.NORMAL) {
-      this.pollRelativeTime();
-    }
     this.realTime = moment(this.cfg.realTimeFixed).format('h:mm A');
 
-
-    if (this.cfg.type === MessageType.NORMAL) {
-
-      let words = this._verseFilter.filter(this.cfg.message);
-
-      for (let word of words) {
-
-        if (typeof word !== 'string') {
-          this.words.push(word);
-          continue;
-        }
-
-        let filteredWord = null;
-
-        filteredWord = this._filterWord(word);
-
-        if (filteredWord) {
-          this.words.push(filteredWord);
-        } else {
-          this.words.push({
-            type: WordType.NONE,
-            text: word
-          });
-        }
-      }
-
+    if (MessageType.NORMAL == this.cfg.type) {
+      this.filter();
     }
 
   }
 
-  private _filterWord(word: string) {
-
-    let result = null;
-
-    if (typeof (result = this._filterImages(word)) !== 'string') {
-      return result;
-    }
-
-    if (typeof (result = this._filterLinks(word)) !== 'string') {
-      return result;
-    }
-
-    return null;
-
-  }
-
+  /***********************
+   * Aurelia Bind Method
+   */
   bind() {
     this.isDefault = !this.cfg.avatar;
 
@@ -122,6 +93,58 @@ export class MessageView {
     }
 
   }
+
+
+
+  public filter() {
+
+    let images = this.getImages(this.cfg.message);
+
+    if (images) {
+      images.forEach(img => {
+        this.cfg.message = this.cfg.message.replace(
+          img,
+          `![](${img})`
+        );
+      });
+    }
+
+    let msg = this.md.render(this.cfg.message) as string
+      , verses = this.verseFilter.filter(msg)
+      , el = this.el.querySelector('.container .content') as HTMLElement
+      , div = document.createElement('div')
+    ;
+
+    div.innerHTML = msg;
+
+    // TODO - apply the basic HTML then extract the elements and apply the events.
+    if (verses.length) {
+      this._filterVerses(verses, div);
+    }
+
+    el.appendChild(div);
+
+  }
+
+
+  private _filterVerses(verses: string[], append: HTMLElement) {
+    verses.forEach((v, i) => {
+      let a = document.createElement('a');
+      a.classList.add('verse');
+      a.href = 'javascript:void(0);';
+      a.title = 'Click to view Scripture';
+      a.textContent = v;
+      a.id = `v${i}`;
+      append.innerHTML = append.innerHTML.replace(v, a.outerHTML);
+      a = append.querySelector(`#${a.id}`) as HTMLAnchorElement;
+      a.onmousedown = (e) => {
+        this.getVerse(e, v);
+      };
+    });
+  }
+
+
+
 
   getVerse(e: MouseEvent, verse: string) {
     if (e.button == 0) {
@@ -158,73 +181,43 @@ export class MessageView {
 
   }
 
-  private _filterLinks(input: string) {
+  private _filterLinks(md: any) {
+    let defaultLinkRenderer =
+      md.renderer.rules.link_open ||
+      function(tokens, idx, options, env, self) {
+        return self.renderToken(tokens, idx, options);
+      };
 
-    // Prevent unnecessary filtering
-    if (input.indexOf('http://') == -1 &&
-        input.indexOf('https://') == -1) return input;
-
-    let msg = input.split(' ')
-      , match = null
-      , result = {
-        text: null,
-          type: WordType.LINK,
-          data: {
-            link: null,
-            invalid: false
-          }
-        };
-
-    for (let p of msg) {
-      if (match = (/http[s]?:\/\/([a-zA-Z0-9/+-_]\.?)+(\.[a-z]{2,3})?$/g).exec(p)) {
-        if (match[0] == p) {
-          let link = p.replace(/^http[s]?:\/\/[w]{3}?\.?/, '');
-          input = input.replace(p,
-            `<a target="_blank" title="${p}" ` +
-            `href="${p}">${(link.length > 40) ? link.substr(0, 40) + '...' : link}</a>`
-          );
-          result.text = (link.length > 40) ? link.substr(0, 40) + '...' : link;
-          result.data.link = p;
-        } else {
-          result.text = 'Invalid Link';
-          result.data.invalid = true;
-        }
-      }
-    }
-
-    return result.text ? result : input;
+    md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
+      let aIndex = tokens[idx].attrIndex('target');
+      tokens[idx].attrPush(['target', '_blank']); // Add new attribute
+      return defaultLinkRenderer(tokens, idx, options, env, self);
+    };
   }
 
 
-  private _filterImages(input: string) {
+  public getImages(input: string) {
 
     // Prevent unnecessary filtering
     if (input.indexOf('http://') == -1 &&
-        input.indexOf('https://') == -1) return input;
+        input.indexOf('https://') == -1) return [];
 
     let msg = input.split(' ')
       , match = null
-      , result = {
-          text: null,
-          type: WordType.IMAGE,
-          data: {
-            invalid: false
-          }
-        };
+      , results = [] as string[]
+    ;
 
 
     for (let p of msg) {
       if (match = (/http[s]?:\/\/([a-zA-Z0-9/+-_]\.?)+\.(png|jpg|jpeg|gif)$/g.exec(p))) {
         if (match[0] == p) {
-          result.text = p;
+          results.push(p);
         } else {
-          result.text = 'Invalid Link';
-          result.data.invalid = true;
         }
       }
     }
 
-    return result.text ? result : input;
+    return results;
 
   }
 

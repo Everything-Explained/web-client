@@ -16,9 +16,9 @@ template
       span.right
         span.real-time ${realTime}
 
-    span.content(class='${cfg.scale}'
-                 innerHTML.bind='cfg.message | markdown')
-      //- template(repeat.for='word of words') ${word.type == $parent.wordType('none') ? word.text + '&#32;' : ''}
+    span.content(class='${cfg.scale}')
+      //- template(repeat.for='word of words')
+      //-   ${word.type == $parent.wordType('none') ? word.text + '&#32;' : ''}
 
       //-   a(if.bind='word.type == $parent.wordType("link")',
       //-     title='${word.data.link}'

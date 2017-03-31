@@ -5,24 +5,25 @@ import * as sourcemaps from 'gulp-sourcemaps';
 import * as notify from 'gulp-notify';
 import * as rename from 'gulp-rename';
 import * as ts from 'gulp-typescript';
-import * as project from '../aurelia.json';
 import {CLIOptions, build} from 'aurelia-cli';
 import * as eventStream from 'event-stream';
+let project =  require('../aurelia.json');
 
 function configureEnvironment() {
   let env = CLIOptions.getEnvironment();
 
   return gulp.src(`aurelia_project/environments/${env}.ts`)
-    .pipe(changedInPlace({firstPass:true}))
+    .pipe(changedInPlace({firstPass: true}))
     .pipe(rename('environment.ts'))
     .pipe(gulp.dest(project.paths.root));
 }
 
-var typescriptCompiler = typescriptCompiler || null;
+// TODO - If error = typescriptCompiler || null
+let typescriptCompiler = null;
 
 function buildTypeScript() {
   typescriptCompiler = ts.createProject('tsconfig.json', {
-    "typescript": require('typescript')
+    'typescript': require('typescript')
   });
 
   let dts = gulp.src(project.transpiler.dtsSource);
