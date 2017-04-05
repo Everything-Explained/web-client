@@ -24,8 +24,11 @@ template
       section#MainWindow
         div#MainPort.optiscroll
           div.message-tray.optiscroll-content
-            message-view.message(repeat.for='msg of ports.main._view',
-                                  cfg.bind='msg', io.bind='$parent.io')
+            message-view.message(
+              repeat.for='msg of ports.main._view'
+              cfg.bind='msg'
+              messages.bind='msg.messages'
+              io.bind='$parent.io')
 
       section#PartialWindow
         div#Pane0.pane

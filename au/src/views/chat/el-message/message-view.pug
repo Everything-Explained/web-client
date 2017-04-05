@@ -1,4 +1,4 @@
-template
+template(class='${modClass}')
   require(from='../../../resources/value-converters/markdown-format')
   //- &#128100; .default
   aside(if.bind='modClass === "normal"', class='${cfg.scale} ${modClass}')
@@ -37,6 +37,6 @@ template
 
   div(if.bind='modClass !== "normal"', class='${modClass} ${cfg.severity}')
     span.username ${cfg.alias}
-    span.content ${cfg.message}
+    span.content ${cfg.messages[0]}
     span.real-time ${realTime}
 

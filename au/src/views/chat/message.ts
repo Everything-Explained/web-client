@@ -38,7 +38,7 @@ export interface IMessage {
 export class Message {
 
   alias: string;
-  message: string;
+  messages: string[];
   realTimeFixed: number;
   scale: string;
   severity: string;
@@ -49,7 +49,7 @@ export class Message {
   constructor(ops: IMessage) {
 
     this.alias = ops.alias;
-    this.message = ops.message;
+    this.messages = [ops.message];
     this.scale = ops.scale === undefined ? 'large' : ops.scale;
     this.type = ops.type;
     this.avatar = ops.avatar;

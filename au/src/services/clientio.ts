@@ -20,7 +20,7 @@ export class ClientIO {
   };
 
 
-  constructor(private _hasConnected: (data: any) => void, private _populate: (msg: Message) => void, chat: Chat) {
+  constructor(private _hasConnected: (data: any) => void, private _populate: (msg: IMessage) => void, chat: Chat) {
 
     this._chat = chat;
     this.connect();
@@ -187,14 +187,14 @@ export class ClientIO {
 
   onUserJoin(user: string) {
     if (user === this._chat.alias) return;
-    this._chat.addMessage(`${user} has joined the conversation...`, MessageType.IMPLICIT);
+    this._chat.addMessage(` has joined the conversation...`, MessageType.IMPLICIT, null, user);
     this._chat.addUser(user);
   }
 
 
   onUserDisconnect(user: string) {
     this._chat.removeUser(user);
-    this._chat.addMessage(`${user} has left the room...`, MessageType.IMPLICIT);
+    this._chat.addMessage(` has left the room...`, MessageType.IMPLICIT, null, user);
   }
 
 

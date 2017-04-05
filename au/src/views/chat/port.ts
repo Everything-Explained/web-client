@@ -1,5 +1,5 @@
 
-import {Message, MessageScale, MessageType} from '../chat/message';
+import {IMessage, Message, MessageScale, MessageType} from '../chat/message';
 import {Chat} from './chat';
 
 export class Port {
@@ -95,7 +95,29 @@ export class Port {
 
     // Set message scale and add
     msg.scale = this._scale;
-    this._view.push(msg);
+
+    let last =
+      (this._view.length)
+        ? this._view[this._view.length - 1]
+        : null
+    ;
+
+    let msgLength =
+      (last && last.messages.length)
+        ? last.messages.length
+        : null
+    ;
+
+    if (  last
+          && last.alias == msg.alias
+          && last.type == MessageType.NORMAL
+          && msg.type == MessageType.NORMAL) {
+      last.messages.push(msg.messages[0]);
+    }
+
+
+    if (!last || msgLength == last.messages.length)
+      this._view.push(msg);
 
     if (this._oContainer)
       this.scrollPort();

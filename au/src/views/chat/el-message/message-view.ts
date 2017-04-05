@@ -1,5 +1,5 @@
 
-import {bindable, inject, customElement} from 'aurelia-framework';
+import {bindable, bindingMode, autoinject, customElement, observable, ObserverLocator, Disposable, BindingEngine} from 'aurelia-framework';
 import * as moment from 'moment';
 import {PageElement} from '../../../helpers/page';
 import {Message, IMessage, MessageType} from '../../../views/chat/message';
@@ -21,12 +21,13 @@ interface IWord {
   data?: any;
 }
 
-@inject(Element)
+@autoinject
 @customElement('message-view')
 export class MessageView {
 
   @bindable cfg: Message;
   @bindable io: ClientIO;
+  @bindable messages: string[];
 
   content:       string;
   realTime:      string;
@@ -53,7 +54,9 @@ export class MessageView {
   private _relativeTime = Date.now();
   public verseFilter: BibleVerseFilter;
 
-  constructor(private el: Element) {
+  subscription: Disposable;
+
+  constructor(private el: Element, private _be: BindingEngine) {
     this.verseFilter = new BibleVerseFilter();
     this._filterLinks(this.md);
   }
@@ -71,6 +74,9 @@ export class MessageView {
     if (MessageType.NORMAL == this.cfg.type) {
       this.filter();
     }
+
+    this.subscription = this._be.collectionObserver(this.messages)
+      .subscribe(splices => this.messagesMutated(splices));
 
   }
 
@@ -91,25 +97,29 @@ export class MessageView {
     if (this.cfg.type === MessageType.INLINE) {
       this.cfg.alias = this.cfg.alias + ' Says: ';
     }
+  }
 
+  messagesMutated(splices) {
+    this.filter(this.messages[this.messages.length - 1]);
   }
 
 
 
-  public filter() {
-
-    let images = this.getImages(this.cfg.message);
+  public filter(extraMsg = null as string) {
+    let rawMsg = extraMsg || this.cfg.messages[0]
+      , images = this.getImages(rawMsg)
+    ;
 
     if (images) {
       images.forEach(img => {
-        this.cfg.message = this.cfg.message.replace(
+        rawMsg = rawMsg.replace(
           img,
           `![](${img})`
         );
       });
     }
 
-    let msg = this.md.render(this.cfg.message) as string
+    let msg = this.md.render(rawMsg) as string
       , verses = this.verseFilter.filter(msg)
       , el = this.el.querySelector('.container .content') as HTMLElement
       , div = document.createElement('div')

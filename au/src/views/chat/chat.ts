@@ -86,7 +86,7 @@ export class Chat {
       //   console.log('Average message latency:', total / measures.length)
       // }
       if (msg.type == MessageType.SERVER) {
-        this.addMessage(msg.message, MessageType.SERVER);
+        this.addMessage(msg.message[0], MessageType.SERVER);
       } else {
         this.ports.main.addMessage(new Message({
           alias: msg.alias,
@@ -140,7 +140,7 @@ export class Chat {
   setMsgPortFocus(port: Port) {
     this._activePort = port;
 
-    for (var p in this.ports) {
+    for (let p in this.ports) {
       if (this.ports[p] !== port) {
         (<Port>this.ports[p]).active = false;
       }
@@ -149,7 +149,7 @@ export class Chat {
     port.active = true;
   }
 
-  addMessage(msg: string, type: MessageType, severity = MessageSeverity.NEUTRAL) {
+  addMessage(msg: string, type: MessageType, severity = MessageSeverity.NEUTRAL, forceAlias = '') {
 
     let alias = '';
 
@@ -158,7 +158,7 @@ export class Chat {
       case MessageType.EMOTE:    alias = this.alias; break;
       case MessageType.CLIENT:   alias = 'Client';   break;
       case MessageType.SERVER:   alias = 'Server';   break;
-      case MessageType.IMPLICIT: alias = '';         break;
+      case MessageType.IMPLICIT: alias = forceAlias; break;
       case MessageType.INLINE:
         let parts = msg.split(';', 2);
         alias  = parts[0].trim();

@@ -6,6 +6,7 @@ import * as moment from 'moment';
 export class Blog {
 
   public isLoading = true;
+  public isError = false;
   public eOptiscroll: HTMLElement;
   public entries = {} as contentful.Entries;
 
@@ -26,7 +27,11 @@ export class Blog {
       this._scriptsLoaded = true;
       this._loadPage();
     };
-    contentful.src = '//unpkg.com/contentful@latest/browser-dist/contentful.min.js';
+    contentful.onerror = () => {
+      this.isLoading = false;
+      this.isError = true;
+    };
+    contentful.src = '//unpkg.com/contentful@3.8.1/browser-dist/contentful.min.js';
     head.appendChild(contentful);
   }
 
@@ -55,7 +60,6 @@ export class Blog {
       return;
     }
     if (this._scriptsLoaded) {
-      console.log('scripts loaded HOPEFULLY');
       this._scrollBar = new Optiscroll(this.eOptiscroll, {
         autoUpdate: true
       });
@@ -64,8 +68,11 @@ export class Blog {
   }
 
   detached() {
-    this._scrollBar.destroy();
-    this.isLoading = true;
+    if (!this.isError) {
+      this._scrollBar.destroy();
+      this.isLoading = true;
+    }
+
   }
 
   private _slice(list: NodeList): HTMLElement[] {

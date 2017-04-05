@@ -3,6 +3,7 @@ template
   require(from='../../resources/value-converters/date-format')
   section.blog-container
     div.preloader(style.bind='isLoading ? "" : "display: none"')
+    div.error(if.bind='isError') let the #[span.info admin] know an #[span.fail error] occurred
     div.optiscroll(ref='eOptiscroll')
       div.dev-blog.optiscroll-content(
         class.bind='isLoading ? "" : "is-loaded"'

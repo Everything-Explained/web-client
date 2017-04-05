@@ -21,10 +21,10 @@ export class Changelog {
   constructor() {
 
     Web.GET('/changelog', {},
-
-    (err, code, data) => {
-      this.logs = data;
-    });
+      (err, code, data) => {
+        this.logs = data;
+      }
+    );
 
 
 
