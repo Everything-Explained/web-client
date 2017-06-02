@@ -6,7 +6,7 @@ import * as pug from 'gulp-pug';
 import {build} from 'aurelia-cli';
 let project =  require('../aurelia.json');
 
-export default function processMarkup() {
+export default function processPug() {
 
   let p = pug();
 

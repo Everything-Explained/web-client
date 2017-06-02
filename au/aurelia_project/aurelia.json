@@ -1,18 +1,22 @@
 {
-  "name": "au-client",
+  "name": "au",
   "type": "project:application",
   "platform": {
     "id": "web",
     "displayName": "Web",
     "output": "scripts",
-    "index": "index.html"
+    "index": "index.html",
+    "baseDir": "."
   },
   "transpiler": {
     "id": "typescript",
     "displayName": "TypeScript",
     "fileExtension": ".ts",
     "dtsSource": [
-      "./typings/**/*.d.ts",
+      "./typings/3rd Party/**/*.d.ts",
+      "./typings/globals/angular-protractor/*.d.ts",
+      "./typings/globals/selenium-webdriver/*.d.ts",
+      "./typings/globals.d.ts",
       "./custom_typings/**/*.d.ts"
     ],
     "source": "src/**/*.ts"
@@ -27,10 +31,10 @@
     ]
   },
   "cssProcessor": {
-    "id": "css",
-    "displayName": "css",
+    "id": "none",
+    "displayName": "None",
     "fileExtension": ".css",
-    "source": "src/app.css"
+    "source": "src/**/*.css"
   },
   "editor": {
     "id": "vscode",
@@ -42,11 +46,11 @@
   },
   "paths": {
     "root": "src",
-    "resources": "src/resources",
-    "elements": "src/resources/elements",
-    "attributes": "src/resources/attributes",
-    "valueConverters": "src/resources/value-converters",
-    "bindingBehaviors": "src/resources/binding-behaviors"
+    "resources": "resources",
+    "elements": "resources/elements",
+    "attributes": "resources/attributes",
+    "valueConverters": "resources/value-converters",
+    "bindingBehaviors": "resources/binding-behaviors"
   },
   "build": {
     "targets": [
@@ -54,7 +58,8 @@
         "id": "web",
         "displayName": "Web",
         "output": "scripts",
-        "index": "index.html"
+        "index": "index.html",
+        "baseDir": "."
       }
     ],
     "loader": {
@@ -88,10 +93,13 @@
         "name": "vendor-bundle.js",
         "prepend": [
           "node_modules/bluebird/js/browser/bluebird.core.js",
-          "src/libs/markdownit.min.js",
+          "node_modules/markdown-it/dist/markdown-it.min.js",
+          "node_modules/simplebar/dist/simplebar.js",
+          "node_modules/aurelia-cli/lib/resources/scripts/configure-bluebird.js",
           "node_modules/requirejs/require.js"
         ],
         "dependencies": [
+          "aurelia-animator-css",
           "aurelia-binding",
           "aurelia-bootstrapper",
           "aurelia-dependency-injection",
@@ -131,16 +139,16 @@
             "env": "dev"
           },
           {
-            "name": "moment",
-            "path": "../node_modules/moment/min/moment.min"
-          },
-          {
-            "name": "optiscroll",
-            "path": "../src/libs/optiscroll.min"
-          },
-          {
             "name": "socket.io-client",
-            "path": "../node_modules/socket.io-client/socket.io.min"
+            "main": "./socket.io.min.js",
+            "path": "../node_modules/socket.io-client",
+            "resources": []
+          },
+          {
+            "name": "moment",
+            "main": "./moment.js",
+            "path": "../node_modules/moment",
+            "resources": []
           }
         ]
       }
