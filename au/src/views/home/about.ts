@@ -1,4 +1,7 @@
+import {inject} from 'aurelia-framework';
 
+
+@inject(Element)
 export class About {
 
   private _emailName = this._toArray('noumenae') as string[];
@@ -12,7 +15,9 @@ export class About {
     );
   private _emailVisible = false;
 
-  constructor() {}
+  public text = about;
+
+  constructor(private _el: HTMLElement) {}
 
 
 
@@ -24,6 +29,18 @@ export class About {
     this._till(0, 0, el);
 
 
+  }
+
+  attached() {
+    let el = this._el.querySelector('#PageContent .home');
+    let test = new SimpleBar(el, {
+      autoHide: false,
+      scrollbarMinSize: 16
+    });
+
+    // setTimeout(() => {
+    //   test.recalculate();
+    // }, 1000);
   }
 
 
@@ -71,3 +88,21 @@ export class About {
     return Array.prototype.slice.call(val);
   }
 }
+
+
+const about = `**Hello there!**
+
+_So you want to know what this site is all about huh?_ It's funny, cause I do too! Without people to make this place amazing, it won't be. You are an integral part of whether or not this place will become a bastion of love and understanding...or just another haven for trolling and depravity. Often in our lives we become complacent with each other, deciding that as long as we stay in our own lane, we're _"okay"_. **Are you okay?** Is your life the image of all your imagination? That's what Noumenae is about; it's about the discovery of our potential, together. It's the understanding that there is more to life than what we're doing about it.
+
+If you're still reading, you must be at least a little curious right? At this point you might be wondering about the invite requirements. **No Judgement**, **No Condemnation**, and **No shortage of Love** are all the tenets you need. I don't want anyone to be under any illusions though, so let me make this clear: _We are about the work of God_. No, I do not claim that this site is the literal or metaphorical work of God, but that the people for whom this site was made, are the work of God; and by extension, if you do not believe you are the work of God, then you probably won't see your home here. However, if you have an incling that there is more to you than flesh and blood, then you might've just found your long lost home.
+
+Now obviously because we aren't perfect, this site is not going to be perfect. There will inevitably be arguments from time to time, but they will be dealt with by the spirit of love that we will have for one another. Now, all this _"God-talk"_ aside, there is room for debate surrounding other topics, but the spirit of the site stays the same. Believe it or not, it is possible to think, speak, and be like a human while exhibiting an air of Godliness.
+
+**An air of Godliness is precisely what Noumenae is looking to pull out of its members**.
+
+For a more complete understanding of this site, check out the [Rules] and [FAQ] sections.
+
+
+[Noumenon]:#/faq/noumenae
+[Rules]:#/rules
+[FAQ]:#/faq`;

@@ -254,7 +254,7 @@ export class ClientIO {
     };
 
     if (srv && srv === 'io server disconnect') {
-      msgObj.message = 'Server Shutdown by Admin';
+      msgObj.message = 'Server Closed Connection';
     } else {
       msgObj.message = 'Server Lost Connection';
     }
