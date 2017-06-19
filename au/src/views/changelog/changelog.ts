@@ -17,6 +17,8 @@ export class Changelog {
     data: string;
   } = null;
 
+  public isAttached = false;
+
 
   constructor() {
 
@@ -66,5 +68,11 @@ export class Changelog {
     setTimeout(() => {
       this.clicked = true;
     }, 0);
+  }
+
+  attached() {
+    setTimeout(() => {
+      this.isAttached = true;
+    }, 30);
   }
 }

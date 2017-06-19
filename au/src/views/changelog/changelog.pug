@@ -2,14 +2,16 @@
 
 template
   require(from='../../resources/value-converters/date-format')
-  section.changelog.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
+  section.changelog(
+    class='${isAttached ? "page-in" : "g-hidden"}'
+  )
     section#ChangeList
       span.title(repeat.for='log of logs'
-                 class='${clicked ? "hidden" : "visible"}'
+                 class='${clicked ? "g-hidden" : "g-visible"}'
                  click.delegate='open(log.timeStamp)')
         div.description(innerHTML.bind='log.title')
         div.date ${log.timeStamp | dateFormat: '@STD'}
 
-    article#Changes(innerhtml.bind='changes', class='${clicked ? "visible" : "hidden"}')
+    article#Changes(innerhtml.bind='changes', class='${clicked ? "g-visible" : "g-hidden"}')
 
-    aside.close.icon-close(click.delegate='close()', class='${clicked ? "visible" : "hidden"}')
+    aside.close.icon-close(click.delegate='close()', class='${clicked ? "g-visible" : "g-hidden"}')

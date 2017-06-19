@@ -1,6 +1,8 @@
 ﻿template
   //- section.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
-  article.home.au-animate(role='rules')
+  article.home.au-animate(
+    class='${isAttached ? "page-in" : "g-hidden"}'
+    role='rules')
     div.rules-container.content
       span.rule Love
       span.def.

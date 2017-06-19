@@ -42,6 +42,8 @@ export class Chat {
 
   scriptures: IScriptures;
 
+  isAttached = false;
+
 
   ports = {
     main:   new Port('main', this),
@@ -123,6 +125,10 @@ export class Chat {
     this.ports.top.portContainer    = document.getElementById('Pane0');
     this.ports.center.portContainer = document.getElementById('Pane1');
     this.ports.bottom.portContainer = document.getElementById('Pane2');
+
+    setTimeout(() => {
+      this.isAttached = true;
+    }, 30);
 
   }
 

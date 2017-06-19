@@ -1,4 +1,9 @@
+import {inject} from 'aurelia-framework';
+
+@inject(Element)
 export class Faq {
+
+  public isAttached = false;
 
   private _page: HTMLElement;
   private _questions: HTMLElement[];
@@ -7,21 +12,13 @@ export class Faq {
   private _scrollBar: IOptiscrollInstance;
   private _searchParam: string;
 
-  constructor() {}
+  constructor(private _el: HTMLElement) {}
 
   attached() {
     this._page = document.querySelector('article.faq') as HTMLElement;
     this._questions = this.nodeToArray(this._page.querySelectorAll('div.question'));
 
     this._eAnswer = document.getElementById('Answers').firstChild as HTMLElement;
-
-    this._scrollBar = new Optiscroll(document.getElementById('Questions'), {
-      autoUpdate: true
-    });
-
-    new Optiscroll(document.getElementById('Answers'), {
-      autoUpdate: true
-    });
 
     if (this._searchParam) {
       let ev = document.createEvent('HTMLEvents')
@@ -31,6 +28,14 @@ export class Faq {
       el.value = this._searchParam;
       el.dispatchEvent(ev);
     }
+
+
+    setTimeout(() => {
+      this.isAttached = true;
+    }, 30);
+
+
+
   }
 
   activate(params) {

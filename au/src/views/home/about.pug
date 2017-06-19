@@ -6,4 +6,7 @@
 - var noumenae = "<a href='#/faq/noumenae'>Here</a>"
 template
   require(from='../../resources/value-converters/markdown-format')
-  article.home.au-animate(role='about' innerhtml.bind='text | markdown')
+  article.home.au-animate(
+    class='${isAttached ? "page-in" : "g-hidden"}'
+    role='about'
+    innerhtml.bind='text | markdown')

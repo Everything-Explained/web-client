@@ -14,8 +14,10 @@ export class About {
       .concat(['.', 'c', 'o', 'm'])
     );
   private _emailVisible = false;
+  private calculateTimeout: NodeJS.Timer = null;
 
   public text = about;
+  public isAttached = false;
 
   constructor(private _el: HTMLElement) {}
 
@@ -33,14 +35,11 @@ export class About {
 
   attached() {
     let el = this._el.querySelector('#PageContent .home');
-    let test = new SimpleBar(el, {
-      autoHide: false,
-      scrollbarMinSize: 16
-    });
 
-    // setTimeout(() => {
-    //   test.recalculate();
-    // }, 1000);
+    setTimeout(() => {
+      this.isAttached = true;
+    }, 30);
+
   }
 
 

@@ -19,7 +19,7 @@ template
       a.modal-close(href='javascript:void(0)') &#10060;
 
 
-  section.anim-container(class='${router.isNavigating ? "hidden" : "visible"}')
+  section.anim-container(class='${isAttached ? "g-visible" : "g-hidden"}')
     section#ChatContainer
       section#MainWindow
         div#MainPort.optiscroll

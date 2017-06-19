@@ -13,7 +13,7 @@ $header
   font-size 34px
   font-family $ff-verdana
   text-align center
-  background $panel
+  background hsl(0, 0%, 9.7%)
   border-top-left-radius 13px
   border-top-right-radius 13px
 
@@ -42,12 +42,14 @@ $content
 article.home
   position relative
   display flex
+  opacity 0
   -ms-flex-direction column
   flex-direction column
+  overflow-x: auto
   margin 0 auto
+  transition all .15s linear
+  transform translateZ(0)
   b, i, em, strong
-    // color hsl(50, 50%, 50%)
-    // font-family: Source Code Pro
     word-spacing: -1px
     font-style: normal
     font-weight: 400
@@ -69,7 +71,7 @@ article[role='about']
     @extend $content
     margin-bottom 7px
     margin-top 0
-    margin-right 22px
+    margin-right 11px
     transition: all .3s ease
     &:last-child
       margin-bottom 50px
@@ -80,17 +82,16 @@ article[role='about']
 
 
 article[role='rules']
-  position relative
   border-top 4px solid transparent
   border-left 6px solid transparent
 
   .rules-container
     @extend $content
-    position relative
+    min-height: min-content
     margin-bottom: 5px
-    margin-right 23px
+    margin-right 11px
     display flex
-    background-color: transparent
+    background-color: hsl(0, 0%, 6.7%)
     border-top-right-radius 0
     border-top-left-radius 0
     padding 0
@@ -113,7 +114,7 @@ article[role='rules']
     text-align center
     font-size 21px
     background-color: hsl(0, 0%, 9.7%)
-    color $article-subheader-color
+    color hsl(0, 0%, 75%)
     transition: background .3s, color .3s
 
   .def
@@ -151,7 +152,13 @@ article[role='FAQ']
     flex-direction row
 
   .scroller
-    padding-right 16px
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    padding-right 5px
+    overflow auto
 
   .question-panel
     display flex
@@ -161,14 +168,20 @@ article[role='FAQ']
     margin-left 7px
 
   #Questions
+    position: relative
     min-width 325px
+    margin-right 5px
     flex 1
 
   #Answers
+    position: relative
     flex 1
     background-color #1f1f1f
-    padding-left 5px
     min-width 400px
+    margin-right 20px
+    .scroller
+      padding 0
+      margin-right -20px
     h1
       font-size 30px
       font-family 'Comfortaa'
@@ -193,7 +206,7 @@ article[role='FAQ']
       line-height: 27px
       // box-shadow 3px 3px 21px 0 #000
       transition background .3s
-      margin 17px 13px 27px 21px
+      margin 17px 30px 27px 21px
       &:hover
         background-color: hsl(278, 30%, 10%)
 
