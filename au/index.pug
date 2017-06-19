@@ -49,32 +49,27 @@ html
       a:hover {
         color: #d4bd2b;
       }
-      .visible {
+      .g-visible {
         visibility: visible;
         opacity: 1;
         transition: all 0.3s;
       }
-      .hidden {
+      .g-hidden {
         visibility: hidden;
         opacity: 0;
       }
-      .au-enter-active {
-        animation: myFadeIn 0.7s;
+      .page-in {
+        opacity: 1 !important;
+      }
+      .anim-leave {
+        animation: MyFadeIn 0.7s reverse;
       }
       .body-loader {
         position: fixed;
-        top: 100px;
+        top: 0;
         right: 0;
         left: 0;
         bottom: 0;
-        text-align: center;
-      }
-      .body-loader span {
-        position: relative;
-        top: -20px;
-        color: hsl(50, 50%, 50%);
-        font-size: 24px;
-        font-family: 'Roboto';
       }
       ::selection {
         background: rgba(212,189,43,0.185);
@@ -114,7 +109,7 @@ html
         opacity: 0.5;
         pointer-events: auto;
       }
-      .cover {
+      .conditions {
         position: absolute;
         display: none;
         top: 0;
@@ -124,7 +119,7 @@ html
         background-color: #111;
         z-index: 10000;
       }
-      .cover .response {
+      .conditions .response {
         display: block;
         width: 100%;
         font-family: Comfortaa, Verdana, Geneva, sans-serif;
@@ -136,38 +131,37 @@ html
         padding-top: 100px;
         text-align: center;
       }
-      .cover span {
+      .conditions span {
         position: relative;
         top: -10px;
         color: #7de888;
-        lobster: pickles;
       }
-      .cover .container {
+      .conditions .container {
         position: relative;
         display: block;
         margin-top: 77px;
         text-align: center;
       }
-      .cover a:link,
-      .cover a:hover,
-      .cover a:active,
-      .cover a:visited {
+      .conditions a:link,
+      .conditions a:hover,
+      .conditions a:active,
+      .conditions a:visited {
         text-decoration: none !important;
         border: none !important;
       }
-      .cover .fail {
+      .conditions .fail {
         position: relative;
         top: 10px;
         color: #ff80cc;
       }
-      .cover .icon {
+      .conditions .icon {
         display: inline-block;
         width: 180px;
         height: 128px;
         background-position: center center;
         background-repeat: no-repeat;
       }
-      .cover .icon:before {
+      .conditions .icon:before {
         position: absolute;
         display: block;
         width: 180px;
@@ -183,25 +177,25 @@ html
         white-space: pre;
         transition: all 0.3s;
       }
-      .cover .icon:hover:before {
+      .conditions .icon:hover:before {
         opacity: 1;
       }
-      .cover .firefox {
+      .conditions .firefox {
         background-image: url("http://img04.deviantart.net/1fbf/i/2004/09/3/5/firefox_dock_icon_v3.png");
       }
-      .cover .firefox:before {
+      .conditions .firefox:before {
         content: 'Try \a FireFox!';
       }
-      .cover .chrome {
+      .conditions .chrome {
         background-image: url("http://icons.iconarchive.com/icons/franksouza183/fs/128/Apps-google-chrome-icon.png");
       }
-      .cover .chrome:before {
+      .conditions .chrome:before {
         content: 'Try \a Google Chrome!';
       }
-      .cover .opera {
+      .conditions .opera {
         background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/128px-Opera_2015_icon.svg.png");
       }
-      .cover .opera:before {
+      .conditions .opera:before {
         content: 'Try \a Opera!';
       }
       .cssload-container {
@@ -403,11 +397,14 @@ html
           opacity: 0;
         }
       }
+    //- END STYLES
+    link(rel='stylesheet' href='//unpkg.com/simplebar@2.3.2/dist/simplebar.css')
     link(rel='stylesheet' href='/au/src/app.css')
     meta(
       name='google-signin-client_id'
       content='307312730681-l12c0r4a669fb6vmmvg4seq1uebqq1fd.apps.googleusercontent.com'
     )
+    //- script(src='//unpkg.com/simplebar@2.3.2/dist/simplebar.js')
     script(src='/au/src/libs/live.js')
 
     //- ////////////////////////////////////////
@@ -420,17 +417,17 @@ html
 
   body(aurelia-app='au-config')
     noscript
-      div.cover(style='display: inline-block')
+      div.conditions(style='display: inline-block')
         div.response you must enable #[span javascript] for this site to run
 
     div.body-loader
       div.preloader
       span Loading Noumenae Alpha...
 
-    div#cookie.cover
+    div#cookie.conditions
       div.response you must enable #[span cookies] for this site to run
 
-    div#failure.cover
+    div#failure.conditions
       div.response your #[span browser] has #[span.fail failed] you
       div.container
         a.chrome.icon(href='https://chrome.google.com')

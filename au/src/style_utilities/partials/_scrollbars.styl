@@ -1,4 +1,43 @@
 
+
+article.home::-webkit-scrollbar,
+article.home .scroller::-webkit-scrollbar
+	width 13px
+	border 2px solid hsl(278, 10%, 20%)
+	border-radius: 3px
+	background hsl(0, 0%, 0%)
+
+article.home::-webkit-scrollbar-thumb,
+article.home .scroller::-webkit-scrollbar-thumb
+	background hsl(278, 13%, 27%)
+	border-radius: 3px
+
+article.home .scroller::-webkit-scrollbar
+	width 7px
+	border none
+
+article.home #Answers .scroller::-webkit-scrollbar
+	width 13px
+	border 2px solid hsl(278, 10%, 20%)
+
+
+.simplebar-track .simplebar-scrollbar
+	background: hsl(50, 100%, 27%)
+	width 10px
+	border-radius: 2px
+	&.visible
+		opacity 1
+		transition background .3s ease
+		&:hover, &:active
+			background hsl(50, 100%, 40%)
+			cursor pointer
+
+.simplebar-track
+	background hsl(50, 0%, 0%)
+	border 1px solid hsl(0, 0%, 17%)
+	width 16px
+
+
 // SCROLLBAR STYLE
 .optiscroll-v,
 .optiscroll-h
