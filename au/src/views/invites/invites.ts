@@ -4,27 +4,29 @@ import {computedFrom} from 'aurelia-framework';
 
 export class Invites {
 
-  minMsgLen  = 200; // Characters needed to submit message
-  minNameLen = 4;  // Characters needed to submit name
-  nameLen = 0;
-  msgLen = 0;
-  msgLimits = {
+  public minMsgLen  = 200; // Characters needed to submit message
+  public minNameLen = 4;  // Characters needed to submit name
+  public nameLen = 0;
+  public msgLen = 0;
+  public msgLimits = {
     hours: 0,
     minutes: 0
   };
 
-  isLoading = true;
+  public isAttached = false;
+
+  public isLoading = true;
   private _isMsgSent = false;
   private _isMsgFailed = false;
   private _isMsgLimited = false;
 
-  isEmailValid = false;
+  public isEmailValid = false;
 
-  elMsg: HTMLInputElement;
-  elName: HTMLInputElement;
-  elEmail: HTMLInputElement;
+  public elMsg: HTMLInputElement;
+  public elName: HTMLInputElement;
+  public elEmail: HTMLInputElement;
 
-  exEmail = new RegExp('/^.+@.+\..+$/');
+  public exEmail = new RegExp('/^.+@.+\..+$/');
 
   constructor() {
     Web.GET('/internal/canrequestinvite', {}, (err, code, data) => {
@@ -160,5 +162,11 @@ export class Invites {
         rs({code, data});
       });
     });
+  }
+
+  public attached() {
+    setTimeout(() => {
+      this.isAttached = true;
+    }, 50);
   }
 }
