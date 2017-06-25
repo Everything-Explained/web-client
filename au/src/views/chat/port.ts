@@ -13,7 +13,6 @@ export class Port {
   private _isActive = false;
   private _view: Message[];
   private _chatView: Chat;
-  private _scrollObj: IOptiscrollInstance;
 
   constructor(name: string, chatview: Chat, scale = 'medium') {
 
@@ -50,11 +49,6 @@ export class Port {
     this._oPort = <HTMLElement> obj.children[0];
     this._oTray = <HTMLElement> this._oPort.children[0];
 
-    if (this.name == 'main') {
-      this._scrollObj = new Optiscroll(this._oPort, {
-        autoUpdate: false
-      });
-    }
   }
 
 
@@ -134,10 +128,12 @@ export class Port {
 
   scrollPort() {
 
+    if (this._oTray.scrollTop < (this._oTray.scrollHeight - this._oTray.clientHeight)) {
+      return;
+    }
     setTimeout(() => {
-      this._scrollObj.scrollTo(false, 'bottom', 300);
+      this._oTray.scrollTop = this._oTray.scrollHeight;
     }, 30);
-
 
   }
 
