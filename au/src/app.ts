@@ -3,7 +3,6 @@ import {Router, NavModel, RouterConfiguration } from 'aurelia-router';
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {Page, PageElement} from './helpers/page';
-import {$} from './helpers/domop';
 import * as encrypt from './helpers/cheap-encrypt';
 import {Login} from './app-login';
 // import {Logger} from './helpers/logger';
@@ -186,6 +185,7 @@ export class App {
       }
       if (!foundActiveItem) {
         this.populateRoutes(this.mainMenu[0]);
+        this.mainMenu[0].isActive = true;
       }
 
     });
@@ -200,20 +200,6 @@ export class App {
 
     this._eva.subscribe('router:navigation:complete', payload => {
 
-      // ############   HANDLE PAGE SCROLLBARS   ############ //
-      // Make sure there are no active scrollbars
-      if (this._scrollbars) this._scrollbars.destroy();
-
-      if (!this._isFirstNavigation) {
-        let content = document.getElementById('PageContent');
-
-        // Only activate scrollbar if the page contains the optiscroll class
-        if (content.querySelector('section.optiscroll-content')) {
-          this._scrollbars = new Optiscroll(content, {
-            autoUpdate: true
-          });
-        }
-      }
 
       if (this._session.isFirstSignin) {
         for (let r of this.mainMenu[0].routes) {
@@ -407,17 +393,6 @@ export class App {
 
     let req = new XMLHttpRequest()
       , lights = localStorage.getItem('lights');
-
-
-    if (this._isFirstNavigation) {
-      let content = document.getElementById('PageContent');
-
-      if (content.querySelector('section.optiscroll-content')) {
-        this._scrollbars = new Optiscroll(document.getElementById('PageContent'), {
-          autoUpdate: true
-        });
-      }
-    }
     this._isFirstNavigation = false;
 
 
