@@ -2,6 +2,7 @@
 
 template
   require(from='../../resources/value-converters/date-format')
+  require(from='../../resources/value-converters/markdown-format')
   section.changelog(
     class='${isAttached ? "page-in" : "g-hidden"}'
   )
@@ -12,6 +13,6 @@ template
         div.description(innerHTML.bind='log.title')
         div.date ${log.timeStamp | dateFormat: '@STD'}
 
-    article#Changes(innerhtml.bind='changes', class='${clicked ? "g-visible" : "g-hidden"}')
+    article#Changes(innerhtml.bind='changes | markdown: true', class='${clicked ? "g-visible" : "g-hidden"}')
 
     aside.close.icon-close(click.delegate='close()', class='${clicked ? "g-visible" : "g-hidden"}')

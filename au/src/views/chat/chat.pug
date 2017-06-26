@@ -22,8 +22,8 @@ template
   section.anim-container(class='${isAttached ? "g-visible" : "g-hidden"}')
     section#ChatContainer
       section#MainWindow
-        div#MainPort.optiscroll
-          div.message-tray.optiscroll-content
+        div#MainPort
+          div.message-tray
             message-view.message(
               repeat.for='msg of ports.main._view'
               cfg.bind='msg'
