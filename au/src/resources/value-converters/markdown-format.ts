@@ -1,7 +1,7 @@
 
 
 export class MarkdownValueConverter {
-  toView(val: string) {
+  toView(val: string, useHTML: boolean) {
     let md = window['markdownit'];
     if (!md) {
       console.warn('Markdown Not Loaded');
@@ -9,12 +9,23 @@ export class MarkdownValueConverter {
     }
 
     if (!md.render) {
-      md = md({breaks: true});
+      window['mdHTML'] = md({
+        html: true,
+        breaks: true,
+        typographer: true,
+        quotes: '“”‘’'
+      });
+      md = md({
+        breaks: true,
+        typographer: true,
+        quotes: '“”‘’'
+      });
       this._createLinkTargetBlank(md);
+      this._createLinkTargetBlank(window['mdHTML']);
       this._createGreekInline(md);
     }
 
-    let html = md.render(val);
+    let html = (useHTML) ? window['mdHTML'].render(val) : md.render(val);
     // Force all PRE (code) elements into P (Paragraph) elements
     html = html.replace(/\<pre\>/g, '<div class="code"><pre>');
     html = html.replace(/\<\/pre\>/g, '</pre></div>');
@@ -32,8 +43,11 @@ export class MarkdownValueConverter {
       };
 
     md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
-      let aIndex = tokens[idx].attrIndex('target');
-      tokens[idx].attrPush(['target', '_blank']); // Add new attribute
+      if (~tokens[idx].attrGet('href').indexOf('http')) {
+        let aIndex = tokens[idx].attrIndex('target');
+        tokens[idx].attrPush(['target', '_blank']); // Add new attribute
+      }
+
       return defaultLinkRenderer(tokens, idx, options, env, self);
     };
   }
