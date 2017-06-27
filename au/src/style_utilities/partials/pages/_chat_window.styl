@@ -207,7 +207,8 @@ $chat-message-right-margin = 13px
     padding-right: 5px
     font-size: 18px
     font-family: 'Source Code Pro', 'consolas', monospace
-    div p:last-child
+    @extend .md-chat-message
+    div & p:last-child
       margin-bottom 10px
 
     a:visited,

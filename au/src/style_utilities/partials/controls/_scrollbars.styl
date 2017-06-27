@@ -1,0 +1,37 @@
+
+
+article.home::-webkit-scrollbar,
+article.home .scroller::-webkit-scrollbar,
+.changelog #Changes::-webkit-scrollbar,
+.invite-page::-webkit-scrollbar,
+#MainWindow .message-tray::-webkit-scrollbar,
+.blog-container .dev-blog::-webkit-scrollbar
+	width 13px
+	border 2px solid hsl(278, 10%, 20%)
+	border-radius: 3px
+	background hsl(0, 0%, 0%)
+
+article.home::-webkit-scrollbar-thumb,
+article.home .scroller::-webkit-scrollbar-thumb,
+.modal-container section::-webkit-scrollbar-thumb,
+.changelog #Changes::-webkit-scrollbar-thumb,
+.invite-page::-webkit-scrollbar-thumb,
+#MainWindow .message-tray::-webkit-scrollbar-thumb,
+.blog-container .dev-blog::-webkit-scrollbar-thumb
+	background hsl(278, 17%, 30%)
+	border-radius: 3px
+	&:hover
+		background hsl(278, 23%, 40%)
+
+article.home .scroller::-webkit-scrollbar,
+#MainWindow .message-tray::-webkit-scrollbar
+	width 7px
+	border none
+
+.modal-container section::-webkit-scrollbar
+	width 8px
+	border none
+
+article.home #Answers .scroller::-webkit-scrollbar
+	width 13px
+	border 2px solid hsl(278, 10%, 20%)

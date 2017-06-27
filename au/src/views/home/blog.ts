@@ -11,7 +11,7 @@ export class Blog {
   public entries = {} as contentful.Entries;
 
 
-  private _scriptsLoaded = false;
+  public scriptsLoaded = false;
   private _isFirstLoad = true;
   private _scrollBar: IOptiscrollInstance;
 
@@ -24,7 +24,7 @@ export class Blog {
 
     contentful.async = true;
     contentful.onload = () => {
-      this._scriptsLoaded = true;
+      this.scriptsLoaded = true;
       this._loadPage();
     };
     contentful.onerror = () => {
@@ -46,33 +46,27 @@ export class Blog {
       .then(entries => {
         this.entries = entries;
         setTimeout(() => {
-          this._scrollBar = new Optiscroll(this.eOptiscroll, {
-            autoUpdate: true
-          });
           this.isLoading = false;
         }, 200);
       });
   }
 
   attached() {
-    if (this._isFirstLoad) {
-      this._isFirstLoad = false;
-      return;
-    }
-    if (this._scriptsLoaded) {
-      this._scrollBar = new Optiscroll(this.eOptiscroll, {
-        autoUpdate: true
-      });
-      this.isLoading = false;
+    // if (this._isFirstLoad) {
+    //   this._isFirstLoad = false;
+    //   return;
+    // }
+    if (this.scriptsLoaded) {
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 50);
     }
   }
 
   detached() {
     if (!this.isError) {
-      this._scrollBar.destroy();
       this.isLoading = true;
     }
-
   }
 
   private _slice(list: NodeList): HTMLElement[] {

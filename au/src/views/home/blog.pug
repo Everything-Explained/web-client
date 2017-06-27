@@ -4,14 +4,13 @@ template
   section.blog-container
     div.preloader(style.bind='isLoading ? "" : "display: none"')
     div.error(if.bind='isError') let the #[span.info admin] know an #[span.fail error] occurred
-    div.optiscroll(ref='eOptiscroll')
-      div.dev-blog.optiscroll-content(
-        class.bind='isLoading ? "" : "is-loaded"'
-        ref='devBlog'
-      )
-        div.container(repeat.for='item of entries.items')
-          div.separator
-          h1(data-date='${item.sys.createdAt | dateFormat: "@STD"}').
-            ${item.fields.title.toLowerCase()}
-          div.separator
-          article(innerHTML.bind='item.fields.body | markdown')
+    div.dev-blog(
+      class='${isLoading ? "" : "is-loaded"}'
+      ref='devBlog'
+    )
+      div.container(repeat.for='item of entries.items')
+        div.separator
+        h1(data-date='${item.sys.createdAt | dateFormat: "@STD"}').
+          ${item.fields.title.toLowerCase()}
+        div.separator
+        article(innerHTML.bind='item.fields.body | markdown')
