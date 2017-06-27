@@ -7,10 +7,7 @@ template
       aside.logo(click.delegate='test()')
 
 
-
-    div#PageTransition(class='${page.overlay? "active" : ""}')
-
-    section#TrayTop.buffer
+    section#TrayTop
       aside.watermark
         span alpha
           span.num ${version}
@@ -23,7 +20,7 @@ template
                      \${route.config.classes ? route.config.classes : ""} `) ${route.config.name}
 
     section#PageMiddle
-      section#TrayLeft(class='buffer2 ${utils.page.leftTray.className}')
+      section#TrayLeft(class='${utils.page.leftTray.className}')
         menu#MainMenu
           ul
             li( repeat.for='item of mainMenu'
@@ -32,7 +29,3 @@ template
                 innerhtml='<span>${item.name}</span>')
 
       router-view#PageContent
-
-      section#TrayRight(class='buffer2 ${page.rightTray.className}')
-
-    footer#TrayBottom.buffer
