@@ -15,7 +15,7 @@ export function copyAdmin() {
     '../admin/**/**.css',
     '!../admin/node_modules/**',
     '../admin/package.json'
-  ]
+  ];
 
   return gulp.src(src)
     .pipe(gulp.dest('../releaseV2/admin'))
@@ -25,7 +25,7 @@ export function copyStaticErrors() {
   let files = [
     '../static_errors/**.pug',
     '../au/src/style_utilities/static.css'
-  ]
+  ];
 
   return gulp.src(files)
     .pipe(replace('../au/src/style_utilities/static.css', 'static.css'))

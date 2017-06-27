@@ -23,5 +23,5 @@ export function readyApp() {
 export function readyCSS() {
   return gulp.src('../au/aurelia_project/tasks/build.ts')
     .pipe(replace('// processCSS', 'processCSS'))
-    .pipe(gulp.dest('../au/aurelia_project/tasks', {overwrite: true}))
+    .pipe(gulp.dest('../au/aurelia_project/tasks', {overwrite: true}));
 }
