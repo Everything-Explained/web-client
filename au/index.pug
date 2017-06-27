@@ -2,60 +2,8 @@ doctype html
 html
   head
     style.
-      body,
-      html {
-        font: 14px 'Verdana', 'Geneva', 'Tahoma', sans-serif;
-        background-color: #111;
-        overflow: hidden;
-        height: 100%;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      body,
-      div,
-      article,
-      span,
-      ul,
-      menu,
-      input,
-      textarea,
-      section,
-      a,
-      p,
-      header,
-      footer,
-      button,
-      form,
-      aside,
-      #PageContent,
-      label,
-      pre {
-        padding: 0;
-        margin: 0;
-        line-height: normal;
-        outline: none;
-        border: none;
-        box-sizing: border-box;
-      }
-      a:link,
-      a:visited,
-      a:active {
-        color: inherit;
-        text-decoration: none;
-        border-bottom: 1px dashed hsl(50, 40%, 50%);
-        transition: color 0.3s;
-      }
-      a:hover {
-        color: hsl(278, 70%, 75%);
-      }
-      .g-visible {
-        visibility: visible;
-        opacity: 1;
-        transition: all 0.3s;
-      }
-      .g-hidden {
-        visibility: hidden;
-        opacity: 0;
+      body, html {
+        background: hsl(0, 0%, 6.7%);
       }
       .page-in {
         opacity: 1 !important;
@@ -69,44 +17,6 @@ html
         right: 0;
         left: 0;
         bottom: 0;
-      }
-      ::selection {
-        background: rgba(212,189,43,0.185);
-      }
-      ::-moz-selection {
-        background: rgba(170,170,170,0.3);
-      }
-      input {
-        border: none;
-        font-size: 17px;
-      }
-      main {
-        position: absolute;
-        display: block;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-      }
-      button {
-        font-size: 21px;
-      }
-      #PageTransition {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        background-color: #000;
-        opacity: 0;
-        z-index: 20;
-        pointer-events: none;
-        transition: opacity 0.3s;
-      }
-      #PageTransition.active {
-        opacity: 0.5;
-        pointer-events: auto;
       }
       .conditions {
         position: absolute;
@@ -260,19 +170,6 @@ html
         border: 6px solid #9140bf;
         box-shadow: 0 0 56px #7e00c7, inset 0 0 56px #a766cc;
       }
-      @-o-keyframes ripple {
-        0% {
-          -o-transform: scale(0);
-          opacity: 0;
-        }
-        50% {
-          opacity: 1;
-        }
-        100% {
-          -o-transform: scale(1);
-          opacity: 0;
-        }
-      }
       @-ms-keyframes ripple {
         0% {
           -ms-transform: scale(0);
@@ -284,64 +181,6 @@ html
         100% {
           -ms-transform: scale(1);
           opacity: 0;
-        }
-      }
-      @-webkit-keyframes ripple {
-        0% {
-          -webkit-transform: scale(0);
-          opacity: 0;
-        }
-        50% {
-          opacity: 1;
-        }
-        100% {
-          -webkit-transform: scale(1);
-          opacity: 0;
-        }
-      }
-      @-moz-keyframes ripple {
-        0% {
-          -moz-transform: scale(0);
-          opacity: 0;
-        }
-        50% {
-          opacity: 1;
-        }
-        100% {
-          -moz-transform: scale(1);
-          opacity: 0;
-        }
-      }
-      @-moz-keyframes myFadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-      @-webkit-keyframes myFadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-      @-o-keyframes myFadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-      @keyframes myFadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
         }
       }
       @-moz-keyframes ripple {
