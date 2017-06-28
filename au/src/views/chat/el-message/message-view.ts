@@ -6,6 +6,7 @@ import {Message, IMessage, MessageType} from '../../../views/chat/message';
 import {Chat} from '../../../views/chat/chat';
 import {ClientIO} from '../../../services/clientio';
 import {BibleVerseFilter} from './bible-verse-filter';
+import {MarkdownValueConverter} from '../../../resources/value-converters/markdown-format';
 
 
 export enum WordType {
@@ -29,12 +30,12 @@ export class MessageView {
   @bindable io: ClientIO;
   @bindable messages: string[];
 
-  content:       string;
   realTime:      string;
   realTimeFixed: number;
   relativeTime:  string;
   alias:         string;
   scale:         string;
+
   words = new Array<IWord>();
   md = window['markdownit']({
     breaks: true,
@@ -58,7 +59,7 @@ export class MessageView {
 
   constructor(private el: Element, private _be: BindingEngine) {
     this.verseFilter = new BibleVerseFilter();
-    this._filterLinks(this.md);
+    MarkdownValueConverter._createLinkTargetBlank(this.md);
   }
 
 
@@ -195,26 +196,11 @@ export class MessageView {
 
   }
 
-  private _filterLinks(md: any) {
-    let defaultLinkRenderer =
-      md.renderer.rules.link_open ||
-      function(tokens, idx, options, env, self) {
-        return self.renderToken(tokens, idx, options);
-      };
-
-    md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
-      let aIndex = tokens[idx].attrIndex('target');
-      tokens[idx].attrPush(['target', '_blank']); // Add new attribute
-      return defaultLinkRenderer(tokens, idx, options, env, self);
-    };
-  }
-
 
   public getImages(input: string) {
 
     // Prevent unnecessary filtering
-    if (input.indexOf('http://') == -1 &&
-        input.indexOf('https://') == -1) return [];
+    if (input.indexOf('http[s]?://') == -1) return [];
 
     let msg = input.split(' ')
       , match = null
@@ -223,7 +209,7 @@ export class MessageView {
 
 
     for (let p of msg) {
-      if (match = (/http[s]?:\/\/([a-zA-Z0-9/+-_]\.?)+\.(png|jpg|jpeg|gif)$/g.exec(p))) {
+      if (match = (/http[s]?:\/\/([a-zA-Z0-9/+-_]\.?)+\.(png|jpg|jpeg|gif|bmp)$/g.exec(p))) {
         if (match[0] == p) {
           results.push(p);
         } else {

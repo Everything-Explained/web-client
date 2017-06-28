@@ -1,31 +1,38 @@
 
 
 export class MarkdownValueConverter {
+
+  // TODO - markdownit should be declared in a global typings scope
+  private md: any;
+
   toView(val: string, useHTML: boolean) {
-    let md = window['markdownit'];
-    if (!md) {
+    if (!window['markdownit']) {
       console.warn('Markdown Not Loaded');
       return val;
     }
 
-    if (!md.render) {
-      window['mdHTML'] = md({
+    if (!this.md) {
+      this.md = window['markdownit'];
+    }
+
+    if (!this.md.render) {
+      window['mdHTML'] = this.md({
         html: true,
         breaks: true,
         typographer: true,
         quotes: '“”‘’'
       });
-      md = md({
+      this.md = this.md({
         breaks: true,
         typographer: true,
         quotes: '“”‘’'
       });
-      this._createLinkTargetBlank(md);
-      this._createLinkTargetBlank(window['mdHTML']);
-      this._createGreekInline(md);
+      MarkdownValueConverter._createLinkTargetBlank(this.md);
+      MarkdownValueConverter._createLinkTargetBlank(window['mdHTML']);
+      this._createGreekInline(this.md);
     }
 
-    let html = (useHTML) ? window['mdHTML'].render(val) : md.render(val);
+    let html = (useHTML) ? window['mdHTML'].render(val) : this.md.render(val);
     // Force all PRE (code) elements into P (Paragraph) elements
     html = html.replace(/\<pre\>/g, '<div class="code"><pre>');
     html = html.replace(/\<\/pre\>/g, '</pre></div>');
@@ -34,7 +41,7 @@ export class MarkdownValueConverter {
 
 
 
-  private _createLinkTargetBlank(md) {
+  static _createLinkTargetBlank(md) {
 
     let defaultLinkRenderer =
       md.renderer.rules.link_open ||
