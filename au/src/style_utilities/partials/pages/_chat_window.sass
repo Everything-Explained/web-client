@@ -1,12 +1,12 @@
 
-section.anim-container
+section &.anim-container
   flex: 1
   display: flex
   flex-direction: column
-  transition opacity 0.3s linear
+  transition: opacity 0.3s linear
 
 
-section#ChatContainer
+section &#ChatContainer
   display: flex
   flex: 1 0
 
@@ -21,40 +21,46 @@ section#ChatContainer
 
 
 .chat-input-container
-  color: $chat-input-color
+  color: $h1-color
   background-color: $panel
-  background-clip padding-box
+  background-clip: padding-box
   font-size: 18px
   padding: 7px 5px
-  border-left: 2px solid $win-divider-border-color
-  border-top: 2px solid $win-divider-border-color
+  border-left: 2px solid transparent
+  border-top: 2px solid transparent
   border-bottom-right-radius: 13px
   word-wrap: break-word
   overflow: hidden
+
   pre
     display: inline-block
     font-family: Verdana, Geneva, Tahoma, sans-serif
     max-width: 100%
+
   .suggestion
     color: #ccc
 
 
-$chat-message-right-margin = 13px
 .message
   display: flex
-  margin-bottom 4px
+  margin-bottom: 4px
+
   &.server, &.emote
     background-color: hsl(0, 0%, 9.7%)
-    padding 3px 0
+    padding: 3px 0
+
   &.emote
-    background-color: hsla(278, 100%, 75%, 0.15 / $golden-ratio)
+    background-color: hsla(278, 100%, 75%, .15 / $golden-ratio)
+
   .container
     display: flex
     flex-direction: column
     flex: 1
-    background-color: hsla(0, 100%, 100%, 0.06 / $golden-ratio)
+    background-color: hsla(0, 100%, 100%, .06 / $golden-ratio)
+
     &.normal
-      padding 5px 0 0 5px
+      padding: 5px 0 0 5px
+
     &.emote
       display: none
 
@@ -85,25 +91,28 @@ $chat-message-right-margin = 13px
     .avatar
       position: relative
       border-radius: 8px
-      border: 2px solid $msg-avatar-border-color
+      border: 2px solid hsl(0, 0%, 0%)
+
       &.default
-        text-outline(1px, white)
-        color: $msg-avatar-color
-        border: none
+        +text-outline(1px, white)
+        color: hsl(0, 0%, 80%)
+        border: 0
         background-image: none !important
         top: -8px
         left: 2px
 
     .real-time
       font-size: 12px
-      color: $msg-timestamp-color
+      color: hsl(0, 0%, 50.3%)
 
     &.large
       width: 70px
       height: 90px
+
       &.default
         width: 55px
         margin-right: 0
+
       .avatar
         height: 64px
         width: 64px
@@ -112,24 +121,30 @@ $chat-message-right-margin = 13px
     &.medium
       width: 50px
       height: 60px
+
       &.default
         width: 40px
+
       .avatar
         height: 48px
         width: 48px
         font-size: 50px
+
       .real-time
         display: none
 
     &.small
       width: 35px
       height: 40px
+
       .avatar
         height: 36px
         width: 36px
         font-size: 36px
+
       .default
         top: -3px
+
       .real-time
         display: none
 
@@ -149,19 +164,21 @@ $chat-message-right-margin = 13px
     .left
       display: flex
       align-items: center
+
       .username
         position: relative
         font-family: Delius
         letter-spacing: 1px
-        color: $msg-username-color
-        text-shadow: $msg-username-text-shadow
+        color: $info
+        text-shadow: none
         margin-right: 20px
 
       .relative-time
         position: relative
         font-size: 12px
-        color: $msg-timestamp-color
-        &:before
+        color: hsl(0, 0%, 50.3%)
+
+        &::before
           position: absolute
           content: '\2022'
           left: -13px
@@ -170,9 +187,9 @@ $chat-message-right-margin = 13px
 
     .right
       .real-time
-        margin-right $chat-message-right-margin
+        margin-right: 13px
         font-size: 12px
-        color: $msg-realtime-color
+        color: hsl(0, 0%, 50.3%)
 
     &.large
       .username
@@ -185,11 +202,13 @@ $chat-message-right-margin = 13px
     &.small
       margin-bottom: 0
       margin-left: 2px
+
       .left
         .username
           font-size: 14px
+
         .relative-time
-          display none
+          display: none
   // END MESSAGE INFO
 
 
@@ -198,6 +217,7 @@ $chat-message-right-margin = 13px
   //  Message CONTENT
   /////////////////////////
   .content
+    @extend .md-chat-message
     position: relative
     margin-left: 5px
     display: inline-block
@@ -206,33 +226,38 @@ $chat-message-right-margin = 13px
     padding-right: 5px
     font-size: 18px
     font-family: 'Source Code Pro', 'consolas', monospace
-    @extend .md-chat-message
-    div & p:last-child
-      margin-bottom 10px
 
-    a:visited,
-    a:active,
-    a:link
-      color: $msg-link-color
-      border-bottom: 1px dashed $msg-link-color
-      text-decoration: none
-      transition: border .3s, color .3s
-    a:hover
-      color: $msg-link-hover-color
-      border-bottom: 1px solid $msg-link-hover-color
-      text-decoration: dashed
-    a.verse
-      color: $msg-verse-link-color
-      border-color: $msg-verse-link-color
-    b.invalid-link
-      color: #aaa
-      text-outline(1px, white)
+    div & p:last-child
+      margin-bottom: 10px
+
+    // a:visited,
+    // a:active,
+    // a:link
+    //   color: hsl()
+    //   border-bottom: 1px dashed $msg-link-color
+    //   text-decoration: none
+    //   transition: border .3s, color .3s
+    // a:hover
+    //   color: $msg-link-hover-color
+    //   border-bottom: 1px solid $msg-link-hover-color
+    //   text-decoration: dashed
+    a &.verse
+      color: hsl(327.2, 100%, 80.6%)
+      border-color: hsl(327.2, 100%, 80.6%)
+
+    b &.invalid-link
+      +text-outline(1px, white)
+      color: hsl(0, 0%, 66.7%)
+
     img
       max-width: 100%
+
     &.large
       font-size: large
+
     &.medium
       font-size: 18px
+
     &.small
       top: -3px
       font-size: 14px
@@ -241,29 +266,32 @@ $chat-message-right-margin = 13px
 
 
   // ALL
-  div.client, div.server, div.inline, div.implicit,
-  div.emote
+  div &.client, div &.server,
+  div &.inline, div &.implicit,
+  div &.emote
     display: flex
     flex: 1
-    padding 3px 0
+    padding: 3px 0
+
     .username
       position: relative
       margin-left: 19px
       padding-left: 5px
-      color: $emote-username-color
+      color: $info
       font-size: 16px
       font-family: 'Source Code Pro'
-      &:before
+
+      &::before
+        +text-outline(0, #000)
         position: absolute
         top: -12px
         left: -16px
         content: '\21D2'
         font-size: 32px
         font-style: normal
-        color: $emote-icon-color
-        text-shadow: $emote-msg-bullet-textshadow
+        color: hsl(49, 67.2%, 43%)
+        text-shadow: none
         font-family: 'Source Code Pro'
-        text-outline(0, #000)
 
     .content
       position: relative
@@ -271,136 +299,153 @@ $chat-message-right-margin = 13px
       margin-left: 5px
       font-size: 16px
       font-family: 'Source Code Pro'
-      color: $emote-msg-color
+      color: hsl(50, 50%, 60%)
 
     .real-time
-      margin-right $chat-message-right-margin
+      margin-right: 13px
       text-align: right
       font-size: 12px
-      color: $msg-timestamp-color
+      color: hsl(0, 0%, 50.3%)
   // END EMOTE
 
 
 
-  div.emote, div.implicit
+  div &.emote, div &.implicit
     .username
       position: relative
-      top -2px
-      left 3px
+      top: -2px
+      left: 3px
       font-size: 18px
       text-transform: lowercase
       font-variant: small-caps
-      &:before
-        top -10px
-        left -19px
+
+      &::before
+        top: -10px
+        left: -19px
+
     .content
-      margin-left 10px
+      margin-left: 10px
 
 
   // IMPLICIT
-  div.implicit
-    .content, .username:before
-      color hsl(0, 0%, 45%)
+  div &.implicit
+    .content, .username::before
+      color: hsl(0, 0%, 45%)
+
     .username
-      color hsl(0, 0%, 55%)
+      color: hsl(0, 0%, 55%)
   // END IMPLICIT
 
 
 
 
-  // SERVER
-  div.client,
-  div.server
+    // SERVER
+  div &.client,
+  div &.server
     .username
       margin-left: 19px
       margin-right: 15px
       padding-left: 0
       font-size: 14px
-      color: $server-username-color
-      text-shadow: $server-username-text-shadow
+      color: hsl(23.1, 100%, 75%)
+      text-shadow: none
       font-family: 'Source Code Pro'
-      &:before
+
+      &::before
         top: -13px
-        left -18px
+        left: -18px
         font-size: 30px
-        content '\2022'
-        color: $server-username-color
-        text-shadow: $server-msg-bullet-textshadow
+        content: '\2022'
+        color: hsl(23.1, 100%, 75.1%)
+        text-shadow: none
+
       // TODO: Use border to create triangle (all browser support)
-      &:after
+      &::after
         top: -13px
         left: 52px
         position: absolute
         content: '\2022'
         font-size: 30px
         font-style: normal
-        color: $server-msg-color
-        text-shadow: $server-msg-bullet-textshadow
+        color: $info
+        text-shadow: none
 
     .real-time
       font-size: 12px
 
     .content
-      color: $server-msg-color
-      text-shadow: $server-msg-textshadow
+      color: $info
+      text-shadow: none
       font-family: 'Source Code Pro'
       font-size: 14px
       word-spacing: normal
       margin-left: 6px
-      &:after
-        content ''
+
+      &::after
+        content: ''
 
     &.attention
       .username
-        &:after
-          color: $msg-attention
+
+        &::after
+          color: $attention
+
       .content
-        color: $msg-attention
+        color: $attention
   // END SERVER
 
 
 
   // CLIENT
-  div.client
+  div &.client
     .username
-      color: $client-username-color
-      &:after
-        color: $msg-neutral
-      &:before
-        color: $client-bullet-color
-        text-outline(1px, $client-bullet-outline)
+      color: hsl(0, 0%, 66.7%)
+
+      &::after
+        color: $neutral
+
+      &::before
+        +text-outline(1px, hsl(0, 0%, 0%))
+        color: hsl(0, 0%, 80%)
 
     .content
-      color: $client-msg-color
-      text-shadow: $client-text-shadow
+      color: hsl(0, 0%, 50%)
+      text-shadow: none
 
     &.attention
       .username
-        &:after
-          color: $msg-attention
+
+        &::after
+          color: $attention
+
       .content
-        color: $msg-attention
+        color: $attention
 
     &.normal
       .username
-        &:after
-          color: $msg-info
-      .content
-        color: $msg-info
 
-  div.implicit
+        &::after
+          color: $info
+
+      .content
+        color: $info
+
+  div &.implicit
     .username
-      &:after
+
+      &::after
         display: none
 
-  div.inline
+  div &.inline
     .username
-      color: $inline-username-color
+      color: hsl(278, 70%, 83%)
       margin-right: 5px
-      &:before
-        color: $inline-username-color
-        text-shadow: $inline-msg-bullet-textshadow
-      &:after
+
+      &::before
+        color: hsl(278, 70%, 83%)
+        text-shadow: none
+
+      &::after
         display: none
 
 
@@ -414,9 +459,9 @@ section#MainWindow
   #MainPort
     position: relative
     // background-color: hsla(0, 100%, 100%, 0.06 / $golden-ratio)
-    background-clip padding-box
-    border-left: 2px solid $win-divider-border-color
-    border-top: 2px solid $win-divider-border-color
+    background-clip: padding-box
+    border-left: 2px solid transparent
+    border-top: 2px solid transparent
     border-top-left-radius: 7px
     flex: 1 1 0
     flex-direction: column
@@ -427,18 +472,18 @@ section#MainWindow
 
     .message-tray
       position: absolute
-      top 0
-      left 0
-      right 0
-      bottom 0
-      padding-right 5px
-      margin-right 2px
-      overflow-x auto
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      padding-right: 5px
+      margin-right: 2px
+      overflow-x: auto
       display: block
 
 
 
-section#PartialWindow
+section &#PartialWindow
   width: 200px
   //display: flex;
   flex-direction: column
@@ -448,51 +493,54 @@ section#PartialWindow
     flex: 1 0
     flex-direction: column
     display: flex
+
     &:first-child
-      border-top: 2px solid $win-divider-border-color
+      border-top: 2px solid transparent
+
     &:last-child
       border-bottom-right-radius: 13px
+
     &:nth-child(n+1)
-      border-top: 2px solid $win-divider-border-color
+      border-top: 2px solid transparent
 
-  .paneport
-    position: relative
-    min-height: 33%
-    background-color: $panel
-    flex: 1
-    flex-direction: column
-    display: flex
-    border-left: 2px solid $win-divider-border-color
-    justify-content: flex-end
-    transition: background .7s
+// .paneport
+//   position: relative
+//   min-height: 33%
+//   background-color: $panel
+//   flex: 1
+//   flex-direction: column
+//   display: flex
+//   border-left: 2px solid transparent
+//   justify-content: flex-end
+//   transition: background .7s
 
-    &.active
-      background: $pane-active-bg
+//   &.active
+//     background: $pane-active-bg
 
-      // Separator
-      &:before
-        position: absolute
-        content: ''
-        top: 0
-        left: -6px
-        bottom: 0
-        width: 4px
-        background: $accent-dark
-        border-left: 1px solid $win-divider-border-color
-        z-index: 10
+//     // Separator
+//     &:before
+//       position: absolute
+//       content: ''
+//       top: 0
+//       left: -6px
+//       bottom: 0
+//       width: 4px
+//       background: $accent-dark
+//       border-left: 1px solid transparent
+//       z-index: 10
 
-      // Arrow
-      &:after
-        position: absolute
-        content: ''
-        width: 10px
-        height: 10px
-        top: 48%
-        left: -24px
-        border-top: 4px solid $accent-dark
-        border-right: 4px solid $accent-dark
-        z-index: 10
-        transform: rotate(45deg)
+//     // Arrow
+//     &:after
+//       position: absolute
+//       content: ''
+//       width: 10px
+//       height: 10px
+//       top: 48%
+//       left: -24px
+//       border-top: 4px solid $accent-dark
+//       border-right: 4px solid $accent-dark
+//       z-index: 10
+//       transform: rotate(45deg)
 
   .message-tray
     position: relative
@@ -509,12 +557,13 @@ section#PartialWindow
 @keyframes fadeInOut
   from
     opacity: 1
+
   to
     opacity: .3
 
 
 
-aside#UserList
+aside &#UserList
   display: flex
   max-width: 0
   min-width: 0
@@ -524,7 +573,7 @@ aside#UserList
   transition: all .3s
 
   &.active
-    background-clip padding-box
+    background-clip: padding-box
     border-left: 2px solid $win-divider-border-color
     border-top: 2px solid $win-divider-border-color
     padding-top: 3px
@@ -542,11 +591,13 @@ aside#UserList
       font-style: italic
       color: $msg-attention
       animation: fadeInOut .7s $ease-io-sine infinite alternate
-      &:after
+
+      &::after
         position: absolute
         content: '\00a0(...)'
 
     &.paused-typing
       color: $msg-neutral
-      &:after
-        content: "\00a0(---)"
+
+      &::after
+        content: '\00a0(---)'

@@ -2,6 +2,7 @@
   "name": "au",
   "description": "An Aurelia client application.",
   "version": "0.1.0",
+  "sasslintConfig": "sass-lint.yml",
   "repository": {
     "type": "???",
     "url": "???"
@@ -33,6 +34,8 @@
     "gulp-tslint": "^5.0.0",
     "gulp-typescript": "^3.1.4",
     "minimatch": "^3.0.2",
+    "node-sass": "^4.5.3",
+    "sass-lint": "^1.10.2",
     "through2": "^2.0.1",
     "tslint": "^5.4.2",
     "typescript": ">=1.9.0-dev || ^2.0.0",

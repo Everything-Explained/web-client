@@ -1,8 +1,7 @@
 
-$changelog-title = $head-1-color
 
 .changelog
-  transition opacity .3s linear
+  transition: opacity .3s linear
 
 #ChangeList
   position: absolute
@@ -10,15 +9,15 @@ $changelog-title = $head-1-color
   align-content: flex-start;
   border-top: 4px solid transparent
   border-left: 4px solid transparent
-  padding-right 10px
+  padding-right: 10px
   transition: all .3s linear
 
   .title
-    margin 0 7px 5px 0
+    margin: 0 7px 5px 0
     display: inline-block
     padding: 10px 20px
-    background-color $panel
-    color $head-1-color
+    background-color: $panel
+    color: hsl(50, 50%, 50%)
     text-align: center
     border-radius: 5px 0 13px 0
     cursor: pointer
@@ -33,29 +32,29 @@ $changelog-title = $head-1-color
       font-size: 20px
 
   .date
-    color hsl(128, 50%, 60%)
+    color: hsl(128, 50%, 60%)
     font-family: 'Source Code Pro'
-    font-size 18px
+    font-size: 18px
 
 #Changes
-  position: absolute
-  top 5px
-  right 0
-  bottom 0
-  left 0
-  flex-direction: column
-  overflow-y auto
-  transition: all .3s linear
   @extend .md-changelog
+  position: absolute
+  top: 5px
+  right: 0
+  bottom: 0
+  left: 0
+  flex-direction: column
+  overflow-y: auto
+  transition: all .3s ease
 
-.changelog .close
+.changelog &.close
   position: fixed
-  top 121px
-  right 33px
-  padding 1px 13px
+  top: 121px
+  right: 33px
+  padding: 1px 13px
   font-size: 40px
-  color hsl(0, 80%, 63%)
-  border-radius 3px
+  color: hsl(0, 80%, 63%)
+  border-radius: 3px
   background-color: $panel
-  transition .3s ease
+  // transition: .3s ease
   cursor: pointer

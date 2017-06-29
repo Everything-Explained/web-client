@@ -1,15 +1,15 @@
 
-section#TrayTop .watermark
+#TrayTop &.watermark
   position: fixed
   bottom: 25px
-  left -50px
-  padding 0 55px 6px 55px
+  left: -50px
+  padding: 0 55px 6px
   background-color: hsl(0, 0, 13%)
   border-bottom: 4px double hsl(0, 0%, 30%)
   border-top: 4px double hsl(0, 0%, 30%)
   color: hsl(0, 0%, 35%)
   font-size: 30px
-  opacity: 0.65
+  opacity: .65
   font-family: 'Source Code Pro'
   text-align: center
   font-variant: small-caps
@@ -17,11 +17,14 @@ section#TrayTop .watermark
   transition: all .3s linear
   cursor: crosshair
   z-index: 1000
+
   span
     position: relative
-  span.num
-    margin-left 7px
-    font-size 20px
+
+  span &.num
+    margin-left: 7px
+    font-size: 20px
+
   &:hover
-    color hsl(50, 100%, 35%)
-    opacity 1
+    color: hsl(50, 100%, 35%)
+    opacity: 1
