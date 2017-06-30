@@ -1,0 +1,38 @@
+#UserList
+  display: flex
+  max-width: 0
+  min-width: 0
+  flex: 1 0
+  background: hsl(0, 0%, 11.3%)
+  z-index: 1
+  transition: all .3s
+
+  &.active
+    background-clip: padding-box
+    border-left: 2px solid transparent
+    border-top: 2px solid transparent
+    padding-top: 3px
+    padding-left: 5px
+    max-width: 190px
+    min-width: 190px
+
+  li
+    list-style-type: none
+    padding-bottom: 3px
+    color: hsl(0, 0%, 75.3%)
+
+    &.paused-typing,
+    &.is-typing
+      font-style: italic
+      color: $attention
+      animation: fadeInOut .7s $ease-io-sine infinite alternate
+
+      &::after
+        position: absolute
+        content: '\00a0(...)'
+
+    &.paused-typing
+      color: $neutral
+
+      &::after
+        content: '\00a0(---)'

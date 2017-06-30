@@ -60,7 +60,7 @@ $speed: .2s
   transform: translate(-50%) scale(.3, .3)
   transition: all .5s
 
-  a.modal-close
+  .modal-close
     &:visited, &:active, &:link
       position: absolute
       bottom: -20px
@@ -73,7 +73,7 @@ $speed: .2s
       color: hsl(0, 0%, 0%)
       background: hsl(271.7, 100%, 83%)
       box-shadow: 0 0 13px 2px  hsl(0, 0%, 0%)
-      transition: all $speed ease-in-out
+      transition: all $speed ease
 
     &:hover
       background: $h1-color
@@ -95,10 +95,10 @@ $speed: .2s
       position: relative
       top: -5px
 
-      .normal
-        font-variant: normal
-        font-size: 24px
-        letter-spacing: 4px
+    .normal
+      font-variant: normal
+      font-size: 24px
+      letter-spacing: 4px
 
   section
     margin-top: 3px

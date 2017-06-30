@@ -5,21 +5,6 @@ section .anim-container
   flex-direction: column
   transition: opacity 0.3s linear
 
-
-#ChatContainer
-  display: flex
-  flex: 1 0
-
-
-#ChatCommander
-  z-index: 1
-  min-height: 30px
-  display: flex
-  flex-direction: column
-  justify-content: center
-  overflow: hidden
-
-
 .chat-input-container
   color: $h1-color
   background-color: $panel
@@ -450,36 +435,7 @@ section .anim-container
 
 
 
-section#MainWindow
-  display: flex
-  flex: 1 0
-  flex-direction: column
-  min-width: 400px
 
-  #MainPort
-    position: relative
-    // background-color: hsla(0, 100%, 100%, 0.06 / $golden-ratio)
-    background-clip: padding-box
-    border-left: 2px solid transparent
-    border-top: 2px solid transparent
-    border-top-left-radius: 7px
-    flex: 1 1 0
-    flex-direction: column
-    display: flex
-    justify-content: flex-end
-    overflow: hidden
-    z-index: 1
-
-    .message-tray
-      position: absolute
-      top: 0
-      left: 0
-      right: 0
-      bottom: 0
-      padding-right: 5px
-      margin-right: 2px
-      overflow-x: auto
-      display: block
 
 
 
@@ -554,50 +510,8 @@ section#MainWindow
 
 
 
-@keyframes fadeInOut
-  from
-    opacity: 1
-
-  to
-    opacity: .3
 
 
 
-#UserList
-  display: flex
-  max-width: 0
-  min-width: 0
-  flex: 1 0
-  background: hsl(0, 0%, 11.3%)
-  z-index: 1
-  transition: all .3s
 
-  &.active
-    background-clip: padding-box
-    border-left: 2px solid transparent
-    border-top: 2px solid transparent
-    padding-top: 3px
-    padding-left: 5px
-    max-width: 190px
-    min-width: 190px
 
-  li
-    list-style-type: none
-    padding-bottom: 3px
-    color: hsl(0, 0%, 75.3%)
-
-    &.paused-typing,
-    &.is-typing
-      font-style: italic
-      color: $attention
-      animation: fadeInOut .7s $ease-io-sine infinite alternate
-
-      &::after
-        position: absolute
-        content: '\00a0(...)'
-
-    &.paused-typing
-      color: $neutral
-
-      &::after
-        content: '\00a0(---)'

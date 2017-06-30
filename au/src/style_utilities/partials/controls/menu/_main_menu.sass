@@ -1,0 +1,57 @@
+#MainMenu
+  margin-top: 27px
+  font-size: 32px
+  font-family: 'Comfortaa'
+  font-variant: small-caps
+  letter-spacing: 2px
+  word-spacing: 2px
+  font-weight: 400
+  display: flex
+  justify-content: flex-end
+
+  ul
+    position: relative
+    list-style: none
+    width: 95%
+
+    span
+      position: relative
+      top: -4px
+
+    li
+      position: relative
+      padding: 2px 5px 1px 0
+      display: block
+      height: 33px
+      text-align: right
+      color: hsl(0, 0%, 30%)
+      border-top-left-radius: 13px
+      border-bottom-left-radius: 13px
+      border-left: 4px solid transparent
+      transition: color .3s, background .3s, border .3s
+      overflow: hidden
+      user-select: none
+      cursor: pointer
+
+      &:hover
+        color: $h1-color
+        opacity: 1
+        background-clip: padding-box
+
+      &.active
+        color: $h1-color
+        background: $panel
+        border-left: 4px solid hsl(52, 37%, 50%)
+
+// FireFox Font rendering shinanigans
+@-moz-document url-prefix()
+  #MainMenu
+    font-size: 28px
+
+    ul
+      li
+        padding: 2px 3px 0 0
+
+      span
+        top: -1px
+// End FireFox Hack
