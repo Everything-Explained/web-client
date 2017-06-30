@@ -1,52 +1,59 @@
 
 article[role='rules']
-  border-top 4px solid transparent
-  border-left 6px solid transparent
+  border-top: 4px solid transparent
+  border-left: 6px solid transparent
 
   .rules-container
-    @extend $content
+    @extend %content
     min-height: min-content
     margin-bottom: 5px
-    margin-right 11px
-    display flex
+    margin-right: 11px
+    display: flex
     background-color: hsl(0, 0%, 6.7%)
-    border-top-right-radius 0
-    border-top-left-radius 0
-    padding 0
+    border-top-right-radiu: 0
+    border-top-left-radius: 0
+    padding: 0
+
     &:first-child
-      margin-top 0
-      border-top-left-radius 3.5px
+      margin-top: 0
+      border-top-left-radius: 3.5px
+
     &:last-child
-      border-bottom-right-radius 7px
+      border-bottom-right-radius: 7px
+
     &:hover .rule, &:hover .def
       background-color: hsl(278, 33%, 12%)
+
     &:hover .rule
-      color $head-1-color
+      color: $h1-color
 
   .rule
     display: flex
     justify-content: center;
     flex-direction: column;
-    flex 4
-    padding 13px 8px
-    text-align center
-    font-size 21px
+    flex: 4
+    padding: 13px 8px
+    text-align: center
+    font-size: 21px
     background-color: hsl(0, 0%, 9.7%)
-    color hsl(0, 0%, 75%)
+    color: hsl(0, 0%, 75%)
     transition: background .3s, color .3s
 
   .def
     margin-left: 5px
     flex-direction: column
-    flex 10
+    flex: 10
     background-color: hsl(0, 0%, 9.7%)
-    padding 13px 8px
+    padding: 13px 8px
     transition: background .3s
 
   .legend
     display: flex
-    margin-bottom 10px
+    margin-bottom: 10px
+
     & > b
-      margin-right 10px
+      margin-right: 10px
+
     &:last-child
-      margin-bottom 0
+      margin-bottom: 0
+

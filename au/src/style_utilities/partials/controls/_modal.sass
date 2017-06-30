@@ -1,0 +1,205 @@
+
+$speed: .2s
+
+.modal-overlay
+  position: fixed
+  content: ' '
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  opacity: 0
+  visibility: hidden
+  background-color: hsla(0, 0%, 0%, .55)
+  z-index: 1000
+  transition: all .5s
+
+  &.modal-open
+    opacity: 1
+    visibility: visible
+
+  &.modal-open .modal-container
+    opacity: 1
+    top: 12%
+    transform: translate(-50%) scale(1, 1)
+
+  &.modal-preloader
+    opacity: 1
+    visibility: visible
+
+  &.modal-preloader .modal-preload-container
+    opacity: 1
+    display: block
+    visibility: visible
+
+  .modal-preload-container
+    position: absolute
+    display: none
+    left: 50%
+    top: 50%
+    opacity: 0
+    visibility: hidden
+    transform: translate(-50%, -80%)
+    transition: all .3s
+
+.modal-container
+  position: absolute
+  display: flex
+  flex-direction: column
+  left: 50%
+  top: -20%
+  width: 60%
+  max-height: 70%
+  padding: 2px 0 0
+  color: hsl(0, 0%, 86.7%)
+  background-color: hsla(0, 0, 7%, .7)
+  border: 8px solid hsla(52, 100%, 60%, .3 / $golden-ratio)
+  border-radius: 5px
+  box-shadow: 0 1px 23px 5px hsl(0, 0%, 0%), inset 0 0 0 10px transparent
+  opacity: 0
+  transform: translate(-50%) scale(.3, .3)
+  transition: all .5s
+
+  a.modal-close
+    &:visited, &:active, &:link
+      position: absolute
+      bottom: -20px
+      right: -20px
+      border-radius: 50%
+      font-size: 20px
+      padding: 3px 8px 5px
+      font-weight: bold
+      text-decoration: none
+      color: hsl(0, 0%, 0%)
+      background: hsl(271.7, 100%, 83%)
+      box-shadow: 0 0 13px 2px  hsl(0, 0%, 0%)
+      transition: all $speed ease-in-out
+
+    &:hover
+      background: $h1-color
+      color: hsl(0, 0%, 0%)
+
+  header
+    text-align: center
+    padding: 0
+    padding-top: 3px
+    font-size: 34px
+    height: 37px
+    font-family: comfortaa
+    font-variant: small-caps
+    color: hsl(0, 0%, 0%)
+    background: linear-gradient(to right, hsla(0, 0%, 0%, .3) 0%, hsla(51, 100%, 45%, 1) 50%, hsla(0, 0%, 0%, .3) 100%);
+    border-bottom: transparent
+
+    span
+      position: relative
+      top: -5px
+
+      .normal
+        font-variant: normal
+        font-size: 24px
+        letter-spacing: 4px
+
+  section
+    margin-top: 3px
+    margin-right: 5px
+    font-family: 'delius'
+    font-size: 18px
+    color: hsl(0, 0%, 70%)
+    padding: 13px
+    overflow: auto
+
+    h2
+      margin: 33px 0 14px 7px
+      font-size: 30px
+      font-family: 'comfortaa'
+      font-weight: 300
+      font-variant: small-caps
+      letter-spacing: 2px
+      color: hsl(278, 100%, 80%)
+
+      &:first-child
+        margin-top: 12px
+
+    .legend
+      display: flex
+      margin-bottom: 10px
+
+      .col1
+        line-height: 30px
+        margin-right: 13px
+        font-family: 'Source Code Pro'
+        font-weight: normal
+        color: hsl(50, 40%, 55%)
+        width: 60px
+        text-align: right
+
+      .col2
+        letter-spacing: 1px
+        line-height: 27px
+        flex: 1
+
+  footer
+    height: 10px
+
+
+
+// FireFox font rendering shinanigans
+@-moz-document url-prefix()
+  .modal-container & header
+    font-size: 30px
+
+    span
+      top: -2px
+// End FireFox Hack
+
+
+// $green: $h1-color
+// $cwidth: 20px
+// $cheight: 35px
+
+// .check
+//   position: relative
+//   top: -4px
+//   display: block
+//   width: $cwidth
+//   height: $cheight
+
+//   &::before
+//     position: relative
+//     display: block
+//     content: ''
+//     left: 100%
+//     width: 4px
+//     height: $cheight
+//     background: $modal-login-check
+//     transform: rotateZ(33deg)
+//     border-radius: 10px
+//     transition: all .3s
+
+//   &::after
+//     position: relative
+//     display: block
+//     content: ''
+//     top: -11px
+//     left: -4px
+//     width: $cwidth
+//     height: 4px
+//     background: $modal-login-check
+//     transform: rotateZ(33deg)
+//     transition: all .3s
+//     border-radius: 10px
+
+//   &.invalid
+//     left: -7px
+
+//     &::before
+//       transform: rotateZ(225deg)
+//       background: $modal-login-check-invalid
+
+//     &::after
+//       top: -($cheight / 2) - 2px
+//       left: ($cwidth / 2) - 4px
+//       width: $cheight
+//       background: $modal-login-check-invalid
+//       transform: rotateZ(225deg)

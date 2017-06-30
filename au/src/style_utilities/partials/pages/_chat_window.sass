@@ -1,12 +1,12 @@
 
-section &.anim-container
+section .anim-container
   flex: 1
   display: flex
   flex-direction: column
   transition: opacity 0.3s linear
 
 
-section &#ChatContainer
+#ChatContainer
   display: flex
   flex: 1 0
 
@@ -227,7 +227,7 @@ section &#ChatContainer
     font-size: 18px
     font-family: 'Source Code Pro', 'consolas', monospace
 
-    div & p:last-child
+    div p:last-child
       margin-bottom: 10px
 
     // a:visited,
@@ -266,9 +266,9 @@ section &#ChatContainer
 
 
   // ALL
-  div &.client, div &.server,
-  div &.inline, div &.implicit,
-  div &.emote
+  .client, .server,
+  .inline, .implicit,
+  .emote
     display: flex
     flex: 1
     padding: 3px 0
@@ -310,7 +310,7 @@ section &#ChatContainer
 
 
 
-  div &.emote, div &.implicit
+  .emote, .implicit
     .username
       position: relative
       top: -2px
@@ -328,7 +328,7 @@ section &#ChatContainer
 
 
   // IMPLICIT
-  div &.implicit
+  .implicit
     .content, .username::before
       color: hsl(0, 0%, 45%)
 
@@ -340,8 +340,8 @@ section &#ChatContainer
 
 
     // SERVER
-  div &.client,
-  div &.server
+  .client,
+  .server
     .username
       margin-left: 19px
       margin-right: 15px
@@ -397,7 +397,7 @@ section &#ChatContainer
 
 
   // CLIENT
-  div &.client
+  .client
     .username
       color: hsl(0, 0%, 66.7%)
 
@@ -430,13 +430,13 @@ section &#ChatContainer
       .content
         color: $info
 
-  div &.implicit
+  .implicit
     .username
 
       &::after
         display: none
 
-  div &.inline
+  .inline
     .username
       color: hsl(278, 70%, 83%)
       margin-right: 5px
@@ -483,7 +483,7 @@ section#MainWindow
 
 
 
-section &#PartialWindow
+#PartialWindow
   width: 200px
   //display: flex;
   flex-direction: column
@@ -563,7 +563,7 @@ section &#PartialWindow
 
 
 
-aside &#UserList
+#UserList
   display: flex
   max-width: 0
   min-width: 0
@@ -574,8 +574,8 @@ aside &#UserList
 
   &.active
     background-clip: padding-box
-    border-left: 2px solid $win-divider-border-color
-    border-top: 2px solid $win-divider-border-color
+    border-left: 2px solid transparent
+    border-top: 2px solid transparent
     padding-top: 3px
     padding-left: 5px
     max-width: 190px
@@ -584,12 +584,12 @@ aside &#UserList
   li
     list-style-type: none
     padding-bottom: 3px
-    color: $userlist-user-color
+    color: hsl(0, 0%, 75.3%)
 
     &.paused-typing,
     &.is-typing
       font-style: italic
-      color: $msg-attention
+      color: $attention
       animation: fadeInOut .7s $ease-io-sine infinite alternate
 
       &::after
@@ -597,7 +597,7 @@ aside &#UserList
         content: '\00a0(...)'
 
     &.paused-typing
-      color: $msg-neutral
+      color: $neutral
 
       &::after
         content: '\00a0(---)'

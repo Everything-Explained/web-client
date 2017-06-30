@@ -1,0 +1,121 @@
+
+#MainMenu
+  margin-top: 27px
+  font-size: 32px
+  font-family: 'Comfortaa'
+  font-variant: small-caps
+  letter-spacing: 2px
+  word-spacing: 2px
+  font-weight: 400
+  display: flex
+  justify-content: flex-end
+
+  ul
+    position: relative
+    list-style: none
+    width: 95%
+
+    span
+      position: relative
+      top: -4px
+
+    li
+      position: relative
+      padding: 2px 5px 1px 0
+      display: block
+      height: 33px
+      text-align: right
+      color: hsl(0, 0%, 30%)
+      border-top-left-radius: 13px
+      border-bottom-left-radius: 13px
+      border-left: 4px solid transparent
+      transition: color .3s, background .3s, border .3s
+      overflow: hidden
+      user-select: none
+      cursor: pointer
+
+      &:hover
+        color: $h1-color
+        opacity: 1
+        background-clip: padding-box
+
+      &.active
+        color: $h1-color
+        background: $panel
+        border-left: 4px solid hsl(52, 37%, 50%)
+// End MainMenu
+
+
+
+
+
+#TabMenu
+  position: relative
+  height: 100%
+  left: 307px
+
+  ul
+    position: absolute
+    left: 0
+    right: 0
+    bottom: 0
+    list-style: none
+
+    li
+      display: inline-block
+      margin-right: 7px
+      padding: 7px 13px
+      font-family: Comic Sans MS, sans-serif
+      font-size: 22px
+      color: hsl(0, 0%, 30%)
+      text-transform: capitalize
+      border-top-left-radius: 13px
+      border-top-right-radius: 13px
+      transition: opacity .3s, color .3s, border .2s
+      cursor: pointer
+      user-select: none
+
+      &.active
+        opacity: 1
+        color: hsl(278, 100%, 82.4%)
+        border-top: 4px solid hsl(278, 100%, 82.4%)
+        background-color: $panel
+
+      &:hover
+        opacity: 1
+        color: hsl(278, 100%, 82.4%)
+
+    .icon-enter, .icon-cog2
+      &::before
+        margin-right: 5px
+        font-size: 20px
+
+    .login, .settings
+      position: absolute
+      right: 333px
+      bottom: 0
+      font-size: 24px
+      color: hsl(50, 60%, 53%)
+      opacity: 1
+
+      &.active
+        border-color: hsl(127, 60%, 53%)
+        color: hsl(127, 60%, 53%)
+
+      &:hover
+        color: hsl(127, 60%, 53%) !important
+
+
+
+// FireFox Font rendering shinanigans
+@-moz-document url-prefix()
+  #MainMenu
+    font-size: 28px
+
+    ul
+      li
+        padding: 2px 3px 0 0
+
+      span
+        top: -1px
+// End FireFox Hack
