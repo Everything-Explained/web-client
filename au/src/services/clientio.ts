@@ -19,6 +19,31 @@ export class ClientIO {
     main: null
   };
 
+  private _pingInterval = 0;
+
+  private _pingStart = 0;
+  private _latencies = [] as number[];
+
+
+  get latency() {
+
+    let l = 0;
+    for (let latency of this._latencies)
+      l += latency
+    ;
+
+    let latency = Math.floor(l / this._latencies.length);
+
+    return latency > 0
+      ? `${latency}ms`
+      : 'Waiting for Interval'
+    ;
+  }
+
+  get latencyList() {
+    return this._latencies;
+  }
+
 
   constructor(private _hasConnected: (data: any) => void, private _populate: (msg: IMessage) => void, chat: Chat) {
 
@@ -139,6 +164,20 @@ export class ClientIO {
     this._sock.on(this._rooms.main, (msg) => {
       this._populate(msg);
     });
+
+    // Recieve pong event to capture latency
+    this._sock.on('pongcheck', () => {
+      if (this._latencies.length + 1 > 50) {
+        this._latencies.shift();
+      }
+      this._latencies.push(Date.now() - this._pingStart);
+    });
+
+    // Ping timeout to track latency
+    setInterval(() => {
+      this._pingStart = Date.now();
+      this._sock.emit('pingcheck');
+    }, 1000 * 7);
   }
 
 
@@ -170,11 +209,11 @@ export class ClientIO {
 
 
 
-  populateUsers(users: string[]) {
+  populateUsers(users: {alias: string; id: string}[]) {
     this._chat.userlistActive = true;
     let convertedUsers = [];
     for (let u of users) {
-      convertedUsers.push({ name: u, isTyping: ''});
+      convertedUsers.push({ name: u.alias, id: u.id, isTyping: ''});
     }
     this._chat.users = convertedUsers;
   }
@@ -185,9 +224,9 @@ export class ClientIO {
   }
 
 
-  onUserJoin(user: string) {
-    if (user === this._chat.alias) return;
-    this._chat.addMessage(` has joined the conversation...`, MessageType.IMPLICIT, null, user);
+  onUserJoin(user: {alias: string; id: string}) {
+    if (user.alias === this._chat.alias) return;
+    this._chat.addMessage(` has joined the conversation...`, MessageType.IMPLICIT, null, user.alias);
     this._chat.addUser(user);
   }
 
@@ -259,6 +298,8 @@ export class ClientIO {
       msgObj.message = 'Server Lost Connection';
     }
     this._chat.ports.main.addMessage(new Message(msgObj));
+    clearInterval(this._pingInterval);
+    console.info('Disconnecting');
     this.disconnect();
   }
 

@@ -513,10 +513,11 @@ export class ChatCommander {
 
     this._commands = [
       {
-        alias: ['test'],
+        alias: ['ping'],
         isAdmin: false,
         execute: () => {
-          this._sock.sendPrivateMsg('hello world', 'Aedaeum');
+          this._chatView.addMessage(`Ping: ${this._sock.latency}`, MessageType.CLIENT);
+          console.log(this._sock.latencyList);
         }
       },
       {

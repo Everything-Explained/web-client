@@ -19,7 +19,12 @@ export interface CommanderData {
   sock: ClientIO;
   chatView: Chat;
 }
-
+enum AccessLevel {
+  GUEST = 1,
+  MEMBER = 2,
+  MODERATOR = 4,
+  ADMIN = 8
+}
 
 
 @inject(Element, MiniModal)
@@ -33,12 +38,23 @@ export class Chat {
 
   alias: string;
   avatar: string = null;
+  id: string;
+  accessLevel: number;
 
   userlistActive = false;
+  userDataActive = false;
 
   messageCounter = 0;
 
-  users = new Array<{name: string; isTyping: string}>();
+  users = new Array<{name: string; isTyping: string; id: string}>();
+
+  userData = {
+    alias: '',
+    ping: '103ms',
+    idleTime: '1d 2h 3m',
+    accessLevel: 'Member',
+    id: ''
+  };
 
   scriptures: IScriptures;
 
@@ -63,9 +79,10 @@ export class Chat {
     // Initialize chat service
     // DO NOT MOVE -- Dependancy of bind()
     this.io = new ClientIO((data) => {
-      console.log(data);
       this.alias = data.alias;
       this.avatar = data.picture;
+      this.id = data.id;
+      this.accessLevel = data.access_level;
 
       this.addMessage('You are now authenticated, enjoy the chat!', MessageType.SERVER);
 
@@ -101,6 +118,28 @@ export class Chat {
     }, this);
 
 
+  }
+
+  toggleUserData(e: MouseEvent) {
+    let obj = e.target as HTMLElement
+      , alias = obj.innerText.trim()
+    ;
+
+    if (e.button == 2) {
+      this.userDataActive = !this.userDataActive;
+      if (alias == this.alias) {
+        this.userData.ping = this.io.latency;
+        this.userData.alias = this.alias;
+        this.userData.id = this.id;
+        this.userData.accessLevel = this.accessLevel.toString();
+        return false;
+      }
+      return false;
+    }
+  }
+
+  denyContextMenu() {
+    return false;
   }
 
   // AURELIA: Activates on data binding
@@ -226,8 +265,8 @@ export class Chat {
     });
   }
 
-  addUser(user: string) {
-    this.users.push({name: user, isTyping: ''});
+  addUser(user: {alias: string; id: string}) {
+    this.users.push({name: user.alias, id: user.id, isTyping: ''});
   }
 
   removeUser(user: string) {

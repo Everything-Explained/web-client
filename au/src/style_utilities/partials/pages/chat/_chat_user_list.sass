@@ -1,8 +1,13 @@
+$list-width: 230px
+
 #UserList
+  position: relative
   display: flex
   max-width: 0
   min-width: 0
   flex: 1 0
+  font-family: 'Source Code Pro'
+  font-size: 18px
   background: hsl(0, 0%, 11.3%)
   z-index: 1
   transition: all .3s
@@ -13,8 +18,8 @@
     border-top: 2px solid transparent
     padding-top: 3px
     padding-left: 5px
-    max-width: 190px
-    min-width: 190px
+    max-width: $list-width
+    min-width: $list-width
 
   li
     list-style-type: none
@@ -36,3 +41,47 @@
 
       &::after
         content: '\00a0(---)'
+
+  .user-context-menu
+    position: absolute
+    top: 0
+    left: $list-width
+    right: 0
+    bottom: 0
+    width: $list-width - $list-width / 8
+    background: hsl(0, 0%, 12.7%)
+    border-left: 2px solid hsl(0, 0%, 6.7%)
+    box-shadow: -5px 0 20px -3px hsl(0, 0%, 4.7%)
+    transition: transform .25s $ease-io-quart
+
+    &.active
+      transform: translateX(-($list-width - $list-width / 8))
+
+    .title
+      width: 100%
+      text-align: center
+      color: hsl(278, 40%, 75%)
+
+    dl
+      margin: 0
+
+    dt
+      margin-top: 10px
+      padding-left: 7px
+      font-size: 20px
+      font-family: 'Comfortaa'
+      font-variant: small-caps
+      color: $h1-color
+
+      &:first-child
+        margin: 0
+
+    dd
+      color: hsl(0, 0%, 60%)
+
+    .user-id
+      margin-left: 20px
+      font-size: 14px
+
+
+

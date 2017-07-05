@@ -49,6 +49,21 @@ template
 
       aside#UserList(class='${userlistActive ? "active" : ""}')
         ul
-          li(repeat.for='user of users', class='${user.isTyping}') ${user.name}
+          li(repeat.for='user of users'
+             class='${user.isTyping}'
+             contextmenu.delegate='denyContextMenu()'
+             mousedown.delegate='toggleUserData($event)') ${user.name}
+        div.user-context-menu(class='${userDataActive ? "active" : ""}')
+          div.title ${userData.alias}
+          dl
+            dt ping
+            dd ${userData.ping}
+            dt user group
+            dd ${userData.accessLevel}
+            dt idle time
+            dd ${userData.idleTime}
+            dt id
+            dd.user-id ${userData.id}
+
 
     chat-commander#ChatCommander(chat-data.bind='data')
