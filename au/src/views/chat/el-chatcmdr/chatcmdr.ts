@@ -96,6 +96,8 @@ export class ChatCommander {
       this._obj.removeChild(this._ffFix);
     }
 
+    this._sock.isActive = true;
+
     // BACKSPACE
     if (Keys.BACKSPACE == e.which) {
 

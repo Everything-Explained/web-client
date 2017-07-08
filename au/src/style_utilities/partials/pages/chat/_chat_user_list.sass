@@ -1,4 +1,5 @@
 $list-width: 230px
+$menu-list-width: $list-width - ($list-width / 8)
 
 #UserList
   position: relative
@@ -48,14 +49,14 @@ $list-width: 230px
     left: $list-width
     right: 0
     bottom: 0
-    width: $list-width - $list-width / 8
-    background: hsl(0, 0%, 12.7%)
+    width: $menu-list-width
+    background: hsl(278, 17%, 12.7%)
     border-left: 2px solid hsl(0, 0%, 6.7%)
     box-shadow: -5px 0 20px -3px hsl(0, 0%, 4.7%)
     transition: transform .25s $ease-io-quart
 
     &.active
-      transform: translateX(-($list-width - $list-width / 8))
+      transform: translateX(-$menu-list-width)
 
     .title
       width: 100%

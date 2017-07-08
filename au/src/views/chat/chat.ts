@@ -127,12 +127,27 @@ export class Chat {
 
     if (e.button == 2) {
       this.userDataActive = !this.userDataActive;
+
+      // Prevent minor spamming from open/closing the menu
+      if (!this.userDataActive) return false;
+
+      // Checking ones own stats does not require server interaction
       if (alias == this.alias) {
         this.userData.ping = this.io.latency;
         this.userData.alias = this.alias;
         this.userData.id = this.id;
         this.userData.accessLevel = this.accessLevel.toString();
         return false;
+      }
+      // Server interaction for all other users
+      else {
+        for (let user of this.users) {
+          if (user.name == alias) {
+            console.log(`Getting ${user.name} data: ${user.id}`);
+            this.io.getUserData(user.id);
+            this.userData.id = user.id;
+          }
+        }
       }
       return false;
     }

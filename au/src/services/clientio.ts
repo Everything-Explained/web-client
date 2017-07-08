@@ -23,6 +23,11 @@ export class ClientIO {
 
   private _pingStart = 0;
   private _latencies = [] as number[];
+  private _isIdle = false;
+
+  private _idleTime: string;
+  private _idleTimeout: NodeJS.Timer;
+  private _activeDate = new Date();
 
 
   get latency() {
@@ -43,6 +48,20 @@ export class ClientIO {
   get latencyList() {
     return this._latencies;
   }
+
+  get isIdle() {
+    return this._isIdle;
+  }
+
+  set isActive(value: boolean) {
+    if (value) {
+      this._activeDate = new Date();
+      clearTimeout(this._idleTimeout);
+      this.startIdleTimeout();
+    }
+    this._isIdle = value;
+  }
+
 
 
   constructor(private _hasConnected: (data: any) => void, private _populate: (msg: IMessage) => void, chat: Chat) {
@@ -144,6 +163,8 @@ export class ClientIO {
     .on('user-paused-typing',  user  => this.onUserPausedTyping(user))
     .on('bible-verse',         data  => this.showBibleVerse(data))
     .on('session-timeout',     data  => this.onSessionTimeout())
+    .on('userPing',            data  => this.onUserPing(data))
+    .on('user-data',           data  => this.onUserData(data))
     .emit('authenticate');
 
   }
@@ -173,11 +194,21 @@ export class ClientIO {
       this._latencies.push(Date.now() - this._pingStart);
     });
 
-    // Ping timeout to track latency
+    // Ping timeout to track latency and idle
     setInterval(() => {
       this._pingStart = Date.now();
-      this._sock.emit('pingcheck');
+      this._sock.emit('pingcheck', this.latency);
     }, 1000 * 7);
+
+    this.startIdleTimeout();
+
+  }
+
+  startIdleTimeout() {
+    this._idleTimeout = setTimeout(() => {
+      this._isIdle = true;
+      console.log('has gone idle');
+    }, 1000 * 60); // 1 Minute
   }
 
 
@@ -278,6 +309,26 @@ export class ClientIO {
       return o.name == user;
     });
     this._chat.users[index].isTyping = 'is-typing';
+  }
+
+  getUserData(clientID: string) {
+    this._sock.emit('user-data', clientID);
+  }
+
+  onUserData(data) {
+    let userData = JSON.parse(data);
+    this._chat.userData.accessLevel = userData.accessLevel;
+    this._chat.userData.alias = userData.alias;
+    this._chat.userData.ping = userData.latency;
+  }
+
+
+  getPing(clientID) {
+    this._sock.emit('ping-get', clientID);
+  }
+
+  onUserPing(latency: string) {
+    this._chat.userData.ping = latency;
   }
 
 
