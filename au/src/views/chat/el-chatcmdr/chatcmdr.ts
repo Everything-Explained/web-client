@@ -2,7 +2,7 @@
 
 import {bindable, inject, customElement} from 'aurelia-framework';
 import * as io from 'socket.io-client';
-import {IMessage, MessageScale, MessageType} from '../../../views/chat/message';
+import {IMessage, MessageScale, MessageType, Message} from '../../../views/chat/message';
 import {ClientIO} from '../../../services/clientio';
 import {CommanderData, Chat, Ports} from '../../../views/chat/chat';
 import {Port} from '../../../views/chat/port';
@@ -58,6 +58,7 @@ export class ChatCommander {
   private _cmdHistoryPos = null;
   private _chatView: Chat;
   private _ports: Port[];
+  public inputObj: HTMLElement;
 
   // Are permissions elevated?
   private _isAdmin = true;
@@ -75,8 +76,7 @@ export class ChatCommander {
 
 
 
-  constructor(private _obj: HTMLElement) {
-    console.log(this._obj);
+  constructor(private _body: HTMLElement) {
   }
 
 
@@ -90,10 +90,10 @@ export class ChatCommander {
   keyHandler(e: KeyboardEvent) {
 
     let obj = <HTMLElement>e.target,
-        input = this._obj.textContent;
+        input = this._body.textContent;
 
-    if (this._obj.textContent.length > 0 && this._obj.lastChild === this._ffFix) {
-      this._obj.removeChild(this._ffFix);
+    if (this._body.textContent.length > 0 && this._body.lastChild === this._ffFix) {
+      this._body.removeChild(this._ffFix);
     }
 
     this._sock.isActive = true;
@@ -104,8 +104,8 @@ export class ChatCommander {
       // Prevents space buffer from being removed
       if (input.length - 1 == 0) {
         console.log('APPENDING::BACKSPACE');
-        this._obj.innerHTML = '';
-        this._obj.appendChild(this._ffFix);
+        this._body.innerHTML = '';
+        this._body.appendChild(this._ffFix);
       }
 
       if (this.activeCompletion) {
@@ -122,10 +122,10 @@ export class ChatCommander {
 
       if (selection.trim() !== '') {
 
-        if (selection.length == this._obj.textContent.length) {
+        if (selection.length == this._body.textContent.length) {
           console.log('APPENDING::DELETE::', window.getSelection().toString(), '"');
-          this._obj.innerHTML = '';
-          this._obj.appendChild(this._ffFix);
+          this._body.innerHTML = '';
+          this._body.appendChild(this._ffFix);
           return false;
         }
 
@@ -140,7 +140,7 @@ export class ChatCommander {
       if (this.activeCompletion) {
         console.log('Active Completion TAB CLEAR');
         this._clearSuggestion('/' + this.activeCompletion);
-        this._placeCaret(false, this._obj);
+        this.placeCaret(false, this._body);
       }
       return false;
 
@@ -183,7 +183,7 @@ export class ChatCommander {
   commandHandler(e: KeyboardEvent) {
 
     let obj      = <HTMLElement> e.target
-      , input    = (this._obj.childNodes[0].textContent + String.fromCharCode(e.which))
+      , input    = (this._body.childNodes[0].textContent + String.fromCharCode(e.which))
       , rawInput = input;
 
     // Remove NL, EOL, and BOL chars
@@ -193,7 +193,7 @@ export class ChatCommander {
 
       if (this.activeCompletion) {
         this._clearSuggestion('/' + this.activeCompletion);
-        this._placeCaret(false, this._obj);
+        this.placeCaret(false, this._body);
         return false;
       }
 
@@ -236,8 +236,8 @@ export class ChatCommander {
       }
 
       // Cleanup input
-      this._obj.textContent = '';
-      this._obj.appendChild(this._ffFix);
+      this._body.textContent = '';
+      this._body.appendChild(this._ffFix);
       return false;
     }
 
@@ -260,6 +260,23 @@ export class ChatCommander {
 
     return true;
 
+  }
+
+
+  cleanHTML(e: ClipboardEvent) {
+    let originalText = this.inputObj.innerText
+      , newText = e.clipboardData.getData('text')
+    ;
+
+    // Strip unnecessary new line char
+    originalText =
+      originalText == '\n'
+        ? ''
+        : originalText
+    ;
+
+    this.inputObj.innerText = originalText + newText;
+    this.placeCaret(false, this.inputObj);
   }
 
 
@@ -313,8 +330,8 @@ export class ChatCommander {
       if (trim) input = input.trim().replace(/&nbsp;$/, '');
 
       console.log(`"${input.replace(' ', '&nbsp;')}"`);
-      this._obj.innerHTML = input.replace(/\s/g, '&nbsp;').trim();
-      this._placeCaret(false, this._obj);
+      this._body.innerHTML = input.replace(/\s/g, '&nbsp;').trim();
+      this.placeCaret(false, this._body);
     }
 
     return input != storeInput;
@@ -364,11 +381,11 @@ export class ChatCommander {
     if (up) {
 
       if (this._cmdHistoryPos == 0) {
-        this._obj.textContent = `/${this._cmdHistory[0]}`;
+        this._body.textContent = `/${this._cmdHistory[0]}`;
       }
 
       else {
-        this._obj.textContent =
+        this._body.textContent =
             `/${this._cmdHistory[--this._cmdHistoryPos]}`;
       }
     }
@@ -376,17 +393,17 @@ export class ChatCommander {
     // Next Command
     if (!up) {
       if (this._cmdHistoryPos >= this._cmdHistory.length - 1) {
-        this._obj.textContent = '';
+        this._body.textContent = '';
         this._cmdHistoryPos = null;
       }
 
       else {
-        this._obj.textContent =
+        this._body.textContent =
           `/${this._cmdHistory[++this._cmdHistoryPos]}`;
       }
     }
 
-    this._placeCaret(false, this._obj);
+    this.placeCaret(false, this._body);
   }
 
   /**
@@ -400,7 +417,7 @@ export class ChatCommander {
     for (let cmd of this._commands) {
       for (let a of cmd.alias) {
         if (a.indexOf(input.replace(suggestion, '')) == 0) {
-          if (!this.activeCompletion) this._obj.appendChild(this._suggestionElement);
+          if (!this.activeCompletion) this._body.appendChild(this._suggestionElement);
           this._suggestionElement.textContent = a.replace(input, '');
           this.activeCompletion = a;
           if (a == input) this._clearSuggestion();
@@ -422,9 +439,9 @@ export class ChatCommander {
   private _clearSuggestion(input?: string) {
     console.warn('Calling Clear Suggestion');
     this.suggestion = this.activeCompletion = null;
-    this._obj.removeChild(this._suggestionElement);
+    this._body.removeChild(this._suggestionElement);
     if (typeof input !== 'undefined') {
-      this._obj.innerHTML = input;
+      this._body.innerHTML = input;
     }
   }
 
@@ -435,7 +452,7 @@ export class ChatCommander {
    * @param start True to set the caret at the start.
    * @param el The input element to move the caret in.
    */
-  private _placeCaret(start: boolean, el: HTMLElement) {
+  public placeCaret(start: boolean, el: HTMLElement) {
       el.focus();
       if (typeof window.getSelection != 'undefined'
               && typeof document.createRange != 'undefined') {
@@ -453,12 +470,13 @@ export class ChatCommander {
 
   /** AURELIA: DOMReady */
   attached() {
-    this._obj = <HTMLElement>this._obj.children[0];
-    this._obj.appendChild(this._ffFix);
+    this.inputObj = this._body.children[0] as HTMLElement;
+    this._body = <HTMLElement>this._body.children[0];
+    this._body.appendChild(this._ffFix);
 
     setTimeout(() => {
-      this._obj.focus();
-      this._placeCaret(true, this._obj);
+      this._body.focus();
+      this.placeCaret(true, this._body);
     }, 30);
 
     this.pollTyping();
@@ -477,15 +495,15 @@ export class ChatCommander {
   pollTyping() {
 
     if (this.activeCompletion ||
-       (this._obj.textContent.length && this._obj.textContent[0] == '/'))
+       (this._body.textContent.length && this._body.textContent[0] == '/'))
           return setTimeout(() => this.pollTyping(), 500);
 
-    if (this._obj.textContent.length > 0 && !this._isTyping) {
+    if (this._body.textContent.length > 0 && !this._isTyping) {
       this._isTyping = true;
       this._sock.sendUserIsTyping(this._chatView.alias);
       console.log('is-typing');
     }
-    else if (this._isTyping && this._obj.textContent.length === 0) {
+    else if (this._isTyping && this._body.textContent.length === 0) {
       this._isTyping = false;
       this._sock.sendUserStoppedTyping(this._chatView.alias);
       console.log('finished-typing');
@@ -520,6 +538,23 @@ export class ChatCommander {
         execute: () => {
           this._chatView.addMessage(`Ping: ${this._sock.latency}`, MessageType.CLIENT);
           console.log(this._sock.latencyList);
+        }
+      },
+      {
+        alias: ['notice'],
+        isAdmin: false,
+        execute: (args: string) => {
+          let argArray = args.split(' ')
+            , id = argArray.shift().toString()
+            , msg = argArray.join(' ')
+          ;
+          this._sock.sendNotice({
+            alias: this._chatView.alias,
+            message: msg,
+            realTimeFixed: Date.now(),
+            avatar: this._chatView.avatar,
+            type: MessageType.INLINE
+          }, id);
         }
       },
       {

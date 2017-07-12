@@ -3,7 +3,7 @@ section .anim-container
   flex: 1
   display: flex
   flex-direction: column
-  transition: opacity 0.3s linear
+  transition: opacity .3s linear
 
 .chat-input-container
   color: $h1-color
@@ -11,6 +11,7 @@ section .anim-container
   background-clip: padding-box
   font-size: 18px
   padding: 7px 5px
+  font-family: 'Source Code Pro'
   border-left: 2px solid transparent
   border-top: 2px solid transparent
   border-bottom-right-radius: 13px
@@ -35,13 +36,13 @@ section .anim-container
     padding: 3px 0
 
   &.emote
-    background-color: hsla(278, 100%, 75%, .15 / $golden-ratio)
+    background-color: hsl(278, 20%, 12.3%)
 
   .container
     display: flex
     flex-direction: column
     flex: 1
-    background-color: hsla(0, 100%, 100%, .06 / $golden-ratio)
+    background-color: hsl(0, 0%, 10%)
 
     &.normal
       padding: 5px 0 0 5px
@@ -226,11 +227,11 @@ section .anim-container
     //   color: $msg-link-hover-color
     //   border-bottom: 1px solid $msg-link-hover-color
     //   text-decoration: dashed
-    a &.verse
+    .verse
       color: hsl(327.2, 100%, 80.6%)
       border-color: hsl(327.2, 100%, 80.6%)
 
-    b &.invalid-link
+    .invalid-link
       +text-outline(1px, white)
       color: hsl(0, 0%, 66.7%)
 
@@ -421,18 +422,26 @@ section .anim-container
       &::after
         display: none
 
+
+  // INLINE
   .inline
+    background-color: hsl(0, 0%, 9.7%)
     .username
-      color: hsl(278, 70%, 83%)
+      color: hsl(50, 60%, 63%)
       margin-right: 5px
 
       &::before
+        top: -12px
+        left: -19px
         color: hsl(278, 70%, 83%)
         text-shadow: none
 
       &::after
         display: none
 
+    .content
+      color: hsl(278, 20%, 75%)
+  // END INLINE
 
 
 

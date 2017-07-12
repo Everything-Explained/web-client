@@ -3,5 +3,6 @@ template
     contenteditable='true'
     keypress.delegate='commandHandler($event)'
     keydown.delegate='keyHandler($event)'
+    paste.delegate='cleanHTML($event)'
     placeholder='Chat here...'
   )

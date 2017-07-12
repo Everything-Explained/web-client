@@ -51,14 +51,14 @@ button, [type='button']
   text-shadow: 1px 1px 0 hsl(0, 0%, 48%)
   box-shadow: -2px 3px 0 2px hsl(0, 0%, 20%)
   cursor: pointer
-  transition: all .05s linear
+  transition: all .3s ease, transform .08s linear
 
-  &:hover &:enabled
+  &:hover
     background: hsl(50, 35%, 33%)
     box-shadow: -2px 3px 0 2px hsl(50, 35%, 20%)
     text-shadow: 1px 1px 0 hsl(50, 10%, 58%)
 
-  &:active &:enabled
+  &:active
     transform: translate(-4px, 4px)
     box-shadow: 0 0 0 0 hsl(50, 20%, 14%)
 

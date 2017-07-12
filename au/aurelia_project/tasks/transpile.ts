@@ -18,11 +18,11 @@ function configureEnvironment() {
     .pipe(gulp.dest(project.paths.root));
 }
 
-var typescriptCompiler = typescriptCompiler || null;
+let typescriptCompiler = typescriptCompiler || null;
 
 function buildTypeScript() {
   typescriptCompiler = ts.createProject('tsconfig.json', {
-    "typescript": require('typescript')
+    'typescript': require('typescript')
   });
 
   let dts = gulp.src(project.transpiler.dtsSource);
@@ -31,7 +31,10 @@ function buildTypeScript() {
     .pipe(changedInPlace({firstPass: true}));
 
   return eventStream.merge(dts, src)
-    .pipe(plumber({ errorHandler: notify.onError('Error: <%= error.message %>') }))
+    .pipe(plumber({ errorHandler: notify.onError({
+      sound: false,
+      message: 'Error: <%= error.message %>'
+    }) }))
     .pipe(sourcemaps.init())
     .pipe(typescriptCompiler())
     .pipe(sourcemaps.write({ sourceRoot: 'src' }))

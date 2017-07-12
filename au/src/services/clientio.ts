@@ -29,6 +29,8 @@ export class ClientIO {
   private _idleTimeout: NodeJS.Timer;
   private _activeDate = new Date();
 
+  public id: string;
+
 
   get latency() {
 
@@ -64,11 +66,12 @@ export class ClientIO {
 
 
 
-  constructor(private _hasConnected: (data: any) => void, private _populate: (msg: IMessage) => void, chat: Chat) {
-
+  constructor(private _hasConnected:     (data: any)      => void,
+              private _populateMessages: (msg:  IMessage) => void,
+              chat: Chat)
+  {
     this._chat = chat;
     this.connect();
-
   }
 
 
@@ -78,8 +81,10 @@ export class ClientIO {
       this._sock.emit(this._rooms[room], msg);
     }
 
-    // window.performance.mark('mark_message')
+  }
 
+  sendNotice(msg: IMessage, id: string) {
+    this._sock.emit('notice-msg', msg, id);
   }
 
 
@@ -155,16 +160,6 @@ export class ClientIO {
     })
     .on('disconnect',          srv   => this.onDisconnect(srv))
     .on('connect_error',       ()    => this.onFailedConnection())
-    .on('user-joined',         user  => this.onUserJoin(user))
-    .on('user-left',           user  => this.onUserDisconnect(user))
-    .on('users-online',        users => this.populateUsers(users))
-    .on('user-is-typing',      user  => this.onUserTyping(user))
-    .on('user-stopped-typing', user  => this.onStoppedTyping(user))
-    .on('user-paused-typing',  user  => this.onUserPausedTyping(user))
-    .on('bible-verse',         data  => this.showBibleVerse(data))
-    .on('session-timeout',     data  => this.onSessionTimeout())
-    .on('userPing',            data  => this.onUserPing(data))
-    .on('user-data',           data  => this.onUserData(data))
     .emit('authenticate');
 
   }
@@ -175,16 +170,32 @@ export class ClientIO {
 
     if (!this._connected) {
       this._hasConnected(data);
+      this.id = data.id;
       this._connected = true;
     }
 
     // Setup room hash event
     this._rooms[data.room] = data.hash;
 
-    // Setup message population event
-    this._sock.on(this._rooms.main, (msg) => {
-      this._populate(msg);
-    });
+    this._sock
+      // Setup message population event
+      .on(this._rooms.main, msg => this._populateMessages(msg))
+
+      // Setup notice message event
+      .on(this.id, msg => this._populateMessages(msg))
+
+      // Setup all room events
+      .on('user-joined',         user  => this.onUserJoin(user))
+      .on('user-left',           user  => this.onUserDisconnect(user))
+      .on('users-online',        users => this.populateUsers(users))
+      .on('user-is-typing',      user  => this.onUserTyping(user))
+      .on('user-stopped-typing', user  => this.onStoppedTyping(user))
+      .on('user-paused-typing',  user  => this.onUserPausedTyping(user))
+      .on('bible-verse',         data  => this.showBibleVerse(data))
+      .on('session-timeout',     data  => this.onSessionTimeout())
+      .on('userPing',            data  => this.onUserPing(data))
+      .on('user-data',           data  => this.onUserData(data))
+    ;
 
     // Recieve pong event to capture latency
     this._sock.on('pongcheck', () => {
@@ -207,7 +218,6 @@ export class ClientIO {
   startIdleTimeout() {
     this._idleTimeout = setTimeout(() => {
       this._isIdle = true;
-      console.log('has gone idle');
     }, 1000 * 60); // 1 Minute
   }
 
@@ -272,7 +282,7 @@ export class ClientIO {
     this._rooms[data.room] = data.hash;
 
     this._sock.on(this._rooms.main, (msg) => {
-      this._populate(msg);
+      this._populateMessages(msg);
     });
   }
 

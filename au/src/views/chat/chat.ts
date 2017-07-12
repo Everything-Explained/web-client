@@ -10,6 +10,7 @@ import {aggregateVerses, IScriptures, IRawScriptures} from './display-verse';
 import {ClientIO} from '../../services/clientio';
 import {MiniModal} from '../../helpers/minimodal';
 import {Web} from '../../helpers/web';
+import {ChatCommander} from './el-chatcmdr/chatcmdr';
 
 
 
@@ -35,6 +36,8 @@ export class Chat {
 
   // Data to send to the input commander
   data: CommanderData;
+
+  commander: ChatCommander;
 
   alias: string;
   avatar: string = null;
@@ -72,6 +75,8 @@ export class Chat {
   private _isConnected = false;
 
   private _activePort: Port;
+
+  private _chatCommander: HTMLElement;
 
 
   constructor(private body: HTMLElement, public modal: MiniModal) {
@@ -153,6 +158,20 @@ export class Chat {
     }
   }
 
+  noticeUser(e: MouseEvent) {
+    let obj = e.target as HTMLElement
+      , alias = obj.innerText.trim()
+    ;
+
+    for (let user of this.users) {
+      if (user.name == alias) {
+        this._chatCommander.innerHTML = `/notice ${user.id}&nbsp;`;
+        this.commander.placeCaret(false, this.commander.inputObj);
+        break;
+      }
+    }
+  }
+
   denyContextMenu() {
     return false;
   }
@@ -179,6 +198,7 @@ export class Chat {
     this.ports.top.portContainer    = document.getElementById('Pane0');
     this.ports.center.portContainer = document.getElementById('Pane1');
     this.ports.bottom.portContainer = document.getElementById('Pane2');
+    this._chatCommander = this.body.querySelector('chat-commander .chat-input-container') as HTMLElement;
 
     setTimeout(() => {
       this.isAttached = true;

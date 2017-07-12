@@ -96,7 +96,7 @@ export class MessageView {
     this.modClass = this.cfg.messageType;
 
     if (this.cfg.type === MessageType.INLINE) {
-      this.cfg.alias = this.cfg.alias + ' Says: ';
+      this.cfg.alias = this.cfg.alias + ':';
     }
   }
 
