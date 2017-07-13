@@ -3,9 +3,12 @@
 template
   require(from='../../resources/value-converters/date-format')
   require(from='../../resources/value-converters/markdown-format')
+
   section.changelog(
     class='${isAttached ? "page-in" : "g-hidden"}'
   )
+    div.center-preloader(class='${isLoading ? "active" : ""}')
+      div.preloader
     section#ChangeList
       span.title(repeat.for='log of logs'
                  class='${clicked ? "g-hidden" : "g-visible"}'

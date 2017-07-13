@@ -18,6 +18,7 @@ export class Changelog {
   } = null;
 
   public isAttached = false;
+  public isLoading = false;
 
 
   constructor() {
@@ -46,14 +47,18 @@ export class Changelog {
       return;
     }
 
+    this.isLoading = true;
+
     Web.GET(`/logs/${id}`, {},
     (err, code, data) => {
       this.history = {
         id,
         data
       };
+      this.isLoading = false;
       this.updateChanges();
     });
+
   }
 
   close() {

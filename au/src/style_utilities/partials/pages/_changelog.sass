@@ -3,6 +3,25 @@
 .changelog
   transition: opacity .3s linear
 
+  .center-preloader
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background: hsl(0, 0%, 7%)
+    opacity: 0
+    z-index: 100
+    visibility: hidden
+    transition: visibility .3s ease, opacity .3s ease
+
+    &.active
+      opacity: .8
+      visibility: visible
+
+    .preloader
+      top: 10%
+
 #ChangeList
   position: absolute
   flex-flow: row wrap
