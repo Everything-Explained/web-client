@@ -2,14 +2,14 @@
 [
   {
     "timeStamp": "2016-10-25T07:00:00.000Z",
-    "title": "alpha <span>7</span> neo"
+    "title": "<span class='type'>α</span><span class='version'>7</span> : neo"
   },
   {
     "timeStamp": "2017-01-16T08:00:00.000Z",
-    "title": "alpha <span>11</span> mustard-seed"
+    "title": "<span class='type'>α</span><span class='version'>11</span> : mustard-seed"
   },
   {
     "timeStamp":"0000-00-00T08:00:00.000Z",
-    "title": "latest release"
+    "title": "<span class='type'>α</span><span class='version'>12</span> : fate"
   }
 ]

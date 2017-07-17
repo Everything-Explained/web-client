@@ -1,9 +1,7 @@
 
-import {bindable, bindingMode, autoinject, customElement, observable, ObserverLocator, Disposable, BindingEngine} from 'aurelia-framework';
+import {bindable, autoinject, customElement, Disposable, BindingEngine} from 'aurelia-framework';
 import * as moment from 'moment';
-import {PageElement} from '../../../helpers/page';
 import {Message, IMessage, MessageType} from '../../../views/chat/message';
-import {Chat} from '../../../views/chat/chat';
 import {ClientIO} from '../../../services/clientio';
 import {BibleVerseFilter} from './bible-verse-filter';
 import {MarkdownValueConverter} from '../../../resources/value-converters/markdown-format';

@@ -1,6 +1,5 @@
 
 
-import {PageElement} from '../../helpers/page';
 import {Port} from './port';
 import {inject} from 'aurelia-framework';
 import * as io from 'socket.io-client';
@@ -212,7 +211,7 @@ export class Chat {
     // this.page.userList.setClass('');
     // this.page.userList.hide();
     this.modal.cleanup('VerseModal');
-    this.io.disconnect();
+    this.io.disconnect(true);
   }
 
 

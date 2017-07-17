@@ -558,6 +558,13 @@ export class ChatCommander {
         }
       },
       {
+        alias: ['disconnect'],
+        isAdmin: false,
+        execute: (args: string) => {
+          this._sock.disconnect();
+        }
+      },
+      {
         alias: ['prv', 'private'],
         isAdmin: false,
         execute: (msg) => {

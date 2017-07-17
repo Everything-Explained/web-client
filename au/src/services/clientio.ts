@@ -29,6 +29,8 @@ export class ClientIO {
   private _idleTimeout: NodeJS.Timer;
   private _activeDate = new Date();
 
+  private _forceDisconnect = false;
+
   public id: string;
 
 
@@ -358,15 +360,23 @@ export class ClientIO {
     } else {
       msgObj.message = 'Server Lost Connection';
     }
-    this._chat.ports.main.addMessage(new Message(msgObj));
+    if (!this._forceDisconnect)
+      this._chat.ports.main.addMessage(new Message(msgObj))
+    ;
     clearInterval(this._pingInterval);
-    console.info('Disconnecting');
-    this.disconnect();
+    this._forceDisconnect = false;
+    this._connected = false;
   }
 
 
-  disconnect() {
-    this._connected = false;
+  disconnect(silent = false) {
+    if (!silent) {
+      this._chat.addMessage(
+        'Disconnected From Server',
+        MessageType.CLIENT
+      );
+    }
+    this._forceDisconnect = true;
     this._sock.close();
   }
 

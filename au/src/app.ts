@@ -2,13 +2,9 @@
 import {Router, NavModel, RouterConfiguration } from 'aurelia-router';
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {Page, PageElement} from './helpers/page';
-import * as encrypt from './helpers/cheap-encrypt';
 import {Login} from './app-login';
-// import {Logger} from './helpers/logger';
 import {Session} from './app-session';
 import {MiniModal} from './helpers/minimodal';
-import {Web} from './helpers/web';
 
 
 interface PageConfiguration {
@@ -36,13 +32,11 @@ export interface TabPage {
 @inject(Element, EventAggregator, MiniModal, Login, Session)
 export class App {
 
-  version = '11';
+  version = '12';
 
   router: Router;
 
   private _miniModal: MiniModal;
-
-  page = Page;
 
   lightsTimeout = 0;
   lightsOnTimeout = false;
