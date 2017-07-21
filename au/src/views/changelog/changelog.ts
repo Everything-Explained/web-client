@@ -1,4 +1,3 @@
-import {inject} from 'aurelia-framework';
 import {Web} from '../../helpers/web';
 
 interface Log {

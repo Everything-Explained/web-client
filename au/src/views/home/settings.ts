@@ -1,11 +1,10 @@
 import {Login} from '../../app-login';
 import {inject} from 'aurelia-framework';
-import {Router} from 'aurelia-router';
 import {Session} from '../../app-session';
 
-@inject(Login, Router, Session)
+@inject(Login, Session)
 export class Settings {
-  constructor(private _login: Login, private _router: Router, private _session: Session) {
+  constructor(private _login: Login, private _session: Session) {
 
   }
 

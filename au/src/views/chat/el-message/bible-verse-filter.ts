@@ -1,4 +1,3 @@
-import {WordType} from './message-view';
 
 export class BibleVerseFilter {
 

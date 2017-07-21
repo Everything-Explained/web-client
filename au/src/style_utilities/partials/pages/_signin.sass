@@ -11,6 +11,7 @@
   h1
     color: hsl(278, 35%, 67%)
     font-family: 'Comic Sans MS'
+    font-weight: normal
     font-size: 22px
     line-height: 20px
 
@@ -166,9 +167,9 @@
       position: relative
       display: block
       font-size: 20px
-      letter-spacing: 2px
+      letter-spacing: 1px
       word-spacing: 2px
-      font-family: 'Verdana'
+      font-family: 'comfortaa'
       font-variant: small-caps
       margin-top: 25px
       color: hsl(127, 80%, 80%)
@@ -237,6 +238,8 @@
         margin-bottom: 17px
 
     #SSONickname
+      font-family: 'Source Code Pro'
+      font-size: 18px
       padding-bottom: 20px
 
     .input-container
@@ -266,6 +269,10 @@
       user-select: none
       pointer-events: none
 
+    .input-length
+      top: 5px
+      left: 270px
+
     .valid
       color: hsl(127, 35%, 65%)
 
@@ -274,8 +281,8 @@
 
     .input-response
       width: 300px
-      top: 33px
-      left: 50px
+      top: 40px
+      left: 63px
       font-size: 14px
       font-weight: bold
       text-align: left
@@ -295,14 +302,14 @@
         visibility: visible
         opacity: 1
 
-    .icon-check-circle-o &::before, .icon-times-circle &::before
+    .icon-check-circle-o::before, .icon-times-circle::before
       position: absolute
-      top: 5px
-      left: -290px
+      top: 16px
+      left: -280px
       right: 0
       margin: 0 auto
       z-index: 10
-      color: hsl(0, 0, 27%)
+      color: hsl(0, 0, 37%)
       font-size: 30px
       -moz-user-select: none
       -webkit-user-select: none

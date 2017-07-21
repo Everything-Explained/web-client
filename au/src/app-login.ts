@@ -1,6 +1,3 @@
-import {inject} from 'aurelia-framework';
-import {IRobot} from './helpers/robot-check';
-import * as vtor from 'validator';
 import {Web} from './helpers/web';
 import environment from './environment';
 

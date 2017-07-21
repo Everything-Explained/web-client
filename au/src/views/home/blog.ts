@@ -1,6 +1,4 @@
-import {Web} from '../../helpers/web';
 import {singleton} from 'aurelia-framework';
-import * as moment from 'moment';
 
 @singleton(false)
 export class Blog {

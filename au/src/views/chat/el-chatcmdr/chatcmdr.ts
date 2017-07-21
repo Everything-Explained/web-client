@@ -1,10 +1,9 @@
 
 
-import {bindable, inject, customElement} from 'aurelia-framework';
-import * as io from 'socket.io-client';
-import {IMessage, MessageScale, MessageType, Message} from '../../../views/chat/message';
+import {bindable, inject} from 'aurelia-framework';
+import {MessageScale, MessageType} from '../../../views/chat/message';
 import {ClientIO} from '../../../services/clientio';
-import {CommanderData, Chat, Ports} from '../../../views/chat/chat';
+import {CommanderData, Chat} from '../../../views/chat/chat';
 import {Port} from '../../../views/chat/port';
 
 
