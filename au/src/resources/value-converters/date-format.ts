@@ -6,6 +6,13 @@ export class DateFormatValueConverter {
     if (format == '@STD') {
       format = 'MMMM Do, YYYY';
     }
-    return moment(val).format(format);
+
+    let date = moment(val).format(format);
+
+    if (~date.indexOf('Invalid')) {
+      date = 'Unreleased';
+      console.warn('UNRELEASED is NOT a Proper Date');
+    }
+    return date;
   }
 }
