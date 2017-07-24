@@ -16,11 +16,11 @@ let serverFiles = [
 export function setProduction() {
   return gulp.src(`${baseDir}/run.bat`)
     .pipe(replace('=development', '=production'))
-    .pipe(gulp.dest('../releaseV2/server'));
+    .pipe(gulp.dest('../staging/server'));
 }
 
 export function copyServer() {
   return gulp.src(serverFiles)
-    .pipe(gulp.dest('../releaseV2/server'))
+    .pipe(gulp.dest('../staging/server'))
 }
 

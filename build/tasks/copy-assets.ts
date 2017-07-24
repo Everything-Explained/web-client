@@ -3,10 +3,33 @@ import * as replace from 'gulp-replace';
 
 export function copyChangelogs() {
   return gulp.src(['../au/src/views/changelog/**.json',
-                   '../au/src/views/changelog/**/**.pug',
-                   '!../au/src/views/changelog/changelog.pug'])
-        .pipe(gulp.dest('../releaseV2/client/views/changelog'))
+                   '../au/src/views/changelog/**/**.md'])
+        .pipe(gulp.dest('../staging/client/views/changelog'));
 }
+
+export function copyStandalone() {
+  let src = [
+    '../../release/client/robots.txt',
+    '../../release/client/favicon.ico'
+  ];
+
+  return gulp.src(src)
+    .pipe(gulp.dest('../staging/client'));
+
+}
+
+
+export function copyLogs() {
+  return gulp.src('../../release/server/logs/**/**')
+    .pipe(gulp.dest('../staging/server/logs'));
+}
+
+
+export function copyIptable() {
+  return gulp.src('../../release/server/iptable.json')
+    .pipe(gulp.dest('../staging/server'));
+}
+
 
 export function copyAdmin() {
   let src = [
@@ -18,7 +41,7 @@ export function copyAdmin() {
   ];
 
   return gulp.src(src)
-    .pipe(gulp.dest('../releaseV2/admin'))
+    .pipe(gulp.dest('../staging/admin'));
 }
 
 export function copyStaticErrors() {
@@ -29,5 +52,5 @@ export function copyStaticErrors() {
 
   return gulp.src(files)
     .pipe(replace('../au/src/style_utilities/static.css', 'static.css'))
-    .pipe(gulp.dest('../releaseV2/static_errors'));
+    .pipe(gulp.dest('../staging/static_errors'));
 }

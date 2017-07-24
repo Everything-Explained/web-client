@@ -4,8 +4,7 @@ import * as replace from 'gulp-replace';
 
 export function revertBuildCSS() {
   return gulp.src('../au/aurelia_project/tasks/build.ts')
-    .pipe(replace('processCSS', '// processCSS'))
-    .pipe(replace('// processCSS from', 'processCSS from'))
+    .pipe(replace('processCSS,', '// processCSS,'))
     .pipe(gulp.dest('../au/aurelia_project/tasks', {overwrite: true}));
 }
 

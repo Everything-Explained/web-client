@@ -9,7 +9,7 @@ export function readyIndex() {
   return gulp.src('../au/index.pug')
     .pipe(replace(dev_style, ''))
     .pipe(replace(dev_live, ''))
-    .pipe(gulp.dest('../releaseV2/client'));
+    .pipe(gulp.dest('../staging/client'));
 }
 
 
@@ -22,6 +22,6 @@ export function readyApp() {
 
 export function readyCSS() {
   return gulp.src('../au/aurelia_project/tasks/build.ts')
-    .pipe(replace('// processCSS', 'processCSS'))
+    .pipe(replace('// processCSS,', 'processCSS,'))
     .pipe(gulp.dest('../au/aurelia_project/tasks', {overwrite: true}));
 }
