@@ -97,13 +97,6 @@ export class ClientIO {
   }
 
 
-  sendServerMsg(room: string, msg: IMessage) {
-    if (typeof this._rooms[room] !== 'undefined') {
-      this._sock.emit(this._rooms[room], msg);
-    }
-  }
-
-
   sendUserIsTyping(user: string) {
     this._sock.emit('user-is-typing', user);
   }

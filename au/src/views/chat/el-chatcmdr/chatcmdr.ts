@@ -5,6 +5,7 @@ import {MessageScale, MessageType} from '../../../views/chat/message';
 import {ClientIO} from '../../../services/clientio';
 import {CommanderData, Chat} from '../../../views/chat/chat';
 import {Port} from '../../../views/chat/port';
+import {ChatCommands} from '../commands';
 
 
 
@@ -52,7 +53,7 @@ export class ChatCommander {
   public activeCompletion = null;
 
   private _sock: ClientIO;
-  private _commands: ICommand[];
+  private _commands: ChatCommands;
   private _cmdHistory = [];
   private _cmdHistoryPos = null;
   private _chatView: Chat;
@@ -78,11 +79,36 @@ export class ChatCommander {
   constructor(private _body: HTMLElement) {
   }
 
+  /** AURELIA: DOMReady */
+  attached() {
+    this.inputObj = this._body.children[0] as HTMLElement;
+    this._body = <HTMLElement>this._body.children[0];
+    this._body.appendChild(this._ffFix);
 
+    setTimeout(() => {
+      this._body.focus();
+      this.placeCaret(true, this._body);
+    }, 30);
+
+    this.pollTyping();
+
+    // this._obj.onpaste = (e: any) => {
+    //   e.preventDefault();
+
+    //   if (this._obj.textContent.length == 0) this._obj.removeChild(this._ffFix);
+    //   let data = e.clipboardData.getData('text/plain');
+    //   document.execCommand('insertText', false, data.trim());
+    // };
+
+    this._suggestionElement.classList.add('suggestion');
+  }
+
+
+  /** AURELIA: On VM binding */
   bind() {
     this._sock = this.chatData.sock;
     this._chatView = this.chatData.chatView;
-    this.initCommands();
+    this._commands = new ChatCommands(this._sock, this._chatView);
   }
 
 
@@ -201,23 +227,14 @@ export class ChatCommander {
 
         let inputSplit = input.substr(1).split(' ')
           , usrCmd     = inputSplit[0]
-          , msg        = inputSplit.slice(1).join(' ');
+          , msg        = inputSplit.slice(1).join(' ')
+        ;
 
         console.info('Executing Command::"' + usrCmd + '"', inputSplit);
-
-        for (let cmd of this._commands) {
-          if (cmd.alias.find(c => c === usrCmd)) {
-            if (cmd.isAdmin && this._isAdmin) {
-              cmd.execute(msg);
-              this._addCommmandToHistory(usrCmd);
-            }
-            else if (!cmd.isAdmin) {
-              cmd.execute(msg);
-              this._addCommmandToHistory(
-                (!msg) ? usrCmd : usrCmd + ' ' + msg
-              );
-            }
-          }
+        if (this._commands.exec(usrCmd, msg)) {
+          this._addCommmandToHistory(
+            (!msg) ? usrCmd : usrCmd + ' ' + msg
+          );
         }
 
       } else {
@@ -413,18 +430,16 @@ export class ChatCommander {
   private _showSuggestion(input: string) {
     let suggestion = this._suggestionElement.textContent;
 
-    for (let cmd of this._commands) {
-      for (let a of cmd.alias) {
-        if (a.indexOf(input.replace(suggestion, '')) == 0) {
-          if (!this.activeCompletion) this._body.appendChild(this._suggestionElement);
-          this._suggestionElement.textContent = a.replace(input, '');
-          this.activeCompletion = a;
-          if (a == input) this._clearSuggestion();
-          return;
-        }
+    for (let a of this._commands.aliases) {
+      if (a.indexOf(input.replace(suggestion, '')) == 0) {
+        if (!this.activeCompletion) this._body.appendChild(this._suggestionElement);
+        this._suggestionElement.textContent = a.replace(input, '');
+        this.activeCompletion = a;
+        if (a == input) this._clearSuggestion();
+        return;
       }
     }
-
+    if (!this.activeCompletion) return;
     console.log('SHOWSUGGESTION::CLEARING');
     this._clearSuggestion();
   }
@@ -467,29 +482,7 @@ export class ChatCommander {
   }
 
 
-  /** AURELIA: DOMReady */
-  attached() {
-    this.inputObj = this._body.children[0] as HTMLElement;
-    this._body = <HTMLElement>this._body.children[0];
-    this._body.appendChild(this._ffFix);
 
-    setTimeout(() => {
-      this._body.focus();
-      this.placeCaret(true, this._body);
-    }, 30);
-
-    this.pollTyping();
-
-    // this._obj.onpaste = (e: any) => {
-    //   e.preventDefault();
-
-    //   if (this._obj.textContent.length == 0) this._obj.removeChild(this._ffFix);
-    //   let data = e.clipboardData.getData('text/plain');
-    //   document.execCommand('insertText', false, data.trim());
-    // };
-
-    this._suggestionElement.classList.add('suggestion');
-  }
 
   pollTyping() {
 
@@ -522,209 +515,6 @@ export class ChatCommander {
       this._pausedTyping = true;
     }
     this._pausedTypingTimeout = setTimeout(() => this.pollPausedTyping(), this._pausedTypingSpeed);
-
-  }
-
-
-  // todo - Test for conflicting aliases
-  // TODO - Refactor into a proper commands file(s)
-  initCommands() {
-
-    this._commands = [
-      {
-        alias: ['ping'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.addMessage(`Ping: ${this._sock.latency}`, MessageType.CLIENT);
-          console.log(this._sock.latencyList);
-        }
-      },
-      {
-        alias: ['notice'],
-        isAdmin: false,
-        execute: (args: string) => {
-          let argArray = args.split(' ')
-            , id = argArray.shift().toString()
-            , msg = argArray.join(' ')
-          ;
-          this._sock.sendNotice({
-            alias: this._chatView.alias,
-            message: msg,
-            realTimeFixed: Date.now(),
-            avatar: this._chatView.avatar,
-            type: MessageType.INLINE
-          }, id);
-        }
-      },
-      {
-        alias: ['disconnect'],
-        isAdmin: false,
-        execute: (args: string) => {
-          this._sock.disconnect();
-        }
-      },
-      {
-        alias: ['prv', 'private'],
-        isAdmin: false,
-        execute: (msg) => {
-          let parts = msg.split(' ');
-          for (let user of this._chatView.users) {
-            if (parts[0] === user.name) {
-              let username = parts.splice(0, 1);
-              this._sock.sendPrivateMsg(parts.join(' '), username);
-              return;
-            }
-          }
-          this._chatView.addMessage(`"${parts[0]}" is not online at this time.`, MessageType.CLIENT);
-        }
-      },
-      {
-        /** EMOTE  */
-        alias: ['me', 'emote'],
-        isAdmin: false,
-        execute: (msg) => {
-          this._sock.sendEmote('main', {
-            alias: this._chatView.alias,
-            message: msg,
-            realTimeFixed: Date.now(),
-            scale: 'large',
-            avatar: this._chatView.avatar,
-            type: MessageType.EMOTE
-          });
-        }
-      },
-      {
-        /** SERVER */
-        alias: ['serv', 'server'],
-        isAdmin: false,
-        execute: (msg: string) => {
-          this._sock.sendServerMsg('main', {
-            type: MessageType.SERVER,
-            message: msg
-          });
-        }
-      },
-      {
-        alias: ['clear'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.clearAll();
-        }
-      },
-      {
-        alias: ['clearm'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.ports.main.clear();
-        }
-      },
-      {
-        alias: ['ttom'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.transferPorts(
-            this._chatView.ports.top,
-            this._chatView.ports.main
-          );
-        }
-      },
-      {
-        alias: ['nick', 'alias'],
-        isAdmin: false,
-        execute: (msg) => {
-          this._chatView.changeAlias(msg);
-        }
-      },
-      {
-        /** TRANSFER: Main to Top */
-        alias: ['mtot'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.transferPorts(
-            this._chatView.ports.main,
-            this._chatView.ports.top
-          );
-        }
-      },
-      {
-        /** TRANSFER: Main to Center */
-        alias: ['mtoc'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.transferPorts(
-            this._chatView.ports.main,
-            this._chatView.ports.center
-          );
-        }
-      },
-      {
-        /** TRANSFER: Main to Bottom */
-        alias: ['mtob'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.transferPorts(
-            this._chatView.ports.main,
-            this._chatView.ports.bottom
-          );
-        }
-      },
-      {
-        alias: ['pt'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.setMsgPortFocus(this._chatView.ports.top);
-        }
-      },
-      {
-        alias: ['pm'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.setMsgPortFocus(this._chatView.ports.main);
-        }
-      },
-      {
-        alias: ['pc'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.setMsgPortFocus(this._chatView.ports.center);
-        }
-      },
-      {
-        alias: ['pb'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.setMsgPortFocus(this._chatView.ports.bottom);
-        }
-      },
-      {
-        alias: ['medium'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.ports.main.messageScale = MessageScale.MEDIUM;
-        }
-      },
-      {
-        alias: ['small'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.ports.main.messageScale = MessageScale.SMALL;
-        }
-      },
-      {
-        alias: ['large'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.ports.main.messageScale = MessageScale.LARGE;
-        }
-      },
-      {
-        alias: ['connect'],
-        isAdmin: false,
-        execute: () => {
-          this._chatView.reconnect();
-        }
-      }
-    ];
 
   }
 
