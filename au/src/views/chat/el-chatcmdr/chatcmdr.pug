@@ -1,8 +1,8 @@
 template
   div.chat-input-container(
     contenteditable='true'
-    keypress.delegate='commandHandler($event)'
-    keydown.delegate='keyHandler($event)'
-    paste.delegate='cleanHTML($event)'
+    keyup.delegate='_inputHandler.onKeyUp($event)'
+    keydown.delegate='_inputHandler.onKeyDown($event)'
+    paste.delegate='_inputHandler.cleanPastes($event)'
     placeholder='Chat here...'
   )

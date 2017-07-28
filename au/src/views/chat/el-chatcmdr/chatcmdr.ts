@@ -6,6 +6,7 @@ import {ClientIO} from '../../../services/clientio';
 import {CommanderData, Chat} from '../../../views/chat/chat';
 import {Port} from '../../../views/chat/port';
 import {ChatCommands} from '../commands';
+import {InputHandler} from './input-handler';
 
 
 
@@ -59,6 +60,7 @@ export class ChatCommander {
   private _chatView: Chat;
   private _ports: Port[];
   public inputObj: HTMLElement;
+  private _inputHandler: InputHandler;
 
   // Are permissions elevated?
   private _isAdmin = true;
@@ -90,7 +92,7 @@ export class ChatCommander {
       this.placeCaret(true, this._body);
     }, 30);
 
-    this.pollTyping();
+    // this.pollTyping();
 
     // this._obj.onpaste = (e: any) => {
     //   e.preventDefault();
@@ -108,6 +110,7 @@ export class ChatCommander {
   bind() {
     this._sock = this.chatData.sock;
     this._chatView = this.chatData.chatView;
+    this._inputHandler = new InputHandler(this._body, this._sock, this._chatView);
     this._commands = new ChatCommands(this._sock, this._chatView);
   }
 
@@ -115,71 +118,65 @@ export class ChatCommander {
   keyHandler(e: KeyboardEvent) {
 
     let obj = <HTMLElement>e.target,
-        input = this._body.textContent;
+        input = this._body.textContent
+    ;
 
-    if (this._body.textContent.length > 0 && this._body.lastChild === this._ffFix) {
-      this._body.removeChild(this._ffFix);
-    }
+    this._inputHandler.onKeyDown(e);
 
-    this._sock.isActive = true;
+
+
+    // if (this._body.textContent.length > 0 && this._body.lastChild === this._ffFix) {
+    //   this._body.removeChild(this._ffFix);
+    // }
+
+    // this._sock.isActive = true;
 
     // BACKSPACE
-    if (Keys.BACKSPACE == e.which) {
-
-      // Prevents space buffer from being removed
-      if (input.length - 1 == 0) {
-        console.log('APPENDING::BACKSPACE');
-        this._body.innerHTML = '';
-        this._body.appendChild(this._ffFix);
-      }
-
-      if (this.activeCompletion) {
-        console.log('Active Completion BACKSPACE CLEAR');
-        this._clearSuggestion();
-      }
-
-    }
-
-    if (Keys.DELETE == e.which
-        || Keys.BACKSPACE == e.which) {
-
-      let selection = window.getSelection().toString();
-
-      if (selection.trim() !== '') {
-
-        if (selection.length == this._body.textContent.length) {
-          console.log('APPENDING::DELETE::', window.getSelection().toString(), '"');
-          this._body.innerHTML = '';
-          this._body.appendChild(this._ffFix);
-          return false;
-        }
-
-      }
-
-    }
+    // if (Keys.BACKSPACE == e.which) {
 
 
-    if (Keys.TAB == e.which) {
+    // }
+
+    // if (Keys.DELETE == e.which
+    //     || Keys.BACKSPACE == e.which) {
+
+    //   let selection = window.getSelection().toString();
+
+    //   if (selection.trim() !== '') {
+
+    //     if (selection.length == this._body.textContent.length) {
+    //       console.log('APPENDING::DELETE::', window.getSelection().toString(), '"');
+    //       this._body.innerHTML = '';
+    //       this._body.appendChild(this._ffFix);
+    //       return false;
+    //     }
+
+    //   }
+
+    // }
+
+
+    // if (Keys.TAB == e.which) {
 
       // Auto-complete suggestion
-      if (this.activeCompletion) {
-        console.log('Active Completion TAB CLEAR');
-        this._clearSuggestion('/' + this.activeCompletion);
-        this.placeCaret(false, this._body);
-      }
-      return false;
+    //   if (this.activeCompletion) {
+    //     console.log('Active Completion TAB CLEAR');
+    //     this._clearSuggestion('/' + this.activeCompletion);
+    //     this.placeCaret(false, this._body);
+    //   }
+    //   return false;
 
-    }
+    // }
 
-    if (Keys.UP == e.which) {
-      this._showCommandHistory(true);
-      return false;
-    }
+    // if (Keys.UP == e.which) {
+    //   this._showCommandHistory(true);
+    //   return false;
+    // }
 
-    if (Keys.DOWN == e.which) {
-      this._showCommandHistory(false);
-      return false;
-    }
+    // if (Keys.DOWN == e.which) {
+    //   this._showCommandHistory(false);
+    //   return false;
+    // }
 
     /*if(Keys.RIGHT == e.which) {
       console.log(`"${window.getSelection().toString()}"`)
@@ -187,17 +184,17 @@ export class ChatCommander {
     }*/
 
 
-    if (this._isTyping) {
+    // if (this._isTyping) {
 
-      clearTimeout(this._pausedTypingTimeout);
-      if (this._pausedTyping) {
-        this._sock.sendUserIsTyping(this._chatView.alias);
-        this._pausedTyping = false;
-      }
+    //   clearTimeout(this._pausedTypingTimeout);
+    //   if (this._pausedTyping) {
+    //     this._sock.sendUserIsTyping(this._chatView.alias);
+    //     this._pausedTyping = false;
+    //   }
 
-      this._pausedTypingTimeout = setTimeout(() => this.pollPausedTyping(), this._pausedTypingSpeed);
+    //   this._pausedTypingTimeout = setTimeout(() => this.pollPausedTyping(), this._pausedTypingSpeed);
 
-    }
+    // }
 
     return true;
 
@@ -207,92 +204,73 @@ export class ChatCommander {
   // TODO - Corrective typing logic when space is removed (RARE)
   commandHandler(e: KeyboardEvent) {
 
-    let obj      = <HTMLElement> e.target
-      , input    = (this._body.childNodes[0].textContent + String.fromCharCode(e.which))
-      , rawInput = input;
+    let obj      = this._body.childNodes[0] as HTMLInputElement
+      , input    = (this._body.innerText + String.fromCharCode(e.which))
+      , rawInput = input
+    ;
 
     // Remove NL, EOL, and BOL chars
-    input = input.replace(/\s/g, ' ').trim();
+    // input = input.replace(/\s/g, ' ').trim();
 
-    if (e.which === Keys.ENTER) {
+    // if (e.which === Keys.ENTER) {
 
-      if (this.activeCompletion) {
-        this._clearSuggestion('/' + this.activeCompletion);
-        this.placeCaret(false, this._body);
-        return false;
-      }
+    //   if (this.activeCompletion) {
+    //     this._clearSuggestion('/' + this.activeCompletion);
+    //     this.placeCaret(false, this._body);
+    //     return false;
+    //   }
 
 
-      if (input[0] === '/') {
+      // if (input[0] === '/') {
 
-        let inputSplit = input.substr(1).split(' ')
-          , usrCmd     = inputSplit[0]
-          , msg        = inputSplit.slice(1).join(' ')
-        ;
+      //   let inputSplit = input.substr(1).split(' ')
+      //     , usrCmd     = inputSplit[0]
+      //     , msg        = inputSplit.slice(1).join(' ')
+      //   ;
 
-        console.info('Executing Command::"' + usrCmd + '"', inputSplit);
-        if (this._commands.exec(usrCmd, msg)) {
-          this._addCommmandToHistory(
-            (!msg) ? usrCmd : usrCmd + ' ' + msg
-          );
-        }
+      //   console.info('Executing Command::"' + usrCmd + '"', inputSplit);
+      //   if (this._commands.exec(usrCmd, msg)) {
+      //     this._addCommmandToHistory(
+      //       (!msg) ? usrCmd : usrCmd + ' ' + msg
+      //     );
+      //   }
 
-      } else {
+      // } else {
 
-        if (!input) return false;
+      //   if (!input) return false;
 
-        this._sock.sendMsg('main', {
-          alias: this.chatData.chatView.alias,
-          type: MessageType.NORMAL,
-          message: input,
-          realTimeFixed: Date.now(),
-          avatar: this._chatView.avatar
-        });
+      //   this._sock.sendMsg('main', {
+      //     alias: this.chatData.chatView.alias,
+      //     type: MessageType.NORMAL,
+      //     message: input,
+      //     realTimeFixed: Date.now(),
+      //     avatar: this._chatView.avatar
+      //   });
 
-      }
+      // }
 
       // Cleanup input
-      this._body.textContent = '';
-      this._body.appendChild(this._ffFix);
-      return false;
-    }
+    //   this._body.textContent = '';
+    //   this._body.appendChild(this._ffFix);
+    //   return false;
+    // }
 
 
 
-    if (input[0] === '/' && input.length > 1) {
+    // if (input[0] === '/' && input.length > 1) {
       // No commands have spaces
       // TODO - don't block spell correction
-      if (/\s/g.test(rawInput)  ||
-         input.indexOf(' ') > -1) return true;
+    //   if (/\s/g.test(rawInput)  ||
+    //      input.indexOf(' ') > -1) return true;
 
-      console.log('Executing Suggestion');
-      this._showSuggestion(rawInput.substr(1));
-    }
+    //   console.log('Executing Suggestion');
+    //   this._showSuggestion(rawInput.substr(1));
+    // }
 
-    if (this._correctSpelling(rawInput)) {
-      return false;
-    }
+    // if (this._correctSpelling(rawInput)) {
+    //   return false;
+    // }
 
-
-    return true;
-
-  }
-
-
-  cleanHTML(e: ClipboardEvent) {
-    let originalText = this.inputObj.innerText
-      , newText = e.clipboardData.getData('text')
-    ;
-
-    // Strip unnecessary new line char
-    originalText =
-      originalText == '\n'
-        ? ''
-        : originalText
-    ;
-
-    this.inputObj.innerText = originalText + newText;
-    this.placeCaret(false, this.inputObj);
   }
 
 
@@ -497,7 +475,7 @@ export class ChatCommander {
     }
     else if (this._isTyping && this._body.textContent.length === 0) {
       this._isTyping = false;
-      this._sock.sendUserStoppedTyping(this._chatView.alias);
+      this._sock.sendUserFinishedTyping(this._chatView.alias);
       console.log('finished-typing');
       clearTimeout(this._pausedTypingTimeout);
     }

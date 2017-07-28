@@ -101,7 +101,7 @@ export class ClientIO {
     this._sock.emit('user-is-typing', user);
   }
 
-  sendUserStoppedTyping(user: string) {
+  sendUserFinishedTyping(user: string) {
     this._sock.emit('user-stopped-typing', user);
   }
 
