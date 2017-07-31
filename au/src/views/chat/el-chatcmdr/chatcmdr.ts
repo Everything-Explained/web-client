@@ -92,15 +92,6 @@ export class ChatCommander {
       this.placeCaret(true, this._body);
     }, 30);
 
-    // this.pollTyping();
-
-    // this._obj.onpaste = (e: any) => {
-    //   e.preventDefault();
-
-    //   if (this._obj.textContent.length == 0) this._obj.removeChild(this._ffFix);
-    //   let data = e.clipboardData.getData('text/plain');
-    //   document.execCommand('insertText', false, data.trim());
-    // };
 
     this._suggestionElement.classList.add('suggestion');
   }
@@ -137,36 +128,6 @@ export class ChatCommander {
 
     // }
 
-    // if (Keys.DELETE == e.which
-    //     || Keys.BACKSPACE == e.which) {
-
-    //   let selection = window.getSelection().toString();
-
-    //   if (selection.trim() !== '') {
-
-    //     if (selection.length == this._body.textContent.length) {
-    //       console.log('APPENDING::DELETE::', window.getSelection().toString(), '"');
-    //       this._body.innerHTML = '';
-    //       this._body.appendChild(this._ffFix);
-    //       return false;
-    //     }
-
-    //   }
-
-    // }
-
-
-    // if (Keys.TAB == e.which) {
-
-      // Auto-complete suggestion
-    //   if (this.activeCompletion) {
-    //     console.log('Active Completion TAB CLEAR');
-    //     this._clearSuggestion('/' + this.activeCompletion);
-    //     this.placeCaret(false, this._body);
-    //   }
-    //   return false;
-
-    // }
 
     // if (Keys.UP == e.which) {
     //   this._showCommandHistory(true);
@@ -183,19 +144,6 @@ export class ChatCommander {
       return false;
     }*/
 
-
-    // if (this._isTyping) {
-
-    //   clearTimeout(this._pausedTypingTimeout);
-    //   if (this._pausedTyping) {
-    //     this._sock.sendUserIsTyping(this._chatView.alias);
-    //     this._pausedTyping = false;
-    //   }
-
-    //   this._pausedTypingTimeout = setTimeout(() => this.pollPausedTyping(), this._pausedTypingSpeed);
-
-    // }
-
     return true;
 
   }
@@ -208,9 +156,6 @@ export class ChatCommander {
       , input    = (this._body.innerText + String.fromCharCode(e.which))
       , rawInput = input
     ;
-
-    // Remove NL, EOL, and BOL chars
-    // input = input.replace(/\s/g, ' ').trim();
 
     // if (e.which === Keys.ENTER) {
 
@@ -457,43 +402,6 @@ export class ChatCommander {
       } else {
         throw new Error('Browser Too Old for caret Placement');
       }
-  }
-
-
-
-
-  pollTyping() {
-
-    if (this.activeCompletion ||
-       (this._body.textContent.length && this._body.textContent[0] == '/'))
-          return setTimeout(() => this.pollTyping(), 500);
-
-    if (this._body.textContent.length > 0 && !this._isTyping) {
-      this._isTyping = true;
-      this._sock.sendUserIsTyping(this._chatView.alias);
-      console.log('is-typing');
-    }
-    else if (this._isTyping && this._body.textContent.length === 0) {
-      this._isTyping = false;
-      this._sock.sendUserFinishedTyping(this._chatView.alias);
-      console.log('finished-typing');
-      clearTimeout(this._pausedTypingTimeout);
-    }
-
-    return setTimeout(() => this.pollTyping(), 500);
-  }
-
-  pollPausedTyping() {
-
-    if (!this._isTyping) return;
-
-    if (!this._pausedTyping) {
-      console.log('paused-typing');
-      this._sock.sendUserPausedTyping(this._chatView.alias);
-      this._pausedTyping = true;
-    }
-    this._pausedTypingTimeout = setTimeout(() => this.pollPausedTyping(), this._pausedTypingSpeed);
-
   }
 
 }

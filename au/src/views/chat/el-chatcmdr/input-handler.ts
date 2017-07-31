@@ -1,5 +1,6 @@
 import {ClientIO} from '../../../services/clientio';
 import {CommanderData, Chat} from '../../../views/chat/chat';
+import {InputHints} from './input-hints';
 
 enum Keys {
 
@@ -29,11 +30,14 @@ enum Keys {
 export class InputHandler {
 
   private _inputBox: HTMLElement;
+  private _inputHint: InputHints;
 
   private _isTyping            = false;
   private _pausedTyping        = false;
   private _typingTimeout       = null;
   private _typingTimeoutSpeed  = 3500;
+
+  private _ffFix = document.createElement('br');
 
 
   constructor(private _commandBox: HTMLElement,
@@ -41,6 +45,7 @@ export class InputHandler {
               private _chatView: Chat)
   {
     this._inputBox = this._commandBox.childNodes[0] as HTMLElement;
+    this._inputHint = new InputHints(this._commandBox);
   }
 
 
@@ -48,20 +53,38 @@ export class InputHandler {
   onKeyDown(e: KeyboardEvent) {
 
     let obj = <HTMLElement>e.target,
-      input = this._commandBox.textContent
+      input = this.normalizeInput(this._inputBox.innerText)
     ;
 
     // Setup paused-typing polling
     clearTimeout(this._typingTimeout);
-    this._typingTimeout = setTimeout(() => this.setPausedTyping(), this._typingTimeoutSpeed);
+    this._typingTimeout = setTimeout(() => this.onPausedTyping(), this._typingTimeoutSpeed);
+
+    // Track is-typing event
+    this.onTyping(input);
 
     // Reset idle timeout event on socket
     this._sock.isActive = true;
 
 
-    // if (Keys.BACKSPACE == e.which)
-    //   this.onBackspace(input)
-    // ;
+    if (   Keys.BACKSPACE == e.which
+        || Keys.DELETE == e.which) {
+      this.onBackspace(input);
+      this.onDelete(input);
+    }
+
+    if (   e.shiftKey
+        && (   Keys.DELETE == e.which
+            || Keys.BACKSPACE == e.which))
+    {
+      this.resetInputBox();
+    }
+
+    if (Keys.TAB == e.which) {
+      if (this.onTab(input)) {
+        return false;
+      }
+    }
 
 
     // if (Keys.TAB == e.which)
@@ -71,25 +94,65 @@ export class InputHandler {
     return true;
   }
 
-  onKeyUp(e: KeyboardEvent) {
 
-    let input =  this.cleanInput(this._commandBox.innerText)
-      , inputBox = this._commandBox.childNodes[0] as HTMLElement
-    ;
 
-    this.onTypingHandler(input);
+  onKeyPress(e: KeyboardEvent) {
+
+    let input = (
+      this._inputHint.filterHint(this._inputBox.innerText) +
+      String.fromCharCode(e.which)
+    );
+
+    // Catch commands and activate hints
+    if (input[0] == '/') {
+      this._inputHint.show(input.substr(1));
+    }
 
 
     return true;
   }
 
 
-  cleanInput(input: string) {
-    return input.replace(/\s/gi, ' ');
+
+  onKeyUp(e: KeyboardEvent) {
+
+    let input =  this.normalizeInput(this._inputBox.innerText);
+
+    // Catches entire selection deletion
+    if (Keys.BACKSPACE == e.which
+        || Keys.DELETE == e.which)
+    {
+      this.onTyping(input);
+    }
+
+    return true;
   }
 
 
-  cleanPastes(e: ClipboardEvent) {
+
+  onFocus(e: MouseEvent|KeyboardEvent) {
+    let obj = e.target as HTMLElement;
+
+    // Timeout necessary to overwrite default caret position
+    setTimeout(() => {
+      if (this._inputHint.isActive) {
+        InputHandler.insertCaret(
+          this._inputBox.childNodes[0].textContent.length,
+          this._inputBox as HTMLElement
+        );
+      }
+    }, 2);
+  }
+
+
+
+
+
+  // ////////////////////////////
+  // ////////// EVENTS \\\\\\\\\\
+  // ----------------------------
+
+  onPaste(e: ClipboardEvent) {
     let originalText = this._inputBox.innerText
       , newText = e.clipboardData.getData('text')
     ;
@@ -102,19 +165,18 @@ export class InputHandler {
     ;
 
     this._inputBox.innerText = originalText + newText;
-    this.placeCaret(false, this._inputBox);
+    InputHandler.alignCaret(false, this._inputBox);
   }
 
 
+  onTyping(input: string) {
 
-  onTypingHandler(input: string) {
-
-    // User is not typing if they're executing a client command
+    // DO NOT activate typing when user is entering a client command
     if (input[0] == '/' && !~input.indexOf(' ')) {
       return true;
     }
 
-    // Input must have a value
+    // Only activate typing when input exists
     if (input.length > 0) {
       if (!this._isTyping) {
         this._isTyping = true;
@@ -124,8 +186,10 @@ export class InputHandler {
       return true;
     }
 
-    if (this._isTyping) {
+    // Catch when user has finished (ENTER) or erased (BACKSPACE|DEL) typing
+    if (this._isTyping || this._pausedTyping) {
       this._isTyping = false;
+      this._pausedTyping = false;
       this._sock.sendUserFinishedTyping(this._chatView.alias);
       return true;
     }
@@ -135,33 +199,7 @@ export class InputHandler {
   }
 
 
-  onTab(input: string) {
-    // Auto-complete suggestion
-    // if (this.activeCompletion) {
-    //   console.log('Active Completion TAB CLEAR');
-    //   this._clearSuggestion('/' + this.activeCompletion);
-    //   this.placeCaret(false, this._body);
-    // }
-    // return false;
-  }
-
-
-  onBackspace(input: string) {
-    // Prevents space buffer from being removed
-    if (input.length - 1 == 0) {
-      console.log('APPENDING::BACKSPACE');
-      this._commandBox.innerHTML = '';
-      // this._commandBox.appendChild(this._ffFix);
-    }
-
-    // if (this.activeCompletion) {
-    //   console.log('Active Completion BACKSPACE CLEAR');
-    //   this._clearSuggestion();
-    // }
-  }
-
-
-  setPausedTyping() {
+  onPausedTyping() {
 
     if (!this._pausedTyping && this._isTyping) {
       this._pausedTyping = true;
@@ -172,6 +210,80 @@ export class InputHandler {
   }
 
 
+  onTab(input: string) {
+    if (this._inputHint.isActive) {
+      this._inputHint.fillIn();
+      InputHandler.alignCaret(false, this._inputBox);
+      return true;
+    }
+    return false;
+  }
+
+
+  onBackspace(input: string) {
+    this.cleanInputBox(input);
+  }
+
+
+  onDelete(input: string) {
+    this.cleanInputBox(input);
+  }
+
+
+
+
+  normalizeInput(input: string) {
+
+    // Remove invisible character placeholder
+    if (input.length == 1) {
+      input = input.replace(/\n/, '');
+    }
+
+    // Replace &nbsp; chars
+    input = input.replace(/\s/gi, ' ');
+
+    return input;
+  }
+
+
+
+  /**
+   * Aligns and cleans programmatically inserted characters
+   * and/or elements.
+   *
+   * @param input The input to test for cleaning.
+   */
+  cleanInputBox(input: string) {
+
+    this.resetInputBox(input);
+
+    if (this._inputHint.isActive)
+      this._inputHint.clear()
+    ;
+  }
+
+
+
+  /**
+   * Prevents the removal of an invisible placeholder character
+   * necessary for contenteditable divs.
+   *
+   * @param input The input to test for invisible character
+   */
+  resetInputBox(input?: string) {
+    if (input) {
+      if (input.length - 1 != 0) {
+        return false;
+      }
+    }
+
+    this._inputBox.innerHTML = '';
+    this._inputBox.appendChild(this._ffFix);
+
+  }
+
+
+
   /**
    * Place the caret at either the beginning (true) or
    * end (false) of a specified text element.
@@ -179,7 +291,7 @@ export class InputHandler {
    * @param start True to set the caret at the start.
    * @param el The input element to move the caret in.
    */
-  public placeCaret(start: boolean, el: HTMLElement) {
+  static alignCaret(start: boolean, el: HTMLElement) {
       el.focus();
       if (typeof window.getSelection != 'undefined'
               && typeof document.createRange != 'undefined') {
@@ -192,6 +304,23 @@ export class InputHandler {
       } else {
         throw new Error('Browser Too Old for caret Placement');
       }
+  }
+
+
+  /**
+   * Inserts the caret at the specified location of the
+   * specified object
+   *
+   * @param pos The position you want the caret in the object
+   */
+  static insertCaret(pos: number, el: HTMLElement|HTMLInputElement) {
+    let range = document.createRange()
+      , sel = window.getSelection()
+    ;
+    range.setStart(el.childNodes[0], pos);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
   }
 
 
