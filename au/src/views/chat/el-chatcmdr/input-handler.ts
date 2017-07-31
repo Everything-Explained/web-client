@@ -56,7 +56,7 @@ export class InputHandler {
       input = this.normalizeInput(this._inputBox.innerText)
     ;
 
-    // Setup paused-typing polling
+    // Setup paused-typing debounce
     clearTimeout(this._typingTimeout);
     this._typingTimeout = setTimeout(() => this.onPausedTyping(), this._typingTimeoutSpeed);
 
@@ -85,11 +85,6 @@ export class InputHandler {
         return false;
       }
     }
-
-
-    // if (Keys.TAB == e.which)
-    //   return this.onTab(input)
-    // ;
 
     return true;
   }
@@ -130,18 +125,31 @@ export class InputHandler {
 
 
 
+  // Control caret position when hint active
   onFocus(e: MouseEvent|KeyboardEvent) {
     let obj = e.target as HTMLElement;
+    if (this._inputHint.isActive) {
+      InputHandler.insertCaret(
+        this._inputBox.childNodes[0].textContent.length,
+        this._inputBox as HTMLElement
+      );
+    }
+  }
 
-    // Timeout necessary to overwrite default caret position
-    setTimeout(() => {
-      if (this._inputHint.isActive) {
-        InputHandler.insertCaret(
-          this._inputBox.childNodes[0].textContent.length,
-          this._inputBox as HTMLElement
-        );
-      }
-    }, 2);
+
+
+  // Control caret position when hint active
+  onMouseDown(e: MouseEvent) {
+    let obj = e.target as HTMLElement;
+
+    if (this._inputHint.isActive) {
+      InputHandler.insertCaret(
+        this._inputBox.childNodes[0].textContent.length,
+        this._inputBox as HTMLElement
+      );
+      return false;
+    }
+    return true;
   }
 
 
@@ -314,13 +322,16 @@ export class InputHandler {
    * @param pos The position you want the caret in the object
    */
   static insertCaret(pos: number, el: HTMLElement|HTMLInputElement) {
+    console.log('executing');
     let range = document.createRange()
       , sel = window.getSelection()
     ;
+
     range.setStart(el.childNodes[0], pos);
     range.collapse(true);
     sel.removeAllRanges();
     sel.addRange(range);
+
   }
 
 
