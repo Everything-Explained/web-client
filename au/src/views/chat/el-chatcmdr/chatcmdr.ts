@@ -50,32 +50,13 @@ export class ChatCommander {
   @bindable chatData: CommanderData;
   @bindable pickleData: string;
 
-  public suggestion = '';
-  public activeCompletion = null;
-
   private _sock: ClientIO;
   private _commands: ChatCommands;
   private _cmdHistory = [];
   private _cmdHistoryPos = null;
   private _chatView: Chat;
-  private _ports: Port[];
   public inputObj: HTMLElement;
   private _inputHandler: InputHandler;
-
-  // Are permissions elevated?
-  private _isAdmin = true;
-
-  private _suggestionElement = document.createElement('span');
-
-  // This fixes FireFox bad habit of adding its own br tags which
-  // screws with the display of the contenteditable div
-  private _ffFix = document.createElement('br');
-
-  private _isTyping = false;
-  private _pausedTyping = false;
-  private _pausedTypingTimeout = null;
-  private _pausedTypingSpeed = 2000;
-
 
 
   constructor(private _body: HTMLElement) {
@@ -84,16 +65,13 @@ export class ChatCommander {
   /** AURELIA: DOMReady */
   attached() {
     this.inputObj = this._body.children[0] as HTMLElement;
-    this._body = <HTMLElement>this._body.children[0];
-    this._body.appendChild(this._ffFix);
+    this._inputHandler = new InputHandler(this._body, this._sock, this._chatView, this._commands);
 
+    // Will not focus on input unless delayed
     setTimeout(() => {
-      this._body.focus();
-      this.placeCaret(true, this._body);
+      this.inputObj.focus();
+      InputHandler.alignCaret(true, this.inputObj);
     }, 30);
-
-
-    this._suggestionElement.classList.add('suggestion');
   }
 
 
@@ -101,55 +79,10 @@ export class ChatCommander {
   bind() {
     this._sock = this.chatData.sock;
     this._chatView = this.chatData.chatView;
-    this._inputHandler = new InputHandler(this._body, this._sock, this._chatView);
     this._commands = new ChatCommands(this._sock, this._chatView);
   }
 
 
-  keyHandler(e: KeyboardEvent) {
-
-    let obj = <HTMLElement>e.target,
-        input = this._body.textContent
-    ;
-
-    this._inputHandler.onKeyDown(e);
-
-
-
-    // if (this._body.textContent.length > 0 && this._body.lastChild === this._ffFix) {
-    //   this._body.removeChild(this._ffFix);
-    // }
-
-    // this._sock.isActive = true;
-
-    // BACKSPACE
-    // if (Keys.BACKSPACE == e.which) {
-
-
-    // }
-
-
-    // if (Keys.UP == e.which) {
-    //   this._showCommandHistory(true);
-    //   return false;
-    // }
-
-    // if (Keys.DOWN == e.which) {
-    //   this._showCommandHistory(false);
-    //   return false;
-    // }
-
-    /*if(Keys.RIGHT == e.which) {
-      console.log(`"${window.getSelection().toString()}"`)
-      return false;
-    }*/
-
-    return true;
-
-  }
-
-
-  // TODO - Corrective typing logic when space is removed (RARE)
   commandHandler(e: KeyboardEvent) {
 
     let obj      = this._body.childNodes[0] as HTMLInputElement
@@ -270,7 +203,7 @@ export class ChatCommander {
 
       console.log(`"${input.replace(' ', '&nbsp;')}"`);
       this._body.innerHTML = input.replace(/\s/g, '&nbsp;').trim();
-      this.placeCaret(false, this._body);
+      InputHandler.alignCaret(false, this._body);
     }
 
     return input != storeInput;
@@ -342,66 +275,8 @@ export class ChatCommander {
       }
     }
 
-    this.placeCaret(false, this._body);
+    InputHandler.alignCaret(false, this._body);
   }
 
-  /**
-   * Show command suggestions
-   *
-   * @param input An alias of the command being entered.
-   */
-  private _showSuggestion(input: string) {
-    let suggestion = this._suggestionElement.textContent;
-
-    for (let a of this._commands.aliases) {
-      if (a.indexOf(input.replace(suggestion, '')) == 0) {
-        if (!this.activeCompletion) this._body.appendChild(this._suggestionElement);
-        this._suggestionElement.textContent = a.replace(input, '');
-        this.activeCompletion = a;
-        if (a == input) this._clearSuggestion();
-        return;
-      }
-    }
-    if (!this.activeCompletion) return;
-    console.log('SHOWSUGGESTION::CLEARING');
-    this._clearSuggestion();
-  }
-
-  /**
-   * Reset the suggestion and optionally set the input
-   * content.
-   *
-   * @param input Optional string to set the input content.
-   */
-  private _clearSuggestion(input?: string) {
-    console.warn('Calling Clear Suggestion');
-    this.suggestion = this.activeCompletion = null;
-    this._body.removeChild(this._suggestionElement);
-    if (typeof input !== 'undefined') {
-      this._body.innerHTML = input;
-    }
-  }
-
-  /**
-   * Place the caret at either the beginning (true) or
-   * end (false) of a specified text element.
-   *
-   * @param start True to set the caret at the start.
-   * @param el The input element to move the caret in.
-   */
-  public placeCaret(start: boolean, el: HTMLElement) {
-      el.focus();
-      if (typeof window.getSelection != 'undefined'
-              && typeof document.createRange != 'undefined') {
-          let range = document.createRange();
-          range.selectNodeContents(el);
-          range.collapse(start);
-          let sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(range);
-      } else {
-        throw new Error('Browser Too Old for caret Placement');
-      }
-  }
 
 }

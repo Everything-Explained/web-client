@@ -1,6 +1,8 @@
 import {ClientIO} from '../../../services/clientio';
 import {CommanderData, Chat} from '../../../views/chat/chat';
 import {InputHints} from './input-hints';
+import {ChatCommands} from '../commands';
+import {MessageType} from '../message';
 
 enum Keys {
 
@@ -25,6 +27,13 @@ enum Keys {
 }
 
 
+enum TypingMode {
+  TYPING,
+  PASUED,
+  STOPPED
+}
+
+
 
 
 export class InputHandler {
@@ -37,42 +46,92 @@ export class InputHandler {
   private _typingTimeout       = null;
   private _typingTimeoutSpeed  = 3500;
 
+  private _isFirefox = !!~navigator.userAgent.indexOf('Firefox');
   private _ffFix = document.createElement('br');
+
+
+  set typingStatus(val: TypingMode) {
+
+    if (TypingMode.TYPING == val) {
+      if (!this._isTyping) {
+        this._isTyping = true;
+        this._pausedTyping = false;
+        this._sock.sendUserIsTyping();
+      }
+      return;
+    }
+
+
+    if (TypingMode.PASUED == val) {
+      if (!this._pausedTyping && this._isTyping) {
+        this._pausedTyping = true;
+        this._isTyping = false;
+        this._sock.sendUserPausedTyping();
+      }
+      return;
+    }
+
+
+    if (TypingMode.STOPPED == val) {
+      if (this._isTyping || this._pausedTyping) {
+        this._isTyping = this._pausedTyping = false;
+        this._sock.sendUserFinishedTyping();
+      }
+    }
+
+  }
 
 
   constructor(private _commandBox: HTMLElement,
               private _sock: ClientIO,
-              private _chatView: Chat)
+              private _chatView: Chat,
+              private _commands: ChatCommands)
   {
     this._inputBox = this._commandBox.childNodes[0] as HTMLElement;
-    this._inputHint = new InputHints(this._commandBox);
+    if (this._isFirefox) {
+      this._inputBox.appendChild(this._ffFix);
+    }
+    this._inputHint = new InputHints(this._commandBox, this._commands.aliases);
+
   }
 
+
+  // ///////////////////////////////////
+  // ////////// NATIVE EVENTS \\\\\\\\\\
+  // -----------------------------------
 
 
   onKeyDown(e: KeyboardEvent) {
 
-    let obj = <HTMLElement>e.target,
-      input = this.normalizeInput(this._inputBox.innerText)
+
+
+    let rawInput = this._inputBox.innerText
+      , input = this.normalizeInput(rawInput + String.fromCharCode(e.which))
     ;
 
-    // Setup paused-typing debounce
-    clearTimeout(this._typingTimeout);
-    this._typingTimeout = setTimeout(() => this.onPausedTyping(), this._typingTimeoutSpeed);
 
-    // Track is-typing event
-    this.onTyping(input);
+    if (!input) {
+
+      if (this.onTabOut(e)) return false;
+
+      // Prevent firing functions on empty input
+      return true;
+
+    }
+
 
     // Reset idle timeout event on socket
     this._sock.isActive = true;
 
 
-    if (   Keys.BACKSPACE == e.which
-        || Keys.DELETE == e.which) {
-      this.onBackspace(input);
-      this.onDelete(input);
-    }
+    if (this.onInputRemoval(input, e)) return false;
 
+
+    if (this.onFillHint(e)) return false;
+
+
+    // Simulate special command for deleting line
+    // TODO - Create keyboard shortcuts method eventually
     if (   e.shiftKey
         && (   Keys.DELETE == e.which
             || Keys.BACKSPACE == e.which))
@@ -80,11 +139,17 @@ export class InputHandler {
       this.resetInputBox();
     }
 
-    if (Keys.TAB == e.which) {
-      if (this.onTab(input)) {
+
+    // Prevent Firefox BR removal
+    if (Keys.BACKSPACE == e.which && this._isFirefox) {
+      if (!!~rawInput[0].indexOf('\n') && rawInput.length - 1 == 0) {
         return false;
       }
     }
+
+
+    if (this.onTabOut(e)) return false;
+
 
     return true;
   }
@@ -93,14 +158,62 @@ export class InputHandler {
 
   onKeyPress(e: KeyboardEvent) {
 
-    let input = (
-      this._inputHint.filterHint(this._inputBox.innerText) +
-      String.fromCharCode(e.which)
-    );
+    let rawInput = this._inputBox.innerText
+
+        // Normalize Input
+      , input =
+          this.normalizeInput(
+            this._inputHint.filterHint(
+              rawInput
+            ) + String.fromCharCode(e.which)
+          )
+    ;
+
+
+    // User should understand their mistake
+    if (  Keys.ENTER == e.which
+       && !input)
+    {
+      this.onInvalidInput(input);
+      return false;
+    }
+
+
+    // Prevent firing on empty input
+    if (!input) return true;
+
 
     // Catch commands and activate hints
     if (input[0] == '/') {
-      this._inputHint.show(input.substr(1));
+
+      // Fix Firefox BR nonsense
+      if (this._isFirefox && rawInput[0] == '\n') {
+        let br = this._inputBox.childNodes[0];
+        this._inputBox.removeChild(br);
+      }
+
+      // Strip / char from input
+      let word = input.substr(1);
+
+      this._inputHint.show(word);
+
+      if (this.onCommandEntry(word, e)) return false;
+    }
+
+
+    // Default input method
+    if (Keys.ENTER == e.which) {
+      this._sock.sendMsg('main', {
+        alias: this._chatView.alias,
+        type: MessageType.NORMAL,
+        message: input,
+        realTimeFixed: Date.now(),
+        avatar: this._chatView.avatar
+      });
+
+      this.resetInputBox();
+
+      return false;
     }
 
 
@@ -111,14 +224,21 @@ export class InputHandler {
 
   onKeyUp(e: KeyboardEvent) {
 
-    let input =  this.normalizeInput(this._inputBox.innerText);
+    let input =  this.normalizeInput(this._inputBox.textContent);
 
-    // Catches entire selection deletion
-    if (Keys.BACKSPACE == e.which
-        || Keys.DELETE == e.which)
-    {
-      this.onTyping(input);
-    }
+    // Setup paused-typing debounce
+    clearTimeout(this._typingTimeout);
+    this._typingTimeout =
+      setTimeout(() => {
+        this.typingStatus = TypingMode.PASUED;
+      },
+      this._typingTimeoutSpeed
+    );
+
+    // Track is-typing event
+    this.onTyping(input);
+
+    if (!input) return false;
 
     return true;
   }
@@ -133,11 +253,10 @@ export class InputHandler {
         this._inputBox.childNodes[0].textContent.length,
         this._inputBox as HTMLElement
       );
+      return;
     }
+
   }
-
-
-
   // Control caret position when hint active
   onMouseDown(e: MouseEvent) {
     let obj = e.target as HTMLElement;
@@ -149,33 +268,33 @@ export class InputHandler {
       );
       return false;
     }
+
     return true;
   }
 
 
 
-
-
-  // ////////////////////////////
-  // ////////// EVENTS \\\\\\\\\\
-  // ----------------------------
-
   onPaste(e: ClipboardEvent) {
-    let originalText = this._inputBox.innerText
+    let originalText = this.normalizeInput(this._inputBox.textContent)
       , newText = e.clipboardData.getData('text')
     ;
 
-    // Strip unnecessary new line char
-    originalText =
-      originalText[0] == '\n'
-        ? ''
-        : originalText
-    ;
-
-    this._inputBox.innerText = originalText + newText;
+    this._inputBox.textContent = originalText + newText;
     InputHandler.alignCaret(false, this._inputBox);
   }
 
+
+
+
+
+
+
+
+
+
+  // ///////////////////////////////////
+  // ////////// CUSTOM EVENTS \\\\\\\\\\
+  // -----------------------------------
 
   onTyping(input: string) {
 
@@ -186,20 +305,45 @@ export class InputHandler {
 
     // Only activate typing when input exists
     if (input.length > 0) {
-      if (!this._isTyping) {
-        this._isTyping = true;
-        this._pausedTyping = false;
-        this._sock.sendUserIsTyping(this._chatView.alias);
+      this.typingStatus = TypingMode.TYPING;
+      return true;
+    }
+
+    // Default is no typing
+    this.typingStatus = TypingMode.STOPPED;
+
+  }
+
+
+
+  /** on BACKSPACE & DELETE: Clean input if applicable */
+  onInputRemoval(input: string, e: KeyboardEvent) {
+    if (
+           Keys.BACKSPACE == e.which
+        || Keys.DELETE == e.which
+      )
+    {
+      if (this.cleanInputBox(input)) {
+        return true;
       }
-      return true;
     }
+    return false;
+  }
 
-    // Catch when user has finished (ENTER) or erased (BACKSPACE|DEL) typing
-    if (this._isTyping || this._pausedTyping) {
-      this._isTyping = false;
-      this._pausedTyping = false;
-      this._sock.sendUserFinishedTyping(this._chatView.alias);
-      return true;
+
+
+  /** on ENTER & TAB: handle filling hint */
+  onFillHint(e: KeyboardEvent) {
+
+    if (
+           Keys.ENTER == e.which
+        || Keys.TAB   == e.which
+       )
+    {
+      if (this._inputHint.fillIn()) {
+        InputHandler.alignCaret(false, this._inputBox);
+        return true;
+      }
     }
 
     return false;
@@ -207,39 +351,74 @@ export class InputHandler {
   }
 
 
-  onPausedTyping() {
 
-    if (!this._pausedTyping && this._isTyping) {
-      this._pausedTyping = true;
-      this._isTyping = false;
-      this._sock.sendUserPausedTyping(this._chatView.alias);
+  // on ENTER: execute command if applicable
+  onCommandEntry(input: string, e: KeyboardEvent) {
+
+    if (Keys.ENTER == e.which) {
+
+      let alias = input.split(' ', 1)[0]
+        , content = input.replace(alias, '').trim()
+      ;
+
+      if (this._commands.exec(alias, content || null)) {
+        this.resetInputBox();
+        return true;
+      }
+
+      // Prevent partial commands from being sent as a message
+      this.onInvalidInput(input);
+      return true;
+
     }
+    return false;
 
   }
 
 
-  onTab(input: string) {
-    if (this._inputHint.isActive) {
-      this._inputHint.fillIn();
-      InputHandler.alignCaret(false, this._inputBox);
-      return true;
-    }
+
+  /** Handles empty and invalid command input. */
+  onInvalidInput(input: string) {
+    let ignorant = `"${input}" is not an internal or external command.`
+      , fail = 'You must enter a value to send a message.'
+    ;
+
+    this._chatView.addMessage(
+      (!input) ? fail : ignorant,
+      MessageType.CLIENT
+    );
+
+  }
+
+
+
+  /** Prevents accidental tab-out */
+  onTabOut(e: KeyboardEvent) {
+    if (Keys.TAB == e.which) return true;
     return false;
   }
 
 
-  onBackspace(input: string) {
-    this.cleanInputBox(input);
-  }
-
-
-  onDelete(input: string) {
-    this.cleanInputBox(input);
-  }
 
 
 
 
+
+
+
+
+
+
+
+  // /////////////////////////////////////
+  // ////////// UTILITY METHODS \\\\\\\\\\
+  // -------------------------------------
+
+  /**
+   * Strips and replaces unnecessary characters.
+   *
+   * @param input The input to normalize.
+   */
   normalizeInput(input: string) {
 
     // Remove invisible character placeholder
@@ -250,7 +429,7 @@ export class InputHandler {
     // Replace &nbsp; chars
     input = input.replace(/\s/gi, ' ');
 
-    return input;
+    return input.trim();
   }
 
 
@@ -263,11 +442,10 @@ export class InputHandler {
    */
   cleanInputBox(input: string) {
 
-    this.resetInputBox(input);
-
     if (this._inputHint.isActive)
       this._inputHint.clear()
     ;
+
   }
 
 
@@ -278,15 +456,15 @@ export class InputHandler {
    *
    * @param input The input to test for invisible character
    */
-  resetInputBox(input?: string) {
-    if (input) {
-      if (input.length - 1 != 0) {
-        return false;
-      }
-    }
+  resetInputBox() {
 
-    this._inputBox.innerHTML = '';
-    this._inputBox.appendChild(this._ffFix);
+    // Clearing whole input
+    this._inputBox.innerHTML = null;
+
+    // Fix Firefox BR behavior
+    if (this._isFirefox) {
+      this._inputBox.appendChild(this._ffFix);
+    }
 
   }
 
@@ -322,7 +500,7 @@ export class InputHandler {
    * @param pos The position you want the caret in the object
    */
   static insertCaret(pos: number, el: HTMLElement|HTMLInputElement) {
-    console.log('executing');
+
     let range = document.createRange()
       , sel = window.getSelection()
     ;
