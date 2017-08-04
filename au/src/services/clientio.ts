@@ -97,16 +97,16 @@ export class ClientIO {
   }
 
 
-  sendUserIsTyping(user: string) {
-    this._sock.emit('user-is-typing', user);
+  sendUserIsTyping() {
+    this._sock.emit('user-is-typing');
   }
 
-  sendUserFinishedTyping(user: string) {
-    this._sock.emit('user-stopped-typing', user);
+  sendUserFinishedTyping() {
+    this._sock.emit('user-stopped-typing');
   }
 
-  sendUserPausedTyping(user: string) {
-    this._sock.emit('user-paused-typing', user);
+  sendUserPausedTyping() {
+    this._sock.emit('user-paused-typing');
   }
 
   sendPrivateMsg(text: string, to: string) {

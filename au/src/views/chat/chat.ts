@@ -8,6 +8,7 @@ import {ClientIO} from '../../services/clientio';
 import {MiniModal} from '../../helpers/minimodal';
 import {Web} from '../../helpers/web';
 import {ChatCommander} from './el-chatcmdr/chatcmdr';
+import {InputHandler} from './el-chatcmdr/input-handler';
 
 
 
@@ -163,7 +164,7 @@ export class Chat {
     for (let user of this.users) {
       if (user.name == alias) {
         this._chatCommander.innerHTML = `/notice ${user.id}&nbsp;`;
-        this.commander.placeCaret(false, this.commander.inputObj);
+        InputHandler.alignCaret(false, this.commander.inputObj);
         break;
       }
     }

@@ -18,15 +18,16 @@ export class ChatCommands {
 
   constructor(private _sock: ClientIO, private _chatView: Chat) {
 
-    this.commands['me|emote']               = (args) => this._emote(args[0]);
-    this.commands['notice']                 = (args) => this._notice(args[0]);
-    this.commands['dcon|discon|disconnect'] = () => this._disconnect();
-    this.commands['connect']                = () => this._connect();
-    this.commands['nick|alias']             = (args) => this._chatView.changeAlias(args[0]);
-    this.commands['clear']                  = () => this._chatView.clearAll();
-    this.commands['small']                  = () => this._setPortScale('small');
-    this.commands['medium']                 = () => this._setPortScale('medium');
-    this.commands['large']                  = () => this._setPortScale('large');
+    this.commands['me|emote']   = (args) => this._emote(args[0]);
+    this.commands['notice']     = (args) => this._notice(args[0]);
+    this.commands['ping']       = ()     => this._ping();
+    this.commands['disconnect'] = ()     => this._disconnect();
+    this.commands['connect']    = ()     => this._connect();
+    this.commands['nick|alias'] = (args) => this._chatView.changeAlias(args[0]);
+    this.commands['clear']      = ()     => this._chatView.clearAll();
+    this.commands['small']      = ()     => this._setPortScale('small');
+    this.commands['medium']     = ()     => this._setPortScale('medium');
+    this.commands['large']      = ()     => this._setPortScale('large');
 
     this._populateAliases();
 
@@ -42,6 +43,7 @@ export class ChatCommands {
       this.aliases.push(cmd);
     }
   }
+
 
   public exec(alias: string, ...args: string[]) {
 
@@ -64,6 +66,7 @@ export class ChatCommands {
     return false;
   }
 
+
   private _notice(msg: string) {
     let argArray = msg.split(' ')
       , id = argArray.shift().toString()
@@ -79,7 +82,11 @@ export class ChatCommands {
     }, id);
   }
 
+
   private _emote(message: string) {
+
+    if (!message || !message.trim().length) return;
+
     this._sock.sendEmote('main', {
       alias: this._chatView.alias,
       message,
@@ -88,6 +95,7 @@ export class ChatCommands {
       avatar: this._chatView.avatar,
       type: MessageType.EMOTE
     });
+
   }
 
   private _setPortScale(size: string) {
