@@ -130,6 +130,14 @@ export class InputHandler {
     if (this.onFillHint(e)) return false;
 
 
+    // Do not allow SPACE character while hint is active
+    if (   Keys.SPACE == e.which
+        && this._inputHint.isActive)
+    {
+      return false;
+    }
+
+
     // Simulate special command for deleting line
     // TODO - Create keyboard shortcuts method eventually
     if (   e.shiftKey
