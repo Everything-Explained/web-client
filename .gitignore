@@ -2,3 +2,4 @@ releaseV2
 /au/aurelia_project/environments
 /au/src/environment.ts
 /staging
+node_modules

@@ -1,0 +1,17 @@
+{
+  "name": "secret",
+  "version": "1.0.0",
+  "sasslintConfig": "sass-lint.yml",
+  "description": "A place for private projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass-lint": "^1.10.2",
+    "tslint": "^5.6.0",
+    "vue": "^2.4.2"
+  }
+}
