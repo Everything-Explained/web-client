@@ -5,11 +5,13 @@ body
 *
   outline: none
 
+
 select
   transition: border .4s ease
 
   &:hover
     border: 1px solid #2196F3
+
 
 #entry
   position: absolute
@@ -18,40 +20,52 @@ select
   right: 0
   bottom: 0
 
+
 #EntryContainer
   position: relative
-  top: 50px
-  left: 160px
+  top: 20px
+  left: 170px
+
 
 #solution
   margin-top: 30px
 
+
 .inline
   display: inline-block
 
-#LevelSelect
+
+#LevelSelect, #StageSelect
   position: absolute
-  top: -7px
-  left: -113px
+  top: -8px
+  left: -160px
 
   label
     position: absolute
     top: 0
     left: 0
+    width: 80px
+    text-align: center
     color: hsl(0, 0%, 60%)
     font-size: 16px
     font-family: monospace
 
-  .level-select
+  .level-select, .stage-select
     position: relative
     top: 24px
-    width: 100px
+    width: 75px
     margin-right: 10px
     font-variant: small-caps
     font-family: Verdana, Geneva, Tahoma, sans-serif
 
+
+#StageSelect
+  left: -86px
+
+
 .mui-select__menu
   font-variant: small-caps
+
 
 header
   width: 100%
@@ -83,17 +97,18 @@ $ts-color: hsl(0, 0%, 50%)
   position: absolute
   display: block
   top: 70px
-  left: -75px
+  left: -105px
   font-size: 90px
   color: hsl(0, 0%, 70%)
   text-shadow: 0 -2px 0 hsla(0, 0%, 0%, .45), 0 2px 0 hsl(0, 0%, 99%)
   font-family: consolas
 
+
 .piece-placeholder
   position: relative
   display: inline-block
   margin-right: 10px
-  border: 2px solid #aaa
+  border: 2px dashed hsl(0, 0%, 70%)
   width: 133px
   height: 133px
 
@@ -138,25 +153,3 @@ $ts-color: hsl(0, 0%, 50%)
     &.fail::before
       opacity: 1
       top: 113%
-
-
-.puzzle-piece
-  background-color: #000
-  position: absolute
-  display: block
-  width: 133px
-  height: 133px
-  user-select: none
-  border-radius: 5px
-  z-index: 10
-
-
-.puzzle-place
-  position: relative
-  top: 120px
-  left: 100px
-  background-color: #e0e0e0
-  border: 4px solid #ccc
-  height: 100px
-  width: 100px
-  border-radius: 5px

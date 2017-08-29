@@ -1,5 +1,8 @@
 
 
+
+
+
 interface IApp extends Vue {
 
   easyColors: string[];
@@ -13,26 +16,55 @@ interface IApp extends Vue {
     grayscale: string[];
   }
   countdown: number;
+  countdownStart: number;
+  shuffleSpeed: number;
+  shuffleAmount: number;
   level: number;
+  levels: any[];
   randomizeCount: number;
-  isRandomized: boolean;
+  isPuzzleReady: boolean;
+  puzzleLevels: PuzzleLevels;
 
   toArray: (list: NodeList) => any[];
   toNumberedArray: (count: number) => number[];
-  pickColors: (count: number) => string[];
+  pickColors: (count: number, palette?: 'red'|'orange'|'green'|'blue'|'purple'|'grayscale') => string[];
   reorderPuzzle: () => void;
   randomizeNums: (list: number[]) => number[];
-  setupTable: (count: number) => void;
+  puzzleSetup: (options: IPuzzleProperties) => void;
+  createTable: (options: ITableProperties) => void;
+
+  assignPuzzleEvents: (insert: HTMLElement, placeholder: HTMLElement) => void;
+  assignSolutionEvents: (insert: HTMLElement, placeholder: HTMLElement) => void;
+
   randomizePuzzle: (speed?: number, count?: number) => void;
   uniqueOrder: (numbers: number[]) => number[];
 
 }
 
 
+interface IPuzzleProperties {
+  pieceCount: number;
+  countdown: number;
+  shuffleSpeed: number;
+  shuffleAmount: number;
+  palette?: 'red'|'orange'|'green'|'blue'|'purple'|'grayscale';
+}
+
+interface ITableProperties {
+  puzzle: HTMLElement;
+  placeholder: HTMLElement;
+  insert: HTMLElement;
+  solution: HTMLElement;
+  pieceCount: number;
+  palette?: 'red'|'orange'|'green'|'blue'|'purple'|'grayscale';
+}
+
+
 let app = new Vue({
 
-
   el: '#entry',
+
+
 
 
   data: {
@@ -87,21 +119,32 @@ let app = new Vue({
       ]
     },
 
-    isRandomized: false,
+    isPuzzleReady: false,
 
     countdown: 0,
+    countdownStart: 0,
+    shuffleSpeed: 100,
+    shuffleAmount: 10,
 
     level: 0,
+    levels: null,
 
-    randomizeCount: 0
+    randomizeCount: 0,
+
+    puzzleLevels: null as PuzzleLevels
   },
+
+
+
 
   mounted: function() {
 
-    new PuzzleLevels(this)
-
+    this.puzzleLevels = new PuzzleLevels(this);
+    this.levels = this.puzzleLevels.stage[0];
 
   },
+
+
 
 
   methods: {
@@ -112,92 +155,157 @@ let app = new Vue({
     },
 
 
-    beginLevel: function() {
+    setupLevel: function() {
+      this.puzzleLevels.exec(this.level);
+    },
+
+
+    puzzleSetup: function(options: IPuzzleProperties) {
+
+      this.shuffleAmount = options.shuffleAmount;
+      this.shuffleSpeed = options.shuffleSpeed;
+
+      let placeholder = document.createElement('div')
+        , insert = document.createElement('div')
+        , puzzle = this.$refs['puzzle'] as HTMLElement
+        , solution = this.$refs['solution'] as HTMLElement
+        , pieceCount = options.pieceCount
+      ;
+
+      placeholder.classList.add('piece-placeholder')
+      this.countdownStart = options.countdown;
+
+      this.isPuzzleReady = true;
+
+      puzzle.innerHTML = '';
+      solution.innerHTML = '';
+
+      this.createTable({insert, placeholder, pieceCount, puzzle, solution, palette: options.palette});
 
     },
 
 
-    setupTable: function(count: number) {
-        let placeholder = document.createElement('div')
-        , insert = document.createElement('div')
-        , puzzle = this.$refs['puzzle'] as HTMLElement
-        , solution = this.$refs['solution'] as HTMLElement
-        , puzzleCount = count
-      ;
+    assignPuzzleEvents: function(insert: HTMLElement, placeholder: HTMLElement) {
+      insert.draggable = true;
 
-      placeholder.classList.add('piece-placeholder')
+      let dragStart = (ev: DragEvent) => {
+        let id = ev.target['id'];
 
-      this.isRandomized = true;
+        ev.dataTransfer.setData('text', `${id}`);
+        insert.classList.remove('fail');
+        insert.classList.remove('success');
+      };
 
-      let assignEvents = (insert: HTMLElement, placeholder: HTMLElement) => {
-
-        insert.draggable = true;
-
-        let dragStart = (ev: DragEvent) => {
-          ev.dataTransfer.setData('text', (ev.target as HTMLElement).id);
-        };
-
-        let dragOver = (ev: DragEvent) => {
-          ev.preventDefault();
-        }
-
-        let drop = (ev: DragEvent) => {
-          let id = ev.dataTransfer.getData('text')
-            , obj = document.getElementById(id)
-            , ph = obj.parentElement
-            , insertHasColor = false
-            , insertColor = null
-          ;
-
-
-          // Prevent drag toggling on same row
-          if (
-              !obj.style.backgroundColor
-              || obj.id.substr(0, 1) == insert.id.substr(0, 1)
-            )
-            return
-          ;
-
-          insert.style.backgroundColor =
-            window.getComputedStyle(obj, null).getPropertyValue('background-color')
-          ;
-
-          if (ph.dataset['defaultOrder'] == placeholder.dataset['defaultOrder']) {
-            insert.classList.add('success');
-          }
-          else {
-            insert.classList.add('fail');
-          }
-
-          insert.removeEventListener('drop', drop);
-          insert.removeEventListener('dragstart', dragStart);
-          insert.removeEventListener('dragover', dragOver);
-          this.isRandomized = false;
-          insert.draggable = false;
-          obj.style.backgroundColor = null
-        }
-
-        insert.addEventListener('dragstart', dragStart);
-        insert.addEventListener('dragover', dragOver);
-        insert.addEventListener('drop', drop);
+      let dragOver = (ev: DragEvent) => {
+        ev.preventDefault();
       }
 
-      let palette = this.pickColors(puzzleCount);
-      console.log(palette);
-      puzzle.innerHTML = '';
-      solution.innerHTML = '';
+      insert.addEventListener('dragstart', dragStart);
+      insert.addEventListener('dragover', dragOver);
+    },
 
-      for (let i = 0; i < puzzleCount; i++) {
+
+    assignSolutionEvents: function(insert: HTMLElement, placeholder: HTMLElement) {
+
+      insert.draggable = false;
+
+      let resetInsert = () => {
+        let orderId = insert.dataset['orderId'];
+
+        if (orderId) {
+          let obj = document.getElementById(orderId);
+          obj.style.backgroundColor = insert.style.backgroundColor;
+          obj.style.backgroundImage = insert.style.backgroundImage;
+          insert.style.backgroundColor = null;
+          insert.style.backgroundImage = null;
+          insert.classList.remove('fail');
+          insert.classList.remove('success');
+          delete insert.dataset['orderId']
+        }
+      }
+
+      let drop = (ev: DragEvent) => {
+        let id = ev.dataTransfer.getData('text')
+          , obj = document.getElementById(id)
+          , ph = obj.parentElement
+          , orderId = insert.dataset['orderId']
+        ;
+
+        if (!orderId) {
+          insert.dataset['orderId'] = id;
+        }
+        else {
+          resetInsert();
+          insert.dataset['orderId'] = id;
+        }
+
+        insert.style.backgroundColor =
+          window.getComputedStyle(obj, null).getPropertyValue('background-color')
+        ;
+
+        // For easter eggs
+        insert.style.backgroundImage =
+          window.getComputedStyle(obj, null).getPropertyValue('background-image')
+        ;
+
+        if (ph.dataset['defaultOrder'] == placeholder.dataset['defaultOrder']) {
+          insert.classList.add('success');
+        }
+        else {
+          insert.classList.add('fail')
+        }
+
+        this.isPuzzleReady = false;
+        obj.style.backgroundColor = null;
+        obj.style.backgroundImage = null;
+
+      }
+
+      let dragover = (ev: DragEvent) => {
+        ev.preventDefault();
+      }
+
+
+
+      insert.addEventListener('drop', drop);
+      insert.addEventListener('dragover', dragover);
+      insert.addEventListener('dblclick', resetInsert);
+    },
+
+
+    createTable: function(options: ITableProperties) {
+      let palette =
+            (options.palette)
+              ? this.pickColors(options.pieceCount, options.palette)
+              : this.pickColors(options.pieceCount)
+        , insert = options.insert
+        , placeholder = options.placeholder
+        , puzzle = options.puzzle
+        , easterEggEntry = null as number
+        , jj = Math.random() <= 0.001
+      ;
+
+      if (Math.random() <= 0.025) {
+        easterEggEntry = Math.floor(Math.random() * options.pieceCount);
+      }
+
+
+      for (let i = 0; i < options.pieceCount; i++) {
 
         let p = placeholder.cloneNode() as HTMLElement;
         p.style.order = `${i + 1}`
         p.dataset['defaultOrder'] = `${i + 1}`
         insert = insert.cloneNode() as HTMLDivElement;
-        insert.style.backgroundColor = palette[i];
+        if (i == easterEggEntry || jj) {
+          let pos = (jj) ? i + 1 : Math.ceil(Math.random() * options.pieceCount)
+          insert.style.backgroundImage = `url('imgs/dwaa${pos}.png')`
+        } else {
+          insert.style.backgroundColor = palette[i];
+        }
         insert.classList.add('insert');
         insert.classList.add('hidden');
         insert.id = `p${i}`
-        assignEvents(insert, p);
+        this.assignPuzzleEvents(insert, p);
         p.appendChild(insert);
         puzzle.appendChild(p);
 
@@ -207,9 +315,10 @@ let app = new Vue({
         insert.classList.remove('hidden');
         insert.id = `s${i}`;
         insert.style.backgroundColor = null;
-        assignEvents(insert, s);
+        insert.style.backgroundImage = null;
+        this.assignSolutionEvents(insert, s);
         s.appendChild(insert);
-        solution.appendChild(s);
+        options.solution.appendChild(s);
 
       }
     },
@@ -248,25 +357,26 @@ let app = new Vue({
     },
 
 
-    countDown: function() {
+    beginLevel: function() {
       let btn = this.$refs['startbtn'] as HTMLButtonElement
         , randombtn = this.$refs['randomizebtn'] as HTMLButtonElement
         , pieces = this.toArray((this.$refs['puzzle'] as HTMLElement).childNodes) as HTMLElement[]
       ;
+
       pieces.forEach(el => {
         (el.childNodes[0] as HTMLElement).classList.remove('hidden');
       })
 
       randombtn.disabled = true;
       btn.disabled = true;
-      this.countdown = 7;
+      this.countdown = this.countdownStart;
       let countDownInterval = setInterval(() => {
         if (this.countdown > 1) {
           --this.countdown;
         }
         else {
           clearInterval(countDownInterval);
-          this.randomizePuzzle(130, 20);
+          this.randomizePuzzle(this.shuffleSpeed, this.shuffleAmount);
           this.countdown = 0;
           randombtn.disabled = false;
           btn.disabled = false;
@@ -275,9 +385,12 @@ let app = new Vue({
     },
 
 
-    pickColors(count: number) {
+    pickColors(count: number, palette?: string) {
       let saveList = [] as string[]
-        , colorList = this.easyColors
+        , colorList =
+            (palette && palette in this.colorTable)
+              ? this.colorTable[palette]
+              : this.easyColors
       ;
 
       while (count) {
@@ -288,6 +401,7 @@ let app = new Vue({
       }
       return saveList;
     },
+
 
     toArray: function(list: NodeList) {
       return Array.prototype.slice.call(list);
@@ -302,6 +416,7 @@ let app = new Vue({
       return list;
     },
 
+
     randomizeNums: function(list: number[]) {
       let newList = [] as number[];
       for (let nums of list) {
@@ -311,6 +426,7 @@ let app = new Vue({
       }
       return newList;
     },
+
 
     uniqueOrder: function(numbers: number[]) {
       let order = []
