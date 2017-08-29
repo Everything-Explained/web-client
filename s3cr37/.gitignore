@@ -1,3 +1,4 @@
 /memory/**/*.js
 /memory/**/*.map
 /memory/**/*.css
+/**/.sass-cache

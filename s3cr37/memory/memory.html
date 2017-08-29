@@ -2,22 +2,43 @@
   <head>
     <title>Mom Memory Puzzle</title>
     <link href="//cdn.muicss.com/mui-0.9.22/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type='text/css' />
     <script src="//cdn.muicss.com/mui-0.9.22/js/mui.min.js"></script>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div id='entry' class='mui-container'>
-      <header class="header">
-        <button class='mui-btn mui-btn--primary mui-btn--raised' @click='randomizeTable'>Randomize</button>
-        <button class="mui-btn mui-btn--primary mui-btn--raised" @click='randomizePuzzle(80, 20)'>Start</button>
-      </header>
-      <div id="table">
-        <div id="puzzle" ref='puzzle'></div>
-        <div id='solution' ref='solution'></div>
+    <div id='entry' class=''>
+      <div id="EntryContainer">
+        <div id='LevelSelect' class="inline">
+          <label>Select Level</label>
+          <select class='level-select' @change='setLevel'>
+            <option value="1">lvl 1</option>
+            <option value="2">lvl 2</option>
+          </select>
+        </div>
+        <header class="header">
+          <button class='mui-btn
+                          mui-btn--primary'
+                  @click='beginLevel'
+                  ref='randomizebtn'>Randomize
+          </button>
+          <button class="mui-btn
+                         mui-btn--accent"
+                  @click='countDown'
+                  v-bind:disabled='!isRandomized'
+                  ref='startbtn'>Start
+          </button>
+          <div class="ready" v-if='isRandomized'>Click start when ready</div>
+        </header>
+        <div class="countdown" v-if='countdown'>{{ countdown }}</div>
+        <div id="table">
+          <div id="puzzle" ref='puzzle'></div>
+          <div id='solution' ref='solution'></div>
+        </div>
       </div>
     </div>
     <script src='//unpkg.com/vue@2.4.2'></script>
-    <script src='../libs/dragable.js'></script>
+    <script src="levels.js"></script>
     <script src='memory.js'></script>
     <script src='../libs/live.js'></script>
   </body>
