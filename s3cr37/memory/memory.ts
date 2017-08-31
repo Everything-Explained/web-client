@@ -222,7 +222,7 @@ let app = new Vue({
         } else {
           insert.style.backgroundColor = palette[i];
         }
-        
+
         insert.classList.add('insert');
         insert.classList.add('obfuscated');
         insert.id = `p${i}`;
@@ -246,11 +246,9 @@ let app = new Vue({
 
 
     assignPuzzleEvents: function(insert: HTMLElement, placeholder: HTMLElement) {
-      insert.draggable = true;
 
       let dragStart = (ev: DragEvent) => {
         let id = ev.target['id'];
-
         ev.dataTransfer.setData('text', `${id}`);
         insert.classList.remove('fail');
         insert.classList.remove('success');
@@ -264,7 +262,7 @@ let app = new Vue({
       insert.addEventListener('dragover', dragOver);
     },
 
-
+    
     assignSolutionEvents: function(insert: HTMLElement, placeholder: HTMLElement) {
 
       insert.draggable = false;
@@ -273,6 +271,8 @@ let app = new Vue({
         let orderId = insert.dataset['orderId'];
 
         if (orderId) {
+          // Lock successful solutions
+          if (insert.classList.contains('success')) return;
           let obj = document.getElementById(orderId);
           obj.style.backgroundColor = insert.style.backgroundColor;
           obj.style.backgroundImage = insert.style.backgroundImage;
@@ -290,6 +290,10 @@ let app = new Vue({
           , ph = obj.parentElement
           , orderId = insert.dataset['orderId']
         ;
+
+
+        // Lock successful solutions
+        if (insert.classList.contains('success')) return;
 
         if (!orderId) {
           insert.dataset['orderId'] = id;
@@ -368,10 +372,13 @@ let app = new Vue({
       let btn = this.$refs['startbtn'] as HTMLButtonElement
         , randombtn = this.$refs['randomizebtn'] as HTMLButtonElement
         , pieces = this.toArray((this.$refs['puzzle'] as HTMLElement).childNodes) as HTMLElement[]
+        , inserts = [] as HTMLElement[]
       ;
 
       pieces.forEach(el => {
-        (el.childNodes[0] as HTMLElement).classList.remove('obfuscated');
+        let insert = (el.childNodes[0] as HTMLElement);
+        insert.classList.remove('obfuscated');
+        inserts.push(insert);
       });
 
       randombtn.disabled = true;
@@ -387,6 +394,7 @@ let app = new Vue({
           this.countdown = 0;
           randombtn.disabled = false;
           btn.disabled = false;
+          inserts.forEach(el => el.draggable = true);
         }
       }, 1000);
     },
