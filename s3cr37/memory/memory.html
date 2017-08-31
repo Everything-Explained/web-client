@@ -1,13 +1,14 @@
 <html lang="en">
   <head>
     <title>Mom Memory Puzzle</title>
-    <link href="//cdn.muicss.com/mui-0.9.22/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="//cdn.muicss.com/mui-0.9.22/css/mui.min.css" rel="stylesheet" type="text/css">
+    <script src="//cdn.muicss.com/mui-0.9.22/js/mui.min.js" async></script>
     <link rel="stylesheet" href="custom.css" type='text/css' />
-    <script src="//cdn.muicss.com/mui-0.9.22/js/mui.min.js"></script>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div id='entry' class=''>
+    <!-- <div id="test"><div class="cross"></div></div> -->
+    <div id='entry' class='hidden' :class='{ visible: isLoaded }'>
       <div id="EntryContainer">
         <div id='LevelSelect' class="inline">
           <label>Level</label>
@@ -44,7 +45,7 @@
     </div>
     <script src='//unpkg.com/vue@2.4.2'></script>
     <script src="levels.js"></script>
-    <script src='memory.js'></script>
-    <script src='../libs/live.js'></script>
+    <script src='memory.js' async></script>
+    <script src='../libs/live.js' async></script>
   </body>
 </html>

@@ -1,0 +1,224 @@
+
+
+$width: 133px
+$height: $width
+
+
+.circle
+  width: $width
+  height: $height
+  border-radius: 50%
+  background: #f00
+
+
+
+
+%triangle
+  width: 0
+  height: 0
+
+%triangle-vertical
+  @extend %triangle
+  border-left: $width / 2 solid transparent
+  border-right: $width / 2 solid transparent
+
+%triangle-horizontal
+  @extend  %triangle
+  border-top: $width / 2 solid transparent
+  border-bottom: $width / 2 solid transparent
+
+.triangle-up
+  @extend %triangle-vertical
+  border-bottom: $width solid #f00
+
+.triangle-down
+  @extend %triangle-vertical
+  border-top: $width solid #f00
+
+.triangle-left
+  @extend %triangle-horizontal
+  border-right: $width solid #f00
+
+.triangle-right
+  @extend %triangle-horizontal
+  border-left: $width solid #f00
+
+
+
+
+.parallelogram
+  position: relative
+  left: 22px
+  width: $width - 45
+  height: $height
+  -webkit-transform: skew(20deg)
+  -moz-transform: skew(20deg)
+  transform: skew(20deg)
+  background: #f00
+
+
+
+
+.trapezoid
+  position: relative
+  display: block
+  top: 25%
+  width: $width / 2
+  height: 0
+  border-bottom: $width / 2 solid #f00
+  border-left: $width / 4 solid transparent
+  border-right: $width / 4 solid transparent
+
+
+
+.heart
+  position: relative
+  width: $width
+  height: $height
+  margin: 0 auto
+
+  &::before, &::after
+    position: absolute
+    content: ''
+    left: $width / 2
+    top: 10px
+    width: $width / 2
+    height: $width - 19
+    background: #f00
+    border-radius: $width / 2 $width / 2 0 0
+    transform: rotate(-45deg)
+    transform-origin: 0 100%
+
+  &::after
+    left: 0
+    transform: rotate(45deg)
+    transform-origin: 100% 100%
+
+
+
+
+.diamond
+  position: relative
+  display: block
+  margin: 0 auto
+  top: -$width / 2
+  width: 0
+  height: 0
+  border: $width / 2 solid transparent
+  border-bottom-color: #f00
+
+  &::after
+    content: ''
+    position: absolute
+    left: -$width / 2
+    top: $width / 2
+    width: 0
+    height: 0
+    border: $width / 2 solid transparent
+    border-top-color: #f00
+
+
+
+
+$awidth: $width / 1.5
+$height-offset: 22
+
+.diamond-narrow
+  @extend .diamond
+  top: -$awidth / 2.2
+  border: $awidth / 2.2 solid transparent
+  border-bottom: $awidth - $height-offset solid #f00
+
+  &::after
+    top: $awidth - $height-offset
+    left: -$awidth / 2.2
+    border: $awidth / 2.2 solid transparent
+    border-top: $awidth - $height-offset solid #f00
+
+
+
+
+.diamond-cut
+  position: relative
+  border-style: solid
+  border-color: transparent transparent #f00
+  border-width: 0 $width / 4 $width / 4
+  height: 0
+  width: $width / 2
+  margin-bottom: $width / 2
+
+  &::after
+    content: ''
+    position: absolute
+    top: $width / 4
+    left: -$width / 4
+    width: 0
+    height: 0
+    border-style: solid
+    border-color: #f00 transparent transparent
+    border-width: $width - 30 $width / 2 0 $width / 2
+
+
+
+
+$size: $width / 1.33
+
+.sun
+  position: relative
+  top: $size / 6
+  margin: 0 auto
+  width: $size
+  height: $size
+  text-align: center
+  background: #f00
+
+  &::before, &::after
+    position: absolute
+    content: ''
+    top: 0
+    left: 0
+    width: $size
+    height: $size
+    background: #f00
+
+  &::before
+    transform: rotate(30deg)
+
+  &::after
+    transform: rotate(60deg)
+
+
+
+
+.crecent
+  position: relative
+  top: -15px
+  left: -15px
+  width: $width
+  height: $height
+  border-radius: 50%
+  box-shadow: 15px 15px 0 0 #f00
+
+
+
+
+.cross
+  position: relative
+  margin: 0 auto
+  width: .2 * $width
+  height: $height
+  background: #f00
+
+  &::after
+    position: absolute
+    content: ''
+    top: .4 * $width
+    left: -.4 * $width
+    width: $width
+    height: .2 * $width
+    background: #f00
+
+
+
+
+

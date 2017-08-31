@@ -38,6 +38,11 @@ class PuzzleLevels {
     },
 
     {
+      pieceCount: 6, countdown: 7,
+      shuffleSpeed: 100, shuffleAmount: 20
+    },
+
+    {
       pieceCount: 7, countdown: 10,
       shuffleSpeed: 100, shuffleAmount: 20
     },
@@ -48,17 +53,41 @@ class PuzzleLevels {
     },
 
     {
+      pieceCount: 3, countdown: 4,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'medium'
+    },
+
+    {
+      pieceCount: 4, countdown: 6,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'medium'
+    },
+
+    {
       pieceCount: 4, countdown: 4,
       shuffleSpeed: 80, shuffleAmount: 25,
-      palette: 'orange'
-    }
+      palette: 'medium'
+    },
 
-  ] as IPuzzleProperties[]
+    {
+      pieceCount: 5, countdown: 7,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'medium'
+    },
+
+    {
+      pieceCount: 5, countdown: 4,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'medium'
+    },
+
+  ] as IPuzzleProperties[];
 
 
   public stage = [
     this.stageOneLevels
-  ]
+  ];
 
 
 
@@ -71,7 +100,7 @@ class PuzzleLevels {
       this._app.puzzleSetup(this.stageOneLevels[level]);
     }
     else {
-      console.warn(`Level "${level}" does not exist!`)
+      console.warn(`Level "${level}" does not exist!`);
     }
   }
 

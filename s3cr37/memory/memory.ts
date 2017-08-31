@@ -5,16 +5,9 @@
 
 interface IApp extends Vue {
 
-  easyColors: string[];
   colorTable: {
-    red: string[];
-    orange: string[];
-    yellow: string[];
-    green: string[];
-    blue: string[];
-    purple: string[];
-    grayscale: string[];
-  }
+    [key: string]: string[]
+  };
   countdown: number;
   countdownStart: number;
   shuffleSpeed: number;
@@ -23,11 +16,12 @@ interface IApp extends Vue {
   levels: any[];
   randomizeCount: number;
   isPuzzleReady: boolean;
+  isLoaded: boolean;
   puzzleLevels: PuzzleLevels;
 
   toArray: (list: NodeList) => any[];
   toNumberedArray: (count: number) => number[];
-  pickColors: (count: number, palette?: 'red'|'orange'|'green'|'blue'|'purple'|'grayscale') => string[];
+  pickColors: (count: number, palette?: string) => string[];
   reorderPuzzle: () => void;
   randomizeNums: (list: number[]) => number[];
   puzzleSetup: (options: IPuzzleProperties) => void;
@@ -47,7 +41,7 @@ interface IPuzzleProperties {
   countdown: number;
   shuffleSpeed: number;
   shuffleAmount: number;
-  palette?: 'red'|'orange'|'green'|'blue'|'purple'|'grayscale';
+  palette?: string;
 }
 
 interface ITableProperties {
@@ -56,7 +50,7 @@ interface ITableProperties {
   insert: HTMLElement;
   solution: HTMLElement;
   pieceCount: number;
-  palette?: 'red'|'orange'|'green'|'blue'|'purple'|'grayscale';
+  palette?: string;
 }
 
 
@@ -68,14 +62,14 @@ let app = new Vue({
 
 
   data: {
-    easyColors: [
-      'white', 'black', 'orange',
-      'red', 'green', 'blue', 'deepskyblue',
-      'deeppink', 'purple', 'greenyellow',
-      'yellow', 'slategray', 'brown', 'cyan'
-    ],
 
     colorTable: {
+      easy: [
+        'white', 'black', 'orange',
+        'red', 'green', 'blue', 'deepskyblue',
+        'deeppink', 'purple', 'greenyellow',
+        'yellow', 'slategray', 'brown', 'cyan'
+      ],
       red: [
         'indianred', 'lightcoral', 'salmon',
         'darksalmon', 'lightsalmon', 'crimson',
@@ -116,10 +110,17 @@ let app = new Vue({
         'gainsboro', 'lightgray', 'silver',
         'darkgray', 'gray', 'dimgray', 'lightslategray',
         'slategray', 'darkslategray', 'black'
+      ],
+
+      medium: [
+        'lightsalmon', 'coral', 'gold',
+        'goldenrod', 'darkgoldenrod', 'chocolate',
+        'peachpuff'
       ]
     },
 
     isPuzzleReady: false,
+    isLoaded: false,
 
     countdown: 0,
     countdownStart: 0,
@@ -127,6 +128,7 @@ let app = new Vue({
     shuffleAmount: 10,
 
     level: 0,
+    stage: 0,
     levels: null,
 
     randomizeCount: 0,
@@ -141,7 +143,9 @@ let app = new Vue({
 
     this.puzzleLevels = new PuzzleLevels(this);
     this.levels = this.puzzleLevels.stage[0];
-
+    setTimeout(() => {
+      this.isLoaded = true;
+    }, 30);
   },
 
 
@@ -172,16 +176,72 @@ let app = new Vue({
         , pieceCount = options.pieceCount
       ;
 
-      placeholder.classList.add('piece-placeholder')
+      placeholder.classList.add('piece-placeholder');
       this.countdownStart = options.countdown;
 
       this.isPuzzleReady = true;
 
-      puzzle.innerHTML = '';
-      solution.innerHTML = '';
+      let nodes =
+            this.toArray(puzzle.childNodes).concat(
+            this.toArray(solution.childNodes)) as HTMLElement[]
+      ;
+      nodes.forEach(el => el.remove());
 
       this.createTable({insert, placeholder, pieceCount, puzzle, solution, palette: options.palette});
 
+    },
+
+
+    createTable: function(options: ITableProperties) {
+      let palette =
+            (options.palette)
+              ? this.pickColors(options.pieceCount, options.palette)
+              : this.pickColors(options.pieceCount)
+        , insert = options.insert
+        , placeholder = options.placeholder
+        , puzzle = options.puzzle
+        , easterEggEntry = null as number
+        , jj = Math.random() <= 0.001
+      ;
+
+      if (Math.random() <= 0.025) {
+        easterEggEntry = Math.floor(Math.random() * options.pieceCount);
+      }
+
+
+      for (let i = 0; i < options.pieceCount; i++) {
+
+        let p = placeholder.cloneNode() as HTMLElement;
+        p.style.order = `${i + 1}`;
+        p.dataset['defaultOrder'] = `${i + 1}`;
+        insert = insert.cloneNode() as HTMLDivElement;
+
+        if (i == easterEggEntry || jj) {
+          let pos = (jj) ? i + 1 : Math.ceil(Math.random() * options.pieceCount);
+          insert.style.backgroundImage = `url('imgs/dwaa${pos}.png')`;
+        } else {
+          insert.style.backgroundColor = palette[i];
+        }
+        
+        insert.classList.add('insert');
+        insert.classList.add('obfuscated');
+        insert.id = `p${i}`;
+        this.assignPuzzleEvents(insert, p);
+        p.appendChild(insert);
+        puzzle.appendChild(p);
+
+        let s = placeholder.cloneNode() as HTMLElement;
+        s.dataset['defaultOrder'] = `${i + 1}`;
+        insert = insert.cloneNode() as HTMLDivElement;
+        insert.classList.remove('obfuscated');
+        insert.id = `s${i}`;
+        insert.style.backgroundColor = null;
+        insert.style.backgroundImage = null;
+        this.assignSolutionEvents(insert, s);
+        s.appendChild(insert);
+        options.solution.appendChild(s);
+
+      }
     },
 
 
@@ -198,7 +258,7 @@ let app = new Vue({
 
       let dragOver = (ev: DragEvent) => {
         ev.preventDefault();
-      }
+      };
 
       insert.addEventListener('dragstart', dragStart);
       insert.addEventListener('dragover', dragOver);
@@ -220,9 +280,9 @@ let app = new Vue({
           insert.style.backgroundImage = null;
           insert.classList.remove('fail');
           insert.classList.remove('success');
-          delete insert.dataset['orderId']
+          delete insert.dataset['orderId'];
         }
-      }
+      };
 
       let drop = (ev: DragEvent) => {
         let id = ev.dataTransfer.getData('text')
@@ -252,75 +312,22 @@ let app = new Vue({
           insert.classList.add('success');
         }
         else {
-          insert.classList.add('fail')
+          insert.classList.add('fail');
         }
 
         this.isPuzzleReady = false;
         obj.style.backgroundColor = null;
         obj.style.backgroundImage = null;
 
-      }
+      };
 
       let dragover = (ev: DragEvent) => {
         ev.preventDefault();
-      }
-
-
+      };
 
       insert.addEventListener('drop', drop);
       insert.addEventListener('dragover', dragover);
       insert.addEventListener('dblclick', resetInsert);
-    },
-
-
-    createTable: function(options: ITableProperties) {
-      let palette =
-            (options.palette)
-              ? this.pickColors(options.pieceCount, options.palette)
-              : this.pickColors(options.pieceCount)
-        , insert = options.insert
-        , placeholder = options.placeholder
-        , puzzle = options.puzzle
-        , easterEggEntry = null as number
-        , jj = Math.random() <= 0.001
-      ;
-
-      if (Math.random() <= 0.025) {
-        easterEggEntry = Math.floor(Math.random() * options.pieceCount);
-      }
-
-
-      for (let i = 0; i < options.pieceCount; i++) {
-
-        let p = placeholder.cloneNode() as HTMLElement;
-        p.style.order = `${i + 1}`
-        p.dataset['defaultOrder'] = `${i + 1}`
-        insert = insert.cloneNode() as HTMLDivElement;
-        if (i == easterEggEntry || jj) {
-          let pos = (jj) ? i + 1 : Math.ceil(Math.random() * options.pieceCount)
-          insert.style.backgroundImage = `url('imgs/dwaa${pos}.png')`
-        } else {
-          insert.style.backgroundColor = palette[i];
-        }
-        insert.classList.add('insert');
-        insert.classList.add('hidden');
-        insert.id = `p${i}`
-        this.assignPuzzleEvents(insert, p);
-        p.appendChild(insert);
-        puzzle.appendChild(p);
-
-        let s = placeholder.cloneNode() as HTMLElement;
-        s.dataset['defaultOrder'] = `${i + 1}`
-        insert = insert.cloneNode() as HTMLDivElement;
-        insert.classList.remove('hidden');
-        insert.id = `s${i}`;
-        insert.style.backgroundColor = null;
-        insert.style.backgroundImage = null;
-        this.assignSolutionEvents(insert, s);
-        s.appendChild(insert);
-        options.solution.appendChild(s);
-
-      }
     },
 
 
@@ -332,7 +339,7 @@ let app = new Vue({
       ;
 
       pieces.forEach((el, i) => {
-        el.style.order = `${newOrder[i] + 1}`
+        el.style.order = `${newOrder[i] + 1}`;
       });
 
     },
@@ -352,7 +359,7 @@ let app = new Vue({
             clearInterval(interval);
             return;
           }
-        }, speed)
+        }, speed);
       }
     },
 
@@ -364,8 +371,8 @@ let app = new Vue({
       ;
 
       pieces.forEach(el => {
-        (el.childNodes[0] as HTMLElement).classList.remove('hidden');
-      })
+        (el.childNodes[0] as HTMLElement).classList.remove('obfuscated');
+      });
 
       randombtn.disabled = true;
       btn.disabled = true;
@@ -389,15 +396,16 @@ let app = new Vue({
       let saveList = [] as string[]
         , colorList =
             (palette && palette in this.colorTable)
-              ? this.colorTable[palette]
-              : this.easyColors
+              ? this.colorTable[palette].slice(0)
+              : this.colorTable['easy'].slice(0)
       ;
 
-      while (count) {
-        let color = colorList[Math.floor(Math.random() * colorList.length)];
-        if (~saveList.indexOf(color)) continue;
+      for (let i = 0; i < count; i++) {
+        let random = Math.floor(Math.random() * colorList.length)
+          , color = colorList[random]
+        ;
         saveList.push(color);
-        --count;
+        colorList.splice(random, 1);
       }
       return saveList;
     },
@@ -420,7 +428,7 @@ let app = new Vue({
     randomizeNums: function(list: number[]) {
       let newList = [] as number[];
       for (let nums of list) {
-        let random = Math.floor(Math.random() * list.length)
+        let random = Math.floor(Math.random() * list.length);
         newList.push(list[nums]);
         list.splice(random, 1);
       }
@@ -451,4 +459,4 @@ let app = new Vue({
       return order;
     }
   }
-} as Vue.ComponentOptions<IApp>)
+} as Vue.ComponentOptions<IApp>);

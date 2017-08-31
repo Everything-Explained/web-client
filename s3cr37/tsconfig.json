@@ -8,7 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "noResolve": true,
-    "noLib": true,
     "lib": [
       "dom",
       "es5",
