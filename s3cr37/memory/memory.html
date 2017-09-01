@@ -24,7 +24,7 @@
         <header class="header">
           <button class='mui-btn
                           mui-btn--primary'
-                  @click='setupLevel'
+                  @click='puzzle.resetBoard()'
                   ref='randomizebtn'>Randomize
           </button>
           <button class="mui-btn
@@ -37,14 +37,38 @@
         </header>
         <div class="countdown" v-if='countdown'>{{ countdown }}</div>
         <div id="table">
-          <div id="puzzle" ref='puzzle'></div>
-          <div id='solution' ref='solution'></div>
+          <div id="puzzle" ref='puzzle'>
+            <div class="piece-placeholder"
+                 v-for='(piece, index) of puzzle.pieces'
+                 :data-default-order='index + 1'
+                 :style='{order: piece.order}'
+              ><div :id='"p" + piece.order'
+                  class="insert obfuscated"
+                  @dragstart='puzzle.onDragStart'
+                  @dragover='preventDefault'
+                  :draggable='piece.draggable'
+                  :style='{backgroundColor: piece.color}'
+              ></div>
+            </div>
+          </div>
+          <div id='solution' ref='solution'>
+            <div class="piece-placeholder"
+                 v-for='p of puzzle.pieces.length'
+                 :data-default-order='p'
+              ><div class="insert"
+                    @dragover='preventDefault'
+                    @drop='puzzle.onDrop'
+              ></div>
+          </div>
+          </div>
         </div>
       </div>
     </div>
     <script src='//unpkg.com/vue@2.4.2'></script>
-    <script src="levels.js"></script>
-    <script src='memory.js' async></script>
-    <script src='../libs/live.js' async></script>
+    <script src='./scripts/levels.js'></script>
+    <script src='./scripts/memory.js'></script>
+    <script src='./scripts/entry.js' async></script>
+    <!-- <script src="scripts.js"></script> -->
+    <!-- <script src='../libs/live.js' async></script> -->
   </body>
 </html>

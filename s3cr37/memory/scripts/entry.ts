@@ -1,13 +1,9 @@
-
-
-
-
-
 interface IApp extends Vue {
 
   colorTable: {
     [key: string]: string[]
   };
+  puzzle: MemoryPuzzle;
   countdown: number;
   countdownStart: number;
   shuffleSpeed: number;
@@ -18,6 +14,7 @@ interface IApp extends Vue {
   isPuzzleReady: boolean;
   isLoaded: boolean;
   puzzleLevels: PuzzleLevels;
+  puzzlePieces: {order: number, draggable: boolean}[];
 
   toArray: (list: NodeList) => any[];
   toNumberedArray: (count: number) => number[];
@@ -35,14 +32,6 @@ interface IApp extends Vue {
 
 }
 
-
-interface IPuzzleProperties {
-  pieceCount: number;
-  countdown: number;
-  shuffleSpeed: number;
-  shuffleAmount: number;
-  palette?: string;
-}
 
 interface ITableProperties {
   puzzle: HTMLElement;
@@ -127,6 +116,8 @@ let app = new Vue({
     shuffleSpeed: 100,
     shuffleAmount: 10,
 
+    puzzle: MemoryPuzzle,
+    puzzlePieces: [],
     level: 0,
     stage: 0,
     levels: null,
@@ -136,22 +127,37 @@ let app = new Vue({
     puzzleLevels: null as PuzzleLevels
   },
 
-
+  created: function() {
+    this.puzzle = new MemoryPuzzle(this);
+  },
 
 
   mounted: function() {
 
-    this.puzzleLevels = new PuzzleLevels(this);
-    this.levels = this.puzzleLevels.stage[0];
+    // this.puzzleLevels = new PuzzleLevels(this);
+    // this.levels = this.puzzleLevels.stage[0];
     setTimeout(() => {
       this.isLoaded = true;
     }, 30);
+
+    // setTimeout(() => {
+    //   let list = this.uniqueOrder(this.toNumberedArray(this.puzzlePieces.length));
+    //   for (let i = 0; i < this.puzzlePieces.length; i++) {
+    //     this.puzzlePieces[i].order = list[i] + 1;
+    //   }
+    // }, 3000);
   },
 
 
 
 
   methods: {
+
+    preventDefault: function(ev: DragEvent) {
+      ev.preventDefault();
+    },
+
+
 
     setLevel: function(ev: MouseEvent) {
       let obj = ev.target as HTMLSelectElement;
@@ -173,11 +179,11 @@ let app = new Vue({
         , insert = document.createElement('div')
         , puzzle = this.$refs['puzzle'] as HTMLElement
         , solution = this.$refs['solution'] as HTMLElement
-        , pieceCount = options.pieceCount
+        // , pieceCount = options.pieceCount
       ;
 
       placeholder.classList.add('piece-placeholder');
-      this.countdownStart = options.countdown;
+      // this.countdownStart = options.countdown;
 
       this.isPuzzleReady = true;
 
@@ -187,7 +193,7 @@ let app = new Vue({
       ;
       nodes.forEach(el => el.remove());
 
-      this.createTable({insert, placeholder, pieceCount, puzzle, solution, palette: options.palette});
+      // this.createTable({insert, placeholder, pieceCount, puzzle, solution, palette: options.palette});
 
     },
 
@@ -262,7 +268,7 @@ let app = new Vue({
       insert.addEventListener('dragover', dragOver);
     },
 
-    
+
     assignSolutionEvents: function(insert: HTMLElement, placeholder: HTMLElement) {
 
       insert.draggable = false;
