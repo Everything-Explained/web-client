@@ -1,18 +1,24 @@
 
-interface IPuzzleProperties {
-  length:        number;
-  duration:      number;
-  shuffleSpeed:  number;
-  shuffleAmount: number;
-  palette?:      number;
-}
 
 
 interface IPuzzlePiece {
   order: number;
+  defaultOrder: number;
   draggable: boolean;
-  color?: string;
-  shape?: string;
+  obfuscated: boolean;
+  color: string;
+  image: string;
+  shape: string;
+}
+
+interface IPuzzleAnswer {
+  defaultOrder: number;
+  color: string;
+  image: string;
+  shape: string;
+  pieceIndex?: number;
+  success: boolean;
+  fail: boolean;
 }
 
 
@@ -20,17 +26,19 @@ interface IPuzzlePiece {
 class MemoryPuzzle {
 
 
-  public level = 0;
-  public stage = 0;
+  private _level: IPuzzleLevel;
+  private _stage = 0;
   public shuffleSpeed = 100;
   public shuffleAmount = 10;
+  public levels = new PuzzleLevels();
 
 
   public pieces = [] as IPuzzlePiece[];
+  public answers = [] as IPuzzleAnswer[];
 
   private _colorTable = {
     easy: [
-      'white', 'black', 'orange',
+      '#fff', '#000', 'orange',
       'red', 'green', 'blue', 'deepskyblue',
       'deeppink', 'purple', 'greenyellow',
       'yellow', 'slategray', 'brown', 'cyan'
@@ -84,85 +92,213 @@ class MemoryPuzzle {
     ]
   };
 
-  private _levels = new PuzzleLevels();
+  private _answersCleared = true;
+
+  private _ee = new EventEmitter();
+  private _events = ['success', 'fail'];
 
 
+  set level(val: number) {
+    this._level = this.levels.stage[this._stage][val];
+    this._populateBoard();
+  }
+
+  //
+  // TODO - need to observe solution pieces
+  //
   constructor(private _app: IApp) {
     let colors = this._pickColors(4);
-    for (let i = 0; i < 4; i++) {
-      this.pieces.push({
-        order: i + 1,
-        draggable: true,
-        color: null,
-        shape: null
-      });
+
+    this.level = 0;
+
+    this._populateBoard();
+
+
+
+  }
+
+
+  public onDragStart(ev: DragEvent, index?: number) {
+    ev.dataTransfer.setData('text', `${index}`);
+  }
+  public onDrop(ev: DragEvent, index: number) {
+    let indexFrom = parseInt(ev.dataTransfer.getData('text'))
+      , insertFrom = this.pieces[indexFrom]
+      , insertTo = this.answers[index]
+    ;
+
+
+    this._answersCleared = false;
+
+    // Lock successful solutions
+    if (insertTo.success) return;
+
+    // Swap pieces
+    if (typeof insertTo.pieceIndex == 'number') {
+      this.resetInsert(null, index);
     }
 
+    insertTo.pieceIndex = indexFrom;
+
+    // Move puzzle piece color
+    insertTo.color = insertFrom.color;
+    insertFrom.color = null;
+    insertFrom.draggable = false;
+
+
+    if (insertTo.defaultOrder == insertFrom.defaultOrder) {
+      insertTo.success = true;
+    }
+    else insertTo.fail = true;
+
+    let answers =
+          this.answers.filter(ans => !(ans.fail == ans.success))
+    ;
+
+    // Send events based on completed boards
+    if (answers.length == this.answers.length) {
+      if (insertTo.fail) this._ee.emit('fail');
+      else {
+        this._ee.emitEvent('success');
+      }
+    }
   }
 
 
-  public onDragStart(ev: DragEvent) {
-    let id = ev.target['id'];
-    ev.dataTransfer.setData('text', `${id}`);
-    console.log(id);
+  public beginLevel() {
+    this._app.countdown = this._level.duration;
+    this.pieces.forEach(p => p.obfuscated = false);
+
+    // Start memorize countdown
+    let interval = setInterval(async () => {
+      if (this._app.countdown == 1) {
+        clearInterval(interval);
+        this._shuffle().then(() => {
+          this.pieces.forEach(p => p.draggable = true);
+        });
+      }
+      --this._app.countdown;
+    }, 1000);
+
   }
-  public onDrop(ev: DragEvent) {
-    let id = ev.dataTransfer.getData('text')
-      , insertFrom = document.getElementById(id)
-      , insertTo = ev.target as HTMLElement
-      , phFrom = insertFrom.parentElement
-      , phTo = insertTo.parentElement
-      , orderId = insertFrom.dataset['orderId']
+
+  private _shuffle() {
+    let count = 0;
+
+    return new Promise<boolean>((rs, rj) => {
+      let interval = setInterval(() => {
+        let order = this._uniqueOrder(this._level.length);
+
+        this.pieces.forEach((p, i) => {
+          p.order = order[i] + 1;
+        });
+
+        if (++count == this._level.shuffleAmount) {
+          clearInterval(interval);
+          rs(true);
+        }
+
+      }, this._level.shuffleSpeed);
+    });
+
+  }
+
+
+  public setupBoard() {
+    let colorLength = this._level.length
+
+      , colorPallete =
+          (this._level.palette)
+            ? this._level.palette
+            : null
+
+      , colors = this._pickColors(colorLength, colorPallete)
+    ;
+
+    for (let i = 0; i < colors.length; i++) {
+      let ans = this.answers[i]
+        , piece = this.pieces[i]
+      ;
+      piece.color = colors[i];
+      piece.order = i + 1;
+      piece.obfuscated = true;
+      if (!this._answersCleared){
+        this._clearAnswerData(ans);
+      }
+    }
+    this._answersCleared = true;
+    return true;
+  }
+
+
+  public resetInsert(ev: MouseEvent, indexTo: number) {
+
+    let to = this.answers[indexTo]
+      , from = this.pieces[to.pieceIndex]
     ;
 
     // Lock successful solutions
-    if (insertTo.classList.contains('success')) return;
+    if (to.success) return;
 
-    if (!orderId) {
-      insertTo.dataset['orderId'] = id;
-    }
-
-    insertTo.style.backgroundColor =
-      window.getComputedStyle(insertFrom, null).getPropertyValue('background-color')
-    ;
-
-    // For easter eggs
-    // insertFrom.style.backgroundImage =
-    //   window.getComputedStyle(insertTo, null).getPropertyValue('background-image')
-    // ;
-
-    if (phFrom.dataset['defaultOrder'] == phTo.dataset['defaultOrder']) {
-      insertTo.classList.add('success');
-    }
-    else insertTo.classList.add('fail');
-
-    // Clear colors from original insert
-    insertFrom.style.backgroundColor = null;
-    insertFrom.style.backgroundImage = null;
-  }
-
-
-  public resetBoard() {
-    let colors = this._pickColors(this.pieces.length)
-      , solutionPieces =
-          this._toArray((this._app.$refs['solution'] as HTMLElement)
-                        .childNodes) as HTMLElement[]
-    ;
-
-    solutionPieces.forEach(el => {
-      let obj = el.children[0] as HTMLElement;
-      if (obj.classList.length == 1) return;
-      obj.style.backgroundColor = null;
-      obj.style.backgroundImage = null;
-      obj.classList.remove('fail');
-      obj.classList.remove('success');
-    });
-
-    for (let i = 0; i < colors.length; i++) {
-      this.pieces[i].color = colors[i];
+    if (to) {
+      from.color = to.color;
+      from.draggable = true;
+      this._clearAnswerData(to);
     }
   }
 
+
+  private _populateBoard() {
+
+    if (this.pieces.length) {
+      this.pieces = [];
+      this.answers = [];
+    }
+
+    for (let i = 0; i < this._level.length; i++) {
+      let piece = {
+            order: i + 1,
+            defaultOrder: i + 1,
+            draggable: false,
+            color: null,
+            shape: null,
+            image: null,
+            obfuscated: true
+          }
+        , answer = {
+          defaultOrder: i + 1,
+          color: null,
+          shape: null,
+          success: false,
+          fail: false,
+          image: null
+        }
+      ;
+
+      this.pieces.push(piece);
+      this.answers.push(answer);
+    }
+  }
+
+
+
+
+
+  public on(event: string, fn: () => void) {
+    if (~this._events.indexOf(event)) {
+      this._ee.on(event, fn);
+    }
+    else console.warn(`Cannot bind to "${event}": Event does not exist.`);
+  }
+
+
+  private _clearAnswerData(ans: IPuzzleAnswer) {
+    ans.fail = false;
+    ans.success = false;
+    ans.color = null;
+    ans.image = null;
+    ans.pieceIndex = null;
+  }
 
 
   private _pickColors(len: number, palette?: string) {
@@ -183,8 +319,6 @@ class MemoryPuzzle {
 
     return saveList;
   }
-
-
 
 
   private _toNumArray(len: number) {
@@ -221,6 +355,7 @@ class MemoryPuzzle {
     }
     return order;
   }
+
 
   private _toArray(nodes: NodeList) {
     return Array.prototype.slice.call(nodes);
