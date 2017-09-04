@@ -60,7 +60,16 @@ $ts-color: hsl(0, 0%, 50%)
   color: hsl(0, 0%, 70%)
   text-shadow: 0 -2px 0 hsla(0, 0%, 0%, .45), 0 2px 0 hsl(0, 0%, 99%)
   font-family: consolas
+  -webkit-user-select: none
+  user-select: none
 
+#puzzle
+  .piece-placeholder
+    .insert
+      cursor: move
+
+      &.obfuscated
+        cursor: default
 
 .piece-placeholder
   position: relative
@@ -76,6 +85,7 @@ $ts-color: hsl(0, 0%, 50%)
     -webkit-user-select: none
     width: 100%
     height: 100%
+    cursor: default
 
     &.obfuscated
       opacity: .1

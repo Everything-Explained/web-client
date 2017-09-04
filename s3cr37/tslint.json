@@ -16,7 +16,7 @@
           "avoid-escape"
       ],
       "trailing-comma": [true,
-        "mutliline",
+        "multiline",
         "singleline"
       ],
       "semicolon": [true, "always"],

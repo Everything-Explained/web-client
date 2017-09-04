@@ -1,11 +1,21 @@
 
+
+interface IPuzzleLevel {
+  length:        number;
+  duration:      number;
+  shuffleSpeed:  number;
+  shuffleAmount: number;
+  palette?:      string;
+}
+
+
 class PuzzleLevels {
 
   private _table: HTMLElement;
   private _puzzle: HTMLElement;
   private _solution: HTMLElement;
 
-  public stageOneLevels = [
+  private _stageOneLevels = [
 
     {
       length: 3, duration: 5,
@@ -82,27 +92,16 @@ class PuzzleLevels {
       palette: 'medium'
     },
 
-  ] as IPuzzleProperties[];
+  ] as IPuzzleLevel[];
 
 
   public stage = [
-    this.stageOneLevels
+    this._stageOneLevels
   ];
 
 
 
   constructor() {}
-
-
-
-  exec(level: number) {
-    // if (level < this.stageOneLevels.length) {
-    //   this._app.puzzleSetup(this.stageOneLevels[level]);
-    // }
-    // else {
-    //   console.warn(`Level "${level}" does not exist!`);
-    // }
-  }
 
 
 
