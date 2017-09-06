@@ -8,17 +8,29 @@ interface IPuzzlePiece {
   obfuscated: boolean;
   color: string;
   image: string;
-  shape: string;
+  shapeData: {[key: string]: {
+    style: {sel: string|string[]; props: string[]};
+  }};
+  shape: {[key: string]: boolean};
 }
 
 interface IPuzzleAnswer {
   defaultOrder: number;
   color: string;
   image: string;
-  shape: string;
+  shapeData: {[key: string]: {
+    style: {sel: string|string[]; props: string[]}
+    class?: {[key: string]: boolean};
+  }};
+  shape: {[key: string]: boolean};
   pieceIndex?: number;
   success: boolean;
   fail: boolean;
+}
+
+enum PaletteTable {
+  COLOR,
+  SHAPE
 }
 
 
@@ -92,6 +104,107 @@ class MemoryPuzzle {
     ]
   };
 
+  private _shapeTable = {
+    easy: [
+      'diamond', 'diamond-narrow', 'diamond-cut', 'sun',
+      'cross', 'trapezoid', 'square', 'circle', 'crecent',
+      'heart', 'parallelogram'
+    ]
+  };
+
+  private _shapeData = {
+    'triangle-up': {
+      style: {
+        sel: '*',
+        props: ['border-bottom-color']
+      },
+    },
+    'triangle-down': {
+      style: {
+        sel: '*',
+        props: ['border-top-color']
+      },
+    },
+    'triangle-right': {
+      style: {
+        sel: '*',
+        props: ['border-left-color']
+      },
+    },
+    'triangle-left': {
+      style: {
+        sel: '*',
+        props: ['border-right-color']
+      },
+    },
+    'square': {
+      style: {
+        sel: '*',
+        props: ['color']
+      },
+    },
+    'circle': {
+      style: {
+        sel: '*',
+        props: ['background']
+      },
+    },
+    'heart': {
+      style: {
+        sel: '*::before, *::after',
+        props: ['background']
+      },
+    },
+    'trapezoid': {
+      style: {
+        sel: '*',
+        props: ['border-bottom-color']
+      },
+    },
+    'parallelogram': {
+      style: {
+        sel: '*',
+        props: ['background']
+      },
+    },
+    'sun': {
+      style: {
+        sel: ['*', '*::before, *::after'],
+        props: ['background', 'background']
+      },
+    },
+    'crecent': {
+      style: {
+        sel: '*',
+        props: ['color']
+      },
+    },
+    'diamond': {
+      style: {
+        sel: ['*', '*::after'],
+        props: ['border-bottom-color', 'border-top-color']
+      },
+    },
+    'diamond-narrow': {
+      style: {
+        sel: ['*', '*::after'],
+        props: ['border-bottom-color', 'border-top-color']
+      },
+    },
+    'diamond-cut': {
+      style: {
+        sel: ['*', '*::after'],
+        props: ['border-bottom-color', 'border-top-color']
+      },
+    },
+    'cross': {
+      style: {
+        sel: ['*', '*::after'],
+        props: ['background', 'background']
+      },
+    }
+  };
+
   private _answersCleared = true;
 
   private _ee = new EventEmitter();
@@ -103,22 +216,23 @@ class MemoryPuzzle {
     this._populateBoard();
   }
 
+  set stage(val: number) {
+    this._stage = val;
+    this.level = 0;
+  }
+
   //
   // TODO - need to observe solution pieces
   //
   constructor(private _app: IApp) {
-    let colors = this._pickColors(4);
-
     this.level = 0;
 
     this._populateBoard();
-
-
-
   }
 
 
   public onDragStart(ev: DragEvent, index?: number) {
+    ev.dataTransfer.effectAllowed = 'move';
     ev.dataTransfer.setData('text', `${index}`);
   }
   public onDrop(ev: DragEvent, index: number) {
@@ -126,7 +240,6 @@ class MemoryPuzzle {
       , insertFrom = this.pieces[indexFrom]
       , insertTo = this.answers[index]
     ;
-
 
     this._answersCleared = false;
 
@@ -142,7 +255,14 @@ class MemoryPuzzle {
 
     // Move puzzle piece color
     insertTo.color = insertFrom.color;
+    insertTo.shape = insertFrom.shape;
     insertFrom.color = null;
+
+    let shapes = {} as {[key: string]: boolean};
+    for (let s in this._shapeData) {
+      shapes[s] = false;
+    }
+    insertFrom.shape = Object.assign({}, shapes);
     insertFrom.draggable = false;
 
 
@@ -212,8 +332,23 @@ class MemoryPuzzle {
             ? this._level.palette
             : null
 
-      , colors = this._pickColors(colorLength, colorPallete)
+      , colors = this._pickPalette(colorLength, this._colorTable, colorPallete)
+
+      , shapes = this._pickPalette(colorLength, this._shapeTable, this._level.shapes)
+
+      , style = (document.getElementById('shapeStyles')
+                || document.createElement('style')) as HTMLStyleElement
     ;
+
+    if (!style.id) {
+      style.id = 'shapeStyles';
+      document.head.appendChild(style);
+    }
+
+    let css = style.sheet as CSSStyleSheet;
+    for (let i = 0; i < css.cssRules.length; i++) {
+      css.deleteRule(0);
+    }
 
     for (let i = 0; i < colors.length; i++) {
       let ans = this.answers[i]
@@ -222,6 +357,43 @@ class MemoryPuzzle {
       piece.color = colors[i];
       piece.order = i + 1;
       piece.obfuscated = true;
+      if (this._level.shapes) {
+        for (let s in piece.shape) {
+          if (piece.shape[s]) {
+            piece.shape[s] = false;
+            break;
+          }
+        }
+        let shapeKey = shapes[i]
+          , shape = piece.shapeData[shapeKey]
+        ;
+
+        piece.shape[shapeKey] = true;
+
+        if (shapeKey == 'square') {
+          continue;
+        }
+
+        if (typeof shape.style.sel == 'string') {
+          let sel = shape.style.sel.replace(/\*/g, `.${shapeKey}`)
+            , prop = shape.style.props[0]
+          ;
+          css.insertRule(`${sel} { ${prop}: ${colors[i]} }`, css.cssRules.length);
+        }
+        else {
+          for (let j = 0; j < shape.style.sel.length; j++) {
+            let sel = `${shape.style.sel[j].replace(/\*/g, `.${shapeKey}`)}`
+              , prop = shape.style.props[j]
+            ;
+
+            css.insertRule(`${sel} { ${prop}: ${colors[i]} }`, css.cssRules.length);
+          }
+        }
+
+        piece.color = 'transparent';
+
+      }
+
       if (!this._answersCleared){
         this._clearAnswerData(ans);
       }
@@ -237,11 +409,12 @@ class MemoryPuzzle {
       , from = this.pieces[to.pieceIndex]
     ;
 
-    // Lock successful solutions
-    if (to.success) return;
+    // Lock successful solutions and prevent sending blank
+    if (to.success || to.pieceIndex == null) return;
 
     if (to) {
       from.color = to.color;
+      from.shape = to.shape;
       from.draggable = true;
       this._clearAnswerData(to);
     }
@@ -255,20 +428,29 @@ class MemoryPuzzle {
       this.answers = [];
     }
 
+    let shapes = {} as {[key: string]: boolean};
+    for (let s in this._shapeData) {
+      shapes[s] = false;
+    }
+
     for (let i = 0; i < this._level.length; i++) {
+
+
       let piece = {
             order: i + 1,
             defaultOrder: i + 1,
             draggable: false,
             color: null,
-            shape: null,
+            shapeData: Object.assign({}, this._shapeData),
+            shape: Object.assign({}, shapes),
             image: null,
             obfuscated: true
           }
         , answer = {
           defaultOrder: i + 1,
           color: null,
-          shape: null,
+          shapeData: Object.assign({}, this._shapeData),
+          shape: Object.assign({}, shapes),
           success: false,
           fail: false,
           image: null
@@ -278,6 +460,7 @@ class MemoryPuzzle {
       this.pieces.push(piece);
       this.answers.push(answer);
     }
+
   }
 
 
@@ -293,28 +476,33 @@ class MemoryPuzzle {
 
 
   private _clearAnswerData(ans: IPuzzleAnswer) {
+    let shapes = {} as {[key: string]: boolean};
+    for (let s in this._shapeData) {
+      shapes[s] = false;
+    }
     ans.fail = false;
     ans.success = false;
     ans.color = null;
+    ans.shape = shapes;
     ans.image = null;
     ans.pieceIndex = null;
   }
 
 
-  private _pickColors(len: number, palette?: string) {
+  private _pickPalette(len: number, table: {[key: string]: string[]}, type?: string) {
     let saveList = [] as string[]
-      , colorList =
-          (palette && palette in this._colorTable)
-            ? this._colorTable[palette].slice(0)
-            : this._colorTable['easy'].slice(0)
+      , palette =
+          (type && type in table)
+            ? table[type].slice(0)
+            : table['easy'].slice(0)
     ;
 
     for (let i = 0; i < len; i++) {
-      let random = Math.floor(Math.random() * colorList.length)
-        , color = colorList[random]
+      let random = Math.floor(Math.random() * palette.length)
+        , item = palette[random]
       ;
-      saveList.push(color);
-      colorList.splice(random, 1);
+      saveList.push(item);
+      palette.splice(random, 1);
     }
 
     return saveList;

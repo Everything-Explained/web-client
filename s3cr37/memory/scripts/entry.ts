@@ -38,6 +38,9 @@ let app = new Vue({
     isPuzzleRunning: false,
     isLoaded: false,
 
+    levels: 0,
+    stages: 0,
+
     countdown: 0,
     countdownStart: 0,
     shuffleSpeed: 100,
@@ -78,6 +81,12 @@ let app = new Vue({
     setLevel: function(ev: MouseEvent) {
       let obj = ev.target as HTMLSelectElement;
       this.puzzle.level = obj.selectedIndex;
+    },
+
+    setStage: function(ev: MouseEvent) {
+      let obj = ev.target as HTMLSelectElement;
+      this.puzzle.stage = obj.selectedIndex;
+      this.levels = this.puzzle.levels.stage[obj.selectedIndex].length;
     },
 
     setupBoard: function(ev: MouseEvent) {

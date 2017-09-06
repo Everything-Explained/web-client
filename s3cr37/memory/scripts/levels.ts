@@ -6,6 +6,7 @@ interface IPuzzleLevel {
   shuffleSpeed:  number;
   shuffleAmount: number;
   palette?:      string;
+  shapes?:       string;
 }
 
 
@@ -94,9 +95,18 @@ class PuzzleLevels {
 
   ] as IPuzzleLevel[];
 
+  private _stageTwoLevels = [
+    {
+      length: 3, duration: 1,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      shapes: 'easy'
+    }
+  ] as IPuzzleLevel[];
+
 
   public stage = [
-    this._stageOneLevels
+    this._stageOneLevels,
+    this._stageTwoLevels
   ];
 
 

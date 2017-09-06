@@ -102,10 +102,9 @@ $height: $width
   display: block
   margin: 0 auto
   top: -$width / 2
-  width: 0
-  height: 0
   border: $width / 2 solid transparent
   border-bottom-color: #f00
+  pointer-events: none
 
   &::after
     content: ''
@@ -125,6 +124,8 @@ $height-offset: 22
 
 .diamond-narrow
   @extend .diamond
+  width: 0
+  height: 0
   top: -$awidth / 2.2
   border: $awidth / 2.2 solid transparent
   border-bottom: $awidth - $height-offset solid #f00
@@ -197,7 +198,8 @@ $size: $width / 1.33
   width: $width
   height: $height
   border-radius: 50%
-  box-shadow: 15px 15px 0 0 #f00
+  color: #f00
+  box-shadow: 15px 15px 0 0
 
 
 

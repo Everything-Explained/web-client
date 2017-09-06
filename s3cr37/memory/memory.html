@@ -19,7 +19,9 @@
         </div>
         <div id="StageSelect" class='inline'>
           <label>Stage</label>
-          <select class="stage-select" :disabled='isPuzzleRunning'>
+          <select class="stage-select"
+                  @change='setStage'
+                  :disabled='isPuzzleRunning'>
             <option v-for='(stage, index) of stages' value="index">stg {{ index + 1 }}</option>
           </select>
         </div>
@@ -27,13 +29,15 @@
           <button class='mui-btn
                           mui-btn--primary'
                   @click='setupBoard'
-                  :disabled='isPuzzleRunning'>Randomize
+                  :disabled='isPuzzleRunning'
+                  draggable="false">Randomize
           </button>
           <button class="mui-btn
                          mui-btn--accent"
                   @click='beginLevel'
                   :disabled='!isBoardSetup || isPuzzleRunning'
-                  ref='btnStart'>Start
+                  ref='btnStart'
+                  draggable='false'>Start
           </button>
           <div class="ready" v-if='isBoardSetup'>Click start when ready</div>
         </header>
@@ -44,14 +48,15 @@
                  v-for='(piece, index) of puzzle.pieces'
                  :style='{order: piece.order}'
               ><div :id='"p" + piece.order'
-                  class="insert"
-                  :class='{obfuscated: piece.obfuscated}'
-                  @dragstart='puzzle.onDragStart($event, index)'
-                  @dragover='preventDefault'
-                  @dblclick='puzzle.resetInsert($event)'
-                  :draggable='piece.draggable'
-                  :style='{backgroundColor: piece.color, backgroundImage: piece.image}'
-              ></div>
+                    class="insert"
+                    :class='{obfuscated: piece.obfuscated}'
+                    @dragstart='puzzle.onDragStart($event, index)'
+                    @dragover='preventDefault'
+                    :draggable='piece.draggable'
+                    :style='{backgroundColor: piece.color, backgroundImage: piece.image}'
+                ><div class="shape"
+                      :class='piece.shape'></div>
+              </div>
             </div>
           </div>
           <div id='solution' ref='solution'>
@@ -64,7 +69,7 @@
                     @dblclick='puzzle.resetInsert($event, index)'
                     :style='{ backgroundColor: ans.color, backgroundImage: ans.image }'
                     :id='"a" + index'
-              ></div>
+              ><div class="shape" :class='ans.shape'></div></div>
           </div>
           </div>
         </div>
