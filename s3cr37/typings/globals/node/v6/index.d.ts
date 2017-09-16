@@ -13,10 +13,6 @@ interface Console {
     warn(message?: any, ...optionalParams: any[]): void;
 }
 
-interface Error {
-    stack?: string;
-}
-
 interface ErrorConstructor {
     captureStackTrace(targetObject: Object, constructorOpt?: Function): void;
     stackTraceLimit: number;
@@ -1359,7 +1355,7 @@ declare module "repl" {
         displayPrompt(preserveCursor?: boolean): void;
 
         context: any;
-    
+
         /**
          * events.EventEmitter
          * 1. exit

@@ -2,7 +2,11 @@ interface IApp extends Vue {
 
   puzzle: MemoryPuzzle;
   stages: number;
+  stage: number;
   levels: number;
+  level: number;
+  pieces: IPuzzlePiece[];
+  answers: IPuzzleAnswer[];
 
   btnStart: HTMLButtonElement;
   btnSetup: HTMLButtonElement;
@@ -15,11 +19,13 @@ interface IApp extends Vue {
   isLoaded: boolean;
   puzzlePieces: {order: number, draggable: boolean}[];
   onPuzzleSuccess: () => void;
+  setPieces: () => void;
 
   toArray: (list: NodeList) => any[];
   toNumberedArray: (count: number) => number[];
 
-
+  totalAccuracy: number;
+  levelAccuracy: number;
 
 }
 
@@ -41,13 +47,19 @@ let app = new Vue({
     levels: 0,
     stages: 0,
 
+    level: 0,
+    stage: 0,
+
     countdown: 0,
     countdownStart: 0,
     shuffleSpeed: 100,
     shuffleAmount: 10,
 
-    puzzle: MemoryPuzzle,
-    puzzlePieces: [],
+    totalAccuracy: 0,
+    levelAccuracy: 0,
+
+    pieces: [],
+    answers: []
 
   },
 
@@ -55,6 +67,7 @@ let app = new Vue({
     this.puzzle = new MemoryPuzzle(this);
     this.stages = this.puzzle.levels.stage.length;
     this.levels = this.puzzle.levels.stage[0].length;
+    this.setPieces();
     this.puzzle.on('success', () => this.onPuzzleSuccess());
   },
 
@@ -77,20 +90,27 @@ let app = new Vue({
     },
 
 
+    onDragStart: function(ev: DragEvent, index: number) {
+      this.puzzle.onDragStart(ev, index);
+    },
 
     setLevel: function(ev: MouseEvent) {
       let obj = ev.target as HTMLSelectElement;
-      this.puzzle.level = obj.selectedIndex;
+      this.level = obj.selectedIndex;
+      this.puzzle.level = this.level;
+      this.setPieces();
     },
 
     setStage: function(ev: MouseEvent) {
       let obj = ev.target as HTMLSelectElement;
-      this.puzzle.stage = obj.selectedIndex;
+      this.stage = obj.selectedIndex;
+      this.puzzle.stage = this.stage;
       this.levels = this.puzzle.levels.stage[obj.selectedIndex].length;
     },
 
     setupBoard: function(ev: MouseEvent) {
       if (this.puzzle.setupBoard()) {
+        this.setPieces();
         this.isBoardSetup = true;
       }
     },
@@ -100,9 +120,14 @@ let app = new Vue({
       this.isPuzzleRunning = true;
       this.isBoardSetup = false;
       this.puzzle.beginLevel();
-
     },
 
+
+    setPieces: function() {
+      this.pieces = this.puzzle.pieces;
+      this.answers = this.puzzle.answers;
+      this.isBoardSetup = false;
+    },
     onPuzzleSuccess: function() {
       this.isPuzzleRunning = false;
     },

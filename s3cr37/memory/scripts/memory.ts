@@ -38,8 +38,6 @@ enum PaletteTable {
 class MemoryPuzzle {
 
 
-  private _level: IPuzzleLevel;
-  private _stage = 0;
   public shuffleSpeed = 100;
   public shuffleAmount = 10;
   public levels = new PuzzleLevels();
@@ -51,10 +49,12 @@ class MemoryPuzzle {
   private _colorTable = {
     easy: [
       '#fff', '#000', 'orange',
-      'red', 'green', 'blue', 'deepskyblue',
-      'deeppink', 'purple', 'greenyellow',
+      'red', 'green', 'blue',
+      'deeppink', 'purple',
       'yellow', 'slategray', 'brown', 'cyan'
     ],
+    monodark: ['black'],
+    monolight: ['white'],
     red: [
       'indianred', 'lightcoral', 'salmon',
       'darksalmon', 'lightsalmon', 'crimson',
@@ -207,13 +207,26 @@ class MemoryPuzzle {
 
   private _answersCleared = true;
 
-  private _ee = new EventEmitter();
+  private _ee     = new EventEmitter();
+  private _stats: Stats;
   private _events = ['success', 'fail'];
+  private _level:   IPuzzleLevel;
+  private _levelIndex = 0;
+  private _stage  = 0;
 
+  private tempStats = {
+    hits: 0,
+    misses: 0
+  };
 
   set level(val: number) {
     this._level = this.levels.stage[this._stage][val];
+    this._levelIndex = val;
     this._populateBoard();
+
+    // Can be called before initialized
+    if (this._stats)
+      this._stats.updRealTimeStats();
   }
 
   set stage(val: number) {
@@ -226,8 +239,8 @@ class MemoryPuzzle {
   //
   constructor(private _app: IApp) {
     this.level = 0;
-
     this._populateBoard();
+    this._stats = new Stats(_app, this.levels);
   }
 
 
@@ -268,8 +281,13 @@ class MemoryPuzzle {
 
     if (insertTo.defaultOrder == insertFrom.defaultOrder) {
       insertTo.success = true;
+      this.tempStats.hits += 1;
     }
-    else insertTo.fail = true;
+    else {
+      insertTo.fail = true;
+      this.tempStats.misses += 1;
+    }
+
 
     let answers =
           this.answers.filter(ans => !(ans.fail == ans.success))
@@ -280,6 +298,17 @@ class MemoryPuzzle {
       if (insertTo.fail) this._ee.emit('fail');
       else {
         this._ee.emitEvent('success');
+
+        this._stats.puzzleCompleted = {
+          hits: this.tempStats.hits,
+          misses: this.tempStats.misses,
+          pieces: this.answers.length,
+          stage: this._stage,
+          level: this._levelIndex
+        };
+
+        this.tempStats.hits = 0;
+        this.tempStats.misses = 0;
       }
     }
   }
@@ -324,6 +353,9 @@ class MemoryPuzzle {
   }
 
 
+  //
+  // TODO - Refactor this function into smaller parts
+  //
   public setupBoard() {
     let colorLength = this._level.length
 
@@ -371,6 +403,9 @@ class MemoryPuzzle {
         piece.shape[shapeKey] = true;
 
         if (shapeKey == 'square') {
+          if (!this._answersCleared){
+            this._clearAnswerData(ans);
+          }
           continue;
         }
 
@@ -502,7 +537,9 @@ class MemoryPuzzle {
         , item = palette[random]
       ;
       saveList.push(item);
-      palette.splice(random, 1);
+      // Preserve single-color palletes
+      if (palette.length > 1)
+        palette.splice(random, 1);
     }
 
     return saveList;

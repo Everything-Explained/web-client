@@ -1,7 +1,7 @@
 <html lang="en">
   <head>
     <title>Mom Memory Puzzle</title>
-    <script src="//cdn.muicss.com/mui-0.9.22/js/mui.min.js" async></script>
+    <script src="../libs/mui.min.js" async></script>
     <link rel="stylesheet" href="custom.css" type='text/css' />
     <link rel="stylesheet" href="styles.css">
   </head>
@@ -45,12 +45,12 @@
         <div id="table">
           <div id="puzzle" ref='puzzle'>
             <div class="piece-placeholder"
-                 v-for='(piece, index) of puzzle.pieces'
+                 v-for='(piece, index) of pieces'
                  :style='{order: piece.order}'
               ><div :id='"p" + piece.order'
                     class="insert"
                     :class='{obfuscated: piece.obfuscated}'
-                    @dragstart='puzzle.onDragStart($event, index)'
+                    @dragstart='onDragStart($event, index)'
                     @dragover='preventDefault'
                     :draggable='piece.draggable'
                     :style='{backgroundColor: piece.color, backgroundImage: piece.image}'
@@ -61,7 +61,7 @@
           </div>
           <div id='solution' ref='solution'>
             <div class="piece-placeholder"
-                 v-for='(ans, index) of puzzle.answers'
+                 v-for='(ans, index) of answers'
               ><div class="insert"
                     :class='{ success: ans.success, fail: ans.fail }'
                     @dragover='preventDefault'
@@ -74,10 +74,36 @@
           </div>
         </div>
       </div>
+      <div id='LevelAccuracy'>
+        <label>lvl<span class='num'>{{level + 1}}</span> accuracy</label>
+        <div class="prog-mask"
+          ><div class="progress"
+            ><div class="prog-inner"
+                  :style='{ transform: "rotate(" + (levelAccuracy * 1.8 - 45) + "deg)" }'
+              ></div>
+              <div class="prog-inner-text">{{ levelAccuracy + '%' }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='TotalAccuracy'>
+        <label>total accuracy</label>
+        <div class="prog-mask"
+          ><div class="progress"
+            ><div class="prog-inner"
+                  :style='{ transform: "rotate(" + (totalAccuracy * 1.8 - 45) + "deg)" }'
+              ></div>
+              <div class="prog-inner-text">{{ totalAccuracy + '%' }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src='//unpkg.com/vue@2.4.2'></script>
+    <script src='../libs/vue.js'></script>
     <script src="../libs/EventEmitter.min.js"></script>
+    <script src='../libs/localforage.min.js'></script>
     <script src='./scripts/levels.js'></script>
+    <script src="./scripts/stats.js"></script>
     <script src='./scripts/memory.js'></script>
     <script src='./scripts/entry.js' async></script>
     <!-- <script src="scripts.js"></script> -->

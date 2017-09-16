@@ -97,10 +97,50 @@ class PuzzleLevels {
 
   private _stageTwoLevels = [
     {
-      length: 3, duration: 1,
+      length: 3, duration: 5,
       shuffleSpeed: 80, shuffleAmount: 25,
-      shapes: 'easy'
-    }
+      palette: 'easy', shapes: 'easy'
+    },
+    {
+      length: 3, duration: 3,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'easy',  shapes: 'easy'
+    },
+    {
+      length: 4, duration: 6,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'easy', shapes: 'easy'
+    },
+    {
+      length: 4, duration: 4,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'easy', shapes: 'easy'
+    },
+    {
+      length: 5, duration: 8,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'easy', shapes: 'easy'
+    },
+    {
+      length: 5, duration: 6,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'easy', shapes: 'easy'
+    },
+    {
+      length: 6, duration: 9,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'easy', shapes: 'easy'
+    },
+    {
+      length: 6, duration: 7,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'easy', shapes: 'easy'
+    },
+    {
+      length: 7, duration: 14,
+      shuffleSpeed: 80, shuffleAmount: 25,
+      palette: 'easy', shapes: 'easy'
+    },
   ] as IPuzzleLevel[];
 
 

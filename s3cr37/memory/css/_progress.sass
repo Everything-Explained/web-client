@@ -1,0 +1,75 @@
+
+$prog-size: 140px
+$prog-adjust: $prog-size + 20
+
+%prog-container
+  width: $prog-adjust
+  height: $prog-size / 2
+
+  label
+    position: absolute
+    width: $prog-adjust
+    font-family: Consolas, monospace
+    font-variant: small-caps
+    font-size: 22px
+    bottom: -25px
+    text-align: center
+    z-index: 10
+
+  .num
+    font-size: 18px
+    font-weight: bold
+    color: hsl(300, 100%, 50%)
+
+  .prog-mask
+    position: relative
+    width: $prog-adjust
+    height: $prog-size / 2
+    border-bottom: 2px solid #bbb
+    overflow: hidden
+    text-align: center
+
+
+  .progress, .prog-inner
+    margin: 0 auto
+    width: $prog-size
+    height: $prog-size
+    border-radius: 50%
+    border: 10px solid #fff
+    box-sizing: border-box
+
+
+  .prog-inner
+    position: absolute
+    top: 0
+    left: 10px
+    border: 10px solid transparent
+    border-bottom: 10px solid #777
+    border-left: 10px solid #777
+    transition: .5s ease-in-out
+    transform: rotate(-45deg)
+
+  .prog-inner-text
+    position: relative
+    top: $prog-size / 8
+    font-family: Consolas, monospace
+    font-size: 20px
+// END PROGRESS CLASSES
+
+
+
+#LevelAccuracy
+  @extend %prog-container
+  position: absolute
+  bottom: 20%
+  left: 30px
+
+#TotalAccuracy
+  @extend %prog-container
+  position: absolute
+  bottom: 20%
+  left: 230px
+
+
+
+
