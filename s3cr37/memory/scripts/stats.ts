@@ -44,52 +44,8 @@ class Stats {
   public stage = 0;
 
   private _user: IUser;
+  private _progressInverval: NodeJS.Timer;
 
-  //
-  // TODO - Non-destructive addition/creation of new stat properties
-  //        for new levels or new stats.
-  //
-  constructor(private _app: IApp, levels: PuzzleLevels) {
-    this.readyDB(levels);
-  }
-
-  public async readyDB(levels: PuzzleLevels) {
-    let user = await localforage.getItem('femmbyte') as IUser;
-
-    if (!user) {
-      this._user = {
-        name: 'femmbyte',
-        hits: 0,
-        realHits: 0,
-        misses: 0,
-        stage: []
-      };
-
-      let stages = [];
-      for (let s = 0; s < levels.stage.length; s++) {
-        stages.push([]);
-
-        for (let l = 0; l < levels.stage[s].length; l++) {
-          stages[s].push({
-            hits: 0,
-            misses: 0,
-            averages: [],
-            realHits: 0,
-            tries: 0
-          });
-        }
-      }
-
-      this._user.stage = stages;
-
-      await localforage.setItem('femmbyte', this._user);
-    } else {
-      this._user = user;
-    }
-
-    console.log(this._user);
-    this.updRealTimeStats();
-  }
 
   set puzzleCompleted(val: IPuzzleStats) {
 
@@ -120,18 +76,103 @@ class Stats {
     let avg = this.getAccuracy(this._user.hits, this._user.misses)
       , realAvg = this.getAccuracy(this._user.realHits, this._user.misses)
     ;
-    console.log(this._user, `${avg}%, ${realAvg}%`);
+
+    console.log(this._user);
     this.updRealTimeStats();
   }
 
+  //
+  // TODO - Non-destructive addition/creation of new stat properties
+  //        for new levels or new stats.
+  //
+  constructor(private _app: IApp, private _levels: PuzzleLevels) {
+    this.readyDB();
+  }
+
+  public async readyDB() {
+    let user = await localforage.getItem('femmbyte') as IUser;
+
+    if (!user) {
+      this._initUser();
+    } else {
+      this._user = user;
+      this._chkUpdateUser();
+    }
+
+    console.log(this._user);
+    this.updRealTimeStats();
+  }
+
+
   public updRealTimeStats() {
 
-    this._app.totalAccuracy = this.getAccuracy(this._user.hits, this._user.misses);
-    this._app.levelAccuracy = this.getAverage(this._user.stage[this._app.stage][this._app.level].averages)
+    clearInterval(this._progressInverval);
+
+    let lvlAcc = this.getAverage(this._user.stage[this._app.stage][this._app.level].averages)
+      , totalAcc = this.getAccuracy(this._user.hits, this._user.misses)
+    ;
+
+    let acc = parseFloat(lvlAcc.toFixed(2))
+      , accDiff = lvlAcc - this._app.levelAccuracy
+      , absDiff = Math.abs(accDiff)
+      , speed = 0
+      , timeout = 50
+    ;
+
+    if (absDiff > 50) {speed = 10.11; timeout = 40; }
+    else if (absDiff >= 30) { speed = 1.73; timeout = 30; }
+    else if (absDiff <= 1) {
+      speed = 0.01;
+      timeout = 30;
+    }
+    else if (absDiff <= 3) {
+      speed = .03;
+      timeout = 30;
+    }
+    else if (absDiff <= 12) {
+      speed = .33;
+      timeout = 45;
+    }
+    else if (absDiff < 30) {
+      speed = 3.11;
+      timeout = 45;
+    }
+
+    speed =
+      (accDiff < 0)
+        ? speed * -1
+        : speed
+    ;
+
+    console.log(speed);
+
+    this._progressInverval = setInterval(() => {
+      if (acc !== this._app.levelAccuracy) {
+
+        let speedDiff = speed + this._app.levelAccuracy;
+
+        if (speedDiff > acc && accDiff > 0) {
+          this._app.levelAccuracy = acc;
+        }
+        else if (speedDiff < acc && accDiff < 0) {
+          this._app.levelAccuracy = acc;
+        }
+        else {
+          this._app.levelAccuracy = parseFloat((this._app.levelAccuracy + speed).toFixed(2));
+        }
+
+      } else {
+        clearInterval(this._progressInverval);
+      }
+
+    }, timeout);
+
+    this._app.totalAccuracy = parseFloat(totalAcc.toFixed(2));
+    // this._app.levelAccuracy = parseFloat(lvlAcc.toFixed(2));
   }
 
   public getAccuracy(hits: number, misses: number) {
-    let avg = 100 - Math.floor((misses / hits) * 100);
+    let avg = 100 - ((misses / hits) * 100);
     return avg;
   }
 
@@ -143,7 +184,101 @@ class Stats {
       answer += d;
     }
 
-    return Math.floor(answer / data.length);
+    return answer / data.length;
+  }
+
+
+  private _initUser() {
+
+    this._user = {
+      name: 'femmbyte',
+      hits: 0,
+      realHits: 0,
+      misses: 0,
+      stage: []
+    };
+
+    let stages = [];
+    for (let s = 0; s < this._levels.stage.length; s++) {
+      stages.push([]);
+
+      for (let l = 0; l < this._levels.stage[s].length; l++) {
+        stages[s].push({
+          hits: 0,
+          realHits: 0,
+          misses: 0,
+          averages: [],
+          tries: 0
+        });
+      }
+    }
+
+    localforage.setItem('femmbyte', this._user);
+    this._user.stage = stages;
+    console.info('User Created');
+  }
+
+  private async _chkUpdateUser() {
+
+    let save = false;
+
+    // ADD/REMOVE Levels if applicable
+    this._user.stage.forEach((levels, i) => {
+      let realLvlLen = this._levels.stage[i].length;
+
+      if (levels.length == realLvlLen) return;
+
+      console.info('Updating Levels');
+      save = true;
+
+      if (levels.length > realLvlLen) {
+        levels.splice(realLvlLen, levels.length - realLvlLen);
+        return;
+      }
+
+      if (levels.length < realLvlLen) {
+        let newLen = realLvlLen - levels.length;
+        for (let i = 0; i < newLen; i++) {
+          levels.push({
+            hits: 0,
+            realHits: 0,
+            misses: 0,
+            averages: [],
+            tries: 0,
+          });
+        }
+        return;
+      }
+    });
+
+
+    if (this._user.stage.length < this._levels.stage.length) {
+      console.info('Updating Stages');
+      save = true;
+      let userStageLength = this._user.stage.length
+        , actualStageLength = this._levels.stage.length
+      ;
+      for (let i = userStageLength; i < actualStageLength; i++) {
+        this._user.stage.push([]);
+
+        while (this._user.stage[i].length < this._levels.stage[i].length) {
+          this._user.stage[i].push({
+            hits: 0,
+            misses: 0,
+            averages: [],
+            realHits: 0,
+            tries: 0
+          });
+        }
+
+      }
+    }
+
+    if (save) {
+      await localforage.setItem('femmbyte', this._user);
+      console.info('Updated User');
+      console.log(this._user);
+    }
   }
 
 }

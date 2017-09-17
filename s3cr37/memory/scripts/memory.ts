@@ -324,6 +324,7 @@ class MemoryPuzzle {
         clearInterval(interval);
         this._shuffle().then(() => {
           this.pieces.forEach(p => p.draggable = true);
+          this._app.isBoardActive = true;
         });
       }
       --this._app.countdown;

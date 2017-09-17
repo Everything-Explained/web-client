@@ -15,6 +15,7 @@ interface IApp extends Vue {
   shuffleSpeed: number;
   shuffleAmount: number;
   isBoardSetup: boolean;
+  isBoardActive: boolean;
   isPuzzleRunning: boolean;
   isLoaded: boolean;
   puzzlePieces: {order: number, draggable: boolean}[];
@@ -42,6 +43,7 @@ let app = new Vue({
 
     isBoardSetup: false,
     isPuzzleRunning: false,
+    isBoardActive: false,
     isLoaded: false,
 
     levels: 0,
@@ -99,13 +101,20 @@ let app = new Vue({
       this.level = obj.selectedIndex;
       this.puzzle.level = this.level;
       this.setPieces();
+      this.isBoardActive = false;
     },
 
+    // Resets level to 0 for next stage
     setStage: function(ev: MouseEvent) {
-      let obj = ev.target as HTMLSelectElement;
-      this.stage = obj.selectedIndex;
-      this.puzzle.stage = this.stage;
+      let obj = ev.target as HTMLSelectElement
+        , lvlObj = (this.$refs['levelSelect'] as HTMLSelectElement)
+      ;
+      this.puzzle.stage = obj.selectedIndex;
       this.levels = this.puzzle.levels.stage[obj.selectedIndex].length;
+      this.stage = obj.selectedIndex;
+      this.level = 0;
+      lvlObj.selectedIndex = this.level;
+      this.setPieces();
     },
 
     setupBoard: function(ev: MouseEvent) {
@@ -127,6 +136,7 @@ let app = new Vue({
       this.pieces = this.puzzle.pieces;
       this.answers = this.puzzle.answers;
       this.isBoardSetup = false;
+      this.isBoardActive = false;
     },
     onPuzzleSuccess: function() {
       this.isPuzzleRunning = false;

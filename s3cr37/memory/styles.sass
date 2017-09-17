@@ -7,38 +7,54 @@
 
 
 #entry
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
+  width: 100%
+  height: 100%
   transition: opacity .5s, visibility .5s
 
   #EntryContainer
     position: relative
-    top: 20px
-    left: 180px
 
   #puzzle
     display: flex
+    justify-content: center
+
+    .piece-placeholder
+      .insert
+        cursor: move
+
+        &.obfuscated
+          cursor: default
 
   #solution
     margin-top: 30px
+    transition: all .3s ease-in-out
 
-#test
-  position: absolute
-  top: 92px
-  left: 182px // 205 para
-  width: 133px
-  height: 133px
-  text-align: center
+    .piece-placeholder
+      border-color: hsl(200, 20%, 70%)
+
+  #CountDown
+    position: absolute
+    display: block
+    top: 200px
+    width: 100%
+    font-size: 90px
+    color: hsl(0, 0%, 70%)
+    text-shadow: 0 -2px 0 hsla(0, 0%, 0%, .45), 0 2px 0 hsl(0, 0%, 99%)
+    font-family: consolas
+    -webkit-user-select: none
+    user-select: none
+    transition: all .3s ease-in-out
+
+  #Board
+    text-align: center
 
 
 
 header
   width: 100%
   height: 50px
-  margin-bottom: 20px
+  margin-bottom: 44px
+  text-align: center
   -webkit-user-select: none
 
   .ready
@@ -52,33 +68,15 @@ header
 
 
 $ts-color: hsl(0, 0%, 50%)
-.countdown
-  position: absolute
-  display: block
-  top: 70px
-  left: -105px
-  font-size: 90px
-  color: hsl(0, 0%, 70%)
-  text-shadow: 0 -2px 0 hsla(0, 0%, 0%, .45), 0 2px 0 hsl(0, 0%, 99%)
-  font-family: consolas
-  -webkit-user-select: none
-  user-select: none
 
-#puzzle
-  .piece-placeholder
-    .insert
-      cursor: move
-
-      &.obfuscated
-        cursor: default
 
 .piece-placeholder
   position: relative
   display: inline-block
   margin-right: 10px
-  border: 2px dashed hsl(0, 0%, 70%)
-  width: 133px
-  height: 133px
+  border: 2px dashed hsl(0, 0%, 80%)
+  width: 100px
+  height: 100px
 
   .insert
     display: block
@@ -89,12 +87,13 @@ $ts-color: hsl(0, 0%, 50%)
     cursor: default
 
     &.obfuscated
-      opacity: .1
+      opacity: .05
 
     &::after, &::before
       position: absolute
-      content: 'correct'
+      content: 'hit'
       padding-bottom: 3px
+      left: 0
       font-size: 24px
       font-variant: small-caps
       background-color: hsl(128, 50%, 85%)
@@ -122,3 +121,11 @@ $ts-color: hsl(0, 0%, 50%)
     &.fail::before
       opacity: 1
       top: 113%
+// END PIECE PLACEHOLDER
+
+
+#StatContainer
+  position: relative
+  width: 100%
+  text-align: center
+

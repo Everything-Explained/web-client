@@ -5,6 +5,7 @@ $prog-adjust: $prog-size + 20
 %prog-container
   width: $prog-adjust
   height: $prog-size / 2
+  text-align: left
 
   label
     position: absolute
@@ -25,7 +26,7 @@ $prog-adjust: $prog-size + 20
     position: relative
     width: $prog-adjust
     height: $prog-size / 2
-    border-bottom: 2px solid #bbb
+    border-bottom: 2px solid hsl(128, 50%, 50%)
     overflow: hidden
     text-align: center
 
@@ -39,36 +40,34 @@ $prog-adjust: $prog-size + 20
     box-sizing: border-box
 
 
+  $prog-color: hsl(200, 50%, 50%)
   .prog-inner
     position: absolute
     top: 0
     left: 10px
     border: 10px solid transparent
-    border-bottom: 10px solid #777
-    border-left: 10px solid #777
-    transition: .5s ease-in-out
+    border-bottom: 10px solid $prog-color
+    border-left: 10px solid $prog-color
     transform: rotate(-45deg)
 
   .prog-inner-text
     position: relative
     top: $prog-size / 8
     font-family: Consolas, monospace
-    font-size: 20px
+    font-size: 24px
 // END PROGRESS CLASSES
 
 
 
-#LevelAccuracy
+#LevelAccuracy, #TotalAccuracy
   @extend %prog-container
-  position: absolute
-  bottom: 20%
-  left: 30px
+  position: relative
+  top: 70px
+  left: 3px
+  display: inline-block
 
 #TotalAccuracy
-  @extend %prog-container
-  position: absolute
-  bottom: 20%
-  left: 230px
+  left: -3px
 
 
 
