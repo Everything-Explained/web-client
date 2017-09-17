@@ -44,7 +44,7 @@ class Stats {
   public stage = 0;
 
   private _user: IUser;
-  private _progressInverval: NodeJS.Timer;
+  private _timeouts: { [key: string]: NodeJS.Timer } = {};
 
 
   set puzzleCompleted(val: IPuzzleStats) {
@@ -106,70 +106,29 @@ class Stats {
 
   public updRealTimeStats() {
 
-    clearInterval(this._progressInverval);
+    clearInterval(this._timeouts['lvlAcc']);
+    clearInterval(this._timeouts['totAcc']);
+    // clearInterval(this._totalAccInterval);
 
-    let lvlAcc = this.getAverage(this._user.stage[this._app.stage][this._app.level].averages)
-      , totalAcc = this.getAccuracy(this._user.hits, this._user.misses)
-    ;
+    this._animProgWheel(
+      'levelAccuracy',
+      'lvlAcc',
+      this.getAverage(this._user.stage[this._app.stage][this._app.level].averages)
+    );
+    this._animProgWheel(
+      'totalAccuracy',
+      'totAcc',
+      this.getAccuracy(this._user.hits, this._user.misses)
+    );
+    // this._totalAccInterval = setInterval(() => {
 
-    let acc = parseFloat(lvlAcc.toFixed(2))
-      , accDiff = lvlAcc - this._app.levelAccuracy
-      , absDiff = Math.abs(accDiff)
-      , speed = 0
-      , timeout = 50
-    ;
+    // })
 
-    if (absDiff > 50) {speed = 10.11; timeout = 40; }
-    else if (absDiff >= 30) { speed = 1.73; timeout = 30; }
-    else if (absDiff <= 1) {
-      speed = 0.01;
-      timeout = 30;
-    }
-    else if (absDiff <= 3) {
-      speed = .03;
-      timeout = 30;
-    }
-    else if (absDiff <= 12) {
-      speed = .33;
-      timeout = 45;
-    }
-    else if (absDiff < 30) {
-      speed = 3.11;
-      timeout = 45;
-    }
-
-    speed =
-      (accDiff < 0)
-        ? speed * -1
-        : speed
-    ;
-
-    console.log(speed);
-
-    this._progressInverval = setInterval(() => {
-      if (acc !== this._app.levelAccuracy) {
-
-        let speedDiff = speed + this._app.levelAccuracy;
-
-        if (speedDiff > acc && accDiff > 0) {
-          this._app.levelAccuracy = acc;
-        }
-        else if (speedDiff < acc && accDiff < 0) {
-          this._app.levelAccuracy = acc;
-        }
-        else {
-          this._app.levelAccuracy = parseFloat((this._app.levelAccuracy + speed).toFixed(2));
-        }
-
-      } else {
-        clearInterval(this._progressInverval);
-      }
-
-    }, timeout);
-
-    this._app.totalAccuracy = parseFloat(totalAcc.toFixed(2));
+    // this._app.totalAccuracy = parseFloat(totalAcc.toFixed(2));
     // this._app.levelAccuracy = parseFloat(lvlAcc.toFixed(2));
   }
+
+
 
   public getAccuracy(hits: number, misses: number) {
     let avg = 100 - ((misses / hits) * 100);
@@ -187,6 +146,78 @@ class Stats {
     return answer / data.length;
   }
 
+  private _animProgWheel(animProp: string, tName: string, max: number) {
+    let [speed, timeout] = this._setAnimSpeed(max, this._app[animProp])
+      , intervalStore = null as NodeJS.Timer
+    ;
+
+    intervalStore = this._timeouts[tName] = setInterval(() => {
+      if (parseFloat(max.toFixed(2)) !== this._app[animProp]) {
+        this._app[animProp] =
+          parseFloat(
+            this._animate(
+              max,
+              this._app[animProp],
+              speed).toFixed(2)
+          )
+        ;
+      } else {
+        clearInterval(intervalStore);
+      }
+    }, timeout);
+  }
+
+  private _animate(max: number, current: number, speed: number) {
+    let speedDiff = speed + current;
+
+    if (speedDiff > max && speed > 0) {
+      return max;
+    }
+
+    if (speedDiff < max && speed < 0) {
+      return max;
+    }
+
+    return current + speed;
+  }
+
+  private _setAnimSpeed(max: number, current: number) {
+
+    let speed = 0
+      , timeout = 0
+      , diff = max - current
+      , threshold = Math.abs(diff)
+    ;
+
+    if (threshold > 50) {speed = 10.11; timeout = 40; }
+    else if (threshold >= 30) { speed = 1.73; timeout = 30; }
+    else if (threshold <= 1) {
+      speed = 0.03;
+      timeout = 35;
+    }
+    else if (threshold <= 3) {
+      speed = .07;
+      timeout = 30;
+    }
+    else if (threshold <= 7) {
+      speed = .33;
+      timeout = 35;
+    }
+    else if (threshold <= 15) {
+      speed = .53;
+      timeout = 35;
+    }
+    else if (threshold < 30) {
+      speed = 3.11;
+      timeout = 50;
+    }
+
+    speed = (diff < 0) ? speed * -1 : speed;
+
+    console.log(speed);
+
+    return [speed, timeout];
+  }
 
   private _initUser() {
 
