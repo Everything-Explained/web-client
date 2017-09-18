@@ -108,24 +108,21 @@ class Stats {
 
     clearInterval(this._timeouts['lvlAcc']);
     clearInterval(this._timeouts['totAcc']);
-    // clearInterval(this._totalAccInterval);
 
     this._animProgWheel(
       'levelAccuracy',
       'lvlAcc',
       this.getAverage(this._user.stage[this._app.stage][this._app.level].averages)
     );
-    this._animProgWheel(
-      'totalAccuracy',
-      'totAcc',
-      this.getAccuracy(this._user.hits, this._user.misses)
-    );
-    // this._totalAccInterval = setInterval(() => {
 
-    // })
-
-    // this._app.totalAccuracy = parseFloat(totalAcc.toFixed(2));
-    // this._app.levelAccuracy = parseFloat(lvlAcc.toFixed(2));
+    let totalAcc = this.getAccuracy(this._user.hits, this._user.misses);
+    if (totalAcc.toFixed(2) !== this._app.totalAccuracy.toString())
+      this._animProgWheel(
+        'totalAccuracy',
+        'totAcc',
+        totalAcc
+      )
+    ;
   }
 
 
@@ -201,7 +198,7 @@ class Stats {
     }
     else if (threshold <= 7) {
       speed = .33;
-      timeout = 35;
+      timeout = 30;
     }
     else if (threshold <= 15) {
       speed = .53;

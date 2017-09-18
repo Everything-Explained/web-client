@@ -109,9 +109,9 @@ let app = new Vue({
       let obj = ev.target as HTMLSelectElement
         , lvlObj = (this.$refs['levelSelect'] as HTMLSelectElement)
       ;
+      this.stage = obj.selectedIndex;
       this.puzzle.stage = obj.selectedIndex;
       this.levels = this.puzzle.levels.stage[obj.selectedIndex].length;
-      this.stage = obj.selectedIndex;
       this.level = 0;
       lvlObj.selectedIndex = this.level;
       this.setPieces();

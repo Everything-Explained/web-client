@@ -93,7 +93,7 @@ class MemoryPuzzle {
     ],
     grayscale: [
       'gainsboro', 'lightgray', 'silver',
-      'darkgray', 'gray', 'dimgray', 'lightslategray',
+      'darkgray', 'gray', 'dimgray',
       'slategray', 'darkslategray', 'black'
     ],
 
