@@ -24,6 +24,7 @@ button
 #LevelSelect, #StageSelect
   position: relative
   display: inline-block
+  top: -7px
   left: 15px
 
   label
@@ -44,5 +45,28 @@ button
     font-variant: small-caps
     font-family: Verdana, Geneva, Tahoma, sans-serif
 
+$try-margin: -25
+#LevelSelect
+  &::before, &::after
+    position: absolute
+    content: attr(data-tries)
+    top: 50px
+    left: -17px + $try-margin
+    width: 100%
+    text-align: right
+    font-family: consolas, monospace
+    font-size: 20px
+    font-weight: bold
+    color: hsl(200, 80%, 45%)
+    z-index: 10
+  &::after
+    position: absolute
+    content: attr(data-new-tries)
+    left: 72px + $try-margin
+    text-align: left
+    color: hsl(128, 50%, 40%)
+
 #StageSelect
   left: -2px
+
+

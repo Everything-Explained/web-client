@@ -44,7 +44,9 @@ class Stats {
   public stage = 0;
 
   private _user: IUser;
+  private _tempStats = {} as { stage: { tries: number}[][] };
   private _timeouts: { [key: string]: NodeJS.Timer } = {};
+
 
 
   set puzzleCompleted(val: IPuzzleStats) {
@@ -61,6 +63,7 @@ class Stats {
     lvl.realHits += hits;
     lvl.misses += misses;
     lvl.tries += 1;
+    this._tempStats.stage[val.stage][val.level].tries += 1;
 
     if (hits == val.pieces) {
       lvl.averages.push(100);
@@ -85,12 +88,21 @@ class Stats {
   // TODO - Non-destructive addition/creation of new stat properties
   //        for new levels or new stats.
   //
-  constructor(private _app: IApp, private _levels: PuzzleLevels) {
+  constructor(private _app: IApp, private _levels: PuzzleLevels, private _memory: MemoryPuzzle) {
     this.readyDB();
   }
 
   public async readyDB() {
     let user = await localforage.getItem('femmbyte') as IUser;
+    this._tempStats.stage = [];
+    this._levels.stage.forEach((s, i) => {
+      this._tempStats.stage.push([]);
+      s.forEach(l => {
+        this._tempStats.stage[i].push({
+          tries: 0
+        });
+      });
+    });
 
     if (!user) {
       this._initUser();
@@ -109,14 +121,21 @@ class Stats {
     clearInterval(this._timeouts['lvlAcc']);
     clearInterval(this._timeouts['totAcc']);
 
+    let stage = this._memory.stage
+      , level = this._memory.level
+    ;
+
+    this._app.totalTries = `${this._user.stage[stage][level].tries}|`;
+    this._app.currentTries = `+${this._tempStats.stage[stage][level].tries}`;
+
     this._animProgWheel(
       'levelAccuracy',
       'lvlAcc',
-      this.getAverage(this._user.stage[this._app.stage][this._app.level].averages)
+      this.getAverage(this._user.stage[stage][level].averages)
     );
 
     let totalAcc = this.getAccuracy(this._user.hits, this._user.misses);
-    if (totalAcc.toFixed(2) !== this._app.totalAccuracy.toString())
+    if (totalAcc.toFixed(2) !== this._app.totalAccuracy.toFixed(2))
       this._animProgWheel(
         'totalAccuracy',
         'totAcc',
@@ -193,18 +212,18 @@ class Stats {
       timeout = 35;
     }
     else if (threshold <= 3) {
-      speed = .07;
+      speed = .11;
       timeout = 30;
     }
     else if (threshold <= 7) {
       speed = .33;
       timeout = 30;
     }
-    else if (threshold <= 15) {
+    else if (threshold <= 20) {
       speed = .53;
       timeout = 35;
     }
-    else if (threshold < 30) {
+    else if (threshold > 20) {
       speed = 3.11;
       timeout = 50;
     }

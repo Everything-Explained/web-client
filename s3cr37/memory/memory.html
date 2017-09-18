@@ -6,17 +6,18 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <!-- <div id="test"><div class="cross"></div></div> -->
     <div id='entry' class='hidden' :class='{ visible: isLoaded }'>
       <div id="EntryContainer">
         <header class="header">
-          <div id='LevelSelect' class="inline">
+          <div id='LevelSelect' :data-tries='totalTries' :data-new-tries='currentTries' class="inline">
             <label>Level</label>
             <select class='level-select'
                     @change='setLevel'
                     :disabled='isPuzzleRunning'
                     ref='levelSelect'
-              ><option v-for='(lvl, index) of levels' :value='index'>lvl {{ index + 1 }}</option>
+              ><option v-for='(lvl, index) of levels' :value='index'
+                >lvl {{ index + 1 }}
+              </option>
             </select>
           </div>
           <div id="StageSelect" class='inline'>

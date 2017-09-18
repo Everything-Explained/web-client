@@ -211,8 +211,9 @@ class MemoryPuzzle {
   private _stats: Stats;
   private _events = ['success', 'fail'];
   private _level:   IPuzzleLevel;
+
   private _levelIndex = 0;
-  private _stage  = 0;
+  private _stageIndex  = 0;
 
   private tempStats = {
     hits: 0,
@@ -220,27 +221,40 @@ class MemoryPuzzle {
   };
 
   set level(val: number) {
-    this._level = this.levels.stage[this._stage][val];
+    this._level = this.levels.stage[this._stageIndex][val];
     this._levelIndex = val;
     this._populateBoard();
 
     // Can be called before initialized
-    if (this._stats)
+    if (this._stats) {
+      this._stats.level = this._levelIndex;
       this._stats.updRealTimeStats();
+    }
+  }
+
+  get level() {
+    return this._levelIndex;
+  }
+
+  get stage() {
+    return this._stageIndex;
   }
 
   set stage(val: number) {
-    this._stage = val;
+    this._stageIndex = val;
+    this._stats.stage = this._stageIndex;
     this.level = 0;
   }
+
+
 
   //
   // TODO - need to observe solution pieces
   //
   constructor(private _app: IApp) {
     this.level = 0;
+    this._stats = new Stats(_app, this.levels, this);
     this._populateBoard();
-    this._stats = new Stats(_app, this.levels);
   }
 
 
@@ -303,7 +317,7 @@ class MemoryPuzzle {
           hits: this.tempStats.hits,
           misses: this.tempStats.misses,
           pieces: this.answers.length,
-          stage: this._stage,
+          stage: this._stageIndex,
           level: this._levelIndex
         };
 

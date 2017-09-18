@@ -5,6 +5,8 @@ interface IApp extends Vue {
   stage: number;
   levels: number;
   level: number;
+  totalTries: string;
+  currentTries: string;
   pieces: IPuzzlePiece[];
   answers: IPuzzleAnswer[];
 
@@ -51,6 +53,8 @@ let app = new Vue({
 
     level: 0,
     stage: 0,
+    totalTries: '0/',
+    currentTries: '+0',
 
     countdown: 0,
     countdownStart: 0,
@@ -110,9 +114,9 @@ let app = new Vue({
         , lvlObj = (this.$refs['levelSelect'] as HTMLSelectElement)
       ;
       this.stage = obj.selectedIndex;
+      this.level = 0;
       this.puzzle.stage = obj.selectedIndex;
       this.levels = this.puzzle.levels.stage[obj.selectedIndex].length;
-      this.level = 0;
       lvlObj.selectedIndex = this.level;
       this.setPieces();
     },
