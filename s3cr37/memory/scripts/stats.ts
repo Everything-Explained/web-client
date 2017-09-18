@@ -44,7 +44,13 @@ class Stats {
   public stage = 0;
 
   private _user: IUser;
-  private _tempStats = {} as { stage: { tries: number}[][] };
+  private _tempStats = {} as {
+    totalAccuracy: number,
+    stage: {
+      tries: number,
+      accuracy: number
+    }[][]
+  };
   private _timeouts: { [key: string]: NodeJS.Timer } = {};
 
 
@@ -54,6 +60,9 @@ class Stats {
     let hits = (val.misses >= val.hits) ? 0 : val.hits - val.misses
       , misses = val.misses
       , lvl = this._user.stage[val.stage][val.level]
+      , oldAvg = this.getAverage(lvl.averages)
+      , oldAcc = this.getAccuracy(this._user.hits, this._user.misses)
+      , tmpLvl = this._tempStats.stage[val.stage][val.level]
     ;
 
     this._user.hits += val.hits;
@@ -63,7 +72,6 @@ class Stats {
     lvl.realHits += hits;
     lvl.misses += misses;
     lvl.tries += 1;
-    this._tempStats.stage[val.stage][val.level].tries += 1;
 
     if (hits == val.pieces) {
       lvl.averages.push(100);
@@ -75,11 +83,17 @@ class Stats {
       lvl.averages.push(Math.floor((hits / val.pieces) * 100));
     }
 
-    localforage.setItem('femmbyte', this._user);
-    let avg = this.getAccuracy(this._user.hits, this._user.misses)
-      , realAvg = this.getAccuracy(this._user.realHits, this._user.misses)
+    tmpLvl.tries += 1;
+    tmpLvl.accuracy +=
+      (oldAvg == 100 || !oldAvg)
+        ? 0
+        : this.getAverage(lvl.averages) - oldAvg
+    ;
+    this._tempStats.totalAccuracy +=
+      (this.getAccuracy(this._user.hits, this._user.misses) - oldAcc)
     ;
 
+    localforage.setItem('femmbyte', this._user);
     console.log(this._user);
     this.updRealTimeStats();
   }
@@ -96,10 +110,12 @@ class Stats {
     let user = await localforage.getItem('femmbyte') as IUser;
     this._tempStats.stage = [];
     this._levels.stage.forEach((s, i) => {
+      this._tempStats.totalAccuracy = 0;
       this._tempStats.stage.push([]);
       s.forEach(l => {
         this._tempStats.stage[i].push({
-          tries: 0
+          tries: 0,
+          accuracy: 0,
         });
       });
     });
@@ -123,15 +139,19 @@ class Stats {
 
     let stage = this._memory.stage
       , level = this._memory.level
+      , lvlAcc = this.getAverage(this._user.stage[stage][level].averages)
+      , tmpLvl = this._tempStats.stage[stage][level]
     ;
 
     this._app.totalTries = `${this._user.stage[stage][level].tries}|`;
-    this._app.currentTries = `+${this._tempStats.stage[stage][level].tries}`;
+    this._app.currentTries = `+${tmpLvl.tries}`;
+    this._app.levelAccFlux = tmpLvl.accuracy;
+    this._app.totalAccFlux = this._tempStats.totalAccuracy;
 
     this._animProgWheel(
       'levelAccuracy',
       'lvlAcc',
-      this.getAverage(this._user.stage[stage][level].averages)
+      lvlAcc
     );
 
     let totalAcc = this.getAccuracy(this._user.hits, this._user.misses);
@@ -215,13 +235,13 @@ class Stats {
       speed = .11;
       timeout = 30;
     }
-    else if (threshold <= 7) {
+    else if (threshold <= 10) {
       speed = .33;
       timeout = 30;
     }
     else if (threshold <= 20) {
-      speed = .53;
-      timeout = 35;
+      speed = .87;
+      timeout = 30;
     }
     else if (threshold > 20) {
       speed = 3.11;

@@ -13,7 +13,7 @@
             <label>Level</label>
             <select class='level-select'
                     @change='setLevel'
-                    :disabled='isPuzzleRunning'
+                    :disabled='puzzle.isUserPlaying || puzzle.isLevelRunning'
                     ref='levelSelect'
               ><option v-for='(lvl, index) of levels' :value='index'
                 >lvl {{ index + 1 }}
@@ -24,25 +24,29 @@
             <label>Stage</label>
             <select class="stage-select"
                     @change='setStage'
-                    :disabled='isPuzzleRunning'>
+                    :disabled='puzzle.isUserPlaying || puzzle.isLevelRunning'>
               <option v-for='(stage, index) of stages' value="index">stg {{ index + 1 }}</option>
             </select>
           </div>
           <button class='mui-btn
                          mui-btn--primary
                          header-btn'
-                  @click='setupBoard'
-                  :disabled='isPuzzleRunning'
+                  @click='puzzle.readyBoard()'
+                  :disabled='puzzle.isUserPlaying || puzzle.isLevelRunning'
                   draggable="false">Randomize
           </button>
           <button class="mui-btn
                          mui-btn--accent
                          header-btn"
-                  @click='beginLevel'
-                  :disabled='!isBoardSetup || isPuzzleRunning'
+                  @click='puzzle.beginLevel()'
+                  :disabled='!puzzle.isBoardReady || puzzle.isLevelRunning || puzzle.isUserPlaying'
                   ref='btnStart'
                   draggable='false'>Start
           </button>
+          <button class="mui-btn mui-btn--danger header-btn"
+                  @click='oops'
+                  :disabled='!puzzle.isUserPlaying'
+          >oops</button>
         </header>
         <div id="Board">
           <div id="puzzle" ref='puzzle'>
@@ -61,7 +65,7 @@
               </div>
             </div>
           </div>
-          <div id='solution' ref='solution' class='hidden' :class='{visible: isBoardActive }'>
+          <div id='solution' ref='solution' class='hidden' :class='{visible: puzzle.isUserPlaying }'>
             <div class="piece-placeholder"
                  v-for='(ans, index) of answers'
               ><div class="insert"
@@ -84,8 +88,10 @@
                 ><div class="prog-inner"
                       :style='{ transform: "rotate(" + (levelAccuracy * 1.8 - 45) + "deg)" }'
                   ></div>
-                  <div class="prog-inner-text">{{ levelAccuracy + '%' }}
-                </div>
+                  <div class="prog-inner-text"
+                       :class='{ good: levelAccFlux >= 0, bad: levelAccFlux < 0, none: levelAccFlux == 0 }'
+                       :data-accuracy-mod='levelAccMod'
+                       :data-accuracy='levelAccFluxStr'>{{ levelAccuracy.toFixed(2) + '%' }}</div>
               </div>
             </div>
           </div>
@@ -96,8 +102,11 @@
                 ><div class="prog-inner"
                       :style='{ transform: "rotate(" + (totalAccuracy * 1.8 - 45) + "deg)" }'
                   ></div>
-                  <div class="prog-inner-text">{{ totalAccuracy + '%' }}
-                </div>
+                  <div class="prog-inner-text"
+                       :class='{ good: totalAccFlux >= 0, bad: totalAccFlux < 0, none: !totalAccFlux }'
+                       :data-accuracy='totalAccFluxStr'
+                       :data-accuracy-mod='totalAccMod'
+                    >{{ totalAccuracy.toFixed(2) + '%' }}</div>
               </div>
             </div>
           </div>

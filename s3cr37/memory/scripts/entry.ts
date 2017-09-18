@@ -22,13 +22,16 @@ interface IApp extends Vue {
   isLoaded: boolean;
   puzzlePieces: {order: number, draggable: boolean}[];
   onPuzzleSuccess: () => void;
-  setPieces: () => void;
+  refreshPieces: () => void;
+  readyBoard: () => void;
 
-  toArray: (list: NodeList) => any[];
   toNumberedArray: (count: number) => number[];
 
   totalAccuracy: number;
+  totalAccFlux: number;
   levelAccuracy: number;
+  levelAccFlux: number;
+
 
 }
 
@@ -62,7 +65,9 @@ let app = new Vue({
     shuffleAmount: 10,
 
     totalAccuracy: 0,
+    totalAccFlux: 0,
     levelAccuracy: 0,
+    levelAccFlux: 0,
 
     pieces: [],
     answers: []
@@ -73,7 +78,7 @@ let app = new Vue({
     this.puzzle = new MemoryPuzzle(this);
     this.stages = this.puzzle.levels.stage.length;
     this.levels = this.puzzle.levels.stage[0].length;
-    this.setPieces();
+    this.refreshPieces();
     this.puzzle.on('success', () => this.onPuzzleSuccess());
   },
 
@@ -87,7 +92,27 @@ let app = new Vue({
   },
 
 
+  computed: {
+    levelAccFluxStr: function() {
+      let acc = Math.abs(this.levelAccFlux).toFixed(2);
+      return `${acc}%`;
+    },
+    levelAccMod: function() {
+      if (this.levelAccFlux == 0) return '';
+      return (this.levelAccFlux < 0) ? '-' : '+';
+    },
 
+    totalAccFluxStr: function() {
+      let acc = Math.abs(this.totalAccFlux).toFixed(2);
+      return `${acc}%`;
+    },
+
+    totalAccMod: function() {
+      if (this.totalAccFlux == 0) return '';
+      return (this.totalAccFlux < 0) ? '-' : '+';
+    }
+
+  },
 
   methods: {
 
@@ -102,52 +127,38 @@ let app = new Vue({
 
     setLevel: function(ev: MouseEvent) {
       let obj = ev.target as HTMLSelectElement;
-      this.level = obj.selectedIndex;
-      this.puzzle.level = this.level;
-      this.setPieces();
-      this.isBoardActive = false;
+      this.puzzle.level = obj.selectedIndex;
+      this.refreshPieces();
     },
 
-    // Resets level to 0 for next stage
     setStage: function(ev: MouseEvent) {
       let obj = ev.target as HTMLSelectElement
         , lvlObj = (this.$refs['levelSelect'] as HTMLSelectElement)
       ;
-      this.stage = obj.selectedIndex;
-      this.level = 0;
       this.puzzle.stage = obj.selectedIndex;
-      this.levels = this.puzzle.levels.stage[obj.selectedIndex].length;
       lvlObj.selectedIndex = this.level;
-      this.setPieces();
     },
 
-    setupBoard: function(ev: MouseEvent) {
-      if (this.puzzle.setupBoard()) {
-        this.setPieces();
-        this.isBoardSetup = true;
-      }
+    readyBoard: function(ev: MouseEvent) {
+      this.puzzle.readyBoard();
+      this.refreshPieces();
     },
 
-
-    beginLevel: function() {
-      this.isPuzzleRunning = true;
-      this.isBoardSetup = false;
-      this.puzzle.beginLevel();
+    oops: function() {
+      this.isPuzzleRunning = false;
+      this.readyBoard();
+      this.puzzle.clearTemp();
     },
 
 
-    setPieces: function() {
+    refreshPieces: function() {
       this.pieces = this.puzzle.pieces;
       this.answers = this.puzzle.answers;
-      this.isBoardSetup = false;
-      this.isBoardActive = false;
     },
+
     onPuzzleSuccess: function() {
       this.isPuzzleRunning = false;
     },
 
-    toArray(nodes: NodeList) {
-      return Array.prototype.slice.call(nodes);
-    }
   }
 } as Vue.ComponentOptions<IApp>);

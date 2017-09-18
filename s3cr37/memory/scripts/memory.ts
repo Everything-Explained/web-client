@@ -46,6 +46,11 @@ class MemoryPuzzle {
   public pieces = [] as IPuzzlePiece[];
   public answers = [] as IPuzzleAnswer[];
 
+  public isShuffling = false;
+  public isLevelRunning = false;
+  public isUserPlaying = false;
+  public isBoardReady = false;
+
   private _colorTable = {
     easy: [
       '#fff', '#000', 'orange',
@@ -220,10 +225,17 @@ class MemoryPuzzle {
     misses: 0
   };
 
+
+
+  get level() {
+    return this._levelIndex;
+  }
+
   set level(val: number) {
+    this._app.level = val;
     this._level = this.levels.stage[this._stageIndex][val];
     this._levelIndex = val;
-    this._populateBoard();
+    this._refreshBoard();
 
     // Can be called before initialized
     if (this._stats) {
@@ -232,15 +244,15 @@ class MemoryPuzzle {
     }
   }
 
-  get level() {
-    return this._levelIndex;
-  }
+
 
   get stage() {
     return this._stageIndex;
   }
 
   set stage(val: number) {
+    this._app.stage = val;
+    this._app.levels = this.levels.stage[val].length;
     this._stageIndex = val;
     this._stats.stage = this._stageIndex;
     this.level = 0;
@@ -248,13 +260,9 @@ class MemoryPuzzle {
 
 
 
-  //
-  // TODO - need to observe solution pieces
-  //
   constructor(private _app: IApp) {
     this.level = 0;
     this._stats = new Stats(_app, this.levels, this);
-    this._populateBoard();
   }
 
 
@@ -321,33 +329,46 @@ class MemoryPuzzle {
           level: this._levelIndex
         };
 
-        this.tempStats.hits = 0;
-        this.tempStats.misses = 0;
+        this.clearTemp();
+        this.isUserPlaying = false;
+        this.isBoardReady = false;
       }
     }
   }
 
+  public clearTemp() {
+    this.tempStats.hits = 0;
+    this.tempStats.misses = 0;
+  }
+
 
   public beginLevel() {
+    this.isLevelRunning = true;
     this._app.countdown = this._level.duration;
     this.pieces.forEach(p => p.obfuscated = false);
 
-    // Start memorize countdown
-    let interval = setInterval(async () => {
-      if (this._app.countdown == 1) {
-        clearInterval(interval);
-        this._shuffle().then(() => {
-          this.pieces.forEach(p => p.draggable = true);
-          this._app.isBoardActive = true;
-        });
-      }
-      --this._app.countdown;
-    }, 1000);
+    return new Promise((rs, rj) => {
+      // Start memorize countdown
+      let interval = setInterval(async () => {
+        if (this._app.countdown == 1) {
+          clearInterval(interval);
+          this._shuffle().then(() => {
+            this.pieces.forEach(p => p.draggable = true);
+            this.isLevelRunning = false;
+            this.isUserPlaying = true;
+            rs(true);
+          });
+        }
+        --this._app.countdown;
+      }, 1000);
+    });
+
 
   }
 
   private _shuffle() {
     let count = 0;
+    this.isShuffling = true;
 
     return new Promise<boolean>((rs, rj) => {
       let interval = setInterval(() => {
@@ -359,6 +380,7 @@ class MemoryPuzzle {
 
         if (++count == this._level.shuffleAmount) {
           clearInterval(interval);
+          this.isShuffling = false;
           rs(true);
         }
 
@@ -371,7 +393,7 @@ class MemoryPuzzle {
   //
   // TODO - Refactor this function into smaller parts
   //
-  public setupBoard() {
+  public readyBoard() {
     let colorLength = this._level.length
 
       , colorPallete =
@@ -386,6 +408,8 @@ class MemoryPuzzle {
       , style = (document.getElementById('shapeStyles')
                 || document.createElement('style')) as HTMLStyleElement
     ;
+
+    this.isUserPlaying = false;
 
     if (!style.id) {
       style.id = 'shapeStyles';
@@ -449,9 +473,9 @@ class MemoryPuzzle {
       }
     }
     this._answersCleared = true;
+    this.isBoardReady = true;
     return true;
   }
-
 
   public resetInsert(ev: MouseEvent, indexTo: number) {
 
@@ -471,7 +495,7 @@ class MemoryPuzzle {
   }
 
 
-  private _populateBoard() {
+  private _refreshBoard() {
 
     if (this.pieces.length) {
       this.pieces = [];
@@ -484,7 +508,6 @@ class MemoryPuzzle {
     }
 
     for (let i = 0; i < this._level.length; i++) {
-
 
       let piece = {
             order: i + 1,
@@ -510,6 +533,8 @@ class MemoryPuzzle {
       this.pieces.push(piece);
       this.answers.push(answer);
     }
+
+    this.isBoardReady = false;
 
   }
 
