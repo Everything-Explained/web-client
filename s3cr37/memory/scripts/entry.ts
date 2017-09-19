@@ -5,8 +5,8 @@ interface IApp extends Vue {
   stage: number;
   levels: number;
   level: number;
-  totalTries: string;
-  currentTries: string;
+  totalTries: number;
+  currentTries: number;
   pieces: IPuzzlePiece[];
   answers: IPuzzleAnswer[];
 
@@ -56,8 +56,8 @@ let app = new Vue({
 
     level: 0,
     stage: 0,
-    totalTries: '0/',
-    currentTries: '+0',
+    totalTries: 0,
+    currentTries: 0,
 
     countdown: 0,
     countdownStart: 0,
@@ -79,7 +79,6 @@ let app = new Vue({
     this.stages = this.puzzle.levels.stage.length;
     this.levels = this.puzzle.levels.stage[0].length;
     this.refreshPieces();
-    this.puzzle.on('success', () => this.onPuzzleSuccess());
   },
 
 

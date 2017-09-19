@@ -9,7 +9,7 @@
     <div id='entry' class='hidden' :class='{ visible: isLoaded }'>
       <div id="EntryContainer">
         <header class="header">
-          <div id='LevelSelect' :data-tries='totalTries' :data-new-tries='currentTries' class="inline">
+          <div id='LevelSelect' :data-tries='totalTries + ":"' :data-new-tries='"+" + currentTries' class="inline">
             <label>Level</label>
             <select class='level-select'
                     @change='setLevel'

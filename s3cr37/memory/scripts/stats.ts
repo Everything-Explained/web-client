@@ -143,8 +143,8 @@ class Stats {
       , tmpLvl = this._tempStats.stage[stage][level]
     ;
 
-    this._app.totalTries = `${this._user.stage[stage][level].tries}|`;
-    this._app.currentTries = `+${tmpLvl.tries}`;
+    this._app.totalTries = this._user.stage[stage][level].tries;
+    this._app.currentTries = tmpLvl.tries;
     this._app.levelAccFlux = tmpLvl.accuracy;
     this._app.totalAccFlux = this._tempStats.totalAccuracy;
 
@@ -228,7 +228,7 @@ class Stats {
     if (threshold > 50) {speed = 10.11; timeout = 40; }
     else if (threshold >= 30) { speed = 1.73; timeout = 30; }
     else if (threshold <= 1) {
-      speed = 0.03;
+      speed = 0.05;
       timeout = 35;
     }
     else if (threshold <= 3) {
