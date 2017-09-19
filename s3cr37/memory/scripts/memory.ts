@@ -40,11 +40,12 @@ class MemoryPuzzle {
 
   public shuffleSpeed = 100;
   public shuffleAmount = 10;
-  public levels = new PuzzleLevels();
+  private _levels = new PuzzleLevels();
 
 
   public pieces = [] as IPuzzlePiece[];
   public answers = [] as IPuzzleAnswer[];
+  public countdown = 0;
 
   public isShuffling = false;
   public isLevelRunning = false;
@@ -216,9 +217,21 @@ class MemoryPuzzle {
   private _stats: Stats;
   private _events = ['success', 'fail'];
   private _level:   IPuzzleLevel;
+  private _stage: IPuzzleLevel[];
 
   private _levelIndex = 0;
-  private _stageIndex  = 0;
+  private _stageIndex = 0;
+
+  get levelIndex() { return this._levelIndex; }
+  set levelIndex(val) {
+    this._levelIndex = val;
+    this.level = val;
+  }
+  get stageIndex() { return this._stageIndex; }
+  set stageIndex(val) {
+    this._stageIndex = val;
+    this.stage = val;
+  }
 
   private tempStats = {
     hits: 0,
@@ -226,43 +239,39 @@ class MemoryPuzzle {
   };
 
 
-
-  get level() {
-    return this._levelIndex;
-  }
-
+  get levels() { return this._stage.length; }
   set level(val: number) {
-    this._app.level = val;
-    this._level = this.levels.stage[this._stageIndex][val];
     this._levelIndex = val;
+    this._level = this._levels.stage[this._stageIndex][val];
     this._refreshBoard();
 
     // Can be called before initialized
-    if (this._stats) {
-      this._stats.level = this._levelIndex;
-      this._stats.updRealTimeStats();
+    this._stats.level = this._levelIndex;
+    this._stats.stage = this._stageIndex;
+    if (this._stats.isReady) this._stats.updateStats();
+    else {
+      let interval = setInterval(() => {
+        if (!this._stats.isReady) return;
+        clearInterval(interval);
+        this._stats.updateStats();
+      }, 100);
     }
   }
 
-
-
-  get stage() {
-    return this._stageIndex;
-  }
-
+  get stages() { return this._levels.stage.length; }
   set stage(val: number) {
-    this._app.stage = val;
-    this._app.levels = this.levels.stage[val].length;
+    this._stage = this._levels.stage[val];
     this._stageIndex = val;
-    this._stats.stage = this._stageIndex;
     this.level = 0;
   }
+
+  get stats() { return this._stats; }
 
 
 
   constructor(private _app: IApp) {
-    this.level = 0;
-    this._stats = new Stats(_app, this.levels, this);
+    this._stats = new Stats(_app, this._levels, this);
+    this.stage = 0;
   }
 
 
@@ -344,13 +353,13 @@ class MemoryPuzzle {
 
   public beginLevel() {
     this.isLevelRunning = true;
-    this._app.countdown = this._level.duration;
+    this.countdown = this._level.duration;
     this.pieces.forEach(p => p.obfuscated = false);
 
     return new Promise((rs, rj) => {
       // Start memorize countdown
       let interval = setInterval(async () => {
-        if (this._app.countdown == 1) {
+        if (this.countdown == 1) {
           clearInterval(interval);
           this._shuffle().then(() => {
             this.pieces.forEach(p => p.draggable = true);
@@ -359,7 +368,7 @@ class MemoryPuzzle {
             rs(true);
           });
         }
-        --this._app.countdown;
+        --this.countdown;
       }, 1000);
     });
 
@@ -410,6 +419,7 @@ class MemoryPuzzle {
     ;
 
     this.isUserPlaying = false;
+    this.clearTemp();
 
     if (!style.id) {
       style.id = 'shapeStyles';

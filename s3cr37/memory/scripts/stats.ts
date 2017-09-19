@@ -42,6 +42,21 @@ class Stats {
 
   public level = 0;
   public stage = 0;
+  public isReady = false;
+
+  private _totalAccuracy = 0;
+  private _levelAccuracy = 0;
+  private _totalTries = 0;
+  private _currentTries = 0;
+  private _levelAccFlux = 0;
+  private _totalAccFlux = 0;
+
+  get totalAccuracy() { return this._totalAccuracy; }
+  get levelAccuracy() { return this._levelAccuracy; }
+  get totalTries()    { return this._totalTries; }
+  get currentTries()  { return this._currentTries; }
+  get levelAccFlux()  { return this._levelAccFlux; }
+  get totalAccFlux()  { return this._totalAccFlux; }
 
   private _user: IUser;
   private _tempStats = {} as {
@@ -90,12 +105,14 @@ class Stats {
         : this.getAverage(lvl.averages) - oldAvg
     ;
     this._tempStats.totalAccuracy +=
-      (this.getAccuracy(this._user.hits, this._user.misses) - oldAcc)
+      (oldAcc == 100 || !oldAcc)
+        ? 0
+        : this.getAccuracy(this._user.hits, this._user.misses) - oldAcc
     ;
 
     localforage.setItem('femmbyte', this._user);
     console.log(this._user);
-    this.updRealTimeStats();
+    this.updateStats();
   }
 
   //
@@ -103,10 +120,12 @@ class Stats {
   //        for new levels or new stats.
   //
   constructor(private _app: IApp, private _levels: PuzzleLevels, private _memory: MemoryPuzzle) {
-    this.readyDB();
+    this.startDB().then(() => {
+      this.isReady = true;
+    });
   }
 
-  public async readyDB() {
+  public async startDB() {
     let user = await localforage.getItem('femmbyte') as IUser;
     this._tempStats.stage = [];
     this._levels.stage.forEach((s, i) => {
@@ -128,36 +147,51 @@ class Stats {
     }
 
     console.log(this._user);
-    this.updRealTimeStats();
   }
 
 
-  public updRealTimeStats() {
+  public updateStats() {
 
     clearInterval(this._timeouts['lvlAcc']);
     clearInterval(this._timeouts['totAcc']);
 
-    let stage = this._memory.stage
-      , level = this._memory.level
+    let stage = this._memory.stageIndex
+      , level = this._memory.levelIndex
       , lvlAcc = this.getAverage(this._user.stage[stage][level].averages)
       , tmpLvl = this._tempStats.stage[stage][level]
     ;
 
-    this._app.totalTries = this._user.stage[stage][level].tries;
-    this._app.currentTries = tmpLvl.tries;
-    this._app.levelAccFlux = tmpLvl.accuracy;
-    this._app.totalAccFlux = this._tempStats.totalAccuracy;
 
-    this._animProgWheel(
-      'levelAccuracy',
+    this._totalTries = this._user.stage[stage][level].tries;
+    this._currentTries = tmpLvl.tries;
+
+    if (tmpLvl.accuracy !== this._levelAccFlux) {
+      this._animText(
+        '_levelAccFlux',
+        'lvlAccFlux',
+        tmpLvl.accuracy
+      );
+    }
+
+    if (this._tempStats.totalAccuracy !== this._totalAccFlux) {
+      this._animText(
+        '_totalAccFlux',
+        'totAccFlux',
+        this._tempStats.totalAccuracy
+      );
+    }
+
+    this._animText(
+      '_levelAccuracy',
       'lvlAcc',
       lvlAcc
     );
 
     let totalAcc = this.getAccuracy(this._user.hits, this._user.misses);
-    if (totalAcc.toFixed(2) !== this._app.totalAccuracy.toFixed(2))
-      this._animProgWheel(
-        'totalAccuracy',
+    console.log(totalAcc, this._totalAccuracy);
+    if (totalAcc.toFixed(2) !== this._totalAccuracy.toFixed(2))
+      this._animText(
+        '_totalAccuracy',
         'totAcc',
         totalAcc
       )
@@ -167,6 +201,7 @@ class Stats {
 
 
   public getAccuracy(hits: number, misses: number) {
+    if (misses == 0 && hits == 0) return 0;
     let avg = 100 - ((misses / hits) * 100);
     return avg;
   }
@@ -182,18 +217,18 @@ class Stats {
     return answer / data.length;
   }
 
-  private _animProgWheel(animProp: string, tName: string, max: number) {
-    let [speed, timeout] = this._setAnimSpeed(max, this._app[animProp])
+  private _animText(animProp: string, tName: string, max: number) {
+    let [speed, timeout] = this._setAnimSpeed(max, this[animProp])
       , intervalStore = null as NodeJS.Timer
     ;
 
     intervalStore = this._timeouts[tName] = setInterval(() => {
-      if (parseFloat(max.toFixed(2)) !== this._app[animProp]) {
-        this._app[animProp] =
+      if (parseFloat(max.toFixed(2)) !== this[animProp]) {
+        this[animProp] =
           parseFloat(
             this._animate(
               max,
-              this._app[animProp],
+              this[animProp],
               speed).toFixed(2)
           )
         ;
@@ -227,6 +262,10 @@ class Stats {
 
     if (threshold > 50) {speed = 10.11; timeout = 40; }
     else if (threshold >= 30) { speed = 1.73; timeout = 30; }
+    else if (threshold <= .3) {
+      speed = 0.01;
+      timeout = 35;
+    }
     else if (threshold <= 1) {
       speed = 0.05;
       timeout = 35;

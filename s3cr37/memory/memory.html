@@ -9,13 +9,17 @@
     <div id='entry' class='hidden' :class='{ visible: isLoaded }'>
       <div id="EntryContainer">
         <header class="header">
-          <div id='LevelSelect' :data-tries='totalTries + ":"' :data-new-tries='"+" + currentTries' class="inline">
+          <div id='LevelSelect'
+               class="inline"
+               :data-tries='puzzle.stats.totalTries + ":"'
+               :data-new-tries='"+" + puzzle.stats.currentTries'
+          >
             <label>Level</label>
             <select class='level-select'
-                    @change='setLevel'
+                    v-model='puzzle.levelIndex'
                     :disabled='puzzle.isUserPlaying || puzzle.isLevelRunning'
                     ref='levelSelect'
-              ><option v-for='(lvl, index) of levels' :value='index'
+              ><option v-for='(lvl, index) of puzzle.levels' :value='index'
                 >lvl {{ index + 1 }}
               </option>
             </select>
@@ -23,9 +27,9 @@
           <div id="StageSelect" class='inline'>
             <label>Stage</label>
             <select class="stage-select"
-                    @change='setStage'
+                    v-model='puzzle.stageIndex'
                     :disabled='puzzle.isUserPlaying || puzzle.isLevelRunning'>
-              <option v-for='(stage, index) of stages' value="index">stg {{ index + 1 }}</option>
+              <option v-for='(stage, index) of puzzle.stages' :value="index">stg {{ index + 1 }}</option>
             </select>
           </div>
           <button class='mui-btn
@@ -44,19 +48,19 @@
                   draggable='false'>Start
           </button>
           <button class="mui-btn mui-btn--danger header-btn"
-                  @click='oops'
+                  @click='puzzle.readyBoard()'
                   :disabled='!puzzle.isUserPlaying'
           >oops</button>
         </header>
         <div id="Board">
           <div id="puzzle" ref='puzzle'>
             <div class="piece-placeholder"
-                 v-for='(piece, index) of pieces'
+                 v-for='(piece, index) of puzzle.pieces'
                  :style='{order: piece.order}'
               ><div :id='"p" + piece.order'
                     class="insert"
                     :class='{obfuscated: piece.obfuscated}'
-                    @dragstart='onDragStart($event, index)'
+                    @dragstart='puzzle.onDragStart($event, index)'
                     @dragover='preventDefault'
                     :draggable='piece.draggable'
                     :style='{backgroundColor: piece.color, backgroundImage: piece.image}'
@@ -67,7 +71,7 @@
           </div>
           <div id='solution' ref='solution' class='hidden' :class='{visible: puzzle.isUserPlaying }'>
             <div class="piece-placeholder"
-                 v-for='(ans, index) of answers'
+                 v-for='(ans, index) of puzzle.answers'
               ><div class="insert"
                     :class='{ success: ans.success, fail: ans.fail }'
                     @dragover='preventDefault'
@@ -78,20 +82,25 @@
               ><div class="shape" :class='ans.shape'></div></div>
             </div>
           </div>
-          <div id="CountDown" class='hidden' :class='{visible: countdown > 0}'>{{ countdown }}</div>
+          <div id="CountDown" class='hidden' :class='{visible: puzzle.countdown > 0}'>{{ puzzle.countdown }}</div>
         </div>
         <div id="StatContainer">
           <div id='LevelAccuracy'>
-            <label>lvl<span class='num'>{{level + 1}}</span> accuracy</label>
+            <label>lvl<span class='num'>{{puzzle.levelIndex + 1}}</span> proficiency</label>
             <div class="prog-mask"
               ><div class="progress"
                 ><div class="prog-inner"
-                      :style='{ transform: "rotate(" + (levelAccuracy * 1.8 - 45) + "deg)" }'
+                      :style='{ transform: "rotate(" + (stats.levelAccuracy * 1.8 - 45) + "deg)" }'
                   ></div>
                   <div class="prog-inner-text"
-                       :class='{ good: levelAccFlux >= 0, bad: levelAccFlux < 0, none: levelAccFlux == 0 }'
+                       :class='{ good: stats.levelAccFlux >= 0,
+                                 bad:  stats.levelAccFlux < 0,
+                                 none: stats.levelAccFlux == 0 }'
                        :data-accuracy-mod='levelAccMod'
-                       :data-accuracy='levelAccFluxStr'>{{ levelAccuracy.toFixed(2) + '%' }}</div>
+                       :data-accuracy='levelAccFluxStr'
+                  >
+                    {{ stats.levelAccuracy.toFixed(2) + '%' }}
+                  </div>
               </div>
             </div>
           </div>
@@ -100,13 +109,17 @@
             <div class="prog-mask"
               ><div class="progress"
                 ><div class="prog-inner"
-                      :style='{ transform: "rotate(" + (totalAccuracy * 1.8 - 45) + "deg)" }'
+                      :style='{ transform: "rotate(" + (stats.totalAccuracy * 1.8 - 45) + "deg)" }'
                   ></div>
                   <div class="prog-inner-text"
-                       :class='{ good: totalAccFlux >= 0, bad: totalAccFlux < 0, none: !totalAccFlux }'
+                       :class='{ good: stats.totalAccFlux >= 0,
+                                 bad: stats.totalAccFlux < 0,
+                                 none: !stats.totalAccFlux }'
                        :data-accuracy='totalAccFluxStr'
                        :data-accuracy-mod='totalAccMod'
-                    >{{ totalAccuracy.toFixed(2) + '%' }}</div>
+                  >
+                    {{ stats.totalAccuracy.toFixed(2) + '%' }}
+                  </div>
               </div>
             </div>
           </div>
