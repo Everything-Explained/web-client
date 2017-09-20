@@ -188,7 +188,6 @@ class Stats {
     );
 
     let totalAcc = this.getAccuracy(this._user.hits, this._user.misses);
-    console.log(totalAcc, this._totalAccuracy);
     if (totalAcc.toFixed(2) !== this._totalAccuracy.toFixed(2))
       this._animText(
         '_totalAccuracy',
@@ -289,7 +288,7 @@ class Stats {
 
     speed = (diff < 0) ? speed * -1 : speed;
 
-    console.log(speed);
+    // console.log(speed);
 
     return [speed, timeout];
   }

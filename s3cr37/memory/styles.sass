@@ -9,7 +9,7 @@
 #entry
   width: 100%
   height: 100%
-  transition: opacity .5s, visibility .5s
+  transition: opacity .4s ease, visibility .4s ease
 
   #EntryContainer
     position: relative
@@ -27,7 +27,7 @@
 
   #solution
     margin-top: 30px
-    transition: all .3s ease-in-out
+    transition: all .5s ease-in-out
 
     .piece-placeholder
       border-color: hsl(200, 20%, 70%)
@@ -53,7 +53,7 @@
 header
   width: 100%
   height: 50px
-  margin-bottom: 44px
+  margin-bottom: 54px
   text-align: center
   -webkit-user-select: none
 
@@ -73,10 +73,35 @@ $ts-color: hsl(0, 0%, 50%)
 .piece-placeholder
   position: relative
   display: inline-block
-  margin-right: 10px
+  top: 0
+  margin-right: 18px
   border: 2px dashed hsl(0, 0%, 80%)
   width: 100px
   height: 100px
+  transition: opacity .15s ease, transform .15s ease, border .15s ease, visibility .15s ease
+
+  &.obfuscated::after
+    position: absolute
+    content: ''
+    top: 0
+    left: 0
+    height: 100px
+    width: 100px
+    background: hsl(0, 0%, 100%)
+    opacity: 0.99
+
+  &.on-drag
+    opacity: 0.35
+    transform: scale(.7)
+
+  &.on-drop
+    opacity: 0
+    visibility: hidden
+    transform: scale(0.1)
+
+  &.on-drag-over
+    transform: scale(1.2)
+    border-color: hsl(0, 0%, 50%) !important
 
   .insert
     display: block
@@ -85,9 +110,6 @@ $ts-color: hsl(0, 0%, 50%)
     width: 100%
     height: 100%
     cursor: default
-
-    &.obfuscated
-      opacity: .05
 
     &::after, &::before
       position: absolute

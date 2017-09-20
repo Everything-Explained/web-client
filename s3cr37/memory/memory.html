@@ -57,10 +57,11 @@
             <div class="piece-placeholder"
                  v-for='(piece, index) of puzzle.pieces'
                  :style='{order: piece.order}'
-              ><div :id='"p" + piece.order'
+                 :class='{obfuscated: piece.obfuscated}'
+              ><div :id='"p" + index'
                     class="insert"
-                    :class='{obfuscated: piece.obfuscated}'
                     @dragstart='puzzle.onDragStart($event, index)'
+                    @dragend='puzzle.onDragEnd($event)'
                     @dragover='preventDefault'
                     :draggable='piece.draggable'
                     :style='{backgroundColor: piece.color, backgroundImage: piece.image}'
@@ -75,6 +76,9 @@
               ><div class="insert"
                     :class='{ success: ans.success, fail: ans.fail }'
                     @dragover='preventDefault'
+                    @dragenter='puzzle.onDragEnter($event, index)'
+                    @dragleave='puzzle.onDragLeave'
+                    @dragend='puzzle.onDragEnd'
                     @drop='puzzle.onDrop($event, index)'
                     @dblclick='puzzle.resetInsert($event, index)'
                     :style='{ backgroundColor: ans.color, backgroundImage: ans.image }'

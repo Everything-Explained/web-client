@@ -276,13 +276,27 @@ class MemoryPuzzle {
 
 
   public onDragStart(ev: DragEvent, index?: number) {
+    let obj = ev.target as HTMLElement;
+    obj.parentElement.classList.add('on-drag');
+
     ev.dataTransfer.effectAllowed = 'move';
     ev.dataTransfer.setData('text', `${index}`);
   }
+  public onDragEnd(ev: DragEvent) {
+    let obj = ev.target as HTMLElement;
+    obj.parentElement.classList.remove('on-drag');
+    this.answers.forEach((a, index) => {
+      document.getElementById(`a${index}`).parentElement.classList.remove('on-drag-over');
+    });
+  }
   public onDrop(ev: DragEvent, index: number) {
+
+    ev.stopPropagation();
+
     let indexFrom = parseInt(ev.dataTransfer.getData('text'))
       , insertFrom = this.pieces[indexFrom]
       , insertTo = this.answers[index]
+      , obj: HTMLElement
     ;
 
     this._answersCleared = false;
@@ -300,7 +314,7 @@ class MemoryPuzzle {
     // Move puzzle piece color
     insertTo.color = insertFrom.color;
     insertTo.shape = insertFrom.shape;
-    insertFrom.color = null;
+
 
     let shapes = {} as {[key: string]: boolean};
     for (let s in this._shapeData) {
@@ -311,17 +325,20 @@ class MemoryPuzzle {
 
 
     if (insertTo.defaultOrder == insertFrom.defaultOrder) {
+      obj = document.getElementById(`p${indexFrom}`).parentElement;
+      obj.classList.add('on-drop');
       insertTo.success = true;
       this.tempStats.hits += 1;
     }
     else {
+      insertFrom.color = 'transparent';
       insertTo.fail = true;
       this.tempStats.misses += 1;
     }
 
 
     let answers =
-          this.answers.filter(ans => !(ans.fail == ans.success))
+        this.answers.filter(ans => !(ans.fail == ans.success))
     ;
 
     // Send events based on completed boards
@@ -341,8 +358,24 @@ class MemoryPuzzle {
         this.clearTemp();
         this.isUserPlaying = false;
         this.isBoardReady = false;
+        this.pieces.forEach((p, index) => {
+          p.color = null;
+          document.getElementById(`p${index}`).parentElement.classList.remove('on-drop');
+        });
       }
     }
+
+    return false;
+  }
+  public onDragEnter(ev: DragEvent, index: number) {
+    ev.preventDefault();
+    let obj = ev.target as HTMLElement;
+    if (this.answers[index].success) return;
+    obj.parentElement.classList.add('on-drag-over');
+  }
+  public onDragLeave(ev: DragEvent) {
+    let obj = ev.target as HTMLElement;
+    obj.parentElement.classList.remove('on-drag-over');
   }
 
   public clearTemp() {
@@ -527,7 +560,7 @@ class MemoryPuzzle {
             shapeData: Object.assign({}, this._shapeData),
             shape: Object.assign({}, shapes),
             image: null,
-            obfuscated: true
+            obfuscated: false
           }
         , answer = {
           defaultOrder: i + 1,
