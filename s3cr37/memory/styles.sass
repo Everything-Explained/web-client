@@ -17,6 +17,7 @@
   #puzzle
     display: flex
     justify-content: center
+    margin-right: -18px
 
     .piece-placeholder
       .insert
@@ -28,6 +29,7 @@
   #solution
     margin-top: 30px
     transition: all .5s ease-in-out
+    margin-right: -18px
 
     .piece-placeholder
       border-color: hsl(200, 20%, 70%)
@@ -35,9 +37,9 @@
   #CountDown
     position: absolute
     display: block
-    top: 200px
+    top: 230px
     width: 100%
-    font-size: 90px
+    font-size: 120px
     color: hsl(0, 0%, 70%)
     text-shadow: 0 -2px 0 hsla(0, 0%, 0%, .45), 0 2px 0 hsl(0, 0%, 99%)
     font-family: consolas
@@ -47,6 +49,7 @@
 
   #Board
     text-align: center
+// END ENTRY STYLES
 
 
 
@@ -65,10 +68,25 @@ header
     color: hsl(128, 100%, 35%)
     font-size: 18px
     font-family: Verdana, Geneva, Tahoma, sans-serif
+// END HEADER STYLES
+
+
+
+footer
+  position: absolute
+  right: 10px
+  bottom: 7px
+  width: 60px
+  font-family: Consolas, monospace
+  font-size: 16px
+  border-bottom: 4px dotted hsl(200, 80%, 45%)
+  text-align: center
+// END FOOTER
+
 
 
 $ts-color: hsl(0, 0%, 50%)
-
+$ease-speed: .17s
 
 .piece-placeholder
   position: relative
@@ -76,17 +94,17 @@ $ts-color: hsl(0, 0%, 50%)
   top: 0
   margin-right: 18px
   border: 2px dashed hsl(0, 0%, 80%)
-  width: 100px
-  height: 100px
-  transition: opacity .15s ease, transform .15s ease, border .15s ease, visibility .15s ease
+  width: 120px
+  height: 120px
+  transition: opacity $ease-speed ease, transform $ease-speed ease, border $ease-speed ease, visibility $ease-speed ease
 
   &.obfuscated::after
     position: absolute
     content: ''
     top: 0
     left: 0
-    height: 100px
-    width: 100px
+    height: 120px
+    width: 120px
     background: hsl(0, 0%, 100%)
     opacity: 0.99
 
@@ -102,6 +120,7 @@ $ts-color: hsl(0, 0%, 50%)
   &.on-drag-over
     transform: scale(1.2)
     border-color: hsl(0, 0%, 50%) !important
+    transition: transform .07s ease
 
   .insert
     display: block

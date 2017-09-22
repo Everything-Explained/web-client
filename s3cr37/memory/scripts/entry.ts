@@ -28,7 +28,7 @@ let app = new Vue({
   data: {
 
     isLoaded: false,
-
+    version: 'v1.0',
 
     stage: 0,
     totalTries: 0,
