@@ -61,7 +61,7 @@ let app = new Vue({
   computed: {
     levelAccFluxStr: function() {
       let acc = Math.abs(this.stats.levelAccFlux).toFixed(2);
-      return `${acc}%`;
+      return (acc == '0.00') ? '' : `${acc}%`;
     },
     levelAccMod: function() {
       if (this.stats.levelAccFlux == 0) return '';
@@ -70,7 +70,7 @@ let app = new Vue({
 
     totalAccFluxStr: function() {
       let acc = Math.abs(this.stats.totalAccFlux).toFixed(2);
-      return `${acc}%`;
+      return (acc == '0.00') ? '' : `${acc}%`;
     },
 
     totalAccMod: function() {

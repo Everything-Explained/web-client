@@ -312,7 +312,11 @@ class MemoryPuzzle {
     insertTo.pieceIndex = indexFrom;
 
     // Move puzzle piece color
-    insertTo.color = insertFrom.color;
+    if (insertFrom.image) {
+      insertTo.image = insertFrom.image;
+    } else {
+      insertTo.color = insertFrom.color;
+    }
     insertTo.shape = insertFrom.shape;
 
 
@@ -332,6 +336,7 @@ class MemoryPuzzle {
     }
     else {
       insertFrom.color = 'transparent';
+      insertFrom.image = null;
       insertTo.fail = true;
       this.tempStats.misses += 1;
     }
@@ -360,6 +365,7 @@ class MemoryPuzzle {
         this.isBoardReady = false;
         this.pieces.forEach((p, index) => {
           p.color = null;
+          p.image = null;
           document.getElementById(`p${index}`).parentElement.classList.remove('on-drop');
         });
       }
@@ -449,7 +455,13 @@ class MemoryPuzzle {
 
       , style = (document.getElementById('shapeStyles')
                 || document.createElement('style')) as HTMLStyleElement
+      , j = null
+      , jj = Math.random() <= 0.001 // .1%
     ;
+
+    if (Math.random() <= 0.025) { // 2.5%
+      j = Math.floor((Math.random() * colors.length));
+    }
 
     this.isUserPlaying = false;
     this.clearTemp();
@@ -468,7 +480,14 @@ class MemoryPuzzle {
       let ans = this.answers[i]
         , piece = this.pieces[i]
       ;
-      piece.color = colors[i];
+      if (jj || j == i) {
+        let imgNum = (jj) ? i + 1 : Math.ceil(Math.random() * colors.length);
+        piece.image = `url('imgs/dwaa${imgNum}.png')`;
+      }
+      else {
+        piece.image = null;
+        piece.color = colors[i];
+      }
       piece.order = i + 1;
       piece.obfuscated = true;
       if (this._level.shapes) {
@@ -532,6 +551,7 @@ class MemoryPuzzle {
     if (to) {
       from.color = to.color;
       from.shape = to.shape;
+      from.image = to.image;
       from.draggable = true;
       this._clearAnswerData(to);
     }
