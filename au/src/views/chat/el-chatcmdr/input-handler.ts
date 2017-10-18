@@ -1,6 +1,7 @@
 import {ClientIO} from '../../../services/clientio';
 import {CommanderData, Chat} from '../../../views/chat/chat';
 import {InputHints} from './input-hints';
+import {InputHistory} from './input-history';
 import {ChatCommands} from '../commands';
 import {MessageType} from '../message';
 
@@ -40,6 +41,7 @@ export class InputHandler {
 
   private _inputBox: HTMLElement;
   private _inputHint: InputHints;
+  private _inputHistory: InputHistory;
 
   private _isTyping            = false;
   private _pausedTyping        = false;
@@ -92,18 +94,21 @@ export class InputHandler {
       this._inputBox.appendChild(this._ffFix);
     }
     this._inputHint = new InputHints(this._commandBox, this._commands.aliases);
+    this._inputHistory = new InputHistory();
 
   }
 
 
-  // ///////////////////////////////////
-  // ////////// NATIVE EVENTS \\\\\\\\\\
-  // -----------------------------------
+
+
+
+
+
+/*****************************/
+//#region NATIVE EVENTS
 
 
   onKeyDown(e: KeyboardEvent) {
-
-
 
     let rawInput = this._inputBox.innerText
       , input = this.normalizeInput(rawInput + String.fromCharCode(e.which))
@@ -128,6 +133,9 @@ export class InputHandler {
 
 
     if (this.onFillHint(e)) return false;
+
+
+    if (this.onHistory(e)) return false;
 
 
     // Do not allow SPACE character while hint is active
@@ -211,6 +219,7 @@ export class InputHandler {
 
     // Default input method
     if (Keys.ENTER == e.which) {
+      this._inputHistory.add(input);
       this._sock.sendMsg('main', {
         alias: this._chatView.alias,
         type: MessageType.NORMAL,
@@ -232,9 +241,9 @@ export class InputHandler {
 
   onKeyUp(e: KeyboardEvent) {
 
-    let input =  this.normalizeInput(this._inputBox.textContent);
+    let input = this.normalizeInput(this._inputBox.textContent);
 
-    // Setup paused-typing debounce
+    // Setup paused-typing timeout
     clearTimeout(this._typingTimeout);
     this._typingTimeout =
       setTimeout(() => {
@@ -281,7 +290,9 @@ export class InputHandler {
   }
 
 
-
+  /**
+   * Converts formatted text into plain text
+   */
   onPaste(e: ClipboardEvent) {
     let originalText = this.normalizeInput(this._inputBox.textContent)
       , newText = e.clipboardData.getData('text')
@@ -291,6 +302,8 @@ export class InputHandler {
     InputHandler.alignCaret(false, this._inputBox);
   }
 
+//#endregion
+/****************************/
 
 
 
@@ -298,11 +311,8 @@ export class InputHandler {
 
 
 
-
-
-  // ///////////////////////////////////
-  // ////////// CUSTOM EVENTS \\\\\\\\\\
-  // -----------------------------------
+/******************************/
+//#region CUSTOM EVENTS
 
   onTyping(input: string) {
 
@@ -407,6 +417,24 @@ export class InputHandler {
   }
 
 
+  /** on UP or DOWN: toggle forward through input history */
+  onHistory(e: KeyboardEvent) {
+    if (Keys.UP == e.which) {
+      this._inputHistory.next();
+      return true;
+    }
+
+    if (Keys.DOWN == e.which) {
+      this._inputHistory.prev();
+      return true;
+    }
+    return false;
+  }
+
+
+
+//#endregion
+/******************************/
 
 
 
@@ -414,13 +442,8 @@ export class InputHandler {
 
 
 
-
-
-
-
-  // /////////////////////////////////////
-  // ////////// UTILITY METHODS \\\\\\\\\\
-  // -------------------------------------
+/********************************/
+//#region UTILITY METHODS
 
   /**
    * Strips and replaces unnecessary characters.
@@ -522,3 +545,6 @@ export class InputHandler {
 
 
 }
+
+//#endregion
+/********************************/

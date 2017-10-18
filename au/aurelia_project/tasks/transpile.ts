@@ -13,16 +13,16 @@ function configureEnvironment() {
   let env = CLIOptions.getEnvironment();
 
   return gulp.src(`aurelia_project/environments/${env}.ts`)
-    .pipe(changedInPlace({firstPass:true}))
+    .pipe(changedInPlace({firstPass: true}))
     .pipe(rename('environment.ts'))
     .pipe(gulp.dest(project.paths.root));
 }
 
-let typescriptCompiler = typescriptCompiler || null;
+var typescriptCompiler = typescriptCompiler || null;
 
 function buildTypeScript() {
   typescriptCompiler = ts.createProject('tsconfig.json', {
-    'typescript': require('typescript')
+    typescript: require('typescript')
   });
 
   let dts = gulp.src(project.transpiler.dtsSource);
@@ -32,8 +32,8 @@ function buildTypeScript() {
 
   return eventStream.merge(dts, src)
     .pipe(plumber({ errorHandler: notify.onError({
-      sound: false,
-      message: 'Error: <%= error.message %>'
+      message: 'Error: <%= error.message %>',
+      sound: false
     }) }))
     .pipe(sourcemaps.init())
     .pipe(typescriptCompiler())

@@ -19,7 +19,7 @@
           "mutliline",
           "singleline"
         ],
-        "semicolon": true,
+        "semicolon": [true, "always"],
         "whitespace": [true,
             "check-branch",
             "check-operator",
@@ -33,6 +33,6 @@
             "property-declaration": "nospace",
             "variable-declaration": "nospace"
         }],
-        "interface-name": false
+        "interface-name": [true, "always-prefix"]
   }
 }
