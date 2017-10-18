@@ -379,6 +379,8 @@ export class InputHandler {
         , content = input.replace(alias, '').trim()
       ;
 
+      this._inputHistory.add('/' + input);
+
       if (this._commands.exec(alias, content || null)) {
         this.resetInputBox();
         return true;
@@ -419,16 +421,32 @@ export class InputHandler {
 
   /** on UP or DOWN: toggle forward through input history */
   onHistory(e: KeyboardEvent) {
+
+    if (   Keys.UP   !== e.which
+        && Keys.DOWN !== e.which)
+      return false
+    ;
+
     if (Keys.UP == e.which) {
-      this._inputHistory.next();
-      return true;
+      let val = this._inputHistory.next();
+      if (val)
+        this._inputBox.innerText = val;
+      else
+        this.resetInputBox()
+      ;
     }
 
     if (Keys.DOWN == e.which) {
-      this._inputHistory.prev();
-      return true;
+      let val = this._inputHistory.prev();
+
+      if (val)
+        this._inputBox.innerText = val;
+      else
+        this.resetInputBox()
+      ;
     }
-    return false;
+
+    return true;
   }
 
 
