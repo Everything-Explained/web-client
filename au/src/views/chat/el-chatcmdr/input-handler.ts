@@ -2,6 +2,7 @@ import {ClientIO} from '../../../services/clientio';
 import {CommanderData, Chat} from '../../../views/chat/chat';
 import {InputHints} from './input-hints';
 import {InputHistory} from './input-history';
+import {InputSpellcheck} from './input-spellcheck';
 import {ChatCommands} from '../commands';
 import {MessageType} from '../message';
 
@@ -42,6 +43,7 @@ export class InputHandler {
   private _inputBox: HTMLElement;
   private _inputHint: InputHints;
   private _inputHistory: InputHistory;
+  private _inputSpellcheck: InputSpellcheck;
 
   private _isTyping            = false;
   private _pausedTyping        = false;
@@ -95,6 +97,7 @@ export class InputHandler {
     }
     this._inputHint = new InputHints(this._commandBox, this._commands.aliases);
     this._inputHistory = new InputHistory();
+    this._inputSpellcheck = new InputSpellcheck();
 
   }
 
@@ -241,7 +244,9 @@ export class InputHandler {
 
   onKeyUp(e: KeyboardEvent) {
 
-    let input = this.normalizeInput(this._inputBox.textContent);
+    let input = this.normalizeInput(this._inputBox.textContent)
+      , rawInput = this._inputBox.textContent
+    ;
 
     // Setup paused-typing timeout
     clearTimeout(this._typingTimeout);
@@ -256,6 +261,12 @@ export class InputHandler {
     this.onTyping(input);
 
     if (!input) return false;
+
+    let newInput = null;
+    if (newInput = this._inputSpellcheck.check(rawInput)) {
+      this._inputBox.innerHTML = newInput;
+      InputHandler.alignCaret(false, this._inputBox);
+    }
 
     return true;
   }
@@ -446,6 +457,7 @@ export class InputHandler {
       ;
     }
 
+    InputHandler.alignCaret(false, this._inputBox);
     return true;
   }
 
