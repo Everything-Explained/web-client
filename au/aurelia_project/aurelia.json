@@ -126,8 +126,8 @@
     "source": "src/**/*.ts"
   },
   "markupProcessor": {
-    "id": "pug",
-    "displayName": "pug",
+    "id": "none",
+    "displayName": "None",
     "fileExtension": ".html",
     "source": [
       "!src/views/changelog/logs",

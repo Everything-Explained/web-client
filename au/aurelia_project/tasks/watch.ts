@@ -5,7 +5,7 @@ import * as debounce from 'debounce';
 import { build } from 'aurelia-cli';
 import * as project from '../aurelia.json';
 import transpile from './transpile';
-import processMarkup from './process-markup';
+import processPug from './process-pug';
 import processCSS from './process-css';
 import copyFiles from './copy-files';
 
@@ -15,7 +15,7 @@ let pendingRefreshPaths = [];
 let watchCallback = () => { };
 let watches = [
   { name: 'transpile', callback: transpile, source: project.transpiler.source },
-  { name: 'markup', callback: processMarkup, source: project.markupProcessor.source },
+  { name: 'markup', callback: processPug, source: project.markupProcessor.source },
   { name: 'CSS', callback: processCSS, source: project.cssProcessor.source }
 ];
 
@@ -111,7 +111,7 @@ let refresh = debounce(() => {
   );
 
   toExecute();
-}, debounceWaitTime);
+}, debounceWaitTime, null);
 
 function log(message: string) {
   console.log(message);
