@@ -24,10 +24,6 @@ template(class='${modClass}')
       //-     href='${word.data.link}'
       //-     target='_blank') ${word.text}&#32;
 
-      //-   a.verse(if.bind='word.type == $parent.wordType("verse")',
-      //-           href='javascript:void(0);', title='Click to View Scripture',
-      //-           mousedown.delegate='$parent.getVerse($event, word.text)') ${word.text}&#32;
-
       //-   a(if.bind='word.type == $parent.wordType("image") && !word.data.invalid', target='_blank' href='${word.text}')
       //-     img(src='${word.text ? word.text : ""}')
 
