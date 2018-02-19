@@ -1,5 +1,3 @@
-
-
 export class Bean {
 
   on(element: any, eventType: string, handler: () => void, ...handlerArgs: string[]);

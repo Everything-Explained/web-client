@@ -11,7 +11,8 @@ module CheapEncrypt {
     , chars = 94
 
     // Ratio to ramp circular reference char codes
-    , seedRamp = 0.7;
+    , seedRamp = 0.7
+  ;
 
 
 
@@ -24,7 +25,8 @@ module CheapEncrypt {
     }
 
     let keyNums = parseKeys(keys)
-      , encodedStr = '';
+      , encodedStr = ''
+    ;
 
 
     let i = 0;
@@ -54,7 +56,8 @@ module CheapEncrypt {
       , keys = keyStr.split(',')
 
       // Seeds circular reference 0/94
-      , seed: number;
+      , seed: number
+    ;
 
 
     if (keys.length < 4) {
@@ -69,12 +72,13 @@ module CheapEncrypt {
     }
 
 
-    for (var k of keys) {
+    for (let k of keys) {
 
       let x = parseInt(k)
 
         // Remainder when key exceeds character length
-        , r = chars * Math.floor(x / chars);
+        , r = chars * Math.floor(x / chars)
+      ;
 
 
       if (x >= chars) {

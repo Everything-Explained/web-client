@@ -1,0 +1,3 @@
+# what is a silence
+
+A silence is when an admin or moderator decides to mute a user for inappropriate content or behavior. The duration of the mute depends on the severity of the infraction. Most mutes will only last 15 - 300 seconds. While a user is muted, they may view, but not participate in the chat. A silence will generally happen when a user is flooding the chat repeatedly (too quickly or with repeated content).

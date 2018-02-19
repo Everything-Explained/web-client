@@ -5,7 +5,6 @@ export class Blog {
 
   public isLoading = true;
   public isError = false;
-  public eOptiscroll: HTMLElement;
   public entries = {} as contentful.Entries;
 
 

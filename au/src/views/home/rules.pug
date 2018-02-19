@@ -1,4 +1,6 @@
-﻿template
+﻿- var nsfw = "<a href='#/faq/nsfw' title='Not Safe For Work'>NSFW</a>"
+
+template
   //- section.optiscroll-content(class='${router.isNavigating ? "hidden" : "visible"}')
   article.home.au-animate(
     class='${isAttached ? "page-in" : "g-hidden"}'
@@ -6,9 +8,9 @@
     div.rules-container.content
       span.rule Love
       span.def.
-        One rule to "Rule" them all. #[em Show Love for one another];
-        if you do this, then other rules become unnecessary. However, if you're a little rusty
-        when it comes to dealing with other people, go ahead and keep reading.
+        One rule to "Rule" them all. #[em Show Love for one another]; there is no rule greater
+        than this. The rules below are explicit reminders for those moments when we forget
+        to love.
 
     div.rules-container.content
       span.rule Language
@@ -16,7 +18,7 @@
         span.legend
           b 1.1
           span.
-            Offending members or provoking members to anger is explicity forbidden.
+            Offending members or provoking members to anger is forbidden.
         span.legend
           b 1.2
           span.
@@ -27,12 +29,12 @@
           b 1.3
           span.
             Any language that violates #[b 1.1] will NOT be tolerated; this includes language
-            barriers.
+            barriers. #[em (ex: cursing in spanish to an english speaking person)]
         span.legend
           b 2.1
           span.
             All our members have a right to be as anonymous as they wish. Provoking a member
-            to divulge personal details about themselves is explicitly forbidden.
+            to divulge personal details about themselves is forbidden.
         span.legend
           b 3.1
           span.
@@ -47,26 +49,29 @@
       span.def
         span.legend
           b 1.1
-          span All links should be constructive and non-provocative.
+          span.
+            All links should be constructive and non-provocative. This depends highly on the context
+            of the channel. Most links are okay in the general chat as long as they don't violate any
+            previous or following rules.
         span.legend
           b 2.1
           span All images should be appropriate for the channel they're posted in.
         span.legend
           b 2.2
           span.
-            Images that are provocative or NSFW, should not be linked,
+            Images that are provocative or !{nsfw}, should not be linked,
             talked about, or hinted at in any way.
         span.legend
           b 2.3
           span.
-            A provocative or NSFW image may be discussed, or in some cases linked, #[b ONLY] if
+            A provocative or !{nsfw} image may be discussed, or in some cases linked, #[b ONLY] if
             the context of the discussion warrants it. In such a case, the image (if linked) must be
             behind spoilers.
         span.legend
           b 2.4
           span.
-            Any provocative or NSFW images that are illegal or potentially illegal are
-            explicitly forbidden, regardless of the context of a discussion.
+            Any provocative or !{nsfw} images that are illegal or potentially illegal are
+            forbidden, regardless of the context of a discussion.
 
 
     div.rules-container.content
@@ -78,12 +83,7 @@
         joy from the wellspring of our #[b God-given-love] that is within all of us, bursting out
         to be discovered. Share the passion, the heartache, and the revelation. All of it is God-within,
         letting the world know He's always been here.
-        #[br]#[br]
 
-        I'd like to think we can take our Father's example to heart;
-        #[em God so loved the world that he gave his only begotten son].
-        Don't you think it's our duty to at least attempt a fraction of this kind of selfless love
-        towards each other?
 
     div.rules-container.content
       span.rule Disclaimer
