@@ -12,11 +12,13 @@ interface Question {
 export class Faq {
 
   public isAttached = false;
-  private _searchParam: string;
 
   public questions: Question[] = [];
   public answer = '';
   public elSearch: HTMLInputElement;
+
+  private _searchParam: string;
+  private _qTitles: string[] = [];
 
   constructor(private _el: HTMLElement) {
 
@@ -26,15 +28,25 @@ export class Faq {
         return;
       }
 
+      let qTemp: Question[] = [];
+
       for (let q in data) {
-        this.questions.push(
+        qTemp.push(
           {
             title: q,
             content: data[q],
             filter: false
           }
         );
+        this._qTitles.push(q);
       }
+
+      // Sort questions by Alphabetical
+      this._qTitles.sort();
+      this._qTitles.forEach(t => {
+        this.questions.push(qTemp.filter(v => { return t == v.title; })[0]);
+      });
+
       if (this._searchParam) {
         this.seek(this._searchParam);
       }

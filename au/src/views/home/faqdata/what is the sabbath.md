@@ -1,3 +1,0 @@
-# what is the sabbath
-
-The Sabbath, as defined in the dictionary is, in fact, the 7th day of the week. This is the day I, and many others, observe as the _"day of rest"_ provided us when Elohim rested from their creation. As it is written, this day was created for man, not man for the Sabbath. In other words, it's for our sake to take advantage of for our relationship with the Father as well as each other.

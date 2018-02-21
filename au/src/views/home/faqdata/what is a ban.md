@@ -1,5 +1,11 @@
 # what is a ban
 
-A ban is when a user is forced out of the site and potentially deleted. There are also temporary bans which prevent any kind of logging in until the duration is reached. Bans will be very rare and reserved for persistent inappropriate conduct and/or an outright defiance of the rules. Only Admins will have the ability to perma ban. Users that are temporarily banned will be under review by an Admin. Again, this is a last resort kind of punishment and should not be expected for the proverbial "spilt milk".
+A ban is when a user is _temporarily_ or _permanately_ **blacklisted** from being a user of **Noumenae**. Banned users will not be able to login to the site, but they can still view any of the static pages that do not require a login.
+
+Because **Noumenae** is an _invite-only_ service, Bans are **highly unlikely** to be necessary. That being said, temporary Bans might be used in extreme cases. If a user tries to login during a temporary ban, they will be shown the countdown time until they are unbanned.
+
+There will be no Banning over the proverbial _"spilt milk"_. Banning is reserved for **repeated**, severe infractions of the [Rules].
 
 > _No bans will be given out unless absolutely necessary_
+
+[rules]:#/rules

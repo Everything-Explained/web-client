@@ -1,5 +1,7 @@
 # what is a family
 
-This is a difficult question, since it's entirely subjective. Each of us has had our own experience with family. We exist, therefore we have a family in one way or another. All I can tell you is how a family SHOULD be, not how families, in fact, are. They should be kind, understanding, and tough. That's from my own experience; your mileage may vary.
+A family takes your hand when you can't move; a family knocks you off that _"high horse"_; a family knows how to _love the joy and the hurt_; a family _embraces_ all its members as one; finally a _real_ family runs **headlong** into life, without a care for how it looks to others.
 
-Noumenae is a family, insomuch that we care for one another (at least we should) and strive to better one another by either being an example (a light) or through spirited conversation. Families are not perfect and there are going to be tensions but they should be short-lived. The better question would be, "What's the difference between a Human family and a God family".
+For me, and I think for many, a family stands on _the strength_ of _the belief_ in _the Self_. The Self is that part of us which holds the key to creativity and fulfillment. It's the families job to pull that out of each other.
+
+> _Of course this is just my opinion, your mileage may vary_
