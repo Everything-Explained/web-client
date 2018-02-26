@@ -14,7 +14,7 @@ export class Faq {
   public isAttached = false;
 
   public questions: Question[] = [];
-  public answer = '';
+  public answer = '## click a question on the left';
   public elSearch: HTMLInputElement;
 
   private _searchParam: string;
