@@ -1,6 +1,6 @@
 import * as gulp from 'gulp';
 import {revertAppCSS, revertBuildCSS} from './tasks/cleanup';
-import copyScripts from './tasks/copy-au'
+import copyScripts from './tasks/copy-au';
 import {readyApp, readyCSS, readyIndex} from './tasks/ready';
 import {copyChangelogs, copyAdmin, copyStaticErrors, copyLogs, copyStandalone, copyIptable} from './tasks/copy-assets';
 import {copyServer, setProduction} from './tasks/copy-server';
@@ -14,7 +14,7 @@ gulp.task('ready', gulp.series(
 
 gulp.task('clean', gulp.parallel(revertAppCSS, revertBuildCSS));
 
-gulp.task('setupServer', gulp.series(setProduction, copyServer))
+gulp.task('setupServer', gulp.series(setProduction, copyServer));
 
 gulp.task('copyApp', copyScripts);
 

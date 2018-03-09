@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "bluebird": "registry:dt/bluebird#3.5.0+20170323165310",
     "gulp": "registry:npm/gulp#4.0.0-alpha.2+20160817105618",
     "gulp-replace": "registry:dt/gulp-replace#0.0.0+20160510010627"
   },

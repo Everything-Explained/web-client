@@ -6,6 +6,7 @@ export function revertBuildCSS() {
   return gulp.src('../au/aurelia_project/tasks/build.ts')
     .pipe(replace('processCSS,', '// processCSS,'))
     .pipe(gulp.dest('../au/aurelia_project/tasks', {overwrite: true}));
+
 }
 
 export function revertAppCSS() {
