@@ -175,10 +175,8 @@
       font-size: 14px
 
 
-  ///////////////////////
-  // IMPLICIT MESSAGES //
-  ///////////////////////
-  .client, .server, .inline, .emote
+
+  .client, .server, .inline, .emote, .implicit
     display: flex
     flex: 1
     padding: 7px 0 2px 0
@@ -208,7 +206,7 @@
       color: hsl(0, 0%, 50.3%)
 
 
-  .emote, .inline
+  .emote, .inline, .implicit
     .username
       position: relative
       left: 3px
@@ -239,6 +237,13 @@
       color: hsl(278, 70%, 83%)
     .content
       color: hsl(278, 20%, 75%)
+
+  .implicit
+    opacity: 0.6
+    .username
+      color: hsl(0, 0%, 70%)
+      &::before
+        color: hsl(0, 0%, 33%)
 
 
 

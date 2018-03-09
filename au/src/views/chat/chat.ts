@@ -91,7 +91,7 @@ export class Chat {
 
     },
     // Executes on every message
-    (msg) => {
+    (msgObj) => {
 
       // if (msg.type === MessageType.NORMAL && msg.username == this.alias) {
       //   window.performance.mark('mark_message_displayed');
@@ -107,17 +107,13 @@ export class Chat {
       //   }
       //   console.log('Average message latency:', total / measures.length)
       // }
-      if (msg.type == MessageType.SERVER) {
-        this.addMessage(msg.message[0], MessageType.SERVER);
-      } else {
-        this.ports.main.addMessage(new Message({
-          alias: msg.alias,
-          message: msg.message,
-          realTimeFixed: msg.realTimeFixed,
-          avatar: msg.avatar,
-          type: msg.type
-        }));
-      }
+      this.ports.main.addMessage(new Message({
+        alias: msgObj.alias,
+        message: msgObj.message,
+        realTimeFixed: msgObj.realTimeFixed,
+        avatar: msgObj.avatar,
+        type: msgObj.type
+      }));
     }, this);
 
 

@@ -85,6 +85,8 @@ export class ClientIO {
 
   }
 
+
+
   sendNotice(msg: IMessage, id: string) {
     this._sock.emit('notice-msg', msg, id);
   }
@@ -204,7 +206,7 @@ export class ClientIO {
     setInterval(() => {
       this._pingStart = Date.now();
       this._sock.emit('pingcheck', this.latency);
-    }, 1000 * 7);
+    }, 1000 * 10); // 10 seconds
 
     this.startIdleTimeout();
 
@@ -213,22 +215,22 @@ export class ClientIO {
   startIdleTimeout() {
     this._idleTimeout = setTimeout(() => {
       this._isIdle = true;
-    }, 1000 * 60); // 1 Minute
+    }, 1000 * 60 * 8); // 8 Minutes
   }
 
 
   onSessionTimeout() {
-    this._chat.addMessage('Session timed out, please navigate to another page.', MessageType.SERVER, MessageSeverity.ATTENTION);
+    this._chat.addMessage(
+      'Session timed out, please navigate to another page.',
+      MessageType.SERVER,
+      MessageSeverity.ATTENTION
+    );
   }
 
 
-  onServerMessage(out: {msg: string; type?: number}) {
-    if (!out.type) {
-      this._chat.addMessage(out.msg, MessageType.SERVER);
-    }
-    else {
-      this._chat.addMessage(out.msg, MessageType.SERVER, out.type);
-    }
+  onServerMessage(obj: IMessage) {
+    let severity = obj.severity || MessageSeverity.INFO;
+    this._chat.addMessage(obj.message, MessageType.SERVER, severity);
   }
 
 
