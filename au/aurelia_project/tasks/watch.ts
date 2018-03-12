@@ -16,7 +16,7 @@ let watchCallback = () => { };
 let watches = [
   { name: 'transpile', callback: transpile, source: project.transpiler.source },
   { name: 'markup', callback: processPug, source: project.markupProcessor.source },
-  { name: 'CSS', callback: processCSS, source: project.cssProcessor.source }
+  // { name: 'CSS', callback: processCSS, source: project.cssProcessor.source }
 ];
 
 if (typeof project.build.copyFiles === 'object') {

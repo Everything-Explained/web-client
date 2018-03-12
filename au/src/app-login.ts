@@ -34,7 +34,6 @@ export class Login {
   }
 
   private _initGoogleAuth() {
-
     if (!window['gapi']) {
       setTimeout(() => {
         this._initGoogleAuth();
