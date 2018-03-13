@@ -50,7 +50,8 @@ export class MarkdownValueConverter {
       };
 
     md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
-      if (~tokens[idx].attrGet('href').indexOf('http')) {
+      let link = tokens[idx].attrGet('href').toLowerCase();
+      if (~link.indexOf('http')) {
         let aIndex = tokens[idx].attrIndex('target');
         tokens[idx].attrPush(['target', '_blank']); // Add new attribute
       }

@@ -107,32 +107,45 @@ export class MessageView {
   public filter(extraMsg = null as string) {
     let rawMsg = extraMsg || this.cfg.messages[0]
       , images = this.getImages(rawMsg)
+      , render = () => {
+        let msg = this.md.render(rawMsg) as string
+          , verses = this.verseFilter.filter(msg)
+          , el = this.el.querySelector('.container .content') as HTMLElement
+          , div = document.createElement('div')
+        ;
+
+        div.innerHTML = msg;
+
+        // TODO - apply the basic HTML then extract the elements and apply the events.
+        if (verses.length) {
+          this._filterVerses(verses, div);
+        }
+
+        el.appendChild(div);
+      };
     ;
 
-    if (images) {
+    if (images.length) {
+      let imgTest = new Image()
+        , imgCount = 0
+      ;
       images.forEach(img => {
-        rawMsg = rawMsg.replace(
-          img,
-          `![](${img})`
-        );
+        imgTest.onload = () => {
+          ++imgCount;
+          rawMsg = rawMsg.replace(
+            img,
+            `![](${img})`
+          );
+          if (imgCount == images.length) render();
+        };
+        imgTest.onerror = () => {
+          ++imgCount;
+          if (imgCount == images.length) render();
+        };
+        imgTest.src = img;
       });
     }
-
-    let msg = this.md.render(rawMsg) as string
-      , verses = this.verseFilter.filter(msg)
-      , el = this.el.querySelector('.container .content') as HTMLElement
-      , div = document.createElement('div')
-    ;
-
-    div.innerHTML = msg;
-
-    // TODO - apply the basic HTML then extract the elements and apply the events.
-    if (verses.length) {
-      this._filterVerses(verses, div);
-    }
-
-    el.appendChild(div);
-
+    else render();
   }
 
 
@@ -197,26 +210,24 @@ export class MessageView {
 
   public getImages(input: string) {
 
-    // Prevent unnecessary filtering
-    if (input.indexOf('http[s]?://') == -1) return [];
-
     let msg = input.split(' ')
+      , inputTest = input.toLowerCase()
       , match = null
       , results = [] as string[]
     ;
 
-
+    //
+    // TODO - This should be deprecated once mime-type is established for links
+    //
     for (let p of msg) {
-      if (match = (/http[s]?:\/\/([a-zA-Z0-9/+-_]\.?)+\.(png|jpg|jpeg|gif|bmp)$/g.exec(p))) {
-        if (match[0] == p) {
+      if (~inputTest.indexOf('http://') || ~inputTest.indexOf('https://')) {
+        if (match = (/\.(png|jpg|jpeg|gif|bmp)$/g.exec(p))) {
           results.push(p);
-        } else {
         }
       }
     }
 
     return results;
-
   }
 
 

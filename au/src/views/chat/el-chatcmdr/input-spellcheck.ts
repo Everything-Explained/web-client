@@ -37,7 +37,6 @@ export class InputSpellcheck {
       ;
 
       if (word.charCodeAt(0) == 32 || word.charCodeAt(0) == 160) {
-        console.log(word);
         let wordFix =
           (word[wordLen - 1].charCodeAt(0) == 32 || word[wordLen - 1].charCodeAt(0) == 160)
             ? `&nbsp;${this._checkList[i]}&nbsp;`
@@ -56,9 +55,11 @@ export class InputSpellcheck {
       }
     }
 
-    // Only capitalize on more than one word
-    if (str.split('\s')[1])
-      str = str[0].toUpperCase() + str.substr(1);
+    // Only capitalize on more than one word and non-links
+    if (str.split('\s')[1]){
+      if (str.toLowerCase().indexOf('http') != 0)
+        str = str[0].toUpperCase() + str.substr(1);
+    }
 
 
     return (original == str) ? null : str;
