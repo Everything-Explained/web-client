@@ -196,6 +196,9 @@ export class Chat {
 
     setTimeout(() => {
       this.isAttached = true;
+      window.onfocus = () => {
+        this.io.isActive = true;
+      };
     }, 30);
 
   }
@@ -206,6 +209,7 @@ export class Chat {
     // this.page.userList.setClass('');
     // this.page.userList.hide();
     this.modal.cleanup('VerseModal');
+    window.onfocus = null;
     this.io.disconnect(true);
   }
 

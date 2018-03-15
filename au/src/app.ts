@@ -32,7 +32,7 @@ export interface TabPage {
 @inject(Element, EventAggregator, MiniModal, Login, Session)
 export class App {
 
-  version = '12';
+  version = '24';
 
   router: Router;
 

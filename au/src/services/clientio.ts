@@ -24,10 +24,7 @@ export class ClientIO {
   private _pingStart = 0;
   private _latencies = [] as number[];
   private _isIdle = false;
-
-  private _idleTime: string;
   private _idleTimeout: NodeJS.Timer;
-  private _activeDate = new Date();
 
   private _forceDisconnect = false;
 
@@ -59,11 +56,13 @@ export class ClientIO {
 
   set isActive(value: boolean) {
     if (value) {
-      this._activeDate = new Date();
       clearTimeout(this._idleTimeout);
+      if (this.isIdle) {
+        this._sock.emit('user-is-active');
+      }
       this.startIdleTimeout();
     }
-    this._isIdle = value;
+    this._isIdle = !value;
   }
 
 
@@ -215,6 +214,7 @@ export class ClientIO {
   startIdleTimeout() {
     this._idleTimeout = setTimeout(() => {
       this._isIdle = true;
+      this._sock.emit('user-is-idle');
     }, 1000 * 60 * 8); // 8 Minutes
   }
 
