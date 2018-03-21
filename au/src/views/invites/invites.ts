@@ -142,12 +142,12 @@ export class Invites {
 
   private _requestInvite() {
 
-    interface TimeLimit {
+    interface ITimeLimit {
       hours: number;
       minutes: number;
     }
 
-    return new Promise<{code: number, data: TimeLimit }>((rs, rj) => {
+    return new Promise<{code: number, data: ITimeLimit }>((rs, rj) => {
       Web.POST('/internal/requestinvite',  {
         fields: {
           alias: this.name,

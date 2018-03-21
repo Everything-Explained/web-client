@@ -11,10 +11,9 @@ export class Settings {
   logOut() {
     this._login.signOut((err, code, data) => {
       if (code == 200) {
-        window.location.reload();
         return;
       }
-      console.log(data);
+      console.error(data);
     });
   }
 

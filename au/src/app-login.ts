@@ -96,7 +96,8 @@ export class Login {
 
     let s = document.getElementsByTagName('script')[0] as HTMLElement
       , gel = document.createElement('script')
-      , fel = document.createElement('script');
+      , fel = document.createElement('script')
+    ;
 
     gel.async = fel.async = true;
     gel.src = '//apis.google.com/js/api.js';
@@ -303,13 +304,14 @@ export class Login {
         }
       },
       (err, code, data) => {
-        console.log(err, code, data);
+        window.location.reload();
         cb(err, code, data);
       });
     };
 
     let isAuthedWithGoogle = this._auth2.isSignedIn.get()
-      , isAuthedWithFacebook = FB.getAuthResponse();
+      , isAuthedWithFacebook = FB.getAuthResponse()
+    ;
 
     if (!isAuthedWithGoogle && !isAuthedWithGoogle) {
       return logout();
@@ -321,8 +323,11 @@ export class Login {
     }
 
     if (isAuthedWithFacebook) {
+      console.log('Logging out facebook');
       FB.logout((e) => {
-        return logout();
+        setTimeout(() => {
+          logout();
+        }, 500);
       });
     }
 
