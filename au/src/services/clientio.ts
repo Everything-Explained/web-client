@@ -58,7 +58,7 @@ export class ClientIO {
     if (value) {
       clearTimeout(this._idleTimeout);
       if (this.isIdle) {
-        this._sock.emit('user-is-active');
+        this._sock.emit('user-state-active');
       }
       this.startIdleTimeout();
     }
@@ -87,7 +87,7 @@ export class ClientIO {
 
 
   sendNotice(msg: IMessage, id: string) {
-    this._sock.emit('notice-msg', msg, id);
+    this._sock.emit('user-notice-msg', msg, id);
   }
 
 
@@ -99,15 +99,15 @@ export class ClientIO {
 
 
   sendUserIsTyping() {
-    this._sock.emit('user-is-typing');
+    this._sock.emit('user-typing-start');
   }
 
   sendUserFinishedTyping() {
-    this._sock.emit('user-stopped-typing');
+    this._sock.emit('user-typing-stop');
   }
 
   sendUserPausedTyping() {
-    this._sock.emit('user-paused-typing');
+    this._sock.emit('user-typing-pause');
   }
 
   sendPrivateMsg(text: string, to: string) {
@@ -119,7 +119,7 @@ export class ClientIO {
 
   getBibleVerse(scriptures: string) {
     this._chat.modal.preload('VerseModal');
-    this._sock.emit('find-verse', scriptures);
+    this._sock.emit('user-get-verse', scriptures);
   }
 
 
@@ -150,13 +150,13 @@ export class ClientIO {
       this._chat.addMessage('Connected Successfully', MessageType.SERVER);
     })
     .on('server-msg',   msg => this.onServerMessage(msg))
-    .on('auth-success', data => this.completeAuthentication(data))
-    .on('auth-fail',    msg => {
+    .on('server-auth-success', data => this.completeAuthentication(data))
+    .on('server-auth-fail',    msg => {
       this._chat.addMessage(msg, MessageType.SERVER);
     })
     .on('disconnect',          srv   => this.onDisconnect(srv))
     .on('connect_error',       ()    => this.onFailedConnection())
-    .emit('authenticate');
+    .emit('server-authenticate');
 
   }
 
@@ -181,31 +181,31 @@ export class ClientIO {
       .on(this.id, msg => this._populateMessages(msg))
 
       // Setup all room events
-      .on('user-joined',         user  => this.onUserJoin(user))
-      .on('user-left',           user  => this.onUserDisconnect(user))
-      .on('users-online',        users => this.populateUsers(users))
-      .on('user-is-typing',      user  => this.onUserTyping(user))
-      .on('user-stopped-typing', user  => this.onStoppedTyping(user))
-      .on('user-paused-typing',  user  => this.onUserPausedTyping(user))
-      .on('bible-verse',         data  => this.showBibleVerse(data))
-      .on('session-timeout',     data  => this.onSessionTimeout())
-      .on('userPing',            data  => this.onUserPing(data))
-      .on('user-data',           data  => this.onUserData(data))
+      .on('user-joined',        user  => this.onUserJoin(user))
+      .on('user-left',          user  => this.onUserDisconnect(user))
+      .on('users-online',       users => this.populateUsers(users))
+      .on('user-typing-start',  user  => this.onUserTyping(user))
+      .on('user-typing-stop',   user  => this.onStoppedTyping(user))
+      .on('user-typing-pause',  user  => this.onUserPausedTyping(user))
+      .on('server-bible-verse', data  => this.showBibleVerse(data))
+      .on('session-timeout',    data  => this.onSessionTimeout())
+      .on('user-ping',          data  => this.onUserPing(data))
+      .on('user-data',          data  => this.onUserData(data))
     ;
 
     // Recieve pong event to capture latency
-    this._sock.on('pongcheck', () => {
+    this._sock.on('server-pong', () => {
       if (this._latencies.length + 1 > 50) {
         this._latencies.shift();
       }
       this._latencies.push(Date.now() - this._pingStart);
     });
 
-    // Ping timeout to track latency and idle
+    // Send ping event
     setInterval(() => {
       this._pingStart = Date.now();
-      this._sock.emit('pingcheck', this.latency);
-    }, 1000 * 10); // 10 seconds
+      this._sock.emit('server-ping', this.latency);
+    }, 1000 * 150); // 150 seconds
 
     this.startIdleTimeout();
 
@@ -214,7 +214,7 @@ export class ClientIO {
   startIdleTimeout() {
     this._idleTimeout = setTimeout(() => {
       this._isIdle = true;
-      this._sock.emit('user-is-idle');
+      this._sock.emit('user-state-idle');
     }, 1000 * 60 * 8); // 8 Minutes
   }
 

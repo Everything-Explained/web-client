@@ -6,7 +6,6 @@ export enum MessageType {
   EMOTE,
   INLINE,
   PRIVATE,
-  PLUS,
   SERVER,
   CLIENT,
   IMPLICIT,
@@ -55,6 +54,7 @@ export class Message {
     this.avatar = ops.avatar;
     this.realTimeFixed = ops.realTimeFixed;
     this.severity = ops.severity == undefined ? 'info' : this.getMessageSeverity(ops.severity);
+    console.log(ops.severity);
 
   }
 

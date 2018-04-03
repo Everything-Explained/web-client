@@ -112,12 +112,14 @@ export class Chat {
         message: msgObj.message,
         realTimeFixed: msgObj.realTimeFixed,
         avatar: msgObj.avatar,
+        severity: msgObj.severity || undefined,
         type: msgObj.type
       }));
     }, this);
 
 
   }
+
 
   toggleUserData(e: MouseEvent) {
     let obj = e.target as HTMLElement
@@ -152,6 +154,7 @@ export class Chat {
     }
   }
 
+
   noticeUser(e: MouseEvent) {
     let obj = e.target as HTMLElement
       , alias = obj.innerText.trim()
@@ -166,9 +169,11 @@ export class Chat {
     }
   }
 
+
   denyContextMenu() {
     return false;
   }
+
 
   // AURELIA: Activates on data binding
   bind() {
@@ -227,6 +232,7 @@ export class Chat {
     port.active = true;
   }
 
+
   addMessage(msg: string, type: MessageType, severity = MessageSeverity.NEUTRAL, forceAlias = '') {
 
     let alias = '';
@@ -257,6 +263,7 @@ export class Chat {
     }));
   }
 
+
   showVerse(scriptures: IRawScriptures) {
     let s = aggregateVerses(scriptures);
     this.scriptures = {
@@ -276,6 +283,7 @@ export class Chat {
     this.ports.top.clear();
     this.ports.main.clear(false);
   }
+
 
   changeAlias(alias: string) {
 
@@ -298,9 +306,11 @@ export class Chat {
     });
   }
 
+
   addUser(user: {alias: string; id: string}) {
     this.users.push({name: user.alias, id: user.id, isTyping: ''});
   }
+
 
   removeUser(user: string) {
     for (let i = 0; i < this.users.length; i++) {
