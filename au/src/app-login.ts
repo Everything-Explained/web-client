@@ -304,8 +304,8 @@ export class Login {
         }
       },
       (err, code, data) => {
-        window.location.reload();
         cb(err, code, data);
+        if (!err) window.location.reload();
       });
     };
 

@@ -350,6 +350,7 @@ export class ClientIO {
       severity: MessageSeverity.ATTENTION
     };
 
+
     if (srv && srv === 'io server disconnect') {
       msgObj.message = 'Server Closed Connection';
     } else {
@@ -361,6 +362,7 @@ export class ClientIO {
     clearInterval(this._pingInterval);
     this._forceDisconnect = false;
     this._connected = false;
+    this._chat.userlistActive = false;
   }
 
 
