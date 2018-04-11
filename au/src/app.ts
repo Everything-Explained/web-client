@@ -131,6 +131,10 @@ export class App {
         }
       }
     }
+    else {
+      // Remove Chat page
+      this.mainMenu.splice(1, 1);
+    }
 
     this._initFirstMenuItem();
 
@@ -398,9 +402,6 @@ export class App {
 
     // sse.addEventListener('error', (e) => {
     //   console.error(e);
-    // });
-
-    // sse.addEventListener('ping', (e) => {
     // });
 
     // sse.addEventListener('message', (e) => {
