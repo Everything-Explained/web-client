@@ -107,9 +107,6 @@ export class InputHandler {
 
 
 
-/*****************************/
-//#region NATIVE EVENTS
-
 
   onKeyDown(e: KeyboardEvent) {
 
@@ -169,13 +166,15 @@ export class InputHandler {
 
     if (this.onTabOut(e)) return false;
 
-
     return true;
   }
 
 
 
   onKeyPress(e: KeyboardEvent) {
+
+    // Prevent Firefox firing
+    if (Keys.BACKSPACE == e.which) return true;
 
     let rawInput = this._inputBox.innerText
 
@@ -187,7 +186,6 @@ export class InputHandler {
             ) + String.fromCharCode(e.which)
           )
     ;
-
 
     // User should understand their mistake
     if (  Keys.ENTER == e.which
@@ -206,9 +204,21 @@ export class InputHandler {
     if (input[0] == '/') {
 
       // Fix Firefox BR nonsense
-      if (this._isFirefox && rawInput[0] == '\n') {
-        let br = this._inputBox.childNodes[0];
-        this._inputBox.removeChild(br);
+      if (this._isFirefox) {
+
+        if (rawInput[0] == '\n') {
+          let br = this._inputBox.childNodes[0];
+          this._inputBox.removeChild(br);
+        }
+
+        if (Keys.SPACE == e.which && !this._inputHint.isActive) {
+          let br = this._inputBox.childNodes[this._inputBox.childNodes.length - 1];
+          this._inputBox.removeChild(br);
+          this._inputBox.textContent = rawInput.trim() + '\u00a0'; // append NBSP
+          InputHandler.alignCaret(false, this._inputBox);
+          return false;
+        }
+
       }
 
       // Strip / char from input
@@ -301,9 +311,7 @@ export class InputHandler {
   }
 
 
-  /**
-   * Converts formatted text into plain text
-   */
+  /** Converts formatted text into plain text */
   onPaste(e: ClipboardEvent) {
     let originalText = this.normalizeInput(this._inputBox.textContent)
       , newText = e.clipboardData.getData('text')
@@ -313,8 +321,6 @@ export class InputHandler {
     InputHandler.alignCaret(false, this._inputBox);
   }
 
-//#endregion
-/****************************/
 
 
 
@@ -322,8 +328,6 @@ export class InputHandler {
 
 
 
-/******************************/
-//#region CUSTOM EVENTS
 
   onTyping(input: string) {
 
@@ -463,8 +467,6 @@ export class InputHandler {
 
 
 
-//#endregion
-/******************************/
 
 
 
@@ -472,8 +474,6 @@ export class InputHandler {
 
 
 
-/********************************/
-//#region UTILITY METHODS
 
   /**
    * Strips and replaces unnecessary characters.
@@ -575,6 +575,3 @@ export class InputHandler {
 
 
 }
-
-//#endregion
-/********************************/
