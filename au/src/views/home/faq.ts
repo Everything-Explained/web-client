@@ -68,6 +68,12 @@ export class Faq {
 
   activate(params) {
     this._searchParam = params.query || null;
+
+    // Auto-filter from FAQ links
+    if (this.isAttached && this._searchParam) {
+      this.elSearch.value = this._searchParam;
+      this.seek(this._searchParam);
+    }
   }
 
 
@@ -78,6 +84,7 @@ export class Faq {
 
   render(q: Question) {
     this.answer = q.content;
+    window.location.assign('#/faq');
   }
 
 
