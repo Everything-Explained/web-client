@@ -6,6 +6,6 @@ Because **Noumenae** is an _invite-only_ service, Bans are **highly unlikely** t
 
 There will be no Banning over the proverbial _"spilt milk"_. Banning is reserved for **repeated**, severe infractions of the [Rules].
 
-> _No bans will be given out unless absolutely necessary_
+> No bans will be given out unless absolutely necessary.
 
 [rules]:#/rules

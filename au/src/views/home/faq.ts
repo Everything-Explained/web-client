@@ -14,11 +14,12 @@ export class Faq {
   public isAttached = false;
 
   public questions: Question[] = [];
-  public answer = '## click a question on the left';
+  public answer = '#### click a question on the left';
   public elSearch: HTMLInputElement;
 
   private _searchParam: string;
   private _qTitles: string[] = [];
+  private _rendered = false;
 
   constructor(private _el: HTMLElement) {
 
@@ -48,17 +49,16 @@ export class Faq {
       });
 
       if (this._searchParam) {
-        this.seek(this._searchParam);
+        if (!this._findPage(this._searchParam))
+          this.seek(this._searchParam);
       }
     });
 
   }
 
-  attached() {
 
-    if (this._searchParam) {
-      this.elSearch.value = this._searchParam;
-    }
+
+  attached() {
 
     setTimeout(() => {
       this.isAttached = true;
@@ -66,26 +66,52 @@ export class Faq {
 
   }
 
+
+
   activate(params) {
     this._searchParam = params.query || null;
 
     // Auto-filter from FAQ links
-    if (this.isAttached && this._searchParam) {
-      this.elSearch.value = this._searchParam;
-      this.seek(this._searchParam);
+    if (this.isAttached && this._searchParam && !this._rendered) {
+      if (!this._findPage(this._searchParam)) {
+        this.elSearch.value = this._searchParam;
+        this.seek(this._searchParam);
+      }
     }
+
+    if (!this._searchParam) {
+      this.answer = '#### click a question on the left';
+    }
+
+    this._rendered = false;
   }
 
 
-  nodeToArray(nodes: NodeList) {
-    return Array.prototype.slice.call(nodes);
+
+  private _findPage(page: string) {
+
+    page = page.replace(/[-]/g, ' ');
+
+    if (this._qTitles.includes(page)) {
+      for (let q of this.questions) {
+        if (q.title == page) {
+          this.answer = q.content;
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
+
 
 
   render(q: Question) {
     this.answer = q.content;
-    window.location.assign('#/faq');
+    this._rendered = true;
+    window.location.assign(`#/faq/${q.title.replace(/\s/g, '-')}`);
   }
+
 
 
   seek(data: KeyboardEvent | string) {

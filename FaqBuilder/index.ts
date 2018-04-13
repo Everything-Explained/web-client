@@ -55,7 +55,7 @@ class Test {
 
       ++count;
       if (count == files.length) {
-        if (changed) {
+        if (changed || added) {
           writeFileSync(this._configFile, JSON.stringify(this._config, null, 2));
         }
         else {

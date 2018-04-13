@@ -1,9 +1,8 @@
 # what is abuse
 
-Abuse is similar, but NOT the same as, a down-vote. Down voting assumes that the message recieving the down-vote is dissatisfactory in some way. Abuse, however, means a user has directly abused the site or a user on the site in some way. Giving an abuse modifier is not to be taken lightly and as such, will require users to input a small message as to why they are assigning abuse.
+Abuse is similar, but **not** the same as a down-vote. _Down-voting_ in most systems is a way for a user to express their general dislike for a message, warranted or unwarranted. **Abuse** however, means a user has knowingly ignored the site rules and/or is abusing other users on the site. Giving an abuse modifier is not to be taken lightly and as such, will require users to input a small message as to why they are assigning abuse.
 
-* Messages may only recieve one abuse per user.
-* Users are required to enter a reason.
-  * Reasons must be at least 20 chars long
-  * Reasons must be no longer than 140 chars long
-* Users must have at least 133 _standard_ messages to assign Abuse
+- Unlocked when a user is at least the [level] of _Engaged_
+- May only be applied _once per 72 hours_ per user
+
+[level]:#/faq/level

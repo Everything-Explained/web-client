@@ -7,6 +7,11 @@
     color: hsl(278, 35%, 72%)
   h2
     position: relative
+    margin: 30px 0 0 25px
+    font-size: 24px
+    color: hsl(50, 55%, 63%)
+  h4
+    position: relative
     top: 27%
     margin: 0 auto
     font-size: 34px
@@ -20,21 +25,32 @@
     line-height: 32px
     border-radius: 7px
     background: $sub-panel
-    transition: background .3s ease
+    transition: background .3s ease, color .3s ease
     &:hover
+      color: hsl(0, 0%, 65%)
       background: $panel-hover
 
   ul
-    margin: 13px 0 0 70px
+    margin: 13px 0 15px 70px
     font-family: 'Source Code Pro'
     color: hsl(127, 20%, 60%)
     line-height: 27px
 
 
   blockquote
-    margin: 0
-    em
-      color: hsl(50, 30%, 70%)
+    margin: 0 auto 15px auto
+    width: 95%
+    background-color: hsl(278, 20%, 13%)
+    border: 1px solid hsl(278, 30%, 23%)
+    opacity: 0.75
+    color: hsl(278, 40%, 85%)
+    font-weight: 400
+    box-sizing: border-box
+    transition: opacity .3s ease
+    &:hover
+      opacity: 1
+    strong
+      color: hsl(50, 70%, 77%)
     p
       margin: 0
       background: none
