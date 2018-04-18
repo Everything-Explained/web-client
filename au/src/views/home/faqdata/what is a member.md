@@ -1,3 +1,8 @@
 # what is a member
 
-A member is a user of noumenae who has signed up by recieving an invitation. The user, by clicking "signup", has agreed to the rules and became a member of noumenae through the signup page on the site.
+A member is an official user of **Noumenae** who has signed up through the [Invitation Process].
+
+> By clicking "signup", the user has agreed to the [Rules] and become a member of **Noumenae**
+
+[rules]:#/rules
+[invitation process]:#/faq/how-do-invites-work

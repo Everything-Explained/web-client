@@ -16,6 +16,7 @@ export class Faq {
   public questions: Question[] = [];
   public answer = '#### click a question on the left';
   public elSearch: HTMLInputElement;
+  public elScroller: HTMLElement;
 
   private _searchParam: string;
   private _qTitles: string[] = [];
@@ -105,10 +106,11 @@ export class Faq {
   }
 
 
-
+  // Referenced in view
   render(q: Question) {
     this.answer = q.content;
     this._rendered = true;
+    this.elScroller.scrollTop = 0;
     window.location.assign(`#/faq/${q.title.replace(/\s/g, '-')}`);
   }
 

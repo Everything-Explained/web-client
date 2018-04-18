@@ -14,12 +14,15 @@ template
     role='FAQ')
     div.qa-container
       div.question-panel
-        input#Search(type='text', placeholder='Search', keyup.delegate='seek($event) & debounce:150' ref='elSearch')
+        input#Search(type='text',
+                     placeholder='Search',
+                     keyup.delegate='seek($event) & debounce:150'
+                     ref='elSearch')
         div#Questions
           div.scroller
             div.qablock(repeat.for='q of questions' if.bind = '!q.filter')
               div.question(mousedown.delegate='render(q)') ${q.title}
 
       div#Answers
-        div.scroller(innerhtml.bind = 'answer | markdown')
+        div.scroller(innerhtml.bind = 'answer | markdown', ref='elScroller')
           div.answer-placeholder Click a Question on the Left

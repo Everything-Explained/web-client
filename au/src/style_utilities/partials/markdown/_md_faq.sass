@@ -2,12 +2,14 @@
   @extend .g-markdown
 
   h1
-    margin-bottom: 20px
+    margin: 60px 0 20px 8px
     font-size: 27px
     color: hsl(278, 35%, 72%)
+    &:first-child
+      margin-top: 13px
   h2
     position: relative
-    margin: 30px 0 0 25px
+    margin: 30px 0 10px 50px
     font-size: 24px
     color: hsl(50, 55%, 63%)
   h4
@@ -17,7 +19,7 @@
     font-size: 34px
     color: hsl(50, 75%, 53%)
     text-align: center
-  p
+  div > p
     padding: 10px 30px 10px 30px
     width: 95%
     margin: 0 auto 15px auto
@@ -29,6 +31,16 @@
     &:hover
       color: hsl(0, 0%, 65%)
       background: $panel-hover
+      strong
+        color: hsl(0, 0%, 75%)
+      em
+        color: hsl(278, 50%, 80%)
+      a
+        color: hsl(50, 0%, 65%)
+        border-color: hsl(278, 50%, 80%)
+        &:hover
+          color: hsl(50, 50%, 60%)
+
 
   ul
     margin: 13px 0 15px 70px
@@ -40,19 +52,17 @@
   blockquote
     margin: 0 auto 15px auto
     width: 95%
-    background-color: hsl(278, 20%, 13%)
-    border: 1px solid hsl(278, 30%, 23%)
-    opacity: 0.75
-    color: hsl(278, 40%, 85%)
+    background-color: hsl(50, 20%, 13%)
+    border: 1px solid hsl(50, 30%, 23%)
+    opacity: 0.8
+    color: hsl(50, 75%, 80%)
     font-weight: 400
     box-sizing: border-box
     transition: opacity .3s ease
     &:hover
       opacity: 1
     strong
-      color: hsl(50, 70%, 77%)
+      color: hsl(278, 80%, 87%)
     p
-      margin: 0
-      background: none
-      &:hover
-        background: none
+      padding: 10px 30px 10px 30px
+      font-size: 18px
