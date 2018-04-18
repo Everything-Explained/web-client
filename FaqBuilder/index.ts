@@ -31,7 +31,13 @@ class Test {
     let count = 0
       , changed = 0
       , added = 0
+      , deleted: string[] = []
     ;
+
+    for (let f in oldConfig) {
+      if (files.includes(`${f}.md`)) continue;
+      deleted.push(f);
+    }
 
     files.forEach(async f => {
       let filePath = path.join(this._faqPath, f)
@@ -50,13 +56,18 @@ class Test {
       }
       else {
         ++added;
-        log.info(`Added "${name}"`);
+        log.info(`Added:::[${name}]`);
       }
 
       ++count;
       if (count == files.length) {
-        if (changed || added) {
+        if (changed || added || deleted.length) {
           writeFileSync(this._configFile, JSON.stringify(this._config, null, 2));
+          if (deleted.length) {
+            for (let f of deleted) {
+              log.info(`Deleted:::[${f}]`);
+            }
+          }
         }
         else {
           log.warn(`(No Changes or Additions)`);
