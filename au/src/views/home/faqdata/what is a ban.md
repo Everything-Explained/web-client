@@ -8,4 +8,6 @@ There will be no Banning over the proverbial _"spilt milk"_. Banning is reserved
 
 > No bans will be given out unless absolutely necessary.
 
+##### WIP : Bans are currently impossible
+
 [rules]:#/rules

@@ -104,4 +104,4 @@ For a more complete understanding of this site, check out the [Rules] and [FAQ] 
 
 [Noumenon]:#/faq/noumenae
 [Rules]:#/rules
-[FAQ]:#/faq`;
+[FAQ]:#/faq/how-to-use-the-faq`;

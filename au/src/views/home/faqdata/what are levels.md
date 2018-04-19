@@ -20,6 +20,6 @@ When we talk about levels in **Noumenae** we're talking about **Message Levels**
 - Immortal
 - Omnicient
 
-> This system is still a **work in progress**, so you may expect these names to change over time, but the leveling system will remain.
+##### WIP : Level names are subject to change.
 
 [xp]:#/faq/what-is-xp

@@ -4,6 +4,10 @@
 
 Originally **Love** points were going to be aquired over time and extremely rare and valuable, but I realized this would have been the creation of anti-love. **Love** now has no intrinsic value except that which you place on it; _as it should be_.
 
-Contrary to **Love's** original concept, it will no longer increase [Renown].
+> Contrary to **Love's** original concept, it will no longer increase **Renown**.
+
+##### WIP : Users will receive 999 love to give per 24 hours; only if they're empty.
+
+##### WIP : This feature is currently not available
 
 [renown]:#/faq/renown

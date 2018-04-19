@@ -1,16 +1,16 @@
-# how do invites work
+# ?: how do invites work
 
 Invites are given out by the Admin as well as those who have established some integrity on the site. That being said, you're _free to email the Admin_ as described on the [about] page.
 
 > The Requirements below are just loose guidelines; **content of character** is most important.
 
-# general invite requirements
+# ?: what are the requirements
 
 Noumenae is a harbor for those who feel their flesh isn't all there is, especially when that **flesh is tearing at your soul**. All of us are struggling with _something_, desiring a solace from worry and doubt. This restlessness that we feel from the depth of our being, this _nagging tug_...if you feel such a pull, then **Noumenae** might be what you're looking for.
 
 We call this invisible tension _God_ or _Spirit_ or _Divine_ and we deem it **unseen** or **unknown**. Even though we don't see and we don't know, deep down we feel we _should_ see and _should_ know. If these are the kinds of questions you're asking, the kind of life you're living, or the kind of thoughts you're pondering, then fill out the [Invitation Form].
 
-# why invite only
+# ?: why invite only
 
 There are three reasons **necessary** for this decision. The first is that there are _too many people_ on the internet who enjoy abusing free services. That is the world we live in and as such, I must take that into consideration.
 

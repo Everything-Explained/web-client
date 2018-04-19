@@ -97,6 +97,7 @@ export class Faq {
       for (let q of this.questions) {
         if (q.title == page) {
           this.answer = q.content;
+          this.elScroller.scrollTop = 0;
           return true;
         }
       }
