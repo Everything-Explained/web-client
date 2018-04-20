@@ -12,25 +12,31 @@
     letter-spacing: 1px
 
   a
-    transition: color .3s ease, border .3s ease
+    transition: color .3s, border .3s
 
   b, strong
     font-weight: 400
     color: hsl(0, 0%, 70%)
-    transition: color .3s ease
+    transition: color .3s
 
   i, em
     color: hsl(278, 20%, 72%)
     font-style: normal
-    transition: color .3s ease
+    transition: color .3s
 
     strong, b
       color: hsl(50, 50%, 65%)
 
   code
-    color: hsl(50, 25%, 60%)
+    padding: 0 5px
+    color: hsl(0, 0%, 80%)
     font-family: 'source code pro'
-    word-spacing: -1px
+    background: hsl(0, 0%, 25%)
+    border: 1px solid hsl(0, 0%, 0%)
+    border-radius: 5px
+    white-space: nowrap
+    word-spacing: -3px
+    transition: background .3s, color .3s
 
 
 @import 'markdown/md_changelog'

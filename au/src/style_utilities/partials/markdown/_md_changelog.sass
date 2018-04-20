@@ -1,6 +1,8 @@
 .md-changelog
 
+
   @extend .g-markdown
+
 
   h1
     margin: 10px 0 0 44px
@@ -26,21 +28,38 @@
 
     li
       margin-top: 7px
+      transition: background .3s, color .3s
 
       &:first-child
         margin-top: 10px
 
     &:hover
-      background: hsl(278, 33%, 16%)
+      background: lighten($panel-hover, 5%)
+
+    &:hover code
+      color: hsl(278, 50%, 80%)
+      background: hsl(278, 25%, 25%)
 
     &:hover li
-      background-color: hsl(278, 33%, 12%)
+      background-color: hsl(278, 18%, 12%)
+      color: hsl(0, 0%, 65%)
+      strong
+        color: hsl(0, 0%, 75%)
+      em
+        color: hsl(278, 50%, 80%)
+      a
+        color: hsl(50, 0%, 65%)
+        border-color: hsl(278, 50%, 80%)
+        &:hover
+          color: hsl(50, 50%, 60%)
+
 
   ul
     width: 107%
     padding-left: 5px
     list-style: none
     list-style-type: none
+
 
   li
     position: relative
@@ -56,7 +75,7 @@
     background-color: hsl(0, 0%, 9.7%)
     border-top: 5px solid hsl(0, 0%, 6%)
     word-spacing: 1px
-    transition: background .3s ease
+    transition: background .3s, color .3s
 
     &:first-child
       border-top-left-radius: 15px

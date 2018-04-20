@@ -80,7 +80,7 @@ export class About {
   }
 
   getViewStrategy() {
-    return 'views/home/about.html';
+    return 'views/home/welcome.html';
   }
 
   private _toArray(val: Node|string) {
@@ -91,17 +91,21 @@ export class About {
 
 const about = `**Hello there!**
 
-_So you want to know what this site is all about huh?_ It's funny, cause I do too! Without people to make this place amazing, it won't be. You are an integral part of whether or not this place will become a bastion of love and understanding...or just another haven for trolling and depravity. Often in our lives we become complacent with each other, deciding that as long as we stay in our own lane, we're _"okay"_. **Are you okay?** Is your life all that you imagined? That's what Noumenae is about; it's about the discovery of our potential, __together__. It's the understanding that there is more to life than what we're doing about it.
+_Do you like long walks on the Beach?_...**Just Kidding!!**
+But...do you find yourself contemplating where your life is headed? **Noumenae** is a place for those who are confounded in their present life. **No**, not necessarily unhappy, but _unsure as to what exactly fulfills them_. Even further, those who might be very happy with their life but feel as though something isn't quite right...**something is missing**...
 
-If you're still reading, you must be at least a little curious right? At this point you might be wondering about the invite requirements. **No Judgment**, **No Condemnation**, and **No shortage of Love** are all the tenets you need. I don't want anyone to be under any illusions though, so let me make this clear: _We are about the work of God_. No, I do not claim that this site is the literal or metaphorical work of God, but that the people for whom this site was made, are the work of God; and by extension, if you do not believe you are the work of God, then you probably won't see your home here. However, if you have an inkling that there is more to you than flesh and blood, then you might've just found your long lost home.
+Unfortunately this material world has very little answers when it comes to the human condition. You'd think by now that with **all** the self-help books, we'd have figured out what gives our lives _meaning and purpose_. Thankfully though, the answer is often inside our own selves, but...**most of us can't hear**. If you're ready to listen to _the real You_, then I think **Noumenae** might just be the community you've been searching for.
 
-Now obviously because we aren't perfect, this site is not going to be perfect. There will inevitably be disagreements from time to time, but they will be dealt with by the spirit of love that we will have for one another. Now, all this _"God-talk"_ aside, there is room for debate surrounding other topics, but the spirit of the site stays the same. Believe it or not, it is possible to think, speak, and be like a human while exhibiting an air of Godliness.
+Just so there's no mincing of words here, **Yes**, we are about the **Spiritual** work; the revealing of our hidden nature which we so often ignore. There is **no** judgement or condemnation here, only simple people whom all are on this journey with you, desiring your success. Now before you think we're all just a bunch of happy Guppies, let me say that I myself, have been disenchanted with life on many occations; I know what depression feels like. _But that's what **Love** is for_.
 
-**An air of Godliness is precisely what Noumenae is looking to pull out of its members**.
+___There is no doctrine___, only ___YOU___.
+You are the light you never knew you had; _all of us **Are**_.
+If you are thoroughly enticed by now _...hehe..._ then go ahead and check out the invite tab on the left or [Click Here][invite]
 
 For a more complete understanding of this site, check out the [Rules] and [FAQ] sections.
 
 
-[Noumenon]:#/faq/noumenae
+[Noumenon]:#/faq/about-the-creation
 [Rules]:#/rules
+[invite]:#/invites
 [FAQ]:#/faq/how-to-use-the-faq`;

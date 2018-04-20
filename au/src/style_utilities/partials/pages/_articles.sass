@@ -27,6 +27,19 @@
   color: hsl(0, 0%, 60%)
   border-top-right-radius: 6.5px
   border-top-left-radius: 3.5px
+  transition: background .3s, color .3s
+  &:hover
+    background-color: $panel-hover
+    color: hsl(0, 0%, 65%)
+    strong
+      color: hsl(0, 0%, 75%)
+    em
+      color: hsl(278, 50%, 80%)
+    a
+      color: hsl(50, 0%, 65%)
+      border-color: hsl(278, 50%, 80%)
+      &:hover
+        color: hsl(50, 50%, 60%)
 
 
 #articles

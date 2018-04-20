@@ -46,7 +46,7 @@ export class App {
     {
       name:     'home',
       pages: [
-        {name: 'about'},
+        {name: 'welcome'},
         {name: 'rules'},
         {name: 'faq'},
         {
@@ -67,7 +67,7 @@ export class App {
           classes: 'settings icon-cog2'
         }
       ],
-      def:      'about',
+      def:      'welcome',
       isActive: false,
       defRoute: null,
       routes:   new Array<NavModel>()
@@ -197,7 +197,6 @@ export class App {
   private _setupNavigationCallbackHandler() {
 
     this._eva.subscribe('router:navigation:complete', payload => {
-
 
       if (this._session.isFirstSignin) {
         for (let r of this.mainMenu[0].routes) {
@@ -351,7 +350,7 @@ export class App {
 
           if (page.name.toLowerCase() == 'blog') {
             if (!window.session.authed) {
-              route['redirect'] = 'about';
+              route['redirect'] = 'welcome';
             }
           }
 
