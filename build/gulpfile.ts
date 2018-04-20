@@ -6,7 +6,7 @@ import {copyChangelogs, copyAdmin, copyStaticErrors, copyLogs, copyStandalone, c
 import {copyServer, setProduction} from './tasks/copy-server';
 
 
-gulp.task('readyBuild', gulp.series(
+gulp.task('readyBuild', gulp.parallel(
   readyApp,
   readyCSS,
   readyAurelia
@@ -36,6 +36,7 @@ gulp.task('release',
     copyAdmin,
     revertAppCSS,
     revertBuildCSS,
+    revertAureliaConfig,
 
     // Copy server files
     gulp.series(
