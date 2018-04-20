@@ -1,6 +1,4 @@
 releaseV2
-/au/aurelia_project/environments
-/au/src/environment.ts
 /staging
 node_modules
 au/src/views/home/faqdata/faq.json
