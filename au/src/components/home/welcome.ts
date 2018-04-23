@@ -18,7 +18,7 @@ export class Welcome {
 
   }
 
-  getViewStrategy() {
-    return 'views/home/welcome.html';
-  }
+  // getViewStrategy() {
+  //   return 'views/home/welcome.html';
+  // }
 }

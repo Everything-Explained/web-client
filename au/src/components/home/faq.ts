@@ -70,7 +70,7 @@ export class Faq {
 
 
   activate(params) {
-    this._searchParam = params.query || null;
+    this._searchParam = params.page || null;
 
     // Auto-filter from FAQ links
     if (this.isAttached && this._searchParam && !this._rendered) {
@@ -112,7 +112,7 @@ export class Faq {
     this.answer = q.content;
     this._rendered = true;
     this.elScroller.scrollTop = 0;
-    window.location.assign(`#/faq/${q.title.replace(/\s/g, '-')}`);
+    window.location.assign(`#/home/faq/${q.title.replace(/\s/g, '-')}`);
   }
 
 
@@ -145,9 +145,9 @@ export class Faq {
   }
 
 
-  getViewStrategy() {
-    return 'views/home/faq.html';
-  }
+  // getViewStrategy() {
+  //   return 'views/home/faq.html';
+  // }
 }
 
 

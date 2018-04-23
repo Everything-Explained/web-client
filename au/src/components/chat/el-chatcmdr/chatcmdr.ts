@@ -1,10 +1,10 @@
 
 
 import {bindable, inject} from 'aurelia-framework';
-import {MessageScale, MessageType} from '../../../views/chat/message';
+import {MessageScale, MessageType} from '../../../components/chat/message';
 import {ClientIO} from '../../../services/clientio';
-import {CommanderData, Chat} from '../../../views/chat/chat';
-import {Port} from '../../../views/chat/port';
+import {CommanderData, Chat} from '../../../components/chat/chat';
+import {Port} from '../../../components/chat/port';
 import {ChatCommands} from '../commands';
 import {InputHandler} from './input-handler';
 

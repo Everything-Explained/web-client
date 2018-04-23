@@ -14,18 +14,20 @@ template
 
       menu#TabMenu
         ul
-          li( repeat.for='route of activeRoutes',
-              mousedown.delegate='$parent.goTo(route.href)',
-              class=`\${route.isActive ? "active" : ""}
-                     \${route.config.classes ? route.config.classes : ""} `) ${route.config.name}
+          li( repeat.for='route of tabRouteTree',
+              if.bind='route.navModel.config.isChild'
+              mousedown.delegate='$parent.goTo(route.route)'
+              class=`\${route.navModel.isActive ? "active" : ""}
+                     \${route.config.classes ? route.config.classes : ""} `) ${route.name}
 
     section#PageMiddle
       section#TrayLeft(class='${utils.page.leftTray.className}')
         menu#MainMenu
           ul
-            li( repeat.for='item of mainMenu'
-                mousedown.delegate='$parent.populateRoutes(item, $event, true)'
-                class='${item.isActive ? "active" : ""}'
-                innerhtml='<span>${item.name}</span>')
+            li( repeat.for='route of router.routes'
+                if.bind='!route.navModel.config.isChild && route.route'
+                class='${route.name == "pickle" ? "active" : ""}'
+              )
+                a(href='#/${route.name}') ${route.name}
 
       router-view#PageContent

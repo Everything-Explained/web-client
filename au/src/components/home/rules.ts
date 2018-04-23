@@ -15,8 +15,8 @@ export class Rules {
 
   }
 
-  getViewStrategy() {
-    return 'views/home/rules.html';
-  }
+  // getViewStrategy() {
+  //   return 'views/home/rules.html';
+  // }
 
 }

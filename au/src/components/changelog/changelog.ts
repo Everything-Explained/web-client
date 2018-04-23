@@ -28,8 +28,6 @@ export class Changelog {
       }
     );
 
-
-
   }
 
   open(timeStamp: string) {
