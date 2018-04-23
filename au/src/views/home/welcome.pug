@@ -1,7 +1,30 @@
 
 template
   require(from='../../resources/value-converters/markdown-format')
-  article.home.au-animate(
+  require(from='../../resources/elements/markdown')
+  article.home.au-animate.markdown.md-welcome(
     class='${isAttached ? "page-in" : "g-hidden"}'
     role='about'
-    innerhtml.bind='text | markdown')
+  )
+    :markdown-it(linkify breaks plugins=['markdown-it-deflist'])
+      **Hello there!**
+
+      _Do you like long walks on the Beach?_...**Just Kidding!!**
+      But...do you find yourself contemplating where your life is headed? **Noumenae** is a place for those who are confounded in their present life. **No**, not necessarily unhappy, but _unsure as to what exactly fulfills them_. Even further, those who might be very happy with their life but feel as though something isn't quite right...**something is missing**...
+
+      Unfortunately this material world has very little answers when it comes to the human condition. You'd think by now that with **all** the self-help books, we'd have figured out what gives our lives _meaning and purpose_. Thankfully though, the answer is often inside our own selves, but...**most of us can't hear**. If you're ready to listen to _the real You_, then I think **Noumenae** might just be the community you've been searching for.
+
+      Just so there's no mincing of words here, **Yes**, we are about the **Spiritual** work; the revealing of our hidden nature which we so often ignore. There is **no** judgement or condemnation here, only simple people whom all are on this journey with you, desiring your success. Now before you think we're all just a bunch of happy Guppies, let me say that I myself, have been disenchanted with life on many occations; I know what depression feels like. _But that's what **Love** is for_.
+
+      ___There is no doctrine___, only ___YOU___.
+      You are the light you never knew you had; _all of us **Are**_.
+      If you are thoroughly enticed by now _...hehe..._ then go ahead and check out the invite tab on the left or [Click Here][invite]
+
+      For a more complete understanding of this site, check out the [Rules] and [FAQ] sections.
+      If you have any questions for concerns
+
+
+      [Noumenon]:#/faq/about-the-creation
+      [Rules]:#/rules
+      [invite]:#/invites
+      [FAQ]:#/faq/how-to-use-the-faq

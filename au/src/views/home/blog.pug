@@ -4,7 +4,7 @@ template
   section.blog-container
     div.preloader(style.bind='isLoading ? "" : "display: none"')
     div.error(if.bind='isError') let the #[span.info admin] know an #[span.fail error] occurred
-    div.dev-blog(
+    div.dev-blog.markdown.md-blog(
       class='${isLoading ? "" : "is-loaded"}'
       ref='devBlog'
     )

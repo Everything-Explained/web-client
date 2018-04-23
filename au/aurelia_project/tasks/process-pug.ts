@@ -4,7 +4,7 @@ import * as changedInPlace from 'gulp-changed-in-place';
 import * as sourcemaps from 'gulp-sourcemaps';
 import * as pug from 'gulp-pug';
 import {build} from 'aurelia-cli';
-let project =  require('../aurelia.json');
+let project = require('../aurelia.json');
 
 export default function processPug() {
 

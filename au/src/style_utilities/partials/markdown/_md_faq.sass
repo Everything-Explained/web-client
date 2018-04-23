@@ -1,6 +1,4 @@
 .md-faq
-  @extend .g-markdown
-
   h1
     margin: 60px 0 20px 8px
     font-size: 27px
@@ -44,20 +42,8 @@
     line-height: 32px
     border-radius: 7px
     background: $sub-panel
-    transition: background .3s ease, color .3s ease
     &:hover
-      color: hsl(0, 0%, 65%)
-      background: $panel-hover
-      strong
-        color: hsl(0, 0%, 75%)
-      em
-        color: hsl(278, 50%, 80%)
-      a
-        color: hsl(50, 0%, 65%)
-        border-color: hsl(278, 50%, 80%)
-        &:hover
-          color: hsl(50, 50%, 60%)
-
+      @extend %panel-hover
 
   ul
     margin: 13px 0 15px 70px
@@ -76,7 +62,7 @@
     color: hsl(50, 75%, 80%)
     font-weight: 400
     box-sizing: border-box
-    transition: opacity .3s ease
+    transition: opacity .4s
     &:hover
       opacity: 1
     strong

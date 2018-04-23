@@ -23,6 +23,6 @@ template
             div.qablock(repeat.for='q of questions' if.bind = '!q.filter')
               div.question(mousedown.delegate='render(q)') ${q.title}
 
-      div#Answers
+      div#Answers.markdown.md-faq
         div.scroller(innerhtml.bind = 'answer | markdown', ref='elScroller')
           div.answer-placeholder Click a Question on the Left
