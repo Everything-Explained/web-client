@@ -1,10 +1,10 @@
 
 import {bindable, autoinject, customElement, Disposable, BindingEngine} from 'aurelia-framework';
 import * as moment from 'moment';
-import {Message, MessageType} from '../../../views/chat/message';
-import {ClientIO} from '../../../services/clientio';
+import {Message, MessageType} from '../../components/message';
+import {ClientIO} from '../../components/chat-io';
 import {BibleVerseFilter} from './bible-verse-filter';
-import {MarkdownValueConverter} from '../../../resources/value-converters/markdown-format';
+import {MarkdownValueConverter} from '../../../../resources/value-converters/markdown-format';
 
 
 export enum WordType {

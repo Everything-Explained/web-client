@@ -1,7 +1,7 @@
-import {ClientIO} from '../../services/clientio';
-import {ChatCommander} from './el-chatcmdr/chatcmdr';
-import {MessageScale, MessageType} from '../../views/chat/message';
-import {Chat} from './chat';
+import {ClientIO} from './chat-io';
+import {ChatCommander} from '../elements/chatcmdr/chatcmdr';
+import {MessageScale, MessageType} from '../components/message';
+import {Chat} from '../chat';
 
 interface ICommand {
   alias: string[];

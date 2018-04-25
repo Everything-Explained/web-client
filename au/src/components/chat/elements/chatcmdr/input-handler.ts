@@ -1,10 +1,10 @@
-import {ClientIO} from '../../../services/clientio';
-import {CommanderData, Chat} from '../../../views/chat/chat';
+import {ClientIO} from '../../components/chat-io';
+import {CommanderData, Chat} from '../../chat';
 import {InputHints} from './input-hints';
 import {InputHistory} from './input-history';
 import {InputSpellcheck} from './input-spellcheck';
-import {ChatCommands} from '../commands';
-import {MessageType} from '../message';
+import {ChatCommands} from '../../components/commands';
+import {MessageType} from '../../components/message';
 
 enum Keys {
 

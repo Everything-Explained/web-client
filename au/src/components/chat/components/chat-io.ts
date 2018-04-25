@@ -1,9 +1,9 @@
 
 import * as io from 'socket.io-client';
-import {Message, MessageType, MessageSeverity, IMessage} from '../views/chat/message';
-import {IRawScriptures} from '../views/chat/display-verse';
-import {Chat} from '../views/chat/chat';
-import {Utils} from '../helpers/utils';
+import {Message, MessageType, MessageSeverity, IMessage} from './message';
+import {IRawScriptures} from './display-verse';
+import {Chat} from '../chat';
+import {Utils} from '../../../helpers/utils';
 
 
 export class ClientIO {

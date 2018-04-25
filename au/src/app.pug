@@ -12,22 +12,23 @@ template
         span α
           span.num ${version}
 
-      menu#TabMenu
-        ul
-          li( repeat.for='route of tabRouteTree',
-              if.bind='route.navModel.config.isChild'
-              mousedown.delegate='$parent.goTo(route.route)'
-              class=`\${route.navModel.isActive ? "active" : ""}
-                     \${route.config.classes ? route.config.classes : ""} `) ${route.name}
+      //- menu#TabMenu
+      //-   ul
+      //-     li( repeat.for='route of tabRouteTree',
+      //-         if.bind='route.settings.isChild'
+      //-         mousedown.delegate='$parent.goTo(route.route)'
+      //-         class=`\${route.navModel.isActive ? "active" : ""}
+      //-                \${route.settings.classes ? route.settings.classes : ""} `) ${route.name}
 
     section#PageMiddle
       section#TrayLeft(class='${utils.page.leftTray.className}')
         menu#MainMenu
           ul
-            li( repeat.for='route of router.routes'
-                if.bind='!route.navModel.config.isChild && route.route'
-                class='${route.name == "pickle" ? "active" : ""}'
+            li( repeat.for='route of router.navigation'
+                if.bind='!route.settings.hidden'
+                mousedown.delegate='$parent.router.navigate(route.config.name)'
+                class='${route.isActive ? "active" : ""}'
               )
-                a(href='#/${route.name}') ${route.name}
+                span ${route.config.name}
 
       router-view#PageContent

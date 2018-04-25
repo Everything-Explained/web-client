@@ -1,5 +1,5 @@
 
-import {Message, MessageScale, MessageType} from '../chat/message';
+import {Message, MessageScale, MessageType} from './components/message';
 import {Chat} from './chat';
 
 export class Port {

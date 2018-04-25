@@ -1,5 +1,5 @@
 import {inject} from 'aurelia-framework';
-import { Web } from '../../helpers/web';
+import { Web } from '../../../helpers/web';
 
 
 interface Question {

@@ -2,13 +2,13 @@
 
 import {Port} from './port';
 import {inject} from 'aurelia-framework';
-import {Message, MessageType, MessageSeverity} from './message';
-import {aggregateVerses, IScriptures, IRawScriptures} from './display-verse';
-import {ClientIO} from '../../services/clientio';
+import {Message, MessageType, MessageSeverity} from './components/message';
+import {aggregateVerses, IScriptures, IRawScriptures} from './components/display-verse';
+import {ClientIO} from './components/chat-io';
 import {MiniModal} from '../../helpers/minimodal';
 import {Web} from '../../helpers/web';
-import {ChatCommander} from './el-chatcmdr/chatcmdr';
-import {InputHandler} from './el-chatcmdr/input-handler';
+import {ChatCommander} from './elements/chatcmdr/chatcmdr';
+import {InputHandler} from './elements/chatcmdr/input-handler';
 
 
 
