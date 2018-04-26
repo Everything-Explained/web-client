@@ -1,5 +1,5 @@
 import {inject} from 'aurelia-framework';
-import { Web } from '../../../shared/services/web-get';
+import { Web } from '../../../../shared/services/web-get';
 
 
 interface Question {
@@ -24,7 +24,7 @@ export class Faq {
 
   constructor(private _el: HTMLElement) {
 
-    Web.GET('/faq', {}, (err, code, data) => {
+    Web.GET('/faq', {json: true}, (err, code, data) => {
       if (err) {
         console.error(err);
         return;
