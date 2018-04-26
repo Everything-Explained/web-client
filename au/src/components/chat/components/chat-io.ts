@@ -3,7 +3,7 @@ import * as io from 'socket.io-client';
 import {Message, MessageType, MessageSeverity, IMessage} from './message';
 import {IRawScriptures} from './display-verse';
 import {Chat} from '../chat';
-import {Utils} from '../../../helpers/utils';
+import {Utils} from '../../../shared/utilities/utils';
 
 
 export class ClientIO {

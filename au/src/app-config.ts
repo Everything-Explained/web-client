@@ -1,6 +1,6 @@
 import {Aurelia} from 'aurelia-framework';
 import environment from './environment';
-import {Web} from './helpers/web';
+import {Web} from './shared/services/web-get';
 
 // Configure Bluebird Promises.
 (<any>Promise).config({

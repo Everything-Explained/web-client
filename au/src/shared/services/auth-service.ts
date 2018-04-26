@@ -1,5 +1,7 @@
-import {Web} from './helpers/web';
-import environment from './environment';
+import {Web} from './web-get';
+import environment from '../../environment';
+import { inject } from 'aurelia-framework';
+import { Session } from '../models/session';
 
 
 
@@ -9,6 +11,7 @@ enum LoginTypes {
   FACEBOOK = 4
 }
 
+@inject(Session)
 export class Login {
 
   private _auth2: gapi.auth2.GoogleAuth;
@@ -19,7 +22,7 @@ export class Login {
   private _fbReady = false;
 
 
-  constructor() {}
+  constructor(public session: Session) {}
 
   public initAuthLibs(cb: () => void) {
     if (this._isReady) return cb();

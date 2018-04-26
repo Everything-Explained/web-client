@@ -2,9 +2,9 @@
 import {Router, NavModel, RouterConfiguration, RouteConfig } from 'aurelia-router';
 import {inject} from 'aurelia-framework';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {Login} from './app-login';
-import {Session} from './app-session';
-import {MiniModal} from './helpers/minimodal';
+import {Login} from './shared/services/auth-service';
+import {Session} from './shared/models/session';
+import {MiniModal} from './shared/utilities/minimodal';
 
 
 interface PageConfiguration {
@@ -87,8 +87,9 @@ export class App {
     let routes = [];
 
     routes.push([
-      {route: ['', 'home'], name: 'home', moduleId: 'components/home/home', nav: true},
-      {route: ['changelog'], name: 'changelog', moduleId: 'components/changelog/changelog', nav: true}
+      {route: '', redirect: 'home'},
+      {route: 'home', name: 'home', moduleId: 'components/home/home', nav: true},
+      {route: 'changelog', name: 'changelog', moduleId: 'components/changelog/changelog', nav: true}
     ]);
 
     if (!this._session.authed) {

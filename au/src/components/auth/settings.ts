@@ -1,6 +1,6 @@
-import {Login} from '../../app-login';
+import {Login} from '../../shared/services/auth-service';
 import {inject} from 'aurelia-framework';
-import {Session} from '../../app-session';
+import {Session} from '../../shared/models/session';
 
 @inject(Login, Session)
 export class Settings {

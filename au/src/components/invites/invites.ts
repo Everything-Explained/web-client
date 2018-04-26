@@ -1,4 +1,4 @@
-import {Web} from '../../helpers/web';
+import {Web} from '../../shared/services/web-get';
 import {computedFrom} from 'aurelia-framework';
 
 

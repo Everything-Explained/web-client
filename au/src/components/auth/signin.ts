@@ -1,11 +1,11 @@
 const scope = 'https://www.googleapis.com/auth/plus.me';
 
-import {IRobot} from '../../helpers/robot-check';
-import {Web} from '../../helpers/web';
+import {IRobot} from '../../shared/utilities/robot-check';
+import {Web} from '../../shared/services/web-get';
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
-import {Login} from '../../app-login';
-import {Session} from '../../app-session';
+import {Login} from '../../shared/services/auth-service';
+import {Session} from '../../shared/models/session';
 
 enum SignupStatus {
   NONE = 1,
