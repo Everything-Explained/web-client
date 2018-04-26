@@ -24,7 +24,7 @@ export class Faq {
 
   constructor(private _el: HTMLElement) {
 
-    Web.GET('/faq', {json: true}, (err, code, data) => {
+    Web.GET('/faq', {}, (err, code, data) => {
       if (err) {
         console.error(err);
         return;

@@ -1,5 +1,5 @@
 import { RouterConfiguration, Router } from 'aurelia-router';
-import { inject } from 'aurelia-framework';
+import { inject, computedFrom } from 'aurelia-framework';
 import { Session } from '../../shared/models/session';
 
 @inject(Session)
@@ -26,6 +26,11 @@ export class Home {
 
     config.map(routes);
     this.router = router;
+  }
+
+  @computedFrom('router.currentInstruction.config.name')
+  get activeRoute() {
+    return this.router.currentInstruction.config.name;
   }
 
 }
