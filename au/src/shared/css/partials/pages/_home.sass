@@ -2,6 +2,13 @@ menu.home-page
   margin-bottom: 6px
   padding-right: 22px
   text-align: right
+  ul
+    display: inline-block
+    padding: 0 15px
+    float: right
+    border-bottom: 4px double hsl(278, 20%, 45%)
+    border-radius: 0 0 10px 10px
+    text-align: center
   li
     margin-right: 15px
     padding: 7px 15px
@@ -17,6 +24,8 @@ menu.home-page
     transition: all .3s
     &:hover
       color: hsl(278, 70%, 85%)
+    &:last-child
+      margin-right: 0
     &.active
       color: hsl(278, 70%, 85%)
       background: $panel

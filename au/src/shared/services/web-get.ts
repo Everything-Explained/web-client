@@ -5,6 +5,7 @@ interface URIProperties {
   headers?: any;
   data?: any;
   method?: string;
+  json?: boolean;
 }
 
 
@@ -35,7 +36,8 @@ export class Web {
     let req = new XMLHttpRequest()
       , fields = props.fields || null
       , raw = props.raw || null
-      , forms = null;
+      , forms = null
+    ;
 
     props.data = props.data || null;
 
