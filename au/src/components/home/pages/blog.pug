@@ -1,6 +1,6 @@
 template
-  require(from='../../resources/value-converters/markdown-format')
-  require(from='../../resources/value-converters/date-format')
+  require(from='../../../resources/value-converters/markdown-format')
+  require(from='../../../resources/value-converters/date-format')
   section.blog-container
     div.preloader(style.bind='isLoading ? "" : "display: none"')
     div.error(if.bind='isError') let the #[span.info admin] know an #[span.fail error] occurred
