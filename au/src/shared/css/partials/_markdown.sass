@@ -13,6 +13,8 @@
     &:hover
       color: hsl(50, 50%, 60%)
 
+$trans-speed: .35s
+
 .markdown
   font-family: 'Nunito'
   font-weight: 300
@@ -33,32 +35,32 @@
     line-height: 30px
     border-top-right-radius: 6.5px
     border-top-left-radius: 3.5px
-    transition: background .4s, color .4s
+    transition: background $trans-speed, color $trans-speed
     transform: translateZ(0)
 
-  li, blockquote
-    transition: background .4s
+  blockquote
+    transition: background $trans-speed
     transform: translateZ(0)
 
   dt, dd
-    transition: background .4s, color .4s
+    transition: background $trans-speed, color $trans-speed
     transform: translateZ(0)
 
 
   a
-    transition: border .4s, color .4s
+    transition: border $trans-speed, color $trans-speed
     transform: translateZ(0)
 
   b, strong
     font-weight: 400
     color: hsl(0, 0%, 70%)
-    transition: color .4s
+    transition: color $trans-speed
     transform: translateZ(0)
 
   i, em
     color: hsl(278, 20%, 72%)
     font-style: normal
-    transition: color .4s
+    transition: color $trans-speed
     transform: translateZ(0)
 
     strong, b
@@ -73,7 +75,7 @@
     border-radius: 5px
     white-space: nowrap
     word-spacing: -3px
-    transition: background .4s, color .4s
+    transition: background $trans-speed, color $trans-speed
     transform: translateZ(0)
 
 

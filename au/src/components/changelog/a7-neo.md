@@ -29,12 +29,10 @@ eyJ0aW1lIjoiMjAxNi0xMC0yNVQwNzowMDowMC4wMDBaIiwidGl0bGUiOiLOsTcgOiBuZW8ifQ==
 
 >- **Invite Only!** - To take the strain off the current testing phase of the site, I've decided to make the site invite-only. This will be pending on the overall popularity of the site and its resources.
 
->- **Sign In? What's That?** - I know, there was no way to actually Signup or Login to the site. This is no longer the case. It took a lot of revisions and updates, but it's finally here. You can login with either a <span style='color:hsl(220,44%,77%) !important;'>Facebook</span> or <span style='color: hsl(4,69%,77%) !important;'>Google+/Gmail</span> account.
->
+>- **Sign In? What's That?** - I know, there was no way to actually Signup or Login to the site. This is no longer the case. It took a lot of revisions and updates, but it's finally here. You can login with either a Facebook or Google+/Gmail account.
 >- This is a bigger discussion, but for right now these are the only ways to login. Eventually I plan on having a login system that incorperates more social networks and a method for those who have no social network accounts.
 
 >- **Did Someone Say Changelog?** - You're reading it right now! This section will only be updated with major releases and will generally be a decent length, so buckle up.
->
 >- If you would like to know about the day-to-day changes or quick fixes that pop out from time to time, you can request the repo link in chat and I just _might_ give if to you if you're _special_ enough _:P_
 
 # look forward to

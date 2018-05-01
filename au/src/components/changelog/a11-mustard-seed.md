@@ -6,15 +6,12 @@ eyJ0aW1lIjoiMjAxNy0wMS0xNlQwODowMDowMC4wMDBaIiwidGl0bGUiOiLOsTExIDogbXVzdGFyZC1z
 >- **New Changelog Look** - This changelog had seen better days. It was a bit too convoluted. More spacing and margins, as well as a background color has given it a bit of a face-lift.
 
 >- **Welcome to the Invite System!** - That's right, you can now request an invite directly through the site without needing to email anyone directly. The invite system allows `only 1 invite request per IP every 24 hours`.
->
 >- If you're thinking to yourself: _"I don't see this invite page anywhere!"_, it's probably because you're already logged in. Only guests can access the invite page.
 
 >- **Want to Know how Development is Going?** - For registered members, you can check out the new [Development Blog] page. I wanted a way to connect you directly to the development process of this site since Noumenae is not mine, but **ours**.
->
 >- Unfortunately, my life is quite hectic at the moment, so there will not be a defined schedule. I do plan on having one eventually though, _so stay tuned!_
 
 >- **New Rules!** - Just what you always wanted, more rules!! There is an ongoing [Discussion] about why the rules have been expanded to include legality. Signups are now an implicit agreement to these new legal rules. Don't worry though, this has nothing to do with going after members; it's there to protect Noumenae and associated persons against severe abuse of the site.
->
 >- In all likelyhood, this will not happen, but it's necessary as a: _"just in case"_ scenario.
 
 >- **New Loader Animation!** A loader animation has been universalized (is that a word?). Well anyway, it just means that there are no longer different animated [GIFS] when you're waiting for a resource to load. The new animation will look like a purple rippling pond.

@@ -1,4 +1,5 @@
 import {Web} from '../../shared/services/web-get';
+import { IPage, IPagingConfig } from '../../shared/layouts/dynamic-paging';
 
 interface Log {
   date:      string;
@@ -19,42 +20,36 @@ export class Changelog {
   public isAttached = false;
   public isLoading = false;
 
+  public pages: IPage[] = [];
+
+  public dynConfig: IPagingConfig;
+
 
   constructor() {
 
     Web.GET('/changelog', {},
       (err, code, data) => {
+        for (let d of data) {
+
+          let titleSplit = d.title.split(' :')
+            , preTitle = titleSplit[0]
+          ;
+          preTitle = `<span class="type">${preTitle}</span> :`;
+
+          this.pages.push({
+            title: preTitle + titleSplit[1],
+            time: new Date(d.time),
+            content: d.content
+          });
+        }
+
+        this.pages = this.pages.sort((p1, p2) => {
+          return p2.time.getTime() - p1.time.getTime();
+        });
+
         this.logs = data;
       }
     );
-
-  }
-
-  open(timeStamp: string) {
-    if (this.clicked) return;
-    let id =
-          timeStamp
-            .replace(/\//g, '')
-            .split('T')[0]
-            .replace(/\-/g, '')
-    ;
-
-    if (this.history && this.history.id == id) {
-      this.updateChanges();
-      return;
-    }
-
-    this.isLoading = true;
-
-    Web.GET(`/logs/${id}`, {},
-    (err, code, data) => {
-      this.history = {
-        id,
-        data
-      };
-      this.isLoading = false;
-      this.updateChanges();
-    });
 
   }
 

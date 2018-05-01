@@ -1,0 +1,13 @@
+template
+  require(from='../../resources/value-converters/markdown-format')
+  article.dyn-panel
+    div.panel-container
+      div.panel
+        div.titles
+          div.scroller
+            div.title(repeat.for='page of pages'
+                      innerhtml.bind='page.title'
+                      mousedown.delegate='render(page.content)')
+
+      div.page.markdown(class.bind='mdClass')
+        div.scroller(innerhtml.bind='content | markdown')

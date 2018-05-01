@@ -1,0 +1,69 @@
+article.dyn-panel
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+
+  // Placeholder text
+  h4
+    position: relative
+    top: 27%
+    margin: 0 auto
+    font-size: 34px
+    color: hsl(50, 75%, 53%)
+    text-align: center
+
+  .panel-container
+    display: flex
+    height: 100%
+    flex-direction: row
+
+  .scroller
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    padding-right: 5px
+    overflow-x: hidden
+    overflow-y: auto
+
+  .titles
+    position: relative
+    height: 100%
+    flex-direction: column
+    min-width: 325px
+    margin-left: 7px
+
+  .type
+    font-variant: normal
+
+  .title
+    position: relative
+    margin-bottom: 7px
+    padding: 5px 0
+    color: hsl(278, 0%, 70%)
+    background: $sub-panel-light
+    font-family: 'Comfortaa'
+    font-weight: 300
+    font-variant: small-caps
+    font-size: 20px
+    text-align: center
+    letter-spacing: 1px
+    cursor: pointer
+    transition: background .4s, color .4s
+
+  .page
+    position: relative
+    flex: 1
+    min-width: 400px
+    margin-top: 5px
+    margin-right: 20px
+    .scroller
+      padding: 0
+      margin-right: -20px
+      & > :last-child
+        margin-bottom: 133px
+
+

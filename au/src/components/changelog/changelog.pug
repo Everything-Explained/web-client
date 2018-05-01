@@ -1,21 +1,24 @@
-- var notice = "<a href='/#/faq/notice'>notices</a>";
-
 template
   require(from='../../resources/value-converters/date-format')
   require(from='../../resources/value-converters/markdown-format')
+  require(from='../../shared/layouts/dynamic-paging')
 
-  section.changelog(
-    class='${isAttached ? "page-in" : "g-hidden"}'
-  )
-    div.center-preloader(class='${isLoading ? "active" : ""}')
-      div.preloader
-    section#ChangeList
-      span.title(repeat.for='log of logs'
-                 class='${clicked ? "g-hidden" : "g-visible"}'
-                 click.delegate='open(log.timeStamp)')
-        div.description(innerHTML.bind='log.title')
-        div.date ${log.timeStamp | dateFormat: '@STD'}
+  dynamic-paging(config.bind='dynConfig'
+                 md-class='md-changelog'
+                 pages.bind='pages'
+                 placeholder='#### click a log on the left to view')
+  //- section.changelog(
+  //-   class='${isAttached ? "page-in" : "g-hidden"}'
+  //- )
+  //-   div.center-preloader(class='${isLoading ? "active" : ""}')
+  //-     div.preloader
+  //-   section#ChangeList
+  //-     span.title(repeat.for='log of logs'
+  //-                class='${clicked ? "g-hidden" : "g-visible"}'
+  //-                click.delegate='open(log.timeStamp)')
+  //-       div.description(innerHTML.bind='log.title')
+  //-       div.date ${log.timeStamp | dateFormat: '@STD'}
 
-    article#Changes.markdown.md-changelog(innerhtml.bind='changes | markdown: true', class='${clicked ? "g-visible" : "g-hidden"}')
+  //-   article#Changes.markdown.md-changelog(innerhtml.bind='changes | markdown: true', class='${clicked ? "g-visible" : "g-hidden"}')
 
-    aside.close.icon-close(click.delegate='close()', class='${clicked ? "g-visible" : "g-hidden"}')
+  //-   aside.close.icon-close(click.delegate='close()', class='${clicked ? "g-visible" : "g-hidden"}')
