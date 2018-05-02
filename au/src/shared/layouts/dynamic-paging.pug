@@ -6,8 +6,14 @@ template
         div.titles
           div.scroller
             div.title(repeat.for='page of pages'
-                      innerhtml.bind='page.title'
-                      mousedown.delegate='render(page.content)')
+                      mousedown.delegate='render(page)'
+            )
+              div.left(if.bind='page.title.length == 2') ${page.title[0]}
+              div.right(if.bind='page.title.length == 2') ${page.title[1]}
+
 
       div.page.markdown(class.bind='mdClass')
-        div.scroller(innerhtml.bind='content | markdown')
+        header(if.bind='header') ${header}
+          div.subheader ${subheader}
+        div.content-scroller.scroller(innerhtml.bind='content | markdown'
+                                      ref='elContentScroller')

@@ -8,30 +8,33 @@ export interface IPagingConfig {
 }
 
 export interface IPage {
-  title: string;
+  title: string|[string, string];
   time?: Date;
   content: string;
 }
 
 export class DynamicPaging {
-  @bindable placeholder = '#### this is a temporary placeholder';
+  @bindable placeHolder = '#### this is a temporary placeholder';
   @bindable({defaultBindingMode: bindingMode.oneTime }) mdClass = '';
   @bindable({defaultBindingMode: bindingMode.oneTime }) pages: IPage[] = [];
 
+  public elContentScroller: HTMLElement;
+
   public content = '';
+  public header = '';
+  public subheader = '';
 
-
-
-  constructor() {
-    this.content = this.placeholder;
-  }
+  constructor() {}
 
 
   bind() {
-
+    this.content = this.placeHolder;
   }
 
-  public render(content: string) {
-    this.content = content;
+  public render(page: IPage) {
+    this.content = page.content;
+    this.header = page.title[1];
+    this.subheader = page.time.toLocaleDateString();
+    this.elContentScroller.scrollTop = 0;
   }
 }
