@@ -1,4 +1,4 @@
-# what is a notice
+eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxMzoxNi4yOTVaIiwidGl0bGUiOiJhYm91dCBub3RpY2VzIn0=
 
 When sending a message to a channel, everyone sees it. Notices allow you to single out one person in a channel and send them a message directly. The difference between this kind of message and a **private message**, is that a notice is channel-specific. You can only send a notice to a user if they're _in the same channel as you are_.
 

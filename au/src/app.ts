@@ -89,7 +89,7 @@ export class App {
     routes.push([
       {route: '', redirect: 'home'},
       {route: 'home', name: 'home', moduleId: 'components/home/home', nav: true},
-      {route: 'changelog', name: 'changelog', moduleId: 'components/changelog/changelog', nav: true}
+      {route: ['changelog', 'changelog/:page'], name: 'changelog', moduleId: 'components/changelog/changelog', nav: true}
     ]);
 
     if (!this._session.authed) {

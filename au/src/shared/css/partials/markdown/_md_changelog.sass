@@ -20,10 +20,10 @@
 
     li
       margin-top: 7px
-      padding: 15px 20px
+      padding: 15px 8px 15px 15px
+      transition: background $trans-speed, color $trans-speed
       &:first-child
         margin-top: 10px
-      transition: background $trans-speed, color $trans-speed
 
     &:hover
       background: lighten($panel-hover, 5%)
@@ -33,17 +33,7 @@
       background: hsl(278, 25%, 25%)
 
     &:hover li
-      background-color: hsl(278, 18%, 12%)
-      color: hsl(0, 0%, 65%)
-      strong
-        color: hsl(0, 0%, 75%)
-      em
-        color: hsl(278, 50%, 80%)
-      a
-        color: hsl(50, 0%, 65%)
-        border-color: hsl(278, 50%, 80%)
-        &:hover
-          color: hsl(50, 50%, 60%)
+      @extend %panel-hover
 
 
   ul

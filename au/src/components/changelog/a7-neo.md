@@ -48,5 +48,5 @@ eyJ0aW1lIjoiMjAxNi0xMC0yNVQwNzowMDowMC4wMDBaIiwidGl0bGUiOiLOsTcgOiBuZW8ifQ==
 and finally [Noumenae].
 
 
-[Noumenae]:/#/faq/noumenae
+[Noumenae]:/#/home/faq/noumenae
 [notices]:/#faq/notice

@@ -1,4 +1,4 @@
-# what are levels
+eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxMDo1OS43ODNaIiwidGl0bGUiOiJsZXZlbGluZyJ9
 
 When we talk about levels in **Noumenae** we're talking about **Message Levels**. When you send a message using chat, you have a chance to gain some [XP] towards the next level. Each level comes with its own name and each name relates to how invested a user is in chatting.
 
@@ -22,4 +22,4 @@ When we talk about levels in **Noumenae** we're talking about **Message Levels**
 
 ##### WIP : Level names are subject to change.
 
-[xp]:#/faq/what-is-xp
+[xp]:#/home/faq/what-is-xp

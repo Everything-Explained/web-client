@@ -1,4 +1,4 @@
-# what is a ban
+eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxMToyNC42OTBaIiwidGl0bGUiOiJhYm91dCBiYW5zIn0=
 
 A ban is when a user is _temporarily_ or _permanately_ **blacklisted** from being a user of **Noumenae**. Banned users will not be able to login to the site, but they can still view any of the static pages that do not require a login.
 

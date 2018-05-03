@@ -1,4 +1,4 @@
-# what is a love
+eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxMTo1NS4xNjJaIiwidGl0bGUiOiJhYm91dCBsb3ZlcyJ9
 
 **Love** is a big part of **Noumenae** and as such, it is a trackable stat on the site; however, it is free. There are no limitations on how much **Love** one can give or recieve. **Noumenae** encourages that **Love** be given when any user contributes something meaningful to you personally. When you give **Love**, it will increase not only their love stat, but your _love-given_ stat.
 
@@ -10,4 +10,4 @@ Originally **Love** points were going to be aquired over time and extremely rare
 
 ##### WIP : This feature is currently not available
 
-[renown]:#/faq/renown
+[renown]:#/home/faq/renown

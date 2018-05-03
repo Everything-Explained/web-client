@@ -46,4 +46,4 @@ eyJ0aW1lIjoiMjAxOC0wNC0yMFQwODowMDowMC4wMDBaIiwidGl0bGUiOiLOsTQ4IDogY2hyb21lLWki
 [cdn]:https://www.incapsula.com/cdn-guide/what-is-cdn-how-it-works.html
 [cache]:https://en.wikipedia.org/wiki/Cache_(computing)
 [busted]:https://www.keycdn.com/support/what-is-cache-busting/
-[xp]:#/faq/what-is-xp
+[xp]:#/home/faq/what-is-xp

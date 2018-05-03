@@ -14,7 +14,8 @@ eyJ0aW1lIjoiMjAxNy0wNy0yNVQwODowMDowMC4wMDBaIiwidGl0bGUiOiLOsTEyIDogZmF0ZSJ9
 
 >- **Notices!** - Finally they're here. You are now able to [notice] users, which is not unlike sending a private message, but instead of the message being sent to some special window, it all appears in the main chat. Read more about notices [here](/#faq/notice).
 >- To notice a user, just **double click** their name in the user list; it will fill your input with a **command** and **ID**. It will look something like `/notice zh882Egs8QJpK6aAAAf `. Just start typing your message and hit enter to send it. Don't worry about not getting a confirmation, that's just how it works for now.
-_In the future you'll get a message saying that your notice was sent successfully_.
+>
+>- _In the future you'll get a message saying that your notice was sent successfully_.
 
 # fixes
 
@@ -33,7 +34,8 @@ _In the future you'll get a message saying that your notice was sent successfull
 
 >- **Ping, Pong** - Back in the day, when real-time communication was much more difficult, there was a _ping-pong_ message that ensured the client was still connected to the server. The server would send a _ping_ message and the client would return a _pong_ message. If the server did not recieve a _pong_ message within a certain amount of time, the server would disconnect and/or cleanup the client connection.
 >- Thankfully such shinanigans are not necessary these days, but...without a series of ongoing _send-recieve_ transactions, there's no way to accurately measure [latency]. So even though it's not necessary from a design standpoint, it's still very helpful for getting an accurate measurement of a clients [latency] to the server. This allows your ping to be measured in the new user context menu.
-_Other real-time stats will piggy-back on this method like: away status, idle time, and message activity_
+>
+>- _Other real-time stats will piggy-back on this method like: away status, idle time, and message activity_
 
 
 [discussion]:https://github.com/Noumenae/client/issues/46

@@ -4,34 +4,43 @@ article.dyn-panel
   left: 0
   right: 0
   bottom: 0
+  opacity: 0
+  transition: all $trans-speed
 
   // Placeholder text
   h4
-    position: relative
-    top: 27%
-    margin: 0 auto
+    position: absolute
+    display: inline-block
+    // width: 500px
+    padding: 5px 13px
+    margin: 0
+    top: 20%
+    left: 50%
     font-size: 34px
-    color: hsl(50, 75%, 53%)
+    color: hsl(50, 55%, 55%)
+    background: $panel
+    border-radius: 7px
     text-align: center
+    transform: translateX(-50%)
 
   header
     position: absolute
     left: 0
     right: 0
-    padding: 5px 0 55px 0
+    padding-top: 20px
+    height: 144px
     text-align: center
     @extend %font-comfortaa
     font-size: 44px
     letter-spacing: 1px
-    color: hsl(50, 50%, 50%)
-    background: linear-gradient(to bottom, hsla(0, 0%, 6.7%, 0.95) 0%, hsla(0, 0%, 6.7%, 0.8) 60%, hsla(0, 0%,6.7%,0) 100%);
+    color: hsl(50, 55%, 55%)
+    background: linear-gradient(to bottom, hsla(0, 0%, 6.7%, 0.97) 5%, hsla(0, 0%, 6.7%, 0.85) 60%, hsla(0, 0%, 6.7%, 0) 100%);
     z-index: 100
     .subheader
       position: absolute
       left: 0
       right: 0
       font-size: 18px
-      color: hsl(50, 50%, 50%)
 
   .panel-container
     display: flex
@@ -48,24 +57,26 @@ article.dyn-panel
     overflow-x: hidden
     overflow-y: auto
 
-  .content-scroller >:first-child
-    margin-top: 90px
+  .content-scroller
+    padding: 0
+    margin-right: -20px
+    & > h1:first-child, & > p:first-child
+      margin-top: 145px
+    & > :last-child
+      margin-bottom: 150px
 
   .titles
     position: relative
     height: 100%
     flex-direction: column
-    min-width: 325px
+    min-width: 300px
     margin-left: 7px
     margin-top: 7px
-
-  .type
-    font-variant: normal
 
   .title
     position: relative
     display: flex
-    flex-direction: row
+    flex-direction: column-reverse
     margin-bottom: 7px
     padding: 5px 0
     color: hsl(278, 0%, 70%)
@@ -73,7 +84,7 @@ article.dyn-panel
     font-family: 'Comfortaa'
     font-weight: 300
     font-variant: small-caps
-    font-size: 24px
+    font-size: 22px
     text-align: center
     letter-spacing: 1px
     cursor: pointer
@@ -81,35 +92,54 @@ article.dyn-panel
     &:hover
       background: lighten($panel-hover, 3%)
       color: hsl(0, 0%, 85%)
-      & .left
+      & .title-left
         color: hsl(50, 70%, 70%)
+      & .subtitle
+        color: lighten($panel-hover, 43%)
 
+  .split-title
+    display: flex
+    font-size: 24px
+    flex-direction: row
 
-  .left
+  .subtitle
     position: relative
-    top: 4px
-    flex: 1
-    font-size: 20px
-    text-align: right
+    left: 10px
+    font-size: 16px
+    font-family: 'Source Code Pro'
+    font-variant: normal
+    color: lighten($panel, 25%)
+    text-align: left
+    transition: color $trans-speed
+
+  .title-left
+    position: relative
+    flex: 1.5
+    align-self: center
+    font-size: 24px
     font-variant: normal
     color: hsl(278, 40%, 75%)
     transition: color $trans-speed
 
-  .right
+  .title-right
     flex: 4
     text-align: left
     padding-left: 10px
 
-  .page
+  .content
     position: relative
     flex: 1
     min-width: 400px
     margin-top: 5px
     margin-right: 20px
-    .scroller
-      padding: 0
-      margin-right: -20px
-      & > :last-child
-        margin-bottom: 133px
+    opacity: 0
+    transition: opacity .25s
+    &.visible
+      opacity: 1
+    &.hidden
+      opacity: 0
+
+
+
 
 

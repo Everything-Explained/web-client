@@ -1,12 +1,9 @@
 template
-  require(from='../../resources/value-converters/date-format')
-  require(from='../../resources/value-converters/markdown-format')
   require(from='../../shared/layouts/dynamic-paging')
 
-  dynamic-paging(config.bind='dynConfig'
-                 md-class='md-changelog'
+  dynamic-paging(md-class='md-changelog'
                  pages.bind='pages'
-                 placeholder='#### click a log on the left to view')
+                 place-holder='#### select a log on the left')
   //- section.changelog(
   //-   class='${isAttached ? "page-in" : "g-hidden"}'
   //- )

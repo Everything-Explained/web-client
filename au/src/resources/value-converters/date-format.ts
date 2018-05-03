@@ -7,6 +7,10 @@ export class DateFormatValueConverter {
       format = 'MMMM Do, YYYY';
     }
 
+    if (format == '@NUM') {
+      format = 'MM/DD/YYYY';
+    }
+
     let date = moment(val).format(format);
 
     if (~date.indexOf('Invalid')) {

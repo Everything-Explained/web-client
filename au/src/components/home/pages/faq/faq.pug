@@ -1,19 +1,23 @@
 template
-  require(from='../../../../resources/value-converters/markdown-format')
-  article.home.faq(
-    class='${isAttached ? "page-in" : "g-hidden"}'
-    role='FAQ')
-    div.qa-container
-      div.question-panel
-        input#Search(type='text',
-                     placeholder='Search',
-                     keyup.delegate='seek($event) & debounce:150'
-                     ref='elSearch')
-        div#Questions
-          div.scroller
-            div.qablock(repeat.for='q of questions' if.bind = '!q.filter')
-              div.question(mousedown.delegate='render(q)') ${q.title}
+  require(from='../../../../shared/layouts/dynamic-paging')
 
-      div#Answers.markdown.md-faq
-        div.scroller(innerhtml.bind = 'answer | markdown', ref='elScroller')
-          div.answer-placeholder Click a Question on the Left
+  dynamic-paging(md-class='md-faq'
+                 pages.bind='pages'
+                 place-holder='#### click a topic on the left')
+  //- article.home.faq(
+  //-   class='${isAttached ? "page-in" : "g-hidden"}'
+  //-   role='FAQ')
+  //-   div.qa-container
+  //-     div.question-panel
+  //-       input#Search(type='text',
+  //-                    placeholder='Search',
+  //-                    keyup.delegate='seek($event) & debounce:150'
+  //-                    ref='elSearch')
+  //-       div#Questions
+  //-         div.scroller
+  //-           div.qablock(repeat.for='q of questions' if.bind = '!q.filter')
+  //-             div.question(mousedown.delegate='render(q)') ${q.title}
+
+  //-     div#Answers
+  //-       div.scroller.markdown.md-faq(innerhtml.bind = 'answer | markdown', ref='elScroller')
+  //-         div.answer-placeholder Click a Question on the Left

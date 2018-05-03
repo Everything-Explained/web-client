@@ -1,4 +1,4 @@
-# what is a silence
+eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxMzozMC40MDVaIiwidGl0bGUiOiJhYm91dCBzaWxlbmNlcyJ9
 
 A silence is when an **Admin** or **Moderator** decides to mute a user for inappropriate content or behavior. The duration of the mute depends on the severity of the infraction. _Most mutes will only last 15 - 300 seconds_.
 

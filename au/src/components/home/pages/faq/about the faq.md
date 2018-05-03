@@ -1,4 +1,4 @@
-# ?: how do i use the faq
+eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDowOTozMy4zNjRaIiwidGl0bGUiOiJhYm91dCB0aGUgZmFxIn0=
 
 You'll notice in the _top-left_ of this panel, there is a search box. Typing in that box will filter the FAQ questions. Clicking on any of the questions on the left, will replace _this area you're reading right now_, with the answer of the question you clicked.
 
@@ -16,6 +16,6 @@ External links look identical to page links, but they will open up a _new Window
 
 **That's all there is to it! Enjoy the FAQ!**
 
-[what is xp]:#/faq/what-is-xp
-[what are levels]:#/faq/what-are-levels
+[what is xp]:#/home/faq/what-is-xp
+[what are levels]:#/home/faq/what-are-levels
 [definition of a cat]:http://www.dictionary.com/browse/cat
