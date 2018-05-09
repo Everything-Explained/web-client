@@ -1,7 +1,7 @@
 template
   require(from='../../../../shared/layouts/dynamic-paging')
 
-  dynamic-paging(md-class='md-faq'
+  dynamic-paging(if.bind='pages.length' md-class='md-faq'
                  pages.bind='pages'
                  place-holder='#### click a topic on the left')
   //- article.home.faq(

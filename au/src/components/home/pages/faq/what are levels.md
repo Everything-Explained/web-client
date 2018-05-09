@@ -22,4 +22,4 @@ When we talk about levels in **Noumenae** we're talking about **Message Levels**
 
 ##### WIP : Level names are subject to change.
 
-[xp]:#/home/faq/what-is-xp
+[xp]:#/home/faq/about-xp-for-levels

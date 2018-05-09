@@ -16,6 +16,6 @@ External links look identical to page links, but they will open up a _new Window
 
 **That's all there is to it! Enjoy the FAQ!**
 
-[what is xp]:#/home/faq/what-is-xp
-[what are levels]:#/home/faq/what-are-levels
+[what is xp]:#/home/faq/about-xp-for-levels
+[what are levels]:#/home/faq/leveling
 [definition of a cat]:http://www.dictionary.com/browse/cat

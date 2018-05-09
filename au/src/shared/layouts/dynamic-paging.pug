@@ -13,7 +13,7 @@ template
               div.split-title(if.bind='page.title.length == 2')
                 div.title-left ${page.title[0]}
                 div.title-right ${page.title[1]}
-                  div.subtitle(if.bind='page.time') ${page.time | dateFormat: "@NUM"}
+                  div.subtitle(if.bind='page.time') ${page.time | dateFormat: "@NUM-"}
 
 
 
@@ -21,7 +21,7 @@ template
         class='${isTransit ? "hidden" : "visible"}'
       )
         header(if.bind='header') ${header}
-          div.subheader ${subheader}
+          div.subheader ${subheader | dateFormat: "@NUMTIME"}
         div.content-scroller.scroller.markdown(
           innerhtml.bind='content | markdown'
           class.bind='mdClass'

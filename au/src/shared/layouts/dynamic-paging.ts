@@ -1,4 +1,4 @@
-import { bindable, computedFrom, bindingMode, inject } from 'aurelia-framework';
+import { bindable, computedFrom, bindingMode, inject, BindingEngine, customElement } from 'aurelia-framework';
 import { Router, NavModel, NavigationInstruction } from 'aurelia-router';
 import { EventAggregator, Subscription } from 'aurelia-event-aggregator';
 import { RouteHandler } from 'aurelia-route-recognizer';
@@ -16,11 +16,12 @@ export interface IPage {
   content: string;
 }
 
-@inject(Router, EventAggregator)
+@customElement('dynamic-paging')
+@inject(Router, EventAggregator, BindingEngine)
 export class DynamicPaging {
   @bindable placeHolder = '#### this is a temporary placeholder';
   @bindable({defaultBindingMode: bindingMode.oneTime }) mdClass = '';
-  @bindable({defaultBindingMode: bindingMode.oneTime }) pages: IPage[] = [];
+  @bindable({defaultBindingMode: bindingMode.twoWay }) pages: IPage[] = [];
 
   public elContentScroller: HTMLElement;
   public content = '';
@@ -28,39 +29,24 @@ export class DynamicPaging {
   public isTransit = false;
 
   public header = '';
-  public subheader = '';
+  public subheader: Date = null;
 
   private routerSub: Subscription;
   private _firstLoad = true;
 
-  constructor(private _router: Router, private _ea: EventAggregator) {
-    console.log('constructing');
-    console.log(this.pages);
+  constructor(private _router: Router, private _ea: EventAggregator, private _be: BindingEngine) {
   }
 
 
-  bind() {
+  bind(context: any, old: any) {
     this.content = this.placeHolder;
     let page = this._router.currentInstruction.params.page;
-
     this._findPage(page);
 
-    this.routerSub = this._ea.subscribe('router:navigation:complete', (nav) => {
-      if (this._firstLoad) {
-        this._firstLoad = false;
-        return;
-      }
-      nav = nav.instruction as NavigationInstruction;
-      if (nav.params.childRoute) {
-        this._findPage(nav.params.childRoute.split('/').pop());
-      }
-      else
-        this._findPage(nav.params.page);
-    });
   }
 
+
   private _findPage(page: string) {
-    console.log(this.pages);
     if (!page) {
       this.content = this.placeHolder;
       this.header = '';
@@ -90,32 +76,16 @@ export class DynamicPaging {
       this.isAttached = true;
     }, 50);
 
-    setTimeout(() => {
-      console.log(this.pages);
-      let titles = []
-        , sortedPages = []
-      ;
-
-      if (!this.pages.length) {
-        console.log(this.pages.pop());
+    this.routerSub = this._ea.subscribe('router:navigation:complete', (nav) => {
+      nav = nav.instruction as NavigationInstruction;
+      if (nav.params.childRoute) {
+        let test = nav.params.childRoute.split('/').pop();
+        this._findPage(test);
       }
+      else
+        this._findPage(nav.params.page);
+    });
 
-      if (typeof this.pages[0].title == 'string') {
-        for (let p of this.pages) {
-          titles.push(p.title);
-        }
-        titles.sort();
-        for (let t of titles) {
-          for (let p of this.pages) {
-            if (t == p.title) {
-              sortedPages.push(p);
-              break;
-            }
-          }
-        }
-        this.pages = sortedPages;
-      }
-    }, 50);
   }
 
   detached() {
@@ -146,7 +116,7 @@ export class DynamicPaging {
           ? page.title
           : page.title[1]
       ;
-      this.subheader = page.time.toLocaleDateString();
+      this.subheader = page.time;
       this.elContentScroller.scrollTop = 0;
     }, 250);
   }

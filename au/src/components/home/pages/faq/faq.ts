@@ -30,6 +30,10 @@ export class Faq {
         return;
       }
 
+      let titles = []
+        , sortedPages = []
+      ;
+
       for (let d of data) {
         this.pages.push(
           {
@@ -38,6 +42,22 @@ export class Faq {
             time: new Date(d.date)
           }
         );
+      }
+
+      if (typeof this.pages[0].title == 'string') {
+        for (let p of this.pages) {
+          titles.push(p.title);
+        }
+        titles.sort();
+        for (let t of titles) {
+          for (let p of this.pages) {
+            if (t == p.title) {
+              sortedPages.push(p);
+              break;
+            }
+          }
+        }
+        this.pages = sortedPages;
       }
     });
 
