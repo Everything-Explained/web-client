@@ -43,22 +43,6 @@ export class Faq {
           }
         );
       }
-
-      if (typeof this.pages[0].title == 'string') {
-        for (let p of this.pages) {
-          titles.push(p.title);
-        }
-        titles.sort();
-        for (let t of titles) {
-          for (let p of this.pages) {
-            if (t == p.title) {
-              sortedPages.push(p);
-              break;
-            }
-          }
-        }
-        this.pages = sortedPages;
-      }
     });
 
   }

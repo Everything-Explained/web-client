@@ -41,32 +41,23 @@ export class DynamicPaging {
   bind(context: any, old: any) {
     this.content = this.placeHolder;
     let page = this._router.currentInstruction.params.page;
-    this._findPage(page);
+    if (typeof this.pages[0].title == 'string') {
+      this.pages.sort((p1, p2) => p1.title > p2.title ? 1 : -1);
+    }
+    this.render(this._findPage(page));
 
   }
 
 
   private _findPage(page: string) {
-    if (!page) {
-      this.content = this.placeHolder;
-      this.header = '';
-      return;
-    }
+    if (!page) return null;
+
     if (typeof this.pages[0].title == 'string') {
-      for (let p of this.pages) {
-        if (p.title == page.replace(/-/g, ' ')) {
-          this.render(p);
-          break;
-        }
-      }
+      let cleanPage = page.replace(/-/g, ' ');
+      return this.pages.find(p => p.title == cleanPage);
     }
     else {
-      for (let p of this.pages) {
-        if (p.title[1] == page) {
-          this.render(p);
-          break;
-        }
-      }
+      return this.pages.find(p => p.title[1] == page);
     }
 
   }
@@ -79,11 +70,11 @@ export class DynamicPaging {
     this.routerSub = this._ea.subscribe('router:navigation:complete', (nav) => {
       nav = nav.instruction as NavigationInstruction;
       if (nav.params.childRoute) {
-        let test = nav.params.childRoute.split('/').pop();
-        this._findPage(test);
+        let page = nav.params.childRoute.split('/').pop();
+        this.render(this._findPage(page));
       }
       else
-        this._findPage(nav.params.page);
+        this.render(this._findPage(nav.params.page));
     });
 
   }
@@ -107,6 +98,11 @@ export class DynamicPaging {
 
 
   public render(page: IPage) {
+    if (!page) {
+      this.content = this.placeHolder;
+      this.header = '';
+      return;
+    }
     this.isTransit = true;
     setTimeout(() => {
       this.isTransit = false;
