@@ -6,7 +6,7 @@ import {Chat} from '../chat';
 import {Utils} from '../../../shared/utilities/utils';
 
 
-export class ClientIO {
+export class ChatIO {
 
   private _sock = io({
     forceNew: true,

@@ -4,7 +4,7 @@ import {Port} from './port';
 import {inject} from 'aurelia-framework';
 import {Message, MessageType, MessageSeverity} from './components/message';
 import {aggregateVerses, IScriptures, IRawScriptures} from './components/display-verse';
-import {ClientIO} from './components/chat-io';
+import {ChatIO} from './components/chat-io';
 import {MiniModal} from '../../shared/utilities/minimodal';
 import {Web} from '../../shared/services/web-get';
 import {ChatCommander} from './elements/chatcmdr/chatcmdr';
@@ -15,7 +15,7 @@ import {InputHandler} from './elements/chatcmdr/input-handler';
 export enum Ports { MAIN, TOP, CENTER, BOTTOM };
 
 export interface CommanderData {
-  sock: ClientIO;
+  sock: ChatIO;
   chatView: Chat;
 }
 enum AccessLevel {
@@ -30,7 +30,7 @@ enum AccessLevel {
 export class Chat {
 
   // Socket IO instance
-  io: ClientIO;
+  io: ChatIO;
 
   // Data to send to the input commander
   data: CommanderData;
@@ -81,7 +81,7 @@ export class Chat {
 
     // Initialize chat service
     // DO NOT MOVE -- Dependancy of bind()
-    this.io = new ClientIO((data) => {
+    this.io = new ChatIO((data) => {
       this.alias = data.alias;
       this.avatar = data.picture;
       this.id = data.id;

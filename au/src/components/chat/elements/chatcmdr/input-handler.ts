@@ -1,4 +1,4 @@
-import {ClientIO} from '../../components/chat-io';
+import {ChatIO} from '../../components/chat-io';
 import {CommanderData, Chat} from '../../chat';
 import {InputHints} from './input-hints';
 import {InputHistory} from './input-history';
@@ -87,7 +87,7 @@ export class InputHandler {
 
 
   constructor(private _commandBox: HTMLElement,
-              private _sock: ClientIO,
+              private _sock: ChatIO,
               private _chatView: Chat,
               private _commands: ChatCommands)
   {

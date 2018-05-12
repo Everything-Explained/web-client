@@ -1,4 +1,4 @@
-import {ClientIO} from '../../components/chat-io';
+import {ChatIO} from '../../components/chat-io';
 import {CommanderData, Chat} from '../../chat';
 
 export class InputHints {

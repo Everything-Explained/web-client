@@ -2,7 +2,7 @@
 
 import {bindable, inject} from 'aurelia-framework';
 import {MessageScale, MessageType} from '../../components/message';
-import {ClientIO} from '../../components/chat-io';
+import {ChatIO} from '../../components/chat-io';
 import {CommanderData, Chat} from '../../chat';
 // import {Port} from '../../../components/chat/port';
 import {ChatCommands} from '../../components/commands';
@@ -50,7 +50,7 @@ export class ChatCommander {
   @bindable chatData: CommanderData;
   @bindable pickleData: string;
 
-  private _sock: ClientIO;
+  private _sock: ChatIO;
   private _commands: ChatCommands;
   private _cmdHistory = [];
   private _cmdHistoryPos = null;

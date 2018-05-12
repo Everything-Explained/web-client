@@ -2,7 +2,7 @@
 import {bindable, autoinject, customElement, Disposable, BindingEngine} from 'aurelia-framework';
 import * as moment from 'moment';
 import {Message, MessageType} from '../../components/message';
-import {ClientIO} from '../../components/chat-io';
+import {ChatIO} from '../../components/chat-io';
 import {BibleVerseFilter} from './bible-verse-filter';
 import {MarkdownValueConverter} from '../../../../resources/value-converters/markdown-format';
 
@@ -25,7 +25,7 @@ interface IWord {
 export class MessageView {
 
   @bindable cfg: Message;
-  @bindable io: ClientIO;
+  @bindable io: ChatIO;
   @bindable messages: string[];
 
   realTime:      string;

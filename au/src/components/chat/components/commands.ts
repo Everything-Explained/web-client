@@ -1,4 +1,4 @@
-import {ClientIO} from './chat-io';
+import {ChatIO} from './chat-io';
 import {ChatCommander} from '../elements/chatcmdr/chatcmdr';
 import {MessageScale, MessageType} from '../components/message';
 import {Chat} from '../chat';
@@ -16,7 +16,7 @@ export class ChatCommands {
   public aliases = [] as string[];
 
 
-  constructor(private _sock: ClientIO, private _chatView: Chat) {
+  constructor(private _sock: ChatIO, private _chatView: Chat) {
 
     this.commands['me|emote']   = (args) => this._emote(args[0]);
     this.commands['notice']     = (args) => this._notice(args[0]);

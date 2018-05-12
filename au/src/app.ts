@@ -28,7 +28,16 @@ export interface IRoute {
 @inject(Element, EventAggregator, MiniModal, Login, Session)
 export class App {
 
-  version = '48';
+  public watermark = {
+    version: '36',
+    class: 'α',
+    title: 'α36',
+    desc: `
+      We shall carry on by 12's until we reach β;
+      a shift from the arbitrary past into the ever
+      present - a gift to Me, Myself, and I.
+    `
+  };
 
   router: Router;
 
@@ -165,6 +174,10 @@ export class App {
 
   get lights() {
     return localStorage.getItem('lights') == 'on';
+  }
+
+  public openWatermark() {
+    this._modal.show('VersionModal');
   }
 
 
