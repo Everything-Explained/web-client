@@ -35,14 +35,14 @@ article.dyn-panel
     color: hsl(50, 55%, 55%)
     background: linear-gradient(to bottom, hsla(0, 0%, 6.7%, 0.97) 5%, hsla(0, 0%, 6.7%, 0.85) 60%, hsla(0, 0%, 6.7%, 0) 100%);
     z-index: 100
-    .subheader
+    .timestamp
       position: absolute
       left: 0
       right: 0
       font-size: 18px
       font-variant: normal
       font-family: 'Source Code Pro'
-      color: lighten($panel, 23%)
+      color: lighten($panel, 25%)
 
   .panel-container
     display: flex
@@ -78,7 +78,7 @@ article.dyn-panel
   .title
     position: relative
     display: flex
-    flex-direction: column-reverse
+    flex-direction: column
     margin-bottom: 7px
     padding: 5px 0
     color: hsl(278, 0%, 70%)
@@ -99,20 +99,22 @@ article.dyn-panel
       & .subtitle
         color: lighten($panel-hover, 43%)
 
+  .title-timestamp
+    position: relative
+    font-size: 16px
+    font-family: 'Source Code Pro'
+    font-variant: normal
+    text-align: right
+    color: lighten($panel, 25%)
+    transition: color $trans-speed
+
   .split-title
     display: flex
     font-size: 24px
     flex-direction: row
-
-  .subtitle
-    position: relative
-    left: 10px
-    font-size: 16px
-    font-family: 'Source Code Pro'
-    font-variant: normal
-    color: lighten($panel, 25%)
-    text-align: left
-    transition: color $trans-speed
+    .title-timestamp
+      left: 10px
+      text-align: left
 
   .title-left
     position: relative

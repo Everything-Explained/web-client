@@ -16,19 +16,28 @@ export interface IPage {
   content: string;
 }
 
+export enum SortType {
+  ALPHABET,
+  DATE
+}
+
 @customElement('dynamic-paging')
 @inject(Router, EventAggregator, BindingEngine)
 export class DynamicPaging {
+
   @bindable placeHolder = '#### this is a temporary placeholder';
   @bindable({defaultBindingMode: bindingMode.oneTime }) mdClass = '';
-  @bindable({defaultBindingMode: bindingMode.twoWay }) pages: IPage[] = [];
+  @bindable({defaultBindingMode: bindingMode.oneTime }) pages: IPage[] = [];
+  @bindable({defaultBindingMode: bindingMode.oneTime }) showTimestamp = false;
 
   public elContentScroller: HTMLElement;
+
   public content = '';
+  public header = '';
+
   public isAttached = false;
   public isTransit = false;
 
-  public header = '';
   public subheader: Date = null;
 
   private routerSub: Subscription;
@@ -49,20 +58,24 @@ export class DynamicPaging {
   }
 
 
-  private _findPage(page: string) {
-    if (!page) return null;
+  private _findPage(title: string) {
+    if (!title) return null;
 
     if (typeof this.pages[0].title == 'string') {
-      let cleanPage = page.replace(/-/g, ' ');
+      let cleanPage = title.replace(/-/g, ' ');
       return this.pages.find(p => p.title == cleanPage);
     }
     else {
-      return this.pages.find(p => p.title[1] == page);
+      return this.pages.find(p => p.title[1] == title);
     }
 
   }
 
+
+  /** Aurelia DOM-ready event */
   attached() {
+
+    // Fade-in page
     setTimeout(() => {
       this.isAttached = true;
     }, 50);
@@ -79,9 +92,11 @@ export class DynamicPaging {
 
   }
 
+
   detached() {
     this.routerSub.dispose();
   }
+
 
   public navigate(page: string) {
     if (this.isTransit) return;
@@ -104,6 +119,8 @@ export class DynamicPaging {
       return;
     }
     this.isTransit = true;
+
+    // Wait for transition to render
     setTimeout(() => {
       this.isTransit = false;
       this.content = page.content;

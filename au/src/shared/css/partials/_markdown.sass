@@ -13,7 +13,8 @@
     &:hover
       color: hsl(50, 50%, 60%)
 
-$trans-speed: .35s
+$trans-speed: .5s
+$trans-easing: ease
 
 .markdown
   font-family: 'Nunito'
@@ -36,32 +37,18 @@ $trans-speed: .35s
     border-top-right-radius: 6.5px
     border-top-left-radius: 3.5px
     transition: background $trans-speed, color $trans-speed
-    transform: translateZ(0)
 
-  blockquote
-    transition: background $trans-speed
-    transform: translateZ(0)
-
-  dt, dd
-    transition: background $trans-speed, color $trans-speed
-    transform: translateZ(0)
-
-
-  a
-    transition: border $trans-speed, color $trans-speed
-    transform: translateZ(0)
+  a, b, strong, i, em,
+  dt, dd, code, blockquote
+    transition: border $trans-speed $trans-easing, color $trans-speed $trans-easing, background $trans-speed $trans-easing
 
   b, strong
     font-weight: 400
     color: hsl(0, 0%, 70%)
-    transition: color $trans-speed
-    transform: translateZ(0)
 
   i, em
     color: hsl(278, 20%, 72%)
     font-style: normal
-    transition: color $trans-speed
-    transform: translateZ(0)
 
     strong, b
       color: hsl(50, 50%, 65%)
@@ -75,8 +62,6 @@ $trans-speed: .35s
     border-radius: 5px
     white-space: nowrap
     word-spacing: -3px
-    transition: background $trans-speed, color $trans-speed
-    transform: translateZ(0)
 
 
 @import 'markdown/md_changelog'

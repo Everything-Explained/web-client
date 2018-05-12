@@ -8,12 +8,15 @@ template
           div.scroller
             div.title(repeat.for='page of pages'
                       mousedown.delegate=`
-                        navigate(page.title.length == 2 ? page.title[1] : page.title)`
-            ) ${page.title.length == 2 ? '' : page.title}
+                        navigate(page.title.length == 2 ? page.title[1] : page.title)
+                      `
+            )
+              span ${page.title.length == 2 ? '' : page.title}
               div.split-title(if.bind='page.title.length == 2')
                 div.title-left ${page.title[0]}
                 div.title-right ${page.title[1]}
-                  div.subtitle(if.bind='page.time') ${page.time | dateFormat: "@NUM-"}
+                  div.title-timestamp(if.bind='page.time && showTimestamp')
+                    ${page.time | dateFormat: "@NUM-"}
 
 
 
@@ -21,7 +24,7 @@ template
         class='${isTransit ? "hidden" : "visible"}'
       )
         header(if.bind='header') ${header}
-          div.subheader ${subheader | dateFormat: "@NUMTIME"}
+          div.timestamp ${subheader | dateFormat: "@NUMTIME"}
         div.content-scroller.scroller.markdown(
           innerhtml.bind='content | markdown'
           class.bind='mdClass'
