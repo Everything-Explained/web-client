@@ -1,12 +1,14 @@
 import {Web} from '../../shared/services/web-get';
 import { IPage, IPagingConfig } from '../../shared/layouts/dynamic-paging';
+import { singleton } from 'aurelia-framework';
 
 interface Log {
-  time:    string;
+  date:    string;
   title:   string;
   content: string;
 }
 
+@singleton(false)
 export class Changelog {
 
   logs: Log[];
@@ -42,7 +44,7 @@ export class Changelog {
 
           this.pages.push({
             title: titleSplit,
-            time: new Date(d.time),
+            time: new Date(d.date),
             content: d.content
           });
         }

@@ -1,4 +1,4 @@
-import {inject} from 'aurelia-framework';
+import {inject, singleton} from 'aurelia-framework';
 import { Web } from '../../../../shared/services/web-get';
 import { Router } from 'aurelia-router';
 
@@ -9,6 +9,7 @@ interface Question {
   filter: boolean;
 }
 
+@singleton(false)
 @inject(Element, Router)
 export class Faq {
 
@@ -23,7 +24,6 @@ export class Faq {
   private _rendered = false;
 
   constructor(private _el: HTMLElement, private _router) {
-
     Web.GET('/faq', {}, (err, code, data) => {
       if (err) {
         console.error(err);
@@ -44,7 +44,6 @@ export class Faq {
         );
       }
     });
-
   }
 
 

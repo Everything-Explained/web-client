@@ -1,12 +1,12 @@
 import {singleton} from 'aurelia-framework';
+import { IPage } from '../../../shared/layouts/dynamic-paging';
 
 @singleton(false)
 export class Blog {
 
   public isLoading = true;
   public isError = false;
-  public entries = {} as contentful.Entries;
-
+  public pages: IPage[];
 
   public scriptsLoaded = false;
   private _isFirstLoad = true;
@@ -41,7 +41,14 @@ export class Blog {
     });
     client.getEntries({order: '-sys.createdAt'})
       .then(entries => {
-        this.entries = entries;
+        this.pages = entries.items.map(i => {
+          return {
+                    title: i.fields.title,
+                    time: new Date(i.sys.createdAt),
+                    content: i.fields.body
+                 };
+        });
+        console.log(this.pages);
         setTimeout(() => {
           this.isLoading = false;
         }, 200);
@@ -49,10 +56,6 @@ export class Blog {
   }
 
   attached() {
-    // if (this._isFirstLoad) {
-    //   this._isFirstLoad = false;
-    //   return;
-    // }
     if (this.scriptsLoaded) {
       setTimeout(() => {
         this.isLoading = false;
@@ -64,9 +67,5 @@ export class Blog {
     if (!this.isError) {
       this.isLoading = true;
     }
-  }
-
-  private _slice(list: NodeList): HTMLElement[] {
-    return Array.prototype.slice.call(list);
   }
 }

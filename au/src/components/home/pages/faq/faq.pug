@@ -3,7 +3,9 @@ template
 
   dynamic-paging(if.bind='pages.length' md-class='md-faq'
                  pages.bind='pages'
+                 show-timestamp.bind='true'
                  place-holder='#### click a topic on the left')
+  div.preloader(style.bind='!pages.length ? "" : "display: none"')
   //- article.home.faq(
   //-   class='${isAttached ? "page-in" : "g-hidden"}'
   //-   role='FAQ')

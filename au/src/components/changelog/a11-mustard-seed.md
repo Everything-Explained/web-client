@@ -1,4 +1,4 @@
-eyJ0aW1lIjoiMjAxNy0wMS0xNlQwODowMDowMC4wMDBaIiwidGl0bGUiOiLOsTExIDogbXVzdGFyZC1zZWVkIn0=
+eyJ0aXRsZSI6Is6xMTEgOiBtdXN0YXJkLXNlZWQiLCJhdXRob3IiOiJBZWRhZXVtIiwiZGF0ZSI6IjIwMTctMDEtMTZUMDg6MDA6MDAuMDAwWiIsImRhdGVVcGRhdGVzIjpmYWxzZX0=
 # major changes
 
 >- **New Font** - General site font changed to Nunito. The previous font was a little too "cursivey". This one looks a lot more professional.

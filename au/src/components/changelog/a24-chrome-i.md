@@ -1,4 +1,4 @@
-eyJ0aW1lIjoiMjAxOC0wNC0yMFQwODowMDowMC4wMDBaIiwidGl0bGUiOiLOsTQ4IDogY2hyb21lLWkifQ==
+eyJ0aXRsZSI6Is6xMjQgOiBjaHJvbWUtaSIsImF1dGhvciI6IkFlZGFldW0iLCJkYXRlIjoiMjAxOC0wNC0yMFQwODowMDowMC4wMDBaIiwiZGF0ZVVwZGF0ZXMiOmZhbHNlfQ==
 # qol features
 
 >- **More Readability** - Default text color was hiding too much into the background. It should be **much** easier to read now.

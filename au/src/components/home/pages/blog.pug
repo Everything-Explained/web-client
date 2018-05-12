@@ -1,16 +1,8 @@
 template
-  require(from='../../../resources/value-converters/markdown-format')
-  require(from='../../../resources/value-converters/date-format')
-  section.blog-container
-    div.preloader(style.bind='isLoading ? "" : "display: none"')
-    div.error(if.bind='isError') let the #[span.info admin] know an #[span.fail error] occurred
-    div.dev-blog.markdown.md-blog(
-      class='${isLoading ? "" : "is-loaded"}'
-      ref='devBlog'
-    )
-      div.container(repeat.for='item of entries.items')
-        div.separator
-        h1(data-date='${item.sys.createdAt | dateFormat: "@STD"}').
-          ${item.fields.title.toLowerCase()}
-        div.separator
-        article(innerHTML.bind='item.fields.body | markdown')
+  require(from='../../../shared/layouts/dynamic-paging')
+  dynamic-paging(if.bind='pages.length' md-class='md-faq'
+                 pages.bind='pages'
+                 show-timestamp.bind='true'
+                 place-holder='#### click an entry on the left')
+  div.preloader(style.bind='!pages.length ? "" : "display: none"')
+

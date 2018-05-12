@@ -15,13 +15,33 @@ export class Home {
 
     let routes = [
       {route: '', redirect: 'welcome'},
-      {route: 'welcome', name: 'welcome', moduleId: `${relLoc}/welcome`, nav: true},
-      {route: 'rules', name: 'rules', moduleId: `${relLoc}/rules`, nav: true},
-      {route: ['faq', 'faq/:page'], name: 'faq', moduleId: `${relLoc}/faq/faq`, nav: true }
+      {
+        route: 'welcome',
+        name: 'welcome',
+        moduleId: `${relLoc}/welcome`, nav: true,
+        desc: 'about noumenae'
+      },
+      {
+        route: 'rules',
+        name: 'rules',
+        moduleId: `${relLoc}/rules`, nav: true,
+        desc: 'common sense'
+      },
+      {
+        route: ['faq', 'faq/:page'],
+        name: 'faq',
+        moduleId: `${relLoc}/faq/faq`, nav: true,
+        desc: 'info database'
+      }
     ];
 
     if (this.session.authed) {
-      routes.push({route: 'blog', name: 'blog', moduleId: `${relLoc}/blog`, nav: true});
+      routes.push({
+        route: 'blog',
+        name: 'blog',
+        moduleId: `${relLoc}/blog`, nav: true,
+        desc: 'in-touch with you'
+      });
     }
 
     config.map(routes);
@@ -30,7 +50,7 @@ export class Home {
 
   @computedFrom('router.currentInstruction.config.name')
   get activeRoute() {
-    return this.router.currentInstruction.config.name;
+    return this.router.currentInstruction.config.desc;
   }
 
 }

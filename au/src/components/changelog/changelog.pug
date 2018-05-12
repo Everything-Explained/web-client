@@ -3,19 +3,6 @@ template
 
   dynamic-paging(if.bind='pages.length' md-class='md-changelog'
                  pages.bind='pages'
+                 show-timestamp.bind='true'
                  place-holder='#### select a log on the left')
-  //- section.changelog(
-  //-   class='${isAttached ? "page-in" : "g-hidden"}'
-  //- )
-  //-   div.center-preloader(class='${isLoading ? "active" : ""}')
-  //-     div.preloader
-  //-   section#ChangeList
-  //-     span.title(repeat.for='log of logs'
-  //-                class='${clicked ? "g-hidden" : "g-visible"}'
-  //-                click.delegate='open(log.timeStamp)')
-  //-       div.description(innerHTML.bind='log.title')
-  //-       div.date ${log.timeStamp | dateFormat: '@STD'}
-
-  //-   article#Changes.markdown.md-changelog(innerhtml.bind='changes | markdown: true', class='${clicked ? "g-visible" : "g-hidden"}')
-
-  //-   aside.close.icon-close(click.delegate='close()', class='${clicked ? "g-visible" : "g-hidden"}')
+  div.preloader(style.bind='!pages.length ? "" : "display: none"')
