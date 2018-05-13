@@ -43,12 +43,11 @@ export class Blog {
       .then(entries => {
         this.pages = entries.items.map(i => {
           return {
-                    title: i.fields.title,
-                    time: new Date(i.sys.createdAt),
+                    title: [i.fields.title],
+                    date: new Date(i.sys.createdAt),
                     content: i.fields.body
                  };
         });
-        console.log(this.pages);
         setTimeout(() => {
           this.isLoading = false;
         }, 200);

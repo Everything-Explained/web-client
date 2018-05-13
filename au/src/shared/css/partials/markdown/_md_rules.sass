@@ -15,6 +15,8 @@
     padding: 0
     &:hover dd
       @extend %panel-hover
+      & > blockquote > p > strong
+        color: hsl(128, 40%, 65%)
     &:hover dt
       color: hsl(50, 50%, 60%)
       background: $panel-hover
@@ -39,6 +41,8 @@
     line-height: 30px
     background-color: $sub-panel
     padding: 13px 8px
+    & > blockquote > p > strong
+      color: hsl(128, 30%, 60%)
 
     & > blockquote
       display: flex

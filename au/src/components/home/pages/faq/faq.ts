@@ -1,6 +1,7 @@
 import {inject, singleton} from 'aurelia-framework';
 import { Web } from '../../../../shared/services/web-get';
 import { Router } from 'aurelia-router';
+import { IPage } from '../../../../shared/layouts/dynamic-paging';
 
 
 interface Question {
@@ -16,7 +17,7 @@ export class Faq {
   public isAttached = false;
 
   public questions: Question[] = [];
-  public pages = [];
+  public pages = [] as IPage[];
 
 
   private _searchParam: string;
@@ -37,9 +38,9 @@ export class Faq {
       for (let d of data) {
         this.pages.push(
           {
-            title: d.title,
+            title: [d.title],
             content: d.content,
-            time: new Date(d.date)
+            date: new Date(d.date)
           }
         );
       }

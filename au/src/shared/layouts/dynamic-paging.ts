@@ -11,14 +11,9 @@ export interface IPagingConfig {
 }
 
 export interface IPage {
-  title: string|[string, string];
-  time?: Date;
+  title: string[];
+  date?: Date;
   content: string;
-}
-
-export enum SortType {
-  ALPHABET,
-  DATE
 }
 
 @customElement('dynamic-paging')
@@ -29,6 +24,7 @@ export class DynamicPaging {
   @bindable({defaultBindingMode: bindingMode.oneTime }) mdClass = '';
   @bindable({defaultBindingMode: bindingMode.oneTime }) pages: IPage[] = [];
   @bindable({defaultBindingMode: bindingMode.oneTime }) showTimestamp = false;
+  @bindable({defaultBindingMode: bindingMode.oneTime }) order = null as 'alphabet'|'dateLast'|'dateFirst';
 
   public elContentScroller: HTMLElement;
 
@@ -43,6 +39,9 @@ export class DynamicPaging {
   private routerSub: Subscription;
   private _firstLoad = true;
 
+  // Available only during and after bind
+  private _isSingleTitle = false;
+
   constructor(private _router: Router, private _ea: EventAggregator, private _be: BindingEngine) {
   }
 
@@ -50,20 +49,39 @@ export class DynamicPaging {
   bind(context: any, old: any) {
     this.content = this.placeHolder;
     let page = this._router.currentInstruction.params.page;
-    if (typeof this.pages[0].title == 'string') {
-      this.pages.sort((p1, p2) => p1.title > p2.title ? 1 : -1);
-    }
-    this.render(this._findPage(page));
+    this._isSingleTitle = this.pages[0].title.length == 1;
 
+    if (this.order)
+      this._sortPages(this.order)
+    ;
+    this.render(this._findPage(page));
+  }
+
+
+  private _sortPages(type: 'alphabet'|'dateLast'|'dateFirst') {
+    if (type == 'alphabet') {
+      const sort =
+        (this._isSingleTitle)
+          ? (p1: IPage, p2: IPage) => p1.title[0] > p2.title[0] ? 1 : -1
+          : (p1: IPage, p2: IPage) => p1.title[1] > p2.title[1] ? 1 : -1
+      ;
+      this.pages.sort(sort);
+    }
+    else if (type == 'dateLast') {
+      this.pages.sort((p1, p2) => p2.date.getTime() - p1.date.getTime());
+    }
+    else {
+      this.pages.sort((p1, p2) => p1.date.getTime() - p2.date.getTime());
+    }
   }
 
 
   private _findPage(title: string) {
     if (!title) return null;
 
-    if (typeof this.pages[0].title == 'string') {
+    if (this._isSingleTitle) {
       let cleanPage = title.replace(/-/g, ' ');
-      return this.pages.find(p => p.title == cleanPage);
+      return this.pages.find(p => p.title[0] == cleanPage);
     }
     else {
       return this.pages.find(p => p.title[1] == title);
@@ -125,11 +143,11 @@ export class DynamicPaging {
       this.isTransit = false;
       this.content = page.content;
       this.header =
-        (typeof page.title == 'string')
-          ? page.title
+        (this._isSingleTitle)
+          ? page.title[0]
           : page.title[1]
       ;
-      this.subheader = page.time;
+      this.subheader = page.date;
       this.elContentScroller.scrollTop = 0;
     }, 250);
   }

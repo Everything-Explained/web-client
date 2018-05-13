@@ -13,7 +13,7 @@
     &:hover
       color: hsl(50, 50%, 60%)
 
-$trans-speed: .5s
+$trans-speed: .4s
 $trans-easing: ease
 
 .markdown
@@ -30,16 +30,24 @@ $trans-easing: ease
     line-height: normal
     letter-spacing: 1px
 
+  h2
+    position: relative
+    margin: 30px 0 10px 50px
+    font-size: 24px
+    color: hsl(50, 55%, 63%)
+
   & > p
     display: block
-    padding: 13px 10px
+    padding: 10px 30px
     line-height: 30px
+    background: $sub-panel
     border-top-right-radius: 6.5px
     border-top-left-radius: 3.5px
     transition: background $trans-speed, color $trans-speed
 
   a, b, strong, i, em,
   dt, dd, code, blockquote
+    transform: translateZ(0)
     transition: border $trans-speed $trans-easing, color $trans-speed $trans-easing, background $trans-speed $trans-easing
 
   b, strong

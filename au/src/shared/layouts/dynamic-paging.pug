@@ -8,14 +8,14 @@ template
           div.scroller
             div.title(repeat.for='page of pages'
                       mousedown.delegate=`
-                        navigate(page.title.length == 2 ? page.title[1] : page.title)
+                        navigate(page.title.length > 1 ? page.title[1] : page.title[0])
                       `
             )
-              span ${page.title.length == 2 ? '' : page.title}
-              div.split-title(if.bind='page.title.length == 2')
+              span ${page.title.length > 1 ? '' : page.title[0]}
+              div.split-title(if.bind='page.title.length > 1')
                 div.title-left ${page.title[0]}
                 div.title-right ${page.title[1]}
-                  div.title-timestamp(if.bind='page.time && showTimestamp') ${page.time | dateFormat: "@NUM-"}
+                  div.title-timestamp(if.bind='page.date && showTimestamp') ${page.date | dateFormat: "@NUM-"}
 
 
 

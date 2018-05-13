@@ -48,7 +48,7 @@ export class Home {
     this.router = router;
   }
 
-  @computedFrom('router.currentInstruction.config.name')
+  @computedFrom('router.currentInstruction.config.desc')
   get activeRoute() {
     return this.router.currentInstruction.config.desc;
   }

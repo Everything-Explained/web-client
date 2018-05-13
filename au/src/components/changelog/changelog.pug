@@ -4,5 +4,7 @@ template
   dynamic-paging(if.bind='pages.length' md-class='md-changelog'
                  pages.bind='pages'
                  show-timestamp.bind='true'
+                 order='dateLast'
                  place-holder='#### select a log on the left')
+
   div.preloader(style.bind='!pages.length ? "" : "display: none"')

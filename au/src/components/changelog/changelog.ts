@@ -44,14 +44,10 @@ export class Changelog {
 
           this.pages.push({
             title: titleSplit,
-            time: new Date(d.date),
+            date: new Date(d.date),
             content: d.content
           });
         }
-
-        this.pages = this.pages.sort((p1, p2) => {
-          return p2.time.getTime() - p1.time.getTime();
-        });
 
         this.logs = data;
       }
