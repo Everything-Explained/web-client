@@ -7,24 +7,6 @@ import {Session} from './shared/models/session';
 import {MiniModal} from './shared/utilities/minimodal';
 
 
-interface PageConfiguration {
-  route: NavModel;
-}
-
-export interface IRoute {
-  name: string;
-  routes?: string[];
-  redirect?: string;
-  page?: string;
-  isActive?: boolean;
-  tabs?: IRoute[];
-  classes?: string;
-  hidden?: boolean;
-  hasChildren?: boolean;
-  isChild?: boolean;
-}
-
-
 @inject(Element, EventAggregator, MiniModal, Login, Session)
 export class App {
 
@@ -43,48 +25,14 @@ export class App {
 
   private _miniModal: MiniModal;
 
-  lightsTimeout = 0;
-  lightsOnTimeout = false;
-
-  // page = Page;
-
-  // Currently active navigation routes (Populated)
-  activeRoutes = new Array<NavModel>();
-
   private _modalOverlay: HTMLElement;
 
 
-  constructor(private elem:          Element,
-              private _eva:          EventAggregator,
-              private _modal:        MiniModal,
-              private _login: Login,
-              private _session: Session)
-  {
-
-    if (this._session.authed) {
-
-      // Remove invite page
-      // this.mainMenu.pop();
-
-      // for (let p of this.mainMenu[0].pages) {
-      //   if (p.name.toLowerCase() == 'signin') {
-      //     p.hidden = true;
-      //   }
-      //   if (p.name.toLowerCase() == 'settings') {
-      //     p.hidden = false;
-      //   }
-      //   if (p.name.toLowerCase() == 'blog') {
-      //     p.hidden = false;
-      //   }
-      // }
-    }
-    else {
-      // Remove Chat page
-      // this.mainMenu.splice(1, 1);
-    }
-
-
-  }
+  constructor(private elem:     Element,
+              private _eva:     EventAggregator,
+              private _modal:   MiniModal,
+              private _login:   Login,
+              private _session: Session) { }
 
 
   /** Aurelia router configuration */
@@ -97,18 +45,41 @@ export class App {
 
     routes.push([
       {route: '', redirect: 'home'},
-      {route: 'home', name: 'home', moduleId: 'components/home/home', nav: true},
-      {route: ['changelog', 'changelog/:page'], name: 'changelog', moduleId: 'components/changelog/changelog', nav: true}
+      {
+        route: 'home', name: 'home',
+        moduleId: 'components/home/home', nav: true
+      },
+      {
+        route: ['changelog', 'changelog/:page'],
+        name: 'changelog',
+        moduleId: 'components/changelog/changelog', nav: true
+      }
     ]);
 
     if (!this._session.authed) {
-      routes.push({route: 'invite', name: 'invite', moduleId: 'components/invites/invites', nav: true});
-      routes.push({route: 'signin', name: 'signin', moduleId: 'components/auth/signin', nav: true});
+      routes.push({
+        route: 'invite',
+        name: 'invite',
+        moduleId: 'components/invites/invites', nav: true
+      });
+      routes.push({
+        route: 'signin',
+        name: 'signin',
+        moduleId: 'components/auth/signin', nav: true
+      });
       routes.push({route: 'settings', redirect: 'signin'});
     }
     else {
-      routes.push({route: 'chat', name: 'chat', moduleId: 'components/chat/chat', nav: true});
-      routes.push({route: 'settings', name: 'settings', moduleId: 'components/auth/settings', nav: true});
+      routes.push({
+        route: 'chat',
+        name: 'chat',
+        moduleId: 'components/chat/chat', nav: true
+      });
+      routes.push({
+        route: 'settings',
+        name: 'settings',
+        moduleId: 'components/auth/settings', nav: true
+      });
       routes.push({route: 'signin', redirect: 'settings'});
     }
 
@@ -172,9 +143,9 @@ export class App {
 
 
 
-  get lights() {
-    return localStorage.getItem('lights') == 'on';
-  }
+  // get lights() {
+  //   return localStorage.getItem('lights') == 'on';
+  // }
 
   public openWatermark() {
     this._modal.show('VersionModal');

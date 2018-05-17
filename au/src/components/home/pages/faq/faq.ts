@@ -1,61 +1,43 @@
 import {inject, singleton} from 'aurelia-framework';
 import { Web } from '../../../../shared/services/web-get';
 import { Router } from 'aurelia-router';
-import { IPage } from '../../../../shared/layouts/dynamic-paging';
+import { IPage, IPageData } from '../../../../shared/layouts/dynamic-paging';
 
-
-interface Question {
-  title: string;
-  content: string;
-  filter: boolean;
-}
 
 @singleton(false)
 @inject(Element, Router)
 export class Faq {
 
-  public isAttached = false;
 
-  public questions: Question[] = [];
-  public pages = [] as IPage[];
+  public isLoaded = false;
+  public pages: IPage[] = [];
 
 
-  private _searchParam: string;
-  private _qTitles: string[] = [];
-  private _rendered = false;
+  constructor(private _el: HTMLElement, private _router) {}
 
-  constructor(private _el: HTMLElement, private _router) {
-    Web.GET('/faq', {}, (err, code, data) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
 
-      let titles = []
-        , sortedPages = []
-      ;
+  async created() {
+    if (this.isLoaded) return;
 
-      for (let d of data) {
-        this.pages.push(
-          {
-            title: [d.title],
-            content: d.content,
-            date: new Date(d.date)
-          }
-        );
-      }
+    let [err, code, data] = await Web.GET('/faq') as [any, number, IPageData[]];
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    data.forEach(d => {
+      this.pages.push({
+        title: [d.title],
+        content: d.content,
+        date: new Date(d.date)
+      });
     });
+
+    this.isLoaded = true;
   }
 
 
-
-  attached() {
-
-    setTimeout(() => {
-      this.isAttached = true;
-    }, 30);
-
-  }
 }
 
 

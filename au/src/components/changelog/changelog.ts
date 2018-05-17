@@ -1,77 +1,39 @@
 import {Web} from '../../shared/services/web-get';
-import { IPage, IPagingConfig } from '../../shared/layouts/dynamic-paging';
+import { IPage, IPagingConfig, IPageData } from '../../shared/layouts/dynamic-paging';
 import { singleton } from 'aurelia-framework';
 
-interface Log {
-  date:    string;
-  title:   string;
-  content: string;
-}
 
 @singleton(false)
 export class Changelog {
 
-  logs: Log[];
-  changes: string = '';
-  clicked: boolean = false;
-  history: {
-    id: string;
-    data: string;
-  } = null;
 
-  public isAttached = false;
-  public isLoading = false;
-
-  public pages: IPage[] = [];
-
-  public dynConfig: IPagingConfig;
-  public placeholder = '#### click a log on the left to view';
+  public isLoaded   = false;
+  public pages      = [] as IPage[];
 
 
-  constructor() {
+  constructor() {}
 
-    Web.GET('/changelog', {},
-      (err, code, data: Log[]) => {
-        for (let d of data) {
 
-          let titleSplit = [] as [string, string]
-            , preTitle = titleSplit[0]
-          ;
+  async created() {
+    if (this.isLoaded) return;
 
-          d.title.split(':').forEach(t => {
-            titleSplit.push(t.trim());
-          });
+    let [err, code, data] = await Web.GET('/changelog') as [any, number, IPageData[]];
 
-          this.pages.push({
-            title: titleSplit,
-            date: new Date(d.date),
-            content: d.content
-          });
-        }
+    if (err) {
+      console.error(err);
+      return;
+    }
 
-        this.logs = data;
-      }
-    );
+    data.forEach(d => {
+      this.pages.push({
+        title:   d.title.split(':').map(v => v.trim()),
+        content: d.content,
+        date:    new Date(d.date)
+      });
+    });
 
+    this.isLoaded = true;
   }
 
-  close() {
-    this.clicked = false;
-    setTimeout(() => {
-      this.changes = '';
-    }, 350);
-  }
 
-  updateChanges() {
-    this.changes = this.history.data;
-    setTimeout(() => {
-      this.clicked = true;
-    }, 0);
-  }
-
-  attached() {
-    setTimeout(() => {
-      this.isAttached = true;
-    }, 30);
-  }
 }

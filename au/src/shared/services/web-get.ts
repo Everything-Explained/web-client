@@ -1,4 +1,6 @@
 
+
+
 interface URIProperties {
   raw?: string;
   fields?: any;
@@ -15,24 +17,27 @@ export class Web {
   constructor() {  }
 
 
-  static GET(url: string, props: URIProperties, cb: (error: any, code: number, data) => void) {
+  static GET(url: string, props?: URIProperties) {
+    props = props || {};
     props.method = 'GET';
-    Web.sendRequest(url, props, cb);
+    return Web.sendRequest(url, props);
   }
 
 
-  static POST(url: string, props: URIProperties, cb: (error: any, code: number, data) => void) {
+  static POST(url: string, props?: URIProperties) {
+    props = props || {};
     props.method = 'POST';
-    Web.sendRequest(url, props, cb);
+    return Web.sendRequest(url, props);
   }
 
-  static DELETE(url: string, props: URIProperties, cb: (error: any, code: number, data) => void) {
+  static DELETE(url: string, props?: URIProperties) {
+    props = props || {};
     props.method = 'DELETE';
-    Web.sendRequest(url, props, cb);
+    return Web.sendRequest(url, props);
   }
 
 
-  static sendRequest(url: string, props: URIProperties, cb: (error, code: number, data) => void) {
+  static sendRequest(url: string, props: URIProperties): Promise<[any, number, any]> {
     let req = new XMLHttpRequest()
       , fields = props.fields || null
       , raw = props.raw || null
@@ -45,52 +50,47 @@ export class Web {
       forms = Web.buildURI(fields, raw);
     }
 
-    req.onload = () => {
+    return new Promise((rs, rj) => {
+      req.onload = () => {
 
-      let data: any = null;
-      data =
-        (~req.getResponseHeader('Content-Type').indexOf('application/json'))
-          ? data = JSON.parse(req.responseText)
-          : req.responseText;
+        let data: any = null;
+        data =
+          (~req.getResponseHeader('Content-Type').indexOf('application/json'))
+            ? data = JSON.parse(req.responseText)
+            : req.responseText
+        ;
 
-      if (req.status >= 200 && req.status < 400) {
-        cb(null, req.status, data);
+        if (req.status >= 200 && req.status < 400) {
+          rs([null, req.status, data]);
+        }
+        else {
+          rs([data, req.status, null]);
+        }
+      };
+
+      req.onerror = (ev) => {
+        rs([ev, -1, null]);
+      };
+
+      if (props.method == 'POST' && forms) {
+        req.open(props.method, url);
+        req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        let data = encodeURI(forms.substr(1));
+        req.send(data);
       }
       else {
-        cb(data, req.status, null);
+        req.open(props.method, (!forms) ? url : url + forms);
+        req.send((forms) ? null : props.data);
       }
-    };
-
-    req.onerror = (ev) => {
-      cb(ev, -1, null);
-    };
-
-    // if (props.headers) {
-    //   for (let h in props.headers) {
-    //     req.setRequestHeader(h, props.headers[h]);
-    //   }
-    // }
-
-    if (props.method == 'POST' && forms) {
-      req.open(props.method, url);
-      req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      let data = encodeURI(forms.substr(1));
-      req.send(data);
-    }
-    else {
-      req.open(props.method, (!forms) ? url : url + forms);
-      req.send((forms) ? null : props.data);
-    }
-
-    // req.send((forms) ? null : props.data);
-
+    });
 
   }
 
   static buildURI(fields = null, raw = null): string {
 
     let path     = ''
-      , fieldStr = '';
+      , fieldStr = ''
+    ;
 
     if (fields) {
       for (let f in fields) {
@@ -106,7 +106,8 @@ export class Web {
             : `?${raw}`
         : (fieldStr)
             ? `?${fieldStr}`
-            : '';
+            : ''
+    ;
 
     return path;
 

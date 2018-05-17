@@ -16,6 +16,12 @@ export interface IPage {
   content: string;
 }
 
+export interface IPageData {
+  title: string;
+  date: string;
+  content: string;
+}
+
 @customElement('dynamic-paging')
 @inject(Router, EventAggregator, BindingEngine)
 export class DynamicPaging {
