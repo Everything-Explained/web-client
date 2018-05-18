@@ -158,7 +158,7 @@ export class Login {
   }
 
 
-  public signIn(type: string, cb?: (err, code, data) => void) {
+  public async signIn(type: string) {
 
     let defMsg = {msg:
       '<span class="fail">error logging in</span><br/>' +
@@ -166,13 +166,9 @@ export class Login {
       ' do you have a <span>noumenae</span> account?'};
 
     if (type === 'google') {
-
-      this._auth2.signIn()
-        .then(d => {
-          let token = d.getAuthResponse().id_token;
-          this._logInWith('google', token, cb ? cb : null);
-        });
-      return;
+      let d = await this._auth2.signIn()
+      let token = d.getAuthResponse().id_token;
+      return this._logInWith('google', token);
     }
 
     if (type === 'facebook') {
@@ -180,46 +176,43 @@ export class Login {
       let fbAuth = FB.getAuthResponse();
       let session = window.session;
 
-
-      // Already logged in
-      if (fbAuth && session.authed) {
-        cb({msg: 'you\'re already signed into <span>noumenae</span>'}, null, null);
-        return;
-      }
-
-      if (fbAuth && !session.authed) {
-        this._logInWith('facebook', fbAuth.accessToken, cb ? cb : null);
-        return;
-      }
-
-      FB.login(res => {
-          this._logInWith('facebook', res.authResponse.accessToken, cb ? cb : null);
+      return new Promise((rs, rj) => {
+        // Already logged in
+        if (fbAuth && session.authed) {
+          rs([{msg: 'you\'re already signed into <span>noumenae</span>'}, -1, null]);
           return;
-        },
-        {scope: 'email'}
-      );
+        }
 
-      // cb(defMsg, null, null);
+        if (fbAuth && !session.authed) {
+          rs(this._logInWith('facebook', fbAuth.accessToken));
+          return;
+        }
 
-      return;
+        FB.login(res => {
+            rs(this._logInWith('facebook', res.authResponse.accessToken));
+            return;
+          },
+          {scope: 'email'}
+        );
+
+      }) as Promise<[any, number, any]>;
+
     }
 
   }
 
 
 
-  public signUp(nick: string, type: string, cb: (err, code, data) => void) {
+  public async signUp(nick: string, type: string) {
     if (type === 'google') {
 
       // TODO - UI should log this
       // if (this._auth2.isSignedIn.get()) return;
 
-      this._auth2.signIn()
-        .then(d => {
-          let token = d.getAuthResponse().id_token;
-          this._signUpWith(nick, 'google', token, cb);
-        });
-      return;
+      let d = await this._auth2.signIn()
+        , token = d.getAuthResponse().id_token
+      ;
+      return this._signUpWith(nick, 'google', token);
     }
 
     if (type === 'facebook') {
@@ -229,34 +222,41 @@ export class Login {
       // TODO - UI Should log this
       // Already logged in
       if (fbAuth) {
-        console.log('Already Logged In');
+        console.error('Already Logged In');
         return;
       }
 
-      FB.login(res => {
-        if (res.status == 'connected') {
-          console.log('Singing up With', res.authResponse.accessToken);
+      return new Promise((rs, rj) => {
+        FB.login(res => {
+          if (res.status == 'connected') {
+            console.log('Singing up With', res.authResponse.accessToken);
 
-          // facebook needs time to update
-          setTimeout(() => {
-            this._signUpWith(nick, 'facebook', res.authResponse.accessToken, cb);
-          }, 500);
+            // facebook needs time to update
+            setTimeout(() => {
+              rs(this._signUpWith(nick, 'facebook', res.authResponse.accessToken));
+            }, 500);
 
-        }
-      }, {scope: 'email'});
-      return;
+          }
+        }, {scope: 'email'});
+
+      }) as Promise<[any, number, any]>;
+
     }
   }
 
 
 
-  private _logInWith(auth_type: string, token: string, cb?: (err, code, data) => void) {
-    Web.POST('/internal/login', {
-      fields: {
-        token,
-        auth_type
-      }
-    }, (err, code, data) => {
+  private async _logInWith(auth_type: string, token: string) {
+
+    return new Promise( async (rs, rj) => {
+      let [err, code, data] =
+          await Web.POST('/internal/login', {
+            fields: {
+              token,
+              auth_type
+            }
+          })
+      ;
 
       // DEBUG
       console.log(err, code, data);
@@ -274,42 +274,51 @@ export class Login {
         });
       }
       err = err || null;
-      if (cb) cb(err, code, data);
-    });
+      rs([err, code, data]);
+
+    }) as Promise<[any, number, any]>;
+
   }
 
 
+  private async _signUpWith(nick: string, auth_type: string, token: string) {
 
-  private _signUpWith(nick: string, auth_type: string, token: string, cb: (err, code, data) => void) {
+    return new Promise( async (rs, rj) => {
+      let [err, code, data] =
+          await Web.POST('/internal/signup', {
+            fields: {
+              token,
+              auth_type,
+              alias: nick
+            }
+          })
+      ;
 
-    Web.POST('/internal/signup', {
-      fields: {
-        token,
-        auth_type,
-        alias: nick
-      }
-    }, (err, code, data) => {
       // DEBUG
       console.log(err, code, data);
-      cb(err, code, data);
-    });
+      rs([err, code, data]);
+
+    }) as Promise<[any, number, any]>;
 
   }
-
 
 
   public signOut(cb: (err, code, data) => void) {
 
-    let logout = () => {
-      Web.POST('/internal/logout', {
-        fields: {
-          secret: window.session.secret
-        }
-      },
-      (err, code, data) => {
-        cb(err, code, data);
+    function logout() {
+      return new Promise( async (rs, rj) => {
+        let [err, code, data] =
+            await Web.POST('/internal/logout', {
+              fields: {
+                secret: window.session.secret
+              }
+            })
+        ;
+
+        rs([err, code, data]);
         if (!err) window.location.reload();
       });
+
     };
 
     let isAuthedWithGoogle = this._auth2.isSignedIn.get()

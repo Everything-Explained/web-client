@@ -119,7 +119,7 @@ export class Signin {
     return !!this._signInResponse;
   }
 
-  public validateNick(ev: KeyboardEvent) {
+  public async validateNick(ev: KeyboardEvent) {
     let obj = ev.target as HTMLInputElement
       , validInput = obj.value.match(/^[a-zA-Z0-9]+$/g);
 
@@ -144,33 +144,28 @@ export class Signin {
       return;
     }
 
-    Web.GET(`/internal/validatealias/${obj.value}`, {},
-    (err, code, data) => {
+    let [err, code, data] =
+        await Web.GET(`/internal/validatealias/${obj.value}`)
+    ;
 
+    if (code == 200) {
+      this._nickInputResponse = 'Nick Available!';
+      this.setInputState(obj, InputStates.VALID);
+      this.setInputState(this.elNickInputResponse, InputStates.NICKVALID);
+      this._socialActive = true;
+      return;
+    }
 
-      if (code == 200) {
-
-        this._nickInputResponse = 'Nick Available!';
-        this.setInputState(obj, InputStates.VALID);
-        this.setInputState(this.elNickInputResponse, InputStates.NICKVALID);
-        this._socialActive = true;
-        return;
-
-      }
-
-      if (code == 409 || code == 400) {
-        this._nickInputResponse = err;
-        this.setInputState(obj, InputStates.INVALID);
-        this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
-        return;
-      }
-
-
-      this._nickInputResponse = 'Server Error! Try Again Later!';
+    if (code == 409 || code == 400) {
+      this._nickInputResponse = err;
       this.setInputState(obj, InputStates.INVALID);
       this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
+      return;
+    }
 
-    });
+    this._nickInputResponse = 'Server Error! Try Again Later!';
+    this.setInputState(obj, InputStates.INVALID);
+    this.setInputState(this.elNickInputResponse, InputStates.NICKINVALID);
 
   }
 
@@ -295,7 +290,7 @@ export class Signin {
 
       if (! (this._signupState & SignupStatus.INVITE)) {
         this._signupState |= SignupStatus.INVITE;
-        this.elInviteButton.addEventListener('click', () => {
+        this.elInviteButton.addEventListener('click', async () => {
 
           this.inviteResponse = '';
 
@@ -308,23 +303,24 @@ export class Signin {
             return;
           }
 
-          Web.POST(`/internal/validateinvite/${this.elInviteContent.value}`,
-          {}, (err, code, data) => {
-            if (code == 200) {
-              let obj = data;
+          let [err, code, data] =
+              await Web.POST(`/internal/validateinvite/${this.elInviteContent.value}`)
+          ;
 
-              if (obj.expired) {
-                this.inviteResponse = 'that <span>invite</span> has <span>expired</span>';
-                return;
-              }
+          if (code == 200) {
+            let obj = data;
 
-              if (!obj.validated || !obj.valid) {
-                this.inviteResponse = '<span>oops</span> did you <span>misspell</span> the invite?';
-                return;
-              }
-              rs(true);
+            if (obj.expired) {
+              this.inviteResponse = 'that <span>invite</span> has <span>expired</span>';
+              return;
             }
-          });
+
+            if (!obj.validated || !obj.valid) {
+              this.inviteResponse = '<span>oops</span> did you <span>misspell</span> the invite?';
+              return;
+            }
+            rs(true);
+          }
         });
       }
 
@@ -339,21 +335,19 @@ export class Signin {
 
 
 
-  public signUp(type: string) {
+  public async signUp(type: string) {
 
     // Do not signup if users are messing around
     if (!this._socialActive ||
         !this.elSSONickname.value ||
         !this.elSSONickname.value.length) return;
 
-    this._login.signUp(this.elSSONickname.value, type, (err, code, data) => {
+    let [err, code, data] = await this._login.signUp(this.elSSONickname.value, type);
 
-      if (code == 200) {
-        this._session.isFirstSignin = true;
-        location.reload();
-      }
-
-    });
+    if (code == 200) {
+      this._session.isFirstSignin = true;
+      location.reload();
+    }
 
   }
 
@@ -365,18 +359,18 @@ export class Signin {
 
 
 
-  public signIn(type: string) {
+  public async signIn(type: string) {
 
-    this._login.signIn(type, (err, code, data) => {
-      if (err) {
-        console.log(err, err.msg);
-        this._signInResponse = err.msg;
-        return;
-      }
-      if (code == 200) {
-        window.location.reload();
-      }
-    });
+    let [err, code, data] = await this._login.signIn(type);
+
+    if (err) {
+      console.log(err, err.msg);
+      this._signInResponse = err.msg;
+      return;
+    }
+    if (code == 200) {
+      window.location.reload();
+    }
 
   }
 
