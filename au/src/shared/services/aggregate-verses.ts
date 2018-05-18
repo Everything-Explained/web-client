@@ -2,8 +2,8 @@
 export interface IRawScriptures {
   book: string;
   notation: string;
-  scriptures: {
-    chapter?: string;
+  chapters: {
+    num?: string;
     text: string;
     verse: string;
     title?: string;
@@ -31,10 +31,10 @@ export interface IVerse {
   text: string;
 }
 
-export function aggregateVerses(scriptureList: IRawScriptures) {
+export function aggregateVerses(bible: IRawScriptures) {
 
-  let book = scriptureList.book
-    , notation = scriptureList.notation
+  let book = bible.book
+    , notation = bible.notation
     , bibleObj = {
         book,
         notation,
@@ -46,24 +46,25 @@ export function aggregateVerses(scriptureList: IRawScriptures) {
         num: '',
         verses: [] as IVerse[]
       }
-    , firstIteration = true;
+    , firstIteration = true
+  ;
 
 
-  for (let s of scriptureList.scriptures) {
-    if (s.chapter && s.chapter != chapterTrack) {
+  for (let chap of bible.chapters) {
+    if (chap.num && chap.num != chapterTrack) {
       if (!firstIteration) bibleObj.chapters.push({
         num: chapterTrack,
         verses: chapter.verses.slice()
       });
-      chapterTrack = chapter.num = s.chapter;
-      titleTrack = s.title || null;
+      chapterTrack = chapter.num = chap.num;
+      titleTrack = chap.title || null;
       firstIteration = false;
       chapter.verses = [];
     }
     chapter.verses.push({
-      title: s.title || null,
-      num: s.verse,
-      text: s.text
+      title: chap.title || null,
+      num: chap.verse,
+      text: chap.text
     });
   }
   bibleObj.chapters.push({
