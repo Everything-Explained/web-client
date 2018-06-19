@@ -52,10 +52,9 @@ $speed: .2s
   max-height: 70%
   padding: 2px 0 0
   color: hsl(0, 0%, 86.7%)
-  background-color: hsla(0, 0, 7%, .7)
-  border: 8px solid hsla(52, 100%, 60%, .3 / $golden-ratio)
+  background-color: hsla(0, 0, 15%, .75)
+  box-shadow: 0 0 100px 8px hsl(0, 0%, 0%)
   border-radius: 5px
-  box-shadow: 0 1px 23px 5px hsl(0, 0%, 0%), inset 0 0 0 10px transparent
   opacity: 0
   transform: translate(-50%) scale(.3, .3)
   transition: all .5s
@@ -63,20 +62,18 @@ $speed: .2s
   .modal-close
     &:visited, &:active, &:link
       position: absolute
-      bottom: -20px
-      right: -20px
-      border-radius: 50%
+      right: 0
       font-size: 20px
-      padding: 3px 8px 5px
+      padding: 4px 8px 5px
       font-weight: bold
       text-decoration: none
-      color: hsl(0, 0%, 0%)
-      background: hsl(271.7, 100%, 83%)
-      box-shadow: 0 0 13px 2px  hsl(0, 0%, 0%)
+      color: hsl(13, 0%, 0%)
+      border-radius: 0 5px 0 0
+      border: none
       transition: all $speed ease
 
     &:hover
-      background: $h1-color
+      background: hsl(13, 100%, 75%)
       color: hsl(0, 0%, 0%)
 
   header
@@ -88,8 +85,9 @@ $speed: .2s
     font-family: comfortaa
     font-variant: small-caps
     color: hsl(0, 0%, 0%)
-    background: linear-gradient(to right, hsla(0, 0%, 0%, .3) 0%, hsla(51, 100%, 45%, 1) 50%, hsla(0, 0%, 0%, .3) 100%);
-    border-bottom: transparent
+    background: hsl(278, 15%, 50%)
+    border-radius: 5px 5px 0 0
+    border-bottom: 1px solid hsl(0, 0%, 0%)
 
     span
       position: relative
