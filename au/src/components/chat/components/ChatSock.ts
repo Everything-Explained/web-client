@@ -27,30 +27,30 @@ type SockEvent = {
   disconnected: (msg: string) => void;
   timeout:      (err: any) => void;
 
-  servermsg:        (msg:   string)   => void;
-  msg:              (msg:   IMessage) => void;
-  notice:           (msg:   string)   => void;
-  emote:            (msg:   string)   => void;
-  userjoined:       (user:  IUser)    => void;
-  userleft:         (user:  IUser)    => void;
-  userlist:         (user:  IUser[])  => void;
-  usertypingstart:  (user:  IUser)    => void;
-  usertypingstop:   (user:  IUser)    => void;
-  usertypingpaused: (user:  IUser)    => void;
-  bibleverse:       (data:  any)      => void;
-  updatestats:      (stats: IStats)   => void;
+  servermsg:         (msg:   string)   => void;
+  msg:               (msg:   IMessage) => void;
+  notice:            (msg:   string)   => void;
+  emote:             (msg:   string)   => void;
+  userjoined:        (user:  IUser)    => void;
+  userleft:          (user:  IUser)    => void;
+  userlist:          (user:  IUser[])  => void;
+  usertypingstarted: (user:  IUser)    => void;
+  usertypingstopped: (user:  IUser)    => void;
+  usertypingpaused:  (user:  IUser)    => void;
+  bibleverse:        (data:  any)      => void;
+  updatestats:       (stats: IStats)   => void;
 }
 
 
 
-enum UserEvent {
+export enum UserEvent {
   MESSAGE       = 'user-message',
   EMOTE         = 'user-emote',
   NOTICE        = 'user-notice',
   LIST          = 'users-online',
   JOINED        = 'user-joined',
   LEFT          = 'user-left',
-  TYPINGSTART   = 'user-typing-start',
+  TYPINGSTARTED = 'user-typing-started',
   TYPINGPAUSED  = 'user-typing-paused',
   TYPINGSTOPPED = 'user-typing-stopped',
   IDLE          = 'user-state-idle',
@@ -74,17 +74,17 @@ export enum ChatEvent {
   RECONNECTING = 'reconnecting',
   DISCONNECTED = 'disconnected',
 
-  SERVERMSG    = 'servermsg',
-  MSG          = 'msg',
-  NOTICE       = 'notice',
-  EMOTE        = 'emote',
-  USERJOINED   = 'userjoined',
-  USERLEFT     = 'userleft',
-  USERLIST     = 'userlist',
-  TYPINGSTART  = 'usertypingstart',
-  TYPINGSTOP   = 'usertypingstop',
-  TYPINGPAUSED = 'usertypingpaused',
-  BIBLEVERSE   = 'bibleverse'
+  SERVERMSG     = 'servermsg',
+  MSG           = 'msg',
+  NOTICE        = 'notice',
+  EMOTE         = 'emote',
+  USERJOINED    = 'userjoined',
+  USERLEFT      = 'userleft',
+  USERLIST      = 'userlist',
+  TYPINGSTARTED = 'usertypingstarted',
+  TYPINGSTOPPED = 'usertypingstopped',
+  TYPINGPAUSED  = 'usertypingpaused',
+  BIBLEVERSE    = 'bibleverse'
 }
 
 
@@ -156,12 +156,12 @@ export class ChatSock {
 
     implicit: {
       userTypingStart: {
-        ev: UserEvent.TYPINGSTART,
-        exec: (user: IUser) => this._execEvent.usertypingstart(user)
+        ev: UserEvent.TYPINGSTARTED,
+        exec: (user: IUser) => this._execEvent.usertypingstarted(user)
       },
       userTypingStopped: {
         ev: UserEvent.TYPINGSTOPPED,
-        exec: (user: IUser) => this._execEvent.usertypingstop(user)
+        exec: (user: IUser) => this._execEvent.usertypingstopped(user)
       },
       userTypingPaused: {
         ev: UserEvent.TYPINGPAUSED,
@@ -187,7 +187,6 @@ export class ChatSock {
   };
 
   private _events: SockEvents = {};
-
   private _execEvent = {} as SockEvent;
 
 
@@ -233,14 +232,14 @@ export class ChatSock {
 
 
 
-  constructor(private readonly _timer: Timer) {}
+  constructor(private readonly _timer: Timer) {
+    this._populateEvents();
+  }
 
 
 
 
   public connect(reconnect = false) {
-
-    this._populateEvents();
 
     if (reconnect && this._isConnected) {
       this._execEvent.connected('Server is Already Connected.');
@@ -276,8 +275,6 @@ export class ChatSock {
       this._sockEventHandlers.user,
       this._sockEventHandlers.implicit
     ]);
-
-    console.log(this._timer);
 
     this._timers.forEach(t => this._timer.add(t));
     this._timer.start();
@@ -322,6 +319,12 @@ export class ChatSock {
 
   public on(event: ChatEvent, exec: (...args: any[]) => void) {
       this._events[event].push(exec);
+      return this;
+  }
+
+
+  public send(event: UserEvent, data?: any) {
+    this._sock.emit(event, data || null);
   }
 
 
@@ -344,15 +347,13 @@ export class ChatSock {
 
 
   private _populateEvents() {
-
-    if (this._events[ChatEvent.AUTHED.toLowerCase()]) return;
-
-    for (let k of Object.keys(ChatEvent)) {
-      let n = k.toLowerCase();
+    for (let k in ChatEvent) {
+      let n = ChatEvent[k];
       // TODO - Remove Debug code for release
-      this._events[n] = [(...args) => { console.debug(n.toUpperCase(), args[0]); }];
-      this._execEvent[n] = (...args: any[]) => this._events[n].forEach(f => f(args));
+      this._events[n] = [(...args) => { console.debug(n.toUpperCase(), args); }];
+      this._execEvent[n] = (...args: any[]) => this._events[n].forEach(f => f.apply(null, args));
     }
+
   }
 
   // private _setTyping(user: string, type: 'paused'|'is'|'stopped') {
