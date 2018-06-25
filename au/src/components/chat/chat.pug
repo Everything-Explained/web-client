@@ -1,7 +1,9 @@
 template
 
-  require(from='./elements/message/message-view')
+  require(from='./elements/message/message')
   require(from='./elements/chatcmdr/chatcmdr')
+  require(from='./elements/user-list/user-list')
+
   aside#VerseModal.modal-overlay
     div.modal-preload-container
       div.preloader
@@ -24,43 +26,14 @@ template
       section#MainWindow
         div#MainPort
           div.message-tray
-            message-view.message(
-              repeat.for='msg of ports.main._view'
+            message.message(
+              repeat.for='msg of messages'
               cfg.bind='msg'
-              messages.bind='msg.messages'
-              io.bind='$parent.io')
+              lines.bind='msg.lines'
+              sock.bind='$parent.sock')
 
-      section#PartialWindow
-        div#Pane0.pane
-          div.paneport
-            div.message-tray
-              message-view.message(repeat.for='msg of ports.top._view',
-                                    cfg.bind='msg')
-        div#Pane1.pane
-          div.paneport
-            div.message-tray
-              message-view.message(repeat.for='msg of ports.center._view',
-                                    cfg.bind='msg')
-        div#Pane2.pane
-          div.paneport
-            div.message-tray
-              message-view.message(repeat.for='msg of ports.bottom._view',
-                                    cfg.bind='msg')
-
-      aside#UserList(class='${userlistActive ? "active" : ""}')
-        ul
-          li(repeat.for='user of users'
-             class='${user.isTyping}'
-             contextmenu.delegate='denyContextMenu()'
-             mousedown.delegate='toggleUserData($event)'
-             dblclick.delegate='noticeUser($event)') ${user.name}
-        div.user-context-menu(class='${userDataActive ? "active" : ""}')
-          div.title ${userData.alias}
-          dl
-            dt ping
-            dd ${userData.ping}
-            dt user group
-            dd ${userData.accessLevel}
+      user-list#UserList(sock.bind='sock')
 
 
-    chat-commander#ChatCommander(chat-data.bind='data' view-model.ref='commander')
+    chat-commander#ChatCommander(sock.bind='sock'
+                                 chat.bind='chat')

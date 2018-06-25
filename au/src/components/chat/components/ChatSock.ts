@@ -1,91 +1,73 @@
+
 import * as io from 'socket.io-client';
-import { IMessage } from '../elements/message/message-data';
 import { ITimerExec, Timer } from '../../../shared/services/timing';
 import { IUser } from '../../../shared/models/user-data';
-import { IStats } from '../../../../../../server/models/db_modules/db_stats';
 
 
 
 interface IEvent {
-  [key: string]: {
-    ev: ServerEvent|UserEvent;
-    exec: (...args: any[]) => void;
-    once?: boolean;
-  };
+  ev: string;
+  funcs: ((...args: any[]) => void)[];
 }
 
 
-type SockEvents = {
-  [key: string]: ((...args: any[]) => void)[]
-}
-
-
-type SockEvent = {
-  connected:    (msg: string) => void;
-  authed:       (msg: string) => void;
-  reconnecting: (msg: string) => void;
-  disconnected: (msg: string) => void;
-  timeout:      (err: any) => void;
-
-  servermsg:         (msg:   string)   => void;
-  msg:               (msg:   IMessage) => void;
-  notice:            (msg:   string)   => void;
-  emote:             (msg:   string)   => void;
-  userjoined:        (user:  IUser)    => void;
-  userleft:          (user:  IUser)    => void;
-  userlist:          (user:  IUser[])  => void;
-  usertypingstarted: (user:  IUser)    => void;
-  usertypingstopped: (user:  IUser)    => void;
-  usertypingpaused:  (user:  IUser)    => void;
-  bibleverse:        (data:  any)      => void;
-  updatestats:       (stats: IStats)   => void;
-}
-
-
-
-export enum UserEvent {
+enum SockEvent {
   MESSAGE       = 'user-message',
   EMOTE         = 'user-emote',
   NOTICE        = 'user-notice',
+
   LIST          = 'users-online',
   JOINED        = 'user-joined',
   LEFT          = 'user-left',
+
   TYPINGSTARTED = 'user-typing-started',
   TYPINGPAUSED  = 'user-typing-paused',
   TYPINGSTOPPED = 'user-typing-stopped',
-  IDLE          = 'user-state-idle',
-  BIBLEVERSE    = 'user-get-verse',
-  UPDATESTATS   = 'user-update-stats'
-}
 
-enum ServerEvent {
+  IDLE          = 'user-state-idle',
+  AWAY          = 'user-state-away',
+
+  BIBLEVERSE    = 'user-get-verse',
+  UPDATESTATS   = 'user-update-stats',
+
+  TEST          = 'test',
+
+
   DISCONNECT  = 'server-disconnect',
   AUTHSUCCESS = 'server-auth-success',
   AUTHFAIL    = 'server-auth-fail',
   CONNERROR   = 'connect_error',
   TIMEOUT     = 'session-timeout',
-  MESSAGE     = 'server-message',
   PING        = 'server-ping',
 }
 
-export enum ChatEvent {
-  CONNECTED    = 'connected',
-  AUTHED       = 'authed',
-  RECONNECTING = 'reconnecting',
-  DISCONNECTED = 'disconnected',
 
-  SERVERMSG     = 'servermsg',
-  MSG           = 'msg',
-  NOTICE        = 'notice',
-  EMOTE         = 'emote',
-  USERJOINED    = 'userjoined',
-  USERLEFT      = 'userleft',
-  USERLIST      = 'userlist',
-  TYPINGSTARTED = 'usertypingstarted',
-  TYPINGSTOPPED = 'usertypingstopped',
-  TYPINGPAUSED  = 'usertypingpaused',
-  BIBLEVERSE    = 'bibleverse'
+export enum UserEvent {
+  MESSAGE = SockEvent.MESSAGE,
+  EMOTE = SockEvent.EMOTE,
+  NOTICE = SockEvent.NOTICE,
+
+  LIST = SockEvent.LIST,
+  JOINED = SockEvent.JOINED,
+  LEFT = SockEvent.LEFT,
+
+  TYPINGSTART = SockEvent.TYPINGSTARTED,
+  TYPINGSTOP = SockEvent.TYPINGSTOPPED,
+  TYPINGPAUSE = SockEvent.TYPINGPAUSED,
+
+  DISCONNECT = SockEvent.DISCONNECT,
 }
+
+
+export enum ServerEvent {
+  SERVERMSG  = 'server-message',
+  CONNECTED  = 'sock-connected',
+  RECONNECT  = 'sock-reconnecting',
+  DISCONNECT = 'sock-disconnected',
+  AUTHED     = 'sock-authed',
+}
+
+
 
 
 export class ChatSock {
@@ -98,97 +80,30 @@ export class ChatSock {
   private _isIdle       = false;
   private _pingStart    = 0;
 
-  private readonly _sockEventHandlers = {
-
-    // Pre-connection events
-    preconn: {
-      msg: {
-        ev: ServerEvent.MESSAGE,
-        exec: (msg: string) => this._execEvent.servermsg(msg)
-      },
-      auth_success: {
-        ev: ServerEvent.AUTHSUCCESS,
-        exec: (data) => this._onAuthSuccess(data)
-      },
-      auth_fail: {
-        ev: ServerEvent.AUTHFAIL,
-        exec: (msg) => { console.debug(msg); }
-      },
-      conn_error: {
-        ev: ServerEvent.CONNERROR,
-        exec: () => {}
-      },
+  private readonly _eventLinks = [
+    {
+      ev: SockEvent.AUTHSUCCESS,
+      func: (user) => this._onAuthSuccess(user)
     },
-
-    server: {
-      disconnect: {
-        ev: ServerEvent.DISCONNECT,
-        exec: msg => this._onDisconnected(msg)
-      },
-      sessionTimeout: {
-        ev: ServerEvent.TIMEOUT,
-        exec: (err) => this._execEvent.timeout(err)
-      },
-      ping: {
-        ev: ServerEvent.PING,
-        exec: () => this._onPing()
-      },
+    {
+      ev: SockEvent.AUTHFAIL,
+      func: (msg) => console.error('AUTHFAIL', msg)
     },
-
-    user: {
-      message: {
-        ev: UserEvent.MESSAGE,
-        exec: (msg: IMessage) => this._execEvent.msg(msg)
-      },
-      notice: {
-        ev: UserEvent.NOTICE,
-        exec: (msg: string) => this._execEvent.notice(msg)
-      },
-      emote: {
-        ev: UserEvent.EMOTE,
-        exec: (msg: string) => this._execEvent.emote(msg)
-      },
-      getVerse: {
-        ev: UserEvent.BIBLEVERSE,
-        exec: data => this._execEvent.bibleverse(data)
-      },
+    {
+      ev: SockEvent.CONNERROR,
+      func: (data) => console.error('CONNERROR', data)
     },
-
-    implicit: {
-      userTypingStart: {
-        ev: UserEvent.TYPINGSTARTED,
-        exec: (user: IUser) => this._execEvent.usertypingstarted(user)
-      },
-      userTypingStopped: {
-        ev: UserEvent.TYPINGSTOPPED,
-        exec: (user: IUser) => this._execEvent.usertypingstopped(user)
-      },
-      userTypingPaused: {
-        ev: UserEvent.TYPINGPAUSED,
-        exec: (user: IUser) => this._execEvent.usertypingpaused(user)
-      },
-      userJoined: {
-        ev: UserEvent.JOINED,
-        exec: (user: IUser) => this._execEvent.userjoined(user)
-      },
-      userLeft: {
-        ev: UserEvent.LEFT,
-        exec: (user: IUser) => this._execEvent.userleft(user)
-      },
-      userList: {
-        ev: UserEvent.LIST,
-        exec: (users: IUser[]) => this._execEvent.userlist(users)
-      },
-      updateStats: {
-        ev: UserEvent.UPDATESTATS,
-        exec: (stats: IStats) => this._execEvent.updatestats(stats)
-      }
+    {
+      ev: SockEvent.DISCONNECT,
+      func: (msg) => this._onDisconnected(msg)
+    },
+    {
+      ev: SockEvent.PING,
+      func: () => this._onPing()
     }
-  };
+  ];
 
-  private _events: SockEvents = {};
-  private _execEvent = {} as SockEvent;
-
+  private _events: IEvent[] = [];
 
   private readonly _timers: ITimerExec[] = [
     {
@@ -196,17 +111,17 @@ export class ChatSock {
       time: 96, // 8 minutes
       interval: false,
       exec: () => {
-        this._sock.emit(UserEvent.IDLE);
+        this._sock.emit(SockEvent.IDLE);
         this._isIdle = true;
       }
     },
     {
       name: 'ping',
-      time: 1, // 5 seconds
+      time: 3, // 5 seconds
       interval: true,
       exec: () => {
         this._pingStart = Date.now();
-        this._sock.emit(ServerEvent.PING, this.latency);
+        this._sock.emit(SockEvent.PING, this.latency);
       }
     }
   ];
@@ -242,42 +157,51 @@ export class ChatSock {
   public connect(reconnect = false) {
 
     if (reconnect && this._isConnected) {
-      this._execEvent.connected('Server is Already Connected.');
+      this._exec(ServerEvent.CONNECTED, 'Server Already Connected...');
       return;
     }
 
     if (reconnect) {
-      this._execEvent.reconnecting('Trying connection to server...');
+      this._exec(ServerEvent.RECONNECT, 'Trying connection to server...');
       this._sock = io({ forceNew: true });
       return;
     }
 
+    this._setupSocket();
+
+    this._sock.emit('server-authenticate');
+
+  }
+
+
+  private _setupSocket() {
     this._sock = io({
       forceNew: true,
       reconnection: false
     });
 
-    this._setSockEvents(this._sockEventHandlers.preconn)
-      .emit('server-authenticate')
-    ;
+    // Setup pre-connection Events
+    this._eventLinks.forEach(ev => {
+      this._sock.on(ev.ev, ev.func);
+    });
 
+    // Setup post-connection Events
+    this._events.forEach(ev => {
+      this._sock.on(ev.ev, (data) => ev.funcs.forEach(f => f(data)));
+    });
   }
 
 
-  private _onAuthSuccess(data: any) {
+  private _onAuthSuccess(user: IUser) {
 
     if (!this._isConnected) {
       this._isConnected = true;
     }
 
-    this._setSockEvents([
-      this._sockEventHandlers.server,
-      this._sockEventHandlers.user,
-      this._sockEventHandlers.implicit
-    ]);
-
     this._timers.forEach(t => this._timer.add(t));
     this._timer.start();
+
+    this._exec(ServerEvent.AUTHED, user);
 
   }
 
@@ -289,7 +213,7 @@ export class ChatSock {
         : 'Server Lost Connection'
     ;
 
-    this._execEvent.disconnected(response);
+    this._exec(ServerEvent.DISCONNECT, response);
     this._isConnected = false;
   }
 
@@ -305,7 +229,7 @@ export class ChatSock {
 
   public disconnect(silent = false) {
     if (!silent)
-      this._execEvent.disconnected('Disconnected from Server');
+      this._exec(ServerEvent.DISCONNECT, 'Disconnected from Server');
     ;
 
     this._timer
@@ -317,53 +241,44 @@ export class ChatSock {
   }
 
 
-  public on(event: ChatEvent, exec: (...args: any[]) => void) {
-      this._events[event].push(exec);
-      return this;
+  public on(event: UserEvent|ServerEvent|string, func: (...args: any[]) => void) {
+    let _event = this._events.find(e => e.ev == event);
+
+    if (_event)
+      _event.funcs.push(func)
+    ;
+    else
+      this._sock.on(event.toString(), func)
+    ;
+
+    return this;
   }
 
 
   public send(event: UserEvent, data?: any) {
-    this._sock.emit(event, data || null);
-  }
-
-
-  private _setSockEvents(events: IEvent|IEvent[]) {
-    if (Array.isArray(events))
-      events.forEach(evs => this._applySockHandlers(evs));
-    else
-      this._applySockHandlers(events);
-
-    return this._sock;
-  }
-
-
-  private _applySockHandlers(event: IEvent) {
-    for (let key in event) {
-      let ev = event[key];
-      this._sock.on(ev.ev, ev.exec);
-    }
+    this._sock.emit(event.toString(), data || null);
   }
 
 
   private _populateEvents() {
-    for (let k in ChatEvent) {
-      let n = ChatEvent[k];
-      // TODO - Remove Debug code for release
-      this._events[n] = [(...args) => { console.debug(n.toUpperCase(), args); }];
-      this._execEvent[n] = (...args: any[]) => this._events[n].forEach(f => f.apply(null, args));
-    }
-
+    this._pushEvents(SockEvent);
+    this._pushEvents(ServerEvent);
   }
 
-  // private _setTyping(user: string, type: 'paused'|'is'|'stopped') {
-  //   this._chat.users.find((u, i) => {
-  //     if (u.name == user) {
-  //       this._chat.users[i].isTyping = `${type}-typing`;
-  //       return true;
-  //     }
-  //     return false;
-  //   });
-  // }
+
+  private _pushEvents(events: typeof ServerEvent|typeof SockEvent) {
+    for (let k of Object.keys(events)) {
+      this._events.push({
+        ev: events[k],
+        funcs: [(... args) => console.debug(k, args ? args : null)]
+      });
+    }
+  }
+
+
+  private _exec(event: ServerEvent|UserEvent, data: any) {
+    let ev = this._events.find(e => e.ev == event);
+    ev.funcs.forEach(f => f(data));
+  }
 
 }
