@@ -2,8 +2,6 @@
 import * as io from 'socket.io-client';
 import { ITimerExec, Timer } from '../../../shared/services/timing';
 import { IUser, UserData } from '../../../shared/models/user-data';
-import { inject } from 'aurelia-framework';
-
 
 
 interface IEvent {
@@ -32,7 +30,7 @@ enum SockEvent {
   TEST          = 'test',
 
 
-  DISCONNECT  = 'server-disconnect',
+  DISCONNECT  = 'disconnect',
   AUTHSUCCESS = 'server-auth-success',
   AUTHFAIL    = 'server-auth-fail',
   CONNERROR   = 'connect_error',
@@ -51,8 +49,6 @@ export enum UserEvent {
   LEFT = SockEvent.USERLEFT,
 
   TYPING = SockEvent.USERTYPING,
-
-  DISCONNECT = SockEvent.DISCONNECT,
 }
 
 
@@ -72,9 +68,10 @@ export class ChatSock {
   private _sock: SocketIOClient.Socket = null;
   private _latencies: number[] = [];
 
-  private _isConnected  = false;
-  private _isIdle       = false;
-  private _pingStart    = 0;
+  private _isConnected     = false;
+  private _isDisconnecting = false;
+  private _isIdle          = false;
+  private _pingStart       = 0;
 
   private readonly _eventLinks = [
     {
@@ -94,8 +91,20 @@ export class ChatSock {
       func: (msg) => this._onDisconnected(msg)
     },
     {
+      ev: SockEvent.USERLIST,
+      func: (user: IUser[]) => this._onUserList(user)
+    },
+    {
       ev: SockEvent.USERTYPING,
       func: (alias, state) => this._onTyping(alias, state)
+    },
+    {
+      ev: SockEvent.USERJOINED,
+      func: (user: IUser) => this._onUserJoined(user)
+    },
+    {
+      ev: SockEvent.USERLEFT,
+      func: (user: IUser) => this._onUserLeft(user)
     },
     {
       ev: SockEvent.PING,
@@ -154,6 +163,8 @@ export class ChatSock {
 
 
 
+  /************************/
+  //#region Public Methods
   public connect(reconnect = false) {
 
     if (reconnect && this._isConnected) {
@@ -163,71 +174,12 @@ export class ChatSock {
 
     if (reconnect) {
       this._exec(ServerEvent.RECONNECT, 'Trying connection to server...');
-      this._sock = io({ forceNew: true });
-      return;
     }
 
     this._setupSocket();
 
     this._sock.emit('server-authenticate');
 
-  }
-
-
-  private _setupSocket() {
-    this._sock = io({
-      forceNew: true,
-      reconnection: false
-    });
-
-    // Setup pre-connection Events
-    this._eventLinks.forEach(ev => {
-      this._sock.on(ev.ev, ev.func);
-    });
-
-    // Setup post-connection Events
-    this._events.forEach(ev => {
-      this._sock.on(ev.ev, (...data) => ev.funcs.forEach(f => f(...data)));
-    });
-  }
-
-
-  private _onAuthSuccess(user: IUser) {
-
-    if (!this._isConnected) {
-      this._isConnected = true;
-    }
-
-    this._timers.forEach(t => this._timer.add(t));
-    this._timer.start();
-
-    this._exec(ServerEvent.AUTHED, user);
-  }
-
-
-  private _onDisconnected(msg: string) {
-    let response =
-      msg == 'io server disconnect'
-        ? 'Server Closed Connection'
-        : 'Server Lost Connection'
-    ;
-
-    this._exec(ServerEvent.DISCONNECT, response);
-    this._isConnected = false;
-  }
-
-
-  private _onPing() {
-    if (this._latencies.length > 50) {
-      this._latencies.shift();
-    }
-    this._latencies.push(Date.now() - this._pingStart);
-    // console.debug('PING', this._latencies);
-  }
-
-
-  private _onTyping(alias: string, state: 'typing-started'|'typing-paused') {
-    this._userData.findUser(alias).typingState = state;
   }
 
 
@@ -241,7 +193,9 @@ export class ChatSock {
       .delete('ping')
     ;
 
-    this._sock.close();
+    this._isDisconnecting = true;
+    this._userData.clear();
+    this._sock.disconnect();
   }
 
 
@@ -261,6 +215,96 @@ export class ChatSock {
 
   public send(event: UserEvent, data?: any) {
     this._sock.emit(event.toString(), data || null);
+  }
+  //#endregion
+  /************************/
+
+
+
+  /************************/
+  //#region Event Handlers
+  private _onAuthSuccess(user: IUser) {
+
+    if (!this._isConnected) {
+      this._isConnected = true;
+    }
+
+    this._userData.currentUser = user;
+
+    this._timers.forEach(t => this._timer.add(t));
+    this._timer.start();
+
+    this._exec(ServerEvent.AUTHED, user);
+  }
+
+
+  private _onDisconnected(msg: string) {
+    let response =
+      msg == 'io server disconnect'
+        ? 'Server Closed Connection'
+        : 'Server Lost Connection'
+    ;
+
+    if (!this._isDisconnecting)
+      this._exec(ServerEvent.DISCONNECT, response)
+    ;
+
+    this._isConnected = this._isDisconnecting = false;
+  }
+
+
+  private _onPing() {
+    if (this._latencies.length > 50) {
+      this._latencies.shift();
+    }
+    this._latencies.push(Date.now() - this._pingStart);
+    // console.debug('PING', this._latencies);
+  }
+
+
+  private _onUserList(list: IUser[]) {
+    this._userData.addUsers(list);
+  }
+
+
+  private _onTyping(alias: string, state: 'typing-started'|'typing-paused') {
+    this._userData.findUser(alias).typingState = state;
+  }
+
+
+  private _onUserJoined(user: IUser) {
+    // Method executes after auth success
+    if (this._userData.currentUser.alias == user.alias) return;
+    this._userData.addUsers(user);
+  }
+
+
+  private _onUserLeft(user: IUser) {
+    this._userData.delUser(user.alias);
+  }
+  //#endregion
+  /************************/
+
+
+
+
+  /*************************/
+  //#region Helper Methods
+  private _setupSocket() {
+    this._sock = io({
+      forceNew: true,
+      reconnection: false
+    });
+
+    // Setup pre-connection Events
+    this._eventLinks.forEach(ev => {
+      this._sock.on(ev.ev, ev.func);
+    });
+
+    // Setup post-connection Events
+    this._events.forEach(ev => {
+      this._sock.on(ev.ev, (...data) => ev.funcs.forEach(f => f(...data)));
+    });
   }
 
 
@@ -284,5 +328,6 @@ export class ChatSock {
     let ev = this._events.find(e => e.ev == event);
     ev.funcs.forEach(f => f(data));
   }
-
+  //#endregion
+  /*************************/
 }
