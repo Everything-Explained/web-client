@@ -1,7 +1,8 @@
 
 import * as io from 'socket.io-client';
 import { ITimerExec, Timer } from '../../../shared/services/timing';
-import { IUser } from '../../../shared/models/user-data';
+import { IUser, UserData } from '../../../shared/models/user-data';
+import { inject } from 'aurelia-framework';
 
 
 
@@ -12,17 +13,15 @@ interface IEvent {
 
 
 enum SockEvent {
-  MESSAGE       = 'user-message',
-  EMOTE         = 'user-emote',
-  NOTICE        = 'user-notice',
+  MESSAGE    = 'user-message',
+  EMOTE      = 'user-emote',
+  NOTICE     = 'user-notice',
 
-  LIST          = 'users-online',
-  JOINED        = 'user-joined',
-  LEFT          = 'user-left',
+  USERLIST   = 'users-online',
+  USERJOINED = 'user-joined',
+  USERLEFT   = 'user-left',
 
-  TYPINGSTARTED = 'user-typing-started',
-  TYPINGPAUSED  = 'user-typing-paused',
-  TYPINGSTOPPED = 'user-typing-stopped',
+  USERTYPING = 'user-typing',
 
   IDLE          = 'user-state-idle',
   AWAY          = 'user-state-away',
@@ -47,13 +46,11 @@ export enum UserEvent {
   EMOTE = SockEvent.EMOTE,
   NOTICE = SockEvent.NOTICE,
 
-  LIST = SockEvent.LIST,
-  JOINED = SockEvent.JOINED,
-  LEFT = SockEvent.LEFT,
+  LIST = SockEvent.USERLIST,
+  JOINED = SockEvent.USERJOINED,
+  LEFT = SockEvent.USERLEFT,
 
-  TYPINGSTART = SockEvent.TYPINGSTARTED,
-  TYPINGSTOP = SockEvent.TYPINGSTOPPED,
-  TYPINGPAUSE = SockEvent.TYPINGPAUSED,
+  TYPING = SockEvent.USERTYPING,
 
   DISCONNECT = SockEvent.DISCONNECT,
 }
@@ -66,7 +63,6 @@ export enum ServerEvent {
   DISCONNECT = 'sock-disconnected',
   AUTHED     = 'sock-authed',
 }
-
 
 
 
@@ -98,6 +94,10 @@ export class ChatSock {
       func: (msg) => this._onDisconnected(msg)
     },
     {
+      ev: SockEvent.USERTYPING,
+      func: (alias, state) => this._onTyping(alias, state)
+    },
+    {
       ev: SockEvent.PING,
       func: () => this._onPing()
     }
@@ -117,7 +117,7 @@ export class ChatSock {
     },
     {
       name: 'ping',
-      time: 3, // 5 seconds
+      time: 6, // 30 seconds
       interval: true,
       exec: () => {
         this._pingStart = Date.now();
@@ -147,7 +147,7 @@ export class ChatSock {
 
 
 
-  constructor(private readonly _timer: Timer) {
+  constructor(private readonly _timer: Timer, private _userData: UserData) {
     this._populateEvents();
   }
 
@@ -187,7 +187,7 @@ export class ChatSock {
 
     // Setup post-connection Events
     this._events.forEach(ev => {
-      this._sock.on(ev.ev, (data) => ev.funcs.forEach(f => f(data)));
+      this._sock.on(ev.ev, (...data) => ev.funcs.forEach(f => f(...data)));
     });
   }
 
@@ -202,7 +202,6 @@ export class ChatSock {
     this._timer.start();
 
     this._exec(ServerEvent.AUTHED, user);
-
   }
 
 
@@ -224,6 +223,11 @@ export class ChatSock {
     }
     this._latencies.push(Date.now() - this._pingStart);
     // console.debug('PING', this._latencies);
+  }
+
+
+  private _onTyping(alias: string, state: 'typing-started'|'typing-paused') {
+    this._userData.findUser(alias).typingState = state;
   }
 
 
@@ -270,7 +274,7 @@ export class ChatSock {
     for (let k of Object.keys(events)) {
       this._events.push({
         ev: events[k],
-        funcs: [(... args) => console.debug(k, args ? args : null)]
+        funcs: [(args) => console.debug(k, args)]
       });
     }
   }

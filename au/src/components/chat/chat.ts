@@ -67,7 +67,7 @@ export class Chat {
               public timing: Timer,
               private _userData: UserData) {
 
-    this._sock = new ChatSock(timing);
+    this._sock = new ChatSock(timing, _userData);
 
     this._eventLinks.forEach(h => {
       this._sock.on(h.ev, h.func);
