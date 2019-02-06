@@ -18,11 +18,7 @@
       </section>
     </aside>
 
-    <section id="TrayTop">
-      <aside class="watermark" @click="openWatermark">
-        <span>{{ verType + version }}</span>
-      </aside>
-    </section>
+    <section id="TrayTop"></section>
 
     <section id="PageMiddle">
       <section id="TrayLeft">
@@ -33,6 +29,9 @@
             </li>
           </ul>
         </menu>
+        <aside class="watermark" @click="openWatermark">
+          <span>{{ verType + version }}</span>
+        </aside>
       </section>
 
       <router-view id="PageContent" />
