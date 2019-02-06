@@ -1,8 +1,0 @@
-node_modules
-.idea
-.DS_STORE
-*.map
-scripts
-src/global.css
-src/app.css
-src/style_utilities/themes/img/bg

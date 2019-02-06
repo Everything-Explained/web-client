@@ -1,9 +1,0 @@
-template
-  menu.home-page
-    h1 ${activeRoute}
-    ul
-      li(repeat.for='route of router.navigation'
-         mousedown.delegate='$parent.router.navigate(route.config.route)'
-         class='${route.isActive ? "active" : ""}') ${route.config.name}
-
-  router-view.child-router

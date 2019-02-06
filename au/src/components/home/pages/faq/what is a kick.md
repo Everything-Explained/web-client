@@ -1,9 +1,0 @@
-eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxMTozNi42NDBaIiwidGl0bGUiOiJhYm91dCBraWNrcyJ9
-
-A kick is when a user is forceably removed _from a channel_ on the chat server for a specific duration, set by an **Admin** or **Moderator**. A **kick** is temporary and you may join the channel again when the duration has expired.
-
-> Trying to repeatedly join the channel after you have been kicked will increase the duration
-
-##### WIP : There will be an obvious time limit for channel kicks eventually
-
-##### WIP : Kicks are currently impossible
