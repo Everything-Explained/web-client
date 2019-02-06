@@ -14,7 +14,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #111;
+        background-color: hsl(0, 0%, 7%);
         z-index: 10000;
       }
       .conditions .response {
@@ -24,6 +24,7 @@
         font-size: 28px;
         font-variant: small-caps;
         letter-spacing: 2px;
+        line-height: 50px;
         word-spacing: 1px;
         color: hsl(50, 90%, 60%);
         padding-top: 100px;
@@ -103,13 +104,15 @@
     <noscript>
       <div class="conditions" style="display: inline-block">
         <div class="response">
-          you must <span>enable javascript</span> for this site to run
+          you must <span>enable javascript</span> for this site to
+          <span class="fail">operate properly</span>
         </div>
       </div>
     </noscript>
     <div id="NoCookies" class="conditions">
       <div class="response">
-        you must <span>enable cookies</span> for this site to <span>operate properly</span>
+        you must <span>enable cookies</span>
+        for this site to <span class="fail">operate properly</span>
       </div>
     </div>
     <div id="Failure" class="conditions">
