@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import { MiniModal } from './libs/minimodal';
 
 Vue.config.productionTip = false
 
+// ######################################################
+// #region BEGIN BROWSER CHECK
 let needBrowser =
   !(typeof navigator['cookieEnabled'] == 'boolean') ||
   !window['Promise'] ||
@@ -25,7 +28,14 @@ if (!cookies) {
   let obj = document.getElementById('NoCookies') as HTMLElement;
   obj.style.display = 'inline-block';
 }
+// #endregion
+// #######################################################
 
+Vue.use({
+  install: () => {
+    Vue.prototype.$modal = new MiniModal()
+  }
+})
 
 if (cookies && !needBrowser) {
   new Vue({

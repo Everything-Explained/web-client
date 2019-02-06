@@ -5,21 +5,21 @@
       <aside class="logo"></aside>
     </header>
 
-    <!-- <aside id="VersionModal" class="modal-overlay">
+    <aside id="VersionModal" class="modal-overlay">
       <div class="modal-preload-container">
         <div class="preloader"></div>
       </div>
       <section class="modal-container">
         <header>
-          <span class="normal"></span>
+          <span class="normal">{{ verType + version }}</span>
         </header>
-        <section class="code"></section>
+        <section class="code">{{ verDesc }}</section>
         <a href="javascript:void(0);" class="modal-close">&#10060;</a>
       </section>
-    </aside> -->
+    </aside>
 
     <section id="TrayTop">
-      <aside class="watermark">
+      <aside class="watermark" @click="openWatermark">
         <span>{{ verType + version }}</span>
       </aside>
     </section>
