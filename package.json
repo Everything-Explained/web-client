@@ -8,6 +8,8 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "@types/markdown-it": "0.0.7",
+    "markdown-it": "^8.4.2",
     "moment": "^2.24.0",
     "vue": "^2.5.22",
     "vue-class-component": "^6.0.0",
