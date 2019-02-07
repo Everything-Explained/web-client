@@ -1,0 +1,67 @@
+.md-faq
+  h1
+    margin: 60px 0 20px 8px
+    font-size: 27px
+    color: hsl(278, 35%, 72%)
+    &:first-child
+      margin-top: 13px
+
+  h4
+    position: relative
+    top: 27%
+    margin: 0 auto
+    font-size: 34px
+    color: hsl(50, 75%, 53%)
+    text-align: center
+  h5
+    position: relative
+    display: block
+    width: 95%
+    margin: 0 auto 15px
+    padding: 10px 30px
+    font-size: 18px
+    font-family: 'Nunito'
+    font-weight: 400
+    font-variant: normal
+    color: hsl(278, 50%, 77%)
+    letter-spacing: 0
+    box-sizing: border-box
+    background-color: hsl(278, 20%, 13%)
+    border: 1px solid hsl(278, 30%, 23%)
+
+
+  & > p
+    width: 95%
+    margin: 0 auto 15px auto
+    font-size: 18px
+    line-height: 32px
+    border-radius: 7px
+    background: $sub-panel
+    &:hover
+      @extend %panel-hover
+
+
+  ul
+    margin: 13px 0 15px 70px
+    font-family: 'Source Code Pro'
+    color: hsl(127, 20%, 60%)
+    line-height: 27px
+
+
+  blockquote
+    margin: 0 auto 15px auto
+    width: 95%
+    background-color: hsl(50, 20%, 13%)
+    border: 1px solid hsl(50, 30%, 23%)
+    opacity: 0.8
+    color: hsl(50, 75%, 80%)
+    font-weight: 400
+    box-sizing: border-box
+    transition: opacity .4s
+    &:hover
+      opacity: 1
+    strong
+      color: hsl(278, 80%, 87%)
+    p
+      padding: 10px 30px 10px 30px
+      font-size: 18px

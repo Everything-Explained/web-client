@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import { MiniModal } from './libs/minimodal';
+import Markdown from 'markdown-it';
 
 Vue.config.productionTip = false
 
@@ -30,6 +31,16 @@ if (!cookies) {
 }
 // #endregion
 // #######################################################
+
+const md = new Markdown();
+Vue.filter('markdown', (v: unknown) => {
+  if (!v) return '';
+  if (typeof v == 'string') {
+    return md.render(v);
+  }
+  throw new Error('Markdown only accepts string values');
+});
+
 
 Vue.use({
   install: () => {

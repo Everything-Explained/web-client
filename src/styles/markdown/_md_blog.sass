@@ -1,0 +1,47 @@
+
+.md-blog
+
+  & > p
+    width: 95%
+    margin: 0 auto 15px auto
+    font-size: 18px
+    line-height: 32px
+    border-radius: 7px
+    background: $sub-panel
+    &:hover
+      @extend %panel-hover
+
+  h3
+    position: relative
+    margin: 0 0 0 7px
+    padding: 33px 0
+    text-align: center
+    font-size: 20px
+    font-family: 'Delius'
+    font-variant: normal
+    font-weight: normal
+    color: hsl(50, 50%, 43%)
+
+    // HORIZONAL LINES
+    &::before, &::after
+      position: absolute
+      content: ' '
+      height: 1px
+      width: 50%
+      left: 50%
+      background: linear-gradient(to right, hsla(50, 30%, 43%, 0) 0%, hsla(278, 40%, 43%, .65) 50%, hsla(50, 30%, 43%, 0) 100%);
+      transform: translateX(-50%)
+
+    &::before
+      top: 10px
+
+    &::after
+      bottom: 10px
+
+
+  pre
+    background-color: hsl(0, 0%, 8%)
+    padding: 10px
+    margin: 0 3%
+    border-radius: 5px
+
