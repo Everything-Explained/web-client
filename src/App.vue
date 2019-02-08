@@ -25,7 +25,19 @@
         <menu id="MainMenu">
           <ul>
             <li>
-              <span></span>
+              <router-link to='home'><span>home</span></router-link>
+            </li>
+            <li>
+              <router-link to='changelog'><span>changelog</span></router-link>
+            </li>
+            <li>
+              <router-link to='faq'><span>faq</span></router-link>
+            </li>
+            <li>
+              <router-link to='invite'><span>invite</span></router-link>
+            </li>
+            <li>
+              <router-link to='signin'><span>signin</span></router-link>
             </li>
           </ul>
         </menu>
