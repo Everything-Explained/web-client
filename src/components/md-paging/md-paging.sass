@@ -1,0 +1,151 @@
+@import '../../styles/_variables';
+
+article.dyn-panel
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  opacity: 1
+  transition: all $trans-speed
+
+  // Placeholder text
+  h4
+    position: relative
+    display: inline-block
+    // width: 500px
+    padding: 5px 13px
+    margin: 0
+    top: 133px
+    left: 50%
+    font-size: 34px
+    color: hsl(50, 55%, 55%)
+    background: $panel
+    border-radius: 7px
+    transform: translateX(-50%)
+
+  header
+    position: absolute
+    left: 0
+    right: 0
+    padding-top: 20px
+    height: 144px
+    text-align: center
+    @extend %font-comfortaa
+    font-size: 44px
+    letter-spacing: 1px
+    color: hsl(50, 55%, 55%)
+    background: linear-gradient(to bottom, hsla(0, 0%, 6.7%, 0.97) 5%, hsla(0, 0%, 6.7%, 0.85) 60%, hsla(0, 0%, 6.7%, 0) 100%);
+    z-index: 100
+    .timestamp
+      position: absolute
+      left: 0
+      right: 0
+      font-size: 18px
+      font-variant: normal
+      font-family: 'Source Code Pro'
+      color: lighten($panel, 25%)
+
+  .panel-container
+    display: flex
+    height: 100%
+    flex-direction: row
+
+  .scroller
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    padding-right: 5px
+    overflow-x: hidden
+    overflow-y: auto
+
+  .content-scroller
+    padding: 0
+    margin-right: -20px
+    & > h1:first-child, & > p:first-child
+      margin-top: 145px
+    & > :last-child
+      margin-bottom: 150px
+
+  .titles
+    position: relative
+    height: 100%
+    flex-direction: column
+    min-width: 300px
+    margin-left: 7px
+    margin-top: 7px
+
+  .title
+    position: relative
+    display: flex
+    flex-direction: column
+    margin-bottom: 7px
+    padding: 5px 0
+    color: hsl(278, 0%, 70%)
+    background: $sub-panel-light
+    font-family: 'Comfortaa'
+    font-weight: 300
+    font-variant: small-caps
+    font-size: 22px
+    text-align: center
+    letter-spacing: 1px
+    cursor: pointer
+    transition: background $trans-speed, color $trans-speed
+    &:hover
+      background: lighten($panel-hover, 3%)
+      color: hsl(0, 0%, 85%)
+      & .title-left
+        color: hsl(50, 70%, 70%)
+      & .subtitle
+        color: lighten($panel-hover, 43%)
+
+  .title-timestamp
+    position: relative
+    font-size: 16px
+    font-family: 'Source Code Pro'
+    font-variant: normal
+    text-align: right
+    color: lighten($panel, 25%)
+    transition: color $trans-speed
+
+  .split-title
+    display: flex
+    font-size: 24px
+    flex-direction: row
+    .title-timestamp
+      left: 10px
+      text-align: left
+
+  .title-left
+    position: relative
+    flex: 1.5
+    align-self: center
+    font-size: 24px
+    font-variant: normal
+    color: hsl(278, 40%, 75%)
+    transition: color $trans-speed
+
+  .title-right
+    flex: 4
+    text-align: left
+    padding-left: 10px
+
+  .content
+    position: relative
+    flex: 1
+    min-width: 400px
+    margin-top: 5px
+    margin-right: 20px
+    opacity: 1
+    transition: opacity .25s
+    &.visible
+      opacity: 1
+    &.hidden
+      opacity: 0
+
+
+
+
+

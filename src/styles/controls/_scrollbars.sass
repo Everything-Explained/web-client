@@ -1,0 +1,47 @@
+
+
+.home,
+.home .scroller,
+.changelog #Changes,
+.invite-page,
+#MainWindow .message-tray,
+.dyn-panel .scroller,
+.blog-container .dev-blog
+  &::-webkit-scrollbar
+    width: 13px
+    border: 2px solid hsl(278, 10%, 20%)
+    border-radius: 3px
+    background: hsl(0, 0%, 0%)
+
+.home,
+.home .scroller,
+.modal-container section,
+.changelog #Changes,
+.invite-page,
+#MainWindow .message-tray,
+.dyn-panel .scroller,
+.blog-container .dev-blog
+  &::-webkit-scrollbar-thumb
+    background: hsl(278, 17%, 30%)
+    border-radius: 3px
+
+    &:hover
+      background: hsl(278, 23%, 40%)
+
+.home .scroller,
+#MainWindow .message-tray
+  &::-webkit-scrollbar
+    width: 7px
+    border: 0
+
+.modal-container section
+  &::-webkit-scrollbar
+    width: 8px
+    border: 0
+
+.home #Answers .scroller,
+.dyn-panel .scroller,
+  &::-webkit-scrollbar
+    width: 13px
+    border: 2px solid hsl(278, 10%, 20%)
+
