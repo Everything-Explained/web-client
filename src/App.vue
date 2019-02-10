@@ -25,19 +25,19 @@
         <menu id="MainMenu">
           <ul>
             <li>
-              <router-link to='home'><span>home</span></router-link>
+              <router-link to='/home'><span>home</span></router-link>
             </li>
             <li>
-              <router-link to='changelog'><span>changelog</span></router-link>
+              <router-link to='/changelog'><span>changelog</span></router-link>
             </li>
             <li>
-              <router-link to='faq'><span>faq</span></router-link>
+              <router-link to='/faq'><span>faq</span></router-link>
             </li>
             <li>
-              <router-link to='invite'><span>invite</span></router-link>
+              <router-link to='/invite'><span>invite</span></router-link>
             </li>
             <li>
-              <router-link to='signin'><span>signin</span></router-link>
+              <router-link to='/signin'><span>signin</span></router-link>
             </li>
           </ul>
         </menu>
@@ -50,13 +50,6 @@
     </section>
 
   </main>
-  <!-- <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div> -->
 </template>
 
 <script type='ts' src='./app.ts'></script>
