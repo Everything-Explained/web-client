@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import { MiniModal } from './libs/minimodal';
 import Markdown from 'markdown-it';
+import moment from 'moment';
+import Component from 'vue-class-component';
 
 Vue.config.productionTip = false
 
@@ -32,6 +34,12 @@ if (!cookies) {
 // #endregion
 // #######################################################
 
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'beforeRouteUpdate',
+]);
+
 const md = new Markdown();
 Vue.filter('markdown', (v: unknown) => {
   if (!v) return '';
@@ -39,6 +47,15 @@ Vue.filter('markdown', (v: unknown) => {
     return md.render(v);
   }
   throw new Error('Markdown only accepts string values');
+});
+
+
+Vue.filter('dateFormat', (v: unknown, format?: string) => {
+  if (!v) return;
+  if (typeof v == 'string' || v instanceof Date) {
+    return moment(v).format(format || 'MMMM Do, YYYY');
+  }
+  throw new Error('DateFormat only accepts string values');
 });
 
 
