@@ -24,7 +24,7 @@ export interface IPageData {
 
 
 @Component
-export default class MdPaging extends Vue {
+export default class MarkdownPaging extends Vue {
   @Prop() public pages!: IPage[];
   @Prop() public path!: string;
   @Prop() public selectedPage!: string;
@@ -44,6 +44,54 @@ export default class MdPaging extends Vue {
     return new Markdown().render(this.content);
   }
 
+  get page() {
+    let log = this.selectedPage
+      , page: IPage|undefined
+    ;
+    if (this.pages[0].title.length > 1) {
+      page = this.pages.find(v => v.title[1] == log)
+    }
+    else {
+      // TODO - 
+      log = log.replace(/-/g, ' ');
+      page = this.pages.find(v => v.title[0] == log);
+    }
+
+    if (page) return page;
+    throw new Error(`Invalid Markdown Page::${page}`)
+  }
+
+
+  public goTo(title: string[]) {
+
+    let link =
+      (title.length > 1)
+        ? this._sanitize(title[1])
+        : this._sanitize(title[0])
+    ;
+
+    this.$router.push(`${this.path}/${link}`);
+  }
+
+
+  // TODO - Reset scroll position when selecting pages
+  @Watch('selectedPage')
+  public renderLog() {
+    if (this.inTransit) return;
+    this.inTransit = true;
+    let page = this.page;
+    setTimeout(() => {
+      this.header = page.title.length > 1 ? page.title[1] : page.title[0]
+      this.subheader = page.date!.toISOString();
+      this.content = page.content
+      this.inTransit = false;
+    }, 250);
+  }
+
+
+  private _sanitize(title: string) {
+    return title.replace(/\s/g, '-');
+  }
 
 
   private _sortPages(type: 'alphabet'|'dateLast'|'dateFirst') {
@@ -69,23 +117,5 @@ export default class MdPaging extends Vue {
       );
     }
   }
-
-  // TODO - Reset scroll position when selecting pages
-  @Watch('selectedPage')
-  public renderLog() {
-    if (this.inTransit) return;
-    this.inTransit = true;
-    let log = this.selectedPage;
-    let page = this.pages.find(v => v.title[1] == log)
-    setTimeout(() => {
-      if (page) {
-        this.header = page.title[1];
-        this.subheader = page.date!.toISOString();
-        this.content = page.content
-      }
-      this.inTransit = false;
-    }, 250);
-  }
-
 
 }

@@ -1,14 +1,14 @@
 
 import { Component, Vue } from 'vue-property-decorator';
 import chglog from './changelog.json';
-import MdPaging from '@/components/md-paging/MdPaging.vue';
+import MarkdownPaging from '@/components/md-paging/MdPaging.vue';
 import { IPage } from '@/components/md-paging/md-paging.js';
 
 
 
 @Component({
   components: {
-    MdPaging
+    MarkdownPaging
   }
 })
 export default class Changelog extends Vue {

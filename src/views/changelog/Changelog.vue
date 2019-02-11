@@ -1,12 +1,12 @@
 <template>
   <div>
-    <md-paging
+    <markdown-paging
       :pages='changelog'
       :selectedPage='selected'
       path='/changelog'
       placeholder='#### select a log on the left'
       class="md-changelog"
-    ></md-paging>
+    ></markdown-paging>
   </div>
 </template>
 
