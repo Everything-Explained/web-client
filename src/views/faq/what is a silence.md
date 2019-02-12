@@ -1,0 +1,9 @@
+eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxMzozMC40MDVaIiwidGl0bGUiOiJhYm91dCBzaWxlbmNlcyJ9
+
+A silence is when an **Admin** or **Moderator** decides to mute a user for inappropriate content or behavior. The duration of the mute depends on the severity of the infraction. _Most mutes will only last 15 - 300 seconds_.
+
+While a user is muted, they may view but not participate in the chat. A silence will generally happen when a user is flooding the chat repeatedly (too quickly or with repeated content).
+
+> Admins and Moderaters are very lenient; it will be deserved
+
+##### WIP : A Silence is currently impossible

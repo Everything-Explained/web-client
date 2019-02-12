@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Welcome from './views/Welcome.vue';
 import About from './views/About.vue';
 import Resp404 from './views/Resp404.vue';
+import FAQ from './views/faq/Faq.vue';
 
 Vue.use(Router)
 
@@ -30,6 +31,12 @@ export default new Router({
       path: '/changelog/:page?',
       name: 'changelog',
       component: () => import('./views/changelog/Changelog.vue'),
+      props: true
+    },
+    {
+      path: '/faq/:page?',
+      name: 'faq',
+      component: FAQ,
       props: true
     },
     {

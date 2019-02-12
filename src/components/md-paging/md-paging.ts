@@ -81,7 +81,7 @@ export default class MarkdownPaging extends Vue {
       }
     }
 
-    if (page) return page;
+    return page;
   }
 
 
