@@ -34,6 +34,7 @@
         </header>
         <img v-if="invalidPage" :src="$dataImages.lambBlush" />
         <div class="content-scroller scroller markdown"
+            :class="mdClass"
             v-html="renderedContent"></div>
       </div>
     </div>

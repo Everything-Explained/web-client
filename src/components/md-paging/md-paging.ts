@@ -29,6 +29,7 @@ export default class MarkdownPaging extends Vue {
   // @Prop() public path!: string;
   @Prop() public selectedPage!: string;
   @Prop() public placeholder!: string;
+  @Prop() public mdClass!: string;
 
   public header = '';
   public subheader = '';
