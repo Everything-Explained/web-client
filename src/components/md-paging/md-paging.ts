@@ -26,39 +26,58 @@ export interface IPageData {
 @Component
 export default class MarkdownPaging extends Vue {
   @Prop() public pages!: IPage[];
-  @Prop() public path!: string;
+  // @Prop() public path!: string;
   @Prop() public selectedPage!: string;
   @Prop() public placeholder!: string;
 
   public header = '';
   public subheader = '';
-  public content = this.placeholder || '#### this is a temporary placeholder';
+  public content = '';
   public inTransit = false;
+  public invalidPage = false;
+
+  private _path = '';
+  private _tempText = '#### this is a temporary placeholder'
 
 
   created() {
+
+    this.renderDefault();
+
     this._sortPages('dateLast');
+    let page = this.selectedPage
+    this._path =
+      (page)
+        ? this.$route.path.replace(`/${page}`, '')
+        : this.$route.path
+    ;
+
+    // Render page on first load
+    if (page) {
+      this.selectedPage = page;
+      this.renderLog();
+    }
+
   }
 
   get renderedContent() {
     return new Markdown().render(this.content);
   }
 
-  get page() {
-    let log = this.selectedPage
+  getPage() {
+    let selPage = this.selectedPage
       , page: IPage|undefined
     ;
+
     if (this.pages[0].title.length > 1) {
-      page = this.pages.find(v => v.title[1] == log)
+      page = this.pages.find(v => v.title[1] == selPage)
     }
     else {
-      // TODO - 
-      log = log.replace(/-/g, ' ');
-      page = this.pages.find(v => v.title[0] == log);
+      selPage = selPage.replace(/-/g, ' ');
+      page = this.pages.find(v => v.title[0] == selPage);
     }
 
     if (page) return page;
-    throw new Error(`Invalid Markdown Page::${page}`)
   }
 
 
@@ -70,7 +89,7 @@ export default class MarkdownPaging extends Vue {
         : this._sanitize(title[0])
     ;
 
-    this.$router.push(`${this.path}/${link}`);
+    this.$router.push(`${this._path}/${link}`);
   }
 
 
@@ -79,13 +98,37 @@ export default class MarkdownPaging extends Vue {
   public renderLog() {
     if (this.inTransit) return;
     this.inTransit = true;
-    let page = this.page;
-    setTimeout(() => {
-      this.header = page.title.length > 1 ? page.title[1] : page.title[0]
-      this.subheader = page.date!.toISOString();
-      this.content = page.content
+    let page = this.getPage();
+
+    if (!page) {
+      this.renderDefault();
       this.inTransit = false;
+      return;
+    }
+
+    setTimeout(() => {
+      if (page) {
+        this.invalidPage = false;
+        this.header = page.title.length > 1 ? page.title[1] : page.title[0]
+        this.subheader = page.date!.toISOString();
+        this.content = page.content
+        this.inTransit = false;
+      }
+
     }, 250);
+  }
+
+
+  private renderDefault() {
+    this.header = '';
+    this.subheader = '';
+    if (this.selectedPage) {
+      this.content = '##### oops, that page doesn\'t exist'
+      this.invalidPage = true;
+    }
+    else {
+      this.content = this.placeholder || this._tempText
+    }
   }
 
 

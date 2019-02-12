@@ -10,7 +10,7 @@ article.dyn-panel
   transition: all $trans-speed
 
   // Placeholder text
-  h4
+  h4, h5
     position: relative
     display: inline-block
     // width: 500px
@@ -23,6 +23,9 @@ article.dyn-panel
     background: $panel
     border-radius: 7px
     transform: translateX(-50%)
+
+  h5
+    color: hsl(278, 40%, 75%)
 
   header
     position: absolute
@@ -144,6 +147,12 @@ article.dyn-panel
       opacity: 1
     &.hidden
       opacity: 0
+
+    img
+      position: absolute
+      left: 50%
+      top: 200px
+      transform: translateX(-50%)
 
 
 

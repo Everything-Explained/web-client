@@ -32,6 +32,7 @@
           {{ header }}
           <div class="timestamp">{{ subheader | dateFormat }}</div>
         </header>
+        <img v-if="invalidPage" :src="$dataImages.lambBlush" />
         <div class="content-scroller scroller markdown"
             v-html="renderedContent"></div>
       </div>
