@@ -4,7 +4,8 @@ import router from './router'
 import { MiniModal } from './libs/minimodal';
 import Markdown from 'markdown-it';
 import moment from 'moment';
-import Component from 'vue-class-component';
+import dataImages from './assets/data-images.json';
+
 
 Vue.config.productionTip = false
 
@@ -34,11 +35,11 @@ if (!cookies) {
 // #endregion
 // #######################################################
 
-Component.registerHooks([
-  'beforeRouteEnter',
-  'beforeRouteLeave',
-  'beforeRouteUpdate',
-]);
+// Component.registerHooks([
+//   'beforeRouteEnter',
+//   'beforeRouteLeave',
+//   'beforeRouteUpdate',
+// ]);
 
 const md = new Markdown();
 Vue.filter('markdown', (v: unknown) => {
@@ -61,9 +62,11 @@ Vue.filter('dateFormat', (v: unknown, format?: string) => {
 
 Vue.use({
   install: () => {
-    Vue.prototype.$modal = new MiniModal()
+    Vue.prototype.$modal = new MiniModal();
+    Vue.prototype.$dataImages = dataImages;
   }
 })
+
 
 if (cookies && !needBrowser) {
   new Vue({
