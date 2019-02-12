@@ -27,7 +27,7 @@ export interface IPageData {
 export default class MarkdownPaging extends Vue {
   @Prop() public pages!: IPage[];
   // @Prop() public path!: string;
-  @Prop() public selectedPage!: string;
+  @Prop() public selectedPage!: string|undefined
   @Prop() public placeholder!: string;
   @Prop() public mdClass!: string;
 
@@ -65,17 +65,20 @@ export default class MarkdownPaging extends Vue {
     return new Markdown().render(this.content);
   }
 
-  getPage() {
+
+  public getPage() {
     let selPage = this.selectedPage
       , page: IPage|undefined
     ;
 
-    if (this.pages[0].title.length > 1) {
-      page = this.pages.find(v => v.title[1] == selPage)
-    }
-    else {
-      selPage = selPage.replace(/-/g, ' ');
-      page = this.pages.find(v => v.title[0] == selPage);
+    if (selPage) {
+      if (this.pages[0].title.length > 1) {
+        page = this.pages.find(v => v.title[1] == selPage)
+      }
+      else {
+        selPage = selPage.replace(/-/g, ' ');
+        page = this.pages.find(v => v.title[0] == selPage);
+      }
     }
 
     if (page) return page;
