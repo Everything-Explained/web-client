@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Welcome from './views/Welcome.vue';
+import Home from './views/home/Home.vue';
 import About from './views/About.vue';
 import Resp404 from './views/Resp404.vue';
 import FAQ from './views/faq/Faq.vue';
@@ -14,9 +14,10 @@ export default new Router({
       redirect: 'home'
     },
     {
-      path: '/home',
+      path: '/home/:page?',
       name: 'home',
-      component: Welcome
+      component: Home,
+      props: true
     },
     {
       path: '/about',
