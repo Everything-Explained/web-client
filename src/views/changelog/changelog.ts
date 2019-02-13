@@ -1,4 +1,3 @@
-
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import changelogData from './changelog.json';
 import MarkdownPaging from '@/components/md-paging/MdPaging.vue';

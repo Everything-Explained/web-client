@@ -1,9 +1,4 @@
 .md-rules
-  blockquote, p
-    margin: 0
-    padding: 0
-    transition: none // Fixes cascading transitions
-
   dl
     margin: 0
     min-height: min-content
@@ -13,6 +8,10 @@
     flex-direction: row
     background-color: hsl(0, 0%, 6.7%)
     padding: 0
+    blockquote, p
+      margin: 0
+      padding: 0
+      transition: none // Fixes cascading transitions
     &:hover dd
       @extend %panel-hover
       & > blockquote > p > strong

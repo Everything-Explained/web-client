@@ -5,6 +5,7 @@
       :selectedPage='page'
       placeholder='#### select a log on the left'
       :mdClass="'md-changelog'"
+      sortBy="dateLast"
     ></markdown-paging>
   </div>
 </template>

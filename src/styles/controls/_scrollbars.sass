@@ -1,7 +1,7 @@
-
+@import '../variables'
 
 .home,
-.home .scroller,
+.home .scrollbars,
 .changelog #Changes,
 .invite-page,
 #MainWindow .message-tray,
@@ -14,12 +14,12 @@
     background: hsl(0, 0%, 0%)
 
 .home,
-.home .scroller,
+.home .scrollbars,
 .modal-container section,
 .changelog #Changes,
 .invite-page,
 #MainWindow .message-tray,
-.dyn-panel .scroller,
+.dyn-panel .scrollbars,
 .blog-container .dev-blog
   &::-webkit-scrollbar-thumb
     background: hsl(278, 17%, 30%)
@@ -28,7 +28,7 @@
     &:hover
       background: hsl(278, 23%, 40%)
 
-.home .scroller,
+.home .scrollbars,
 #MainWindow .message-tray
   &::-webkit-scrollbar
     width: 7px
@@ -39,9 +39,9 @@
     width: 8px
     border: 0
 
-.home #Answers .scroller,
-.dyn-panel .scroller,
+.home #Answers .scrollbars,
+.dyn-panel .scrollbars,
   &::-webkit-scrollbar
     width: 13px
-    border: 2px solid hsl(278, 10%, 20%)
+    border: 2px solid $panel // hsl(278, 10%, 20%)
 
