@@ -46,7 +46,11 @@
         </aside>
       </section>
 
-      <router-view id="PageContent" />
+        <div id="PageContent">
+          <transition name="fade">
+            <router-view />
+          </transition>
+        </div>
     </section>
 
   </main>
