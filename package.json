@@ -10,6 +10,7 @@
   "dependencies": {
     "@types/markdown-it": "0.0.7",
     "markdown-it": "^8.4.2",
+    "markdown-it-deflist": "^2.0.3",
     "moment": "^2.24.0",
     "vue": "^2.5.22",
     "vue-class-component": "^6.0.0",

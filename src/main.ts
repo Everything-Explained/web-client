@@ -41,7 +41,13 @@ if (!cookies) {
 //   'beforeRouteUpdate',
 // ]);
 
-const md = new Markdown();
+const md = new Markdown({
+  xhtmlOut: true,
+  breaks: true,
+  typographer: true,
+  quotes: '“”‘’'
+});
+md.use(require('markdown-it-deflist'));
 Vue.filter('markdown', (v: unknown) => {
   if (!v) return '';
   if (typeof v == 'string') {
@@ -64,6 +70,7 @@ Vue.use({
   install: () => {
     Vue.prototype.$modal = new MiniModal();
     Vue.prototype.$dataImages = dataImages;
+    Vue.prototype.$markdown = md;
   }
 })
 
