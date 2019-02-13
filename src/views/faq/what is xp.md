@@ -1,4 +1,5 @@
-eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxNTo0My4wODdaIiwidGl0bGUiOiJhYm91dCB4cCBmb3IgbGV2ZWxzIn0=
+title: about xp for levels
+author: Jaeiya
 
 **XP** stands for **Experience Points** and you gain them by chatting; however, _you can only gain XP every 45 seconds_. After each message you send, there is a _45 second period_ where you can't gain anything from sending messages. Once this period has elapsed, your next message will cause you to gain XP again.
 

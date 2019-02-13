@@ -1,4 +1,6 @@
-eyJ0aXRsZSI6Is6xMzYgOiB1bnJlbGVhc2VkIiwiYXV0aG9yIjoiQWVkYWV1bSIsImRhdGUiOiIyMDE5LTAxLTAxVDAwOjAwOjAwLjAwMFoiLCJkYXRlVXBkYXRlcyI6ZmFsc2V9
+title: α36 : unreleased
+author: Aedaeum
+date: 02/12/2019
 
 # new layout
 

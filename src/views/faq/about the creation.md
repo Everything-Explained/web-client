@@ -1,4 +1,5 @@
-eyJkYXRlIjoiMjAxOC0wNS0wMlQyMzozMjowNi43NjhaIiwidGl0bGUiOiJjcmVhdGlvbiBvZiBub3VtZW5hZSJ9
+title: about the creation
+author: Jaeiya
 
 Hi, my _alias_ is **Aedaeum** and I coded **Noumenae** from the ground up. If you want to know more about me, go ahead and google my alias and you'll find me all over the internet.
 

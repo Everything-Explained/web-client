@@ -1,4 +1,7 @@
-eyJ0aXRsZSI6Is6xMTEgOiBtdXN0YXJkLXNlZWQiLCJhdXRob3IiOiJBZWRhZXVtIiwiZGF0ZSI6IjIwMTctMDEtMTZUMDg6MDA6MDAuMDAwWiIsImRhdGVVcGRhdGVzIjpmYWxzZX0=
+title: α11 : mustard-seed
+author: Aedaeum
+date: 01/16/2017
+
 # major changes
 
 >- **New Font** - General site font changed to Nunito. The previous font was a little too "cursivey". This one looks a lot more professional.

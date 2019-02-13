@@ -1,4 +1,5 @@
-eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxMjo1NS4wMzJaIiwidGl0bGUiOiJ3aG8gaXMgYSBtZW1iZXIifQ==
+title: who is a member
+author: Jaeiya
 
 A member is an official user of **Noumenae** who has signed up through the [Invitation Process] and accepted the [Rules].
 

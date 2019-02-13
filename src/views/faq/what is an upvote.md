@@ -1,4 +1,5 @@
-eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxNDoyNS4yNDhaIiwidGl0bGUiOiJhYm91dCB1cHZvdGVzIn0=
+title: about upvotes
+author: Jaeiya
 
 Like other sites, an upvote simply means you enjoyed a users message. It doesn't have to be profound, but it should contribute _something_ to the conversation, even if it's just humor or irony.
 

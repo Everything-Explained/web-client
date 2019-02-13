@@ -1,4 +1,5 @@
-eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxMDoxMi4zNzNaIiwidGl0bGUiOiJjb21tb24gZXhwcmVzc2lvbnMifQ==
+title: common expressions
+author: Jaeiya
 
 These are phrases or words that the site will use to describe certain aspects of itself or its userbase.
 

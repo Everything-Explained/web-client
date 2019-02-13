@@ -1,4 +1,5 @@
-eyJkYXRlIjoiMjAxOC0wNS0wM1QwMDoxNToxMS43MjBaIiwidGl0bGUiOiJhYm91dCByZW5vd24ifQ==
+title: about renown
+author: Jaeiya
 
 Renown is an abstract calculation of a users impact on the site. It can be increased through not only activity on the site, but various interactions between users.
 
