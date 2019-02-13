@@ -36,7 +36,7 @@ article.dyn-panel
     font-size: 44px
     letter-spacing: 1px
     color: hsl(50, 55%, 55%)
-    background: linear-gradient(to bottom, hsla(0, 0%, 6.7%, 0.97) 5%, hsla(0, 0%, 6.7%, 0.85) 60%, hsla(0, 0%, 6.7%, 0) 100%);
+    background: linear-gradient(to bottom, hsla(0, 0%, 6.7%, 0.97) 5%, hsla(0, 0%, 6.7%, 0.89) 63%, hsla(0, 0%, 6.7%, 0.05) 100%);
     z-index: 100
     .timestamp
       position: absolute
@@ -52,7 +52,7 @@ article.dyn-panel
     height: 100%
     flex-direction: row
 
-  .scroller
+  .scroller, .content-scroller
     position: absolute
     top: 0
     left: 0
@@ -65,7 +65,7 @@ article.dyn-panel
   .content-scroller
     padding: 0
     margin-right: -20px
-    & > h1:first-child, & > p:first-child
+    & > h1:first-child, & > p:first-child, & > dl:first-child
       margin-top: 145px
     & > :last-child
       margin-bottom: 150px
@@ -152,7 +152,14 @@ article.dyn-panel
       top: 200px
       transform: translateX(-50%)
 
-
-
+  .panel-container.fullscreen
+    flex-direction: column
+    .title
+      flex: 1
+      margin-right: 7px
+    .scroller
+      position: relative
+      display: flex
+      flex-direction: row
 
 

@@ -22,14 +22,17 @@ export interface IPageData {
   content: string;
 }
 
+type sorting = 'alphabet'|'dateLast'|'dateFirst';
 
 @Component
 export default class MarkdownPaging extends Vue {
   @Prop() public pages!: IPage[];
-  // @Prop() public path!: string;
   @Prop() public selectedPage!: string|undefined
   @Prop() public placeholder!: string;
   @Prop() public mdClass!: string;
+  @Prop() public displayType!: string;
+  @Prop() public sortBy!: sorting;
+  @Prop() public redirect!: boolean;
 
   public header = '';
   public subheader = '';
@@ -45,7 +48,7 @@ export default class MarkdownPaging extends Vue {
 
     this.renderDefault();
 
-    this._sortPages('dateLast');
+    this._sortPages(this.sortBy || 'alphabet');
     let page = this.selectedPage
     this._path =
       (page)
@@ -59,10 +62,28 @@ export default class MarkdownPaging extends Vue {
       this.renderLog();
     }
 
+    else if (this.redirect) {
+      this.goTo(this.pages[0].title);
+    }
+
+  }
+
+  updated() {
+    // Allows strikethrough to separate definition
+    // lists. Check the RULES page for an example
+    let nodes = document.querySelectorAll('p > s');
+    nodes.forEach(n => {
+      n.parentElement!.remove();
+    })
   }
 
   get renderedContent() {
-    return new Markdown().render(this.content);
+    return this.$markdown.render(this.content);
+  }
+
+  get displayClass() {
+    if (!this.displayType) return ''
+    return this.displayType;
   }
 
 
@@ -97,7 +118,7 @@ export default class MarkdownPaging extends Vue {
   }
 
 
-  // TODO - Reset scroll position when selecting pages
+  // TODO: Reset scroll position when selecting pages
   @Watch('selectedPage')
   public renderLog() {
     if (this.inTransit) return;
@@ -141,13 +162,12 @@ export default class MarkdownPaging extends Vue {
   }
 
 
-  private _sortPages(type: 'alphabet'|'dateLast'|'dateFirst') {
+  private _sortPages(type: sorting) {
     if (type == 'alphabet') {
       const sort =
-        // (this._isSingleTitle)
-        //   ? (p1: IPage, p2: IPage) => p1.title[0] > p2.title[0] ? 1 : -1
-        //   :
-          (p1: IPage, p2: IPage) => p1.title[1] > p2.title[1] ? 1 : -1
+        (this.pages[0].title.length == 1)
+          ? (p1: IPage, p2: IPage) => p1.title[0] > p2.title[0] ? 1 : -1
+          : (p1: IPage, p2: IPage) => p1.title[1] > p2.title[1] ? 1 : -1
       ;
       this.pages.sort(sort);
     }

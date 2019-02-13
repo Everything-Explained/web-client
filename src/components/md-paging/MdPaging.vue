@@ -1,9 +1,9 @@
 <template>
   <article class="dyn-panel">
-    <div class="panel-container">
+    <div class="panel-container" :class="displayClass">
       <div class="panel">
         <div class="titles">
-          <div class="scroller" v-if="pages.length > 0">
+          <div class="scroller scrollbars" v-if="pages.length > 0">
             <div class="title"
                  v-for="(page, index) of pages"
                  :key="index"
@@ -33,7 +33,7 @@
           <div class="timestamp">{{ subheader | dateFormat }}</div>
         </header>
         <img v-if="invalidPage" :src="$dataImages.lambBlush" />
-        <div class="content-scroller scroller markdown"
+        <div class="content-scroller scrollbars markdown"
             :class="mdClass"
             v-html="renderedContent"></div>
       </div>
