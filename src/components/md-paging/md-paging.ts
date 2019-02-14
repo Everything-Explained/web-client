@@ -40,8 +40,8 @@ export default class MarkdownPaging extends Vue {
   public inTransit = false;
   public invalidPage = false;
 
-  private _path = '';
-  private _tempText = '#### this is a temporary placeholder'
+  private path = '';
+  private tempText = '#### this is a temporary placeholder'
 
 
   created() {
@@ -51,7 +51,7 @@ export default class MarkdownPaging extends Vue {
 
     this._sortPages(this.sortBy || 'alphabet');
     let page = this.selectedPage
-    this._path =
+    this.path =
       (page)
         ? this.$route.path.replace(`/${page}`, '')
         : this.$route.path
@@ -115,7 +115,7 @@ export default class MarkdownPaging extends Vue {
         : this._sanitize(title[0])
     ;
 
-    this.$router.push(`${this._path}/${link}`);
+    this.$router.push(`${this.path}/${link}`);
   }
 
 
@@ -153,7 +153,8 @@ export default class MarkdownPaging extends Vue {
       this.invalidPage = true;
     }
     else {
-      this.content = this.placeholder || this._tempText
+      if (!this.redirect)
+        this.content = this.placeholder || this.tempText
     }
   }
 
