@@ -45,6 +45,7 @@ export default class MarkdownPaging extends Vue {
 
 
   created() {
+    if (this.pages && !this.pages!.length) return;
 
     this.renderDefault();
 

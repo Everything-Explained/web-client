@@ -1,5 +1,5 @@
 <template>
-  <article class="dyn-panel">
+  <article class="dyn-panel" v-if="pages && pages.length">
     <div class="panel-container" :class="displayClass">
       <div class="panel">
         <div class="titles">
