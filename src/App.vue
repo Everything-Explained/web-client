@@ -34,6 +34,9 @@
               <router-link to='/faq'><span>faq</span></router-link>
             </li>
             <li>
+              <router-link to='/blog'><span>blog</span></router-link>
+            </li>
+            <li>
               <router-link to='/invite'><span>invite</span></router-link>
             </li>
             <li>
