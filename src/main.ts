@@ -5,6 +5,7 @@ import { MiniModal } from './libs/minimodal';
 import Markdown from 'markdown-it';
 import moment from 'moment';
 import dataImages from './assets/data-images.json';
+import setupMarkdown from './setup/markdown';
 
 
 Vue.config.productionTip = false
@@ -41,21 +42,6 @@ if (!cookies) {
 //   'beforeRouteUpdate',
 // ]);
 
-const md = new Markdown({
-  xhtmlOut: true,
-  breaks: true,
-  typographer: true,
-  quotes: '“”‘’'
-});
-md.use(require('markdown-it-deflist'));
-Vue.filter('markdown', (v: unknown) => {
-  if (!v) return '';
-  if (typeof v == 'string') {
-    return md.render(v);
-  }
-  throw new Error('Markdown only accepts string values');
-});
-
 
 Vue.filter('dateFormat', (v: unknown, format?: string) => {
   if (!v) return;
@@ -70,7 +56,7 @@ Vue.use({
   install: () => {
     Vue.prototype.$modal = new MiniModal();
     Vue.prototype.$dataImages = dataImages;
-    Vue.prototype.$markdown = md;
+    Vue.prototype.$markdown = setupMarkdown();
   }
 })
 
