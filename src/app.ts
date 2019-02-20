@@ -1,7 +1,4 @@
-import { Component, Vue, Prop } from 'vue-property-decorator';
-import { MiniModal } from './libs/minimodal';
-import moment from 'moment';
-import md from 'markdown-it';
+import { Component, Vue } from 'vue-property-decorator';
 
 
 @Component
@@ -17,6 +14,6 @@ export default class App extends Vue {
 
   public openWatermark() {
     this.$modal.show('VersionModal');
-    console.log(new md().render('**HELLO WORLD**'));
   }
+
 }
