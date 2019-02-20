@@ -1,4 +1,4 @@
-title: about
+title: welcome
 author: Jaeiya
 
 **hello here!**
