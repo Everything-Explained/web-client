@@ -1,0 +1,102 @@
+
+[type='text'],
+[type='email'],
+textarea
+  position: relative
+  display: block
+  width: 200px
+  background-color: #171717
+  border: 7px solid #333
+  padding: 10px 8px
+  font-size: medium
+  color: #aaa
+  border-radius: 5px
+  box-shadow: inset 0 0 17px 2px #000
+  transition: all .3s linear
+  // Force hardware acceleration in Chrome
+  -webkit-transform: translateZ(0)
+
+  &:focus
+    border-color: hsl(50, 70%, 17%)
+
+  &::-webkit-input-placeholder
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+    text-shadow: 1px 1px 0 #000, 2px 2px 0 #000
+    word-spacing: normal
+    color: hsl(0, 0%, 33.3%)
+    transition: all .3s
+
+  &::-moz-placeholder
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+    text-shadow: 1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000
+    word-spacing: normal
+    color: #777
+    transition: all .3s
+
+  &.embeded
+    border: 0
+    box-shadow: none
+
+
+button, [type='button'], [type='submit']
+  position: relative
+  margin-top: 20px
+  background: hsl(0, 0%, 33%)
+  border-radius: 3px
+  padding: 7px 13px
+  color: hsl(0, 0%, 0%)
+  font-weight: bold
+  font-size: 20px
+  font-family: 'Source Code Pro'
+  text-shadow: 1px 1px 0 hsl(0, 0%, 48%)
+  box-shadow: -2px 3px 0 2px hsl(0, 0%, 20%)
+  cursor: pointer
+  transition: all .3s ease, transform .08s linear
+
+  &:hover
+    background: hsl(50, 35%, 33%)
+    box-shadow: -2px 3px 0 2px hsl(50, 35%, 20%)
+    text-shadow: 1px 1px 0 hsl(50, 10%, 58%)
+
+  &:active
+    transform: translate(-4px, 4px)
+    box-shadow: 0 0 0 0 hsl(50, 20%, 14%)
+
+  &:disabled
+    opacity: .35
+
+// $baseColor = hsl(50, 100%, 30%)
+// button
+//   position relative
+//   display inline-block
+//   border-radius 8px
+//   margin-top 20px
+//   background-color transparent
+//   cursor pointer
+//   border-radius 5px
+//   letter-spacing 1px
+//   color #bbb
+//   font-family 'Comic Sans MS'
+//   text-shadow -1px -1px 0 #000
+//   box-shadow 0 9px 0 hsla(0, 0%, 100%, 0.35), 0 10px 0 2px $baseColor
+//   &:hover span
+//     color hsl(50, 80%, 50%)
+//   &:active
+//     transform translate(0, 3px)
+//     box-shadow 0 6px 0 hsla(0, 0%, 100%, 0.35), 0 7px 0 2px $baseColor
+//   &:active span
+//     box-shadow 0 2px 0 #2c2c2c
+//     transform translate(0, 3px)
+//   & span
+//     display inline-block
+//     background-color #474747
+//     padding 7px 13px
+//     border-radius 5px
+//     box-shadow 0 8px 0 #2c2c2c
+//     transition color .3s
+
+
+
+
+
+
