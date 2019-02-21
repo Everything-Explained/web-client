@@ -16,12 +16,21 @@
              maxlength="20"
              @keyup="validateAlias"
       />
-      <span class="counter name-counter"
-            v-if="!isValidAlias"
+      <span
+        v-if="!hasValidAliasChars"
+        class="counter name-valid"
       >
-        Your name needs at least <span>{{minAliasLen - aliasLen}}</span>
-        char(s) to unlock the next form.
+        you entered invalid characters
       </span>
+      <span
+        v-else-if="!hasValidAliasLen"
+        class="counter name-counter"
+      >
+        enter <span>{{minAliasLen - aliasLen}}</span> more
+        <span>valid</span>
+        chars to unlock the next form.
+      </span>
+
 
 
       <input type="email"
@@ -33,7 +42,7 @@
       <span class="counter email-valid"
             v-if="!isValidEmail && isValidAlias"
       >
-        Enter a <span>valid email</span> to continue.
+        enter a <span>valid email</span> to continue.
       </span>
 
 
@@ -54,8 +63,8 @@
       <span class="counter submit-counter"
             v-if="!isValidText && isValidEmail && isValidAlias"
       >
-        your message needs at least <span>{{ minTextLen - textLen }} more</span>
-        char(s) until you can submit it.
+        enter at least <span>{{ minTextLen - textLen }} more</span>
+        chars to submit.
       </span>
     </form>
   </div>

@@ -76,26 +76,15 @@ form
   width: 650px
   opacity: 1
   visibility: visible
-  transition: all .3s ease
-
-  &.hide
-    visibility: hidden
-    opacity: 0
-
-  &.show
-    visibility: visible
-    opacity: 1
-
+  transition: opacity .3s ease
   .name, .about-me, .email
     margin-top: 20px
     width: 250px
     font-family: Source Code Pro
     color: hsl(278, 17%, 67%)
     word-spacing: -1px
-
     &:first-child
       margin-top: 0
-
     &:disabled
       opacity: .5
 
@@ -107,32 +96,29 @@ form
     height: 300px
 
   .counter
-    position: relative
+    position: absolute
     margin-left: 20px
-    font-size: 16px
-    color: hsl(0, 0%, 50%)
-    opacity: 1
-    visibility: visible
-    transition: all .5s
-
-    &.hide
-      visibility: hidden
-      opacity: 0
-
+    font-size: 22px
+    @extend %font-comfortaa
+    font-weight: 400 !important
+    color: hsl(0, 0%, 55%)
     span
       color: hsl(50, 50%, 50%)
 
-  .name-counter, .email-valid
-    position: absolute
-    top: 10px
+  .name-counter, .email-valid, .name-valid
+    top: 2px
     left: 250px
 
+  .name-valid
+    top: 15px
+    color: hsl(7, 100%, 75%)
+
   .submit-counter
-    position: absolute
+    position: relative
     bottom: 0
 
   .email-valid
-    top: 87px
+    top: 77px
     left: 320px
 
 
