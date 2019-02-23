@@ -9,7 +9,7 @@ date: 02/17/2019
 
 # under the hood
 
-> - **The Greatest Overhaul** - This project began as my first foray into [MVC]. I was going to be a part of something new and quite possibly unique, called [Aurelia]. Well, the rose-colored glasses came off and then all I saw was a hot mess. Because of this, I’ve converted the entire project into [Vue]. It’s extendable and flexible in the ways that are most intuitive for perpetual development, which is exactly what I needed.
+> - **The Greatest Overhaul** - This project began as my first foray into [MVC]. I was going to be a part of something new and quite possibly unique, called [Aurelia]. When the rose-colored glasses came off, all I saw was a hot mess. Because of this, I’ve converted the entire project into [Vue]. It’s extendable and flexible in ways that are most intuitive for perpetual development, which is exactly what I needed.
 
 
 
