@@ -6,7 +6,7 @@ import Markdown from 'markdown-it';
 import moment from 'moment';
 import dataImages from './assets/data-images.json';
 import setupMarkdown from './setup/markdown';
-
+import ClientAPI from 'client-api';
 
 Vue.config.productionTip = false
 
@@ -57,6 +57,7 @@ Vue.use({
     Vue.prototype.$modal = new MiniModal();
     Vue.prototype.$dataImages = dataImages;
     Vue.prototype.$markdown = setupMarkdown();
+    Vue.prototype.$api = new ClientAPI()
   }
 })
 
