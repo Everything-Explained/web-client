@@ -9,25 +9,35 @@
         before signing up.
       </p>
     </article>
-    <form class="form">
+
+    <aside class="preload-container g-visible" v-if="isLoading">
+      <div class="preloader"></div>
+    </aside>
+
+    <form
+      class="form"
+      @submit="submit"
+      :class="{ 'g-hidden': isRequestActive || isLoading}"
+    >
       <input
         type="text"
         class="name"
         placeholder="Alias or First Name"
         maxlength="20"
         @keyup="validateAlias"
+        v-model="alias"
       />
       <span
         v-if="!hasValidAliasChars"
         class="counter name-valid"
       >
-        you entered invalid characters
+        You entered invalid characters
       </span>
       <span
         v-else-if="!hasValidAliasLen"
         class="counter name-counter"
       >
-        enter <span>{{minAliasLen - aliasLen}}</span> more
+        Enter <span>{{minAliasLen - aliasLen}}</span> more
         <span>valid</span>
         chars to unlock the next form.
       </span>
@@ -39,12 +49,13 @@
         class="email"
         placeholder="Enter Eamil"
         @keyup="validateEmail"
+        v-model="email"
         :disabled="!isValidAlias"
       />
       <span class="counter email-valid"
         v-if="!isValidEmail && isValidAlias"
       >
-        enter a <span>valid email</span> to continue.
+        Enter a <span>valid email</span> to continue.
       </span>
 
 
@@ -53,6 +64,7 @@
         class="about-me"
         placeholder="Why do you want to join Noumenae?"
         @keyup="validateText"
+        v-model="content"
         :disabled="!isValidEmail || !isValidAlias"
       ></textarea>
 
@@ -61,16 +73,33 @@
         type="submit"
         value="Submit"
         maxlength="20"
-        :disabled="!isValidText || !isValidEmail || !isValidAlias"
+        :disabled="!isReadyToSubmit"
       />
       <span
-        class="counter submit-counter"
+          class="counter submit-counter"
         v-if="!isValidText && isValidEmail && isValidAlias"
       >
-        enter at least <span>{{ minTextLen - textLen }} more</span>
+        Enter at least <span>{{ minTextLen - contentLen }} more</span>
         chars to submit.
       </span>
     </form>
+    <section
+      class="request-status"
+      v-if="isRequestActive"
+      :class="{'g-visible': isRequestActive}"
+    >
+      <span v-if="hasSent">
+        Your <b>request</b> has been <b>sent!</b>
+      </span>
+      <span v-if="hasFailed">
+        <em>Request Failed;</em>
+        <b> Try Again Later!</b>
+      </span>
+      <span v-if="hasActiveTimeout">
+        <em>Wait</em> another <b>{{ timeoutData.hours }} hour(s)</b>
+        and <b>{{ timeoutData.minutes }} minute(s)</b>.
+      </span>
+    </section>
   </div>
 </template>
 
