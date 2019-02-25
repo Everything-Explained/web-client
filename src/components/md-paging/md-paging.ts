@@ -26,9 +26,13 @@ type sorting = 'alphabet'|'dateLast'|'dateFirst';
 
 @Component
 export default class MarkdownPaging extends Vue {
+
   @Prop() public pages!: IPage[];
   @Prop() public selectedPage!: string|undefined
-  @Prop() public placeholder!: string;
+
+  @Prop({default: '#### this is placeholder text'})
+    public placeholder!: string;
+
   @Prop() public mdClass!: string;
   @Prop() public displayType!: string;
   @Prop() public sortBy!: sorting;
@@ -41,7 +45,6 @@ export default class MarkdownPaging extends Vue {
   public invalidPage = false;
 
   private path = '';
-  private tempText = '#### this is a temporary placeholder'
 
 
   created() {
@@ -140,7 +143,6 @@ export default class MarkdownPaging extends Vue {
         this.content = page.content
         this.inTransit = false;
       }
-
     }, 250);
   }
 
@@ -154,7 +156,7 @@ export default class MarkdownPaging extends Vue {
     }
     else {
       if (!this.redirect)
-        this.content = this.placeholder || this.tempText
+        this.content = this.placeholder;
     }
   }
 
