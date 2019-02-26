@@ -8,7 +8,6 @@ export default class Toggle extends Vue {
   @Prop({ default: 'OFF' }) offText!: string;
   @Prop({ default: 'ON'  }) onText!: string;
 
-  // Prevent rapid clicking
   private inTransit_ = false;
 
   public toggle(ev: MouseEvent) {
@@ -19,10 +18,11 @@ export default class Toggle extends Vue {
     this.inTransit_ = true;
 
     this.checked = !this.checked
-    this.$emit('toggled', this.checked);
 
+    // Animation glitches if clicked too fast
     setTimeout(() => {
+      this.$emit('toggled', this.checked);
       this.inTransit_ = false;
-    }, 350);
+    }, 370);
   }
 }
