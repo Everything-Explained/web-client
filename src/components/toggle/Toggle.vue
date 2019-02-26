@@ -27,6 +27,7 @@ $switchWidth: 80px
   display: inline-block
   width: $switchWidth
   height: 40px
+  text-align: left !important
   cursor: pointer
 
   [type='checkbox']
@@ -59,6 +60,7 @@ $switchWidth: 80px
       right: 8px
       line-height: 42px
       color: hsl(50, 30%, 50%)
+      text-align: right
       font-family: 'Nunito'
       font-size: 18px
       user-select: none
