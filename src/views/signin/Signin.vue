@@ -46,7 +46,7 @@
       :class="[hasInvite ? 'g-visible' : 'g-hidden']"
     >
       <input type="text" maxlength="13" spellcheck="false" />
-      <button>Submit</button>
+      <button>Validate</button>
     </section>
 
 

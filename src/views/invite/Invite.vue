@@ -47,7 +47,7 @@
       <input
         type="email"
         class="email"
-        placeholder="Enter Eamil"
+        placeholder="Enter Email"
         @keyup="validateEmail"
         v-model="email"
         :disabled="!isValidAlias"
