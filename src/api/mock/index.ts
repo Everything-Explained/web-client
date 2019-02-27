@@ -1,7 +1,14 @@
 
 interface IRequest {
   status: number;
-  data?: any;
+  data?: {
+    hours?: number;
+    minutes?: number;
+    error?: {
+      msg: string;
+      data?: any
+    }
+  }
 }
 
 type InviteData = {
@@ -16,33 +23,66 @@ export default class ClientAPI {
 
   constructor() {}
 
-  public canRequestInvite(delay?: number, test?: InviteTest): Promise<IRequest> {
-    return new Promise((rs, rj) => {
-      this._timedResolver(() => {
-        if (test && this._testInvite(test, rs)) return;
-        rs({
-          status: 200,
-        })
-      }, delay || 0)
-    })
+  public canRequestInvite(delay?: number, test?: InviteTest) {
+    return this._timedResolver<IRequest>(() => {
+
+      if (test == 'timeout') {
+        return {
+          status: 202,
+          data: {
+            hours: Math.floor(Math.random() * 23),
+            minutes: Math.floor(Math.random() * 59),
+          }
+        }
+      }
+
+      if (test == 'error') {
+        return {
+          status: 500,
+          data: {
+            error: {
+              msg: 'Error Requesting Invite Form'
+            }
+          }
+        }
+      }
+
+      return {
+        status: 200
+      }
+
+    }, delay || 0)
   }
 
 
-  public requestInvite(data: InviteData, delay?: number, test?: InviteTest): Promise<IRequest> {
-    return new Promise((rs, rj) => {
-      this._timedResolver(() => {
-        if (test && this._testRequestInvite(test, rs)) return;
-        rs({
-          status: 200
-        })
-      }, delay || 0)
-    })
+  public requestInvite(data: InviteData, delay?: number, test?: InviteTest) {
+    return this._timedResolver<IRequest>(() => {
+
+      if (test == 'timeout') {
+        return {
+          status: 202,
+          data: {
+            error: {
+              msg: 'Sent Invite During Timeout'
+            }
+          }
+        }
+      }
+
+      if (test == 'error') {
+        return { status: 500 }
+      }
+
+      return { status: 200 }
+
+    }, delay || 0);
   }
 
 
   public validateInvite(invite: string, delay?: number, test?: ValidInvite) {
     return this._timedResolver(() => {
 
+      // Prototype response from server
       let data = {
         valid    : true,
         expired  : false,
@@ -74,54 +114,11 @@ export default class ClientAPI {
         data
       }
 
-
     }, delay || 0)
   }
 
 
-  private _testInvite(test: InviteTest, rs: (arg: IRequest) => void) {
-
-    if (test == 'timeout') {
-      rs({
-        status: 202,
-        data: {
-          hours: Math.floor(Math.random() * 23),
-          minutes: Math.floor(Math.random() * 59)
-        }
-      })
-      return true;
-    }
-
-    if (test == 'error') {
-      rs({
-        status: 500,
-        data: 'Error Requesting Invite Form'
-      });
-      return true;
-    }
-
-    return false;
-  }
-
-  private _testRequestInvite(test: InviteTest, rs: (arg: IRequest) => void) {
-
-    if (test == 'timeout') {
-      rs({
-        status: 202,
-        data: 'Sent Invite During Timeout'
-      })
-      return true;
-    }
-
-    if (test == 'error') {
-      rs({
-        status: 500
-      })
-      return true;
-    }
-  }
-
-  private _timedResolver(cb: () => any, delay: number) {
+  private _timedResolver<T>(cb: () => T, delay: number): Promise<T> {
     return new Promise((rs, rj) => {
       setTimeout(() => {
         rs(cb());
