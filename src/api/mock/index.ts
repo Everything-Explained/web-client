@@ -10,6 +10,7 @@ type InviteData = {
   content: string;
 }
 type InviteTest = 'timeout'|'error';
+type ValidInvite = 'invalid'|'notexist'|'expired';
 
 export default class ClientAPI {
 
@@ -26,6 +27,7 @@ export default class ClientAPI {
     })
   }
 
+
   public requestInvite(data: InviteData, delay?: number, test?: InviteTest): Promise<IRequest> {
     return new Promise((rs, rj) => {
       this._timedResolver(() => {
@@ -35,6 +37,45 @@ export default class ClientAPI {
         })
       }, delay || 0)
     })
+  }
+
+
+  public validateInvite(invite: string, delay?: number, test?: ValidInvite) {
+    return this._timedResolver(() => {
+
+      let data = {
+        valid    : true,
+        expired  : false,
+        exists   : true,
+        validated: true
+      }
+
+      if (test == 'invalid') {
+        data.valid = false;
+        data.exists = false;
+        data.validated = false;
+      }
+
+      if (test == 'notexist') {
+        data.valid = true;
+        data.exists = false;
+        data.validated = false;
+      }
+
+      if (test == 'expired') {
+        data.valid = true;
+        data.exists = true;
+        data.expired = true;
+        data.validated = false;
+      }
+
+      return {
+        status: !test ? 200 : 400,
+        data
+      }
+
+
+    }, delay || 0)
   }
 
 
@@ -80,11 +121,12 @@ export default class ClientAPI {
     }
   }
 
-
-  private _timedResolver(cb: () => void, delay: number) {
-    setTimeout(() => {
-      cb();
-    }, delay);
+  private _timedResolver(cb: () => any, delay: number) {
+    return new Promise((rs, rj) => {
+      setTimeout(() => {
+        rs(cb());
+      }, delay);
+    })
   }
 
 }

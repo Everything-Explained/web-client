@@ -27,6 +27,7 @@
       ></toggle>
     </div>
 
+
     <section
       class="signin-section-wrapper"
       title="Choose Signin"
@@ -40,13 +41,26 @@
       </div>
     </section>
 
+
     <section
       class="signin-section-wrapper has-invite"
       title="Enter Invite Code"
       :class="[hasInvite ? 'g-visible' : 'g-hidden']"
     >
-      <input type="text" maxlength="13" spellcheck="false" />
-      <button>Validate</button>
+      <input
+        type="text"
+        maxlength="13"
+        spellcheck="false"
+        v-model="invite"
+        @keyup="clearInviteStatus"
+      />
+      <span
+        class="invite-status"
+        :class="inviteStatus"
+        v-if="inviteStatus"
+      >{{ inviteStatusText }}</span>
+
+      <button @click="validateInvite">Validate</button>
     </section>
 
 

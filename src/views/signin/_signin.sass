@@ -72,6 +72,7 @@
 
   .has-invite
     width: 350px
+
     [type='text']
       margin: 10px auto 0
       font-size: 28px
@@ -79,8 +80,25 @@
       text-align: center
       text-transform: uppercase
       font-family: 'Source Code Pro'
+
     button
       left: 15.2%
+
+    .invite-status
+      position: relative
+      display: block
+      margin-bottom: -8px
+      padding-top: 8px
+      left: 14%
+      @extend %font-comfortaa
+      font-size: 28px
+      &.bad
+        color: hsl(0, 70%, 70%)
+      &.good
+        color: hsl(126, 80%, 80%)
+      &.medium
+        color: hsl(50, 50%, 50%)
+
 
   .google-button, .facebook-button
     display: block
