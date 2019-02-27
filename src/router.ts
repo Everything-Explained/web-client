@@ -6,6 +6,7 @@ import FAQ from './views/faq/Faq.vue';
 import Blog from './views/blog/Blog.vue';
 import Invite from './views/invite/Invite.vue';
 import Changelog from './views/changelog/Changelog.vue';
+import Signin from './views/signin/Signin.vue';
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ export default new Router({
       name: 'blog',
       component: Blog,
       props: true
+    },
+    {
+      path: '/signin',
+      name: 'signin',
+      component: Signin
     },
     {
       path: '/invite',

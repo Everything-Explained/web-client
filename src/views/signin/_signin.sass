@@ -32,10 +32,13 @@
     text-align: center
     transition: all .4s
 
-  .signin-button-wrapper
-    position: relative
+  .signin-section-wrapper
+    position: absolute
+    top: 50px
+    left: 50%
+    transform: translateX(-50%)
     display: block
-    margin: 50px auto 0
+    margin: 0 auto 0
     padding: 20px 0 25px 0
     width: 330px
     border: 3px solid lighten($panel, 3%)
@@ -47,10 +50,37 @@
       top: -16px
       left: 50%
       font-family: 'Delius'
+      white-space: nowrap
       font-size: 24px
       background-color: hsl(0, 0, 7%)
       color: hsl(50, 50%, 50%)
       transform: translateX(-50%)
+
+  .can-signin
+    position: relative
+    margin: 10px auto 0
+    display: block
+    width: 370px
+    font-family: 'Delius'
+    font-size: 22px
+    color: hsl(50, 50%, 50%)
+    text-align: center
+    .toggle
+      position: relative
+      display: block
+      margin: 10px auto 35px
+
+  .has-invite
+    width: 350px
+    [type='text']
+      margin: 10px auto 0
+      font-size: 28px
+      width: 72.5%
+      text-align: center
+      text-transform: uppercase
+      font-family: 'Source Code Pro'
+    button
+      left: 15.2%
 
   .google-button, .facebook-button
     display: block

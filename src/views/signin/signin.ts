@@ -10,12 +10,21 @@ import Toggle from '@/components/toggle/Toggle.vue';
 export default class Signin extends Vue {
 
 
-  public showSignin = false;
+  public hasAccount = false;
+  public hasInvite = false;
 
   created() {}
 
-  public toggleSignin(val: boolean) {
-    this.showSignin = val;
+  public canSignup() {
+    this.hasInvite = true;
+  }
+
+  public canSignin() {
+    this.hasAccount = true;
+  }
+
+  public getInvite() {
+    this.$router.push('invite');
   }
 
 }

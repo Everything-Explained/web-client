@@ -1,20 +1,55 @@
 <template>
   <div id="SigninPage" class="invite-page">
+    <div
+      class="can-signin"
+      :class="[hasAccount || hasInvite ? 'g-hidden' : 'g-visible']"
+    >
+      Do you have an account?<br/>
+      <toggle
+        off-text="NO"
+        on-text="YES"
+        class="toggle"
+        @toggled="canSignin"
+      ></toggle>
+      Do you have an Invite?<br/>
+      <toggle
+        off-text="NO"
+        on-text="YES"
+        class="toggle"
+        @toggled="canSignup"
+      ></toggle>
+      Would you like an invitation?
+      <toggle
+        off-text="NO"
+        on-text="YES"
+        class="toggle"
+        @toggled="getInvite"
+      ></toggle>
+    </div>
 
-    <div class="signin-button-wrapper" title="Select Signin">
+    <section
+      class="signin-section-wrapper"
+      title="Choose Signin"
+      :class="[hasAccount ? 'g-visible' : 'g-hidden']"
+    >
       <div class="google-button">
         <span class="icon-google-plus">Signin with Google</span>
       </div>
       <div class="facebook-button">
         <span class="icon-facebook">Signin with Google</span>
       </div>
-    </div>
+    </section>
 
-    <!-- <toggle
-      off-text="NO"
-      on-text="YES"
-      @toggled="toggleSignin"
-    ></toggle> -->
+    <section
+      class="signin-section-wrapper has-invite"
+      title="Enter Invite Code"
+      :class="[hasInvite ? 'g-visible' : 'g-hidden']"
+    >
+      <input type="text" maxlength="13" spellcheck="false" />
+      <button>Submit</button>
+    </section>
+
+
   </div>
 </template>
 
