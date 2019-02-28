@@ -54,11 +54,28 @@
         v-model="invite"
         @keyup="clearInviteStatus"
       />
-      <span
-        class="invite-status"
-        :class="inviteStatus"
-        v-if="inviteStatus"
-      >{{ inviteStatusText }}</span>
+
+      <span v-if="inviteStatus.active">
+        <span
+          class="invite-status bad"
+          v-if="!inviteStatus.valid"
+        >invalid invite</span>
+
+        <span
+          class="invite-status bad"
+          v-else-if="!inviteStatus.exists"
+        >invite not found</span>
+
+        <span
+          class="invite-status medium"
+          v-else-if="inviteStatus.expired"
+        >invite has expired</span>
+
+        <span
+          class="invite-status good"
+          v-else-if="inviteStatus.validated"
+        >invite validated!</span>
+      </span>
 
       <button @click="validateInvite">Validate</button>
     </section>
