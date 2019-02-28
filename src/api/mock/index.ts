@@ -1,9 +1,11 @@
 
-interface IRequest {
+export interface InviteRequest {
   status: number;
   data?: {
-    hours?: number;
-    minutes?: number;
+    timeout?: {
+      hours: number;
+      minutes: number;
+    }
     error?: {
       msg: string;
       data?: any
@@ -24,14 +26,16 @@ export default class ClientAPI {
   constructor() {}
 
   public canRequestInvite(delay?: number, test?: InviteTest) {
-    return this._timedResolver<IRequest>(() => {
+    return this._timedResolver<InviteRequest>(() => {
 
       if (test == 'timeout') {
         return {
           status: 202,
           data: {
-            hours: Math.floor(Math.random() * 23),
-            minutes: Math.floor(Math.random() * 59),
+            timeout: {
+              hours: Math.floor(Math.random() * 23),
+              minutes: Math.floor(Math.random() * 59),
+            }
           }
         }
       }
@@ -56,7 +60,7 @@ export default class ClientAPI {
 
 
   public requestInvite(data: InviteData, delay?: number, test?: InviteTest) {
-    return this._timedResolver<IRequest>(() => {
+    return this._timedResolver<InviteRequest>(() => {
 
       if (test == 'timeout') {
         return {

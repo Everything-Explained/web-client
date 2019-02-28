@@ -1,4 +1,5 @@
 import { Vue, Component, Provide } from 'vue-property-decorator';
+import { InviteRequest } from '@/api/mock';
 
 
 @Component
@@ -18,7 +19,7 @@ export default class Invite extends Vue {
   public hasFailed = false;
   public hasSent = false;
 
-  public timeoutData = {
+  public timeout = {
     hours: 0,
     minutes: 0
   }
@@ -51,12 +52,14 @@ export default class Invite extends Vue {
   }
 
   async created() {
-    let t = await this.$api.canRequestInvite(1000);
-    if (t.status == 202) {
-      this.timeoutData = t.data;
-      this.hasActiveTimeout = true;
+    let resp = await this.$api.canRequestInvite(1000);
+    if (resp.status == 202) {
+      if (resp.data && resp.data.timeout) {
+        this.timeout = resp.data.timeout
+        this.hasActiveTimeout = true;
+      }
     }
-    if (t.status == 500) {
+    if (resp.status == 500) {
       this.hasFailed = true;
     }
     this.isLoading = false;

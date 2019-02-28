@@ -96,8 +96,8 @@
         <b> Try Again Later!</b>
       </span>
       <span v-if="hasActiveTimeout">
-        <em>Wait</em> another <b>{{ timeoutData.hours }} hour(s)</b>
-        and <b>{{ timeoutData.minutes }} minute(s)</b>.
+        <em>Wait</em> another <b>{{ timeout.hours }} hour(s)</b>
+        and <b>{{ timeout.minutes }} minute(s)</b>.
       </span>
     </section>
   </div>
