@@ -15,7 +15,6 @@ export default class Invite extends Vue {
   public minTextLen = 200;
 
   public isLoading = true;
-  public hasActiveTimeout = false;
   public hasFailed = false;
   public hasSent = false;
 
@@ -41,6 +40,10 @@ export default class Invite extends Vue {
     return this.contentLen >= this.minTextLen;
   }
 
+  get hasActiveTimeout() {
+    return !!this.timeout.hours || !!this.timeout.minutes;
+  }
+
   get isRequestActive() {
     return this.hasActiveTimeout
         || this.hasFailed
@@ -55,8 +58,7 @@ export default class Invite extends Vue {
     let resp = await this.$api.canRequestInvite(1000);
     if (resp.status == 202) {
       if (resp.data && resp.data.timeout) {
-        this.timeout = resp.data.timeout
-        this.hasActiveTimeout = true;
+        this.timeout = resp.data.timeout;
       }
     }
     if (resp.status == 500) {
