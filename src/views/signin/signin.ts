@@ -1,5 +1,6 @@
 import { Component, Vue, Provide } from 'vue-property-decorator';
 import Toggle from '@/components/toggle/Toggle.vue';
+import AuthInput from '@/components/auth-input/AuthInput.vue';
 
 
 
@@ -17,7 +18,8 @@ interface InviteStatus {
 
 @Component({
   components: {
-    Toggle
+    Toggle,
+    AuthInput
   }
 })
 export default class Signin extends Vue {
