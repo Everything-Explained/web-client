@@ -21,7 +21,7 @@
     >
       <input
         type="text"
-        class="name"
+        class="dark-input name"
         placeholder="Alias or First Name"
         maxlength="20"
         @keyup="validateAlias"
@@ -46,7 +46,7 @@
 
       <input
         type="email"
-        class="email"
+        class="dark-input email"
         placeholder="Enter Email"
         @keyup="validateEmail"
         v-model="email"
@@ -61,7 +61,7 @@
 
       <textarea
         maxlength="500"
-        class="about-me"
+        class="dark-input about-me"
         placeholder="Why do you want to join Noumenae?"
         @keyup="validateText"
         v-model="content"

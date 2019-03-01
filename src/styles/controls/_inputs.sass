@@ -1,20 +1,23 @@
-
-[type='text'],
-[type='email'],
-textarea
+%input
   position: relative
   display: block
   width: 200px
-  background-color: #171717
-  border: 7px solid #333
+  background-color: hsl(0, 0%, 9%)
+  border: 7px solid hsl(0, 0%, 20%)
   padding: 10px 8px
   font-size: medium
   color: #aaa
   border-radius: 5px
-  box-shadow: inset 0 0 17px 2px #000
   transition: all .3s linear
   // Force hardware acceleration in Chrome
   -webkit-transform: translateZ(0)
+
+[type='text'].dark-input,
+[type='email'].dark-input,
+textarea.dark-input
+  @extend %input
+  box-shadow: 0 0 20px 4px hsl(0, 0, 0), inset 0 0 20px 4px hsl(0, 0, 0)
+
 
   &:focus
     border-color: hsl(50, 70%, 17%)
