@@ -10,5 +10,6 @@ declare module "vue/types/vue" {
     readonly $dataImages: typeof imageData;
     readonly $markdown: Markdown;
     readonly $api: ClientAPI;
+    readonly $debounce: (fn: () => void, delay: number) => (...any) => void;
   }
 }
