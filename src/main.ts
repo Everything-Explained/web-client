@@ -23,7 +23,6 @@ let needBrowser =
 
 let cookies = navigator.cookieEnabled || false;
 
-
 if (needBrowser) {
   let obj = document.getElementById('Failure') as HTMLElement;
   obj.style.display = 'inline-block';
@@ -48,7 +47,7 @@ Vue.filter('dateFormat', (v: unknown, format?: string) => {
   if (typeof v == 'string' || v instanceof Date) {
     return moment(v).format(format || 'MMMM Do, YYYY');
   }
-  throw new Error('DateFormat only accepts string values');
+  throw new Error('DateFormat only accepts strings or Date objects');
 });
 
 
@@ -58,6 +57,16 @@ Vue.use({
     Vue.prototype.$dataImages = dataImages;
     Vue.prototype.$markdown = setupMarkdown();
     Vue.prototype.$api = new ClientAPI()
+    Vue.prototype.$debounce =
+      (fn: (...any) => void, delay = 0) => {
+        let timeoutID = 0;
+        return function(...args) {
+          clearTimeout(timeoutID);
+          timeoutID = setTimeout(() => {
+            fn(args);
+          }, delay);
+        }
+      }
   }
 })
 
