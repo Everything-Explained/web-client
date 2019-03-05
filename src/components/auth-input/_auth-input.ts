@@ -88,9 +88,10 @@ export default class AuthInput extends Vue {
     if (req.status >= 400) {
       this.state.failedValidation = true;
       this.failedValidationText = req.data;
-      this.state.checkingValidation = false;
       return false;
     }
+    
+    this.state.checkingValidation = false;
 
     return true
   }
