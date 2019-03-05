@@ -4,12 +4,22 @@ import imageData from '@/assets/data-images.json';
 import Markdown from 'markdown-it';
 import ClientAPI from './api/mock';
 
+
+export type DebounceObj =
+{
+  exec: (...args: any) => Promise<any>;
+  cancel: () => void;
+}
+
 declare module "vue/types/vue" {
   interface Vue {
     readonly $modal: MiniModal;
     readonly $dataImages: typeof imageData;
     readonly $markdown: Markdown;
     readonly $api: ClientAPI;
-    readonly $debounce: (fn: (...args) => any, delay: number) => (...any) => any;
+    readonly $debounce:
+                (fn: (...args: any) => any, delay: number)
+                  => (...args: any)
+                        => DebounceObj
   }
 }
