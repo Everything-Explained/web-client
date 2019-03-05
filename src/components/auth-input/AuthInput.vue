@@ -7,8 +7,18 @@
 
       <span
         class="status invalid"
-        v-if="state.invalid"
-      ><slot name="invalid"></slot></span>
+        v-if="state.invalid1"
+      ><slot name="invalid1"></slot></span>
+
+      <span
+        class="status invalid"
+        v-else-if="state.invalid2"
+      ><slot name="invalid2"></slot></span>
+
+      <span
+        class="status invalid"
+        v-else-if="state.invalid3"
+      ><slot name="invalid3"></slot></span>
 
       <span
         class="status invalid"

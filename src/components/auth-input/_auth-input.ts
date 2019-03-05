@@ -1,6 +1,8 @@
 import { Vue, Provide, Component, Prop, Watch } from 'vue-property-decorator';
 
 
+type InputTest = (input: string) => boolean;
+
 @Component
 export default class AuthInput extends Vue {
 
@@ -10,8 +12,14 @@ export default class AuthInput extends Vue {
   @Prop({ default: 0, type: Number })
   readonly max!: number;
 
-  @Prop({ default: undefined, type: RegExp})
-  readonly regexp!: RegExp;
+  @Prop({ default: undefined, type: Function})
+  readonly test1!: InputTest;
+
+  @Prop({ default: undefined, type: Function})
+  readonly test2!: InputTest;
+
+  @Prop({ default: undefined, type: Function})
+  readonly test3!: InputTest;
 
   @Provide() readonly textInput = '';
 
@@ -21,7 +29,9 @@ export default class AuthInput extends Vue {
     default: true,
     underMin: false,
     overMax: false,
-    invalid: false,
+    invalid1: false,
+    invalid2: false,
+    invalid3: false,
     valid: false,
   }
 
@@ -44,10 +54,10 @@ export default class AuthInput extends Vue {
       let text = this.textInput;
       let len = text.length;
 
+      this.resetState_();
+
       if (len) {
-        if (this.regexp && !this.regexp.test(text)) {
-          this.state.invalid = true;
-        }
+        if (this.isInvalid_(text)) {}
         else if (len < this.min) {
           this.state.underMin = true;
         }
@@ -55,13 +65,25 @@ export default class AuthInput extends Vue {
           this.state.overMax = true;
         }
         else {
-          this.resetState_();
           this.state.valid = true;
         }
       }
-      else this.resetState_()
 
     }, delay);
+  }
+
+
+  private isInvalid_(input: string) {
+    if (this.test1 && !this.test1(input))
+      return this.state.invalid1 = true
+    ;
+    if (this.test2 && !this.test2(input))
+      return this.state.invalid2 = true
+    ;
+    if (this.test3 && !this.test3(input))
+      return this.state.invalid3 = true
+    ;
+    return false;
   }
 
 
@@ -71,7 +93,9 @@ export default class AuthInput extends Vue {
       default: true,
       underMin: false,
       overMax: false,
-      invalid: false,
+      invalid1: false,
+      invalid2: false,
+      invalid3: false,
       valid: false
     }
   }
