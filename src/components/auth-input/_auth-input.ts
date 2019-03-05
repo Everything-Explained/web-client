@@ -1,4 +1,5 @@
 import { Vue, Provide, Component, Prop, Watch } from 'vue-property-decorator';
+import { DebounceObj } from '@/globals';
 
 
 type InputTest = (input: string) => boolean;
@@ -21,6 +22,9 @@ export default class AuthInput extends Vue {
   @Prop({ default: undefined, type: Function})
   readonly test3!: InputTest;
 
+  @Prop({ default: undefined, type: Object})
+  readonly validate!: DebounceObj;
+
   @Provide() readonly textInput = '';
 
 
@@ -41,35 +45,35 @@ export default class AuthInput extends Vue {
 
 
 
-  public validateTextField = this.validateTextField_(400);
   @Watch('textInput')
   public onInputChanged() {
-    this.validateTextField();
+    this.validateTextField_();
   }
 
 
-  private validateTextField_(delay: number) {
-    return this.$debounce(() => {
+  private async validateTextField_() {
+    let text = this.textInput;
+    let len = text.length;
 
-      let text = this.textInput;
-      let len = text.length;
+    this.resetState_();
+    this.validate.cancel();
 
-      this.resetState_();
-
-      if (len) {
-        if (this.isInvalid_(text)) {}
-        else if (len < this.min) {
-          this.state.underMin = true;
-        }
-        else if (len > this.max) {
-          this.state.overMax = true;
-        }
-        else {
-          this.state.valid = true;
-        }
+    if (len) {
+      if (this.isInvalid_(text)) {
       }
-
-    }, delay);
+      else if (len < this.min) {
+        this.state.underMin = true;
+      }
+      else if (len > this.max) {
+        this.state.overMax = true;
+      }
+      else {
+        if (this.validate) {
+          console.log(await this.validate.exec(text));
+        }
+        else this.state.valid = true;
+      }
+    }
   }
 
 
