@@ -25,9 +25,12 @@ export default class AuthInput extends Vue {
   @Prop({ default: undefined, type: Object})
   readonly validate!: DebounceObj;
 
+  @Prop({ default: undefined, type: String})
+  readonly validationType!: string;
+
   @Provide() readonly textInput = '';
 
-
+  public failedValidationText = '';
 
   public state = {
     default: true,
@@ -36,6 +39,8 @@ export default class AuthInput extends Vue {
     invalid1: false,
     invalid2: false,
     invalid3: false,
+    failedValidation: false,
+    checkingValidation: false,
     valid: false,
   }
 
@@ -68,12 +73,26 @@ export default class AuthInput extends Vue {
         this.state.overMax = true;
       }
       else {
-        if (this.validate) {
-          console.log(await this.validate.exec(text));
-        }
-        else this.state.valid = true;
+        this.state.valid = await this.isValidated_(text);
       }
     }
+  }
+
+
+  private async isValidated_(input: string) {
+    if (!this.validate) return true;
+
+    this.state.checkingValidation = true;
+    let req = await this.validate.exec(input);
+
+    if (req.status >= 400) {
+      this.state.failedValidation = true;
+      this.failedValidationText = req.data;
+      this.state.checkingValidation = false;
+      return false;
+    }
+
+    return true
   }
 
 
@@ -100,6 +119,8 @@ export default class AuthInput extends Vue {
       invalid1: false,
       invalid2: false,
       invalid3: false,
+      failedValidation: false,
+      checkingValidation: false,
       valid: false
     }
   }
