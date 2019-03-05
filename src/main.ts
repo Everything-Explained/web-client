@@ -58,13 +58,16 @@ Vue.use({
     Vue.prototype.$markdown = setupMarkdown();
     Vue.prototype.$api = new ClientAPI()
     Vue.prototype.$debounce =
-      (fn: (...any) => void, delay = 0) => {
+      (fn: (...any) => any, delay = 0) => {
         let timeoutID = 0;
         return function(...args) {
-          clearTimeout(timeoutID);
-          timeoutID = setTimeout(() => {
-            fn(args);
-          }, delay);
+          return new Promise((rs, rj) => {
+            clearTimeout(timeoutID);
+            timeoutID = setTimeout(() => {
+              return rs(fn(...args));
+            }, delay);
+          })
+
         }
       }
   }
