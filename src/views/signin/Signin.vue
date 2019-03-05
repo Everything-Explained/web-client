@@ -2,7 +2,7 @@
   <div id="SigninPage" class="invite-page">
     <div
       class="can-signin"
-      :class="[hasAccount || hasInvite ? 'g-hidden' : 'g-visible']"
+      :class="[hasAccount || !hasInvite ? 'g-hidden' : 'g-visible']"
     >
       Do you have an account?<br/>
       <toggle off-text="NO" on-text="YES"
@@ -77,21 +77,25 @@
     </section>
 
 
+    <!-- ([a-zA-Z0-9])\1{2,} -->
     <!-- SIGNUP CONTROLS -->
-    <!-- <section
+    <section
       class="signin-section-wrapper"
       title-text="Signup"
     >
       <auth-input
         :min="4"
         :max="20"
-        :regexp="/^[a-zA-Z0-9]+$/"
+        :test1="(input) => /^[a-zA-Z0-9]+$/.test(input)"
+        :test2="(input) => !/([a-zA-Z0-9])\1{2,}/.test(input)"
+        :validate="validateAlias"
       >
-        <template v-slot:invalid>Allowed: 0-9, a-z, or A-Z</template>
+        <template v-slot:invalid1>Allowed: 0-9, a-z, or A-Z</template>
+        <template v-slot:invalid2>Repeat Characters Detected</template>
         <template v-slot:valid>Name Available!</template>
         Enter First Name or Alias
       </auth-input>
-    </section> -->
+    </section>
   </div>
 </template>
 

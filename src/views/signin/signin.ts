@@ -64,12 +64,20 @@ export default class Signin extends Vue {
     this.inviteStatus.active = true;
   }
 
+  get validateAlias() {
+    return (this.$debounce(async (input: string) => {
+      return await this.$api.validateAlias(input)
+    }, 800))();
+  }
 
   public clearInviteStatus() {
     if (this.inviteStatus)
       this.inviteStatus.active = false
     ;
   }
+
+
+
 
   // ONLY use with validateInvite() api call
   // private _randInviteResp() {
