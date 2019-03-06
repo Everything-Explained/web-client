@@ -61,22 +61,23 @@ export default class AuthInput extends Vue {
     let len = text.length;
 
     this.resetState_();
-    this.validate.cancel();
+    if (this.validate) this.validate.cancel();
     this.$emit('valid-input', '');
 
 
     if (len) {
       if (this.isInvalid_(text)) {
       }
-      else if (len < this.min) {
+      else if (this.min && len < this.min) {
         this.state.underMin = true;
       }
-      else if (len > this.max) {
+      else if (this.max && len > this.max) {
         this.state.overMax = true;
       }
       else {
         this.state.valid = await this.isValidated_(text);
-        this.$emit('valid-input', text);
+        if (this.state.valid)
+          this.$emit('valid-input', text);
       }
     }
   }
