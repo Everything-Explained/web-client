@@ -39,11 +39,19 @@ export default class Signin extends Vue {
   }
 
   public authedAlias = '';
+  public authedInvite = '';
 
 
   get validateAlias() {
     return (this.$debounce(async (input: string) => {
       return await this.$api.validateAlias(input, 500)
+    }, 800))();
+  }
+
+
+  get validateInvite() {
+    return (this.$debounce(async (input: string) => {
+      return await this.$api.validateInvite(input, 500);
     }, 800))();
   }
 
@@ -75,21 +83,16 @@ export default class Signin extends Vue {
     this.$router.push('invite');
   }
 
-
-  public async validateInvite() {
-    let resp =
-      await this.$api.validateInvite(this.invite, 0, this._randInviteResp()) as InviteStatus
+  @Watch('invite')
+  public clearInviteStatus() {
+    if (this.inviteStatus)
+      this.inviteStatus.active = false
     ;
-    this.inviteStatus = Object.assign(this.inviteStatus, resp.data);
-    this.inviteStatus.active = true;
-    if (this.inviteStatus.validated) {
-      setTimeout(() => {
-        this.startSignup();
-      }, 300);
-    }
-
   }
 
+  public setInvite(val: string) {
+    this.authedInvite = val;
+  }
 
   public setAlias(val: string) {
     this.authedAlias = val;
@@ -100,12 +103,7 @@ export default class Signin extends Vue {
   }
 
 
-  @Watch('invite')
-  public clearInviteStatus() {
-    if (this.inviteStatus)
-      this.inviteStatus.active = false
-    ;
-  }
+
 
 
 

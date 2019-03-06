@@ -49,34 +49,24 @@
       title-text="Enter Invite Code"
       :class="[hasInvite && !validatedInvite ? 'g-visible' : 'g-hidden']"
     >
-      <input type="text" maxlength="13" spellcheck="false"
+      <!-- <input type="text" maxlength="13" spellcheck="false"
         class="dark-input"
         v-model="invite"
-      />
-
-      <span v-if="inviteStatus.active">
-        <span
-          class="invite-status bad"
-          v-if="!inviteStatus.valid"
-        >invalid invite</span>
-
-        <span
-          class="invite-status bad"
-          v-else-if="!inviteStatus.exists"
-        >invite not found</span>
-
-        <span
-          class="invite-status medium"
-          v-else-if="inviteStatus.expired"
-        >invite has expired</span>
-
-        <span
-          class="invite-status good"
-          v-else-if="inviteStatus.validated"
-        >invite validated!</span>
-      </span>
-
-      <button class="standard" @click="validateInvite">Validate</button>
+      /> -->
+      <auth-input
+        :max="20"
+        :validate="validateInvite"
+        validationType="Invite"
+        @valid-input="setInvite"
+      >
+        <template v-slot:valid>Invite Validated</template>
+        Enter Invite Code
+      </auth-input>
+      <button
+        class="standard"
+        @click="startSignup"
+        :disabled="!authedInvite"
+      >Continue</button>
     </section>
 
 
