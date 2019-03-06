@@ -74,6 +74,7 @@
         value="Submit"
         maxlength="20"
         :disabled="!isReadyToSubmit"
+        class="standard"
       />
       <span
           class="counter submit-counter"

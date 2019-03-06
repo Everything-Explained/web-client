@@ -41,7 +41,7 @@ textarea.dark-input
     box-shadow: none
 
 
-button, [type='button'], [type='submit']
+%button
   position: relative
   margin-top: 20px
   background: hsl(0, 0%, 33%)
@@ -67,6 +67,11 @@ button, [type='button'], [type='submit']
 
   &:disabled
     opacity: .35
+
+button.standard,
+[type='button'].standard,
+[type='submit'].standard
+  @extend %button
 
 
 
