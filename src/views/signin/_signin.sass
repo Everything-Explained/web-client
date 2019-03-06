@@ -100,24 +100,44 @@
         color: hsl(50, 50%, 50%)
 
 
+  .name-signup
+    width: 380px
+    & .auth-input
+      width: 300px
+      margin: 10px auto 0 auto
+
+    button
+      left: 11.3%
+
+
   .google-button, .facebook-button
+    position: relative
     display: block
     margin: 10px auto 15px auto
     width: 264px
     height: 40px
     cursor: pointer
-    box-shadow: 5px 13px 10px -3px hsl(0, 0, 0)
+    background-color: transparent
+    box-shadow: 5px 13px 10px -3px black
 
-    &:hover .icon-google-plus, &:hover .icon-facebook
-      background-color: hsl(0, 0%, 17%)
-      color: hsl(50, 60%, 55%)
+    &:active
+      top: 2px
+      left: 2px
+
+    &:hover .icon-google-plus
+      background-color: hsl(220, 15%, 17%)
+      color: hsl(0, 0%, 90%)
+
+    &:hover .icon-facebook
+      background-color: hsl(220, 15%, 17%)
+      color: hsl(0, 0%, 90%)
 
     &:hover .icon-google-plus::before
       color: hsl(0, 0%, 90%)
       background-color: hsl(0, 90%, 64%)
 
     &:hover .icon-facebook::before
-      color: hsl(0, 0, 100%)
+      color: hsl(0, 0%, 90%)
       background-color: hsl(220, 45%, 42%)
 
   .icon-google-plus, .icon-facebook
