@@ -22,15 +22,18 @@ export default class AuthInput extends Vue {
   @Prop({ default: undefined, type: Function})
   readonly test3!: InputTest;
 
-  @Prop({ default: undefined, type: Object})
-  readonly validate!: DebounceObj;
+  @Prop({ default: undefined, type: Function})
+  readonly validate!: (...args: any) => Promise<any>;
 
   @Prop({ default: undefined, type: String})
   readonly validationType!: string;
 
+  @Prop({ default: 500, type: Number })
+  readonly validationDelay!: number;
+
   @Provide() readonly textInput = '';
 
-  public failedValidationText = '';
+
 
   public state = {
     default: true,
@@ -44,6 +47,12 @@ export default class AuthInput extends Vue {
     valid: false,
   }
 
+  public failedValidationText = '';
+  public validation = this.delayValidation_(this.validate)
+
+  private validationPriority_ = 0;
+
+
 
 
   created() {}
@@ -51,19 +60,12 @@ export default class AuthInput extends Vue {
 
 
   @Watch('textInput')
-  public onInputChanged() {
-    this.validateTextField_();
-  }
-
-
   private async validateTextField_() {
     let text = this.textInput;
     let len = text.length;
 
     this.resetState_();
-    if (this.validate) this.validate.cancel();
     this.$emit('valid-input', '');
-
 
     if (len) {
       if (this.isInvalid_(text)) {
@@ -75,19 +77,23 @@ export default class AuthInput extends Vue {
         this.state.overMax = true;
       }
       else {
-        this.state.valid = await this.isValidated_(text);
-        if (this.state.valid)
+        this.state.checkingValidation = true;
+        this.state.valid =
+          await this.isValidated_(text, ++this.validationPriority_)
+        ;
+        if (this.state.valid) {
           this.$emit('valid-input', text);
+        }
       }
     }
   }
 
 
-  private async isValidated_(input: string) {
+  private async isValidated_(input: string, priority: number) {
     if (!this.validate) return true;
 
-    this.state.checkingValidation = true;
-    let req = await this.validate.exec(input);
+    let req = await this.validation(input) as any
+    if (priority < this.validationPriority_) return false;
 
     if (req.status >= 400) {
       this.state.failedValidation = true;
@@ -127,6 +133,20 @@ export default class AuthInput extends Vue {
       failedValidation: false,
       checkingValidation: false,
       valid: false
+    }
+  }
+
+
+  private delayValidation_(fn: (...args: any) => Promise<any>) {
+    let timeoutID = 0;
+    let that = this;
+    return function (...args: any) {
+      clearTimeout(timeoutID);
+      return new Promise(rs => {
+        timeoutID = setTimeout(() => {
+          rs(fn(args));
+        }, that.validationDelay);
+      })
     }
   }
 
