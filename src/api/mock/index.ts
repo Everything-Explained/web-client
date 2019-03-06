@@ -19,7 +19,8 @@ type InviteData = {
   content: string;
 }
 type InviteTest = 'timeout'|'error';
-type ValidInvite = 'invalid'|'notexist'|'expired';
+type InvalidInvite = 'invalid'|'notexist'|'expired';
+type InvalidAlias = 'exists'|'similar';
 
 export default class ClientAPI {
 
@@ -83,39 +84,45 @@ export default class ClientAPI {
   }
 
 
-  public validateInvite(invite: string, delay?: number, test?: ValidInvite) {
+  public validateInvite(invite: string, delay?: number, test?: InvalidInvite) {
     return this._timedResolver(() => {
 
-      // Prototype response from server
-      let data = {
-        valid    : true,
-        expired  : false,
-        exists   : true,
-        validated: true
+      let data = '';
+
+      if (test ==  'invalid') data = 'invalid invite';
+      if (test == 'notexist') data = 'invite not found';
+      if (test ==  'expired') data = 'invite has expired';
+
+      return {
+        status: !data ? 200 : 400,
+        data
       }
 
-      if (test == 'invalid') {
-        data.valid = false;
-        data.exists = false;
-        data.validated = false;
+    }, delay || 0)
+  }
+
+
+  public validateAlias(alias: string, delay?: number, test?: InvalidAlias) {
+    return this._timedResolver(() => {
+
+      if (test == 'similar') {
+        let percent = 50 + Math.floor(Math.random() * 50);
+        return {
+          status: 409,
+          data: `${percent}% Match to Existing Name`
+        }
       }
 
-      if (test == 'notexist') {
-        data.valid = true;
-        data.exists = false;
-        data.validated = false;
-      }
-
-      if (test == 'expired') {
-        data.valid = true;
-        data.exists = true;
-        data.expired = true;
-        data.validated = false;
+      if (test == 'exists') {
+        return {
+          status: 409,
+          data: 'Name Already In Use'
+        }
       }
 
       return {
-        status: !test ? 200 : 400,
-        data
+        status: 200,
+        data: 'Name Available!'
       }
 
     }, delay || 0)
