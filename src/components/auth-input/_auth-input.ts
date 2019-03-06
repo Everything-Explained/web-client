@@ -62,6 +62,8 @@ export default class AuthInput extends Vue {
 
     this.resetState_();
     this.validate.cancel();
+    this.$emit('valid-input', '');
+
 
     if (len) {
       if (this.isInvalid_(text)) {
@@ -74,6 +76,7 @@ export default class AuthInput extends Vue {
       }
       else {
         this.state.valid = await this.isValidated_(text);
+        this.$emit('valid-input', text);
       }
     }
   }
@@ -90,7 +93,7 @@ export default class AuthInput extends Vue {
       this.failedValidationText = req.data;
       return false;
     }
-    
+
     this.state.checkingValidation = false;
 
     return true
