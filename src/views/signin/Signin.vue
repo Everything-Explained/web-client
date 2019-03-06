@@ -49,14 +49,11 @@
       title-text="Enter Invite Code"
       :class="[hasInvite && !validatedInvite ? 'g-visible' : 'g-hidden']"
     >
-      <!-- <input type="text" maxlength="13" spellcheck="false"
-        class="dark-input"
-        v-model="invite"
-      /> -->
       <auth-input
         :max="20"
         :validate="validateInvite"
         validationType="Invite"
+        :validationDelay="800"
         @valid-input="setInvite"
       >
         <template v-slot:valid>Invite Validated</template>
@@ -83,6 +80,7 @@
         :test2="(input) => !/([a-zA-Z0-9])\1{2,}/.test(input)"
         :validate="validateAlias"
         validationType="Name"
+        :validationDelay="600"
         @valid-input="setAlias"
       >
         <template v-slot:invalid1>Allowed: 0-9, a-z, or A-Z</template>
@@ -90,6 +88,13 @@
         <template v-slot:valid>Alias Available!</template>
         Enter an Alias
       </auth-input>
+      <ul>
+        <li>An Alias must be unique and contain very few repeated characters.</li>
+        <li>
+          An Alias will be rejected if it has a 50% or more match with an
+          existing users Alias.
+        </li>
+      </ul>
       <button class="standard" :disabled="!authedAlias" @click="saveAlias">Save</button>
     </section>
   </div>

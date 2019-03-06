@@ -42,17 +42,13 @@ export default class Signin extends Vue {
   public authedInvite = '';
 
 
-  get validateAlias() {
-    return (this.$debounce(async (input: string) => {
-      return await this.$api.validateAlias(input, 500)
-    }, 800))();
+  public async validateAlias(alias) {
+    return await this.$api.validateAlias(alias, 500)
   }
 
 
-  get validateInvite() {
-    return (this.$debounce(async (input: string) => {
-      return await this.$api.validateInvite(input, 500);
-    }, 800))();
+  public async validateInvite(invite: string) {
+    return await this.$api.validateInvite(invite, 500);
   }
 
 
