@@ -13,6 +13,24 @@ export interface InviteRequest {
   }
 }
 
+export interface SingupRequest {
+  status: number;
+  data?: {
+    verify: boolean;
+    exists: boolean;
+    error: string|null
+  }
+}
+
+export interface SigninRequest {
+  status: number;
+  data?: {
+    notfound: boolean;
+    signedin: boolean;
+    error: string|null
+  }
+}
+
 type InviteData = {
   alias: string;
   email: string;
@@ -123,6 +141,92 @@ export default class ClientAPI {
       return {
         status: 200,
         data: 'Name Available!'
+      }
+
+    }, delay || 0)
+  }
+
+
+  public signup(alias: string, type: 'google'|'facebook', delay?: number, test?: 'email'|'exists'|'error') {
+    return this._timedResolver<SingupRequest>(() => {
+
+      if (test == 'email') {
+        return {
+          status: 403,
+          data: {
+            verify: true,
+            exists: false,
+            error: null
+          }
+        }
+      }
+
+      if (test == 'exists') {
+        return {
+          status: 403,
+          data: {
+            verify: false,
+            exists: true,
+            error: null
+          }
+        }
+      }
+
+      if (test == 'error') {
+        return {
+          status: 403,
+          data: {
+            verify: false,
+            exists: false,
+            error: 'some kind of auth chain issue maybe'
+          }
+        }
+      }
+
+      return {
+        status: 200,
+      }
+    }, delay || 0)
+  }
+
+
+  public signin(type: 'google'|'facebook', delay?: number, test?: 'error'|'notfound'|'signedin') {
+    return this._timedResolver<SigninRequest>(() => {
+      if (test == 'notfound') {
+        return {
+          status: 403,
+          data: {
+            notfound: true,
+            signedin: false,
+            error: null
+          }
+        }
+      }
+
+      if (test == 'signedin') {
+        return {
+          status: 403,
+          data: {
+            notfound: false,
+            signedin: true,
+            error: null
+          }
+        }
+      }
+
+      if (test == 'error') {
+        return {
+          status: 403,
+          data: {
+            notfound: false,
+            signedin: false,
+            error: 'some kind of error occurred'
+          }
+        }
+      }
+
+      return {
+        status: 200
       }
 
     }, delay || 0)
