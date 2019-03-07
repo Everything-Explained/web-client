@@ -7,13 +7,13 @@
       Do you have an account?<br/>
       <toggle off-text="NO" on-text="YES"
         class="toggle"
-        @toggled="canSignin"
+        @toggled="showSignin"
       ></toggle>
 
       Do you have an Invite?<br/>
       <toggle off-text="NO" on-text="YES"
         class="toggle"
-        @toggled="canSignup"
+        @toggled="showInviteForm"
       ></toggle>
 
       Would you like an invitation?
@@ -40,6 +40,7 @@
           Signin with Facebook
         </span>
       </button>
+      <span class="signup-response">this is a test</span>
     </section>
 
 
@@ -50,6 +51,7 @@
       :class="[hasInvite && !validatedInvite ? 'g-visible' : 'g-hidden']"
     >
       <auth-input
+        :min="10"
         :max="20"
         :validate="validateInvite"
         validationType="Invite"
@@ -61,7 +63,7 @@
       </auth-input>
       <button
         class="standard"
-        @click="startSignup"
+        @click="showSignup"
         :disabled="!authedInvite"
       >Continue</button>
     </section>

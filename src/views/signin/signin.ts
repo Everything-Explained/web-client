@@ -62,15 +62,15 @@ export default class Signin extends Vue {
 
 
 
-  public canSignup() {
+  public showInviteForm() {
     this.hasInvite = true;
   }
 
-  public startSignup() {
+  public showSignup() {
     this.validatedInvite = true;
   }
 
-  public canSignin() {
+  public showSignin() {
     this.hasAccount = true;
   }
 
