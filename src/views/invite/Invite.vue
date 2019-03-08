@@ -19,12 +19,12 @@
       @submit="submit"
       :class="{ 'g-hidden': isRequestActive || isLoading}"
     >
+      <!-- ALIAS CONTROL -->
       <input
         type="text"
         class="dark-input name"
         placeholder="Alias or First Name"
         maxlength="20"
-        @keyup="validateAlias"
         v-model="alias"
       />
       <span
@@ -37,23 +37,22 @@
         v-else-if="!hasValidAliasLen"
         class="counter name-counter"
       >
-        Enter <span>{{minAliasLen - aliasLen}}</span> more
+        Enter <span>{{minAliasLen - alias.length}}</span> more
         <span>valid</span>
         chars to unlock the next form.
       </span>
 
 
-
+      <!-- EMAIL CONTROL -->
       <input
         type="email"
         class="dark-input email"
         placeholder="Enter Email"
-        @keyup="validateEmail"
         v-model="email"
-        :disabled="!isValidAlias"
+        :disabled="!hasValidAlias"
       />
       <span class="counter email-valid"
-        v-if="!isValidEmail && isValidAlias"
+        v-if="!hasValidEmail && hasValidAlias"
       >
         Enter a <span>valid email</span> to continue.
       </span>
@@ -63,9 +62,8 @@
         maxlength="500"
         class="dark-input about-me"
         placeholder="Why do you want to join Noumenae?"
-        @keyup="validateText"
         v-model="content"
-        :disabled="!isValidEmail || !isValidAlias"
+        :disabled="!hasValidEmail || !hasValidAlias"
       ></textarea>
 
 
@@ -78,9 +76,9 @@
       />
       <span
           class="counter submit-counter"
-        v-if="!isValidText && isValidEmail && isValidAlias"
+        v-if="!hasValidTextLen && hasValidEmail && hasValidAlias"
       >
-        Enter at least <span>{{ minTextLen - contentLen }} more</span>
+        Enter at least <span>{{ minTextLen - content.length }} more</span>
         chars to submit.
       </span>
     </form>
