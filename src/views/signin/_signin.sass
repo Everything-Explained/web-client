@@ -59,6 +59,39 @@
       transform: translateX(-50%)
 
 
+  .signin
+    width: 400px
+
+
+  .signup-response
+    position: relative
+    display: block
+    width: 90%
+    margin: 10px auto 0 auto
+    padding: 1px 10px 13px 10px
+    font-family: 'Nunito'
+    font-size: 18px
+    font-weight: 400
+    letter-spacing: 1px
+    background-color: $sub-panel-light
+    color: hsl(50, 40%, 65%)
+    box-shadow: 0 0 20px 1px black
+
+    + .refresh
+      position: relative
+      left: 25px
+
+    .error
+      color: hsl(50, 50%, 50%)
+      font-family: 'Source Code Pro'
+
+    h2
+      margin: 10px 0
+      @extend %font-comfortaa
+      font-size: 28px
+      color: hsl(0, 70%, 75%)
+
+
   .can-signin
     position: relative
     margin: 10px auto 0
@@ -128,24 +161,6 @@
       left: 11.3%
 
 
-  .signup-response
-    position: relative
-    display: block
-    left: 36px
-    width: 260px
-    margin-top: 30px
-    padding: 5px
-    font-family: monospace
-    font-size: 20px
-    font-weight: bold
-    text-align: center
-    text-transform: capitalize
-    letter-spacing: 1px
-    background-color: $sub-panel-light
-    color: hsl(0, 70%, 70%)
-    box-shadow: 0 0 25px -1px black
-
-  
   .google-button, .facebook-button
     position: relative
     display: block

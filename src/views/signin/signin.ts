@@ -24,36 +24,40 @@ interface InviteStatus {
 })
 export default class Signin extends Vue {
 
-  @Provide() invite = '';
+  public hasAccount   = false;
+  public hasInvite    = false;
+  public validInvite  = false;
+  public validAlias   = false;
+  public inviteActive = false;
 
-  public hasAccount = false;
-  public hasInvite = false;
-  public validatedInvite = false;
-  public validAlias = false;
-  public inviteStatus = {
-    active: false,
-    valid: false,
+  public alias = '';
+  public invite = '';
+
+  public signupResp = {
+    verify: false,
     exists: false,
-    expired: false,
-    validated: false
+    error: null
   }
 
-  public authedAlias = '';
-  public authedInvite = '';
-
-
-  public async validateAlias(alias) {
-    return await this.$api.validateAlias(alias, 500)
-  }
-
-
-  public async validateInvite(invite: string) {
-    return await this.$api.validateInvite(invite, 500);
+  public signinResp = {
+    notfound: false,
+    signedin: false,
+    error: null
   }
 
 
   get hasChosen() {
-    return this.hasAccount || this.hasInvite || this.validatedInvite;
+    return this.hasAccount || this.hasInvite || this.validInvite;
+  }
+
+  get canSignin() {
+    return   !this.signupResp.exists
+          && !this.signupResp.verify
+          && !this.signupResp.error
+          && !this.signinResp.notfound
+          && !this.signinResp.signedin
+          && !this.signinResp.error
+    ;
   }
 
 
@@ -61,58 +65,48 @@ export default class Signin extends Vue {
 
 
 
-
-  public showInviteForm() {
-    this.hasInvite = true;
-  }
-
-  public showSignup() {
-    this.validatedInvite = true;
-  }
-
-  public showSignin() {
-    this.hasAccount = true;
-  }
-
-
-  public getInvite() {
-    this.$router.push('invite');
-  }
-
-  @Watch('invite')
-  public clearInviteStatus() {
-    if (this.inviteStatus)
-      this.inviteStatus.active = false
-    ;
-  }
-
-  public setInvite(val: string) {
-    this.authedInvite = val;
-  }
-
-  public setAlias(val: string) {
-    this.authedAlias = val;
-  }
-
-  public saveAlias() {
-    this.validAlias = true;
+  public async signin(type: 'google'|'facebook') {
+    if (this.alias && this.hasInvite) {
+      let resp = await this.$api.signup(this.alias, type, 300, 'email')
+      if (resp.status >= 400) {
+        this.signupResp = Object.assign(this.signupResp, resp.data);
+      }
+    }
+    else {
+      let resp = await this.$api.signin('google', 0, 'error');
+      if (resp.status >= 400) {
+        this.signinResp = Object.assign(this.signinResp, resp.data);
+      }
+    }
   }
 
 
+  public async validateAlias(alias) {
+    return await this.$api.validateAlias(alias)
+  }
 
+
+  public async validateInvite(invite: string) {
+    return await this.$api.validateInvite(invite);
+  }
+
+
+  public refresh() {
+    window.location.reload();
+  }
 
 
 
 
   // ONLY use with validateInvite() api call
-  private _randInviteResp() {
-    let tests = [
-      'invalid',
-      'expired',
-      'notexist',
-    ]
-    let rand = tests[Math.floor(Math.random() * tests.length)]
-    return rand;
-  }
+  // private _randInviteResp() {
+  //   let tests = [
+  //     'invalid',
+  //     'expired',
+  //     'notexist',
+  //   ]
+  //   let rand = tests[Math.floor(Math.random() * tests.length)]
+  //   return rand;
+  // }
 
 }
