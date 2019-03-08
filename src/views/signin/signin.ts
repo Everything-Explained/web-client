@@ -4,18 +4,6 @@ import AuthInput from '@/components/auth-input/AuthInput.vue';
 
 
 
-interface InviteStatus {
-  status: number;
-  data: {
-    valid: boolean;
-    exists: boolean;
-    expired: boolean;
-    validated: boolean;
-  }
-}
-
-
-
 @Component({
   components: {
     Toggle,
@@ -46,6 +34,7 @@ export default class Signin extends Vue {
   }
 
 
+
   get hasChosen() {
     return this.hasAccount || this.hasInvite || this.validInvite;
   }
@@ -61,7 +50,10 @@ export default class Signin extends Vue {
   }
 
 
+
+
   created() {}
+
 
 
 
@@ -73,7 +65,7 @@ export default class Signin extends Vue {
       }
     }
     else {
-      let resp = await this.$api.signin('google', 0, 'error');
+      let resp = await this.$api.signin(type, 0, 'error');
       if (resp.status >= 400) {
         this.signinResp = Object.assign(this.signinResp, resp.data);
       }

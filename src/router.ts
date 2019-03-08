@@ -48,8 +48,7 @@ export default new Router({
     {
       path: '/invite',
       name: 'invite',
-      component: Invite,
-      props: true
+      component: Invite
     },
     {
       path: '*',

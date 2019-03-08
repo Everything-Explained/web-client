@@ -10,10 +10,14 @@ import { IPage } from '@/components/md-paging/md-paging.js';
     MarkdownPaging
   }
 })
-export default class Faq extends Vue {
+export default class Blog extends Vue {
 
+  // From route property /blog/:page
   @Prop() public page!: string;
+
   public blog: IPage[] = [];
+
+
 
   async created() {
     let client = contentful.createClient({
@@ -24,7 +28,7 @@ export default class Faq extends Vue {
 
     let blogItems = blogdata.items.map(item => {
       return {
-        title: item.fields.title.split(':').map(v => v.trim()),
+        title: item.fields.title.split(':'),
         content: item.fields.body,
         date: new Date(item.sys.createdAt)
       }
@@ -32,6 +36,7 @@ export default class Faq extends Vue {
     this.blog.push(...blogItems);
   }
 
-  
+
+
 
 }

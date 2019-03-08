@@ -13,17 +13,21 @@ import { IPage } from '@/components/md-paging/md-paging.js';
 })
 export default class Faq extends Vue {
 
+  // From route property /faq/:page
   @Prop() public page!: string;
+
   public faq: IPage[] = [];
 
   created() {
-    faqData.forEach(v => {
-      this.faq.push({
-        title: v.title.split(':').map(v => v.trim()),
-        content: v.content,
-        date: new Date(v.date)
-      })
+
+    let pages = faqData.map(page => {
+      return {
+        title: page.title.split(':'),
+        content: page.content,
+        date: new Date(page.date)
+      }
     })
+    this.faq.push(...pages);
   }
 
 }

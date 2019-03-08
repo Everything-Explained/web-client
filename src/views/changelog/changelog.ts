@@ -12,11 +12,14 @@ import { IPage } from '@/components/md-paging/md-paging.js';
 })
 export default class Changelog extends Vue {
 
+  // From route property /changelog/:page
   @Prop() public page!: string;
+
   public changelog: IPage[] = [];
 
-  created() {
 
+
+  created() {
     let logs = changelogData.map(log => {
       return {
         title: log.title.split(':').map(v => v.trim()),
@@ -24,7 +27,11 @@ export default class Changelog extends Vue {
         date: new Date(log.date)
       }
     })
+
     this.changelog.push(...logs);
   }
+
+
+
 
 }

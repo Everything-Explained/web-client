@@ -12,17 +12,26 @@ import { IPage } from '@/components/md-paging/md-paging.js';
 })
 export default class Home extends Vue {
 
+  // From route property /home/:page
   @Prop() public page!: string;
+
   public home: IPage[] = [];
 
+
+
   created() {
-    homeData.forEach(v => {
-      this.home.push({
-        title: v.title.split(':').map(v => v.trim()),
-        content: v.content,
-        date: new Date(v.date)
-      })
+    let homePages = homeData.map(page => {
+      return {
+        title: page.title.split(':'),
+        content: page.content,
+        date: new Date(page.date)
+      }
     })
+
+    this.home.push(...homePages)
   }
+
+
+
 
 }
