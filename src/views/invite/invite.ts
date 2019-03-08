@@ -9,7 +9,6 @@ export default class Invite extends Vue {
   @Provide() email = '';
   @Provide() content = '';
 
-  public contentLen = 0;
   public readonly minAliasLen = 4;
   public readonly minTextLen = 200;
 
@@ -21,6 +20,8 @@ export default class Invite extends Vue {
     hours: 0,
     minutes: 0
   }
+
+
 
   get hasValidAliasLen() {
     return this.alias.length >= this.minAliasLen
@@ -59,6 +60,10 @@ export default class Invite extends Vue {
     ;
   }
 
+
+
+
+
   async created() {
     let resp = await this.$api.canRequestInvite(500);
     if (resp.status == 202) {
@@ -73,6 +78,7 @@ export default class Invite extends Vue {
 
   public async submit(ev: Event) {
     ev.preventDefault();
+
     if (this.isReadyToSubmit) {
       this.isLoading = true;
 
@@ -92,6 +98,9 @@ export default class Invite extends Vue {
       }
     }
 
-    return false;
   }
+
+
+
+
 }
