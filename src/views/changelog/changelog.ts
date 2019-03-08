@@ -16,13 +16,15 @@ export default class Changelog extends Vue {
   public changelog: IPage[] = [];
 
   created() {
-    changelogData.forEach(v => {
-      this.changelog.push({
-        title: v.title.split(':').map(v => v.trim()),
-        content: v.content,
-        date: new Date(v.date)
-      })
+
+    let logs = changelogData.map(log => {
+      return {
+        title: log.title.split(':').map(v => v.trim()),
+        content: log.content,
+        date: new Date(log.date)
+      }
     })
+    this.changelog.push(...logs);
   }
 
 }

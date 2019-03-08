@@ -76,6 +76,8 @@ export default class Invite extends Vue {
   }
 
 
+
+
   public async submit(ev: Event) {
     ev.preventDefault();
 
@@ -97,7 +99,6 @@ export default class Invite extends Vue {
         this.hasSent = true;
       }
     }
-
   }
 
 

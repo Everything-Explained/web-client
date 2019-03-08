@@ -22,15 +22,16 @@ export default class Faq extends Vue {
     })
     let blogdata = await client.getEntries({ order: '-sys.createdAt' });
 
-    let blogItems = blogdata.items.map(v => {
+    let blogItems = blogdata.items.map(item => {
       return {
-        title: v.fields.title.split(':').map(vv => vv.trim()),
-        content: v.fields.body,
-        date: new Date(v.sys.createdAt)
+        title: item.fields.title.split(':').map(v => v.trim()),
+        content: item.fields.body,
+        date: new Date(item.sys.createdAt)
       }
     })
     this.blog.push(...blogItems);
-
   }
+
+  
 
 }
