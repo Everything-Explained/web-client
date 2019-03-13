@@ -1,8 +1,8 @@
 import Vue from 'vue';
-import { MiniModal } from './libs/minimodal';
+import { MiniModal } from '../libs/minimodal';
 import imageData from '@/assets/data-images.json';
 import Markdown from 'markdown-it';
-import ClientAPI from './api/mock';
+import ClientAPI from '../api/mock';
 
 
 export type DebounceObj =
