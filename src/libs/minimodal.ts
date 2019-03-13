@@ -1,7 +1,7 @@
 export class MiniModal {
 
   private _modals: HTMLElement[] = [];
-  private _escModalEvent: (ev: KeyboardEvent) => void;
+  private _escModalEvent = (ev: KeyboardEvent) => {};
 
   constructor() {}
 
@@ -38,11 +38,11 @@ export class MiniModal {
 
     // Arbitrary clicks should not close the modal
     modal.children[0].addEventListener('click',
-      (e: MouseEvent) => this._preventBubble(e)
+      e => this._preventBubble(e as MouseEvent)
     );
 
     modal.children[1].addEventListener('click',
-      (e: MouseEvent) => this._preventBubble(e)
+      e => this._preventBubble(e as MouseEvent)
     );
 
     document.addEventListener('keyup', onKeyUp);
