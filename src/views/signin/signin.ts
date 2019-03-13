@@ -1,4 +1,4 @@
-import { Component, Vue, Provide, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import Toggle from '@/components/toggle/Toggle.vue';
 import AuthInput from '@/components/auth-input/AuthInput.vue';
 

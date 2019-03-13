@@ -1,5 +1,4 @@
 import { Vue, Provide, Component, Prop, Watch } from 'vue-property-decorator';
-import { DebounceObj } from '@/globals';
 
 
 type InputTest = (input: string) => boolean;

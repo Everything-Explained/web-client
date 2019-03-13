@@ -16,12 +16,8 @@ export default class App extends Vue {
     this.$modal.show('VersionModal');
   }
 
-  public created() {
-    this.test();
-  }
+  public created() {}
 
-  public async test() {
-    let t = await this.$api.canRequestInvite()
-  }
+  public async test() {}
 
 }

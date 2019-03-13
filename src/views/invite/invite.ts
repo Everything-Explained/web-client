@@ -66,12 +66,15 @@ export default class Invite extends Vue {
 
   async created() {
     let resp = await this.$api.canRequestInvite(500);
+
     if (resp.status == 202) {
       this.timeout = resp.data!.timeout!;
     }
+
     if (resp.status == 500) {
       this.hasFailed = true;
     }
+
     this.isLoading = false;
   }
 
