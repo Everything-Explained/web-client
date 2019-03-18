@@ -26,7 +26,7 @@ export class Web {
 
 
 
-  public get(url: string, options?: RequestInit) {
+  public get(url: string, options?: RequestInit): unknown {
     const method = 'GET';
 
     options =
