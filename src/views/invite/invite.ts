@@ -71,7 +71,7 @@ export default class Invite extends Vue {
       this.timeout = resp.data!.timeout!;
     }
 
-    if (resp.status == 500) {
+    if (resp.status > 400) {
       this.hasFailed = true;
     }
 
