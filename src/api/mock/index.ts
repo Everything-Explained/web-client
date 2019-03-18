@@ -1,17 +1,4 @@
-
-export interface InviteRequest {
-  status: number;
-  data?: {
-    timeout?: {
-      hours: number;
-      minutes: number;
-    }
-    error?: {
-      msg: string;
-      data?: any
-    }
-  }
-}
+import { InviteReqResp } from '../server';
 
 export interface SingupRequest {
   status: number;
@@ -42,10 +29,16 @@ type InvalidAlias = 'exists'|'similar';
 
 export default class ClientAPI {
 
+  private _rid = '';
+
   constructor() {}
 
+  set rid(val: string) {
+    this._rid = val;
+  }
+
   public canRequestInvite(delay?: number, test?: InviteTest) {
-    return this._timedResolver<InviteRequest>(() => {
+    return this._timedResolver<InviteReqResp>(() => {
 
       if (test == 'timeout') {
         return {
@@ -79,7 +72,7 @@ export default class ClientAPI {
 
 
   public requestInvite(data: InviteData, delay?: number, test?: InviteTest) {
-    return this._timedResolver<InviteRequest>(() => {
+    return this._timedResolver<InviteReqResp>(() => {
 
       if (test == 'timeout') {
         return {
@@ -229,6 +222,21 @@ export default class ClientAPI {
         status: 200
       }
 
+    }, delay || 0)
+  }
+
+
+  public getSession(delay?: number) {
+    return this._timedResolver(() => {
+      return {
+        status: 200,
+        data: {
+          session: {
+            rid: 'F8ELA9B32'
+          },
+          error: null
+        }
+      }
     }, delay || 0)
   }
 
