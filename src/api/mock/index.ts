@@ -76,12 +76,7 @@ export default class ClientAPI {
 
       if (test == 'timeout') {
         return {
-          status: 202,
-          data: {
-            error: {
-              msg: 'Sent Invite During Timeout'
-            }
-          }
+          status: 403
         }
       }
 
