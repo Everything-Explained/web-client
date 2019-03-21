@@ -2,7 +2,7 @@
   <div id="SigninPage" class="invite-page">
     <div
       class="can-signin"
-      :class="[hasChosen ? 'g-hidden' : 'g-visible']"
+      :class="[hasChosen || isCallback ? 'g-hidden' : 'g-visible']"
     >
       Do you have an account?<br/>
       <toggle off-text="NO" on-text="YES"
@@ -152,6 +152,24 @@
         :disabled="!alias"
         @click="() => validAlias = true"
       >Continue</button>
+    </section>
+
+
+    <section
+      class="signin-section-wrapper failed-signin"
+      :title-text="callbackTitle"
+      v-if="isCallback"
+    >
+      <p
+        v-if="callbackType == 1"
+      >Unfortunately, you do not have a valid account with us. If
+      you'd like to request an invite,
+      <span>click the button below</span>.
+      </p>
+      <button
+        class="standard"
+        @click="$router.push('/invite')"
+      >Request Invite</button>
     </section>
   </div>
 </template>

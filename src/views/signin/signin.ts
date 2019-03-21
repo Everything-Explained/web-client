@@ -34,6 +34,31 @@ export default class Signin extends Vue {
   }
 
 
+  get isCallback() {
+    let callback = this.$route.params.callback;
+
+    return (
+         !!callback
+      && callback == 'authfail'
+      && !!this.$route.params.type
+    )
+  }
+
+  get callbackType() {
+    return parseInt(this.$route.params.type);
+  }
+
+  get callbackTitle() {
+    if (this.isCallback) {
+      if (this.callbackType == 1) {
+        return 'Signin Failure'
+      }
+      else {
+        return 'Signup Failure';
+      }
+    }
+    return '';
+  }
 
   get hasChosen() {
     return this.hasAccount || this.hasInvite || this.validInvite;
@@ -57,19 +82,23 @@ export default class Signin extends Vue {
 
 
 
-  public async signin(type: 'google'|'facebook') {
-    if (this.alias && this.hasInvite) {
-      let resp = await this.$api.signup(this.alias, type, 300, 'email')
-      if (resp.status >= 400) {
-        this.signupResp = Object.assign(this.signupResp, resp.data);
-      }
+  public signin(type: 'google'|'facebook') {
+    if (type == 'google') {
+      window.location.replace('/auth/google')
     }
-    else {
-      let resp = await this.$api.signin(type, 0, 'error');
-      if (resp.status >= 400) {
-        this.signinResp = Object.assign(this.signinResp, resp.data);
-      }
-    }
+    // if (this.alias && this.hasInvite) {
+    //   let resp = await this.$api.signup(this.alias, type, 300, 'email')
+    //   console.log(resp);
+    //   if (resp.status >= 400) {
+    //     this.signupResp = Object.assign(this.signupResp, resp.data);
+    //   }
+    // }
+    // else {
+    //   let resp = await this.$api.signin(type, 0, 'error');
+    //   if (resp.status >= 400) {
+    //     this.signinResp = Object.assign(this.signinResp, resp.data);
+    //   }
+    // }
   }
 
 

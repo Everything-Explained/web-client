@@ -41,7 +41,7 @@ export default new Router({
       props: true
     },
     {
-      path: '/signin',
+      path: '/signin/:callback?/:type?',
       name: 'signin',
       component: Signin
     },
