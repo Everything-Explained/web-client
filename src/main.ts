@@ -7,6 +7,7 @@ import moment from 'moment';
 import dataImages from './assets/data-images.json';
 import setupMarkdown from './setup/markdown';
 import ClientAPI from 'client-api';
+import { SessionData } from './api/server';
 
 Vue.config.productionTip = false
 
@@ -41,6 +42,7 @@ if (!cookies) {
 //   'beforeRouteUpdate',
 // ]);
 
+const api = new ClientAPI();
 
 Vue.filter('dateFormat', (v: unknown, format?: string) => {
   if (!v) return;
@@ -50,13 +52,12 @@ Vue.filter('dateFormat', (v: unknown, format?: string) => {
   throw new Error('DateFormat only accepts strings or Date objects');
 });
 
-
 Vue.use({
   install: () => {
     Vue.prototype.$modal = new MiniModal();
     Vue.prototype.$dataImages = dataImages;
     Vue.prototype.$markdown = setupMarkdown();
-    Vue.prototype.$api = new ClientAPI()
+    Vue.prototype.$api = api;
     Vue.prototype.$debounce =
       (fn: (...args: any) => any, delay = 0) => {
         let timeoutID = 0;
@@ -80,11 +81,17 @@ Vue.use({
 })
 
 
-if (cookies && !needBrowser) {
-  new Vue({
-    router,
-    render: h => h(App)
-  }).$mount('#app')
+async function initVue() {
+  // Vue relies on session data
+  await api.initSession();
+  if (cookies && !needBrowser) {
+    new Vue({
+      router,
+      render: h => h(App)
+    }).$mount('#app')
+  }
 }
+initVue();
+
 
 

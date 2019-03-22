@@ -20,6 +20,6 @@ declare module "vue/types/vue" {
     readonly $debounce:
                 (fn: (...args: any) => any, delay: number)
                   => (...args: any)
-                        => DebounceObj
+                      => DebounceObj
   }
 }
