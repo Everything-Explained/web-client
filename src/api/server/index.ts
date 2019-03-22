@@ -11,7 +11,7 @@ interface APIResponse {
   data?: ResponseData;
 }
 
-interface SessionData {
+export interface SessionData {
   alias: string;
   rid: string;
   invite: string;
@@ -50,36 +50,23 @@ export default class ClientAPI {
     return `rid=${this._session.rid}`
   }
 
+
   public canRequestInvite() {
-    return this._exec(() => {
-      return this.web.get(`/invite/request?${this.rid}`) as InviteReqResp
-    })
+    return this.web.get(`/invite/request?${this.rid}`) as InviteReqResp
   }
 
-  public getSession() {
-    return this.web.get(`/session`) as SessionResponse
-  }
-
-
-  /**
-   * Load the session (for RID) before calling an API
-   * end point.
-   */
-  private async _exec<T>(cb: () => T) {
-    let resp: SessionResponse | undefined
-    if (!this._session) {
-      resp = await this.getSession()
-      if(resp.status == 200) {
-        this._session = resp.data.session;
-      }
+  public signin(type: 'google'|'facebook') {
+    if (type == 'google') {
+      window.location.replace(`/auth/google?${this.rid}`);
     }
-
-    if (this._session.rid) {
-      return cb();
-    }
-
-    console.error(resp);
-    throw new Error('Cannot connect to session');
   }
+
+
+  public async initSession() {
+    if (this._session) return;
+    let resp = await this.web.get(`/session`) as SessionResponse;
+    this._session = resp.data.session;
+  }
+
 
 }

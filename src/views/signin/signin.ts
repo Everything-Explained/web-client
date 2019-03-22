@@ -84,17 +84,17 @@ export default class Signin extends Vue {
 
   public signin(type: 'google'|'facebook') {
     if (type == 'google') {
-      window.location.replace('/auth/google')
+      this.$api.signin('google');
     }
     // if (this.alias && this.hasInvite) {
     //   let resp = await this.$api.signup(this.alias, type, 300, 'email')
-    //   console.log(resp);
     //   if (resp.status >= 400) {
     //     this.signupResp = Object.assign(this.signupResp, resp.data);
     //   }
     // }
     // else {
     //   let resp = await this.$api.signin(type, 0, 'error');
+    //   console.log(resp);
     //   if (resp.status >= 400) {
     //     this.signinResp = Object.assign(this.signinResp, resp.data);
     //   }
