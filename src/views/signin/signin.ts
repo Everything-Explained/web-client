@@ -50,7 +50,7 @@ export default class Signin extends Vue {
 
   get callbackTitle() {
     if (this.isCallback) {
-      if (this.callbackType == 1) {
+      if (this.callbackType == 1 || 2) {
         return 'Signin Failure'
       }
       else {

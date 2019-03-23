@@ -160,15 +160,21 @@
       :title-text="callbackTitle"
       v-if="isCallback"
     >
-      <p
-        v-if="callbackType == 1"
-      >Unfortunately, you do not have a valid account with us. If
-      you'd like to request an invite,
-      <span>click the button below</span>.
+      <p v-if="callbackType == 1">
+        Unfortunately, you do not have a valid account with us. If
+        you'd like to request an invite,
+        <span>click the button below</span>.
+      </p>
+      <p v-if="callbackType == 2">
+        <span>You are already signed in.</span><br/><br/>
+        Are you having trouble accessing a part of the site?
+        Please contact the <span>Admin</span> if you are experiencing
+        any technical difficulties.
       </p>
       <button
         class="standard"
         @click="$router.push('/invite')"
+        v-if="callbackType == 1"
       >Request Invite</button>
     </section>
   </div>

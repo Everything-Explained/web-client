@@ -1,5 +1,4 @@
-import { Vue, Component, Provide, Watch } from 'vue-property-decorator';
-import { InviteRequest } from '@/api/mock';
+import { Vue, Component, Provide } from 'vue-property-decorator';
 
 
 @Component
