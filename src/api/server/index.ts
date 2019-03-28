@@ -35,6 +35,12 @@ export interface InviteReqResp extends APIResponse {
   data?: InviteReqDataResp;
 }
 
+interface InviteReqData {
+  alias: string;
+  email: string;
+  content: string;
+}
+
 
 
 export default class ClientAPI {
@@ -53,6 +59,16 @@ export default class ClientAPI {
 
   public canRequestInvite() {
     return this.web.get(`/invite/request?${this.rid}`) as InviteReqResp
+  }
+
+  public requestInvite(data: InviteReqData) {
+    return this.web.post(`/invite/request?${this.rid}`, data);
+  }
+
+  public validateInvite(invite: string) {
+    return Promise.resolve({
+      status: 200
+    })
   }
 
   public signin(type: 'google'|'facebook') {
