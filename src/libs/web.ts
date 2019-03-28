@@ -43,17 +43,17 @@ export class Web {
 
     const method = 'POST';
     let contentType = ''
-      , data = ''
+      , bodyData = ''
     ;
 
     if (body) {
       if (typeof body == 'object') {
         contentType = 'application/json';
-        data = JSON.stringify(body);
+        bodyData = JSON.stringify(body);
       }
       else {
         contentType = 'text/plain';
-        data = body;
+        bodyData = body;
       }
     }
 
@@ -61,6 +61,7 @@ export class Web {
       {
         method,
         headers: { 'Content-Type': contentType },
+        body: bodyData
       },
       options,
     );
