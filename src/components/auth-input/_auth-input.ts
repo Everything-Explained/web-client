@@ -49,6 +49,7 @@ export default class AuthInput extends Vue {
   public failedValidationText = '';
   public validation = this.delayValidation_(this.validate)
 
+  /** Maintains validation priority with async operations */
   private validationPriority_ = 0;
 
 
@@ -67,8 +68,7 @@ export default class AuthInput extends Vue {
     this.$emit('valid-input', '');
 
     if (len) {
-      if (this.isInvalid_(text)) {
-      }
+      if (this.isInvalid_(text)) {}
       else if (this.min && len < this.min) {
         this.state.underMin = true;
       }
@@ -91,7 +91,7 @@ export default class AuthInput extends Vue {
   private async isValidated_(input: string, priority: number) {
     if (!this.validate) return true;
 
-    let req = await this.validation(input) as any
+    let req = await this.validation.start(input) as any
     if (priority < this.validationPriority_) return false;
 
     if (req.status >= 400) {
@@ -101,7 +101,6 @@ export default class AuthInput extends Vue {
     }
 
     this.state.checkingValidation = false;
-
     return true
   }
 
@@ -122,6 +121,8 @@ export default class AuthInput extends Vue {
 
 
   private resetState_() {
+    ++this.validationPriority_;
+    this.validation.stop();
     this.state = {
       default: true,
       underMin: false,
@@ -139,13 +140,18 @@ export default class AuthInput extends Vue {
   private delayValidation_(fn: (...args: any) => Promise<any>) {
     let timeoutID = 0;
     let that = this;
-    return function (...args: any) {
-      clearTimeout(timeoutID);
-      return new Promise(rs => {
-        timeoutID = setTimeout(() => {
-          rs(fn(args));
-        }, that.validationDelay);
-      })
+    return {
+      start: function (...args: any) {
+        clearTimeout(timeoutID);
+        return new Promise(rs => {
+          timeoutID = setTimeout(() => {
+            rs(fn(args));
+          }, that.validationDelay);
+        })
+      },
+      stop: function() {
+        clearTimeout(timeoutID);
+      }
     }
   }
 
