@@ -98,6 +98,7 @@
     font-weight: bold
     &.error
       color: hsl(0, 70%, 70%)
+      text-transform: capitalize
     &.success
       color: hsl(126, 80%, 80%)
     &.neutral

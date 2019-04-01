@@ -56,6 +56,14 @@ export default class ClientAPI {
     return `rid=${this._session.rid}`
   }
 
+  get invite() {
+    return this._session.invite;
+  }
+
+
+  public validateAlias(alias: string) {
+    return this.web.get(`/auth/alias?${this.rid}&alias=${alias}`);
+  }
 
   public canRequestInvite() {
     return this.web.get(`/invite/request?${this.rid}`) as InviteReqResp
@@ -66,9 +74,7 @@ export default class ClientAPI {
   }
 
   public validateInvite(invite: string) {
-    return Promise.resolve({
-      status: 200
-    })
+    return this.web.get(`/invite/${invite}?${this.rid}`);
   }
 
   public signin(type: 'google'|'facebook') {
