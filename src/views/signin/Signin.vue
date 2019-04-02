@@ -144,7 +144,7 @@
         <li>An Alias must be unique and contain very few repeated characters.</li>
         <li>
           An Alias will be rejected if it has a 50% or more match with an
-          existing users Alias.
+          existing Alias.
         </li>
       </ul>
       <button
