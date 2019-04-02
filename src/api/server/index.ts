@@ -62,7 +62,7 @@ export default class ClientAPI {
 
 
   public validateAlias(alias: string) {
-    return this.web.get(`/auth/alias?${this.rid}&alias=${alias}`);
+    return this.web.get(`/auth/alias/${alias}?${this.rid}`);
   }
 
   public canRequestInvite() {
@@ -74,7 +74,7 @@ export default class ClientAPI {
   }
 
   public validateInvite(invite: string) {
-    return this.web.get(`/invite/${invite}?${this.rid}`);
+    return this.web.get(`/auth/invite/${invite}?${this.rid}`);
   }
 
   public signin(type: 'google'|'facebook') {

@@ -235,6 +235,9 @@ export default class ClientAPI {
     }, delay || 0)
   }
 
+  /** Placeholder for getting server session */
+  public initSession() { return; }
+
 
   private _timedResolver<T>(cb: () => T, delay: number): Promise<T> {
     return new Promise((rs, rj) => {
