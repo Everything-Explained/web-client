@@ -24,20 +24,10 @@
       <section id="TrayLeft">
         <menu id="MainMenu">
           <ul>
-            <li>
-              <router-link to='/home'><span>home</span></router-link>
-            </li>
-            <li>
-              <router-link to='/changelog'><span>changelog</span></router-link>
-            </li>
-            <li>
-              <router-link to='/faq'><span>faq</span></router-link>
-            </li>
-            <li>
-              <router-link to='/blog'><span>blog</span></router-link>
-            </li>
-            <li>
-              <router-link to='/signin'><span>signin</span></router-link>
+            <li v-for="(route, i) of routes" :key="i">
+              <router-link :to='"/" + route.name'>
+                <span>{{route.name}}</span>
+              </router-link>
             </li>
           </ul>
         </menu>

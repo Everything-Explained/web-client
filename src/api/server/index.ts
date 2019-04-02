@@ -85,9 +85,9 @@ export default class ClientAPI {
 
 
   public async initSession() {
-    if (this._session) return;
     let resp = await this.web.get(`/session`) as SessionResponse;
     this._session = resp.data.session;
+    return this._session;
   }
 
 

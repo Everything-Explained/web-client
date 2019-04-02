@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import initRouter from './router'
 import { MiniModal } from './libs/minimodal';
 import Markdown from 'markdown-it';
 import moment from 'moment';
@@ -83,10 +83,10 @@ Vue.use({
 
 async function initVue() {
   // Vue relies on session data
-  await api.initSession();
+  let session = await api.initSession();
   if (cookies && !needBrowser) {
     new Vue({
-      router,
+      router: initRouter(session),
       render: h => h(App)
     }).$mount('#app')
   }
