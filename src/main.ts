@@ -2,13 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import initRouter from './router'
 import { MiniModal } from './libs/minimodal';
-import Markdown from 'markdown-it';
 import moment from 'moment';
 import dataImages from './assets/data-images.json';
 import setupMarkdown from './setup/markdown';
 import ClientAPI from 'client-api';
-import { SessionData } from './api/server';
-
 Vue.config.productionTip = false
 
 // ######################################################
@@ -86,7 +83,7 @@ async function initVue() {
   let session = await api.initSession();
   if (cookies && !needBrowser) {
     new Vue({
-      router: initRouter(session),
+      router: initRouter(session, api),
       render: h => h(App)
     }).$mount('#app')
   }

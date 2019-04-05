@@ -1,16 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/home/Home.vue';
-import Resp404 from './views/Resp404.vue';
-import FAQ from './views/faq/Faq.vue';
 import Blog from './views/blog/Blog.vue';
 import Invite from './views/invite/Invite.vue';
 import Changelog from './views/changelog/Changelog.vue';
 import Signin from './views/signin/Signin.vue';
+import Settings from './views/settings/Settings.vue';
 import { RouteConfig } from 'vue-router';
 import { SessionData } from './api/server';
+import ClientAPI from './api/mock';
 
-export default function initRoutes(session: SessionData) {
+export default function initRoutes(session: SessionData, api: ClientAPI) {
   Vue.use(Router);
 
   const routes = [
@@ -36,7 +36,7 @@ export default function initRoutes(session: SessionData) {
     {
       path: '/faq/:page?',
       name: 'faq',
-      component: FAQ,
+      component: () => import(/* webpackChunkName: "faq" */ './views/faq/Faq.vue'),
       props: true,
       meta: { display: true }
     },
@@ -49,7 +49,7 @@ export default function initRoutes(session: SessionData) {
     {
       path: '*',
       name: '404',
-      component: Resp404,
+      component: () => import(/* webpackChunkName: "404" */ './views/Resp404.vue'),
       meta: { display: false }
     }
   ] as RouteConfig[]
@@ -62,7 +62,6 @@ export default function initRoutes(session: SessionData) {
       path: '/signin/:callback?/:type?',
       name: 'signin',
       component: Signin,
-      redirect: session.authed ? 'settings' : '',
       meta: { display: !session.authed }
     },
     {
@@ -83,10 +82,19 @@ export default function initRoutes(session: SessionData) {
       path: '/settings',
       name: 'settings',
       redirect: signinRedirect,
-      meta: { display: session.authed }
+      component: Settings,
+      beforeEnter: async (to, from, next) => {
+        const settingResp = await api.getSettings();
+        if (settingResp.status == 200) {
+          to.meta.settings = settingResp.data;
+          return next();
+        }
+        next(new Error(`Could not retrieve settings : ${settingResp.status}`))
+      },
+      meta: { display: session.authed },
     }
-  ]);
-u
+  ] as RouteConfig[]);
+
   return new Router({ routes });
 }
 

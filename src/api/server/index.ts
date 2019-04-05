@@ -81,6 +81,18 @@ export default class ClientAPI {
     if (type == 'google') {
       window.location.replace(`/auth/google?${this.rid}`);
     }
+
+    if (type == 'facebook') {
+      window.location.replace(`/auth/facebook?${this.rid}`);
+    }
+  }
+
+  public getSettings() {
+    return this.web.get(`/authed/api/settings?${this.rid}`);
+  }
+
+  public logout() {
+    window.location.replace(`/auth/logout?${this.rid}`);
   }
 
 

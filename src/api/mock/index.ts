@@ -1,4 +1,4 @@
-import { InviteReqResp } from '../server';
+import { InviteReqResp, SessionData } from '../server';
 
 export interface SingupRequest {
   status: number;
@@ -32,10 +32,6 @@ export default class ClientAPI {
   private _rid = '';
 
   constructor() {}
-
-  set rid(val: string) {
-    this._rid = val;
-  }
 
   public canRequestInvite(delay?: number, test?: InviteTest) {
     return this._timedResolver<InviteReqResp>(() => {
@@ -220,6 +216,21 @@ export default class ClientAPI {
     }, delay || 0)
   }
 
+  public getSettings() {
+    return this._timedResolver(() => {
+      return {
+        status: 200,
+        data: {
+          alias: 'testing',
+          email: 'sadflqweafsdf@asdf.com',
+          picture: '../../assets/flame300.png'
+        }
+      }
+    }, 0);
+  }
+
+  public logout() { /* placeholder */ }
+
 
   public getSession(delay?: number) {
     return this._timedResolver(() => {
@@ -236,7 +247,14 @@ export default class ClientAPI {
   }
 
   /** Placeholder for getting server session */
-  public initSession() { return; }
+  public initSession() {
+    return {
+      rid: '',
+      authed: false,
+      alias: '',
+      invite: ''
+    } as SessionData
+  }
 
 
   private _timedResolver<T>(cb: () => T, delay: number): Promise<T> {
