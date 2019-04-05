@@ -103,5 +103,5 @@
 </template>
 
 
-<script lang='ts' src='./invite.ts'></script>
+<script lang='ts' src='./_invite.ts'></script>
 <style lang='sass' src='./_invite.sass'></style>

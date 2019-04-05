@@ -11,5 +11,5 @@
   </div>
 </template>
 
-<script lang="ts" src='./home.ts'></script>
+<script lang="ts" src='./_home.ts'></script>
 <style lang='sass' src='@/styles/markdown/_md_welcome.sass'></style>

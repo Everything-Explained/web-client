@@ -10,5 +10,5 @@
 </template>
 
 
-<script lang="ts" src='./faq.ts'></script>
+<script lang="ts" src='./_faq.ts'></script>
 <style lang='sass' src='../../styles/markdown/_md_faq.sass'></style>

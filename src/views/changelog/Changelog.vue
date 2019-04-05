@@ -10,5 +10,5 @@
   </div>
 </template>
 
-<script lang="ts" src='./changelog.ts'></script>
+<script lang="ts" src='./_changelog.ts'></script>
 <style lang='sass' src='@/styles/markdown/_md_changelog.sass'></style>
