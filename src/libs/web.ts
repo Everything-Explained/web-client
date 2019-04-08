@@ -38,7 +38,6 @@ export class Web {
     return this._fetch(url, options);
   }
 
-
   public post(url: string, body: any, options?: RequestInit) {
 
     const method = 'POST';
@@ -67,6 +66,13 @@ export class Web {
     );
 
     return this._fetch(url, options);
+  }
+
+  
+  public patch(url: string) {
+    return this.post(url, null, {
+      method: 'PATCH'
+    })
   }
 
 
