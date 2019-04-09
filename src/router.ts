@@ -9,6 +9,8 @@ import Settings from './views/settings/Settings.vue';
 import { RouteConfig } from 'vue-router';
 import { SessionData } from './api/server';
 import ClientAPI from './api/mock';
+import Chat from './views/chat/Chat.vue';
+import F404 from './views/Resp404.vue';
 
 export default function initRoutes(session: SessionData, api: ClientAPI) {
   Vue.use(Router);
@@ -49,7 +51,7 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
     {
       path: '*',
       name: '404',
-      component: () => import(/* webpackChunkName: "404" */ './views/Resp404.vue'),
+      component: F404,
       meta: { display: false }
     }
   ] as RouteConfig[]
@@ -76,6 +78,22 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
       path: '/chat',
       name: 'chat',
       redirect: signinRedirect,
+      component: Chat,
+      beforeEnter: (to, from, next) => {
+        const socketFlag = 'socketScriptLoaded';
+        if (globalThis[socketFlag]) {
+          return next();
+        }
+
+        const script = document.createElement('script');
+        script.src = '/socket.io/socket.io.js'
+        script.async = true;
+        script.onload = () => {
+          globalThis[socketFlag] = true;
+          next();
+        }
+        document.head.appendChild(script);
+      },
       meta: { display: session.authed }
     },
     {
@@ -86,7 +104,7 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
       beforeEnter: async (to, from, next) => {
         const settingResp = await api.getSettings();
         if (settingResp.status == 200) {
-          to.meta.settings = settingResp.data;
+          to.meta.data = settingResp.data;
           return next();
         }
         next(new Error(`Could not retrieve settings : ${settingResp.status}`))
