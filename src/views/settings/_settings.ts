@@ -13,12 +13,32 @@ export default class Settings extends Vue {
   public email!: string;
   public picture!: string;
 
+  public newAlias = '';
+
+  public changeAlias = false;
+
 
   public created() {
-    const settings = this.$route.meta.settings;
+    const settings = this.$route.meta.data;
     this.alias = settings.alias;
     this.email = settings.email;
     this.picture = settings.picture;
+  }
+
+  public toggleEditAlias() {
+    this.changeAlias = !this.changeAlias;
+  }
+
+  public async updateAlias() {
+    this.newAlias = '';
+    const aliasResp = await this.$api.updateAlias();
+    if (aliasResp.status == 200 && aliasResp.data) {
+      this.toggleEditAlias();
+      this.alias = aliasResp.data;
+    }
+    else {
+      console.error(aliasResp);
+    }
   }
 
 

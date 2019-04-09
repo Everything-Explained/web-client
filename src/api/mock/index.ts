@@ -13,7 +13,6 @@ export interface SigninRequest {
   status: number;
   data?: {
     notfound: boolean;
-    signedin: boolean;
     error: string|null
   }
 }
@@ -128,6 +127,16 @@ export default class ClientAPI {
       }
 
     }, delay || 0)
+  }
+
+
+  public updateAlias(alias?: string) {
+    return this._timedResolver(() => {
+      return {
+        status: 200,
+        data: alias
+      }
+    }, 0);
   }
 
 

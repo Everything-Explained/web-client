@@ -77,6 +77,10 @@ export default class ClientAPI {
     return this.web.get(`/auth/invite/${invite}?${this.rid}`);
   }
 
+  public updateAlias() {
+    return this.web.patch(`/authed/api/alias?${this.rid}`);
+  }
+
   public signin(type: 'google'|'facebook') {
     if (type == 'google') {
       window.location.replace(`/auth/google?${this.rid}`);
