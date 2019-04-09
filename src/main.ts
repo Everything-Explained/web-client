@@ -5,7 +5,8 @@ import { MiniModal } from './libs/minimodal';
 import moment from 'moment';
 import dataImages from './assets/data-images.json';
 import setupMarkdown from './setup/markdown';
-import ClientAPI from 'client-api';
+import ClientAPI from './api/mock';
+import API from 'client-api';
 Vue.config.productionTip = false
 
 // ######################################################
@@ -39,7 +40,7 @@ if (!cookies) {
 //   'beforeRouteUpdate',
 // ]);
 
-const api = new ClientAPI();
+const api = new API() as ClientAPI;
 
 Vue.filter('dateFormat', (v: unknown, format?: string) => {
   if (!v) return;
@@ -82,6 +83,7 @@ async function initVue() {
   // Vue relies on session data
   let session = await api.initSession();
   if (cookies && !needBrowser) {
+
     new Vue({
       router: initRouter(session, api),
       render: h => h(App)

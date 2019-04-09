@@ -1,14 +1,9 @@
-declare class ClientAPI {
-  constructor();
-  public canRequestInvite(): Promise<boolean>;
-  public initSession(): Promise<{
-    alias: string;
-    rid: string;
-    invite: string;
-    authed: boolean;
-  }>;
-}
 
+/**
+ * Imported through wepback to be either @/api/mock or
+ * @/api/server API.
+ */
 declare module 'client-api' {
-  export = ClientAPI;
+  let x: any;
+  export = x;
 }
