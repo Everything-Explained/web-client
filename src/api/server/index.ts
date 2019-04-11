@@ -52,8 +52,12 @@ export default class ClientAPI {
     this.web = new Web();
   }
 
-  get rid() {
+  get ridQuery() {
     return `rid=${this._session.rid}`
+  }
+
+  get rid() {
+    return this._session.rid;
   }
 
   get invite() {
@@ -62,41 +66,41 @@ export default class ClientAPI {
 
 
   public validateAlias(alias: string) {
-    return this.web.get(`/auth/alias/${alias}?${this.rid}`);
+    return this.web.get(`/auth/alias/${alias}?${this.ridQuery}`);
   }
 
   public canRequestInvite() {
-    return this.web.get(`/invite/request?${this.rid}`) as InviteReqResp
+    return this.web.get(`/invite/request?${this.ridQuery}`) as InviteReqResp
   }
 
   public requestInvite(data: InviteReqData) {
-    return this.web.post(`/invite/request?${this.rid}`, data);
+    return this.web.post(`/invite/request?${this.ridQuery}`, data);
   }
 
   public validateInvite(invite: string) {
-    return this.web.get(`/auth/invite/${invite}?${this.rid}`);
+    return this.web.get(`/auth/invite/${invite}?${this.ridQuery}`);
   }
 
   public updateAlias() {
-    return this.web.patch(`/authed/api/alias?${this.rid}`);
+    return this.web.patch(`/authed/api/alias?${this.ridQuery}`);
   }
 
   public signin(type: 'google'|'facebook') {
     if (type == 'google') {
-      window.location.replace(`/auth/google?${this.rid}`);
+      window.location.replace(`/auth/google?${this.ridQuery}`);
     }
 
     if (type == 'facebook') {
-      window.location.replace(`/auth/facebook?${this.rid}`);
+      window.location.replace(`/auth/facebook?${this.ridQuery}`);
     }
   }
 
   public getSettings() {
-    return this.web.get(`/authed/api/settings?${this.rid}`);
+    return this.web.get(`/authed/api/settings?${this.ridQuery}`);
   }
 
   public logout() {
-    window.location.replace(`/auth/logout?${this.rid}`);
+    window.location.replace(`/auth/logout?${this.ridQuery}`);
   }
 
 

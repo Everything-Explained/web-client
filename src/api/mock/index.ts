@@ -30,6 +30,10 @@ export default class ClientAPI {
 
   private _rid = '';
 
+  get rid() {
+    return this._rid;
+  }
+
   constructor() {}
 
   public canRequestInvite(delay?: number, test?: InviteTest) {
