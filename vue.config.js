@@ -1,7 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  productionSourceMap: false,
+  css: {
+    sourceMap: true,
+    extract: false
+  },
 
   chainWebpack: config => {
     const apiClientLocation = process.env.API_TYPE // mock or server
@@ -9,14 +12,10 @@ module.exports = {
       .set('client-api', path.resolve(__dirname, `src/api/${apiClientLocation}`))
   },
 
-  css: {
-    sourceMap: true,
-    extract: false
-  },
-
-  baseUrl: undefined,
+  publicPath: undefined,
   outputDir: undefined,
   assetsDir: undefined,
   runtimeCompiler: undefined,
+  productionSourceMap: false,
   parallel: undefined
 }

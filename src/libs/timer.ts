@@ -22,7 +22,9 @@ export interface ITimerExec {
 
 
 
-
+/**
+ * Creates one timeout to manage all timers.
+ */
 export class Timer {
 
 
@@ -37,7 +39,6 @@ export class Timer {
 
 
   public add(timer: ITimerExec) {
-
     if (this._getTimer(timer.name))
       throw new Error(`A Time named "${timer.name}" already exists`)
     ;
@@ -54,7 +55,6 @@ export class Timer {
 
 
   public delete(name: string) {
-
     if (!name) return this;
 
     const timer = this._getTimer(name)
@@ -72,7 +72,6 @@ export class Timer {
 
 
   public start(name?: string) {
-
     if (name) return this._initTimeout(name);
 
     if (this._pollRunning) {
@@ -118,7 +117,6 @@ export class Timer {
 
 
   public stop(name?: string) {
-
     if (name) {
       let timer = this._getTimer(name);
       if (!timer.interval)
@@ -140,7 +138,6 @@ export class Timer {
 
 
   private _execInterval() {
-
     if (!this._timers.length) {
       return this.stop();
     }
@@ -155,11 +152,10 @@ export class Timer {
       return;
     }
 
+    // Check when a timeout is finished executing
     if (!t.interval && t._count == t.time) return;
 
-    ++t._count!;
-
-    if (t._count! % t.time == 0) {
+    if (++t._count! % t.time == 0) {
       t.exec();
     }
   }

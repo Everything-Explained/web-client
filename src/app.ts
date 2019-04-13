@@ -1,5 +1,7 @@
-import { Component, Vue } from 'vue-property-decorator';
+import { Vue } from 'vue-property-decorator';
+import Component from 'vue-class-component';
 import { RouteConfig } from 'vue-router';
+import { ModVueRouter } from './typings/shims-router';
 
 
 @Component
@@ -20,7 +22,9 @@ export default class App extends Vue {
   }
 
   public created() {
-    let routes = this.$router.options.routes;
+    const router = this.$router as ModVueRouter;
+    const routes = router.options.routes;
+
     if (routes) {
       this.routes = routes.filter(v => { return (v.meta && v.meta.display) });
     }

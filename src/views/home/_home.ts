@@ -1,4 +1,5 @@
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Vue, Prop } from 'vue-property-decorator';
+import Component from 'vue-class-component';
 import homeData from './home.json';
 import MarkdownPaging from '@/components/md-paging/MdPaging.vue';
 import { IPage } from '@/components/md-paging/md-paging.js';
