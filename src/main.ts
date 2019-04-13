@@ -1,3 +1,4 @@
+import './setup/register-hooks';
 import Vue from 'vue'
 import App from './App.vue'
 import initRouter from './router'
@@ -34,11 +35,9 @@ if (!cookies) {
 // #endregion
 // #######################################################
 
-// Component.registerHooks([
-//   'beforeRouteEnter',
-//   'beforeRouteLeave',
-//   'beforeRouteUpdate',
-// ]);
+
+
+
 
 const api = new API() as ClientAPI;
 
