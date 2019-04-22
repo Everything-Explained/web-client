@@ -1,0 +1,30 @@
+<template>
+  <div class="userlist">
+    <div
+      class="user"
+      v-for="(user, i) of users"
+      :key="i"
+    >
+      <i
+        class="fas fa-circle status"
+        :class="{
+          idle: user.idle,
+          away: user.away,
+          nostatus: user.nostatus
+        }"
+      ></i>
+      <div
+        class="user-name"
+        :class="user.typing"
+      >{{ user.alias }}</div>
+    </div>
+  </div>
+</template>
+
+
+
+
+<script lang='ts' src='./_userlist.ts'></script>
+<style lang='sass' src='./_userlist.sass'></style>
+
+

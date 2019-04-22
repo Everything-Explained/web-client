@@ -1,0 +1,40 @@
+@import '../../../../styles/variables'
+
+.userlist
+  position: relative
+  margin: 3px 0 0 2px
+  min-width: 160px
+  flex: 0
+  background: hsl(0, 0%, 11%)
+
+  .user
+    padding: 7px 0 0 7px
+    font-size: 1.1em
+    font-family: 'Source Code Pro'
+    color: hsl(0, 0%, 60%)
+
+  .user-name
+    display: inline-block
+    padding-left: 7px
+    &.typing, &.typing-paused
+      color: hsl(278, 35%, 70%)
+      font-style: italic
+      animation: fadeInOut .7s $ease-io-sine infinite alternate
+
+    &.typing-paused
+      color: hsl(0, 0%, 50%)
+
+  i.far, i.fas
+    position: relative
+    top: -2px
+    font-size: 8px
+    color: hsl(128, 30%, 57%)
+
+
+  .status
+    &.away
+      color: hsl(33, 80%, 57%)
+    &.idle
+      color: hsl(220, 65%, 57%)
+    &.nostatus
+      color: hsl(7, 65%, 57%)
