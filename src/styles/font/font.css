@@ -1,0 +1,70 @@
+[data-icon]:before {
+  font-family: 'Noucons' !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+[class^="nou-"]:before,
+[class*=" nou-"]:before {
+  font-family: 'noucons' !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.nou-sign-in:before {
+  content: "\61";
+}
+.nou-sign-out:before {
+  content: "\62";
+}
+.nou-comment:before {
+  content: "\63";
+}
+.nou-home:before {
+  content: "\64";
+}
+.nou-dot-3:before {
+  content: "\65";
+}
+.nou-question-circle:before {
+  content: "\66";
+}
+.nou-doc-text-inv:before {
+  content: "\67";
+}
+.nou-doc-text:before {
+  content: "\68";
+}
+.nou-cog:before {
+  content: "\69";
+}
+.nou-checklist:before {
+  content: "\6b";
+}
+.nou-bubble-3:before {
+  content: "\6a";
+}
+.nou-bubble-2:before {
+  content: "\6c";
+}
+.nou-bubble-1:before {
+  content: "\6d";
+}
+.nou-circle:before {
+  content: "\6e";
+}
+.nou-google-plus-square:before {
+  content: "\6f";
+}
+.nou-facebook-square:before {
+  content: "\70";
+}
