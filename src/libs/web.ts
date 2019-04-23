@@ -1,4 +1,3 @@
-import { relativeTimeRounding } from 'moment';
 
 export class Web {
 
@@ -68,7 +67,7 @@ export class Web {
     return this._fetch(url, options);
   }
 
-  
+
   public patch(url: string) {
     return this.post(url, null, {
       method: 'PATCH'

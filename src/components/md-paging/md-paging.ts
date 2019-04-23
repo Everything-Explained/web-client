@@ -1,6 +1,5 @@
 
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
-import Markdown from 'markdown-it';
 
 
 export interface IPagingConfig {

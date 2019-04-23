@@ -3,14 +3,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import initRouter from './router'
 import { MiniModal } from './libs/minimodal';
-import m from 'moment';
+import moment from 'moment';
 import dataImages from './assets/data-images.json';
 import setupMarkdown from './setup/markdown';
 import ClientAPI from './api/mock';
 import API from 'client-api';
 
-// Ignores locale directory and uses smallest moment source
-const moment: typeof m = require('moment/src/moment').default;
 
 Vue.config.productionTip = false
 

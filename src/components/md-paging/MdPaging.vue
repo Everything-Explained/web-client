@@ -5,9 +5,9 @@
         <div class="titles">
           <div class="scroller scrollbars" v-if="pages.length > 0">
             <div class="title"
-                 v-for="(page, index) of pages"
-                 :key="index"
-                 @mousedown="goTo(page.title)"
+              v-for="(page, index) of pages"
+              :key="index"
+              @mousedown="goTo(page.title)"
             >
               <span>{{ page.title.length > 1 ? '' : page.title[0] }}</span>
               <div class="split-title" v-if="page.title.length > 1">

@@ -22,9 +22,11 @@ type InviteData = {
   email: string;
   content: string;
 }
-type InviteTest = 'timeout'|'error';
+type InviteTest    = 'timeout'|'error';
 type InvalidInvite = 'invalid'|'notexist'|'expired';
-type InvalidAlias = 'exists'|'similar';
+type InvalidAlias  = 'exists'|'similar';
+
+
 
 export default class ClientAPI {
 

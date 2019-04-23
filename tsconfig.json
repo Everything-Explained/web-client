@@ -18,6 +18,7 @@
       "socket.io-client"
     ],
     "paths": {
+      "*": ["types/*"],
       "@/*": [
         "src/*"
       ]

@@ -47,7 +47,7 @@ export default class AuthInput extends Vue {
   }
 
   public failedValidationText = '';
-  public validation = this.delayValidation_(this.validate)
+  public validation = this.delayValidation(this.validate)
 
   /** Maintains validation priority with async operations */
   private validationPriority_ = 0;
@@ -60,15 +60,15 @@ export default class AuthInput extends Vue {
 
 
   @Watch('textInput')
-  private async validateTextField_() {
+  private async validateTextField() {
     let text = this.textInput;
     let len = text.length;
 
-    this.resetState_();
+    this.resetState();
     this.$emit('valid-input', '');
 
     if (len) {
-      if (this.isInvalid_(text)) {}
+      if (this.isInvalid(text)) {}
       else if (this.min && len < this.min) {
         this.state.underMin = true;
       }
@@ -78,7 +78,7 @@ export default class AuthInput extends Vue {
       else {
         this.state.checkingValidation = true;
         this.state.valid =
-          await this.isValidated_(text, ++this.validationPriority_)
+          await this.isValidated(text, ++this.validationPriority_)
         ;
         if (this.state.valid) {
           this.$emit('valid-input', text);
@@ -88,7 +88,7 @@ export default class AuthInput extends Vue {
   }
 
 
-  private async isValidated_(input: string, priority: number) {
+  private async isValidated(input: string, priority: number) {
     if (!this.validate) return true;
 
     let req = await this.validation.start(input) as any
@@ -105,7 +105,7 @@ export default class AuthInput extends Vue {
   }
 
 
-  private isInvalid_(input: string) {
+  private isInvalid(input: string) {
     if (this.test1 && !this.test1(input))
       return this.state.invalid1 = true
     ;
@@ -120,7 +120,7 @@ export default class AuthInput extends Vue {
 
 
 
-  private resetState_() {
+  private resetState() {
     ++this.validationPriority_;
     this.validation.stop();
     this.state = {
@@ -137,7 +137,7 @@ export default class AuthInput extends Vue {
   }
 
 
-  private delayValidation_(fn: (...args: any) => Promise<any>) {
+  private delayValidation(fn: (...args: any) => Promise<any>) {
     let timeoutID = 0;
     let that = this;
     return {
