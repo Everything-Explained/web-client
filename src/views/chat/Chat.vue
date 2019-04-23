@@ -1,5 +1,11 @@
 <template>
-  <div></div>
+  <div class="chat">
+    <div class="top-wrapper">
+      <display></display>
+      <userlist></userlist>
+    </div>
+    <commander></commander>
+  </div>
 </template>
 
 
