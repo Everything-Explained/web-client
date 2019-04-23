@@ -6,7 +6,7 @@
       :key="i"
     >
       <i
-        class="fas fa-circle status"
+        class="nou-circle status"
         :class="{
           idle: user.idle,
           away: user.away,
@@ -15,7 +15,10 @@
       ></i>
       <div
         class="user-name"
-        :class="user.typing"
+        :class="{
+          'typing': user.typing,
+          'typing-paused': user.typingPaused
+        }"
       >{{ user.alias }}</div>
     </div>
   </div>

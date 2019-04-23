@@ -5,7 +5,8 @@ import { Generator } from '@/libs/generator';
 
 interface IUser {
   alias: string;
-  typing: ''|'typing'|'typing-paused';
+  typing?: boolean;
+  typingPaused?: boolean;
   muted?: boolean;
   away?: boolean;
   idle?: boolean;
@@ -24,25 +25,16 @@ export default class Userlist extends Vue {
     for (let i = 0; i < 20; i++) {
       this.users.push({
         alias: gen.randomStr(gen.randomRange(4, 12)),
-        idle: this.rngOutOf100() < 50,
+        idle: this.rngOutOf100() < 40,
         away: this.rngOutOf100() < 50,
-        nostatus: this.rngOutOf100() < 20,
-        typing: this.isUserTyping()
+        nostatus: this.rngOutOf100() < 15,
+        typing: this.rngOutOf100() < 14,
+        typingPaused: this.rngOutOf100() < 14
       });
     }
     console.log('Userlist Created');
   }
 
-
-  isUserTyping() {
-    return (
-      this.rngOutOf100() < 10
-        ? 'typing'
-        : this.rngOutOf100() < 10
-          ? 'typing-paused'
-          : ''
-    )
-  }
 
   rngOutOf100() {
     return Math.floor(Math.random() * 100);
