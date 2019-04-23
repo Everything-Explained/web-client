@@ -3,8 +3,8 @@ import Router from 'vue-router';
 import Home from './views/home/Home.vue';
 import Blog from './views/blog/Blog.vue';
 import Invite from './views/invite/Invite.vue';
-import Changelog from './views/changelog/Changelog.vue';
-import Signin from './views/signin/Signin.vue';
+// import Changelog from './views/changelog/Changelog.vue';
+// import Signin from './views/signin/Signin.vue';
 import Settings from './views/settings/Settings.vue';
 import { RouteConfig } from 'vue-router';
 import { SessionData } from './api/server';
@@ -31,7 +31,7 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
     {
       path: '/changelog/:page?',
       name: 'changelog',
-      component: Changelog,
+      component: () => import(/* webpackChunkName: "changelog" */ './views/changelog/Changelog.vue'),
       props: true,
       meta: { display: true }
     },
@@ -59,11 +59,12 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
 
   const signinRedirect = session.authed ? '' : 'signin';
 
+
   routes.push(...[
     {
       path: '/signin/:callback?/:type?',
       name: 'signin',
-      component: Signin,
+      component: () => import(/* webpackChunkName: "signin" */ './views/signin/Signin.vue'),
       meta: { display: !session.authed }
     },
     {
@@ -71,30 +72,15 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
       name: 'blog',
       component: Blog,
       props: true,
-      redirect: signinRedirect,
-      meta: { display: session.authed }
+      // redirect: signinRedirect,
+      meta: { display: !session.authed }
     },
     {
       path: '/chat',
       name: 'chat',
-      redirect: signinRedirect,
-      component: Chat,
-      beforeEnter: (to, from, next) => {
-        const socketFlag = 'socketScriptLoaded';
-        if (globalThis[socketFlag]) {
-          return next();
-        }
-
-        const script = document.createElement('script');
-        script.src = '/socket.io/socket.io.js'
-        script.async = true;
-        script.onload = () => {
-          globalThis[socketFlag] = true;
-          next();
-        }
-        document.head.appendChild(script);
-      },
-      meta: { display: session.authed }
+      // redirect: signinRedirect,
+      component: Chat, // () => import(/* webpackChunkName: "chat" */ './views/chat/Chat.vue'),
+      meta: { display: !session.authed }
     },
     {
       path: '/settings',
