@@ -1,7 +1,10 @@
 
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import Vue from 'vue';
+import { Prop } from 'vue-property-decorator';
+import Component from 'vue-class-component';
 import MarkdownPaging from '@/components/md-paging/MdPaging.vue';
 import { IPage } from '@/components/md-paging/md-paging.js';
+import Utils from '@/libs/utils';
 
 
 
@@ -34,6 +37,14 @@ export default class Blog extends Vue {
       }
     })
     this.blog.push(...blogItems);
+  }
+
+  async beforeRouteEnter(to, from, next) {
+    await Utils.loadScript(
+      'contentfulLoaded',
+      '//cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js'
+    )
+    next();
   }
 
 
