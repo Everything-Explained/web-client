@@ -8,6 +8,16 @@ module.exports = {
   },
 
   configureWebpack: {
+    resolve: {
+      alias: {
+        moment: path.join(__dirname, 'node_modules/moment/min/moment.min.js')
+      }
+    },
+    performance: {
+      hints: 'warning',
+      maxAssetSize: 1024 * 300,     // int (in bytes)
+      maxEntrypointSize: 1024 * 600 // int (in bytes)
+    },
     plugins: [
       new CopyPlugin([
         {
