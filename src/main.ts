@@ -3,11 +3,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import initRouter from './router'
 import { MiniModal } from './libs/minimodal';
-import moment from 'moment';
+import m from 'moment';
 import dataImages from './assets/data-images.json';
 import setupMarkdown from './setup/markdown';
 import ClientAPI from './api/mock';
 import API from 'client-api';
+
+// Ignores locale directory and uses smallest moment source
+const moment: typeof m = require('moment/src/moment').default;
+
 Vue.config.productionTip = false
 
 // ######################################################
@@ -37,8 +41,6 @@ if (!cookies) {
 
 
 
-
-
 const api = new API() as ClientAPI;
 
 Vue.filter('dateFormat', (v: unknown, format?: string) => {
@@ -55,6 +57,7 @@ Vue.use({
     Vue.prototype.$dataImages = dataImages;
     Vue.prototype.$markdown = setupMarkdown();
     Vue.prototype.$api = api;
+    Vue.prototype.$moment = moment;
     Vue.prototype.$debounce =
       (fn: (...args: any) => any, delay = 0) => {
         let timeoutID = 0;
