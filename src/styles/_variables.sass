@@ -18,10 +18,22 @@ $neutral: gray
 =text-outline($sz, $clr)
   text-shadow: 1px 0 $sz $clr, 0 1px $sz $clr, -1px 0 $sz $clr, 0 -1px $sz $clr, -1px -1px $sz $clr, 1px 1px $sz $clr
 
+=font-size($px)
+  font-size: ($px / 16) + em
 
+%scrollbar
+  &::-webkit-scrollbar
+    width: 13px
+    border: 2px solid hsl(278, 10%, 20%)
+    border-radius: 3px
+    background: hsl(0, 0%, 0%)
 
-
-
+%scrollbar-thumb
+  &::-webkit-scrollbar-thumb
+    background: hsl(278, 17%, 30%)
+    border-radius: 3px
+    &:hover
+      background: hsl(278, 23%, 40%)
 
 
 $ease-in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53)
