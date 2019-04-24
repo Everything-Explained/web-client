@@ -83,7 +83,7 @@
     padding-bottom: 3px
     border-bottom: 2px solid hsl(0, 0, 25%)
     font-size: 22px
-    font-family: 'Source Code Pro'
+    font-family: 'Cousine'
     color: hsl(50, 50%, 50%)
 
   .status
