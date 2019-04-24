@@ -3,7 +3,6 @@ import Component from 'vue-class-component';
 import Display from './components/display/Display.vue';
 import Userlist from './components/userlist/Userlist.vue';
 import Commander from './components/cmdinput/Commander.vue';
-import sock from '@/api/mock/socket.io.js';
 import Utils from '@/libs/utils';
 
 @Component({
@@ -36,10 +35,12 @@ export default class Chat extends Vue {
 
 
   async beforeRouteEnter(to, from, next) {
-    // await Utils.loadScript(
-    //   'socketScriptLoaded',
-    //   '/socket.io/socket.io.js'
-    // )
+    await Utils.loadScript(
+      'socketScriptLoaded',
+      window.indev
+        ? '//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'
+        : '/socket.io/socket.io.js'
+    )
     next();
   }
 
