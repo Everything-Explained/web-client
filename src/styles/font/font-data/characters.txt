@@ -1,5 +1,5 @@
 ﻿::::::: COMMON :::::::
-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+-=|\\/"\'<>:;‘’“”[],.
+abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
 
 ::::::: SIMPLE HEADER :::::::
 ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@$%&()-"':,.
@@ -24,4 +24,6 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@$%&()-"':,.
 
 Font URLs:
                                                                      FAMILY  WEIGHT                     SUBSET
-https://fonts.googleapis.com/css?family=Cousine:300,400&text=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!%40%23%24%25%5E%26*()_%2B-%3D%7C%5C%2F%22\'%3C%3E%3A%3B%E2%80%98%E2%80%99%E2%80%9C%E2%80%9D%5B%5D%2C.
+https://fonts.googleapis.com/css?family=Cousine&text=
+
+abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890;:'",.()!?‘’“”[]{}\/@#$%^&*+=_-|<>~`
