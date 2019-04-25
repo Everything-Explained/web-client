@@ -3,6 +3,7 @@
     <div
       id="cmdbox"
       contenteditable="true"
+      spellcheck="false"
       @keydown="inputHandler.onKeyDown"
     ></div>
   </div>
