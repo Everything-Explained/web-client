@@ -23,7 +23,11 @@ export default class Display extends Vue {
         content: 'Tempor nulla deserunt veniam exercitation. Exercitation irure minim reprehenderit officia. Adipisicing eiusmod elit nostrud ullamco deserunt id proident non fugiat mollit in esse duis est. Aliquip laborum eiusmod ad ullamco est sunt anim nostrud irure.',
         avatar,
         alias: gen.randomStr(gen.randomRange(4, 12)),
-        time: this.$moment(Date.now()).format('h:mm:ss a')
+        time: new Date(Date.now())
+                .toLocaleTimeString(
+                  'en-US',
+                  { hour: 'numeric', minute: 'numeric', hour12: true }
+                )
       })
     }
   }

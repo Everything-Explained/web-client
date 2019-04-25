@@ -17,7 +17,7 @@
                 <div class="title-right">
                   {{ page.title[1] }}
                   <div class="title-timestamp">
-                    {{ page.date | dateFormat('MM-DD-YYYY') }}
+                    {{ page.date | dateFormat('log') }}
                   </div>
                 </div>
               </div>

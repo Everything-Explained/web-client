@@ -3,7 +3,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import initRouter from './router'
 import { MiniModal } from './libs/minimodal';
-import moment from 'moment';
 import dataImages from './assets/data-images.json';
 import setupMarkdown from './setup/markdown';
 import ClientAPI from './api/mock';
@@ -57,7 +56,12 @@ const api = new API() as ClientAPI;
 Vue.filter('dateFormat', (v: unknown, format?: string) => {
   if (!v) return;
   if (typeof v == 'string' || v instanceof Date) {
-    return moment(v).format(format || 'MMMM Do, YYYY');
+    const options = { year: 'numeric', month: 'long', day: 'numeric'}
+    if (format == 'log') {
+      options.month = 'numeric'
+      return new Date(v).toLocaleDateString('en-US', options).replace(/\//g, '-')
+    }
+    return new Date(v).toLocaleDateString('en-US', options);
   }
   throw new Error('DateFormat only accepts strings or Date objects');
 });
@@ -68,7 +72,6 @@ Vue.use({
     Vue.prototype.$dataImages = dataImages;
     Vue.prototype.$markdown = setupMarkdown();
     Vue.prototype.$api = api;
-    Vue.prototype.$moment = moment;
     Vue.prototype.$debounce =
       (fn: (...args: any) => any, delay = 0) => {
         let timeoutID = 0;
