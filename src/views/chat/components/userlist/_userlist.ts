@@ -1,4 +1,4 @@
-import { Vue, Provide } from 'vue-property-decorator';
+import { Vue, Prop } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import { Generator } from '@/libs/generator';
 
