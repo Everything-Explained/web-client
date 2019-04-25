@@ -12,6 +12,19 @@ import API from 'client-api';
 
 Vue.config.productionTip = false
 
+declare global {
+  interface Window {
+    /** Is client in development mode -
+     * **set inside '.env' files** */
+    indev: boolean;
+  }
+}
+
+window.indev = process.env.VUE_APP_ENV == 'development';
+
+
+
+
 // ######################################################
 // #region BEGIN BROWSER CHECK
 let needBrowser =
