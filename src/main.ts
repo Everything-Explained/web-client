@@ -7,6 +7,7 @@ import dataImages from './assets/data-images.json';
 import setupMarkdown from './setup/markdown';
 import ClientAPI from './api/mock';
 import API from 'client-api';
+import Utils from './libs/utils';
 
 
 Vue.config.productionTip = false
@@ -56,12 +57,10 @@ const api = new API() as ClientAPI;
 Vue.filter('dateFormat', (v: unknown, format?: string) => {
   if (!v) return;
   if (typeof v == 'string' || v instanceof Date) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric'}
     if (format == 'log') {
-      options.month = 'numeric'
-      return new Date(v).toLocaleDateString('en-US', options).replace(/\//g, '-')
+      return Utils.toNumericDate(v).replace(/\//g, '-')
     }
-    return new Date(v).toLocaleDateString('en-US', options);
+    return Utils.toNormalDate(v);
   }
   throw new Error('DateFormat only accepts strings or Date objects');
 });
