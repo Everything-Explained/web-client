@@ -2,6 +2,8 @@ import Vue from 'vue';
 import { Prop } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import { Generator } from '@/libs/generator';
+import Message from '../message/Message.vue';
+import Lorem from '@/libs/loremipsum';
 
 interface IMessage {
   content: string;
@@ -10,17 +12,23 @@ interface IMessage {
   time: string;
 }
 
-@Component
+@Component({
+  components: {
+    Message
+  }
+})
 export default class Display extends Vue {
 
   messages: IMessage[] = [];
 
   created() {
     const gen = new Generator();
+    const ipsum = new Lorem();
+
     for (let i = 0; i < 30; i++) {
-      const avatar = 'https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAfM/_RhlOKf4IlU/photo.jpg?sz=48';
+      const avatar = 'https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAfM/_RhlOKf4IlU/photo.jpg?sz=96';
       this.messages.push({
-        content: 'Tempor nulla deserunt veniam exercitation. Exercitation irure minim reprehenderit officia. Adipisicing eiusmod elit nostrud ullamco deserunt id proident non fugiat mollit in esse duis est. Aliquip laborum eiusmod ad ullamco est sunt anim nostrud irure.',
+        content: ipsum.generate('words', gen.randomRange(5, 20), 'english'),
         avatar,
         alias: gen.randomStr(gen.randomRange(4, 12)),
         time: new Date(Date.now())
