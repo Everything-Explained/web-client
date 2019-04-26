@@ -6,6 +6,7 @@
         :key="i"
         :alias="msg.alias"
         :avatar="msg.avatar"
+        type="normal"
       >
         {{ msg.content }}
       </message>

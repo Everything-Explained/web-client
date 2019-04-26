@@ -6,21 +6,64 @@
   margin-bottom: 13px
   margin-right: 13px
 
+  .alias
+    color: $info
+
+  .content
+    color: hsl(0, 0%, 63%)
+
+  .content.server
+    color: $info
+    .nou-circle.last
+      color: $info
+
+
   &.inline
     .content
-      padding: 5px 100px 5px 7px
+      padding: 5px 7px 5px 91px
+
     .alias
       display: inline-block
-      color: $info
       padding-right: 5px
+
     .time
       position: absolute
-      top: 5px
-      right: 10px
+      top: 8px
+      left: 5px
       color: hsl(50, 0%, 33%)
       font-family: 'Cousine'
       text-shadow: 1px 0 1px black, 0 1px 1px black, -1px 0 1px black, 0 -1px 1px black
       +font-size(16)
+
+    &.scale-normal
+      .avatar
+        height: 32px
+        width: 32px
+        min-height: 32px
+        min-width: 32px
+
+
+  &.inline.server
+    .content
+      font-family: 'Cousine'
+
+    .alias
+      padding: 0
+
+    .time
+      top: 5px
+
+    .nou-circle
+      color: $attention
+      +font-size(10)
+
+    .nou-circle.first
+      margin-right: 4px
+
+    .nou-circle.last
+      margin-left: 8px
+      margin-right: -5px
+
 
   &.scale-small
     .avatar
@@ -29,6 +72,7 @@
       min-height: 24px
       min-width: 24px
 
+
   &.scale-normal
     .avatar
       width: 48px
@@ -36,12 +80,14 @@
       min-height: 48px
       min-width: 48px
 
+
   &.scale-large
     .avatar
       width: 96px
       height: 96px
       min-height: 96px
       min-width: 96px
+
 
   .infobar
     position: absolute
@@ -56,25 +102,24 @@
       font-family: 'Cousine'
       display: inline-block
 
-    .alias
-      color: $info
-
     .time
       right: 10px
-      color: hsl(50, 0%, 33%)
+      color: hsl(50, 0%, 38%)
       text-shadow: 1px 0 1px black, 0 1px 1px black, -1px 0 1px black, 0 -1px 1px black
+
 
   .avatar
     display: block
     margin: 0 5px 0 0
 
+
   .content
     position: relative
     padding: 40px 10px 10px 10px
-    color: hsl(0, 0%, 50%)
     font-family: 'Nunito'
     font-weight: 300
     +font-size(18)
     background-color: $sub-panel
+    border-top: 2px solid hsl(0, 0%, 12.3%)
     border-bottom: 1px solid hsl(0, 0%, 20%)
-    box-shadow: 2px 2px 13px -1px black
+    box-shadow: 2px 2px 5px -1px black

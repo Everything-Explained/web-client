@@ -28,7 +28,7 @@ export default class Display extends Vue {
     for (let i = 0; i < 30; i++) {
       const avatar = 'https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAfM/_RhlOKf4IlU/photo.jpg?sz=96';
       this.messages.push({
-        content: ipsum.generate('words', gen.randomRange(5, 20), 'english'),
+        content: ipsum.generate('words', gen.randomRange(5, 40), 'english'),
         avatar,
         alias: gen.randomStr(gen.randomRange(4, 12)),
         time: new Date(Date.now())
