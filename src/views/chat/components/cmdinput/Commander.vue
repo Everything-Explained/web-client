@@ -4,7 +4,8 @@
       id="cmdbox"
       contenteditable="true"
       spellcheck="false"
-      @keydown="inputHandler.onKeyDown"
+      ref="cmdbox"
+      @keydown.enter.prevent="onEnter"
     ></div>
   </div>
 </template>

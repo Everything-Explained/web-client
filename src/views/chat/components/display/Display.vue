@@ -6,8 +6,8 @@
         :key="i"
         :alias="msg.alias"
         :avatar="msg.avatar"
-        type="server"
-        scale="normal"
+        :type="msg.type"
+        :scale="scale"
       >
         {{ msg.content }}
       </message>

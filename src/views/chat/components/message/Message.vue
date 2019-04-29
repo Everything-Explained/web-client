@@ -10,7 +10,7 @@
         <i class="nou-circle first"></i>
         <div class="alias">{{ alias }}</div>
         <i class="nou-circle last"></i>
-        <slot></slot>
+        <div class="text"><slot></slot></div>
         <div class="time">{{ time }}</div>
       </div>
     </div>

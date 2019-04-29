@@ -1,10 +1,10 @@
 <template>
   <div class="chat">
     <div class="top-wrapper">
-      <display></display>
-      <userlist></userlist>
+      <display :scale="displayScale" :messages="messages"></display>
+      <userlist scale="normal"></userlist>
     </div>
-    <commander></commander>
+    <commander :chatView="thisView"></commander>
   </div>
 </template>
 
