@@ -16,8 +16,14 @@ interface IUser {
 @Component
 export default class Userlist extends Vue {
 
+  @Prop({ default: 'normal', type: String })
+  readonly scale!: 'small'|'large'|'larger'|'largest';
+
   users: IUser[] = [];
 
+  get scaleClass() {
+    return `scale-${this.scale}`;
+  }
 
   created() {
     let gen = new Generator();

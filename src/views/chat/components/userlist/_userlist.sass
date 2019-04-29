@@ -3,14 +3,34 @@
 .userlist
   position: relative
   margin: 3px 0 0 2px
-  min-width: 160px
+  min-width: 9.1em
   flex: 0
   background: hsl(0, 0%, 12%)
   border-left: 2px solid black
 
+  &.scale-small
+    +font-size(14)
+    .status
+      +font-size(7)
+  &.scale-normal
+    +font-size(16)
+    .status
+      +font-size(8)
+  &.scale-large
+    +font-size(18)
+    .status
+      +font-size(9)
+  &.scale-larger
+    +font-size(20)
+    .status
+      +font-size(10)
+  &.scale-largest
+    +font-size(22)
+    .status
+      +font-size(11)
+
   .user
     padding: 7px 0 0 7px
-    font-size: 1.1em
     font-family: 'Cousine'
     color: hsl(0, 0%, 60%)
 
@@ -28,7 +48,6 @@
   .status
     position: relative
     top: -1px
-    font-size: 10px
     color: hsl(128, 30%, 57%)
 
     &.away

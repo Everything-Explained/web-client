@@ -1,5 +1,5 @@
 <template>
-  <div class="userlist">
+  <div class="userlist" :class="scaleClass">
     <div
       class="user"
       v-for="(user, i) of users"

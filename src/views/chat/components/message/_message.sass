@@ -7,7 +7,7 @@
   margin-right: 13px
 
   .alias
-    color: $info
+    color: $attention
 
   .content
     color: hsl(0, 0%, 63%)
@@ -20,7 +20,7 @@
 
   &.inline
     .content
-      padding: 5px 7px 5px 91px
+      padding: 5px 7px 5px 5.4em
 
     .alias
       display: inline-block
@@ -29,7 +29,9 @@
     .time
       position: absolute
       top: 8px
-      left: 5px
+      left: 0
+      width: 4.8em
+      text-align: right
       color: hsl(50, 0%, 33%)
       font-family: 'Cousine'
       text-shadow: 1px 0 1px black, 0 1px 1px black, -1px 0 1px black, 0 -1px 1px black
@@ -71,22 +73,25 @@
       height: 24px
       min-height: 24px
       min-width: 24px
-
-
-  &.scale-normal
+    .alias, .time, .content
+      +font-size(14)
+  &.scale-normal, &.scale-large,
+  &.scale-larger, &.scale-largest
     .avatar
       width: 48px
       height: 48px
       min-height: 48px
       min-width: 48px
-
-
   &.scale-large
-    .avatar
-      width: 96px
-      height: 96px
-      min-height: 96px
-      min-width: 96px
+    .content, .alias, .time
+      +font-size(18)
+  &.scale-larger
+    .content, .alias, .time
+      +font-size(20)
+  &.scale-largest
+    .content, .alias, .time
+      +font-size(22)
+
 
 
   .infobar
@@ -115,10 +120,10 @@
 
   .content
     position: relative
+    min-width: 12.5em
     padding: 40px 10px 10px 10px
     font-family: 'Nunito'
     font-weight: 300
-    +font-size(18)
     background-color: $sub-panel
     border-top: 2px solid hsl(0, 0%, 12.3%)
     border-bottom: 1px solid hsl(0, 0%, 20%)
