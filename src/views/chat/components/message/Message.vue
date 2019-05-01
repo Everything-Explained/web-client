@@ -6,11 +6,11 @@
       class="chat-message inline server"
       :class="scaleClass"
     >
-      <div class="content server">
+      <div class="content server" :class="priorityClass">
         <i class="nou-circle first"></i>
         <div class="alias">{{ alias }}</div>
         <i class="nou-circle last"></i>
-        <div class="text"><slot></slot></div>
+        <div class="text" ><slot></slot></div>
         <div class="time">{{ time }}</div>
       </div>
     </div>

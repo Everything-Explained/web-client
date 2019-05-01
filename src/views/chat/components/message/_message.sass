@@ -12,16 +12,20 @@
   .content
     color: hsl(0, 0%, 63%)
 
-  .content.server
+  .priority-low
     color: $info
-    .nou-circle.last
-      color: $info
+
+  .priority-medium
+    color: $attention
+
+  .priority-high
+    color: hsl(50, 80%, 67%)
 
 
   &.inline
     .content
       line-height: 1.3em
-      padding: 8px 7px 5px 5.4em
+      padding: 8px 7px 5px 5.8em
 
     .alias
       display: inline-block
@@ -29,9 +33,9 @@
 
     .time
       position: absolute
-      top: 9px
+      top: 10px
       left: 0
-      width: 4.8em
+      width: 5.2em
       text-align: right
       color: hsl(50, 0%, 33%)
       font-family: 'Cousine'
@@ -57,10 +61,8 @@
     .text
       display: inline
 
-    .nou-circle
-      color: $attention
-
     .nou-circle.first
+      color: $attention
       margin-right: 0.7em
 
     .nou-circle.last

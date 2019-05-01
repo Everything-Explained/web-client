@@ -7,6 +7,7 @@
         :alias="msg.alias"
         :avatar="msg.avatar"
         :type="msg.type"
+        :priority="msg.priority"
         :scale="scale"
       >
         {{ msg.content }}

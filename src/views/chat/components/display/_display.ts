@@ -4,18 +4,9 @@ import Component from 'vue-class-component';
 import { Generator } from '@/libs/generator';
 import Message from '../message/Message.vue';
 import Lorem from '@/libs/loremipsum';
+import { IMessage, MsgScale } from '../message/_message';
 
-export interface IMessage {
-  content: string;
-  alias: string;
-  avatar: string;
-  time: string;
-  type: MessageType;
-  scale: MessageScale;
-}
 
-export type MessageType = 'normal'|'inline'|'inline-avatar'|'server';
-export type MessageScale = 'small'|'normal'|'large'|'larger'|'largest';
 
 @Component({
   components: {
@@ -28,7 +19,7 @@ export default class Display extends Vue {
   readonly messages!: IMessage[];
 
   @Prop({ type: String })
-  readonly scale!: MessageScale;
+  readonly scale!: MsgScale;
 
   created() {
     // const gen = new Generator();
