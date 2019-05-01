@@ -5,6 +5,8 @@ import Userlist from './components/userlist/Userlist.vue';
 import Commander from './components/cmdinput/Commander.vue';
 import Utils from '@/libs/utils';
 import { IMessage, MessageType, MessageScale } from './components/display/_display';
+import ChatSocket, { ClientEvent } from './_socket';
+import { MsgPriority } from './components/message/_message';
 
 @Component({
   components: {
@@ -28,6 +30,15 @@ export default class Chat extends Vue {
 
 
   created() {
+    const sock = new ChatSocket();
+    sock.on(ClientEvent.SRVMSG, (content, priority) => {
+      this.addMessage(
+        'Server',
+        content,
+        priority,
+        'server'
+      )
+    })
     // this.sio = io.connect('https://localhost:3003', { forceNew: true });
     // this.sio.on('connect', () => {
     //   console.log('connected successfully');
@@ -39,7 +50,7 @@ export default class Chat extends Vue {
   }
 
 
-  addMessage(alias: string, content: string, type?: MessageType) {
+  addMessage(alias: string, content: string, priority?: MsgPriority, type?: MessageType) {
     const avatar = 'https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAfM/_RhlOKf4IlU/photo.jpg?sz=96'
     this.messages.push(
       {
@@ -48,6 +59,7 @@ export default class Chat extends Vue {
         avatar,
         type: type || 'normal',
         scale: this.displayScale,
+        priority: priority || 'low',
         time: Utils.toNormalTimeString(Date.now())
       }
     )
