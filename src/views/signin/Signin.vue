@@ -127,7 +127,7 @@
     >
       <auth-input
         :min="4"
-        :max="20"
+        :max="13"
         :test1="(input) => /^[a-zA-Z0-9]+$/.test(input)"
         :test2="(input) => !/([a-zA-Z0-9])\1{2,}/.test(input)"
         :validate="validateAlias"

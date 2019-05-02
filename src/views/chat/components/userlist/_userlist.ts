@@ -30,7 +30,7 @@ export default class Userlist extends Vue {
 
     for (let i = 0; i < 20; i++) {
       this.users.push({
-        alias: gen.randomStr(gen.randomRange(4, 12)),
+        alias: gen.randomStr(gen.randomRange(4, 13)),
         idle: this.rngOutOf100() < 40,
         away: this.rngOutOf100() < 50,
         nostatus: this.rngOutOf100() < 15,
