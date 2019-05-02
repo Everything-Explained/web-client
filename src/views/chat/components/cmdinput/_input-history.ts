@@ -16,12 +16,12 @@ export class InputHistory {
       this.history.shift();
     }
 
-    const histlen = this.history.length;
-
-    // Don't add duplicate entries
-    if (histlen && this.history[histlen - 1] == entry) {
-      return;
+    // Causes existing entries to be moved to the front
+    const index = this.history.indexOf(entry);
+    if (~index) {
+      this.history.splice(index, 1);
     }
+
     this.history.push(entry);
     this.pos = this.history.length;
   }
