@@ -88,14 +88,19 @@ export default class Commander extends Vue {
   }
 
   onUp(ev: MouseEvent) {
-    const el = ev.target as HTMLElement;
-    el.innerText = this.history.next();
-    this.alignCaret(false, el);
+    this.setInput(ev.target as HTMLElement, this.history.next());
   }
 
   onDown(ev: MouseEvent) {
-    const el = ev.target as HTMLElement;
-    el.innerText = this.history.prev();
+    this.setInput(ev.target as HTMLElement, this.history.prev());
+  }
+
+
+
+
+  private setInput(el: HTMLElement, val: string) {
+    if (el.innerText == val) return;
+    el.innerText = val;
     this.alignCaret(false, el);
   }
 
