@@ -29,15 +29,18 @@ export class InputHistory {
 
 
   public next() {
-    if (this.pos == 0) return '';
-    return this.history[--this.pos];
+    if (this.pos < 0) return '';
+    return (~(--this.pos)) ? this.history[this.pos] : '';
   }
 
 
 
   public prev() {
     if (this.pos == this.history.length) return '';
-    return this.history[this.pos++];
+    return (++this.pos < this.history.length)
+      ? this.history[this.pos]
+      : ''
+    ;
   }
 
 }
