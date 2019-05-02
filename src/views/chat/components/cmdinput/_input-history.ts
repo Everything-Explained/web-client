@@ -20,25 +20,24 @@ export class InputHistory {
 
     // Don't add duplicate entries
     if (histlen && this.history[histlen - 1] == entry) {
-      this.pos = histlen - 1;
       return;
     }
     this.history.push(entry);
-    this.pos = histlen;
+    this.pos = this.history.length;
   }
 
 
 
   public next() {
-    if (this.pos < 0) return '';
-    return this.history[this.pos--];
+    if (this.pos == 0) return '';
+    return this.history[--this.pos];
   }
 
 
 
   public prev() {
-    if (this.pos == this.history.length - 1) return '';
-    return this.history[++this.pos];
+    if (this.pos == this.history.length) return '';
+    return this.history[this.pos++];
   }
 
 }
