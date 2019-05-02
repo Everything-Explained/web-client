@@ -35,16 +35,15 @@ export default class ChatSocket {
     this.connect();
   }
 
-  on(ev: ClientEvent, func: (...args: any[]) => void) {
-    const evName = ClientEvent[ev];
-    const event = this.events.find(v => v.ev == evName);
+  on(name: ClientEvent, func: (...args: any[]) => void) {
+    const event = this.events.find(v => v.ev == name);
 
     if (event) {
       event.exec.push(func);
     }
     else {
       this.events.push({
-        ev: evName,
+        ev: name,
         exec: [func]
       });
     }
@@ -110,17 +109,18 @@ export default class ChatSocket {
       priority
     )
   }
+
+  private sendClientMsg(content: string, priority = MsgPriorityText.LOW) {
     this.emit(
-      ClientEvent.SRVMSG,
+      ClientEvent.CLIENTMSG,
       content,
       priority
     )
   }
 
 
-  private emit(ev: ClientEvent, ...args: any[]) {
-    const evName = ClientEvent[ev];
-    const event = this.events.find(v => v.ev == evName);
+  private emit(name: ClientEvent, ...args: any[]) {
+    const event = this.events.find(v => v.ev == name);
 
     if (event) {
       event.exec.forEach(f => f(...args))
