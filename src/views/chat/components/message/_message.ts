@@ -42,6 +42,9 @@ export default class Message extends Vue {
   @Prop({ default: 'low', type: String})
   readonly priority!: MsgPriority;
 
+  @Prop({ type: String })
+  readonly content!: string;
+
   readonly time = Utils.toNormalTimeString(Date.now());
 
 
@@ -59,6 +62,10 @@ export default class Message extends Vue {
       this.type == 'inline' ||
       this.type == 'inline-avatar'
     )
+  }
+
+  get sanitizedContent() {
+    return this.$markdown.render(this.content);
   }
 
 

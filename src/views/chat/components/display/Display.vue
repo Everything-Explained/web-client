@@ -9,9 +9,8 @@
         :type="msg.type"
         :priority="msg.priority"
         :scale="scale"
-      >
-        {{ msg.content }}
-      </message>
+        :content="msg.content"
+      ></message>
     </div>
   </div>
 </template>

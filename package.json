@@ -17,6 +17,7 @@
     "vue-router": "^3.0.6"
   },
   "devDependencies": {
+    "@types/markdown-it": "0.0.7",
     "@types/socket.io-client": "^1.4.32",
     "@vue/cli-plugin-e2e-nightwatch": "^3.5.1",
     "@vue/cli-plugin-typescript": "^3.5.3",
