@@ -6,6 +6,8 @@
       spellcheck="false"
       ref="cmdbox"
       @keydown.enter.exact.prevent="onEnter"
+      @keydown.up.exact.prevent="onUp"
+      @keydown.down.exact.prevent="onDown"
     ></div>
   </div>
 </template>
