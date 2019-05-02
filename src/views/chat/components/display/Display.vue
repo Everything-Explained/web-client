@@ -1,6 +1,6 @@
 <template>
   <div class="display">
-    <div class="msg-container">
+    <div class="msg-container" ref="elMessageContainer">
       <message
         v-for="(msg, i) of messages"
         :key="i"

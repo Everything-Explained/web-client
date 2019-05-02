@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Prop } from 'vue-property-decorator';
+import { Prop, Watch } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import { Generator } from '@/libs/generator';
 import Message from '../message/Message.vue';
@@ -38,6 +38,16 @@ export default class Display extends Vue {
     //             )
     //   })
     // }
+  }
+
+
+  @Watch('messages')
+  watchMessages() {
+    const el = this.$refs.elMessageContainer as HTMLElement;
+    // Vue renders async
+    this.$nextTick(() => {
+      el.scrollTop = el.scrollHeight;
+    })
   }
 
 
