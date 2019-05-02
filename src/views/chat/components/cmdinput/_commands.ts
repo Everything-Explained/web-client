@@ -1,5 +1,6 @@
 import Chat from '../../_chat';
-import { MessageScale } from '../display/_display';
+import { MsgScale, MsgPriorityText } from '../message/_message';
+import ChatSocket from '../../_socket';
 
 
 
@@ -9,12 +10,13 @@ export default class ChatCommands {
     // DISPLAY SCALE
     {
       alias: ['scale', 'size', 'display'],
-      exec: (scale: MessageScale) => {
+      exec: (scale: MsgScale) => {
         if (this.isMessageScale(scale)) {
           return this.scale(scale);
         }
         this.sendClientMsg(
-          `Invalid scale ${scale}; Acceptable values are small, normal, large, larger, and largest.`
+          '_Invalid scale_; Acceptable values are **small**, **normal**, \
+          **large**, **larger**, and **largest**.'
         )
       }
     },
@@ -24,13 +26,27 @@ export default class ChatCommands {
       exec: () => {
         this.chatView.clearMessages();
       }
+    },
+    {
+      alias: ['connect'],
+      exec: () => {
+        this.sock.connect();
+      }
+    },
+    {
+      alias: ['disconnect'],
+      exec: () => {
+        this.sock.disconnect();
+      }
     }
   ]
 
 
 
 
-  constructor(private chatView: Chat) {}
+  constructor(private readonly chatView: Chat,
+              private readonly sock: ChatSocket)
+  {}
 
 
 
@@ -50,7 +66,7 @@ export default class ChatCommands {
   }
 
 
-  scale(size: MessageScale) {
+  scale(size: MsgScale) {
     this.chatView.displayScale = size;
     this.sendClientMsg(`Display scale set to: (${size})`);
   }

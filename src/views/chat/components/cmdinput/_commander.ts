@@ -2,6 +2,7 @@ import { Vue, Prop } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import Chat from '../../_chat';
 import ChatCommands from './_commands';
+import ChatSocket from '../../_socket';
 
 
 enum Keys {
@@ -34,7 +35,10 @@ export default class Commander extends Vue {
   @Prop({ type: Object })
   readonly chatView!: Chat;
 
-  readonly commands = new ChatCommands(this.chatView);
+  @Prop({ type: Object })
+  readonly sock!: ChatSocket;
+
+  readonly commands = new ChatCommands(this.chatView, this.sock);
 
   created() {
     console.log(this.$refs);
@@ -57,12 +61,11 @@ export default class Commander extends Vue {
 
     // Check for empty input
     if (!input) {
-      this.chatView.addMessage(
+      return this.chatView.addMessage(
         'Client',
         'You need to enter a command or message.',
         'server'
       );
-      return;
     }
 
     // Check for a command

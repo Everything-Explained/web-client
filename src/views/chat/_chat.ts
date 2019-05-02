@@ -21,6 +21,11 @@ export default class Chat extends Vue {
 
 
   private sio!: SocketIOClient.Socket;
+  private readonly sock = new ChatSocket(
+    'https://localhost:3003',
+    'BKL8YW2OZUNFLC6RJLS7YN7T' || this.$api.rid
+  );
+
   private messages: IMessage[] = [];
 
 
@@ -28,9 +33,12 @@ export default class Chat extends Vue {
     return this;
   }
 
+  get socket() {
+    return this.sock;
+  }
+
 
   created() {
-    const sock = new ChatSocket();
     sock.on(ClientEvent.SRVMSG, (content, priority) => {
       this.addMessage(
         'Server',
@@ -84,7 +92,7 @@ export default class Chat extends Vue {
 
 
   beforeRouteLeave(to, from, next) {
-    this.sio.disconnect();
+    // this.sio.disconnect();
     next();
   }
 
