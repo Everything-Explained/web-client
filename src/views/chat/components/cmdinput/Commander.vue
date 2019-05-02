@@ -5,7 +5,7 @@
       contenteditable="true"
       spellcheck="false"
       ref="cmdbox"
-      @keydown.enter.prevent="onEnter"
+      @keydown.enter.exact.prevent="onEnter"
     ></div>
   </div>
 </template>
