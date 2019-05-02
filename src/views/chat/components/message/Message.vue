@@ -7,11 +7,11 @@
       :class="scaleClass"
     >
       <div class="content server" :class="priorityClass">
+        <div class="time">{{ time }}</div>
         <i class="nou-circle first"></i>
         <div class="alias">{{ alias }}</div>
         <i class="nou-circle last"></i>
         <div class="text markdown md-message" v-html="sanitizedContent"></div>
-        <div class="time">{{ time }}</div>
       </div>
     </div>
 
