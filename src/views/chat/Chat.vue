@@ -2,7 +2,7 @@
   <div class="chat">
     <div class="top-wrapper">
       <display :scale="displayScale" :messages="messages"></display>
-      <userlist scale="normal"></userlist>
+      <userlist :users="users" scale="normal"></userlist>
     </div>
     <commander :chatView="thisView" :sock="socket"></commander>
   </div>

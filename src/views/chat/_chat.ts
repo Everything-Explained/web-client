@@ -4,8 +4,9 @@ import Display from './components/display/Display.vue';
 import Userlist from './components/userlist/Userlist.vue';
 import Commander from './components/cmdinput/Commander.vue';
 import Utils from '@/libs/utils';
-import ChatSocket, { ClientEvent } from './_socket';
+import ChatSocket, { ClientEvent, RoomEvent, SockClient } from './_socket';
 import { MsgPriority, MsgScale, IMessage, MsgType } from './components/message/_message';
+import { User } from './components/userlist/_userlist';
 
 @Component({
   components: {
@@ -16,7 +17,13 @@ import { MsgPriority, MsgScale, IMessage, MsgType } from './components/message/_
 })
 export default class Chat extends Vue {
 
-  public displayScale: MsgScale = 'normal';
+  displayScale: MsgScale = 'normal';
+
+  // TODO: This is temporary until rooms are available
+  // through the display, at which point this will be updated
+  // by an event that comes from the display component
+  roomTag = '';
+
 
 
   private readonly sio!: SocketIOClient.Socket;
@@ -26,6 +33,15 @@ export default class Chat extends Vue {
   );
 
   private messages: IMessage[] = [];
+  private users: User[] = [];
+  private userProto = {
+    typing: false,
+    typingPaused: false,
+    muted: false,
+    away: false,
+    idle: false,
+    nostatus: false
+  } as User;
 
 
 
@@ -53,6 +69,33 @@ export default class Chat extends Vue {
         content,
         'server',
         priority
+      )
+    })
+    .on(
+      ClientEvent.ROOMSETUP,
+      (name, tag, clients) => this.onRoomSetup(name, tag, clients)
+    )
+  }
+
+
+  onRoomSetup(name: string, tag: string, clients: SockClient[]) {
+    const users =
+      clients
+        .slice(0)
+        .map(client => Object.assign(client, this.userProto) as User)
+    ;
+    this.roomTag = tag;
+    this.users = users;
+    this.setupRoom(tag, users);
+  }
+
+
+  setupRoom(tag: string, users: User[]) {
+    this.sock.onRoomEvent(tag, RoomEvent.MESSAGE, (alias, msg, type) => {
+      this.addMessage(
+        alias,
+        msg,
+        type
       )
     })
   }
@@ -94,6 +137,11 @@ export default class Chat extends Vue {
   beforeRouteLeave(to, from, next) {
     // this.sio.disconnect();
     next();
+  }
+
+
+  private toUser(client: SockClient) {
+    return Object.assign(client, this.userProto) as User;
   }
 
 }
