@@ -86,7 +86,7 @@ export default class ChatSocket {
 
   connect() {
     this.sock = io(this.url, {
-      forceNew: true, reconnection: false, query: { test: 'WR79CNE9UO' }})
+      forceNew: true, reconnection: false, query: { test: 'K2DLYMTVLF' }})
     this.sock
       .on('connect', () => this.onConnection())
       .on('disconnect', () => this.onDisconnect())
