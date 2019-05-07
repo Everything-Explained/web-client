@@ -1,7 +1,7 @@
 import { Vue, Prop } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import { Generator } from '@/libs/generator';
-import { SockClient } from '../../_socket';
+import { SockClient } from '../../_chatsocket';
 
 
 export interface User extends SockClient {
@@ -12,6 +12,10 @@ export interface User extends SockClient {
   idle?: boolean;
   nostatus?: boolean;
 }
+
+export type Typing = 'typing-started'|'typing-paused'|'typing-stopped';
+
+
 
 @Component
 export default class Userlist extends Vue {
@@ -27,8 +31,8 @@ export default class Userlist extends Vue {
   }
 
   created() {
-    // let gen = new Generator();
 
+    // let gen = new Generator();
     // for (let i = 0; i < 20; i++) {
     //   this.users.push({
     //     alias: gen.randomStr(gen.randomRange(4, 13)),

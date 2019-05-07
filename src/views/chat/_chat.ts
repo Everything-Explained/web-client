@@ -4,9 +4,10 @@ import Display from './components/display/Display.vue';
 import Userlist from './components/userlist/Userlist.vue';
 import Commander from './components/cmdinput/Commander.vue';
 import Utils from '@/libs/utils';
-import ChatSocket, { ClientEvent, RoomEvent, SockClient } from './_socket';
+import ChatSocket, { ClientEvent, RoomEvent, SockClient } from './_chatsocket';
 import { MsgPriority, MsgScale, IMessage, MsgType } from './components/message/_message';
-import { User } from './components/userlist/_userlist';
+import { User, Typing } from './components/userlist/_userlist';
+
 
 @Component({
   components: {
@@ -54,6 +55,8 @@ export default class Chat extends Vue {
   }
 
 
+
+
   created() {
     this.sock.on(ClientEvent.SERVERMSG, (content, priority) => {
       this.addMessage(
@@ -78,6 +81,8 @@ export default class Chat extends Vue {
   }
 
 
+
+
   onRoomSetup(name: string, tag: string, clients: SockClient[]) {
     const users =
       clients
@@ -86,17 +91,21 @@ export default class Chat extends Vue {
     ;
     this.roomTag = tag;
     this.users = users;
-    this.setupRoom(tag, users);
+    this.setupRoomEvents(tag, users);
   }
 
 
-  setupRoom(tag: string, users: User[]) {
+  setupRoomEvents(tag: string, users: User[]) {
     this.sock.onRoomEvent(tag, RoomEvent.MESSAGE, (alias, msg, type) => {
       this.addMessage(
         alias,
         msg,
         type
       )
+    })
+
+    this.sock.onRoomEvent(tag, RoomEvent.TYPING, (alias, typing: Typing) => {
+      console.log(typing)
     })
   }
 
@@ -139,9 +148,5 @@ export default class Chat extends Vue {
     next();
   }
 
-
-  private toUser(client: SockClient) {
-    return Object.assign(client, this.userProto) as User;
-  }
 
 }

@@ -2,7 +2,7 @@ import { Vue, Prop } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import Chat from '../../_chat';
 import ChatCommands from './_commands';
-import ChatSocket from '../../_socket';
+import ChatSocket, { RoomEvent } from '../../_chatsocket';
 import { InputHistory } from './_input-history';
 
 
@@ -39,17 +39,33 @@ export default class Commander extends Vue {
   @Prop({ type: Object })
   readonly sock!: ChatSocket;
 
+
+  isTyping = false;
+
+
   readonly commands = new ChatCommands(this.chatView, this.sock);
   readonly history = new InputHistory(25);
 
+  readonly typingPaused = this.$debounce((cmdr: this) => {
+    cmdr.isTyping = false;
+    this.sock.emitRoomEvent(
+      this.chatView.roomTag,
+      RoomEvent.TYPING,
+      'typing-paused'
+    )
+  }, 3000)();
+
+
+
+
   created() {
-    console.log(this.$refs);
   }
 
   mounted() {
     const el = this.$refs.cmdbox as HTMLElement;
     el.innerHTML = '<br/>'
   }
+
 
 
 
@@ -79,20 +95,39 @@ export default class Commander extends Vue {
       return el.innerText = '';
     }
 
-    this.chatView.addMessage(
-      '1234567890123',
-      input,
-      'normal'
-    )
+    this.sock.emitRoomEvent(this.chatView.roomTag, RoomEvent.MESSAGE, input);
     el.innerText = '';
   }
+
 
   onUp(ev: MouseEvent) {
     this.setInput(ev.target as HTMLElement, this.history.next());
   }
 
+
   onDown(ev: MouseEvent) {
     this.setInput(ev.target as HTMLElement, this.history.prev());
+  }
+
+
+  onTyping(ev: MouseEvent) {
+    const obj = ev.target as HTMLElement;
+    console.debug('onTyping()')
+
+    if (!obj.innerText.length) {
+      this.typingPaused.cancel();
+      this.isTyping = false;
+      this.sock.emitRoomEvent(this.chatView.roomTag, RoomEvent.TYPING, 'typing-stopped')
+      return;
+    }
+
+    if (!this.isTyping) {
+      this.isTyping = true;
+      this.sock.emitRoomEvent(this.chatView.roomTag, RoomEvent.TYPING, 'typing-started')
+    }
+
+    this.typingPaused.exec(this);
+
   }
 
 

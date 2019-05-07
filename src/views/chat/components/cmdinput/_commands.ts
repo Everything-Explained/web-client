@@ -1,6 +1,6 @@
 import Chat from '../../_chat';
 import { MsgScale, MsgPriorityText } from '../message/_message';
-import ChatSocket from '../../_socket';
+import ChatSocket from '../../_chatsocket';
 
 
 
@@ -56,7 +56,7 @@ export default class ChatCommands {
     const txtCmd = txtCmds[0];
     const txtCmdArg = input.length > 1 ? txtCmds[1] : undefined;
 
-    for (let cmd of this.commands) {
+    for (const cmd of this.commands) {
       if (cmd.alias.includes(txtCmd)) {
         return cmd.exec(txtCmdArg as any)
       }

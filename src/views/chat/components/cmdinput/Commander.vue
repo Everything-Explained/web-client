@@ -8,6 +8,7 @@
       @keydown.enter.exact.prevent="onEnter"
       @keydown.up.exact.prevent="onUp"
       @keydown.down.exact.prevent="onDown"
+      @keyup="onTyping"
     ></div>
   </div>
 </template>
