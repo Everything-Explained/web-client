@@ -12,6 +12,7 @@ export enum ClientEvent {
   SERVERMSG = 'srv-message',
   CLIENTMSG = 'clt-message',
   ROOMSETUP = 'setup-room',
+  AUTHSUCCESS = 'auth-success',
 }
 
 export enum RoomEvent {
@@ -63,6 +64,7 @@ export default class ChatSocket {
     this.sock.on(`${tag}${type}`, (subargs: any[]) => func(...subargs));
   }
 
+
   emitRoomEvent(tag: string, type: RoomEvent, ...args: any[]) {
     this.sock.emit(`${tag}${type}`, ...args);
   }
@@ -94,8 +96,11 @@ export default class ChatSocket {
       .on('connect_timeout', err => this.onError(err))
       .on(ClientEvent.ROOMSETUP, (name, tag, clients) => this.onRoomSetup(name, tag, clients))
       .on(ClientEvent.AUTHFAIL, msg => this.authFailed(msg))
+      .on(ClientEvent.AUTHSUCCESS, user => this.authSuccess(user))
     ;
   }
+
+
 
 
   disconnect() {
@@ -146,6 +151,11 @@ export default class ChatSocket {
   }
 
 
+  private authSuccess(user: SockClient) {
+    this.emit(ClientEvent.AUTHSUCCESS, user);
+  }
+
+
   private authFailed(content: string) {
     this.sendServerMsg(content, MsgPriorityText.HIGH);
   }
@@ -158,6 +168,7 @@ export default class ChatSocket {
       priority
     )
   }
+
 
   private sendClientMsg(content: string, priority = MsgPriorityText.LOW) {
     this.emit(
