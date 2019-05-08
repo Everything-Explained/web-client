@@ -1,14 +1,17 @@
-import { Typing } from './components/userlist/_userlist';
+import { TypingState } from './components/cmdinput/_commander';
 
 
 
 export default class ChatUser {
 
-  alias: string;
-  
-  idle = false;
-  away = false;
+  idle      = false;
+  away      = false;
+  muted     = false;
+  obfuscate = false;
 
+
+  private _alias: string;
+  private _avatar: string;
 
   private _isTyping = false;
   private _isTypingPaused = false;
@@ -22,10 +25,19 @@ export default class ChatUser {
     return this._isTypingPaused;
   }
 
+  get alias() {
+    return this._alias;
+  }
 
-  set typingState(val: Typing) {
+  get avatar() {
+    return this._avatar;
+  }
+
+
+  set typingState(val: TypingState) {
     if (val == 'typing-started') {
       this._isTyping = true;
+      this._isTypingPaused = false;
     }
     else if (val == 'typing-stopped') {
       this._isTyping = false;
@@ -40,8 +52,9 @@ export default class ChatUser {
 
 
 
-  constructor(alias: string) {
-    this.alias = alias;
+  constructor(alias: string, avatar: string) {
+    this._alias = alias;
+    this._avatar = avatar;
   }
 
 

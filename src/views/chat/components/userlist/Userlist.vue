@@ -16,8 +16,8 @@
       <div
         class="user-name"
         :class="{
-          'typing': user.typing,
-          'typing-paused': user.typingPaused
+          'typing': user.isTyping,
+          'typing-paused': user.isTypingPaused
         }"
       >{{ user.alias }}</div>
     </div>

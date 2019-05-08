@@ -6,7 +6,8 @@ import Commander from './components/cmdinput/Commander.vue';
 import Utils from '@/libs/utils';
 import ChatSocket, { ClientEvent, RoomEvent, SockClient } from './_chatsocket';
 import { MsgPriority, MsgScale, IMessage, MsgType } from './components/message/_message';
-import { User, Typing } from './components/userlist/_userlist';
+import { TypingState } from './components/cmdinput/_commander';
+import ChatUser from './_chatuser';
 
 
 @Component({
@@ -34,15 +35,9 @@ export default class Chat extends Vue {
   );
 
   private messages: IMessage[] = [];
-  private users: User[] = [];
-  private userProto = {
-    typing: false,
-    typingPaused: false,
-    muted: false,
-    away: false,
-    idle: false,
-    nostatus: false
-  } as User;
+  private users: ChatUser[] = [];
+
+  private user!: ChatUser;
 
 
 
@@ -75,6 +70,10 @@ export default class Chat extends Vue {
       )
     })
     .on(
+      ClientEvent.AUTHSUCCESS,
+      (user) => { this.user = user; }
+    )
+    .on(
       ClientEvent.ROOMSETUP,
       (name, tag, clients) => this.onRoomSetup(name, tag, clients)
     )
@@ -87,7 +86,7 @@ export default class Chat extends Vue {
     const users =
       clients
         .slice(0)
-        .map(client => Object.assign(client, this.userProto) as User)
+        .map(client => new ChatUser(client.alias, client.avatar))
     ;
     this.roomTag = tag;
     this.users = users;
@@ -95,17 +94,16 @@ export default class Chat extends Vue {
   }
 
 
-  setupRoomEvents(tag: string, users: User[]) {
+  setupRoomEvents(tag: string, users: ChatUser[]) {
     this.sock.onRoomEvent(tag, RoomEvent.MESSAGE, (alias, msg, type) => {
-      this.addMessage(
-        alias,
-        msg,
-        type
-      )
+      this.addMessage(alias, msg, type);
     })
 
-    this.sock.onRoomEvent(tag, RoomEvent.TYPING, (alias, typing: Typing) => {
-      console.log(typing)
+    this.sock.onRoomEvent(tag, RoomEvent.TYPING, (alias, typing: TypingState) => {
+      const user = this.users.find(u => u.alias == alias);
+      if (user) {
+        user.typingState = typing;
+      }
     })
   }
 
@@ -124,6 +122,17 @@ export default class Chat extends Vue {
       }
     )
   }
+
+
+  sendMessage(content: string) {
+    this.sock.emitRoomEvent(this.roomTag, RoomEvent.MESSAGE, content);
+  }
+
+
+  setTyping(state: TypingState) {
+    this.sock.emitRoomEvent(this.roomTag, RoomEvent.TYPING, state);
+  }
+
 
   clearMessages() {
     this.messages = [];

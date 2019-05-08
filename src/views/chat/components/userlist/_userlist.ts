@@ -2,18 +2,8 @@ import { Vue, Prop } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import { Generator } from '@/libs/generator';
 import { SockClient } from '../../_chatsocket';
+import ChatUser from '../../_chatuser';
 
-
-export interface User extends SockClient {
-  typing?: boolean;
-  typingPaused?: boolean;
-  muted?: boolean;
-  away?: boolean;
-  idle?: boolean;
-  nostatus?: boolean;
-}
-
-export type Typing = 'typing-started'|'typing-paused'|'typing-stopped';
 
 
 
@@ -24,11 +14,15 @@ export default class Userlist extends Vue {
   readonly scale!: 'small'|'large'|'larger'|'largest';
 
   @Prop({ type: Array })
-  readonly users!: User[];
+  readonly users!: ChatUser[];
+
 
   get scaleClass() {
     return `scale-${this.scale}`;
   }
+
+
+
 
   created() {
 

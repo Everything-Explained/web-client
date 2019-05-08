@@ -28,13 +28,18 @@ enum Keys {
   CONSOLE = 192
 }
 
+export enum TypingState {
+  STARTED = 'typing-started',
+  STOPPED = 'typing-stopped',
+  PAUSED = 'typing-paused',
+}
 
 
 @Component
 export default class Commander extends Vue {
 
   @Prop({ type: Object })
-  readonly chatView!: Chat;
+  readonly chat!: Chat;
 
   @Prop({ type: Object })
   readonly sock!: ChatSocket;
@@ -43,16 +48,12 @@ export default class Commander extends Vue {
   isTyping = false;
 
 
-  readonly commands = new ChatCommands(this.chatView, this.sock);
+  readonly commands = new ChatCommands(this.chat, this.sock);
   readonly history = new InputHistory(25);
 
   readonly typingPaused = this.$debounce((cmdr: this) => {
     cmdr.isTyping = false;
-    this.sock.emitRoomEvent(
-      this.chatView.roomTag,
-      RoomEvent.TYPING,
-      'typing-paused'
-    )
+    this.chat.setTyping(TypingState.PAUSED);
   }, 3000)();
 
 
@@ -77,26 +78,19 @@ export default class Commander extends Vue {
       )
     ;
 
-    // Check for empty input
-    if (!input) {
-      return this.chatView.addMessage(
-        'Client',
-        'You need to enter a command or message.',
-        'server'
-      );
-    }
+    if (!input.length) return;
 
     this.history.add(input);
 
-    // Check for a command
     if (input.indexOf('/') == 0) {
       const cmd = input.substr(1);
       this.commands.exec(cmd);
-      return el.innerText = '';
+      el.innerText = '';
     }
-
-    this.sock.emitRoomEvent(this.chatView.roomTag, RoomEvent.MESSAGE, input);
-    el.innerText = '';
+    else {
+      this.chat.sendMessage(input);
+      el.innerText = '';
+    }
   }
 
 
@@ -117,13 +111,13 @@ export default class Commander extends Vue {
     if (!obj.innerText.length) {
       this.typingPaused.cancel();
       this.isTyping = false;
-      this.sock.emitRoomEvent(this.chatView.roomTag, RoomEvent.TYPING, 'typing-stopped')
+      this.chat.setTyping(TypingState.STOPPED)
       return;
     }
 
     if (!this.isTyping) {
       this.isTyping = true;
-      this.sock.emitRoomEvent(this.chatView.roomTag, RoomEvent.TYPING, 'typing-started')
+      this.chat.setTyping(TypingState.STARTED);
     }
 
     this.typingPaused.exec(this);
