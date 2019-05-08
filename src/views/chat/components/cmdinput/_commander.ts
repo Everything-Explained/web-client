@@ -53,7 +53,7 @@ export default class Commander extends Vue {
 
   readonly typingPaused = this.$debounce((cmdr: this) => {
     cmdr.isTyping = false;
-    this.chat.setTyping(TypingState.PAUSED);
+    this.chat.typing = TypingState.PAUSED;
   }, 3000)();
 
 
@@ -111,13 +111,13 @@ export default class Commander extends Vue {
     if (!obj.innerText.length) {
       this.typingPaused.cancel();
       this.isTyping = false;
-      this.chat.setTyping(TypingState.STOPPED)
+      this.chat.typing = TypingState.STOPPED;
       return;
     }
 
     if (!this.isTyping) {
       this.isTyping = true;
-      this.chat.setTyping(TypingState.STARTED);
+      this.chat.typing = TypingState.STARTED;
     }
 
     this.typingPaused.exec(this);

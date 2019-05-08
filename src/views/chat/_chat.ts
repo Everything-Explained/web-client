@@ -49,6 +49,10 @@ export default class Chat extends Vue {
     return this.sock;
   }
 
+  set typing(state: TypingState) {
+    this.mainRoom.emit(RoomEvent.TYPING, state);
+  }
+
 
 
 
@@ -129,9 +133,7 @@ export default class Chat extends Vue {
   }
 
 
-  setTyping(state: TypingState) {
-    this.sock.emitRoomEvent(this.roomTag, RoomEvent.TYPING, state);
-  }
+
 
 
   clearMessages() {
