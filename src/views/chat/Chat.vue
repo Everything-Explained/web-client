@@ -4,7 +4,7 @@
       <display :scale="displayScale" :messages="messages"></display>
       <userlist :users="users" scale="normal"></userlist>
     </div>
-    <commander :chat="thisView" :sock="socket"></commander>
+    <commander :chat="$this" :sock="socket"></commander>
   </div>
 </template>
 

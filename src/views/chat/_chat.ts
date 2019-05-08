@@ -36,7 +36,7 @@ export default class Chat extends Vue {
 
 
 
-  get thisView() {
+  get $this() {
     return this;
   }
 
@@ -44,9 +44,15 @@ export default class Chat extends Vue {
     return this.sock;
   }
 
+  get typing() {
+    return this.user.typingState;
+  }
+
   set typing(state: TypingState) {
     this.mainRoom.emit(RoomEvent.TYPING, state);
   }
+
+
 
 
 
