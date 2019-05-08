@@ -5,7 +5,7 @@ import Userlist from './components/userlist/Userlist.vue';
 import Commander from './components/cmdinput/Commander.vue';
 import Utils from '@/libs/utils';
 import ChatSocket, { ClientEvent, RoomEvent, SockClient, SockRoom } from './_chatsocket';
-import { MsgPriority, MsgScale, IMessage, MsgType } from './components/message/_message';
+import { MsgPriority, MsgScale, IMessage, MsgType, MsgPriorityText } from './components/message/_message';
 import { TypingState } from './components/cmdinput/_commander';
 import ChatUser from './_chatuser';
 
@@ -55,63 +55,12 @@ export default class Chat extends Vue {
 
 
 
-
-
   created() {
-    this.sock.on(ClientEvent.SERVERMSG, (content, priority) => {
-      this.addMessage(
-        'Server',
-        content,
-        'server',
-        priority
-      )
-    })
-    .on(ClientEvent.CLIENTMSG, (content, priority) => {
-      this.addMessage(
-        'Client',
-        content,
-        'server',
-        priority
-      )
-    })
-    .on(
-      ClientEvent.AUTHSUCCESS,
-      (user) => { this.user = user; }
-    )
-    .on(
-      ClientEvent.ROOMSETUP,
-      (name, tag, clients) => this.onRoomSetup(name, tag, clients)
-    )
+    this.initSockEvents();
   }
 
 
 
-
-  onRoomSetup(name: string, tag: string, clients: SockClient[]) {
-    const users =
-      clients
-        .slice(0)
-        .map(client => new ChatUser(client.alias, client.avatar))
-    ;
-    this.mainRoom = this.sock.createRoomHandle(tag, name);
-
-    this.users = users;
-    this.setupRoomEvents();
-  }
-
-
-  setupRoomEvents() {
-    this.mainRoom.on(RoomEvent.MESSAGE, (alias, msg, type) => {
-      this.addMessage(alias, msg, type);
-    })
-
-    this.mainRoom.on(RoomEvent.TYPING, (alias, typing: TypingState) => {
-      const user = this.users.find(u => u.alias == alias);
-      if (user) {
-        user.typingState = typing;
-      }
-    })
-  }
 
 
   addMessage(alias: string, content: string, type?: MsgType, priority?: MsgPriority) {
@@ -135,9 +84,6 @@ export default class Chat extends Vue {
   }
 
 
-
-
-
   clearMessages() {
     this.messages = [];
   }
@@ -155,10 +101,61 @@ export default class Chat extends Vue {
     next();
   }
 
-
   beforeRouteLeave(to, from, next) {
     // this.sio.disconnect();
     next();
+  }
+
+
+
+
+  private initSockEvents() {
+    this.sock
+      .on(
+        ClientEvent.SERVERMSG,
+        (content, priority) => {
+          this.addMessage('Server', content, 'server', priority)
+        }
+      )
+      .on(
+        ClientEvent.CLIENTMSG,
+        (content, priority) => {
+          this.addMessage('Client', content, 'server', priority)
+        }
+      )
+      .on(ClientEvent.AUTHSUCCESS, user => { this.user = user })
+      .on(
+        ClientEvent.ROOMSETUP,
+        (name, tag, clients) => this.onRoomSetup(name, tag, clients)
+      )
+    ;
+  }
+
+
+  private onRoomSetup(name: string, tag: string, clients: SockClient[]) {
+    const users =
+      clients
+        .slice(0)
+        .map(client => new ChatUser(client.alias, client.avatar))
+    ;
+    this.mainRoom = this.sock.createRoomHandle(tag, name);
+
+    this.users = users;
+    this.setupRoomEvents();
+  }
+
+
+  private setupRoomEvents() {
+    this.mainRoom.on(RoomEvent.MESSAGE, (alias, msg, type) => {
+      this.addMessage(alias, msg, type);
+    })
+
+    this.mainRoom.on(RoomEvent.TYPING, (alias, typing: TypingState) => {
+      const user = this.users.find(u => u.alias == alias);
+      if (user) {
+        user.typingState = typing;
+      }
+    })
   }
 
 

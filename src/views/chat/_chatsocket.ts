@@ -56,10 +56,11 @@ export default class ChatSocket {
 
 
 
-
   constructor(private url: string, private rid: string) {
     this.connect();
   }
+
+
 
 
 
@@ -104,18 +105,20 @@ export default class ChatSocket {
   connect() {
     this.sock = io(this.url, {
       forceNew: true, reconnection: false, query: { test: 'K2DLYMTVLF' }})
+
     this.sock
       .on('connect', () => this.onConnection())
       .on('disconnect', () => this.onDisconnect())
       .on('connect_error', err => this.onError(err))
       .on('connect_timeout', err => this.onError(err))
-      .on(ClientEvent.ROOMSETUP, (name, tag, clients) => this.onRoomSetup(name, tag, clients))
+      .on(
+        ClientEvent.ROOMSETUP,
+        (name, tag, clients) => this.onRoomSetup(name, tag, clients)
+      )
       .on(ClientEvent.AUTHFAIL, msg => this.authFailed(msg))
       .on(ClientEvent.AUTHSUCCESS, user => this.authSuccess(user))
     ;
   }
-
-
 
 
   disconnect() {
@@ -126,9 +129,7 @@ export default class ChatSocket {
 
 
 
-
   private onRoomSetup(name: string, tag: string, clients: any) {
-    console.debug('onRoomSetup()')
     this.emit(ClientEvent.ROOMSETUP, name, tag, clients);
   }
 
