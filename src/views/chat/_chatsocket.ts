@@ -7,12 +7,12 @@ export interface SockClient {
 }
 
 export enum ClientEvent {
-  AUTHFAIL  = 'auth-fail',
-  PING      = 'clt-ping',
-  SERVERMSG = 'srv-message',
-  CLIENTMSG = 'clt-message',
-  ROOMSETUP = 'setup-room',
+  AUTHFAIL    = 'auth-fail',
   AUTHSUCCESS = 'auth-success',
+  PING        = 'clt-ping',
+  SERVERMSG   = 'srv-message',
+  CLIENTMSG   = 'clt-message',
+  ROOMSETUP   = 'setup-room',
 }
 
 export enum RoomEvent {
@@ -38,6 +38,13 @@ interface SockEvent {
   exec: ((...args: any[]) => void)[];
 }
 
+export interface SockRoom {
+  name: string;
+  tag: string;
+  on: (event: RoomEvent, func: (...args: any[]) => void) => void;
+  emit: (event: RoomEvent, ...args: any[]) => void;
+}
+
 
 export default class ChatSocket {
 
@@ -55,18 +62,26 @@ export default class ChatSocket {
   }
 
 
-  /**
-   * Binds a function to an event on a room.
-   *
-   * @param tag Room identification tag - **via room-setup**
-   */
-  onRoomEvent(tag: string, type: RoomEvent, func: (...args: any[]) => void) {
-    this.sock.on(`${tag}${type}`, (subargs: any[]) => func(...subargs));
-  }
 
+  createRoomHandle(tag: string, name: string): SockRoom {
+    return {
+      name,
+      tag,
 
-  emitRoomEvent(tag: string, type: RoomEvent, ...args: any[]) {
-    this.sock.emit(`${tag}${type}`, ...args);
+      on: (
+        event: RoomEvent,
+        func: (...args: any[]) => void
+      ) => {
+        this.sock.on(`${tag + event}`, (subargs: any[]) => func(...subargs))
+      },
+
+      emit: (
+        event: RoomEvent,
+        ...args: any[]
+      ) => {
+        this.sock.emit(`${tag + event}`, ...args);
+      }
+    }
   }
 
 

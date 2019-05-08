@@ -4,7 +4,7 @@ import Display from './components/display/Display.vue';
 import Userlist from './components/userlist/Userlist.vue';
 import Commander from './components/cmdinput/Commander.vue';
 import Utils from '@/libs/utils';
-import ChatSocket, { ClientEvent, RoomEvent, SockClient } from './_chatsocket';
+import ChatSocket, { ClientEvent, RoomEvent, SockClient, SockRoom } from './_chatsocket';
 import { MsgPriority, MsgScale, IMessage, MsgType } from './components/message/_message';
 import { TypingState } from './components/cmdinput/_commander';
 import ChatUser from './_chatuser';
@@ -21,12 +21,6 @@ export default class Chat extends Vue {
 
   displayScale: MsgScale = 'normal';
 
-  // TODO: This is temporary until rooms are available
-  // through the display, at which point this will be updated
-  // by an event that comes from the display component
-  roomTag = '';
-
-
 
   private readonly sio!: SocketIOClient.Socket;
   private readonly sock = new ChatSocket(
@@ -38,6 +32,7 @@ export default class Chat extends Vue {
   private users: ChatUser[] = [];
 
   private user!: ChatUser;
+  private mainRoom!: SockRoom;
 
 
 
@@ -92,18 +87,19 @@ export default class Chat extends Vue {
         .slice(0)
         .map(client => new ChatUser(client.alias, client.avatar))
     ;
-    this.roomTag = tag;
+    this.mainRoom = this.sock.createRoomHandle(tag, name);
+
     this.users = users;
-    this.setupRoomEvents(tag, users);
+    this.setupRoomEvents();
   }
 
 
-  setupRoomEvents(tag: string, users: ChatUser[]) {
-    this.sock.onRoomEvent(tag, RoomEvent.MESSAGE, (alias, msg, type) => {
+  setupRoomEvents() {
+    this.mainRoom.on(RoomEvent.MESSAGE, (alias, msg, type) => {
       this.addMessage(alias, msg, type);
     })
 
-    this.sock.onRoomEvent(tag, RoomEvent.TYPING, (alias, typing: TypingState) => {
+    this.mainRoom.on(RoomEvent.TYPING, (alias, typing: TypingState) => {
       const user = this.users.find(u => u.alias == alias);
       if (user) {
         user.typingState = typing;
@@ -129,7 +125,7 @@ export default class Chat extends Vue {
 
 
   sendMessage(content: string) {
-    this.sock.emitRoomEvent(this.roomTag, RoomEvent.MESSAGE, content);
+    this.mainRoom.emit(RoomEvent.MESSAGE, content);
   }
 
 
