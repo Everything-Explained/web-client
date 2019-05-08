@@ -72,6 +72,18 @@
       margin-left: 1.2em
       margin-right: 0.7em
 
+    &.scale-large
+      .content, .alias, .time, .text
+        +font-size(16)
+      .nou-circle
+        +font-size(8.5)
+
+    &.scale-larger, &.scale-largest
+      .content, .alias, .time, .text
+        +font-size(18)
+      .nou-circle
+        +font-size(9.5)
+
 
   &.scale-small
     .avatar
@@ -97,19 +109,23 @@
       +font-size(8.5)
 
   &.scale-large
-    .content, .alias, .time, .text
+    .content, .text
       +font-size(18)
     .nou-circle
       +font-size(9.5)
 
   &.scale-larger
-    .content, .alias, .time, .text
+    .alias, .time
+      +font-size(18)
+    .content, .text
       +font-size(20)
     .nou-circle
       +font-size(10.5)
 
   &.scale-largest
-    .content, .alias, .time, .text
+    .alias, .time
+      +font-size(18)
+    .content, .text
       +font-size(22)
     .nou-circle
       +font-size(11.5)
