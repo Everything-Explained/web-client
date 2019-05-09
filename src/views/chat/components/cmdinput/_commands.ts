@@ -56,9 +56,12 @@ export default class ChatCommands {
     const txtCmd = txtCmds[0];
     const txtCmdArg = input.length > 1 ? txtCmds[1] : undefined;
 
+    txtCmds.shift()
+    const longCmdArg = txtCmds.length >= 2 ? txtCmds.join(' ') : undefined;
+
     for (const cmd of this.commands) {
       if (cmd.alias.includes(txtCmd)) {
-        return cmd.exec(txtCmdArg as any)
+        return cmd.exec(longCmdArg || txtCmdArg as any)
       }
     }
 
