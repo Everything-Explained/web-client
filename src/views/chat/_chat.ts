@@ -87,6 +87,14 @@ export default class Chat extends Vue {
     this.mainRoom.emit(RoomEvent.EMOTE, content);
   }
 
+  sendNotice(alias: string, content: string) {
+    const user = this.users.find(u => u.alias == alias);
+    if (user) {
+      console.log('sending notice', alias, user.id, content);
+      this.mainRoom.emit(RoomEvent.NOTICE, user.id, content);
+    }
+  }
+
 
   clearMessages() {
     this.messages = [];
@@ -139,7 +147,7 @@ export default class Chat extends Vue {
   private onRoomSetup(name: string, tag: string, clients: SockClient[]) {
     const users =
       clients.map(
-        client => new ChatUser(client.alias, client.avatar)
+        client => new ChatUser(client.alias, client.avatar, client.id)
       )
     ;
     this.mainRoom = this.sock.createRoomHandle(tag, name);
@@ -151,12 +159,10 @@ export default class Chat extends Vue {
 
   private setupRoomEvents() {
     this.mainRoom.on(RoomEvent.MESSAGE, (alias, msg, type) => {
-      console.debug('on MESSAGE activated')
       this.addMessage(alias, msg, type);
     })
 
     this.mainRoom.on(RoomEvent.TYPING, (alias, typing: TypingState) => {
-      console.debug('on TYPING activated');
       const user = this.users.find(u => u.alias == alias);
       if (user) {
         user.typingState = typing;
@@ -166,10 +172,20 @@ export default class Chat extends Vue {
     this.mainRoom.on(
       RoomEvent.EMOTE,
       (alias, content) => {
-        console.log('adding emote message')
+        console.log('Adding EMOTE : alias', alias, ' and content: ', content);
         this.addMessage(alias, content, 'implicit')
       }
     )
+
+    this.mainRoom.on(
+      RoomEvent.NOTICE,
+      (alias, content) => {
+        console.log('Adding NOTICE : alias', alias, ' and content: ', content);
+        this.addMessage(alias, content, 'implicit-notice');
+      }
+    )
+
+
   }
 
 

@@ -2,7 +2,7 @@ import { MsgPriorityText as MsgPriorityText } from './components/message/_messag
 
 export interface SockClient {
   alias: string;
-  id?: string;
+  id: string;
   avatar: string;
 }
 
@@ -73,7 +73,7 @@ export default class ChatSocket {
         event: RoomEvent,
         func: (...args: any[]) => void
       ) => {
-        this.sock.on(`${tag + event}`, (subargs: any[]) => func(...subargs))
+        this.sock.on(`${tag + event}`, (...subargs: any[]) => func(...subargs))
       },
 
       emit: (

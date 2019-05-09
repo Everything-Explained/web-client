@@ -19,7 +19,7 @@ export enum MsgPriorityText {
   HIGH = 'high'
 }
 
-export type MsgType     = 'normal'|'inline'|'inline-avatar'|'server'|'implicit';
+export type MsgType     = 'normal'|'inline'|'inline-avatar'|'server'|'implicit'|'implicit-notice';
 export type MsgScale    = 'small'|'normal'|'large'|'larger'|'largest';
 export type MsgPriority = 'low'|'medium'|'high'
 
@@ -62,6 +62,19 @@ export default class Message extends Vue {
       this.type == 'inline' ||
       this.type == 'inline-avatar'
     )
+  }
+
+  get isImplicit() {
+    return (
+      this.type == 'implicit' ||
+      this.type == 'implicit-notice'
+    )
+  }
+
+  get implicitClass() {
+    if (!this.isImplicit) throw new Error('Message is not implicit');
+
+    return this.type;
   }
 
   get sanitizedContent() {

@@ -17,13 +17,14 @@
 
     <!-- IMPLICIT MESSAGES -->
     <div
-      v-if="type == 'implicit'"
+      v-if="isImplicit"
       class="chat-message implicit"
-      :class="scaleClass"
+      :class="[implicitClass, scaleClass]"
     >
       <div class="content">
         <i class="nou-right-open-mini"></i>
         <div class="alias implicit">{{ alias }}</div>
+        <i class="nou-right-open-mini last"></i>
         <div class="text implicit markdown md-message" v-html="sanitizedContent"></div>
       </div>
     </div>

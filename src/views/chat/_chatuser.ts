@@ -12,10 +12,14 @@ export default class ChatUser {
 
   private _alias: string;
   private _avatar: string;
+  private _id: string;
 
   private _isTyping = false;
   private _isTypingPaused = false;
 
+  get id() {
+    return this._id;
+  }
 
   get isTyping() {
     return this._isTyping;
@@ -52,9 +56,10 @@ export default class ChatUser {
 
 
 
-  constructor(alias: string, avatar: string) {
+  constructor(alias: string, avatar: string, id: string) {
     this._alias = alias;
     this._avatar = avatar;
+    this._id = id;
   }
 
 

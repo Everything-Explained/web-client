@@ -28,6 +28,15 @@ export default class ChatCommands {
         }
       }
     },
+    {
+      alias: ['notice'],
+      exec: (arg: string) => {
+        const args = arg.split(' ');
+        if (args.length < 2) return;
+        const alias = args[0];
+        this.chatView.sendNotice(alias, args.slice(1).join(' '));
+      }
+    },
     // CLEAR MESSAGES
     {
       alias: ['clear', 'cls'],

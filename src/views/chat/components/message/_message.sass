@@ -85,7 +85,7 @@
         +font-size(9.5)
 
 
-  &.implicit
+  &.implicit, &.implicit-notice
     margin: 0 0 7px 0
     .content
       padding: 7px 15px 5px 0
@@ -122,6 +122,42 @@
       align-self: center
       font-family: 'Cousine'
       color: hsl(47, 45%, 67%)
+
+
+  &.implicit-notice
+    .content
+      padding-bottom: 4px
+      background-color: hsl(220, 50%, 15%)
+      border: 1px solid hsl(220, 30%, 25%)
+    .alias
+      color: hsl(220, 50%, 75%)
+      padding-right: 0
+    .text
+      color: hsl(220, 50%, 75%)
+    .nou-circle
+      color: hsl(278, 80%, 75%)
+      margin: 0 1em 0 1em
+    .nou-right-open-mini
+      color: hsl(278, 80%, 75%)
+      &.last
+        position: relative
+        top: -7px
+        height: 10px
+        margin: 0 0.2em 0 0.2em
+
+    &.scale-large
+      .content, .alias, .time, .text
+        +font-size(16)
+      .nou-circle
+        +font-size(8.5)
+
+    &.scale-larger, &.scale-largest
+      .content, .alias, .time, .text
+        +font-size(18)
+      .nou-circle
+        +font-size(9.5)
+      .nou-right-open-mini.last
+        top: -9px
 
 
   &.scale-small
@@ -205,6 +241,9 @@
   .avatar
     display: block
     margin: 0 5px 0 0
+
+  .text
+    color: hsl(0, 0%, 70%)
 
 
   .content
