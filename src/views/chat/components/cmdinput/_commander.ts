@@ -104,10 +104,19 @@ export default class Commander extends Vue {
   }
 
 
-  onTyping(ev: MouseEvent) {
+  onTyping(ev: KeyboardEvent) {
     const obj = ev.target as HTMLElement;
+    const input = this.normalizeInput(obj.innerText);
+    const preventKeys = [
+      Keys.DOWN,
+      Keys.UP,
+      Keys.LEFT,
+      Keys.RIGHT
+    ]
 
-    if (!obj.innerText.length) {
+    if (this.isKeyPrevented(ev, ...preventKeys)) return;
+
+    if (!input.length) {
       this.typingPaused.cancel();
       this.isTyping = false;
       this.chat.typing = TypingState.STOPPED;
@@ -156,6 +165,16 @@ export default class Commander extends Vue {
 
     input = input.replace(/\s/gi, ' ');
     return input.trim();
+  }
+
+  private isKeyPrevented(ev: KeyboardEvent, ...keys: Keys[]) {
+    let pos = keys.length;
+
+    while (~--pos) {
+      if (ev.which == keys[pos]) return true;
+    }
+
+    return false;
   }
 
 
