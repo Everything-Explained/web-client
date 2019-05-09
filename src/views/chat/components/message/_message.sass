@@ -4,7 +4,7 @@
 .chat-message
   position: relative
   display: flex
-  margin-bottom: 13px
+  margin-bottom: 9px
   margin-right: 13px
 
   .alias
@@ -26,7 +26,7 @@
       color: hsl(50, 80%, 67%) !important
 
 
-  &.inline
+  &.inline, &.implicit
     .content
       display: flex
       line-height: 1.3em
@@ -40,7 +40,7 @@
       min-width: 4.9em
       display: inline
       text-align: right
-      color: hsl(50, 0%, 37%)
+      color: hsl(50, 0%, 40%)
       font-family: 'Cousine'
       text-shadow: 1px 0 1px black, 0 1px 1px black, -1px 0 1px black, 0 -1px 1px black
 
@@ -85,6 +85,45 @@
         +font-size(9.5)
 
 
+  &.implicit
+    margin: 0 0 7px 0
+    .content
+      padding: 7px 15px 5px 0
+      background-color: hsl(278, 15%, 15%)
+      border: 1px solid hsl(278, 12%, 30%)
+      border-radius: 0 8px 8px 0
+      box-shadow: none
+
+    .text, .alias, .time
+      font-family: 'Cousine'
+
+    .alias
+      display: inline
+      padding: 0 .5em 0 5px
+      padding-left: 1.3em
+      color: hsl(278, 25%, 70%)
+
+    .text
+      flex: 1
+      background-color: none
+      color: hsl(47, 45%, 67%)
+
+    .time
+      text-align: right
+      min-width: 5.3em
+      font-family: 'Cousine'
+      right: 5px
+
+    .nou-right-open-mini
+      position: absolute
+      left: -2px
+      top: 4px
+      width: .7em
+      align-self: center
+      font-family: 'Cousine'
+      color: hsl(47, 45%, 67%)
+
+
   &.scale-small
     .avatar
       width: 24px
@@ -107,15 +146,23 @@
       +font-size(16)
     .nou-circle
       +font-size(8.5)
+    .nou-right-open-mini
+      +font-size(24)
 
   &.scale-large
+    .text.implicit
+      +font-size(16)
     .content, .text
       +font-size(18)
     .nou-circle
       +font-size(9.5)
 
   &.scale-larger
-    .alias, .time
+    .nou-right-open-mini
+      left: -3px
+      top: 3px
+      +font-size(28)
+    .alias, .time, .text.implicit
       +font-size(18)
     .content, .text
       +font-size(20)
@@ -123,7 +170,11 @@
       +font-size(10.5)
 
   &.scale-largest
-    .alias, .time
+    .nou-right-open-mini
+      left: -3px
+      top: 3px
+      +font-size(28)
+    .alias, .time, .text.implicit
       +font-size(18)
     .content, .text
       +font-size(22)

@@ -19,7 +19,7 @@ export enum MsgPriorityText {
   HIGH = 'high'
 }
 
-export type MsgType     = 'normal'|'inline'|'inline-avatar'|'server';
+export type MsgType     = 'normal'|'inline'|'inline-avatar'|'server'|'implicit';
 export type MsgScale    = 'small'|'normal'|'large'|'larger'|'largest';
 export type MsgPriority = 'low'|'medium'|'high'
 

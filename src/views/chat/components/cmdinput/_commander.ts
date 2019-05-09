@@ -106,7 +106,6 @@ export default class Commander extends Vue {
 
   onTyping(ev: MouseEvent) {
     const obj = ev.target as HTMLElement;
-    console.debug('onTyping()')
 
     if (!obj.innerText.length) {
       this.typingPaused.cancel();

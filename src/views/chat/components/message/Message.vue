@@ -15,7 +15,20 @@
       </div>
     </div>
 
-    <!-- INLINE MESSAGES -->
+    <!-- IMPLICIT MESSAGES -->
+    <div
+      v-if="type == 'implicit'"
+      class="chat-message implicit"
+      :class="scaleClass"
+    >
+      <div class="content">
+        <i class="nou-right-open-mini"></i>
+        <div class="alias implicit">{{ alias }}</div>
+        <div class="text implicit markdown md-message" v-html="sanitizedContent"></div>
+      </div>
+    </div>
+
+    <!-- NORMAL INLINE MESSAGE -->
     <div
       v-if="isInline"
       class="chat-message inline"

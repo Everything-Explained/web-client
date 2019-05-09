@@ -83,6 +83,10 @@ export default class Chat extends Vue {
     this.mainRoom.emit(RoomEvent.MESSAGE, content);
   }
 
+  sendEmote(content: string) {
+    this.mainRoom.emit(RoomEvent.EMOTE, content);
+  }
+
 
   clearMessages() {
     this.messages = [];
@@ -134,9 +138,9 @@ export default class Chat extends Vue {
 
   private onRoomSetup(name: string, tag: string, clients: SockClient[]) {
     const users =
-      clients
-        .slice(0)
-        .map(client => new ChatUser(client.alias, client.avatar))
+      clients.map(
+        client => new ChatUser(client.alias, client.avatar)
+      )
     ;
     this.mainRoom = this.sock.createRoomHandle(tag, name);
 
@@ -147,15 +151,25 @@ export default class Chat extends Vue {
 
   private setupRoomEvents() {
     this.mainRoom.on(RoomEvent.MESSAGE, (alias, msg, type) => {
+      console.debug('on MESSAGE activated')
       this.addMessage(alias, msg, type);
     })
 
     this.mainRoom.on(RoomEvent.TYPING, (alias, typing: TypingState) => {
+      console.debug('on TYPING activated');
       const user = this.users.find(u => u.alias == alias);
       if (user) {
         user.typingState = typing;
       }
     })
+
+    this.mainRoom.on(
+      RoomEvent.EMOTE,
+      (alias, content) => {
+        console.log('adding emote message')
+        this.addMessage(alias, content, 'implicit')
+      }
+    )
   }
 
 

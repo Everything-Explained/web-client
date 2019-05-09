@@ -20,6 +20,14 @@ export default class ChatCommands {
         )
       }
     },
+    {
+      alias: ['me', 'emote'],
+      exec: (content: string) => {
+        if (content.length) {
+          this.chatView.sendEmote(content);
+        }
+      }
+    },
     // CLEAR MESSAGES
     {
       alias: ['clear', 'cls'],
