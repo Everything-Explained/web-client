@@ -124,6 +124,21 @@ export default class Commander extends Vue {
   }
 
 
+  onPaste(ev: ClipboardEvent) {
+    const data = ev.clipboardData;
+    if (data) {
+      document.execCommand(
+        'insertText', false, data.getData('text/plain')
+      );
+    }
+    else {
+      throw new Error(
+        'onPaste()::does not support clipboard data modification'
+      );
+    }
+  }
+
+
 
 
   private setInput(el: HTMLElement, val: string) {

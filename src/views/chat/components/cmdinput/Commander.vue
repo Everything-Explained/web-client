@@ -9,6 +9,7 @@
       @keydown.up.exact.prevent="onUp"
       @keydown.down.exact.prevent="onDown"
       @keyup="onTyping"
+      @paste.prevent="onPaste"
     ></div>
   </div>
 </template>
