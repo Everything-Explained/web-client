@@ -5,7 +5,7 @@ abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
 ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@$%&()-"':,.
 
 ::::::: PUNCTUATION :::::::
-;:'",.()!?‘’“”
+;:'",.()!?‘’“”…
 
 :::::: SYMBOLS ::::::
 []{}\/@#$%^&*+=_-|<>~`
@@ -23,7 +23,7 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@$%&()-"':,.
 
 
 Font URLs:
-                                                                     FAMILY  WEIGHT                     SUBSET
-https://fonts.googleapis.com/css?family=Cousine&text=
+                                                                                          SUBSET
+https://fonts.googleapis.com/css?family=Cousine&text=abcdefghijklmnopqrstuvwxyz%20ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890%3B%3A'%22%2C.()!%3F%E2%80%98%E2%80%99%E2%80%9C%E2%80%9D%5B%5D%7B%7D%5C%2F%40%23%24%25%5E%26*%2B%3D_-%7C%3C%3E~%60%E2%80%A6
 
-abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890;:'",.()!?‘’“”[]{}\/@#$%^&*+=_-|<>~`
+abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890;:'",.()!?‘’“”[]{}\\/@#$%^&*+=_-|<>~`…
