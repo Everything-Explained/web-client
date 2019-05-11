@@ -21,7 +21,6 @@ export enum RoomEvent {
   NOTICE  = '-rm-notice',
   TYPING  = '-rm-typing',
   LEAVE   = '-rm-leave',
-  LEFT    = '-rm-left',
   JOINED  = '-rm-joined'
 }
 
@@ -38,10 +37,9 @@ interface SockEvent {
   exec: ((...args: any[]) => void)[];
 }
 
-export interface SockRoom {
-  name: string;
+export interface RoomSock {
   tag: string;
-  on: (event: RoomEvent, func: (...args: any[]) => void) => void;
+  on: (event: RoomEvent, func: (...args: any[]) => void) => RoomSock;
   emit: (event: RoomEvent, ...args: any[]) => void;
 }
 
@@ -64,9 +62,8 @@ export default class ChatSocket {
 
 
 
-  createRoomHandle(tag: string, name: string): SockRoom {
-    return {
-      name,
+  createRoomHandle(tag: string): RoomSock {
+    const obj = {
       tag,
 
       on: (
@@ -74,6 +71,7 @@ export default class ChatSocket {
         func: (...args: any[]) => void
       ) => {
         this.sock.on(`${tag + event}`, (...subargs: any[]) => func(...subargs))
+        return obj;
       },
 
       emit: (
@@ -83,6 +81,7 @@ export default class ChatSocket {
         this.sock.emit(`${tag + event}`, ...args);
       }
     }
+    return obj;
   }
 
 
@@ -104,7 +103,8 @@ export default class ChatSocket {
 
   connect() {
     this.sock = io(this.url, {
-      forceNew: true, reconnection: false, query: { test: 'K2DLYMTVLF' }})
+      forceNew: true, reconnection: false, query: { test: 'O2OP4C4HSK' }}
+    );
 
     this.sock
       .on('connect', () => this.onConnection())

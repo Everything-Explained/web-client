@@ -4,10 +4,11 @@ import Display from './components/display/Display.vue';
 import Userlist from './components/userlist/Userlist.vue';
 import Commander from './components/cmdinput/Commander.vue';
 import Utils from '@/libs/utils';
-import ChatSocket, { ClientEvent, RoomEvent, SockClient, SockRoom } from './_chatsocket';
+import ChatSocket, { ClientEvent, RoomEvent, SockClient, RoomSock } from './_chatsocket';
 import { MsgPriority, MsgScale, IMessage, MsgType, MsgPriorityText } from './components/message/_message';
 import { TypingState } from './components/cmdinput/_commander';
 import ChatUser from './_chatuser';
+import Room from './_room';
 
 
 @Component({
@@ -20,19 +21,19 @@ import ChatUser from './_chatuser';
 export default class Chat extends Vue {
 
   displayScale: MsgScale = 'normal';
+  user!: ChatUser;
 
+  users: ChatUser[] = [];
+
+
+  private messages: IMessage[] = [];
+  private room!: Room;
 
   private readonly sio!: SocketIOClient.Socket;
   private readonly sock = new ChatSocket(
     'https://localhost:3003',
     'BKL8YW2OZUNFLC6RJLS7YN7T' || this.$api.rid
   );
-
-  private messages: IMessage[] = [];
-  private users: ChatUser[] = [];
-
-  private user!: ChatUser;
-  private mainRoom!: SockRoom;
 
 
 
@@ -49,7 +50,7 @@ export default class Chat extends Vue {
   }
 
   set typing(state: TypingState) {
-    this.mainRoom.emit(RoomEvent.TYPING, state);
+    this.room.sendTypingState(state);
   }
 
 
@@ -80,19 +81,17 @@ export default class Chat extends Vue {
 
 
   sendMessage(content: string) {
-    this.mainRoom.emit(RoomEvent.MESSAGE, content);
+    this.room.sendMessage(content);
   }
+
 
   sendEmote(content: string) {
-    this.mainRoom.emit(RoomEvent.EMOTE, content);
+    this.room.sendEmote(content);
   }
 
+
   sendNotice(alias: string, content: string) {
-    const user = this.users.find(u => u.alias == alias);
-    if (user) {
-      console.log('sending notice', alias, user.id, content);
-      this.mainRoom.emit(RoomEvent.NOTICE, user.id, content);
-    }
+    this.room.sendNotice(alias, content);
   }
 
 
@@ -114,7 +113,7 @@ export default class Chat extends Vue {
   }
 
   beforeRouteLeave(to, from, next) {
-    // this.sio.disconnect();
+    this.sock.disconnect();
     next();
   }
 
@@ -145,48 +144,16 @@ export default class Chat extends Vue {
 
 
   private onRoomSetup(name: string, tag: string, clients: SockClient[]) {
-    const users =
-      clients.map(
-        client => new ChatUser(client.alias, client.avatar, client.id)
-      )
-    ;
-    this.mainRoom = this.sock.createRoomHandle(tag, name);
-
-    this.users = users;
-    this.setupRoomEvents();
+    this.room = new Room(this.sock, this, {
+      name,
+      tag,
+      clients
+    });
+    this.users = this.room.users;
   }
 
 
-  private setupRoomEvents() {
-    this.mainRoom.on(RoomEvent.MESSAGE, (alias, msg, type) => {
-      this.addMessage(alias, msg, type);
-    })
 
-    this.mainRoom.on(RoomEvent.TYPING, (alias, typing: TypingState) => {
-      const user = this.users.find(u => u.alias == alias);
-      if (user) {
-        user.typingState = typing;
-      }
-    })
-
-    this.mainRoom.on(
-      RoomEvent.EMOTE,
-      (alias, content) => {
-        console.log('Adding EMOTE : alias', alias, ' and content: ', content);
-        this.addMessage(alias, content, 'implicit')
-      }
-    )
-
-    this.mainRoom.on(
-      RoomEvent.NOTICE,
-      (alias, content) => {
-        console.log('Adding NOTICE : alias', alias, ' and content: ', content);
-        this.addMessage(alias, content, 'implicit-notice');
-      }
-    )
-
-
-  }
 
 
 }

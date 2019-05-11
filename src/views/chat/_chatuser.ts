@@ -1,4 +1,5 @@
 import { TypingState } from './components/cmdinput/_commander';
+import { SockClient } from './_chatsocket';
 
 
 
@@ -56,10 +57,10 @@ export default class ChatUser {
 
 
 
-  constructor(alias: string, avatar: string, id: string) {
-    this._alias = alias;
-    this._avatar = avatar;
-    this._id = id;
+  constructor(client: SockClient) {
+    this._alias = client.alias;
+    this._avatar = client.avatar;
+    this._id = client.id;
   }
 
 

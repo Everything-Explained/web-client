@@ -19,7 +19,15 @@ export enum MsgPriorityText {
   HIGH = 'high'
 }
 
-export type MsgType     = 'normal'|'inline'|'inline-avatar'|'server'|'implicit'|'implicit-notice';
+export type MsgType =
+  'normal' |
+  'inline' |
+  'inline-avatar' |
+  'server' |
+  'implicit-notice' |
+  'implicit-passive' |
+  'implicit-emote'
+;
 export type MsgScale    = 'small'|'normal'|'large'|'larger'|'largest';
 export type MsgPriority = 'low'|'medium'|'high'
 
@@ -65,10 +73,7 @@ export default class Message extends Vue {
   }
 
   get isImplicit() {
-    return (
-      this.type == 'implicit' ||
-      this.type == 'implicit-notice'
-    )
+    return !!~this.type.indexOf('implicit');
   }
 
   get implicitClass() {
@@ -78,7 +83,9 @@ export default class Message extends Vue {
   }
 
   get sanitizedContent() {
-    return this.$markdown.render(this.content);
+    let suffix = '';
+    if (~this.type.indexOf('emote')) suffix = '...';
+    return this.$markdown.render(this.content + suffix);
   }
 
 
