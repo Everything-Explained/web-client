@@ -25,9 +25,8 @@
         <menu id="MainMenu">
           <ul>
             <li v-for="(route, i) of routes" :key="i">
-              <router-link :to='"/" + route.name'>
-                <span>{{route.name}}</span>
-              </router-link>
+              <router-link :to='"/" + route.name'
+              >{{route.name.toUpperCase()}}</router-link>
             </li>
           </ul>
         </menu>

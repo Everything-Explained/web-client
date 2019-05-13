@@ -1,12 +1,12 @@
 title: rules
 author: Jaeiya
 
-love
+LOVE
 : One rule to "Rule" them all. ___Show Love for one another___; there is no rule greater than this. The rules below are explicit reminders for those moments when we forget to love.
 
 ~~break~~
 
-language
+LANGUAGE
 : > **1.1**
   >> This is something with 1.1
 
@@ -24,7 +24,7 @@ language
 
 ~~break~~
 
-linking
+LINKING
 : > **1.1**
   >> All links should be constructive and non-provocative. This depends highly on the context of the channel. Most links are okay in the general chat as long as they don't violate any previous or following rules.
 
@@ -43,10 +43,10 @@ linking
 [nsfw]:#/home/faq/what-are-common-phrases
 
 
-fun
+FUN
 : What's the point of bringing people together of similar mind and love if we can't find the laughter and the joy? This is what Noumenae is about; converging on the joy from the wellspring of our **God-given-love** that is within all of us, bursting out to be discovered. Share the passion, the heartache, and the revelation. All of it is God-within, letting the world know He's always been here.
 
 ~~break~~
 
-disclaimer
+DISCLAIMER
 : Noumenae and associated persons do not assume any responsibility for the content that its members post. All members accept full responsibility for their actions and content on this site. Noumenae and associated persons will not be liable or responsible in any way for member generated content or for damages of any kind, including, but not limited to, physiological or psychological, incurred as a result of the use of or reliance on member generated content.

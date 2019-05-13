@@ -1,5 +1,4 @@
 @import '../../styles/markdown'
-@import '../../styles/variables';
 
 article.dyn-panel
   position: absolute
@@ -15,11 +14,11 @@ article.dyn-panel
     position: relative
     display: inline-block
     // width: 500px
-    padding: 5px 13px
+    padding: 7px 13px 3px 13px
     margin: 0
     top: 133px
     left: 50%
-    font-size: 34px
+    +font-size(24)
     color: hsl(50, 55%, 55%)
     background: $panel
     border-radius: 7px
@@ -33,8 +32,7 @@ article.dyn-panel
     height: 144px
     text-align: center
     @extend %font-comfortaa
-    font-size: 44px
-    letter-spacing: 1px
+    +font-size(28)
     color: hsl(50, 55%, 55%)
     background: linear-gradient(to bottom, hsla(0, 0%, 6.7%, 0.97) 5%, hsla(0, 0%, 6.7%, 0.89) 63%, hsla(0, 0%, 6.7%, 0.05) 100%);
     z-index: 100
@@ -84,12 +82,10 @@ article.dyn-panel
     flex-direction: column
     margin-bottom: 7px
     padding: 5px 0
-    color: hsl(278, 0%, 70%)
+    color: hsl(278, 0%, 67%)
     background: $sub-panel-light
-    font-family: 'Comfortaa'
-    font-weight: 300
-    font-variant: small-caps
-    font-size: 22px
+    @extend %font-comfortaa
+    +font-size(18)
     text-align: center
     letter-spacing: 1px
     cursor: pointer
@@ -113,7 +109,7 @@ article.dyn-panel
 
   .split-title
     display: flex
-    font-size: 24px
+    +font-size(18)
     flex-direction: row
     .title-timestamp
       left: 10px

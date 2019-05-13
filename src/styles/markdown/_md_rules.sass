@@ -27,12 +27,11 @@
     flex: 2.7
     padding: 13px 8px
     text-align: center
-    font-size: 28px
-    font-family: 'Comfortaa'
-    font-variant: small-caps
-    letter-spacing: 1px
+    @extend %font-comfortaa
+    +font-size(20)
+    letter-spacing: 2px
     background-color: $sub-panel
-    color: hsl(0, 0%, 75%)
+    color: hsl(0, 0%, 67%)
 
   dd
     margin-left: 5px

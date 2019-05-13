@@ -9,13 +9,13 @@
               :key="index"
               @mousedown="goTo(page.title)"
             >
-              <span>{{ page.title.length > 1 ? '' : page.title[0] }}</span>
+              <span>{{ page.title.length > 1 ? '' : page.title[0].toUpperCase() }}</span>
               <div class="split-title" v-if="page.title.length > 1">
                 <div class="title-left">
                   {{ page.title[0] }}
                 </div>
                 <div class="title-right">
-                  {{ page.title[1] }}
+                  {{ page.title[1].toUpperCase() }}
                   <div class="title-timestamp">
                     {{ page.date | dateFormat('log') }}
                   </div>
@@ -29,7 +29,7 @@
             :class="{ hidden: inTransit }"
       >
         <header>
-          {{ header }}
+          {{ header.toUpperCase() }}
           <div class="timestamp">{{ subheader | dateFormat }}</div>
         </header>
         <img v-if="invalidPage" :src="$dataImages.lambBlush" />

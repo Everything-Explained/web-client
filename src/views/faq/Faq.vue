@@ -3,7 +3,7 @@
     <markdown-paging
       :pages='faq'
       :selectedPage='page'
-      placeholder='#### select a question on the left'
+      placeholder='#### SELECT A QUESTION ON THE LEFT'
       :mdClass="'md-faq'"
     ></markdown-paging>
   </div>

@@ -19,14 +19,12 @@ $trans-easing: ease
 .markdown
   font-family: 'Nunito'
   font-weight: 300
-  font-size: 18px
+  +font-size(18)
   color: hsl(0, 0%, 60%)
 
   h1, h2, h3, h4, h5
     margin-top: 8px
-    font-family: 'Comfortaa'
-    font-variant: small-caps
-    font-weight: 300
+    @extend %font-comfortaa
     line-height: normal
     letter-spacing: 1px
 

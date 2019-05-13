@@ -2,7 +2,7 @@ title: α11 : mustard-seed
 author: Aedaeum
 date: 01/16/2017
 
-# major changes
+# MAJOR CHANGES
 
 >- **New Font** - General site font changed to Nunito. The previous font was a little too "cursivey". This one looks a lot more professional.
 
@@ -21,7 +21,7 @@ date: 01/16/2017
 
 >- **New Form Controls!** - Input boxes, text areas, and buttons...have a new look that blends better with the flat minimalist style of the site.
 
-# fixes
+# FIXES
 
 >- **FAQ** - The FAQ has undergone a tiny face-lift as well, to fix the scrolling issue and add some much needed readability updates.
 
@@ -31,7 +31,7 @@ date: 01/16/2017
 
 >- **Console Double Post** - When losing a socket connection, the console would double-log it, as well as other events, whoops!
 
-# under the hood
+# UNDER THE HOOD
 
 >- **Lovely Modals** - I re-wrote the modal code, which means no more lag.
 

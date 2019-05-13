@@ -3,7 +3,7 @@
     <markdown-paging
       :pages='changelog'
       :selectedPage='page'
-      placeholder='#### select a log on the left'
+      placeholder='#### SELECT A LOG ON THE LEFT'
       :mdClass="'md-changelog'"
       sortBy="dateLast"
     ></markdown-paging>

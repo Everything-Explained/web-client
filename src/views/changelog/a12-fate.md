@@ -2,7 +2,7 @@ title: α12 : fate
 author: Aedaeum
 date: 7/25/2017
 
-# features
+# FEATURES
 
 >- **Scrollbars Everywhere!!** - That's right, we've got delicious scrollbars everywhere, including modals. There's currently a [discussion] about the numerous issues I've had with styling the scrollbars, while trying to maintain good functionality over multiple devices and configurations. Long story short, I had to compromise but I think it will pay off in the future.
 
@@ -20,18 +20,18 @@ date: 7/25/2017
 >
 >- _In the future you'll get a message saying that your notice was sent successfully_.
 
-# fixes
+# FIXES
 
 >- **Stop that Flicker!** - There was an issue with flickering when you navigated to the different home tab pages. This flickering was due to transitioning transparent to non-transparent colors.
 
 >- **Transparent what?** - During the creation of the site, I had the _brilliant_ idea to make all colors transparent for "theming" purposes, which in hindsight was...well...short-sighted _:P_
 >- All colors have been converted to solid colors. There are no more pointless transparent colors on the site. This is a fix, because any transitions from `transparent -> solid` resulted in wonky animation.
 
-# bits and bobs
+# BITS AND BOBS
 
 >- **FAQ page shinanigans** - Unfortunately the faq page is in dire need of a better mechanism for displaying content. Right now I'm updating it with _raw code_, which is just annoying and leaves no room for fancy transitions between topics. This will be addressed in the next update.
 
-# under the hood
+# UNDER THE HOOD
 
 >- **Markdown** - It's not particularly obvious, but most of the pages on the site have been converted to [Markdown]. This means I don't have to write raw html to update certain pages anymore. This will speed up development.
 
