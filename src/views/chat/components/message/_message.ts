@@ -82,10 +82,18 @@ export default class Message extends Vue {
     return this.type;
   }
 
+  get isNotice() {
+    return this.type == 'implicit-notice'
+  }
+
   get sanitizedContent() {
     let suffix = '';
+    let prefix = '';
     if (~this.type.indexOf('emote')) suffix = '...';
-    return this.$markdown.render(this.content + suffix);
+    if (~this.type.indexOf('notice')) {
+      prefix = suffix = '"';
+    }
+    return this.$markdown.render(prefix + this.content + suffix);
   }
 
 

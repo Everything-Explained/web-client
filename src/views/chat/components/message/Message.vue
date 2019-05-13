@@ -15,6 +15,7 @@
       </div>
     </div>
 
+
     <!-- IMPLICIT MESSAGES -->
     <div
       v-if="isImplicit"
@@ -23,11 +24,16 @@
     >
       <div class="content">
         <i class="nou-right-open-mini"></i>
-        <div class="alias implicit">{{ alias }}</div>
-        <i class="nou-right-open-mini last"></i>
+        <div class="alias implicit"
+          >{{ alias }}
+            <span class="notice-says" v-if="isNotice"
+              >tells you&nbsp;
+            </span>
+        </div>
         <div class="text implicit markdown md-message" v-html="sanitizedContent"></div>
       </div>
     </div>
+
 
     <!-- NORMAL INLINE MESSAGE -->
     <div
@@ -42,6 +48,7 @@
         <div class="time">{{ time }}</div>
       </div>
     </div>
+
 
     <!-- NORMAL MESSAGES -->
     <div
