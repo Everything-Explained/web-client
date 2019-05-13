@@ -1,12 +1,12 @@
 <template>
   <div>
-    <!-- SERVER MESSAGES -->
+    <!-- INLINE MESSAGES -->
     <div
-      v-if="type == 'server'"
-      class="chat-message inline server"
-      :class="scaleClass"
+      v-if="isInline"
+      class="chat-message"
+      :class="[inlineClass, scaleClass]"
     >
-      <div class="content server" :class="priorityClass">
+      <div class="content" :class="priorityClass">
         <div class="time">{{ time }}</div>
         <i class="nou-circle first"></i>
         <div class="alias">{{ alias }}</div>
@@ -35,8 +35,8 @@
     </div>
 
 
-    <!-- NORMAL INLINE MESSAGE -->
-    <div
+    <!-- NORMAL MESSAGE (INLINE-VERSION WIP) -->
+    <!-- <div
       v-if="isInline"
       class="chat-message inline"
       :class="scaleClass"
@@ -47,7 +47,7 @@
         <slot></slot>
         <div class="time">{{ time }}</div>
       </div>
-    </div>
+    </div> -->
 
 
     <!-- NORMAL MESSAGES -->

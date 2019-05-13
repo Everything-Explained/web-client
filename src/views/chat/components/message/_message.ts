@@ -23,7 +23,8 @@ export type MsgType =
   'normal' |
   'inline' |
   'inline-avatar' |
-  'server' |
+  'inline-server' |
+  'inline-client' |
   'implicit-notice' |
   'implicit-passive' |
   'implicit-emote'
@@ -66,10 +67,7 @@ export default class Message extends Vue {
   }
 
   get isInline() {
-    return (
-      this.type == 'inline' ||
-      this.type == 'inline-avatar'
-    )
+    return !!~this.type.indexOf('inline');
   }
 
   get isImplicit() {
@@ -79,6 +77,11 @@ export default class Message extends Vue {
   get implicitClass() {
     if (!this.isImplicit) throw new Error('Message is not implicit');
 
+    return this.type;
+  }
+
+  get inlineClass() {
+    if (!this.isInline) throw new Error('Message is not inline');
     return this.type;
   }
 

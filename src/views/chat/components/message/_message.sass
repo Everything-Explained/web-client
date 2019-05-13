@@ -19,14 +19,17 @@
 
   .priority-medium
     .text, .nou-circle.last
-      color: $attention !important
+      color: hsl(330, 100%, 83%) !important
 
   .priority-high
     .text, .nou-circle.last
       color: hsl(50, 80%, 67%) !important
 
 
-  &.inline, &.implicit
+  &.inline, &.implicit, &.inline-server, &.inline-client
+    .content, .text
+      font-family: 'Cousine'
+
     .content
       display: flex
       min-width: 0
@@ -52,20 +55,8 @@
         min-height: 32px
         min-width: 32px
 
-
-  &.inline.server
-    .content
-      font-family: 'Cousine'
-
-    .alias
-      padding: 0
-      color: $attention
-
-    .text
-      display: inline
-
+  &.inline-server, &.inline-client
     .nou-circle.first
-      color: $attention
       margin-right: 0.7em
       margin-left: 1em
 
@@ -84,6 +75,18 @@
         +font-size(18)
       .nou-circle
         +font-size(9.5)
+
+  &.inline-server
+    .alias
+      color: hsl(330, 100%, 80%)
+    .nou-circle.first
+      color: hsl(330, 100%, 80%)
+
+  &.inline-client
+    .alias
+      color: hsl(0, 0%, 80%)
+    .nou-circle.first
+      color: hsl(0, 0%, 80%)
 
 
   &.implicit, &.implicit-notice, &.implicit-passive
@@ -113,18 +116,16 @@
       align-self: center
       font-family: 'Cousine'
 
-
   &.implicit-emote
     .content
       background-color: transparent
       border: none
     .alias
-      color: hsl(47, 25%, 67%)
+      color: hsl(47, 40%, 65%)
     .text
-      color: hsl(47, 25%, 67%)
+      color: hsl(47, 40%, 65%)
     .nou-right-open-mini
-      color: hsl(0, 0%, 35%)
-
+      color: hsl(0, 0%, 40%)
 
   &.implicit-notice
     .content
