@@ -50,7 +50,9 @@ export default class Chat extends Vue {
   }
 
   set typing(state: TypingState) {
-    this.room.sendTypingState(state);
+    if (this.room)
+      this.room.sendTypingState(state)
+    ;
   }
 
 
