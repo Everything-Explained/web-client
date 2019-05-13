@@ -15,6 +15,11 @@ export default class App extends Vue {
     present - a gift to Me, Myself, and I.
   `
 
+  get isFirefox() {
+    console.log(navigator.userAgent);
+    return !!~navigator.userAgent.indexOf('Firefox');
+  }
+
   public routes!: RouteConfig[];
 
   public openWatermark() {

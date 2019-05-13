@@ -64,7 +64,6 @@ export default class Commander extends Vue {
 
   mounted() {
     const el = this.$refs.cmdbox as HTMLElement;
-    el.innerHTML = '<br/>'
   }
 
 

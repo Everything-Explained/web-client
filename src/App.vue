@@ -35,11 +35,11 @@
         </aside>
       </section>
 
-        <div id="PageContent">
-          <transition name="fade">
-            <router-view />
-          </transition>
-        </div>
+      <div id="PageContent" :class="{ firefox: isFirefox }">
+        <transition name="fade">
+          <router-view />
+        </transition>
+      </div>
     </section>
 
   </main>
