@@ -95,7 +95,7 @@ export default class Room {
       userIndex = index;
     }
 
-    if (~userIndex) {
+    if (userIndex >= 0) {
       this.users.splice(userIndex, 1);
       return true;
     }
