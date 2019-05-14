@@ -2,11 +2,11 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import Display from './components/display/Display.vue';
 import Userlist from './components/userlist/Userlist.vue';
-import Commander from './components/cmdinput/Commander.vue';
+import Commander from './components/commander/Commander.vue';
 import Utils from '@/libs/utils';
 import ChatSocket, { ClientEvent, RoomEvent, SockClient, RoomSock } from './_chatsocket';
 import { MsgPriority, MsgScale, IMessage, MsgType, MsgPriorityText } from './components/message/_message';
-import { TypingState } from './components/cmdinput/_commander';
+import { TypingState } from './components/commander/_commander';
 import ChatUser from './_chatuser';
 import Room from './_room';
 

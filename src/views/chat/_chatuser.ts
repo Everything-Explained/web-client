@@ -1,4 +1,4 @@
-import { TypingState } from './components/cmdinput/_commander';
+import { TypingState } from './components/commander/_commander';
 import { SockClient } from './_chatsocket';
 
 

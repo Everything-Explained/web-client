@@ -4,6 +4,7 @@ import Chat from '../../_chat';
 import ChatCommands from './_commands';
 import ChatSocket, { RoomEvent } from '../../_chatsocket';
 import { InputHistory } from './_input-history';
+import InputHints from './_input-hints';
 
 
 enum Keys {

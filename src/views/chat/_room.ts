@@ -1,6 +1,6 @@
 import ChatSocket, { RoomSock, RoomEvent, SockClient } from './_chatsocket';
 import Chat from './_chat';
-import { TypingState } from './components/cmdinput/_commander';
+import { TypingState } from './components/commander/_commander';
 import ChatUser from './_chatuser';
 import { MsgPriorityText } from './components/message/_message';
 
