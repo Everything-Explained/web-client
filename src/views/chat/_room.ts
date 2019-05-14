@@ -62,11 +62,17 @@ export default class Room {
   }
 
 
+  /**
+   * Try's to send a notice, but if the user does not
+   * exist, returns false.
+   */
   sendNotice(aliasTo: string, content: string) {
-    const user = this.users.find(u => u.alias == aliasTo);
+    const {user} = this.findUser(aliasTo)
     if (user) {
       this.send(RoomEvent.NOTICE, user.id, content);
+      return true;
     }
+    return false;
   }
 
 
@@ -160,8 +166,15 @@ export default class Room {
 
 
   private onLeave(alias: string) {
-    this.removeUser(alias);
-    this.chat.addMessage(alias, 'has left the room...', 'implicit-passive');
+    if (this.removeUser(alias)) {
+      this.chat.addImplicitMsg(alias, 'has left the room...');
+    }
+    else {
+      this.chat.addClientMsg(
+        'Could not remove user',
+        'medium'
+      )
+    }
   }
 
 
