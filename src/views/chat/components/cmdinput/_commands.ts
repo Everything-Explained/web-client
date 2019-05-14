@@ -10,38 +10,28 @@ export default class ChatCommands {
     // DISPLAY SCALE
     {
       alias: ['scale', 'size', 'display'],
-      exec: (scale: MsgScale) => {
-        if (this.isMessageScale(scale)) {
-          return this.scale(scale);
-        }
-        this.sendClientMsg(
-          '_Invalid scale_; Acceptable values are **small**, **normal**, \
-          **large**, **larger**, and **largest**.'
-        )
-      }
+      exec: (scale: MsgScale) => this.onSetScale(scale)
     },
     {
       alias: ['me', 'emote'],
-      exec: (content: string) => {
-        if (content.length) {
-          this.chatView.sendEmote(content);
-        }
-      }
+      exec: (args: string) => this.onSendEmote(args)
     },
     {
       alias: ['notice'],
-      exec: (arg: string) => {
-        const args = arg.split(' ');
-        if (args.length < 2) return;
-        const alias = args[0];
-        this.chatView.sendNotice(alias, args.slice(1).join(' '));
-      }
+      exec: (arg: string) => this.onSendNotice(arg)
     },
     // CLEAR MESSAGES
     {
       alias: ['clear', 'cls'],
+      exec: () => this.onClearScreen()
+    },
+    {
+      alias: ['client'],
       exec: () => {
-        this.chatView.clearMessages();
+        this.chat.addClientMsg(
+          'this is some long text to test the client message',
+          'medium'
+        );
       }
     },
     {
@@ -61,7 +51,7 @@ export default class ChatCommands {
 
 
 
-  constructor(private readonly chatView: Chat,
+  constructor(private readonly chat: Chat,
               private readonly sock: ChatSocket)
   {}
 
@@ -82,17 +72,85 @@ export default class ChatCommands {
       }
     }
 
-    this.sendClientMsg('Not a valid command.')
+    this.chat.addClientMsg(
+      `Sorry, I don't understand that command...`,
+      'low'
+    );
   }
 
 
   scale(size: MsgScale) {
-    this.chatView.displayScale = size;
-    this.sendClientMsg(`Display scale set to: (${size})`);
+    this.chat.displayScale = size;
+    this.chat.addClientMsg(`Display scale set to: (${size})`);
   }
 
 
 
+
+  private onSetScale(args: string) {
+    const validArgs = this.getArgs(1, args) as [MsgScale];
+    if (validArgs) {
+      let [size] = validArgs;
+      if (this.isMessageScale(size)) {
+        this.chat.displayScale = size;
+        this.chat.addClientMsg(`Display scale set to: (${size})`);
+        return;
+      }
+    }
+
+    this.chat.addClientMsg(
+      '_Invalid scale_; Acceptable values are **small**, **normal**, \
+      **large**, **larger**, and **largest**.'
+    );
+  }
+
+
+  private onSendEmote(args: string) {
+    if (args && args.length) {
+      this.chat.sendEmote(args);
+      return;
+    }
+
+    this.chat.addClientMsg(
+      `_Invalid Argument_; Make sure you didn't enter empty input.`
+    )
+  }
+
+
+  private onSendNotice(args: string) {
+    const validArgs = this.getArgs(2, args) as [string, string]
+    if (validArgs) {
+      if (!this.chat.sendNotice(...validArgs)) {
+        this.chat.addClientMsg(
+          `**"${validArgs[0]}"** is not in this room.`
+        );
+      }
+      return;
+    }
+
+    this.chat.addClientMsg(`Make sure you enter a users name to Notice them.`);
+  }
+
+
+  private onClearScreen() {
+    this.chat.clearMessages();
+  }
+
+
+  private getArgs(amount: number, str: string) {
+    if (!str) return null;
+
+    const args = str.split(' ');
+    if (args.length < amount) return null;
+
+    const reqArgs: string[] = [];
+    reqArgs.push(...args.slice(0, amount));
+
+    if (args.length > amount)
+      reqArgs.push(args.slice(amount - 1).join(' '))
+    ;
+    return reqArgs;
+  }
 
 
   private isMessageScale(scale: string) {
@@ -103,15 +161,6 @@ export default class ChatCommands {
       scale == 'larger' ||
       scale == 'largest'
     )
-  }
-
-
-  private sendClientMsg(content: string) {
-    this.chatView.addMessage(
-      'Client',
-      content,
-      'server'
-    );
   }
 
 }

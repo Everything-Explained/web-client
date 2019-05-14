@@ -32,7 +32,7 @@ export default class Chat extends Vue {
   private readonly sio!: SocketIOClient.Socket;
   private readonly sock = new ChatSocket(
     'https://localhost:3003',
-    'BKL8YW2OZUNFLC6RJLS7YN7T' || this.$api.rid
+    'Z1YUXTXEK125D8HKGBIC5GWU' // this.$api.rid
   );
 
 
@@ -66,20 +66,39 @@ export default class Chat extends Vue {
 
 
 
-  addMessage(alias: string, content: string, type?: MsgType, priority?: MsgPriority) {
-    const avatar = 'https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAfM/_RhlOKf4IlU/photo.jpg?sz=96'
-    this.messages.push(
-      {
-        alias,
-        content,
-        avatar,
-        type: type || 'normal',
-        scale: this.displayScale,
-        priority: priority || 'low',
-        time: Utils.toNormalTimeString(Date.now())
-      }
-    )
+  addNormalMsg(alias: string, content: string) {
+    this.addMsg(alias, content, 'normal');
   }
+
+
+  addEmote(alias: string, content: string) {
+    this.addMsg(alias, content, 'implicit-emote');
+  }
+
+
+  addNotice(alias: string, content: string) {
+    this.addMsg(alias, content, 'implicit-notice');
+  }
+
+
+  addClientMsg(content: string, priority?: MsgPriority) {
+    this.addMsg(
+      'Client', content, 'inline-client', priority || 'low'
+    );
+  }
+
+
+  addServerMsg(content: string, priority?: MsgPriority) {
+    this.addMsg(
+      'Server', content, 'inline-server', priority || 'high'
+    );
+  }
+
+
+  addImplicitMsg(alias: string, content: string) {
+    this.addMsg(alias, content, 'implicit-passive')
+  }
+
 
 
   sendMessage(content: string) {
@@ -92,16 +111,15 @@ export default class Chat extends Vue {
   }
 
 
+
   sendNotice(alias: string, content: string) {
-    this.room.sendNotice(alias, content);
+    return this.room.sendNotice(alias, content);
   }
 
 
   clearMessages() {
     this.messages = [];
   }
-
-
 
 
   async beforeRouteEnter(to, from, next) {
@@ -122,18 +140,39 @@ export default class Chat extends Vue {
 
 
 
+  private addMsg(
+    alias: string,
+    content: string,
+    type?: MsgType,
+    priority?: MsgPriority
+  ) {
+    const avatar = 'https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAfM/_RhlOKf4IlU/photo.jpg?sz=96'
+    this.messages.push(
+      {
+        alias,
+        content,
+        avatar,
+        type: type || 'normal',
+        scale: this.displayScale,
+        priority: priority || 'low',
+        time: Utils.toNormalTimeString(Date.now())
+      }
+    )
+  }
+
+
   private initSockEvents() {
     this.sock
       .on(
         ClientEvent.SERVERMSG,
         (content, priority) => {
-          this.addMessage('Server', content, 'server', priority)
+          this.addMsg('Server', content, 'inline-server', priority)
         }
       )
       .on(
         ClientEvent.CLIENTMSG,
         (content, priority) => {
-          this.addMessage('Client', content, 'server', priority)
+          this.addMsg('Client', content, 'inline-client', priority)
         }
       )
       .on(ClientEvent.AUTHSUCCESS, user => { this.user = user })

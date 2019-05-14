@@ -2,6 +2,7 @@ import ChatSocket, { RoomSock, RoomEvent, SockClient } from './_chatsocket';
 import Chat from './_chat';
 import { TypingState } from './components/cmdinput/_commander';
 import ChatUser from './_chatuser';
+import { MsgPriorityText } from './components/message/_message';
 
 interface RoomConfig {
   name: string;
@@ -138,23 +139,23 @@ export default class Room {
 
 
   private onMessage(alias: string, content: string) {
-    this.chat.addMessage(alias, content, 'normal');
+    this.chat.addNormalMsg(alias, content);
   }
 
 
   private onEmote(alias: string, content: string) {
-    this.chat.addMessage(alias, content, 'implicit-emote');
+    this.chat.addEmote(alias, content);
   }
 
 
   private onNotice(alias: string, content: string) {
-    this.chat.addMessage(alias, content, 'implicit-notice');
+    this.chat.addNotice(alias, content);
   }
 
 
   private onJoin(client: SockClient) {
     this.users.push(new ChatUser(client))
-    this.chat.addMessage(client.alias, 'has joined the room...', 'implicit-passive')
+    this.chat.addImplicitMsg(client.alias, 'has joined the room...')
   }
 
 
