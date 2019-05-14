@@ -103,7 +103,7 @@ export default class ChatSocket {
 
   connect() {
     this.sock = io(this.url, {
-      forceNew: true, reconnection: false, query: { test: 'O2OP4C4HSK' }}
+      forceNew: true, reconnection: false, query: { test: 'SZ6W9GRQMI' }}
     );
 
     this.sock
@@ -136,7 +136,7 @@ export default class ChatSocket {
 
   private onConnection() {
     this.sock.emit(ServerEvent.SHAKE, this.rid)
-    this.sendServerMsg(
+    this.emitServerMsg(
       'Connected Successfully',
       MsgPriorityText.LOW
     );
@@ -146,10 +146,10 @@ export default class ChatSocket {
   private onDisconnect() {
     if (this.forceClosed) {
       this.forceClosed = false;
-      return this.sendClientMsg('Closed Connection');
+      return this.emitClientMsg('Closed Connection');
     }
 
-    return this.sendServerMsg(
+    return this.emitServerMsg(
       'Closed Connection',
       MsgPriorityText.HIGH
     );
@@ -158,12 +158,12 @@ export default class ChatSocket {
 
   private onError(error: Error) {
     if (~error.message.indexOf('xhr poll error')) {
-      return this.sendClientMsg(
+      return this.emitClientMsg(
         'Cannot Connect to Server',
         MsgPriorityText.HIGH
       )
     }
-    this.sendServerMsg(error.message, MsgPriorityText.HIGH);
+    this.emitServerMsg(error.message, MsgPriorityText.HIGH);
   }
 
 
@@ -173,11 +173,11 @@ export default class ChatSocket {
 
 
   private authFailed(content: string) {
-    this.sendServerMsg(content, MsgPriorityText.HIGH);
+    this.emitServerMsg(content, MsgPriorityText.HIGH);
   }
 
 
-  private sendServerMsg(content: string, priority: MsgPriorityText) {
+  private emitServerMsg(content: string, priority: MsgPriorityText) {
     this.emit(
       ClientEvent.SERVERMSG,
       content,
@@ -186,7 +186,7 @@ export default class ChatSocket {
   }
 
 
-  private sendClientMsg(content: string, priority = MsgPriorityText.LOW) {
+  private emitClientMsg(content: string, priority = MsgPriorityText.LOW) {
     this.emit(
       ClientEvent.CLIENTMSG,
       content,
