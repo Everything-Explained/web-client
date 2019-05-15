@@ -3,17 +3,17 @@
     <img :src="picture" alt="" width="96" height="96" />
     <div class="settings-container" :class="{hidden: changeAlias}">
       <div class="row">
-        <div class="cell">alias</div>
+        <div class="cell">ALIAS</div>
         <div class="cell">
           {{alias}}
-          <i class="far fa-edit"
+          <i class="nou-edit-o"
             title="Edit Alias"
             @click="toggleEditAlias"
           ></i>
         </div>
       </div>
       <div class="row">
-        <div class="cell">email</div>
+        <div class="cell">EMAIL</div>
         <div class="cell">{{email}}</div>
       </div>
       <button class="standard" @click="logout">Logout</button>
