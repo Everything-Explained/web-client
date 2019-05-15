@@ -24,6 +24,10 @@ export default class Display extends Vue {
   @Prop({ type: String })
   readonly msgStyle!: 'normal'|'inline-normal';
 
+
+  private stopScroll = false;
+  private el!: HTMLElement;
+
   created() {
     // const gen = new Generator();
     // const ipsum = new Lorem();
@@ -43,6 +47,10 @@ export default class Display extends Vue {
     // }
   }
 
+  mounted() {
+    this.el = this.$refs.elMessageContainer as HTMLElement;
+  }
+
 
   setMsgType(type: MsgType) {
     if (type == 'normal' || type == 'normal-inline') {
@@ -54,9 +62,22 @@ export default class Display extends Vue {
 
 
   @Watch('messages', {immediate: true})
-  mergeMessages(messages: IMessage[]) {
-    if (messages.length <= 1) return;
+  onImmediateMsgChg(messages: IMessage[]) {
+    this.keepScrollPos();
 
+    if (messages.length > 1) {
+      this.appendLikeMessages(messages);
+    }
+  }
+
+
+  @Watch('messages')
+  onMsgChg(messages: IMessage[]) {
+    this.autoScrollOnMsg();
+  }
+
+
+  private appendLikeMessages(messages: IMessage[]) {
     const lastMsg = messages[messages.length - 2];
     const currentMsg = messages[messages.length - 1];
 
@@ -72,12 +93,28 @@ export default class Display extends Vue {
   }
 
 
-  @Watch('messages')
-  watchMessages(messages: IMessage[]) {
-    const el = this.$refs.elMessageContainer as HTMLElement;
+  /**
+   * Prevents auto-scrolling when a user manually adjusts
+   * their scroll position.
+   */
+  private keepScrollPos() {
+    if (this.el) {
+      const scrollDiff = this.el.scrollHeight - this.el.clientHeight;
+      if (scrollDiff - this.el.scrollTop >= 100) {
+        this.stopScroll = true;
+      }
+    }
+  }
+
+
+  private autoScrollOnMsg() {
     // Vue renders async
     this.$nextTick(() => {
-      el.scrollTop = el.scrollHeight;
+      if (!this.stopScroll)
+        this.el.scrollTop = this.el.scrollHeight;
+      else
+        this.stopScroll = false
+      ;
     })
   }
 
