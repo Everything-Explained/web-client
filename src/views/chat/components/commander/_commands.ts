@@ -126,7 +126,7 @@ export default class ChatCommands {
 
 
   private onSendNotice(args: string) {
-    const validArgs = this.getArgs(2, args) as [string, string]
+    const validArgs = this.getArgs(1, args) as [string, string]
     if (validArgs) {
       if (!this.chat.sendNotice(...validArgs)) {
         this.chat.addClientMsg(
@@ -155,7 +155,7 @@ export default class ChatCommands {
     reqArgs.push(...args.slice(0, amount));
 
     if (args.length > amount)
-      reqArgs.push(args.slice(amount - 1).join(' '))
+      reqArgs.push(args.slice(amount).join(' '))
     ;
     return reqArgs;
   }
