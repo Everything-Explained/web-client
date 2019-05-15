@@ -4,7 +4,7 @@ import Component from 'vue-class-component';
 import { Generator } from '@/libs/generator';
 import Message from '../message/Message.vue';
 import Lorem from '@/libs/loremipsum';
-import { IMessage, MsgScale } from '../message/_message';
+import { IMessage, MsgScale, MsgType } from '../message/_message';
 
 
 
@@ -20,6 +20,9 @@ export default class Display extends Vue {
 
   @Prop({ type: String })
   readonly scale!: MsgScale;
+
+  @Prop({ type: String })
+  readonly msgStyle!: 'normal'|'inline-normal';
 
   created() {
     // const gen = new Generator();
@@ -40,6 +43,16 @@ export default class Display extends Vue {
     // }
   }
 
+
+  setMsgType(type: MsgType) {
+    if (type == 'normal' || type == 'normal-inline') {
+      return this.msgStyle;
+    }
+
+    return type;
+  }
+
+
   @Watch('messages', {immediate: true})
   mergeMessages(messages: IMessage[]) {
     if (messages.length <= 1) return;
@@ -50,6 +63,7 @@ export default class Display extends Vue {
     if (
          currentMsg.type == lastMsg.type
       && currentMsg.alias == lastMsg.alias
+      && lastMsg.type == 'normal'
     ) {
       if (currentMsg.timeNow - lastMsg.timeNow <= 45000) {
         lastMsg.content.push(messages.pop()!.content[0]);

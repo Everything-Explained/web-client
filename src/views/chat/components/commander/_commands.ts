@@ -13,6 +13,10 @@ export default class ChatCommands {
       exec: (args: string) => this.onSetScale(args)
     },
     {
+      alias: ['style'],
+      exec: (args: string) => this.onSetMsgStyle(args)
+    },
+    {
       alias: ['me', 'emote'],
       exec: (args: string) => this.onSendEmote(args)
     },
@@ -110,6 +114,28 @@ export default class ChatCommands {
       '_Invalid scale_; Acceptable values are **small**, **normal**, \
       **large**, **larger**, and **largest**.'
     );
+  }
+
+
+  private onSetMsgStyle(args: string) {
+    const validArgs = this.getArgs(1, args);
+
+    if (validArgs) {
+      const [style] = validArgs as [string];
+      
+      if (style == 'normal') {
+        return this.chat.messageStyle = 'normal';
+      }
+
+      if (style == 'inline') {
+        return this.chat.messageStyle = 'normal-inline';
+      }
+    }
+
+    this.chat.addClientMsg(
+      `_Invalid Argument_; Only **normal** and **inline** are \
+      acceptable values.`
+    )
   }
 
 

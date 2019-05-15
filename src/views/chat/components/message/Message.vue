@@ -36,18 +36,18 @@
 
 
     <!-- NORMAL MESSAGE (INLINE-VERSION WIP) -->
-    <!-- <div
-      v-if="isInline"
-      class="chat-message inline"
-      :class="scaleClass"
+    <div
+      v-if="type == 'normal-inline'"
+      class="chat-message"
+      :class="[scaleClass, 'normal-inline']"
     >
-      <img v-if="type == 'inline-avatar'" :src="avatar" class="avatar" />
       <div class="content">
-        <div class="alias">{{ alias }}</div>
-        <slot></slot>
         <div class="time">{{ time }}</div>
+        <div class="alias"
+          >{{ alias }}<span class="text markdown md-message" v-html="sanitizedContent"></span>
+        </div>
       </div>
-    </div> -->
+    </div>
 
 
     <!-- NORMAL MESSAGES -->

@@ -21,8 +21,8 @@ import Room from './_room';
 export default class Chat extends Vue {
 
   displayScale: MsgScale = 'normal';
+  messageStyle: 'normal'|'normal-inline' = 'normal';
   user!: ChatUser;
-
   users: ChatUser[] = [];
 
 
@@ -147,6 +147,10 @@ export default class Chat extends Vue {
     priority?: MsgPriority
   ) {
     const avatar = 'https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAfM/_RhlOKf4IlU/photo.jpg?sz=96'
+
+    // FIXME: Message style logic should not be here. This is a display
+    // mechanism and should reside in display.
+    type = (!type || type == 'normal') ? this.messageStyle : type;
     this.messages.push(
       {
         alias,

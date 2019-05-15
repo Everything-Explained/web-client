@@ -30,7 +30,11 @@
     &:nth-child(2)
       padding-top: 0
 
-  &.inline, &.implicit, &.inline-server, &.inline-client
+  &.inline,
+  &.implicit,
+  &.inline-server,
+  &.inline-client,
+  &.normal-inline
     .content, .text
       font-family: 'Cousine'
 
@@ -59,7 +63,7 @@
         min-height: 32px
         min-width: 32px
 
-  &.inline-server, &.inline-client
+  &.inline-server, &.inline-client, &.normal-inline
     .nou-circle.first
       margin-right: 0.7em
       margin-left: 1em
@@ -79,6 +83,18 @@
         +font-size(18)
       .nou-circle
         +font-size(9.5)
+
+  &.normal-inline
+    .content
+      padding-top: 3px
+      padding-bottom: 1px
+    .time
+      line-height: 1.5em
+    .alias
+      padding-left: 0.7em
+    .text
+      padding-left: 0.7em
+      line-height: 1.5em
 
   &.inline-server
     .alias

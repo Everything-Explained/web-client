@@ -6,7 +6,7 @@
         :key="i"
         :alias="msg.alias"
         :avatar="msg.avatar"
-        :type="msg.type"
+        :type="setMsgType(msg.type)"
         :priority="msg.priority"
         :scale="scale"
         :content="msg.content"

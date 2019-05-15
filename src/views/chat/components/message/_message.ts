@@ -22,6 +22,7 @@ export enum MsgPriorityText {
 
 export type MsgType =
   'normal' |
+  'normal-inline' |
   'inline' |
   'inline-avatar' |
   'inline-server' |
@@ -67,11 +68,11 @@ export default class Message extends Vue {
   }
 
   get isInline() {
-    return !!~this.type.indexOf('inline');
+    return this.type.indexOf('inline') == 0;
   }
 
   get isImplicit() {
-    return !!~this.type.indexOf('implicit');
+    return this.type.indexOf('implicit') == 0;
   }
 
   get implicitClass() {

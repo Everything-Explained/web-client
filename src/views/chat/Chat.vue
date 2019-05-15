@@ -1,7 +1,11 @@
 <template>
   <div class="chat">
     <div class="top-wrapper">
-      <display :scale="displayScale" :messages="messages"></display>
+      <display
+        :scale="displayScale"
+        :messages="messages"
+        :msg-style="messageStyle"
+      ></display>
       <userlist :users="users" scale="normal"></userlist>
     </div>
     <commander :chat="$this" :sock="socket"></commander>
