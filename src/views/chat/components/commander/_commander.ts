@@ -58,8 +58,10 @@ export default class Commander extends Vue {
   private readonly commands = new ChatCommands(this.chat, this.sock);
   private readonly history = new InputHistory(25);
   private hints!: InputHints;
-
   private cmdBox!: HTMLElement;
+
+
+
 
 
   created() {}
@@ -73,15 +75,18 @@ export default class Commander extends Vue {
 
 
 
+
   onEnter(ev: MouseEvent) {
-    const el = ev.target as HTMLElement;
     const input =
-      this.normalizeInput(
-        el.innerText + String.fromCharCode(ev.which)
-      )
+      this.normalizedInput(String.fromCharCode(ev.which))
     ;
 
     if (!input.length) return;
+
+    // Requires hitting enter twice to execute hinted command
+    if (this.hints.isActive)
+      return this.completeHint()
+    ;
 
     this.history.add(input);
 
@@ -101,7 +106,6 @@ export default class Commander extends Vue {
     let box = this.cmdBox;
     // Prevent removal of placeholder character
     if (box.innerText.length - 1 == 0) {
-
       ev.preventDefault();
     }
     this.hints.clear();
@@ -118,25 +122,10 @@ export default class Commander extends Vue {
   }
 
 
-  onTab() {
-    this.hints.fill();
-    this.alignCaret(false, this.cmdBox);
-  }
+  onSuggestion(ev: KeyboardEvent) {
+    if (this.isKeyPrevented(ev, Keys.BACKSPACE, Keys.UP, Keys.DOWN)) return;
 
-
-  suggest(ev: KeyboardEvent) {
-    if (this.isKeyPrevented(ev, Keys.BACKSPACE)) return;
-
-    let content = '';
-    if (this.cmdBox.childNodes[0]) {
-      content = this.cmdBox.childNodes[0].textContent || '';
-    }
-
-    const input =
-      this.normalizeInput(
-        content + ev.key
-      )
-    ;
+    const input = this.normalizedInput(ev.key, true);
 
     if (input.length < 2 || input[0] != '/') return;
 
@@ -145,8 +134,7 @@ export default class Commander extends Vue {
 
 
   onTyping(ev: KeyboardEvent) {
-    const obj = ev.target as HTMLElement;
-    const input = this.normalizeInput(obj.innerText);
+    const input = this.normalizedInput();
     const preventKeys = [
       Keys.DOWN,
       Keys.UP,
@@ -197,15 +185,22 @@ export default class Commander extends Vue {
   }
 
 
-  private normalizeInput(input: string) {
-    // Remove invisible character placeholder
-    // if (input.length == 1) {
-    //   input = input.replace(/\n/, '');
-    // }
+  private normalizedInput(additive?: string, fromNode?: boolean) {
+    const input =
+      (fromNode)
+        ? this.cmdBox.childNodes[0].textContent + (additive || '')
+        : this.cmdBox.innerText + (additive || '')
+    ;
 
-    input = input.replace(/\s/gi, ' ');
-    return input.trim();
+    return input.replace(/\s/gi, ' ').trim();
   }
+
+
+  private completeHint() {
+    this.hints.fill();
+    this.alignCaret(false, this.cmdBox);
+  }
+
 
   private isKeyPrevented(ev: KeyboardEvent, ...keys: Keys[]) {
     let pos = keys.length;
@@ -216,6 +211,7 @@ export default class Commander extends Vue {
 
     return false;
   }
+
 
   private reset() {
     this.cmdBox.innerHTML = '&#xfeff;';

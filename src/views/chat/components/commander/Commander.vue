@@ -8,10 +8,10 @@
       @keydown.enter.exact.prevent="onEnter"
       @keydown.up.exact.prevent="onUp"
       @keydown.down.exact.prevent="onDown"
-      @keydown.tab.exact.prevent="onTab"
-      @keyup="onTyping"
-      @keydown="suggest"
+      @keydown.tab.exact.prevent="completeHint"
       @keydown.backspace.exact="onBackspace"
+      @keydown="onSuggestion"
+      @keyup="onTyping"
       @blur="hints.clear()"
       @paste.prevent="onPaste"
     >&#xfeff;</div>
