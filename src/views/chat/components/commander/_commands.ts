@@ -10,7 +10,7 @@ export default class ChatCommands {
     // DISPLAY SCALE
     {
       alias: ['scale', 'size', 'display'],
-      exec: (scale: MsgScale) => this.onSetScale(scale)
+      exec: (args: string) => this.onSetScale(args)
     },
     {
       alias: ['me', 'emote'],
@@ -48,7 +48,15 @@ export default class ChatCommands {
     }
   ]
 
-
+  get aliases() {
+    return this.commands.reduce(
+      (a: string[], v) => {
+        a.push(...v.alias);
+        return a;
+      },
+      []
+    )
+  }
 
 
   constructor(private readonly chat: Chat,

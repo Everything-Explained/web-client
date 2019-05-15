@@ -8,9 +8,14 @@
       @keydown.enter.exact.prevent="onEnter"
       @keydown.up.exact.prevent="onUp"
       @keydown.down.exact.prevent="onDown"
+      @keydown.tab.exact.prevent="onTab"
       @keyup="onTyping"
+      @keydown="suggest"
+      @keydown.backspace.exact="onBackspace"
+      @blur="hints.clear()"
       @paste.prevent="onPaste"
-    ></div>
+    >&#xfeff;</div>
+    <!-- The above character prevents command hint failure -->
   </div>
 </template>
 

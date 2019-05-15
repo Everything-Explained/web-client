@@ -49,22 +49,25 @@ export default class Commander extends Vue {
   isTyping = false;
 
 
-  readonly commands = new ChatCommands(this.chat, this.sock);
-  readonly history = new InputHistory(25);
-
   readonly typingPaused = this.$debounce((cmdr: this) => {
     cmdr.isTyping = false;
     this.chat.typing = TypingState.PAUSED;
   }, 3000)();
 
 
+  private readonly commands = new ChatCommands(this.chat, this.sock);
+  private readonly history = new InputHistory(25);
+  private hints!: InputHints;
+
+  private cmdBox!: HTMLElement;
 
 
-  created() {
-  }
+  created() {}
+
 
   mounted() {
-    const el = this.$refs.cmdbox as HTMLElement;
+    this.cmdBox = this.$refs.cmdbox as HTMLElement
+    this.hints = new InputHints(this.cmdBox, this.commands.aliases);
   }
 
 
@@ -85,12 +88,23 @@ export default class Commander extends Vue {
     if (input.indexOf('/') == 0) {
       const cmd = input.substr(1);
       this.commands.exec(cmd);
-      el.innerText = '';
     }
     else {
       this.chat.sendMessage(input);
-      el.innerText = '';
     }
+
+    this.reset();
+  }
+
+
+  onBackspace(ev: KeyboardEvent) {
+    let box = this.cmdBox;
+    // Prevent removal of placeholder character
+    if (box.innerText.length - 1 == 0) {
+
+      ev.preventDefault();
+    }
+    this.hints.clear();
   }
 
 
@@ -101,6 +115,32 @@ export default class Commander extends Vue {
 
   onDown(ev: MouseEvent) {
     this.setInput(ev.target as HTMLElement, this.history.prev());
+  }
+
+
+  onTab() {
+    this.hints.fill();
+    this.alignCaret(false, this.cmdBox);
+  }
+
+
+  suggest(ev: KeyboardEvent) {
+    if (this.isKeyPrevented(ev, Keys.BACKSPACE)) return;
+
+    let content = '';
+    if (this.cmdBox.childNodes[0]) {
+      content = this.cmdBox.childNodes[0].textContent || '';
+    }
+
+    const input =
+      this.normalizeInput(
+        content + ev.key
+      )
+    ;
+
+    if (input.length < 2 || input[0] != '/') return;
+
+    this.hints.show(input.substr(1));
   }
 
 
@@ -177,6 +217,11 @@ export default class Commander extends Vue {
     return false;
   }
 
+  private reset() {
+    this.cmdBox.innerHTML = '&#xfeff;';
+    this.alignCaret(false, this.cmdBox);
+  }
+
 
   /**
    * Place the caret at either the beginning (true) or
@@ -199,6 +244,27 @@ export default class Commander extends Vue {
       }
     } else {
       throw new Error('Browser Too Old for caret Placement');
+    }
+  }
+
+
+  /**
+   * Inserts the caret at the specified location of the
+   * specified object
+   *
+   * @param pos The position you want the caret in the object
+   */
+  private insertCaret(pos: number, el: HTMLElement|HTMLInputElement) {
+
+    let range = document.createRange()
+      , sel = window.getSelection()
+    ;
+
+    range.setStart(el.childNodes[0], pos);
+    range.collapse(true);
+    if (sel) {
+      sel.removeAllRanges();
+      sel.addRange(range);
     }
   }
 
