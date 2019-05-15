@@ -150,12 +150,13 @@ export default class Chat extends Vue {
     this.messages.push(
       {
         alias,
-        content,
+        content: [content],
         avatar,
         type: type || 'normal',
         scale: this.displayScale,
         priority: priority || 'low',
-        time: Utils.toNormalTimeString(Date.now())
+        time: Utils.toNormalTimeString(Date.now()),
+        timeNow: Date.now()
       }
     )
   }

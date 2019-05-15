@@ -25,6 +25,10 @@
     .text, .nou-circle.last
       color: hsl(50, 80%, 67%) !important
 
+  &.normal .text
+    padding-top: 10px
+    &:nth-child(2)
+      padding-top: 0
 
   &.inline, &.implicit, &.inline-server, &.inline-client
     .content, .text
@@ -254,9 +258,8 @@
     display: block
     margin: 0 5px 0 0
 
-  .text
+  .text,
     color: hsl(0, 0%, 70%)
-
 
   .content
     position: relative

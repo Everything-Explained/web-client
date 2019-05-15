@@ -4,10 +4,11 @@ import Utils from '@/libs/utils';
 
 
 export interface IMessage {
-  content: string;
+  content: string[];
   alias: string;
   avatar: string;
   time: string;
+  timeNow: number;
   type: MsgType;
   priority: MsgPriority;
   scale: MsgScale;
@@ -51,11 +52,10 @@ export default class Message extends Vue {
   @Prop({ default: 'low', type: String})
   readonly priority!: MsgPriority;
 
-  @Prop({ type: String })
-  readonly content!: string;
+  @Prop({ type: Array })
+  readonly content!: string[];
 
   readonly time = Utils.toNormalTimeString(Date.now());
-
 
 
   get scaleClass() {
@@ -96,7 +96,7 @@ export default class Message extends Vue {
     if (~this.type.indexOf('notice')) {
       prefix = suffix = '"';
     }
-    return this.$markdown.render(prefix + this.content + suffix);
+    return this.sanitizeContent(prefix + this.content.toString() + suffix);
   }
 
 
@@ -107,6 +107,12 @@ export default class Message extends Vue {
   }
 
 
+
+
+
+  sanitizeContent(content: string) {
+    return this.$markdown.render(content);
+  }
 
 
 }

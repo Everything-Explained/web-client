@@ -53,7 +53,7 @@
     <!-- NORMAL MESSAGES -->
     <div
       v-if="type =='normal'"
-      class="chat-message"
+      class="chat-message normal"
       :class="scaleClass"
     >
       <img :src="avatar" class="avatar" />
@@ -62,7 +62,12 @@
           <div class="alias">{{ alias }}</div>
           <div class="time">{{ time }}</div>
         </div>
-        <div class="text markdown md-message" v-html="sanitizedContent"></div>
+        <div
+          v-for="(line, i) of content"
+          :key="i"
+          class="text markdown md-message"
+          v-html="sanitizeContent(line)"
+        ></div>
       </div>
     </div>
   </div>

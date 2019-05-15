@@ -40,9 +40,26 @@ export default class Display extends Vue {
     // }
   }
 
+  @Watch('messages', {immediate: true})
+  mergeMessages(messages: IMessage[]) {
+    if (messages.length <= 1) return;
+
+    const lastMsg = messages[messages.length - 2];
+    const currentMsg = messages[messages.length - 1];
+
+    if (
+         currentMsg.type == lastMsg.type
+      && currentMsg.alias == lastMsg.alias
+    ) {
+      if (currentMsg.timeNow - lastMsg.timeNow <= 45000) {
+        lastMsg.content.push(messages.pop()!.content[0]);
+      }
+    }
+  }
+
 
   @Watch('messages')
-  watchMessages() {
+  watchMessages(messages: IMessage[]) {
     const el = this.$refs.elMessageContainer as HTMLElement;
     // Vue renders async
     this.$nextTick(() => {
