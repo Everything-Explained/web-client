@@ -130,6 +130,7 @@ export default class ChatSocket {
         ClientEvent.ROOMSETUP,
         (name, tag, clients) => this.onRoomSetup(name, tag, clients)
       )
+      .on(ClientEvent.SERVERMSG, msg => this.emit(ClientEvent.SERVERMSG, msg))
       .on(ClientEvent.AUTHFAIL, msg => this.authFailed(msg))
       .on(ClientEvent.AUTHSUCCESS, user => this.authSuccess(user))
       .on(ClientEvent.PONG, () => this.onPong())
@@ -161,10 +162,6 @@ export default class ChatSocket {
 
   private onConnection() {
     this.sock.emit(ServerEvent.SHAKE, this.rid)
-    this.emitServerMsg(
-      'Connected Successfully',
-      MsgPriorityText.LOW
-    );
   }
 
 
