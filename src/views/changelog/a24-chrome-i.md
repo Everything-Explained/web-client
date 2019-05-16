@@ -14,7 +14,7 @@ date: 04/20/2018
 
 >- **Are you Idle or Active?** - That is the question! And now that question can be answered because the server and client share that information. Your new idle/active stats will be updated when you toggle from idle to active.
 
->- **What level are you?** - Is a question you can now ask yourself. Unfortunately you won't be able to answer that question, because as of right now there is no way to actually view your level. That will come in the next update.
+>- **What level are you?** - Is a question you can now ask yourself. Unfortunately you won't be able to answer that question, because as of right now there is no way to actually view your level. That will come in a later update.
 >- Levels are gained by simply chatting on the site, but to prevent spam, you only gain [XP] every 45 seconds.
 >- If you want to get a sneak peek at what stats will be available in the future, check out this issue [here](https://github.com/Noumenae/server/issues/25). You might not know what some of those stats are, but they will be revealed in time.
 
@@ -37,7 +37,7 @@ date: 04/20/2018
 >- **Persistent Updates!** - Basically when the site gets an update, it requires the user to refresh, but this doesn't work if the site is loaded from the browser [cache]. So to get around this, I've [busted] your cache. This allows a _programmatic_ or _user_ initiated refresh of the page to load the new version of the site.
 >- Originally when I updated the site, I would have to log into my [CDN] (cloudflare) and manually bust the cache by telling it to purge all files. After this update, I will no longer have to do that.
 
->- **Database Revamp** - You, the user, won't recognize any changes with this update but because the database code got updated, it means your new stats are ready to be implemented for the next release cycle.
+>- **Database Revamp** - You, the user, won't recognize any changes with this update but because the database code got updated, it means your new stats are ready to be implemented for a future release cycle.
 
 # FIXES AND SECURITY
 
