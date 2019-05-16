@@ -1,4 +1,5 @@
 import { MsgPriorityText as MsgPriorityText } from './components/message/_message';
+import { Timer } from '@/libs/timer';
 
 export interface SockClient {
   alias: string;
@@ -9,7 +10,7 @@ export interface SockClient {
 export enum ClientEvent {
   AUTHFAIL    = 'auth-fail',
   AUTHSUCCESS = 'auth-success',
-  PING        = 'clt-ping',
+  PONG        = 'clt-pong',
   SERVERMSG   = 'srv-message',
   CLIENTMSG   = 'clt-message',
   ROOMSETUP   = 'setup-room',
@@ -26,7 +27,7 @@ export enum RoomEvent {
 
 export enum ServerEvent {
   SHAKE = 'hand-shake',
-  PONG = 'srv-pong',
+  PING = 'srv-ping',
   IDLE = 'state-idle',
   ACTIVE = 'state-active'
 }
@@ -50,14 +51,28 @@ export default class ChatSocket {
   private events: SockEvent[] = [];
 
   private forceClosed = false;
+  private pingStart = 0;
 
+  private _latencies: number[] = [];
 
-
-
-  constructor(private url: string, private rid: string) {
-    this.connect();
+  get latency() {
+    const ltcyArr = this._latencies;
+    const latencyAvg =
+      ltcyArr.reduce((a, v) => a + v, 0) / ltcyArr.length;
+    ;
+    return Math.round(latencyAvg);
   }
 
+
+
+
+  constructor(
+    private url: string,
+    private rid: string,
+    private timer: Timer
+  ) {
+    this.connect();
+  }
 
 
 
@@ -117,6 +132,7 @@ export default class ChatSocket {
       )
       .on(ClientEvent.AUTHFAIL, msg => this.authFailed(msg))
       .on(ClientEvent.AUTHSUCCESS, user => this.authSuccess(user))
+      .on(ClientEvent.PONG, () => this.onPong())
     ;
   }
 
@@ -131,6 +147,15 @@ export default class ChatSocket {
 
   private onRoomSetup(name: string, tag: string, clients: any) {
     this.emit(ClientEvent.ROOMSETUP, name, tag, clients);
+  }
+
+
+  private onPong() {
+    if (this._latencies.length >= 30) {
+      this._latencies.shift();
+    }
+    this._latencies.push(Date.now() - this.pingStart);
+    console.debug('latencies', this._latencies);
   }
 
 
@@ -169,6 +194,23 @@ export default class ChatSocket {
 
   private authSuccess(user: SockClient) {
     this.emit(ClientEvent.AUTHSUCCESS, user);
+    this.setupPingTimer();
+    this.timer.start();
+  }
+
+
+  private setupPingTimer() {
+    this.timer.add({
+      name: 'ping',
+      time: 3,
+      interval: true,
+      exec: () => {
+        this.pingStart = Date.now();
+        this.sock.emit(ServerEvent.PING, this.latency)
+      }
+    })
+    this.pingStart = Date.now();
+    this.sock.emit(ServerEvent.PING, 0);
   }
 
 

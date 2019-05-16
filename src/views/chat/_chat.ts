@@ -32,7 +32,8 @@ export default class Chat extends Vue {
   private readonly sio!: SocketIOClient.Socket;
   private readonly sock = new ChatSocket(
     'https://localhost:3003',
-    'Z1YUXTXEK125D8HKGBIC5GWU' // this.$api.rid
+    'Z1YUXTXEK125D8HKGBIC5GWU',// this.$api.rid,
+    this.$timer
   );
 
 
@@ -47,6 +48,10 @@ export default class Chat extends Vue {
 
   get typing() {
     return this.user.typingState;
+  }
+
+  get ping() {
+    return this.sock.latency;
   }
 
   set typing(state: TypingState) {

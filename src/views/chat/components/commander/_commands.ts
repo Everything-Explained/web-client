@@ -17,6 +17,10 @@ export default class ChatCommands {
       exec: (args: string) => this.onSetMsgStyle(args)
     },
     {
+      alias: ['ping'],
+      exec: (args: string) => this.onPing(args)
+    },
+    {
       alias: ['me', 'emote'],
       exec: (args: string) => this.onSendEmote(args)
     },
@@ -99,6 +103,12 @@ export default class ChatCommands {
 
 
 
+  private onPing(args: string) {
+    this.chat.addClientMsg(
+      `Ping: ${this.chat.ping}ms`
+    )
+  }
+
   private onSetScale(args: string) {
     const validArgs = this.getArgs(1, args) as [MsgScale];
     if (validArgs) {
@@ -122,7 +132,7 @@ export default class ChatCommands {
 
     if (validArgs) {
       const [style] = validArgs as [string];
-      
+
       if (style == 'normal') {
         return this.chat.messageStyle = 'normal';
       }

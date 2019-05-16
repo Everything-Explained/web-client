@@ -3,6 +3,7 @@ import { MiniModal } from '../libs/minimodal';
 import imageData from '@/assets/data-images.json';
 import Markdown from 'markdown-it';
 import ClientAPI from '../api/mock';
+import { Timer } from '@/libs/timer';
 
 
 export type DebounceObj =
@@ -17,6 +18,7 @@ declare module "vue/types/vue" {
     readonly $dataImages: typeof imageData;
     readonly $markdown: Markdown;
     readonly $api: ClientAPI;
+    readonly $timer: Timer;
     readonly $debounce:
                 (fn: (...args: any) => any, delay: number)
                   => (...args: any)

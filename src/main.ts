@@ -8,6 +8,7 @@ import setupMarkdown from './setup/markdown';
 import ClientAPI from './api/mock';
 import API from 'client-api';
 import Utils from './libs/utils';
+import { Timer } from './libs/timer';
 
 
 Vue.config.productionTip = false
@@ -71,6 +72,7 @@ Vue.use({
     Vue.prototype.$dataImages = dataImages;
     Vue.prototype.$markdown = setupMarkdown();
     Vue.prototype.$api = api;
+    Vue.prototype.$timer = new Timer();
     Vue.prototype.$debounce =
       (fn: (...args: any) => any, delay = 0) => {
         let timeoutID = 0;
