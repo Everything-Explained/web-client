@@ -28,28 +28,32 @@ export interface ITimerExec {
 export class Timer {
 
 
-  private _pollTimeout = 0;
-  private _pollTime = 5e3; // 5 seconds minimum
-  private _pollRunning = false;
+  private pollTimeout = 0;
+  private pollTime    = 5e3;    // 5 seconds minimum
+  private pollRunning = false;
 
-  private _timers: ITimerExec[] = [];
+  private timers: ITimerExec[] = [];
+
+
 
 
   constructor() {}
 
 
+
+
   public add(timer: ITimerExec) {
-    if (this._getTimer(timer.name))
+    if (this.getTimer(timer.name))
       throw new Error(`A Time named "${timer.name}" already exists`)
     ;
 
     timer = Object.assign(timer, {
-      _queued: this._pollRunning,
+      _queued: this.pollRunning,
       _count: (timer.interval) ? 0 : timer.time
     });
 
-    this._timers.push(timer);
-    console.debug('ADDTIMER', this._timers);
+    this.timers.push(timer);
+    console.debug('ADDTIMER', this.timers);
     return this;
   }
 
@@ -57,15 +61,15 @@ export class Timer {
   public delete(name: string) {
     if (!name) return this;
 
-    const timer = this._getTimer(name)
-    const index = this._timers.indexOf(timer);
+    const timer = this.getTimer(name)
+    const index = this.timers.indexOf(timer);
 
-    this._timers.splice(index, 1);
+    this.timers.splice(index, 1);
 
     console.debug(`DELTIMER::${name}`, timer);
 
     // Stop interval on 0 timers
-    if (!this._timers.length) this.stop();
+    if (!this.timers.length) this.stop();
 
     return this;
   }
@@ -74,15 +78,14 @@ export class Timer {
   public start(name?: string) {
     if (name) return this._initTimeout(name);
 
-    if (this._pollRunning) {
+    if (this.pollRunning) {
       console.warn('Timer Poll Already Running');
-    }
-    else {
-      this._pollTimeout =
-        setInterval(() => this._execInterval(), this._pollTime)
+    } else {
+      this.pollTimeout =
+        setInterval(() => this.execInterval(), this.pollTime)
       ;
 
-      this._pollRunning = true;
+      this.pollRunning = true;
     }
 
     return this;
@@ -90,13 +93,13 @@ export class Timer {
 
 
   private _initTimeout(name: string) {
-    let timer = this._getTimer(name);
+    let timer = this.getTimer(name);
 
     if (timer.interval)
       throw new Error('You can ONLY start individual Timeouts, not Intervals')
     ;
 
-    timer._queued = this._pollRunning;
+    timer._queued = this.pollRunning;
     timer._count = 0;
 
     return this;
@@ -104,7 +107,7 @@ export class Timer {
 
 
   public restart(name: string) {
-    let timer = this._getTimer(name);
+    let timer = this.getTimer(name);
 
     if (timer.interval) {
       console.warn('Intervals Cannot be Restared as they are Recurring.');
@@ -118,35 +121,35 @@ export class Timer {
 
   public stop(name?: string) {
     if (name) {
-      let timer = this._getTimer(name);
+      let timer = this.getTimer(name);
       if (!timer.interval)
         timer._count = timer.time
       ;
       return;
     }
 
-    if (this._pollRunning) {
-      clearInterval(this._pollTimeout);
-      this._timers.forEach(t => {
+    if (this.pollRunning) {
+      clearInterval(this.pollTimeout);
+      this.timers.forEach(t => {
         t._count = 0;
         t._queued = false;
       });
-      this._pollRunning = false;
+      this.pollRunning = false;
       console.debug('TIMER::', 'Main Interval Stopped');
     }
   }
 
 
-  private _execInterval() {
-    if (!this._timers.length) {
+  private execInterval() {
+    if (!this.timers.length) {
       return this.stop();
     }
 
-    this._timers.forEach(t => this._checkTimer(t));
+    this.timers.forEach(t => this.checkTimer(t));
   }
 
 
-  private _checkTimer(t: ITimerExec) {
+  private checkTimer(t: ITimerExec) {
     if (t._queued) {
       t._queued = false;
       return;
@@ -161,8 +164,8 @@ export class Timer {
   }
 
 
-  private _getTimer(name: string) {
-    const timer = this._timers.find(t => t.name == name);
+  private getTimer(name: string) {
+    const timer = this.timers.find(t => t.name == name);
     if (timer) return timer;
     throw new Error(`Timer::invalid timer name "${name}"`);
   }
