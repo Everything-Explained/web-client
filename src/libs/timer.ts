@@ -44,7 +44,9 @@ export class Timer {
 
   public add(timer: ITimerExec) {
     if (this.getTimer(timer.name))
-      throw new Error(`A Time named "${timer.name}" already exists`)
+      return console.warn(
+        `Timer "${timer.name}" already exists; ignoring...`
+      )
     ;
 
     timer = Object.assign(timer, {
@@ -62,14 +64,16 @@ export class Timer {
     if (!name) return this;
 
     const timer = this.getTimer(name)
-    const index = this.timers.indexOf(timer);
+    if (timer) {
+      const index = this.timers.indexOf(timer);
 
-    this.timers.splice(index, 1);
+      this.timers.splice(index, 1);
 
-    console.debug(`DELTIMER::${name}`, timer);
+      console.debug(`DELTIMER::${name}`, timer);
 
-    // Stop interval on 0 timers
-    if (!this.timers.length) this.stop();
+      // Stop interval on 0 timers
+      if (!this.timers.length) this.stop();
+    }
 
     return this;
   }
@@ -80,7 +84,8 @@ export class Timer {
 
     if (this.pollRunning) {
       console.warn('Timer Poll Already Running');
-    } else {
+    }
+    else {
       this.pollTimeout =
         setInterval(() => this.execInterval(), this.pollTime)
       ;
@@ -93,36 +98,40 @@ export class Timer {
 
 
   private _initTimeout(name: string) {
-    let timer = this.getTimer(name);
+    const timer = this.getTimer(name);
 
-    if (timer.interval)
-      throw new Error('You can ONLY start individual Timeouts, not Intervals')
-    ;
+    if (timer) {
+      if (timer.interval)
+        throw new Error('You can ONLY start individual Timeouts, not Intervals')
+      ;
 
-    timer._queued = this.pollRunning;
-    timer._count = 0;
+      timer._queued = this.pollRunning;
+      timer._count = 0;
+    }
 
     return this;
   }
 
 
   public restart(name: string) {
-    let timer = this.getTimer(name);
+    const timer = this.getTimer(name);
 
-    if (timer.interval) {
-      console.warn('Intervals Cannot be Restared as they are Recurring.');
-      return;
+    if (timer) {
+      if (timer.interval) {
+        console.warn('Intervals Cannot be Restared as they are Recurring.');
+        return;
+      }
+
+      timer._count = 0;
     }
-
-    timer._count = 0;
 
   }
 
 
   public stop(name?: string) {
     if (name) {
-      let timer = this.getTimer(name);
-      if (!timer.interval)
+      const timer = this.getTimer(name);
+      if (timer && !timer.interval)
         timer._count = timer.time
       ;
       return;
@@ -130,10 +139,12 @@ export class Timer {
 
     if (this.pollRunning) {
       clearInterval(this.pollTimeout);
-      this.timers.forEach(t => {
-        t._count = 0;
-        t._queued = false;
-      });
+
+      for (const timer of this.timers) {
+        timer._count = 0;
+        timer._queued = false;
+      }
+
       this.pollRunning = false;
       console.debug('TIMER::', 'Main Interval Stopped');
     }
@@ -145,7 +156,9 @@ export class Timer {
       return this.stop();
     }
 
-    this.timers.forEach(t => this.checkTimer(t));
+    for (const timer of this.timers) {
+      this.checkTimer(timer);
+    }
   }
 
 
@@ -165,9 +178,7 @@ export class Timer {
 
 
   private getTimer(name: string) {
-    const timer = this.timers.find(t => t.name == name);
-    if (timer) return timer;
-    throw new Error(`Timer::invalid timer name "${name}"`);
+    return this.timers.find(t => t.name == name);
   }
 
 
