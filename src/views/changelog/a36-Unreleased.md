@@ -10,6 +10,11 @@ author: Aedaeum
 > - **Paginated Deliciousness** - The _Changelog_, _FAQ_, _Blog_, and _Home_ pages have been converted to a new layout. These pages have dynamic data which will be converted into a nice looking layout for you to peruse.
 > - Accompanying the new look, is the ability to link to each of the dynamic pages. _Clicking_ a change log will now change the URL and you can share that URL with **anyone**!
 
+> - **Invite page has dissappeared! -** Wait...___no___...it's _just been moved_, don't worry. The Signin page now allows you to do **all the things**. You can of course Signin, but you can also request an invite or Signup with an existing invite! _It's an all-in-one page_ now with fancy toggles for each action.
+> - Of course this page is **only available** if you're not already Signed in...because well, that's the point right?
+
+# BITS & BOBS
+
 > - **Don't like your alias?** - Well, now you can change it! Just go into your [Settings] page and click the _edit icon_ next to your alias. A slick little box will appear, which will allow you to fiddle around. **Have at it!!**
 
 # CHAT OVERHAUL

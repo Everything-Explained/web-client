@@ -132,12 +132,21 @@ export default class Room {
   }
 
 
+  /**
+   * Emits an event over this room-specific channel.
+   *
+   * @param ev Room event to handle
+   * @param args Any arguments to send on the event
+   */
   private send(ev: RoomEvent, ...args: any[]) {
     this.roomSock.emit(ev, ...args);
     return this.roomSock;
   }
 
 
+  /**
+   * Add a handler to this room-specific channel event
+   */
   private on(ev: RoomEvent, func: (...args: any[]) => void) {
     this.roomSock.on(ev, func);
     return this.roomSock;
