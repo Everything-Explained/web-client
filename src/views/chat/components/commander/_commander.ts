@@ -46,12 +46,25 @@ export default class Commander extends Vue {
   readonly sock!: ChatSocket;
 
 
-  isTyping = false;
+  get isTyping() {
+    return this.chat.typing == TypingState.STARTED;
+  }
+
+  get typingState() {
+    return this.chat.typing;
+  }
+
+  set typingState(val: TypingState) {
+    if (TypingState.STOPPED == val) {
+      this.typingPaused.cancel();
+    }
+
+    this.chat.typing = val;
+  }
 
 
   readonly typingPaused = this.$debounce((cmdr: this) => {
-    cmdr.isTyping = false;
-    this.chat.typing = TypingState.PAUSED;
+    cmdr.typingState = TypingState.PAUSED;
   }, 3000)();
 
 
@@ -145,9 +158,7 @@ export default class Commander extends Vue {
     if (this.isKeyPrevented(ev, ...preventKeys)) return;
 
     if (!input.length) {
-      this.typingPaused.cancel();
-      this.isTyping = false;
-      this.chat.typing = TypingState.STOPPED;
+      this.typingState = TypingState.STOPPED;
       return;
     }
 
@@ -155,8 +166,7 @@ export default class Commander extends Vue {
     if (input[0] == '/') return;
 
     if (!this.isTyping) {
-      this.isTyping = true;
-      this.chat.typing = TypingState.STARTED;
+      this.typingState = TypingState.STARTED;
     }
 
     this.typingPaused.exec(this);
