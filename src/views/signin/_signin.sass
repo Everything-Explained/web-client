@@ -198,23 +198,45 @@
       top: 2px
       left: 2px
 
-    &:hover .icon-google-plus
+    &:hover .google-text,
+    &:hover .facebook-text
       background-color: hsl(220, 15%, 17%)
-      color: hsl(0, 0%, 90%)
+
+    &:hover .icon-google
+      background-color: hsl(0, 0%, 90%)
+      .nou-google
+        color: hsl(0, 90%, 64%)
 
     &:hover .icon-facebook
-      background-color: hsl(220, 15%, 17%)
-      color: hsl(0, 0%, 90%)
+      background-color: hsl(0, 0%, 90%)
+      .nou-facebook
+        color: hsl(220, 45%, 42%)
 
-    &:hover .icon-google-plus::before
-      color: hsl(0, 0%, 90%)
-      background-color: hsl(0, 90%, 64%)
+  .icon-google, .icon-facebook
+    position: absolute
+    top: 7px
+    left: 12px
+    height: 40px
+    width: 32px
+    z-index: 10
+    transition: background .3s ease
 
-    &:hover .icon-facebook::before
-      color: hsl(0, 0%, 90%)
-      background-color: hsl(220, 45%, 42%)
+  .nou-google, .nou-facebook
+    position: relative
+    top: -6px
+    left: -9px
+    color: $panel
+    +font-size(51)
+    transition: color .3s ease
 
-  .icon-google-plus, .icon-facebook
+  .icon-google
+    background-color: hsl(0, 0%, 90%)
+
+  .icon-facebook
+    background-color: hsl(0, 0%, 90%)
+
+
+  .google-text, .facebook-text
     position: relative
     display: inline-block
     width: 260px
@@ -230,22 +252,6 @@
     text-align: left
     border-radius: 7px 0 0 7px
     transition: .3s background, .3s color
-
-    &::before
-      position: absolute
-      top: 0
-      left: 0
-      padding: 4px 4px 3px 7px
-      font-family: 'icomoon'
-      line-height: normal
-      color: hsl(50, 50%, 50%)
-      border-radius: 7px 0 0 7px
-      background-color: hsl(0, 0%, 19%)
-      font-size: 36px
-      transition: .3s background, .3s color
-
-  .icon-facebook::before
-    padding: 4px 6px 3px 13px
 
   .signin-response
     position: relative

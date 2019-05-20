@@ -35,7 +35,10 @@
         class="google-button"
         v-if="canSignin"
       >
-        <span class="icon-google-plus">
+        <div class="icon-google">
+          <span class="nou-google"></span>
+        </div>
+        <span class="google-text">
           Signin with Google
         </span>
       </button>
@@ -45,7 +48,10 @@
         class="facebook-button"
         v-if="canSignin"
       >
-        <span class="icon-facebook">
+        <div class="icon-facebook">
+          <span class="nou-facebook"></span>
+        </div>
+        <span class="facebook-text">
           Signin with Facebook
         </span>
       </button>
