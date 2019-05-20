@@ -118,7 +118,7 @@ export default class ChatSocket {
 
   connect() {
     this.sock = io(this.url, {
-      forceNew: true, reconnection: false, query: { test: 'SZ6W9GRQMI' }}
+      forceNew: true, reconnection: false, query: { test: 'ZX87PC57CL' }}
     );
 
     this.sock
@@ -141,6 +141,7 @@ export default class ChatSocket {
   disconnect() {
     this.forceClosed = true;
     this.sock.close();
+    this.timer.stop('ping');
   }
 
 
@@ -192,11 +193,19 @@ export default class ChatSocket {
   private authSuccess(user: SockClient) {
     this.emit(ClientEvent.AUTHSUCCESS, user);
     this.setupPingTimer();
+    // this.setupIdleTimer();
     this.timer.start();
   }
 
 
+  private setupIdleTimer() {
+    throw new Error("Method not implemented.");
+  }
+
+
   private setupPingTimer() {
+    // Timer is a global object
+    this.timer.delete('ping');
     this.timer.add({
       name: 'ping',
       time: 3,
