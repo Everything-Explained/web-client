@@ -151,6 +151,9 @@ export default class Commander extends Vue {
       return;
     }
 
+    // Ignore typing status when executing commands
+    if (input[0] == '/') return;
+
     if (!this.isTyping) {
       this.isTyping = true;
       this.chat.typing = TypingState.STARTED;
