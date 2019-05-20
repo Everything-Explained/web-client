@@ -185,7 +185,9 @@ export default class Chat extends Vue {
           this.addMsg('Client', content, 'inline-client', priority)
         }
       )
-      .on(ClientEvent.AUTHSUCCESS, user => { this.user = user })
+      .on(ClientEvent.AUTHSUCCESS, user => {
+        this.user = new ChatUser(user);
+      })
       .on(
         ClientEvent.ROOMSETUP,
         (name, tag, clients) => this.onRoomSetup(name, tag, clients)
@@ -201,6 +203,7 @@ export default class Chat extends Vue {
       clients
     });
     this.users = this.room.users;
+    this.users.push(this.user); // Add current user to the room
   }
 
 
