@@ -27,7 +27,7 @@
     <!-- SIGNIN/SIGNUP: Select Google or Facebook -->
     <section
       class="signin-section-wrapper signin"
-      title-text="Select Signin Method"
+      title-text="SELECT A SIGNIN METHOD"
       :class="[hasAccount || validAlias ? 'g-visible' : 'g-hidden']"
     >
       <button
@@ -103,7 +103,7 @@
     <!-- SIGNUP: Validate Invite -->
     <section
       class="signin-section-wrapper has-invite"
-      title-text="Enter Invite Code"
+      title-text="ENTER INVITE CODE"
       :class="[hasInvite && !validInvite ? 'g-visible' : 'g-hidden']"
     >
       <auth-input
@@ -114,7 +114,7 @@
         validationType="Invite"
         @valid-input="(vinvite) => invite = vinvite"
       >
-        <template v-slot:valid>Invite Validated</template>
+        <template v-slot:valid><div>Invite Validated</div></template>
         Enter Invite Code
       </auth-input>
       <button
@@ -128,7 +128,7 @@
     <!-- SIGNUP: Create New Alias -->
     <section
       class="signin-section-wrapper name-signup"
-      title-text="Signup"
+      title-text="SIGNUP"
       :class="[validInvite && !validAlias ? 'g-visible' : 'g-hidden']"
     >
       <auth-input
