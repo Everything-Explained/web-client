@@ -4,14 +4,15 @@
       class="user"
       v-for="(user, i) of users"
       :key="i"
+      :class="{
+        idle: user.idle,
+        away: user.away,
+        nostatus: user.nostatus
+      }"
     >
       <i
         class="nou-circle status"
-        :class="{
-          idle: user.idle,
-          away: user.away,
-          nostatus: user.nostatus
-        }"
+
       ></i>
       <div
         class="user-name"

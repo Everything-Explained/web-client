@@ -34,6 +34,30 @@
     font-family: 'Cousine'
     color: hsl(0, 0%, 60%)
 
+    &.idle, &.away, &.muted
+      .user-name
+        font-style: italic
+        opacity: 0.85
+
+    &.idle
+      .status
+        color: hsl(220, 65%, 57%)
+      .user-name
+        color: hsl(220, 65%, 70%)
+
+    &.away
+      .status
+        color: hsl(33, 80%, 57%)
+      .user-name
+        color: hsl(33, 80%, 70%)
+
+    &.muted
+      .status
+        color: hsl(7, 65%, 57%)
+      .user-name
+        color: hsl(7, 50%, 70%)
+        text-decoration: line-through
+
   .user-name
     display: inline-block
     padding-left: 7px
@@ -45,14 +69,8 @@
     &.typing-paused
       color: hsl(0, 0%, 50%)
 
+
   .status
     position: relative
     top: -1px
     color: hsl(128, 30%, 57%)
-
-    &.away
-      color: hsl(33, 80%, 57%)
-    &.idle
-      color: hsl(220, 65%, 57%)
-    &.nostatus
-      color: hsl(7, 65%, 57%)
