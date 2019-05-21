@@ -1,8 +1,8 @@
-import ChatSocket, { RoomSock, RoomEvent, SockClient } from './_chatsocket';
+import ChatSocket, { RoomSock, RoomEvent, SockClient, ClientEvent } from './_chatsocket';
 import Chat from './_chat';
 import { TypingState } from './components/commander/_commander';
 import ChatUser from './_chatuser';
-import { MsgPriorityText } from './components/message/_message';
+
 
 interface RoomConfig {
   name: string;
@@ -113,6 +113,12 @@ export default class Room {
 
 
   private initEvents() {
+
+    this.sock
+      .on(ClientEvent.IDLE, alias => this.onIdle(alias))
+      .on(ClientEvent.ACTIVE, alias => this.onActive(alias))
+    ;
+
     this
       .on(RoomEvent.MESSAGE,
         (alias, content) => this.onMessage(alias, content)
@@ -150,6 +156,18 @@ export default class Room {
   private on(ev: RoomEvent, func: (...args: any[]) => void) {
     this.roomSock.on(ev, func);
     return this.roomSock;
+  }
+
+
+  private onIdle(alias: string) {
+    const {user} = this.findUser(alias);
+    if (user) user.idle = true;
+  }
+
+
+  private onActive(alias: string) {
+    const {user} = this.findUser(alias);
+    if (user) user.idle = false;
   }
 
 

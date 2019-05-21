@@ -155,6 +155,8 @@ export default class Commander extends Vue {
       Keys.RIGHT
     ]
 
+    this.sock.resetIdle();
+
     if (this.isKeyPrevented(ev, ...preventKeys)) return;
 
     if (!input.length) {

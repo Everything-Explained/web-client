@@ -37,7 +37,6 @@ export default class Chat extends Vue {
   );
 
 
-
   get $this() {
     return this;
   }

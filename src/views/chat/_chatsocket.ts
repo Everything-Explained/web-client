@@ -14,7 +14,12 @@ export enum ClientEvent {
   SERVERMSG   = 'srv-message',
   CLIENTMSG   = 'clt-message',
   ROOMSETUP   = 'setup-room',
+  IDLE        = 'user-idle',
+  ACTIVE      = 'user-active',
+  MUTED       = 'user-muted',
 }
+
+type StateEvent = ClientEvent.ACTIVE|ClientEvent.MUTED|ClientEvent.IDLE;
 
 export enum RoomEvent {
   MESSAGE = '-rm-message',
@@ -22,14 +27,14 @@ export enum RoomEvent {
   NOTICE  = '-rm-notice',
   TYPING  = '-rm-typing',
   LEAVE   = '-rm-leave',
-  JOINED  = '-rm-joined'
+  JOINED  = '-rm-joined',
 }
 
 export enum ServerEvent {
   SHAKE = 'hand-shake',
   PING = 'srv-ping',
   IDLE = 'state-idle',
-  ACTIVE = 'state-active'
+  ACTIVE = 'state-active',
 }
 
 
@@ -51,6 +56,7 @@ export default class ChatSocket {
   private events: SockEvent[] = [];
 
   private forceClosed = false;
+  private isIdle = false;
   private pingStart = 0;
 
   private _latencies: number[] = [];
@@ -85,7 +91,10 @@ export default class ChatSocket {
         event: RoomEvent,
         func: (...args: any[]) => void
       ) => {
-        this.sock.on(`${tag + event}`, (...subargs: any[]) => func(...subargs))
+        this.sock.on(
+          `${tag + event}`,
+          (...subargs: any[]) => func(...subargs)
+        );
         return obj;
       },
 
@@ -96,6 +105,7 @@ export default class ChatSocket {
         this.sock.emit(`${tag + event}`, ...args);
       }
     }
+
     return obj;
   }
 
@@ -134,6 +144,9 @@ export default class ChatSocket {
       .on(ClientEvent.AUTHFAIL, msg => this.authFailed(msg))
       .on(ClientEvent.AUTHSUCCESS, user => this.authSuccess(user))
       .on(ClientEvent.PONG, () => this.onPong())
+      .on(ClientEvent.IDLE, alias => this.onUserStateChg(alias, ClientEvent.IDLE))
+      .on(ClientEvent.ACTIVE, alias => this.onUserStateChg(alias, ClientEvent.ACTIVE))
+      .on(ClientEvent.MUTED, alias => this.onUserStateChg(alias, ClientEvent.MUTED))
     ;
   }
 
@@ -142,6 +155,17 @@ export default class ChatSocket {
     this.forceClosed = true;
     this.sock.close();
     this.timer.stop('ping');
+  }
+
+
+  resetIdle() {
+    this.timer.restart('idle');
+
+    if (this.isIdle) {
+      this.sock.emit(ServerEvent.ACTIVE);
+    }
+    
+    this.isIdle = false;
   }
 
 
@@ -157,7 +181,11 @@ export default class ChatSocket {
       this._latencies.shift();
     }
     this._latencies.push(Date.now() - this.pingStart);
-    console.debug('latencies', this._latencies);
+  }
+
+
+  private onUserStateChg(alias: string, event: StateEvent) {
+    this.emit(event, alias);
   }
 
 
@@ -193,13 +221,24 @@ export default class ChatSocket {
   private authSuccess(user: SockClient) {
     this.emit(ClientEvent.AUTHSUCCESS, user);
     this.setupPingTimer();
-    // this.setupIdleTimer();
+    this.setupIdleTimer();
     this.timer.start();
+    this.timer.start('idle');
   }
 
 
   private setupIdleTimer() {
-    throw new Error("Method not implemented.");
+    this.timer.delete('idle');
+    this.timer.add({
+      name: 'idle',
+      time: 1,
+      interval: false,
+      exec: () => {
+        console.debug('executing idle timeout');
+        this.isIdle = true;
+        this.sock.emit(ServerEvent.IDLE);
+      }
+    })
   }
 
 
