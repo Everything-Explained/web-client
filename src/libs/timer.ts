@@ -123,6 +123,7 @@ export class Timer {
       }
 
       timer._count = 0;
+      timer._queued = true;
     }
 
   }
