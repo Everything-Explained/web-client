@@ -66,18 +66,20 @@ export default class Display extends Vue {
     this.keepScrollPos();
 
     if (messages.length > 1) {
-      this.appendLikeMessages(messages);
+      this.appendMsgOnTime(messages);
     }
   }
 
 
   @Watch('messages')
-  onMsgChg(messages: IMessage[]) {
+  onMsgChg() {
     this.autoScrollOnMsg();
   }
 
 
-  private appendLikeMessages(messages: IMessage[]) {
+
+
+  private appendMsgOnTime(messages: IMessage[]) {
     const lastMsg = messages[messages.length - 2];
     const currentMsg = messages[messages.length - 1];
 
