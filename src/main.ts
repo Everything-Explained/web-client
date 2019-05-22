@@ -76,7 +76,7 @@ Vue.use({
     Vue.prototype.$debounce =
       (fn: (...args: any) => any, delay = 0) => {
         let timeoutID = 0;
-        return function() {
+        return (function() {
           return {
             exec: (...args) => {
               clearTimeout(timeoutID);
@@ -90,7 +90,7 @@ Vue.use({
               clearTimeout(timeoutID);
             }
           }
-        }
+        })()
       }
   }
 })
