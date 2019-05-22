@@ -5,7 +5,8 @@ const md = new Markdown({
   xhtmlOut: true,
   breaks: true,
   typographer: true,
-  quotes: '“”‘’'
+  quotes: '“”‘’',
+  linkify: true,
 });
 md.use(require('markdown-it-deflist'));
 
