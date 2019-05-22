@@ -73,11 +73,11 @@ export default class ChatSocket {
 
 
   constructor(
-    private url: string,
+    url: string,
     private rid: string,
     private timer: Timer
   ) {
-    this.connect();
+    this.connect(url);
   }
 
 
@@ -126,8 +126,8 @@ export default class ChatSocket {
   }
 
 
-  connect() {
-    this.sock = io(this.url, {
+  connect(url: string) {
+    this.sock = io(url, {
       forceNew: true, reconnection: false, query: { test: 'ZX87PC57CL' }}
     );
 
@@ -140,13 +140,21 @@ export default class ChatSocket {
         ClientEvent.ROOMSETUP,
         (name, tag, clients) => this.onRoomSetup(name, tag, clients)
       )
-      .on(ClientEvent.SERVERMSG, msg => this.emit(ClientEvent.SERVERMSG, msg))
+      .on(ClientEvent.SERVERMSG,
+        msg => this.emit(ClientEvent.SERVERMSG, msg)
+      )
       .on(ClientEvent.AUTHFAIL, msg => this.authFailed(msg))
       .on(ClientEvent.AUTHSUCCESS, user => this.authSuccess(user))
       .on(ClientEvent.PONG, () => this.onPong())
-      .on(ClientEvent.IDLE, alias => this.onUserStateChg(alias, ClientEvent.IDLE))
-      .on(ClientEvent.ACTIVE, alias => this.onUserStateChg(alias, ClientEvent.ACTIVE))
-      .on(ClientEvent.MUTED, alias => this.onUserStateChg(alias, ClientEvent.MUTED))
+      .on(ClientEvent.IDLE,
+        alias => this.onUserStateChg(alias, ClientEvent.IDLE)
+      )
+      .on(ClientEvent.ACTIVE,
+        alias => this.onUserStateChg(alias, ClientEvent.ACTIVE)
+      )
+      .on(ClientEvent.MUTED,
+        alias => this.onUserStateChg(alias, ClientEvent.MUTED)
+      )
     ;
   }
 
@@ -164,7 +172,7 @@ export default class ChatSocket {
     if (this.isIdle) {
       this.sock.emit(ServerEvent.ACTIVE);
     }
-    
+
     this.isIdle = false;
   }
 
@@ -231,7 +239,7 @@ export default class ChatSocket {
     this.timer.delete('idle');
     this.timer.add({
       name: 'idle',
-      time: 1,
+      time: 96, // 8 minutes
       interval: false,
       exec: () => {
         console.debug('executing idle timeout');

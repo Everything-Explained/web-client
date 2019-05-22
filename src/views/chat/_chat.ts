@@ -37,6 +37,7 @@ export default class Chat extends Vue {
   );
 
 
+
   get $this() {
     return this;
   }
@@ -62,8 +63,26 @@ export default class Chat extends Vue {
 
 
 
+
   created() {
     this.initSockEvents();
+    this.setupIdleChecks();
+  }
+
+  async beforeRouteEnter(to, from, next) {
+    await Utils.loadScript(
+      'socketScriptLoaded',
+      window.indev
+        ? '//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'
+        : '/socket.io/socket.io.js'
+    )
+    next();
+  }
+
+  beforeRouteLeave(to, from, next) {
+    this.sock.disconnect();
+    this.tearDown();
+    next();
   }
 
 
@@ -115,7 +134,6 @@ export default class Chat extends Vue {
   }
 
 
-
   sendNotice(alias: string, content: string) {
     return this.room.sendNotice(alias, content);
   }
@@ -125,21 +143,6 @@ export default class Chat extends Vue {
     this.messages = [];
   }
 
-
-  async beforeRouteEnter(to, from, next) {
-    await Utils.loadScript(
-      'socketScriptLoaded',
-      window.indev
-        ? '//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js'
-        : '/socket.io/socket.io.js'
-    )
-    next();
-  }
-
-  beforeRouteLeave(to, from, next) {
-    this.sock.disconnect();
-    next();
-  }
 
 
 
@@ -203,6 +206,33 @@ export default class Chat extends Vue {
     });
     this.users = this.room.users;
     this.users.push(this.user); // Add current user to the room
+  }
+
+
+  private setupIdleChecks() {
+    window.onfocus = () => {
+      this.sock.resetIdle();
+    }
+
+    const debIdle = this.$debounce(() => {
+      this.sock.resetIdle();
+    }, 500)
+
+    window.onmousemove = () => {
+      // Set active immediately if user is idle
+      if (this.user.idle)
+        this.sock.resetIdle()
+      ;
+      debIdle.exec();
+    }
+  }
+
+
+  private tearDown() {
+    window.onfocus = null;
+    window.onmousemove = null;
+    this.$timer.delete('ping');
+    this.$timer.delete('idle');
   }
 
 

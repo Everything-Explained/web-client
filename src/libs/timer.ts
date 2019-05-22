@@ -122,8 +122,8 @@ export class Timer {
         return;
       }
 
-      timer._count = 0;
       timer._queued = true;
+      timer._count = 0;
     }
 
   }

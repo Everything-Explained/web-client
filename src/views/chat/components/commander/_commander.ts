@@ -65,7 +65,7 @@ export default class Commander extends Vue {
 
   readonly typingPaused = this.$debounce((cmdr: this) => {
     cmdr.typingState = TypingState.PAUSED;
-  }, 3000)();
+  }, 3000)
 
 
   private readonly commands = new ChatCommands(this.chat, this.sock);
