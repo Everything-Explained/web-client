@@ -5,7 +5,10 @@
 export interface ITimerExec {
   name: string;
 
-  /** Set by 5 second increments: 12 would be 60 seconds. */
+  /**
+   * Time (T) where T = T * 5,
+   * **if T = 12 then time is 60 seconds**.
+   */
   time: number;
 
   /** Set false for timeout */

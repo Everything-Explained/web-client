@@ -121,7 +121,6 @@ export default class MarkdownPaging extends Vue {
   }
 
 
-  // TODO: Reset scroll position when selecting pages
   @Watch('selectedPage')
   public renderLog() {
     if (this.inTransit) return;
@@ -141,6 +140,10 @@ export default class MarkdownPaging extends Vue {
         this.subheader = page.date!.toISOString();
         this.content = page.content
         this.inTransit = false;
+        this.$nextTick(() => {
+          const el = this.$refs.elContent as HTMLElement;
+          el.scrollTop = 0;
+        })
       }
     }, 250);
   }

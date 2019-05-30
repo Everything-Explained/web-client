@@ -25,17 +25,21 @@
           </div>
         </div>
       </div>
-      <div class="content"
-            :class="{ hidden: inTransit }"
+      <div
+        class="content"
+        :class="{ hidden: inTransit }"
       >
         <header>
           {{ header.toUpperCase() }}
           <div class="timestamp">{{ subheader | dateFormat }}</div>
         </header>
         <img v-if="invalidPage" :src="$dataImages.lambBlush" />
-        <div class="content-scroller scrollbars markdown"
-            :class="mdClass"
-            v-html="renderedContent"></div>
+        <div
+          class="content-scroller scrollbars markdown"
+          :class="mdClass"
+          v-html="renderedContent"
+          ref="elContent"
+        ></div>
       </div>
     </div>
   </article>

@@ -14,7 +14,7 @@
           <span class="normal">{{ verType + version }}</span>
         </header>
         <section class="code">{{ verDesc }}</section>
-        <a href="javascript:void(0);" class="modal-close">&#10060;</a>
+        <a href="javascript:void(0);" class="modal-close">&times;</a>
       </section>
     </aside>
 

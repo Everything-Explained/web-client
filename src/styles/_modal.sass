@@ -60,20 +60,22 @@ $speed: .2s
   transition: all .5s
 
   .modal-close
+    height: 36px
     &:visited, &:active, &:link
       position: absolute
       right: 0
-      font-size: 20px
+      +font-size(38)
+      line-height: 23px
       padding: 4px 8px 5px
-      font-weight: bold
       text-decoration: none
+      font-family: Consolas
       color: hsl(13, 0%, 0%)
       border-radius: 0 5px 0 0
       border: none
-      transition: all $speed ease
+      transition: color $speed ease
 
     &:hover
-      background: hsl(13, 100%, 75%)
+      background: hsl(5, 100%, 75%)
       color: hsl(0, 0%, 0%)
 
   header
