@@ -57,16 +57,29 @@ export default class ChatSocket {
 
   private forceClosed = false;
   private isIdle = false;
-  private pingStart = 0;
+  private lastPing = 0;
 
   private _latencies: number[] = [];
 
-  get latency() {
+
+
+  get avgLatency() {
     const ltcyArr = this._latencies;
     const latencyAvg =
       ltcyArr.reduce((a, v) => a + v, 0) / ltcyArr.length;
     ;
     return Math.round(latencyAvg);
+  }
+
+
+  get latency() {
+    return this._latencies[this._latencies.length - 1];
+  }
+
+
+  private _url: string;
+  get url() {
+    return this._url;
   }
 
 
@@ -77,6 +90,7 @@ export default class ChatSocket {
     private rid: string,
     private timer: Timer
   ) {
+    this._url = url;
     this.connect(url);
   }
 
@@ -188,7 +202,7 @@ export default class ChatSocket {
     if (this._latencies.length >= 30) {
       this._latencies.shift();
     }
-    this._latencies.push(Date.now() - this.pingStart);
+    this._latencies.push(Date.now() - this.lastPing);
   }
 
 
@@ -255,14 +269,14 @@ export default class ChatSocket {
     this.timer.delete('ping');
     this.timer.add({
       name: 'ping',
-      time: 3,
+      time: 6, // 30 seconds
       interval: true,
       exec: () => {
-        this.pingStart = Date.now();
-        this.sock.emit(ServerEvent.PING, this.latency)
+        this.lastPing = Date.now();
+        this.sock.emit(ServerEvent.PING, this.avgLatency)
       }
     })
-    this.pingStart = Date.now();
+    this.lastPing = Date.now();
     this.sock.emit(ServerEvent.PING, 0);
   }
 

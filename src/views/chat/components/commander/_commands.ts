@@ -34,18 +34,9 @@ export default class ChatCommands {
       exec: () => this.onClearScreen()
     },
     {
-      alias: ['client'],
-      exec: () => {
-        this.chat.addClientMsg(
-          'this is some long text to test the client message',
-          'medium'
-        );
-      }
-    },
-    {
       alias: ['connect'],
       exec: () => {
-        this.sock.connect();
+        this.sock.connect(this.sock.url);
       }
     },
     {
@@ -104,9 +95,17 @@ export default class ChatCommands {
 
 
   private onPing(args: string) {
-    this.chat.addClientMsg(
-      `Ping: ${this.chat.ping}ms`
-    )
+    const validArgs = this.getArgs(1, args) as [string];
+    let msg = `Ping: _${this.sock.latency}ms_`;
+
+    if (validArgs) {
+      const [type] = validArgs;
+      if (type == 'avg' || type == 'average') {
+        msg = `Ping-Average: _${this.sock.avgLatency}ms_`
+      }
+    }
+
+    this.chat.addClientMsg(msg);
   }
 
   private onSetScale(args: string) {

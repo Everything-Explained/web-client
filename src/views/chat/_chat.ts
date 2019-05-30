@@ -50,9 +50,6 @@ export default class Chat extends Vue {
     return this.user.typingState;
   }
 
-  get ping() {
-    return this.sock.latency;
-  }
 
   set typing(state: TypingState) {
     if (this.room)
