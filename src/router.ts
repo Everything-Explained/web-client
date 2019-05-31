@@ -29,8 +29,8 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
       meta: { display: true }
     },
     {
-      path: '/changelog/:page?',
-      name: 'changelog',
+      path: '/chg.log/:page?',
+      name: 'chg.log',
       component: () => import(/* webpackChunkName: "changelog" */ './views/changelog/Changelog.vue'),
       props: true,
       meta: { display: true }

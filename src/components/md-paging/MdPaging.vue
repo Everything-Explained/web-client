@@ -2,14 +2,19 @@
   <article class="dyn-panel" v-if="pages && pages.length">
     <div class="panel-container" :class="displayClass">
       <div class="panel">
-        <div class="titles">
+        <div
+          class="titles"
+          :class="{ 'no-split': pages[0].title.length <= 1}"
+        >
           <div class="scroller scrollbars" v-if="pages.length > 0">
             <div class="title"
               v-for="(page, index) of pages"
               :key="index"
               @mousedown="goTo(page.title)"
             >
-              <span>{{ page.title.length > 1 ? '' : page.title[0].toUpperCase() }}</span>
+              <span v-if="page.title.length <= 1"
+                >{{ page.title[0].toUpperCase() }}
+              </span>
               <div class="split-title" v-if="page.title.length > 1">
                 <div class="title-left">
                   {{ page.title[0] }}
