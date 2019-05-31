@@ -1,4 +1,4 @@
-title: what is a family
+title: family
 author: Jaeiya
 
 A family takes your hand when you can't move; a family knocks you off that _"high horse"_; a family knows how to _love the joy and the hurt_; a family _embraces_ all its members as one; a _real_ family pushes you to run **headlong** into life, without a care for how it looks to others.

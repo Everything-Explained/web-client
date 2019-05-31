@@ -49,4 +49,6 @@ FUN
 ~~break~~
 
 DISCLAIMER
-: Noumenae and associated persons do not assume any responsibility for the content that its members post. All members accept full responsibility for their actions and content on this site. Noumenae and associated persons will not be liable or responsible in any way for member generated content or for damages of any kind, including, but not limited to, physiological or psychological, incurred as a result of the use of or reliance on member generated content.
+: Noumenae and associated persons do not assume any responsibility for the content that its members post. All members accept full responsibility for their actions and content on this site. Noumenae and [associated persons] will not be liable or responsible in any way for member generated content or for damages of any kind, including, but not limited to, physiological or psychological, incurred as a result of the use of or reliance on member generated content.
+
+[associated persons]:/#/faq/as.-persons

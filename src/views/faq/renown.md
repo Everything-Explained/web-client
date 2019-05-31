@@ -1,15 +1,15 @@
-title: about renown
+title: renown
 author: Jaeiya
 
 Renown is an abstract calculation of a users impact on the site. It can be increased through not only activity on the site, but various interactions between users.
 
 > You can gain Renown by chatting, collecting sheep, and recieving upvotes on your messages.
 
-# ?: what is its purpose
+# WHAT IS ITS PURPOSE
 
 _Feedback_; it's nice to recieve compliments and make friends, but those relationships are subjective. _Renown_ is an objective way to quantify contribution to **Noumenae** and its members. _Renown_ allows others to see how you've impacted the site regardless of your interaction with them.
 
-# ?: why is gaining renown slow
+# WHY IS GAINING RENOWN SO SLOW
 
 You should think of _Renown_ as something attained over a vast amount of time. If you think of **Heroes** or **Legends** having _immense Renown_, it's because of all they achieved in their lifetime, not a single solitary act. This is the way in which you should view _Renown_.
 

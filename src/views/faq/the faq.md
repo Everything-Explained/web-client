@@ -1,4 +1,4 @@
-title: about the faq
+title: the faq
 author: Jaeiya
 
 You'll notice in the _top-left_ of this panel, there is a search box. Typing in that box will filter the FAQ questions. Clicking on any of the questions on the left, will replace _this area you're reading right now_, with the answer of the question you clicked.
