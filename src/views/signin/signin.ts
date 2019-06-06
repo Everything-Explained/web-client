@@ -1,4 +1,5 @@
-import { Component, Vue } from 'vue-property-decorator';
+import { Vue } from 'vue-property-decorator';
+import Component from 'vue-class-component';
 import Toggle from '@/components/toggle/Toggle.vue';
 import AuthInput from '@/components/auth-input/AuthInput.vue';
 
@@ -35,26 +36,37 @@ export default class Signin extends Vue {
 
 
   get isCallback() {
-    let callback = this.$route.params.callback;
-
     return (
-         !!callback
-      && callback == 'authfail'
+      !!this.$route.params.callback
       && !!this.$route.params.type
     )
+  }
+
+  get isFailedCallback() {
+    return (
+      this.isCallback
+      && this.$route.params.callback == 'authfail'
+    );
+  }
+
+  get isSuccessCallback() {
+    return (
+      this.isCallback
+      && this.$route.params.callback == 'authsucc'
+    );
   }
 
   get callbackType() {
     return parseInt(this.$route.params.type);
   }
 
-  get callbackTitle() {
+  get callbackFailTitle() {
     if (this.isCallback) {
       if (this.callbackType == 1 || 2) {
-        return 'Signin Failure'
+        return 'SIGNIN FAILURE'
       }
       else {
-        return 'Signup Failure';
+        return 'SIGNUP FAILURE';
       }
     }
     return '';
@@ -83,22 +95,7 @@ export default class Signin extends Vue {
 
 
   public signin(type: 'google'|'facebook') {
-    if (type == 'google') {
-      this.$api.signin('google');
-    }
-    // if (this.alias && this.hasInvite) {
-    //   let resp = await this.$api.signup(this.alias, type, 300, 'email')
-    //   if (resp.status >= 400) {
-    //     this.signupResp = Object.assign(this.signupResp, resp.data);
-    //   }
-    // }
-    // else {
-    //   let resp = await this.$api.signin(type, 0, 'error');
-    //   console.log(resp);
-    //   if (resp.status >= 400) {
-    //     this.signinResp = Object.assign(this.signinResp, resp.data);
-    //   }
-    // }
+    this.$api.signin(type);
   }
 
 

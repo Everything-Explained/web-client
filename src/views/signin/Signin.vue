@@ -141,9 +141,9 @@
         validationType="Alias"
         @valid-input="(valias) => alias = valias"
       >
-        <template v-slot:invalid1>Allowed: 0-9, a-z, or A-Z</template>
-        <template v-slot:invalid2>Repeat Characters Detected</template>
-        <template v-slot:valid>Alias Available!</template>
+        <template v-slot:invalid1><div>Allowed: 0-9, a-z, or A-Z</div></template>
+        <template v-slot:invalid2><div>Repeat Characters Detected</div></template>
+        <template v-slot:valid><div>Alias Available!</div></template>
         Enter an Alias
       </auth-input>
       <ul>
@@ -163,8 +163,8 @@
 
     <section
       class="signin-section-wrapper failed-signin"
-      :title-text="callbackTitle"
-      v-if="isCallback"
+      :title-text="callbackFailTitle"
+      v-if="isFailedCallback"
     >
       <p v-if="callbackType == 1">
         Unfortunately, you do not have a valid account with us. If
@@ -182,6 +182,23 @@
         @click="$router.push('/invite')"
         v-if="callbackType == 1"
       >Request Invite</button>
+    </section>
+
+
+    <section
+      class="signin-section-wrapper success-signin"
+      title-text="SIGNUP SUCCESS"
+      v-if="isSuccessCallback"
+    >
+      <p v-if="callbackType == 1">
+        Welcome to Noumenae!!<br/>
+        I'm sure you're ready to dive into chat, but don't forget
+        to take a look at the rules first, if you haven't already.
+      </p>
+      <button
+        class="standard"
+        @click="() => $router.push('/home/rules')"
+      >Rules</button>
     </section>
   </div>
 </template>
