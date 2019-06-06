@@ -39,6 +39,10 @@ export default class Userlist extends Vue {
     // }
   }
 
+  noticeUser(user: string) {
+    this.$emit('notice-command', `/notice ${user}`);
+  }
+
 
   rngOutOf100() {
     return Math.floor(Math.random() * 100);

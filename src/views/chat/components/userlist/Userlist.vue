@@ -12,7 +12,6 @@
     >
       <i
         class="nou-circle status"
-
       ></i>
       <div
         class="user-name"
@@ -20,6 +19,7 @@
           'typing': user.isTyping,
           'typing-paused': user.isTypingPaused
         }"
+        @dblclick="noticeUser(user.alias)"
       >{{ user.alias }}</div>
     </div>
   </div>

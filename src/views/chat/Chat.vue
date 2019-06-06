@@ -6,9 +6,17 @@
         :messages="messages"
         :msg-style="messageStyle"
       ></display>
-      <userlist :users="users" scale="normal"></userlist>
+      <userlist
+        :users="users"
+        scale="normal"
+        @notice-command="userListNotice"
+      ></userlist>
     </div>
-    <commander :chat="$this" :sock="socket"></commander>
+    <commander
+      :chat="$this"
+      :sock="socket"
+      ref="commander"
+    ></commander>
   </div>
 </template>
 
