@@ -143,6 +143,7 @@ export default class Chat extends Vue {
 
   userListNotice(cmdStr: string) {
     const cmdr = this.$refs.commander as Commander;
+    cmdr.inputManual(cmdStr);
   }
 
 

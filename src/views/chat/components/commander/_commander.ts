@@ -1,4 +1,4 @@
-import { Vue, Prop } from 'vue-property-decorator';
+import { Vue, Prop, Watch } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import Chat from '../../_chat';
 import ChatCommands from './_commands';
@@ -46,6 +46,9 @@ export default class Commander extends Vue {
   readonly sock!: ChatSocket;
 
 
+  private lastInputNode!: Text;
+
+
   get isTyping() {
     return this.chat.typing == TypingState.STARTED;
   }
@@ -87,6 +90,9 @@ export default class Commander extends Vue {
 
 
 
+  inputManual(input: string) {
+    this.setInput(this.cmdBox, input);
+  }
 
 
   onEnter(ev: MouseEvent) {
@@ -116,11 +122,25 @@ export default class Commander extends Vue {
 
 
   onBackspace(ev: KeyboardEvent) {
-    let box = this.cmdBox;
+    const box = this.cmdBox as HTMLElement;
+    const input = box.innerText;
+    const lastChar = input[input.length - 1];
+    let inputLen = input.length;
+
+    // Prevent firefox from being an absolute piece of garbage
+    if (lastChar == '\n') { inputLen -= 1; }
+
     // Prevent removal of placeholder character
-    if (box.innerText.length - 1 == 0) {
+    if (inputLen - 1 == 0) {
+      // Firefox devs don't think before they code
+      if (lastChar == '\n') {
+        box.innerHTML = '\ufeff';
+        this.alignCaret(false, box);
+      }
+
       ev.preventDefault();
     }
+
     this.hints.clear();
   }
 
@@ -194,8 +214,12 @@ export default class Commander extends Vue {
 
 
   private setInput(el: HTMLElement, val: string) {
-    if (el.innerText == val) return;
-    el.innerText = val;
+    if (this.lastInputNode) {
+      if (this.lastInputNode.textContent == val) return;
+      this.lastInputNode.remove();
+    }
+    this.lastInputNode = document.createTextNode(val);
+    el.appendChild(this.lastInputNode);
     this.alignCaret(false, el);
   }
 
@@ -230,6 +254,7 @@ export default class Commander extends Vue {
 
   private reset() {
     this.cmdBox.innerHTML = '&#xfeff;';
+    if (this.lastInputNode) this.lastInputNode.textContent = '';
     this.alignCaret(false, this.cmdBox);
   }
 
