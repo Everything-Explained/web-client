@@ -3,18 +3,16 @@ author: Jaeiya
 
 These are phrases or words that the site will use to describe certain aspects of itself or its userbase.
 
-# ?: what is nsfw
-
-_NSFW_ is an acronym for **Not Safe for Work**. This is commonly used to describe material that isn't suiteable to contructive content. This can include offensive language or potentially offensive images or articles.
+## WHAT IS NSFW
+**NSFW** is an acronym for **Not Safe for Work**. This is commonly used to describe material that isn't suiteable for the work-place. This can include offensive language or potentially offensive images or articles.
 
 > NSFW content is contextual to the conversation, so just use reason when posting such content
 
-# ?: what is aurelia
+## WHAT IS AURELIA
+Aurelia was the front-end [MVVM] framework that drove the user experience on Noumenae. It has now since been replaced with [Vue]
 
-Aurelia is the front-end [MVVM] framework that drives the user experience on Noumenae.
-
-# ?: what is node
-
-Node is the back-end server architecture that drives user content on Noumenae
+## WHAT IS NODE
+Node is the back-end server architecture that drives user content on Noumenae.
 
 [mvvm]:https://www.wintellect.com/model-view-viewmodel-mvvm-explained/
+[vue]:https://vuejs.org/

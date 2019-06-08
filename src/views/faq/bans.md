@@ -9,6 +9,6 @@ There will be no Banning over the proverbial _"spilt milk"_. Banning is reserved
 
 > No bans will be given out unless absolutely necessary.
 
-##### WIP : Bans are currently impossible
+##### WIP : A proof of concept that is not applicable to the current release.
 
-[rules]:#/rules
+[rules]:/#/home/rules

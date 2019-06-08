@@ -7,7 +7,7 @@ Another handy feature is the _hover_ feature of these individual paragraphs. Go 
 
 Using the forward and back buttons on your browser or mouse, will allow you to flip through the browser history of clicked questions. To test this out, click any of the questions on the left, then hit the back button on your browser or mouse. You should be navigated back to this answer.
 
-The FAQ will often reference other answers using links. Clicking [What is XP] or [What are Levels] will immediately replace this answer with the answer of those questions. You can always come right back to this answer by hitting the back button on your browser or mouse; **Try it now!**
+The FAQ will often reference other answers using links. Clicking [XP] or [Levels] will immediately replace this content with those subjects. You can always come right back to this answer by hitting the back button on your browser or mouse; **Try it now!**
 
 External links look identical to page links, but they will open up a _new Window or Tab_. Here is the [Definition of a Cat]. After you're done looking at the definition, _you can close that tab/window_ and you should be looking at this page again.
 
@@ -17,6 +17,6 @@ External links look identical to page links, but they will open up a _new Window
 
 **That's all there is to it! Enjoy the FAQ!**
 
-[what is xp]:#/home/faq/about-xp-for-levels
-[what are levels]:#/home/faq/leveling
+[xp]:/#/faq/xp
+[levels]:/#/faq/levels
 [definition of a cat]:http://www.dictionary.com/browse/cat

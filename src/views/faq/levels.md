@@ -1,14 +1,19 @@
 title: levels
 author: Jaeiya
 
-When we talk about levels in **Noumenae** we're talking about **Message Levels**. When you send a message using chat, you have a chance to gain some [XP] towards the next level. Each level comes with its own name and each name relates to how invested a user is in chatting.
+## WHAT ARE LEVELS
+When we talk about levels in **Noumenae** we're talking about **Message Levels**. When you send a message using chat, you have a chance to gain some [XP] towards the next level. Each level comes with its own title and each title relates to the users contribution to the site.
 
-> Higher level does NOT mean better messages; it just means more time spent chatting.
+Although it sounds nice to gain points everytime you send a message, this is not the case. You only have a *chance* to gain points, so as to prevent any spamming. **Not all messages give you points**.
 
-## level names
+> Higher level does **NOT** mean better messages; it just means more time spent chatting.
 
+## LEVEL NAMES
+
+- Neophyte
 - Roused
 - Curious
+- Engaged
 - Spirited
 - Beholden
 - Ardent
@@ -21,6 +26,6 @@ When we talk about levels in **Noumenae** we're talking about **Message Levels**
 - Immortal
 - Omnicient
 
-##### WIP : Level names are subject to change.
+##### WIP : Level XP and timing is subject to change with more data.
 
-[xp]:#/home/faq/about-xp-for-levels
+[xp]:#/faq/xp
