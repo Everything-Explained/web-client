@@ -72,19 +72,19 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
       name: 'blog',
       component: Blog,
       props: true,
-      // redirect: signinRedirect,
-      meta: { display: !session.authed }
+      redirect: signinRedirect,
+      meta: { display: session.authed }
     },
     {
       path: '/chat',
       name: 'chat',
-      // redirect: signinRedirect,
-      component: Chat, // () => import(/* webpackChunkName: "chat" */ './views/chat/Chat.vue'),
-      meta: { display: !session.authed }
+      redirect: signinRedirect,
+      component: () => import(/* webpackChunkName: "chat" */ './views/chat/Chat.vue'),
+      meta: { display: session.authed }
     },
     {
-      path: '/settings',
-      name: 'settings',
+      path: '/me',
+      name: 'me',
       redirect: signinRedirect,
       component: Settings,
       beforeEnter: async (to, from, next) => {
