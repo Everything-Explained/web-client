@@ -6,6 +6,7 @@
       placeholder='#### select a topic on the left'
       :mdClass="'md-welcome md-rules'"
       :displayType="'fullscreen'"
+      sortBy="inline"
       redirect="true"
     ></markdown-paging>
   </div>

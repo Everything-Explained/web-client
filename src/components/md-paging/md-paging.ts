@@ -21,7 +21,7 @@ export interface IPageData {
   content: string;
 }
 
-type sorting = 'alphabet'|'dateLast'|'dateFirst';
+type sorting = 'alphabet'|'inline'|'dateLast'|'dateFirst';
 
 @Component
 export default class MarkdownPaging extends Vue {
@@ -50,7 +50,7 @@ export default class MarkdownPaging extends Vue {
     if (this.pages && !this.pages!.length) return;
 
     this.renderDefault();
-
+    console.log(this.sortBy);
     this._sortPages(this.sortBy || 'alphabet');
     let page = this.selectedPage
     this.path =
@@ -183,6 +183,7 @@ export default class MarkdownPaging extends Vue {
           p2.date!.getTime() - p1.date!.getTime()
       );
     }
+    else if (type == 'inline') {}
     else {
       this.pages.sort(
         (p1, p2) =>

@@ -21,15 +21,15 @@ export default class Home extends Vue {
 
 
   created() {
-    let homePages = homeData.map(page => {
-      return {
-        title: page.title.split(':'),
-        content: page.content,
-        date: new Date(page.date)
-      }
-    })
-
-    this.home.push(...homePages)
+    this.home.push(
+      ...homeData.map(page => {
+        return {
+          title: page.title.split(':'),
+          content: page.content,
+          date: new Date(page.date)
+        }
+      })
+    )
   }
 
 
