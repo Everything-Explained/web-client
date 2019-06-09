@@ -9,8 +9,17 @@ export default class ChatCommands {
   private commands = [
     // DISPLAY SCALE
     {
-      alias: ['scale', 'size', 'display'],
+      alias: ['scale'],
       exec: (args: string) => this.onSetScale(args)
+    },
+    {
+      alias: ['hello'],
+      exec: () => {
+        this.chat.addClientMsg(
+          'You have just tested out the **hello** command, \
+           which executes this message.'
+        )
+      }
     },
     {
       alias: ['style'],
@@ -30,13 +39,17 @@ export default class ChatCommands {
     },
     // CLEAR MESSAGES
     {
-      alias: ['clear', 'cls'],
+      alias: ['clear'],
       exec: () => this.onClearScreen()
     },
     {
       alias: ['connect'],
       exec: () => {
-        this.sock.connect(this.sock.url);
+        if (this.sock.isDisconnected)
+          this.sock.connect(this.sock.url)
+        ;
+        else
+          this.chat.addClientMsg('Already Connected to Server')
       }
     },
     {
@@ -101,7 +114,7 @@ export default class ChatCommands {
     if (validArgs) {
       const [type] = validArgs;
       if (type == 'avg' || type == 'average') {
-        msg = `Ping-Average: _${this.sock.avgLatency}ms_`
+        msg = `Ping-Average: _${this.sock.avgLatency}ms_ over **${this.sock.latencyRecordCount}** records`
       }
     }
 

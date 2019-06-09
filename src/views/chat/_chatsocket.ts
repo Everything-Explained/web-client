@@ -60,6 +60,7 @@ export default class ChatSocket {
   private lastPing = 0;
 
   private _latencies: number[] = [];
+  private _isDisconnected = true;
 
 
 
@@ -72,6 +73,11 @@ export default class ChatSocket {
   }
 
 
+  get latencyRecordCount() {
+    return this._latencies.length;
+  }
+
+
   get latency() {
     return this._latencies[this._latencies.length - 1];
   }
@@ -80,6 +86,10 @@ export default class ChatSocket {
   private _url: string;
   get url() {
     return this._url;
+  }
+
+  get isDisconnected() {
+    return this._isDisconnected;
   }
 
 
@@ -212,11 +222,14 @@ export default class ChatSocket {
 
 
   private onConnection() {
+    this._isDisconnected = false;
     this.sock.emit(ServerEvent.SHAKE, this.rid)
   }
 
 
   private onDisconnect() {
+    this._isDisconnected = true;
+
     if (this.forceClosed) {
       this.forceClosed = false;
       return this.emitClientMsg('Closed Connection');
