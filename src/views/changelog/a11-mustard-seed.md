@@ -35,10 +35,9 @@ date: 01/16/2017
 
 >- **Lovely Modals** - I re-wrote the modal code, which means no more lag.
 
->- **Aurelia CLI Build System** - Now using Aurelia's built-in [CLI] to bundle,
-    which means no more [SystemJS] or [JSPM].
+>- **Aurelia CLI Build System** - Now using Aurelia's built-in [CLI] to bundle, which means no more [SystemJS] or [JSPM].
 
->- **Fast Promises!** - Now using [BlueBird] promises. This came with the new Aurelia-CLI anyway, so it was convenient. If you want to learn about promises: [Promises Explained]
+>- **Fast Promises!** - Now using [BlueBird] promises. This came with the new Aurelia-CLI anyway, so it was convenient. If you want to learn about [Promises].
 
 >- **Entering the Modern Age** - Switched to **HTTP/2** protocol, which just means a bit more efficient website transfer and features I might utilize like [Server Push].
 
@@ -52,7 +51,7 @@ date: 01/16/2017
 [JSPM]:http://jspm.io/
 [CLI]:http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/the-aurelia-cli
 [BlueBird]:http://bluebirdjs.com/docs/why-bluebird.html
-[Promises Explained]:https://spring.io/understanding/javascript-promises
+[Promises]:https://scotch.io/tutorials/javascript-promises-for-dummies
 [Server Push]:http://blog.xebia.com/http2-server-push/
 [GIFS]:http://lmgtfy.com/?q=what+is+a+gif
 [conflicts with firefox]:https://github.com/Noumenae/client/commit/bcaacbfbfa83a6deab0511da797ce44e145dbcc5

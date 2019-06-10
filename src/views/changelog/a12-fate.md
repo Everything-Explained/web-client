@@ -15,7 +15,7 @@ date: 7/25/2017
 
 >- **User List Love** - Yes, I've finally gotten around to updating the user list with a context menu. It displays ping and user group currently, but with future support for any other stats that should be easily accessible. Just **right click** on any user in the user list to access the context menu.
 
->- **Notices!** - Finally they're here. You are now able to [notice] users, which is not unlike sending a private message, but instead of the message being sent to some special window, it all appears in the main chat. Read more about notices [here](/#faq/notice).
+>- **Notices!** - Finally they're here. You are now able to [notice] users, which is not unlike sending a private message, but instead of the message being sent to some special window, it all appears in the main chat. Read more about notices [here](/#/faq/commands).
 >- To notice a user, just **double click** their name in the user list; it will fill your input with a **command** and **ID**. It will look something like `/notice zh882Egs8QJpK6aAAAf `. Just start typing your message and hit enter to send it. Don't worry about not getting a confirmation, that's just how it works for now.
 >
 >- _In the future you'll get a message saying that your notice was sent successfully_.
@@ -45,5 +45,5 @@ date: 7/25/2017
 [goal]:https://github.com/Noumenae/client/issues/39
 [markdown]:https://guides.github.com/features/mastering-markdown/
 [bedazzling]:https://www.google.com/search?q=what+is+bedazzle
-[notice]:/#faq/what-is-a-notice
+[notice]:/#/faq/commands
 [latency]:http://whatis.techtarget.com/definition/latency

@@ -50,7 +50,6 @@ export default class MarkdownPaging extends Vue {
     if (this.pages && !this.pages!.length) return;
 
     this.renderDefault();
-    console.log(this.sortBy);
     this._sortPages(this.sortBy || 'alphabet');
     let page = this.selectedPage
     this.path =

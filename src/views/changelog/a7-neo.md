@@ -49,5 +49,5 @@ date: 10/25/2016
 and finally [Noumenae].
 
 
-[Noumenae]:/#/home/faq/noumenae
-[notices]:/#faq/notice
+[Noumenae]:/#/faq/creation
+[notices]:/#/faq/commands
