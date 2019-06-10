@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/home/Home.vue';
-import Blog from './views/blog/Blog.vue';
+// import Blog from './views/blog/Blog.vue';
 import Invite from './views/invite/Invite.vue';
 // import Changelog from './views/changelog/Changelog.vue';
 // import Signin from './views/signin/Signin.vue';
@@ -9,7 +9,8 @@ import Settings from './views/settings/Settings.vue';
 import { RouteConfig } from 'vue-router';
 import { SessionData } from './api/server';
 import ClientAPI from './api/mock';
-import Chat from './views/chat/Chat.vue';
+// import FAQ from './views/faq/Faq.vue';
+// import Chat from './views/chat/Chat.vue';
 import F404 from './views/Resp404.vue';
 
 export default function initRoutes(session: SessionData, api: ClientAPI) {
@@ -31,14 +32,15 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
     {
       path: '/chg.log/:page?',
       name: 'chg.log',
-      component: () => import(/* webpackChunkName: "changelog" */ './views/changelog/Changelog.vue'),
+      component: () => import(/* webpackChunkName: "chglog" */ './views/changelog/Changelog.vue'),
       props: true,
       meta: { display: true }
     },
     {
       path: '/faq/:page?',
       name: 'faq',
-      component: () => import(/* webpackChunkName: "faq" */ './views/faq/Faq.vue'),
+      component: () => import(/* webpackChunkName: "faq" */ './views/faq/Faq.vue')
+      ,
       props: true,
       meta: { display: true }
     },
@@ -60,6 +62,7 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
   const signinRedirect = session.authed ? '' : 'signin';
 
 
+
   routes.push(...[
     {
       path: '/signin/:callback?/:type?',
@@ -67,14 +70,14 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
       component: () => import(/* webpackChunkName: "signin" */ './views/signin/Signin.vue'),
       meta: { display: !session.authed }
     },
-    {
-      path: '/blog/:page?',
-      name: 'blog',
-      component: Blog,
-      props: true,
-      redirect: signinRedirect,
-      meta: { display: session.authed }
-    },
+    // {
+    //   path: '/blog/:page?',
+    //   name: 'blog',
+    //   component: Blog,
+    //   props: true,
+    //   redirect: signinRedirect,
+    //   meta: { display: session.authed }
+    // },
     {
       path: '/chat',
       name: 'chat',
