@@ -23,7 +23,7 @@ export default class App extends Vue {
   public routes!: RouteConfig[];
 
   public openWatermark() {
-    this.$modal.show('VersionModal');
+    this.$modal.open('VersionModal');
   }
 
   public created() {

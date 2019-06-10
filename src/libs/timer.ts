@@ -83,7 +83,7 @@ export class Timer {
 
 
   public start(name?: string) {
-    if (name) return this._initTimeout(name);
+    if (name) return this.initTimeout(name);
 
     if (this.pollRunning) {
       console.warn('Timer Poll Already Running');
@@ -94,22 +94,6 @@ export class Timer {
       ;
 
       this.pollRunning = true;
-    }
-
-    return this;
-  }
-
-
-  private _initTimeout(name: string) {
-    const timer = this.getTimer(name);
-
-    if (timer) {
-      if (timer.interval)
-        throw new Error('You can ONLY start individual Timeouts, not Intervals')
-      ;
-
-      timer._queued = this.pollRunning;
-      timer._count = 0;
     }
 
     return this;
@@ -152,6 +136,26 @@ export class Timer {
       this.pollRunning = false;
       console.debug('TIMER::', 'Main Interval Stopped');
     }
+  }
+
+
+
+
+
+  
+  private initTimeout(name: string) {
+    const timer = this.getTimer(name);
+
+    if (timer) {
+      if (timer.interval)
+        throw new Error('You can ONLY start individual Timeouts, not Intervals')
+      ;
+
+      timer._queued = this.pollRunning;
+      timer._count = 0;
+    }
+
+    return this;
   }
 
 
