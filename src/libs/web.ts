@@ -1,25 +1,25 @@
 
 export class Web {
 
-  private _statusCodes: string[] = [];
+  private statusCodes = new Map<number, string>();
 
 
 
   constructor() {
-    this._statusCodes[200] = 'Ok';
-    this._statusCodes[201] = 'Created';
-    this._statusCodes[202] = 'Accepted; Not Completed';
-    this._statusCodes[204] = 'No Content';
-    this._statusCodes[205] = 'Reset Content';
-    this._statusCodes[301] = 'Moved Permanently';
-    this._statusCodes[304] = 'Not Modified';
-    this._statusCodes[400] = 'Bad Request';
-    this._statusCodes[401] = 'Unauthorized';
-    this._statusCodes[403] = 'Forbidden';
-    this._statusCodes[404] = 'Not Found';
-    this._statusCodes[500] = 'Internal Server Error';
-    this._statusCodes[501] = 'Not Implemented';
-    this._statusCodes[503] = 'Service Unavailable';
+    this.statusCodes.set(200, 'OK');
+    this.statusCodes.set(201, 'Created');
+    this.statusCodes.set(202, 'Accepted; Not Completed');
+    this.statusCodes.set(204, 'No Content');
+    this.statusCodes.set(205, 'Rest Content');
+    this.statusCodes.set(301, 'Moved Permanently');
+    this.statusCodes.set(304, 'Not Modified');
+    this.statusCodes.set(400, 'Bad Request');
+    this.statusCodes.set(401, 'Unauthorized');
+    this.statusCodes.set(403, 'Forbidden');
+    this.statusCodes.set(404, 'Not Found');
+    this.statusCodes.set(500, 'Internal Server Error');
+    this.statusCodes.set(501, 'Not Implemented');
+    this.statusCodes.set(503, 'Service Unavailable');
   }
 
 
@@ -84,12 +84,13 @@ export class Web {
 
   private async _fetch(url: string, options: RequestInit) {
 
-    const resp = await fetch(url, options)
-        , contentType = resp.headers.get('Content-Type') || ''
-    ;
+    const resp = await fetch(url, options);
+    const contentType = resp.headers.get('Content-Type') || '';
+    const status = resp.status;
+
     let data: any = null;
 
-    if (resp.status < 300) {
+    if (status < 300) {
       if (~contentType.indexOf('application/json')) {
         data = resp.json();
       }
@@ -100,7 +101,7 @@ export class Web {
     else {
       console.warn(
         `Fetch Error:: ${status} => ` +
-        `${this._statusCodes[status]}\n${url}`
+        `${this.statusCodes.get(status)}\n${url}`
       )
     }
 
