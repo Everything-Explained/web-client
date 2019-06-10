@@ -219,16 +219,16 @@ export default class Chat extends Vue {
       this.sock.resetIdle();
     }
 
-    const debIdle = this.$debounce(() => {
+    const idle = this.$debounce(() => {
       this.sock.resetIdle();
     }, 500)
 
     window.onmousemove = () => {
       // Set active immediately if user is idle
-      if (this.user.idle)
+      if (this.user && this.user.idle)
         this.sock.resetIdle()
       ;
-      debIdle.exec();
+      idle.exec();
     }
   }
 
