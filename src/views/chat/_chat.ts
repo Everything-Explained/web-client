@@ -32,7 +32,7 @@ export default class Chat extends Vue {
   private readonly sio!: SocketIOClient.Socket;
   private readonly sock = new ChatSocket(
     'https://localhost:3003',
-    'Z1YUXTXEK125D8HKGBIC5GWU',// this.$api.rid,
+    this.$api.rid,
     this.$timer
   );
 
@@ -156,7 +156,9 @@ export default class Chat extends Vue {
     type?: MsgType,
     priority?: MsgPriority
   ) {
-    const avatar = 'https://lh4.googleusercontent.com/-jm9RnjaBMrI/AAAAAAAAAAI/AAAAAAAAAfM/_RhlOKf4IlU/photo.jpg?sz=96'
+
+    const user = this.users.find(u => u.alias == alias)
+    const avatar = user ? user.avatar : '';
 
     // FIXME: Message style logic should not be here. This is a display
     // mechanism and should reside in display.
