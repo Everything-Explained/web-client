@@ -11,4 +11,4 @@
 </template>
 
 <script lang="ts" src='./_changelog.ts'></script>
-<style lang='sass' src='@/styles/markdown/_md_changelog.sass'></style>
+<!-- Styles imported in markdown.sass (md_changelog) -->

@@ -13,4 +13,4 @@
 </template>
 
 <script lang="ts" src='./_home.ts'></script>
-<style lang='sass' src='@/styles/markdown/_md_welcome.sass'></style>
+<!-- Styles imported in markdown.sass (welcome, rules) -->

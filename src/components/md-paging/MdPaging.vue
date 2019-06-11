@@ -51,5 +51,5 @@
 </template>
 
 <script lang='ts' src='./md-paging.ts'></script>
-<!-- <style lang="sass" src='./md-paging.sass'></style> //-->
+<!-- <style lang="sass" src='./md-paging.sass'></style> -->
 
