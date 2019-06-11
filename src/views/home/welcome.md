@@ -1,22 +1,19 @@
 title: welcome
 author: Jaeiya
 
-**hello here!**
+However you've made it here, let me begin by saying ___Hi!___
 
-_Do you like long walks on the Beach?_...**Just Kidding!!**
-**Noumenae** is a harbor for those who feel their flesh isn’t all there is, especially when that flesh is _tearing at your soul_. All of us are struggling with _something_, desiring a solace from worry and doubt. This restlessness that we feel from the depth of our being, this _nagging tug_…is the reason Noumenae was created.
+Although the internet can seem as though it's nothing but a vast web of random information, I believe the aggregate of that information could _lead us_ to some form of **peace**. If not peace between each-other, at least peace within ourselves. It's easy to look at the circumstances of our lives and immediately think that we're limited in our ability to ___Be who we are___.
 
-Unfortunately this material world has very little answers when it comes to the human condition. You'd think by now that with **all** the self-help books, we'd have figured out what gives our lives _meaning and purpose_. Thankfully though, the answer is often inside our own selves, but...**most of us can't hear it**. If you're ready to possibly find _the real You_, then I think **Noumenae** might just be the community you've been searching for.
+What if there were a community whose sole purpose rested on knowing how to ___Be___? What if within the community, _every person is celebrated_ for their own perspective; **not** diminished or looked down on? That's what **Noumenae** is all about, it's about celebrating us, **together**. There is no "Right Way", only _your way_.
 
-Just so there's no mincing of words here, **Yes**, we are about the **Spiritual** work; the revealing of our hidden nature which we so often ignore. There is **no** judgement or condemnation here, only simple people whom all are on this journey with you. Now before you think we've all got our _rose-colored_ glasses on, let me say that I myself have been disenchanted with life on many occations; I know what depression feels like, _but that's what **Love** is for_.
+It's **so easy** to get caught up in the semantics of existence that we sometimes forget to live...a lot of us - myself included - we think we're living but really we're just existing. **To live, is to captivate ourselves in the experience**, whatever that experience may be. I hope we all have the freedom to choose that experience, because _we are all deserving of a desireable experience_.
 
-___There is no doctrine___, only ___YOU___.
-You are the light you never knew you had; _all of us **Are**_.
-If you are thoroughly enticed by now _...hehe..._ then go ahead and check out the invite tab on the left or [Click Here][invite]
+This community serves the ___you that you are___ and that **you deserve**; it holds no expectations or doctrines, other than being true to your own self, which in-turn means showing others the same courtesy. If any of this resonates with you _on any level_, check out the [Invite] form and I'll get back to you as soon as I can.
 
-For a more complete understanding of this site, check out the [Rules] and [FAQ] sections.
+For a more complete understanding of this site, check out the [Rules] and [FAQ] sections. Also check out the [Creator] section to get to know more about **why** Noumenae was created.
 
-[Noumenon]:#/home/faq/about-the-creation
-[Rules]:#/home/rules
-[invite]:#/invites
-[FAQ]:#/home/faq/how-to-use-the-faq
+[creator]:/#/faq/creation
+[Rules]:/#/home/rules
+[invite]:/#/invite
+[FAQ]:/#/faq/the-faq

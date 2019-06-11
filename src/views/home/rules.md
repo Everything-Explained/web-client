@@ -2,25 +2,22 @@ title: rules
 author: Jaeiya
 
 LOVE
-: One rule to "Rule" them all. ___Show Love for one another___; there is no rule greater than this. The rules below are explicit reminders for those moments when we forget to love.
+: One rule to "Rule" them all. ___Practice Love for one another___. We're not perfect, so **practicing** love is the best we can hope for. Because _we're subject to the ebb and flow of this life_, sometimes we're incapable of showing Love; the explicit rules below are for those difficult moments.
 
 ~~break~~
 
 LANGUAGE
 : > **1.1**
-  >> This is something with 1.1
+  >> Using provocative language such as cussing or cursing will only be tolerated within the proper context of personal expression (when it's appropriate). Use common sense.
 
   > **1.2**
-  >> Using provocative language such as cussing or cursing will only be tolerated within the proper context of personal expression (when it's appropriate). Keep in mind that it's not appropriate most of the time.
-
-  > **1.3**
   >> Any language that violates 1.1 will NOT be tolerated; this includes language barriers. _(ex: cursing in spanish to an english speaking person)_
 
   > **2.1**
   >> All our members have a right to be as anonymous as they wish. Provoking a member to divulge personal details about themselves is forbidden.
 
   > **3.1**
-  >> Currently, English is the preferred lanugage of Noumenae. If you wish to have a discussion in another language, you're welcome to create your own channel on the site. _(Personal channels are still a work in progress)_
+  >> Currently, English is the preferred lanugage of Noumenae. If you wish to have a discussion in another language, private chat will be available in the future. _(Personal channels are still a work in progress)_
 
 ~~break~~
 
@@ -35,16 +32,16 @@ LINKING
   >> Images that are provocative or [NSFW], should not be linked, talked about, or hinted at in any way.
 
   > **2.3**
-  >> A provocative or [NSFW] image may be discussed, or in some cases linked, ONLY if the context of the discussion warrants it. In such a case, the image (if linked) must be behind spoilers.
+  >> A provocative or [NSFW] image may be discussed, or in some cases linked, ___Only___ if the context of the discussion warrants it. In such a case, the image (if linked) must be behind spoilers. _(Spoilers are currently not implemented)_
 
   > **2.4**
   >> Any provocative or [NSFW] images that are illegal or potentially illegal are forbidden, regardless of the context of a discussion.
 
-[nsfw]:#/home/faq/what-are-common-phrases
+[nsfw]:#/faq/expressions
 
 
 FUN
-: What's the point of bringing people together of similar mind and love if we can't find the laughter and the joy? This is what Noumenae is about; converging on the joy from the wellspring of our **God-given-love** that is within all of us, bursting out to be discovered. Share the passion, the heartache, and the revelation. All of it is God-within, letting the world know He's always been here.
+: ___Enjoy each other!___ We're here for a short time and each of us has our own unique perspective and experiences. Let us revel in these experiences together; let us revel in the **joy**, the **laughter**, the **tears**, the **heartache**, the **revelation**. All of it is us. All of it is for us to know who we are, so ___let's share it and figure it out together!___
 
 ~~break~~
 
