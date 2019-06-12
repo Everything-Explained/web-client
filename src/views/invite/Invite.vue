@@ -23,7 +23,7 @@
       <input
         type="text"
         class="dark-input name"
-        placeholder="Alias or First Name"
+        placeholder="Name or Alias"
         maxlength="20"
         v-model="alias"
       />
@@ -47,7 +47,7 @@
       <input
         type="email"
         class="dark-input email"
-        placeholder="Enter Email"
+        placeholder="Your E-mail"
         v-model="email"
         :disabled="!hasValidAlias"
       />

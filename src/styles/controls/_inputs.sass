@@ -4,9 +4,9 @@
   width: 200px
   background-color: hsl(0, 0%, 9%)
   border: 7px solid hsl(0, 0%, 20%)
-  padding: 10px 8px
-  font-size: medium
-  color: #aaa
+  padding: 10px 8px 7px 8px
+  +font-size(18)
+  color: hsl(0, 0%, 66.7%)
   border-radius: 5px
   transition: all .3s linear
   // Force hardware acceleration in Chrome
@@ -18,22 +18,20 @@ textarea.dark-input
   @extend %input
   box-shadow: 0 0 20px 4px hsl(0, 0, 0), inset 0 0 20px 4px hsl(0, 0, 0)
 
-
   &:focus
     border-color: hsl(50, 70%, 17%)
 
   &::-webkit-input-placeholder
-    font-family: Verdana, Geneva, Tahoma, sans-serif
-    text-shadow: 1px 1px 0 #000, 2px 2px 0 #000
+    text-shadow: 1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000
     word-spacing: normal
-    color: hsl(0, 0%, 33.3%)
+    font-weight: bold
+    color: hsl(0, 0%, 30%)
     transition: all .3s
 
   &::-moz-placeholder
-    font-family: Verdana, Geneva, Tahoma, sans-serif
     text-shadow: 1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000
     word-spacing: normal
-    color: #777
+    color: hsl(0, 0%, 58%)
     transition: all .3s
 
   &.embeded
@@ -73,38 +71,6 @@ button.standard,
 [type='submit'].standard
   @extend %button
 
-
-
-
-// $baseColor = hsl(50, 100%, 30%)
-// button
-//   position relative
-//   display inline-block
-//   border-radius 8px
-//   margin-top 20px
-//   background-color transparent
-//   cursor pointer
-//   border-radius 5px
-//   letter-spacing 1px
-//   color #bbb
-//   font-family 'Comic Sans MS'
-//   text-shadow -1px -1px 0 #000
-//   box-shadow 0 9px 0 hsla(0, 0%, 100%, 0.35), 0 10px 0 2px $baseColor
-//   &:hover span
-//     color hsl(50, 80%, 50%)
-//   &:active
-//     transform translate(0, 3px)
-//     box-shadow 0 6px 0 hsla(0, 0%, 100%, 0.35), 0 7px 0 2px $baseColor
-//   &:active span
-//     box-shadow 0 2px 0 #2c2c2c
-//     transform translate(0, 3px)
-//   & span
-//     display inline-block
-//     background-color #474747
-//     padding 7px 13px
-//     border-radius 5px
-//     box-shadow 0 8px 0 #2c2c2c
-//     transition color .3s
 
 
 
