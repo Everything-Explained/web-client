@@ -135,7 +135,11 @@ export default class MarkdownPaging extends Vue {
     setTimeout(() => {
       if (page) {
         this.invalidPage = false;
-        this.header = page.title.length > 1 ? page.title[1] : page.title[0]
+        this.header =
+          page.title.length > 1
+            ? page.title[0] + ' : ' + page.title[1].toUpperCase()
+            : page.title[0].toUpperCase()
+        ;
         this.subheader = page.date!.toISOString();
         this.content = page.content
         this.inTransit = false;

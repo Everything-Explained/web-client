@@ -4,7 +4,10 @@
       <div class="panel">
         <div
           class="titles"
-          :class="{ 'no-split': pages[0].title.length <= 1}"
+          :class="{
+            'no-split': pages[0].title.length <= 1,
+            'small-titles': pages[0].title.length > 1
+          }"
         >
           <div class="scroller scrollbars" v-if="pages.length > 0">
             <div class="title"
@@ -19,12 +22,12 @@
                 <div class="title-left">
                   {{ page.title[0] }}
                 </div>
-                <div class="title-right">
+                <!-- <div class="title-right">
                   {{ page.title[1].toUpperCase() }}
                   <div class="title-timestamp">
                     {{ page.date | dateFormat('log') }}
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -35,7 +38,7 @@
         :class="{ hidden: inTransit }"
       >
         <header>
-          {{ header.toUpperCase() }}
+          {{ header }}
           <div class="timestamp">{{ subheader | dateFormat }}</div>
         </header>
         <img v-if="invalidPage" :src="$dataImages.lambBlush" />
