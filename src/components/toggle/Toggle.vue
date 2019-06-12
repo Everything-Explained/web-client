@@ -31,9 +31,11 @@ $switchWidth: 80px
   cursor: pointer
 
   [type='checkbox']
+    position: absolute // Firefox won't obey 0 width/height
     opacity: 0
     width: 0
     height: 0
+    pointer-events: none
 
     ~ .slider
       position: absolute
