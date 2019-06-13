@@ -7,9 +7,9 @@ Although the internet can seem as though it's nothing but a vast web of random i
 
 What if there were a community whose sole purpose rested on knowing how to ___Be___? What if within the community, _every person is celebrated_ for their own perspective; **not** diminished or looked down on? That's what **Noumenae** is all about, it's about celebrating us, **together**. There is no "Right Way", only _your way_.
 
-It's **so easy** to get caught up in the semantics of existence that we sometimes forget to live...a lot of us - myself included - we think we're living but really we're just existing. **To live, is to captivate ourselves in the experience**, whatever that experience may be. I hope we all have the freedom to choose that experience, because _we are all deserving of a desireable experience_.
+It's **so easy** to get caught up in the semantics of existence that we sometimes forget to live...a lot of us - myself included - we think we're living, but really we're just existing. **To live, is to captivate ourselves in the experience**, whatever that experience may be. **All of us** are deserving of what we _most desire_ for ourselves as well as those around us.
 
-This community serves the ___you that you are___ and that **you deserve**; it holds no expectations or doctrines, other than being true to your own self, which in-turn means showing others the same courtesy. If any of this resonates with you _on any level_, check out the [Invite] form and I'll get back to you as soon as I can.
+This community serves the ___you that you are___; it holds no expectations or doctrines, other than being true to your own self, which in-turn means showing others the same courtesy. If any of this resonates with you _on any level_, check out the [Invite] form and I'll get back to you as soon as I can.
 
 For a more complete understanding of this site, check out the [Rules] and [FAQ] sections. Also check out the [Creator] section to get to know more about **why** Noumenae was created.
 
