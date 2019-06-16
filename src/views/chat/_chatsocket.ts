@@ -12,6 +12,7 @@ export enum ClientEvent {
   AUTHSUCCESS = 'auth-success',
   PONG        = 'clt-pong',
   SERVERMSG   = 'srv-message',
+  SRVREADY    = 'srv-handshake-ready',
   CLIENTMSG   = 'clt-message',
   ROOMSETUP   = 'setup-room',
   IDLE        = 'user-idle',
@@ -223,7 +224,9 @@ export default class ChatSocket {
 
   private onConnection() {
     this._isDisconnected = false;
-    this.sock.emit(ServerEvent.SHAKE, this.rid)
+    this.sock.on(ClientEvent.SRVREADY, () => {
+      this.sock.emit(ServerEvent.SHAKE, this.rid)
+    })
   }
 
 
