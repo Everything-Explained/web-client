@@ -269,7 +269,7 @@ export default class ChatSocket {
     this.timer.delete('idle');
     this.timer.add({
       name: 'idle',
-      time: 96, // 8 minutes
+      time: 84, // 7 minutes
       interval: false,
       exec: () => {
         console.debug('executing idle timeout');
