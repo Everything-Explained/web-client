@@ -2,7 +2,7 @@
 abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
 
 ::::::: SIMPLE HEADER :::::::
-ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@$%&()-"':,.
+ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890@$%&()-"':,.
 
 ::::::: PUNCTUATION :::::::
 ;:'",.()!?‘’“”…
@@ -24,6 +24,6 @@ ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@$%&()-"':,.
 
 Font URLs:
                                                                                           SUBSET
-https://fonts.googleapis.com/css?family=Cousine&text=abcdefghijklmnopqrstuvwxyz%20ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890%3B%3A'%22%2C.()!%3F%E2%80%98%E2%80%99%E2%80%9C%E2%80%9D%5B%5D%7B%7D%5C%2F%40%23%24%25%5E%26*%2B%3D_-%7C%3C%3E~%60%E2%80%A6
+https://fonts.googleapis.com/css?family=Comfortaa:300&text=ABCDEFGHIJKLMNOPQRSTUVWXYZ%201234567890%40%24%25%26()-%22'%3A%2C.%CE%B1%CE%B2%2B
 
-abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890;:'",.()!?‘’“”[]{}\\/@#$%^&*+=_-|<>~`…
+ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890@$%&()-"\':,.αβ+
