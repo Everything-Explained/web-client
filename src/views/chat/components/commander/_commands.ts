@@ -175,16 +175,22 @@ export default class ChatCommands {
 
   private onSendNotice(args: string) {
     const validArgs = this.getArgs(1, args) as [string, string]
-    if (validArgs) {
-      if (!this.chat.sendNotice(...validArgs)) {
+    if (validArgs.length == 2) {
+      const [alias, msg] = validArgs;
+      if (!this.chat.sendNotice(alias, msg)) {
         this.chat.addClientMsg(
-          `**"${validArgs[0]}"** is not in this room.`
+          `**"${alias}"** is not in this room.`
         );
+      }
+      else {
+        this.chat.addClientMsg(`Notice sent to **${alias}**`)
       }
       return;
     }
 
-    this.chat.addClientMsg(`Make sure you enter a users name to Notice them.`);
+    this.chat.addClientMsg(
+      `_Notice Error_; Make sure you enter **both** a user name and message.`
+    );
   }
 
 
