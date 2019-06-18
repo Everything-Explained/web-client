@@ -16,7 +16,7 @@ It is my personal belief that what we percieve as **God**, communicates to us th
 "[ae]" as a word in _old english_, can mean "law", especially law of nature or God's law. It's also interpreted as **the way, manner, or custom**. In the context of **Noumenae**, it means to be a part of the Noumenal reality, to understand its relevance and influence in our lives; _the reality of what **is**, rather than our perceptions of it_. ___The way of the Noumenal___.
 
 ## WHAT MOTIVATED YOU TO CREATE NOUMENAE
-The simple answer is **Love**. No, not the kind of love that just wants to feel needed, but the kind of love that's tired of seeing its people trampled on. There is a _deep ache_ in all of us for **Truth** but not a lot of places to talk about it. The implications of what **Truth** really is for every one of us, should be an _open honest discussion_, **not** a court of judgment or criticism.
+The simple answer is **Love**. No, not the kind of love that just wants to feel needed, but the kind of love that's tired of seeing its people trampled on, by themselves. There is a _deep ache_ in all of us for **Truth** but not a lot of places to talk about it. The implications of what **Truth** really is for every one of us, should be an _open honest discussion_, **not** a court of judgment or criticism.
 
 > **Noumenae** exists to destroy the paradigm that there is only one acceptable way to **Truth**
 
