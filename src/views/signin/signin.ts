@@ -1,5 +1,4 @@
-import { Vue } from 'vue-property-decorator';
-import Component from 'vue-class-component';
+import { Vue, Component } from 'vue-property-decorator';
 import Toggle from '@/components/toggle/Toggle.vue';
 import AuthInput from '@/components/auth-input/AuthInput.vue';
 

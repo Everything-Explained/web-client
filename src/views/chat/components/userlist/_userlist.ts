@@ -1,7 +1,4 @@
-import { Vue, Prop } from 'vue-property-decorator';
-import Component from 'vue-class-component';
-import { Generator } from '@/libs/generator';
-import { SockClient } from '../../_chatsocket';
+import { Vue, Prop, Component } from 'vue-property-decorator';
 import ChatUser from '../../_chatuser';
 
 

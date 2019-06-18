@@ -10,10 +10,8 @@
   "dependencies": {
     "markdown-it": "^8.4.2",
     "markdown-it-deflist": "^2.0.3",
-    "moment": "^2.24.0",
     "vue": "^2.6.10",
-    "vue-class-component": "^7.0.2",
-    "vue-property-decorator": "^8.1.0",
+    "vue-property-decorator": "^8.2.1",
     "vue-router": "^3.0.6"
   },
   "devDependencies": {

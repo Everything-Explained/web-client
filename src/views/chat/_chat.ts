@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Vue, Component } from 'vue-property-decorator';
 import Display from './components/display/Display.vue';
 import Userlist from './components/userlist/Userlist.vue';
 import Cmdr from './components/commander/Commander.vue';

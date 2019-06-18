@@ -1,7 +1,5 @@
 
-import Vue from 'vue';
-import { Prop } from 'vue-property-decorator';
-import Component from 'vue-class-component';
+import { Prop, Vue, Component } from 'vue-property-decorator';
 import MarkdownPaging from '@/components/md-paging/MdPaging.vue';
 import { IPage } from '@/components/md-paging/md-paging.js';
 import Utils from '@/libs/utils';

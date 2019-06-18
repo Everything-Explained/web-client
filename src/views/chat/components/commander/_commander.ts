@@ -1,5 +1,4 @@
-import { Vue, Prop, Watch } from 'vue-property-decorator';
-import Component from 'vue-class-component';
+import { Vue, Prop, Watch, Component } from 'vue-property-decorator';
 import Chat from '../../_chat';
 import ChatCommands from './_commands';
 import ChatSocket, { RoomEvent } from '../../_chatsocket';

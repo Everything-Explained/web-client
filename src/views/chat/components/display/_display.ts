@@ -1,6 +1,5 @@
 import Vue from 'vue';
-import { Prop, Watch } from 'vue-property-decorator';
-import Component from 'vue-class-component';
+import { Prop, Watch, Component } from 'vue-property-decorator';
 import { Generator } from '@/libs/generator';
 import Message from '../message/Message.vue';
 import Lorem from '@/libs/loremipsum';

@@ -1,5 +1,4 @@
-import { Vue } from 'vue-property-decorator';
-import Component from 'vue-class-component';
+import { Vue, Component } from 'vue-property-decorator';
 import { RouteConfig } from 'vue-router';
 import { ModVueRouter } from './typings/shims-router';
 

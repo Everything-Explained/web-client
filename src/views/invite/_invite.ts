@@ -1,5 +1,4 @@
-import { Vue, Provide } from 'vue-property-decorator';
-import Component from 'vue-class-component';
+import { Vue, Provide, Component } from 'vue-property-decorator';
 
 
 @Component
