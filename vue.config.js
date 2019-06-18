@@ -19,6 +19,11 @@ module.exports = {
           from: path.join(__dirname, 'src/views/static/*.*'),
           to: path.join(__dirname, 'dist/static'),
           flatten: true
+        },
+        {
+          from: path.join(__dirname, 'robots.txt'),
+          to: path.join(__dirname, 'dist'),
+          flatten: true
         }
       ])
     ],
