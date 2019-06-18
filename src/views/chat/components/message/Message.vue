@@ -75,5 +75,5 @@
 
 
 <script lang='ts' src='./_message.ts'></script>
-<style lang='sass' src='./_message.sass'></style>
+<!-- <style lang='sass' src='./_message.sass'></style> -->
 <!-- Markdown styles imported from markdown.sass (md_chat_message) -->

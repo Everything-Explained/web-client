@@ -29,6 +29,6 @@
 
 
 <script lang='ts' src='./_userlist.ts'></script>
-<style lang='sass' src='./_userlist.sass'></style>
+<!-- <style lang='sass' src='./_userlist.sass'></style> -->
 
 

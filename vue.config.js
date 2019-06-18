@@ -3,7 +3,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   css: {
-    sourceMap: true,
+    sourceMap: false,
     extract: false
   },
 
