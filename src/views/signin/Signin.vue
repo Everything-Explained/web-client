@@ -111,9 +111,11 @@
         :max="20"
         :validate="validateInvite"
         :validationDelay="800"
+        :test1="(input) => /^[a-zA-Z0-9]+$/.test(input)"
         validationType="Invite"
         @valid-input="(vinvite) => invite = vinvite"
       >
+        <template v-slot:invalid1><div>Invalid Characters</div></template>
         <template v-slot:valid><div>Invite Validated</div></template>
         Enter Invite Code
       </auth-input>
