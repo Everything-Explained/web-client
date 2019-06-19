@@ -16,6 +16,8 @@ import F404 from './views/Resp404.vue';
 export default function initRoutes(session: SessionData, api: ClientAPI) {
   Vue.use(Router);
 
+  const signinRedirect = session.authed ? '' : 'signin';
+
   const routes = [
     {
       path: '/',
@@ -28,6 +30,13 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
       component: Home,
       props: true,
       meta: { display: true }
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      redirect: signinRedirect,
+      component: () => import(/* webpackChunkName: "chat" */ './views/chat/Chat.vue'),
+      meta: { display: session.authed }
     },
     {
       path: '/chg.log/:page?',
@@ -45,45 +54,10 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
       meta: { display: true }
     },
     {
-      path: '/invite',
-      name: 'invite',
-      component: Invite,
-      meta: { display: false }
-    },
-    {
-      path: '*',
-      name: '404',
-      component: F404,
-      meta: { display: false }
-    }
-  ] as RouteConfig[]
-  ;
-
-  const signinRedirect = session.authed ? '' : 'signin';
-
-
-
-  routes.push(...[
-    {
       path: '/signin/:callback?/:type?',
       name: 'signin',
       component: () => import(/* webpackChunkName: "signin" */ './views/signin/Signin.vue'),
       meta: { display: !session.authed }
-    },
-    // {
-    //   path: '/blog/:page?',
-    //   name: 'blog',
-    //   component: Blog,
-    //   props: true,
-    //   redirect: signinRedirect,
-    //   meta: { display: session.authed }
-    // },
-    {
-      path: '/chat',
-      name: 'chat',
-      redirect: signinRedirect,
-      component: () => import(/* webpackChunkName: "chat" */ './views/chat/Chat.vue'),
-      meta: { display: session.authed }
     },
     {
       path: '/me',
@@ -99,8 +73,32 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
         next(new Error(`Could not retrieve settings : ${settingResp.status}`))
       },
       meta: { display: session.authed },
+    },
+    {
+      path: '/invite',
+      name: 'invite',
+      component: Invite,
+      meta: { display: false }
+    },
+    {
+      path: '*',
+      name: '404',
+      component: F404,
+      meta: { display: false }
     }
-  ] as RouteConfig[]);
+  ] as RouteConfig[]
+  ;
+
+
+  // {
+  //   path: '/blog/:page?',
+  //   name: 'blog',
+  //   component: Blog,
+  //   props: true,
+  //   redirect: signinRedirect,
+  //   meta: { display: session.authed }
+  // },
+
 
   return new Router({ routes });
 }
