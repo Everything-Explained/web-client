@@ -1,7 +1,7 @@
 title: invites
 author: Jaeiya
 
-Invites are given out by the Admin as well as those who have established some integrity on the site. That being said, you're _free to email the Admin_ as described on the [about] page.
+Invites are given out by the Admin as well as those who have established some integrity on the site. That being said, you're _free to email the Admin_ as described on the [Welcome] page.
 
 > The Requirements below are just loose guidelines; **content of character** is most important.
 
@@ -15,6 +15,6 @@ The second, is that with an invite system, we are able to filter out individuals
 
 The third and final reason, is **traffic**. Early on in development, there are going to be traffic restrictions. As more and more people are added, this introduces potential for failure depending on the increase in IO on the server. Once I can assess the average strain per-user on the site, then I can remove this restriction and possibly have higher tier members start inviting more people. _This is all pending overall interest._
 
-[about]:/#/about
+[welcome]:/#/home/welcome
 [invitation form]:/#/invite
 [abuse]:/#/faq/abuses
