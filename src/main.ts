@@ -25,7 +25,6 @@ window.indev = process.env.VUE_APP_ENV == 'development';
 
 
 
-
 // ######################################################
 // #region BEGIN BROWSER CHECK
 let needBrowser =

@@ -153,7 +153,7 @@ export default class ChatSocket {
 
   connect(url: string) {
     this.sock = io(url, {
-      forceNew: true, reconnection: false, query: { test: 'ZX87PC57CL' }}
+      forceNew: true, reconnection: false, }//query: { test: 'ZX87PC57CL' }}
     );
 
     this.sock

@@ -30,7 +30,7 @@ export default class Chat extends Vue {
 
   private readonly sio!: SocketIOClient.Socket;
   private readonly sock = new ChatSocket(
-    'https://localhost:3003',
+    window.location.origin,
     this.$api.rid,
     this.$timer
   );
