@@ -145,7 +145,7 @@ export default class AuthInput extends Vue {
         clearTimeout(timeoutID);
         return new Promise(rs => {
           timeoutID = setTimeout(() => {
-            rs(fn(args));
+            rs(fn(...args));
           }, that.validationDelay);
         })
       },
