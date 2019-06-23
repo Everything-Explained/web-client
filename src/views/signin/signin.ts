@@ -104,7 +104,7 @@ export default class Signin extends Vue {
 
 
   public async validateInvite(invite: string) {
-    return await this.$api.validateInvite(invite);
+    return await this.$api.validateInvite(invite.toUpperCase());
   }
 
 
