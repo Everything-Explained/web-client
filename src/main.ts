@@ -9,6 +9,7 @@ import ClientAPI from './api/mock';
 import API from 'client-api';
 import Utils from './libs/utils';
 import { Timer } from './libs/timer';
+import { SessionData } from './api/server';
 
 
 Vue.config.productionTip = false
@@ -18,6 +19,9 @@ declare global {
     /** Is client in development mode -
      * **set inside '.env' files** */
     indev: boolean;
+
+    /** Rendered by server - index.html */
+    session: SessionData;
   }
 }
 
@@ -95,13 +99,10 @@ Vue.use({
 })
 
 
-async function initVue() {
-  // Vue relies on session data
-  let session = await api.initSession();
+function initVue() {
   if (cookies && !needBrowser) {
-
     new Vue({
-      router: initRouter(session, api),
+      router: initRouter(api.initSession(), api),
       render: h => h(App)
     }).$mount('#app')
   }
