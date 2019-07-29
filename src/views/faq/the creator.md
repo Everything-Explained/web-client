@@ -13,7 +13,7 @@ This is likened to the [Allegory of the Cave] by **Plato**; we are experiencing 
 It is my personal belief that what we percieve as **God**, communicates to us through this Noumenal reality. _We are children interpreting the shadows and echoes of_ **God**.
 
 ## THE AE IN NOUMEN-AE
-"[ae]" as a word in _old english_, can mean "law", especially law of nature or God's law. It's also interpreted as **the way, manner, or custom**. In the context of **Noumenae**, it means to be a part of the Noumenal reality, to understand its relevance and influence in our lives; _the reality of what **is**, rather than our perceptions of it_. ___The way of the Noumenal___.
+Using "[ae]" as a word in _old english_, can mean "law", especially law of nature or God's law. It's also interpreted as **the way, manner, or custom**. In the context of **Noumenae**, it means to be a part of the Noumenal reality, to understand its relevance and influence in our lives; _the reality of what **is**, rather than our perceptions of it_. ___The way of the Noumenal___.
 
 ## WHAT MOTIVATED YOU TO CREATE NOUMENAE
 The simple answer is **Love**. No, not the kind of love that just wants to feel needed, but the kind of love that's tired of seeing its people trampled on, by themselves. There is a _deep ache_ in all of us for **Truth** but not a lot of places to talk about it. The implications of what **Truth** really is for every one of us, should be an _open honest discussion_, **not** a court of judgment or criticism.

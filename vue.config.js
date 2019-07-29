@@ -1,13 +1,18 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
+// TODO: Closure One day...
+// const ClosurePlugin = require('closure-webpack-plugin');
+
 module.exports = {
+
   css: {
     sourceMap: false,
     extract: false
   },
 
   configureWebpack: {
+
     performance: {
       hints: 'warning',
       maxAssetSize: 1024 * 300,     // int (in bytes)

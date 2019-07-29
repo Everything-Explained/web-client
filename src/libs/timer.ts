@@ -14,7 +14,7 @@ export interface ITimerExec {
   /** Set false for timeout */
   interval: boolean;
 
-  /** Interations through the interval execution */
+  /** Iterations through the interval execution */
   _count?: number;
 
   /** Wait until beginning of next interval iteration */
@@ -142,7 +142,7 @@ export class Timer {
 
 
 
-  
+
   private initTimeout(name: string) {
     const timer = this.getTimer(name);
 

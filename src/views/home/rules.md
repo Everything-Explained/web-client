@@ -6,6 +6,11 @@ LOVE
 
 ~~break~~
 
+FUN
+: ___Enjoy each other!___ We're here for a short time and each of us has our own unique perspective and experiences. Let us revel in these experiences together; let us revel in the **joy**, the **laughter**, the **tears**, the **heartache**, the **revelation**. All of it is us. All of it is for us to know who we are, so ___let's share it and figure it out together!___
+
+~~break~~
+
 LANGUAGE
 : > **1.1**
   >> Using provocative language such as cussing or cursing will only be tolerated within the proper context of personal expression (when it's appropriate). Use common sense.
@@ -14,7 +19,7 @@ LANGUAGE
   >> Any language that violates 1.1 will NOT be tolerated; this includes language barriers. _(ex: cursing in spanish to an english speaking person)_
 
   > **2.1**
-  >> All our members have a right to be as anonymous as they wish. Provoking a member to divulge personal details about themselves is forbidden.
+  >> All our members have a right to be as anonymous as they  wish. Provoking a member to divulge personal details about themselves is forbidden.
 
   > **3.1**
   >> Currently, English is the preferred lanugage of Noumenae. If you wish to have a discussion in another language, private chat will be available in the future. _(Personal channels are still a work in progress)_
@@ -38,10 +43,6 @@ LINKING
   >> Any provocative or [NSFW] images that are illegal or potentially illegal are forbidden, regardless of the context of a discussion.
 
 [nsfw]:#/faq/expressions
-
-
-FUN
-: ___Enjoy each other!___ We're here for a short time and each of us has our own unique perspective and experiences. Let us revel in these experiences together; let us revel in the **joy**, the **laughter**, the **tears**, the **heartache**, the **revelation**. All of it is us. All of it is for us to know who we are, so ___let's share it and figure it out together!___
 
 ~~break~~
 
