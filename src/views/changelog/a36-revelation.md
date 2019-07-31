@@ -1,6 +1,6 @@
 title: α36 : revelation
 author: Aedaeum
-date: 6/12/2019
+date: 7/30/2019
 
 # NEW LAYOUT
 > - **Paginated Deliciousness** - The _Changelog_, _FAQ_, _Blog_, and _Home_ pages have been converted to a new layout. These pages have dynamic data which will be converted into a nice looking layout for you to peruse.
@@ -23,7 +23,7 @@ date: 6/12/2019
 > - Because of this change, you can capitalize on those first 60 messages at any point during every hour. _You are no longer limited by a time-delay_. Once you've hit the "speed limit" - **60 messages per hour** - you can obviously still send messages, you just won't gain [XP] for them, until the next hour rolls around.
 
 
-# COMPROMISING
+# COMPROMISES
 > - **Maybe blog later? -** The blog has been a part of the site for quite a while, but it's become more of an after-thought. I don't really know where it fits in with Noumenae right now, so it will be removed from this release.
 
 > - **The Grammar Nazi has been pacified! -** Because I wanted to get this release out on time, I have decided to leave the _real-time spell-checker_ behind. Don't worry though, it will be back in the near future! The next iteration of it will be more efficient and accurate.
