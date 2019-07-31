@@ -4,12 +4,12 @@ import Home from './views/home/Home.vue';
 // import Blog from './views/blog/Blog.vue';
 import Invite from './views/invite/Invite.vue';
 // import Changelog from './views/changelog/Changelog.vue';
-// import Signin from './views/signin/Signin.vue';
+import SignIn from './views/signin/Signin.vue';
 import Settings from './views/settings/Settings.vue';
 import { RouteConfig } from 'vue-router';
 import { SessionData } from './api/server';
 import ClientAPI from './api/mock';
-// import FAQ from './views/faq/Faq.vue';
+import FAQ from './views/faq/Faq.vue';
 // import Chat from './views/chat/Chat.vue';
 import F404 from './views/Resp404.vue';
 
@@ -48,15 +48,14 @@ export default function initRoutes(session: SessionData, api: ClientAPI) {
     {
       path: '/faq/:page?',
       name: 'faq',
-      component: () => import(/* webpackChunkName: "faq" */ './views/faq/Faq.vue')
-      ,
+      component: FAQ,
       props: true,
       meta: { display: true }
     },
     {
       path: '/signin/:callback?/:type?',
       name: 'signin',
-      component: () => import(/* webpackChunkName: "signin" */ './views/signin/Signin.vue'),
+      component: SignIn,
       meta: { display: !session.authed }
     },
     {
