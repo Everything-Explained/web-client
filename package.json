@@ -9,22 +9,22 @@
   },
   "dependencies": {
     "markdown-it": "^8.4.2",
-    "markdown-it-deflist": "^2.0.3",
-    "vue": "^2.6.10",
-    "vue-property-decorator": "^8.2.1",
-    "vue-router": "^3.0.6"
+    "markdown-it-deflist": "^2.1.0",
+    "vue": "^2.6.12",
+    "vue-property-decorator": "^8.5.1",
+    "vue-router": "^3.4.7"
   },
   "devDependencies": {
     "@types/markdown-it": "0.0.7",
-    "@types/socket.io-client": "^1.4.32",
-    "@vue/cli-plugin-e2e-nightwatch": "^3.5.1",
-    "@vue/cli-plugin-typescript": "^3.5.3",
-    "@vue/cli-service": "^3.5.3",
-    "copy-webpack-plugin": "^5.0.2",
+    "@types/socket.io-client": "^1.4.34",
+    "@vue/cli-plugin-e2e-nightwatch": "^3.12.1",
+    "@vue/cli-plugin-typescript": "^3.12.1",
+    "@vue/cli-service": "^3.12.1",
+    "copy-webpack-plugin": "^5.1.2",
     "node-sass": "^4.14.1",
-    "sass-loader": "^7.1.0",
-    "typescript": "^3.4.1",
-    "vue-template-compiler": "^2.6.10"
+    "sass-loader": "^7.3.1",
+    "typescript": "^3.9.7",
+    "vue-template-compiler": "^2.6.12"
   },
   "postcss": {
     "plugins": {
