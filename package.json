@@ -17,9 +17,8 @@
   "devDependencies": {
     "@types/markdown-it": "0.0.7",
     "@types/socket.io-client": "^1.4.34",
-    "@vue/cli-plugin-e2e-nightwatch": "^3.12.1",
     "@vue/cli-plugin-typescript": "^3.12.1",
-    "@vue/cli-service": "^3.12.1",
+    "@vue/cli-service": "^4.5.8",
     "copy-webpack-plugin": "^5.1.2",
     "node-sass": "^4.14.1",
     "sass-loader": "^7.3.1",
