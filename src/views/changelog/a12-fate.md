@@ -1,7 +1,8 @@
-title: α12 : fate
+---
+title: "α12 : fate"
 author: Aedaeum
 date: 7/25/2017
-
+---
 # FEATURES
 
 >- **Scrollbars Everywhere!!** - That's right, we've got delicious scrollbars everywhere, including modals. There's currently a [discussion] about the numerous issues I've had with styling the scrollbars, while trying to maintain good functionality over multiple devices and configurations. Long story short, I had to compromise but I think it will pay off in the future.

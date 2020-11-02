@@ -1,6 +1,7 @@
+---
 title: invites
 author: Jaeiya
-
+---
 Invites are given out by the Admin as well as those who have established some integrity on the site. That being said, you're _free to email the Admin_ as described on the [Welcome] page.
 
 > The Requirements below are just loose guidelines; **content of character** is most important.

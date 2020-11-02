@@ -1,6 +1,7 @@
+---
 title: creation
 author: Jaeiya
-
+---
 ## WHO CREATED NOUMENAE
 Hi, my _alias_ is **Jaeiyah** and **Noumenae** is my brain-child. There was no blood expelled during its creation, but there was certainly sweat and tears haha. Hopefully you'll get as much out of this creation as I put into it; that's my wish and hope.
 

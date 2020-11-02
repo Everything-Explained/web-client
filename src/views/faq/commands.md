@@ -1,6 +1,7 @@
+---
 title: commands
 author: Jaeiya
-
+---
 # WHAT ARE COMMANDS
 When you type a `/` character in the text box on the chat page **(the command box)**, that's the beginning of a command entry. If you **begin** to type `/hello` into the **chat box**, you'll notice that it trys to predict what command you're trying to type. When it's guessed correctly you can hit the `TAB` key on your keyboard to auto-complete that command. From there, all you have to do is hit `ENTER` to execute the command.
 

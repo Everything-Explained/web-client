@@ -1,6 +1,7 @@
+---
 title: rules
 author: Jaeiya
-
+---
 LOVE
 : One rule to "Rule" them all. ___Practice Love for one another___. We're not perfect, so **practicing** love is the best we can hope for. Because _we're subject to the ebb and flow of this life_, sometimes we're incapable of showing Love; the explicit rules below are for those difficult moments.
 

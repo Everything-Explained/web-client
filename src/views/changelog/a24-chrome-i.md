@@ -1,7 +1,8 @@
-title: α24 : chrome-i
+---
+title: "α24 : chrome-i"
 author: Aedaeum
 date: 04/20/2018
-
+---
 # QOL FEATURES
 
 >- **More Readability** - Default text color was hiding too much into the background. It should be **much** easier to read now.

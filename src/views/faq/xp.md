@@ -1,6 +1,7 @@
+---
 title: xp
 author: Jaeiya
-
+---
 ## WHAT IS XP
 **XP** stands for **Experience Points** and you gain them by chatting. This is a standard mechanism for most RPG games, which reward XP for doing things in the game or platform.
 

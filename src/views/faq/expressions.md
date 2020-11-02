@@ -1,6 +1,7 @@
+---
 title: expressions
 author: Jaeiya
-
+---
 These are phrases or words that the site will use to describe certain aspects of itself or its userbase.
 
 ## WHAT IS NSFW

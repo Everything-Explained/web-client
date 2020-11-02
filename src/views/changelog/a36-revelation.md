@@ -1,7 +1,8 @@
-title: α36 : revelation
+---
+title: "α36 : revelation"
 author: Aedaeum
 date: 7/30/2019
-
+---
 # NEW LAYOUT
 > - **Paginated Deliciousness** - The _Changelog_, _FAQ_, _Blog_, and _Home_ pages have been converted to a new layout. These pages have dynamic data which will be converted into a nice looking layout for you to peruse.
 > - Accompanying the new look, is the ability to link to each of the dynamic pages. _Clicking_ a change log will now change the URL and you can share that URL with **anyone**!

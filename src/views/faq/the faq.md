@@ -1,6 +1,7 @@
+---
 title: the faq
 author: Jaeiya
-
+---
 On the left, are a list of topics which contain questions, **some obvious and some not-so-obvious**. I would suggest anyone coming here for the first time, familiarize yourself with each topic so that if anything is added, you know where to go. In future releases, there will be a search function that searches **all** of the content for keywords; for now, you have to do it manually, _sorry_!
 
 One handy feature that **is** available, is the _hover_ feature of these individual paragraphs. Go ahead and hover your mouse over this paragraph; it should light up. This will allow you to keep your place while reading, as well as make the text stand out more.

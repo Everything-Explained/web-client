@@ -1,6 +1,7 @@
+---
 title: levels
 author: Jaeiya
-
+---
 ## WHAT ARE LEVELS
 When we talk about levels in **Noumenae** we're talking about **Message Levels**. When you send a message using chat, you have a chance to gain some [XP] towards the next level. Each level comes with its own title and each title relates to the users contribution to the site.
 

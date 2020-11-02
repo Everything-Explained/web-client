@@ -1,6 +1,7 @@
+---
 title: welcome
 author: Jaeiya
-
+---
 However you've made it here, let me begin by saying ___Hi!___
 
 Although the internet can seem as though it's nothing but a vast web of random information, I believe the aggregate of that information could _lead us_ to some form of **peace**. If not peace between each-other, at least peace within ourselves. It's easy to look at the circumstances of our lives and immediately think that we're limited in our ability to ___Be who we are___.
