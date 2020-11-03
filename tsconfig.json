@@ -1,25 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "esnext", // DO NOT TOUCH
+    "target": "ES2019",
+    "module": "esnext",
     "strict": true,
-    "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false,
-    "resolveJsonModule": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env",
-      "socket.io-client",
-      "markdown-it"
+      "webpack-env"
     ],
     "paths": {
-      "*": ["types/*"],
       "@/*": [
         "src/*"
       ]
