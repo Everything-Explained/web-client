@@ -1,0 +1,49 @@
+.test-class,
+body,
+.app,
+a,
+.nav,
+.nav__link,
+#nav a.router-link-exact-active {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+  display: block;
+  border-width: 0;
+}
+
+.test-class {
+  color: #000;
+}
+
+body {
+  font: 1em sans-serif;
+}
+
+.app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+
+a {
+  color: #fff;
+}
+
+.nav {
+  padding: 30px;
+}
+
+.nav__link {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+/*# sourceMappingURL=_app.css.map */

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2019",
-    "module": "esnext",
+    "module": "ESNEXT",
     "strict": true,
     "importHelpers": true,
     "moduleResolution": "node",

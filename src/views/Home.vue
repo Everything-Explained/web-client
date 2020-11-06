@@ -6,13 +6,15 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
-@Options({
-  components: {
-    HelloWorld,
-  },
-})
-export default class Home extends Vue {}
+export default defineComponent({
+  name: 'Home',
+  setup() {
+    const router = useRouter();
+
+    console.log(router.currentRoute);
+  }
+});
 </script>

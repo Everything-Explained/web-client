@@ -1,0 +1,6 @@
+:root {
+  --panel           : hsl(0, 0%, 14%);
+  --panel-hover     : hsl(278, 17%, 12%);
+  --sub-panel       : hsl(0, 0%, 9.3%);
+  --sub-panel-light : hsl(0, 0%, 10.3%);
+}
