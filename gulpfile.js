@@ -14,9 +14,9 @@ function parseCSS(cb) {
       require('postcss-easy-import'),
       require('precss'),
     ]))
-    .pipe(sourcemaps.write('.'))
     .pipe(rename('main.css'))
-    .pipe(gulp.dest('./src'))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./public'))
   ;
   cb();
 }
