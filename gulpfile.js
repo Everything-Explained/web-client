@@ -12,7 +12,9 @@ function parseCSS(cb) {
     .pipe(sourcemaps.init())
     .pipe(postcss([
       require('postcss-easy-import'),
-      require('precss'),
+      // require('autoprefixer'),
+      // require('postcss-csso')
+      // require('precss'),
     ]))
     .pipe(rename('main.css'))
     .pipe(sourcemaps.write('.'))
