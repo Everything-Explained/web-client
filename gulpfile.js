@@ -25,7 +25,7 @@ function parseCSS(cb) {
 
 
 function watchCSS() {
-  watch(['./src/**.css', '!./src/main.css'], parseCSS);
+  watch(['./src/**/**.css', '!./src/main.css'], parseCSS);
 }
 
 
