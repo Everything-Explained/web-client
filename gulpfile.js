@@ -13,9 +13,9 @@ function parseCSS(cb) {
     .pipe(postcss([
       require('postcss-easy-import'),
       // require('autoprefixer'),
-      // require('postcss-csso')
       // require('precss'),
-    ]))
+      // require('postcss-csso')
+    ]).on('error', (err) => {console.log(err.message);}))
     .pipe(rename('main.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./public'))
