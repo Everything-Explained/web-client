@@ -1,0 +1,42 @@
+.main__menu {
+  display: block;
+  margin-top: 27px;
+  font: small-caps 24px "Comfortaa";
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.main__menu ul {
+  position: relative;
+  display: block;
+  margin-left: 7px;
+}
+
+.main__menu li {
+  display: block;
+}
+
+.main__menu a {
+  position: relative;
+  display: block;
+  padding: 6px 5px 2px 0;
+  text-align: right;
+  color: #4d4d4d;
+  border-left: 4px solid transparent;
+  border-bottom: none;
+  transition: color 0.3s, background 0.3s, border 0.3s;
+  user-select: none;
+  cursor: pointer;
+}
+
+.main__menu a:hover {
+  color: #bfaa40;
+  opacity: 1;
+  background-clip: padding-box;
+}
+
+.main__menu .router-link-active {
+  color: #bfaa40;
+  background: #242424;
+  border-left: 4px solid #afa250;
+}

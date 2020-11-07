@@ -1,6 +1,12 @@
 :root {
-  --panel           : hsl(0, 0%, 14%);
-  --panel-hover     : hsl(278, 17%, 12%);
-  --sub-panel       : hsl(0, 0%, 9.3%);
-  --sub-panel-light : hsl(0, 0%, 10.3%);
+  --main-bg-color         : hsl(0, 0%, 6.7%);
+  --ribbon-color          : hsl(278, 57%, 50%);
+  --selection-color       : hsla(51.8, 66.3%, 50%, .185);
+  --watermark-color       : hsl(0, 0%, 35%);
+  --watermark-hover-color : hsl(278, 100%, 75%);
+
+  --panel-color           : hsl(0, 0%, 14%);
+  --panel-hover           : hsl(278, 17%, 12%);
+  --sub-panel             : hsl(0, 0%, 9.3%);
+  --sub-panel-light       : hsl(0, 0%, 10.3%);
 }
