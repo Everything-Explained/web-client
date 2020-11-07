@@ -1,2 +1,29 @@
 @import "./styles/_base.css";
 
+body,
+html {
+  background: hsl(0, 0%, 6.7%);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: hsla(51.8, 66.3%, 50%, .185);
+}
+
+::-moz-selection {
+  background: hsla(51.8, 66.3%, 50%, .185);
+}
+
+.main-header__ribbon {
+
+}
+
+.main-header__logo {
+
+}
+
+.main__menu {
+
+}

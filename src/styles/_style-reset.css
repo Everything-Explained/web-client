@@ -1,5 +1,8 @@
 @import "reset-css/reset.css";
 
+/**********************************************/
+/* If reset-css changes, this needs to update */
+/**********************************************/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,6 +23,15 @@ time, mark, audio, video {
   font-size      : 100%;
   font           : inherit;
   vertical-align : baseline;
-  outline        : none;
-  box-sizing     : border-box;
+}
+
+body, div, article, span, ul,
+menu, input, textarea, section,
+a, p, header, footer, button,
+form, aside, label, pre, dd, dt,
+code
+{
+  outline     : none;
+  line-height : normal;
+  box-sizing  : border-box;
 }
