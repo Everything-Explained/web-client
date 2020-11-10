@@ -1,12 +1,36 @@
 :root {
-  --main-bg-color         : hsl(0, 0%, 6.7%);
-  --ribbon-color          : hsl(278, 57%, 50%);
-  --selection-color       : hsla(51.8, 66.3%, 50%, .185);
-  --watermark-color       : hsl(0, 0%, 35%);
-  --watermark-hover-color : hsl(278, 100%, 75%);
+  --main-bg-c         : hsl(0, 0%, 6.7%);
+  --header-ribbon-c   : hsl(278, 57%, 50%);
+  --selection-c       : hsla(51.8, 66.3%, 50%, .185);
+  --watermark-c       : hsl(0, 0%, 35%);
+  --watermark-hover-c : hsl(278, 100%, 75%);
 
-  --panel-color           : hsl(0, 0%, 14%);
-  --panel-hover           : hsl(278, 17%, 12%);
-  --sub-panel             : hsl(0, 0%, 9.3%);
-  --sub-panel-light       : hsl(0, 0%, 10.3%);
+  --main-menu-c               : hsl(0, 0%, 30%);
+  --main-menu-active-c        : hsl(50, 50%, 50%);
+  --main-menu-hover-c         : var(--main-menu-active-color);
+  --main-menu-bg-c            : var(--panel-c);
+  --main-menu-active-border-c : hsl(52, 37%, 50%);
+
+  /*** MARKDOWN ***/
+  --md-c              : hsl(0, 0%, 64%);
+  --md-p-hover-c      : hsl(0, 0%, 68%);
+  --md-p-bg-c         : var(--sub-panel);
+  --md-p-hover-bg-c   : hsl(278, 18%, 12%);
+  --md-bold-c         : hsl(0, 0%, 75%);
+  --md-bold-hover-c   : hsl(0, 0%, 77%);
+  --md-italic-c       : hsl(278, 30%, 72%);
+  --md-italic-hover-c : hsl(278, 50%, 80%);
+  --md-bold-italic-c  : hsl(51, 50%, 65%);
+  --md-link-c         : hsl(0, 0%, 73%);
+  --md-link-border-c  : hsl(50, 64%, 59%);
+  --md-link-hover-c   : var(--md-italic-hover-c);
+  --md-code-c         : hsl(0, 0%, 80%);
+  --md-code-bg-c      : hsl(0, 0%, 25%);
+  --md-code-hover-c   : hsl(279, 20%, 80%);
+  --md-code-hover-bg-c: hsl(278, 25%, 30%);
+
+  --panel-c         : hsl(0, 0%, 14%);
+  --panel-hover-c   : hsl(278, 17%, 12%);
+  --sub-panel       : hsl(0, 0%, 9.3%);
+  --sub-panel-light : hsl(0, 0%, 10.3%);
 }

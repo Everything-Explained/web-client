@@ -1,0 +1,103 @@
+.md {
+  font-family : 'Nunito';
+  font-weight : 300;
+  font-size   : 1.25rem;
+  color       : var(--md-c);
+}
+
+.md h1, .md h2,
+.md h3, .md h4,
+.md h5 {
+  margin-top     : 8px;
+  font-family    : 20px "Comfortaa";
+  font-weight    : 300;
+  letter-spacing : 1px;
+}
+
+.md h1 {
+  margin-left: 10px;
+}
+
+.md h2 {
+  position  : relative;
+  margin    : 30px 0 10px 50px;
+  font-size : 1.125rem;
+  color     : hsl(50, 55%, 63%);
+}
+
+.md p {
+  display                 : block;
+  padding                 : 10px 30px;
+  line-height             : 30px;
+  background              : var(--md-p-bg-c);
+  border-top-right-radius : 6.5px;
+  border-top-left-radius  : 3.5px;
+  transition              : background 0.25s, color 0.25s;
+}
+.md > p {
+  margin: auto 11px 7px 7px;
+}
+.md > p:hover {
+  background-color : var(--md-p-hover-bg-c);
+  color            : var(--md-p-hover-c);
+}
+
+.md b,
+.md strong {
+  font-weight: 400;
+  color: var(--md-bold-c);
+}
+.md > p:hover strong {
+  color: var(--md-bold-hover-c);
+}
+
+.md i,
+.md em {
+  color      : var(--md-italic-c);
+  font-style : normal;
+}
+.md > p:hover em {
+  color: var(--md-italic-hover-c);
+}
+
+.md a:link,
+.md a:active,
+.md a:visited {
+  color           : var(--md-link-c);
+  text-decoration : none;
+  border-bottom   : 1px dashed var(--md-link-border-c);
+  transition      : border .25s ease, color .25s ease;
+}
+.md a:hover {
+  color: var(--md-link-hover-c);
+}
+
+.md i strong,
+.md i b,
+.md em strong,
+.md em b {
+  color: var(--md-bold-italic-c) !important;
+}
+
+.md code {
+  padding       : 2px 3px 0 3px;
+  color         : var(--md-code-c);
+  font-family   : "Cousine";
+  background    : var(--md-code-bg-c);
+  border        : 1px solid black;
+  font-size     : 1.125rem;
+  border-radius : 5px;
+  white-space   : nowrap;
+  word-spacing  : -3px;
+}
+.md > p:hover code {
+  background: var(--md-code-hover-bg-c);
+  color: var(--md-code-hover-c);
+}
+
+.md b,  .md i,
+.md em, .md dt,
+.md dd, .md code,
+.md strong, .md blockquote {
+  transition: color 0.25s ease, background 0.25s ease;
+}
