@@ -1,0 +1,75 @@
+@import "../../_base.css";
+
+body,
+html {
+  height: 100%;
+  font-size: var(--body-f-sz);
+  background: var(--body-bg-c);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--selection-c);
+}
+
+::-moz-selection {
+  background: var(--selection-bg-c);
+}
+
+
+.main {
+  display: flex;
+  flex-flow: column;
+  min-height: 100%;
+}
+
+.main__header {
+  height: 10rem;
+  border-bottom: 7px solid var(--panel-c);
+}
+
+
+.main__header-ribbon {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--body-head-ribbon-c);
+}
+
+.main__header_title {
+  display: block;
+  position: absolute;
+  top: 10px; left: 0; right: 0; bottom: 0;
+  text-align: center;
+  color: var(--body-head-title-c);
+  font: var(--body-head-title-f-sz) 'Pique N Meex';
+  margin: 0 auto;
+}
+
+
+.main__body {
+  display: flex;
+  flex: 1 0;
+  flex-flow: row nowrap;
+}
+
+.main__body-left-section {
+  min-width: 150px;
+  max-width: 150px;
+}
+
+.main__body-content {
+  position : absolute;
+  display  : flex;
+  top: 7px; right: 7px; left: 0; bottom: 10px;
+  margin         : 0 auto;
+  flex           : 1 0;
+  flex-direction : column;
+  max-width      : 1024px;
+  overflow       : auto;
+}

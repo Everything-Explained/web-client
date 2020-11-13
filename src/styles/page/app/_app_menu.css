@@ -1,0 +1,49 @@
+.main__menu {
+  display        : block;
+  height         : 100%;
+  font           : small-caps var(--main-menu-f-sz) "Comfortaa";
+  font-weight    : 300;
+  letter-spacing : 2px;
+}
+
+.main__menu ul {
+  display         : flex;
+  margin-left     : 7px;
+  width           : 100%;
+  height          : 100%;
+  height          : 100%;
+  align-items     : flex-end;
+  justify-content : center;
+}
+
+.main__menu li {
+  position: relative;
+  display: inline;
+  padding: 3px 7px 0 7px;
+  background: var(--sub-panel);
+}
+.main__menu li:nth-child(even) {
+  margin: 0 13px;
+}
+
+.main__menu a {
+  position      : relative;
+  color         : var(--main-menu-c);
+  border-left   : 4px solid transparent;
+  border-bottom : none;
+  transition    : color 0.3s, background 0.3s, border 0.3s;
+  user-select   : none;
+  cursor        : pointer;
+}
+
+.main__menu a:hover {
+  color           : var(--main-menu-hov-c);
+  opacity         : 1;
+  background-clip : padding-box;
+}
+
+.main__menu .router-link-active {
+  color       : var(--main-menu-act-c);
+  background  : var(--main-menu-bg-c);
+  /* border-left : 4px solid var(--main-menu-active-border-c); */
+}

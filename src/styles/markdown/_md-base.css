@@ -1,9 +1,11 @@
 .md {
   font-family : 'Nunito';
   font-weight : 300;
-  font-size   : 1.25rem;
+  font-size   : var(--md-f-sz);
   color       : var(--md-c);
 }
+
+
 
 .md h1, .md h2,
 .md h3, .md h4,
@@ -25,59 +27,84 @@
   color     : hsl(50, 55%, 63%);
 }
 
+
 .md p {
   display                 : block;
-  padding                 : 10px 30px;
-  line-height             : 30px;
-  background              : var(--md-p-bg-c);
+  padding                 : 7px 13px;
+  line-height             : 27px;
+  background              : var(--md-pg-bg-c);
   border-top-right-radius : 6.5px;
   border-top-left-radius  : 3.5px;
   transition              : background 0.25s, color 0.25s;
 }
 .md > p {
-  margin: auto 11px 7px 7px;
+  margin: auto 7px 7px 7px;
 }
 .md > p:hover {
-  background-color : var(--md-p-hover-bg-c);
-  color            : var(--md-p-hover-c);
+  background-color : var(--md-pg-bg-hov-c);
+  color            : var(--md-pg-hov-c);
 }
+
 
 .md b,
 .md strong {
   font-weight: 400;
-  color: var(--md-bold-c);
+  color: var(--md-b-c);
 }
 .md > p:hover strong {
-  color: var(--md-bold-hover-c);
+  color: var(--md-pg-hov-b-c);
 }
+
 
 .md i,
 .md em {
-  color      : var(--md-italic-c);
+  color      : var(--md-i-c);
   font-style : normal;
 }
 .md > p:hover em {
-  color: var(--md-italic-hover-c);
+  color: var(--md-pg-hov-i-c);
 }
+
 
 .md a:link,
 .md a:active,
 .md a:visited {
   color           : var(--md-link-c);
   text-decoration : none;
-  border-bottom   : 1px dashed var(--md-link-border-c);
+  border-bottom   : 1px dashed var(--md-link-bdr-c);
   transition      : border .25s ease, color .25s ease;
 }
 .md a:hover {
-  color: var(--md-link-hover-c);
+  color: var(--md-link-hov-c);
 }
 
-.md i strong,
-.md i b,
-.md em strong,
-.md em b {
-  color: var(--md-bold-italic-c) !important;
+
+.md blockquote > p {
+  margin           : 20px 3rem 20px 3rem;
+  padding          : 8px 2.2rem 8px 2.2rem;
+  font-size        : 1.5rem;
+  background-color : var(--md-bq-bg-c);
+  color            : var(--md-bq-c);
+  border           : 2px solid black;
+  border-radius    : 8px;
 }
+.md blockquote > p::before,
+.md blockquote > p::after {
+  position: absolute;
+  font-size: 6rem;
+  vertical-align: baseline;
+  color: hsl(30, 100%, 75%);
+}
+.md blockquote > p::before {
+  margin-top: 28px;     /* blockquote (margin-top + padding-top)  */
+  margin-left: -2.2rem; /* blockquote (padding-left * -1) */
+  content: '“';
+}
+.md blockquote > p::after {
+  right: 4px; bottom: -20px;
+  content: '”'
+}
+
 
 .md code {
   padding       : 2px 3px 0 3px;
@@ -91,9 +118,10 @@
   word-spacing  : -3px;
 }
 .md > p:hover code {
-  background: var(--md-code-hover-bg-c);
-  color: var(--md-code-hover-c);
+  background: var(--md-code-bg-hov-c);
+  color: var(--md-code-hov-c);
 }
+
 
 .md b,  .md i,
 .md em, .md dt,

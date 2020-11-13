@@ -29,7 +29,7 @@ body, div, article, span, ul,
 menu, input, textarea, section,
 a, p, header, footer, button,
 form, aside, label, pre, dd, dt,
-code
+code, h1, h2, h3, h4, h5
 {
   outline     : none;
   line-height : normal;

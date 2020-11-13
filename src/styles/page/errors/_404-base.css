@@ -1,0 +1,24 @@
+.i404__error-container {
+  text-align: center;
+}
+.i404__h1 {
+  margin-top: 20px;
+  font-family: "Comfortaa";
+  font-weight: 300;
+  font-variant: small-caps;
+  letter-spacing: 2px;
+  word-spacing: 2px;
+  font-size: 28px;
+  color: hsl(50, 90%, 60%);
+}
+.i404__fail-text {
+  top: 10px;
+  color: hsl(324, 100%, 75%);
+}
+.i404__info-text {
+  top: -10px;
+  color: hsl(126, 70%, 70%);
+}
+/* .error-container img {
+  margin-top: 20px;
+} */

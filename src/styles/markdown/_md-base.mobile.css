@@ -1,0 +1,42 @@
+@media only screen and (max-width: 700px) {
+  .md {
+    font-size: var(--md-mobile-f-sz);
+  }
+  .md p {
+    padding: 7px 10px;
+    line-height: 22px;
+  }
+  .md > p {
+    margin: auto 7px 7px 7px;
+  }
+  .md blockquote > p {
+    font-size: 1.38rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .md blockquote > p {
+    margin: 10px 7px;
+    font-size: 1.28rem;
+  }
+}
+
+@media only screen and (max-width: 361px) {
+  .md {
+    font-size: var(--md-mobile-sm-f-sz);
+  }
+  .md:first-child { margin-top: 5px; }
+  .md p {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    line-height: 20px;
+  }
+  .md > p {
+    margin: auto 5px 5px 5px;
+  }
+  .md blockquote > p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 1.13rem;
+  }
+}

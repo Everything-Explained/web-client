@@ -1,1 +1,2 @@
-@import './_markdown/_md-base.css';
+@import './markdown/_md-base.css';
+@import './markdown/_md-base.mobile.css';

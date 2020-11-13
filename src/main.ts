@@ -1,16 +1,16 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import Vue, { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
 
 
 
 
 const getElement = (id: string) => {
   return document.getElementById(id) as HTMLElement;
-}
+};
 
 
-const browserIsSupported = () => {
+const browserIsSupported = (() => {
   const isValidBrowser =
        navigator.cookieEnabled != undefined
     || window['Promise']
@@ -23,22 +23,20 @@ const browserIsSupported = () => {
     const el = getElement('Failure');
     el.style.display = 'inline-block';
     return false;
-  }
-  return true;
-}
+  } return true;
+})();
 
 
-const cookiesAreEnabled = () => {
+const cookiesAreEnabled = (() => {
   if (!navigator.cookieEnabled) {
     const el = getElement('NoCookies');
     el.style.display = 'inline-block';
     return false;
-  }
-  return true;
-}
+  } return true;
+})();
 
 
-if (cookiesAreEnabled() && browserIsSupported()) {
+if (cookiesAreEnabled && browserIsSupported) {
   createApp(App)
     .use(router)
     .mount('#app')

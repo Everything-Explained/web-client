@@ -1,11 +1,47 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import Home from '@/views/home/home.vue';
+import FAQ from '@/views/faq/faq.vue';
+import Literature from '@/views/literature/literature.vue';
+import Changelog from '@/views/changelog/changelog.vue';
+import i404 from '@/views/errors/404.vue';
+
 
 const routes: Array<RouteRecordRaw> = [
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home
-  // },
+  {
+    path: '/',
+    redirect: 'home',
+    component: Home,
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: Home,
+    meta: { display: true, order: 1, title: 'About Us' }
+  },
+  {
+    path: '/faq/:page?',
+    name: 'faq',
+    component: FAQ,
+    meta: { display: true, order: 2, title: 'Frequently Asked Questions' }
+  },
+  {
+    path: '/literature/:category?/:page?',
+    name: 'lit',
+    component: Literature,
+    meta: { display: true, order: 3, title: 'Literature' }
+  },
+  {
+    path: '/changelog/:page?',
+    name: 'chg.log',
+    component: Changelog,
+    meta: { display: false, order: 4, title: 'Changelog' }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: '404',
+    component: i404,
+    meta: { display: false }
+  }
   // {
   //   path: '/about',
   //   name: 'About',
