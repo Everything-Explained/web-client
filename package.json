@@ -21,7 +21,6 @@
     "autoprefixer": "^10.0.1",
     "eslint": "^7.12.1",
     "gulp": "^4.0.2",
-    "gulp-csso": "^4.0.1",
     "gulp-postcss": "^9.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-sourcemaps": "^2.6.5",
@@ -29,10 +28,8 @@
     "postcss-assets": "^5.0.0",
     "postcss-csso": "^5.0.0",
     "postcss-easy-import": "^3.0.0",
-    "precss": "^4.0.0",
     "reset-css": "^5.0.1",
     "sass": "^1.29.0",
-    "tailwindcss": "^1.9.6",
     "ts-node": "^9.0.0",
     "typescript": "~3.9.3"
   },

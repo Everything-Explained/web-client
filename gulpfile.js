@@ -12,10 +12,12 @@ function parseCSS(cb) {
     .pipe(sourcemaps.init())
     .pipe(postcss([
       require('postcss-easy-import'),
-      // require('autoprefixer'),
       // require('precss'),
+      // require('autoprefixer'),
       // require('postcss-csso')
-    ]).on('error', (err) => {console.log(err.message);}))
+    ])
+    .on('error', (err) => {console.log(err.message);})
+    .on('warning', (warn) => { console.log(warn.message);}))
     .pipe(rename('main.css'))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./public'))
