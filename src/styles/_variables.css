@@ -31,6 +31,9 @@
   --body-head-title-c    : hsl(0, 100%, 63%);
 
   --selection-bg-c    : hsla(30, 66.3%, 50%, .185);
+  --scrollbar-c          : var(--panel-c);
+  --scrollbar-hov-c      : hsl(30, 24%, 22%);
+  --scrollbar-track-c    : hsl(0, 0%, 0%);
 
   --watermark-c       : hsl(0, 0%, 35%);
   --watermark-hov-c   : hsl(0, 100%, 75%);

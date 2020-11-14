@@ -1,21 +1,19 @@
 /* FireFox compatibility */
 .--default-scrollbar {
-  scrollbar-color: var(--panel-c) black;
+  scrollbar-color: var(--scrollbar-c) black;
   scrollbar-width: thin;
 }
 
 .--default-scrollbar::-webkit-scrollbar {
   width: 10px;
-  /* scrollbar-width: thin; Firefox */
+  background: var(--scrollbar-track-c);
+  border: 1px solid var(--scrollbar-c);
   border-radius: 3px;
-  background: black;
 }
 .--default-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--panel-c);
-  /* scrollbar-color: var(--panel-c); Firefox */
+  background: var(--scrollbar-c);
   border-radius: 3px;
 }
 .--default-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: hsl(30, 51%, 51%);
-  /* scrollbar-color: hsl(30, 51%, 51%); Firefox */
+  background: var(--scrollbar-hov-c);
 }
