@@ -51,8 +51,8 @@
 
 .md b,
 .md strong {
-  font-weight: 400;
-  color: var(--md-b-c);
+  font-weight : 400;
+  color       : var(--md-b-c);
 }
 .md > p:hover strong {
   color: var(--md-pg-hov-b-c);
@@ -102,24 +102,24 @@
  */
 .md blockquote > p i,
 .md blockquote > p em {
-  display: block;
-  margin-top: 8px;
-  font-family: 'Comfortaa';
-  font-variant: small-caps;
-  letter-spacing: 0.5px;
-  color: var(--md-bq-c);
+  display        : block;
+  margin-top     : 8px;
+  font-family    : 'Comfortaa';
+  font-variant   : small-caps;
+  letter-spacing : 0.5px;
+  color          : var(--md-bq-c);
 }
 .md blockquote > p::before,
 .md blockquote > p::after {
-  position: absolute;
-  font-size: 6rem;
-  vertical-align: baseline;
-  color: hsl(30, 100%, 75%);
+  position       : absolute;
+  font-size      : 6rem;
+  vertical-align : baseline;
+  color          : hsl(30, 100%, 75%);
 }
 .md blockquote > p::before {
-  margin-top: 28px;     /* blockquote (margin-top + padding-top)  */
-  margin-left: -2.2rem; /* blockquote (padding-left * -1) */
-  content: '“';
+  margin-top  : 28px;    /* blockquote (margin-top + padding-top)  */
+  margin-left : -2.2rem; /* blockquote (padding-left * -1) */
+  content     : '“';
 }
 .md blockquote > p::after {
   right: 4px; bottom: -20px;
@@ -139,8 +139,8 @@
   word-spacing  : -3px;
 }
 .md > p:hover code {
-  background: var(--md-code-bg-hov-c);
-  color: var(--md-code-hov-c);
+  background : var(--md-code-bg-hov-c);
+  color      : var(--md-code-hov-c);
 }
 
 

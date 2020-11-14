@@ -1,18 +1,18 @@
 .main__watermark {
-  position: fixed;
-  display: block;
-  left: 75px;
-  bottom: 13px;
-  z-index: 10;
-  color: var(--watermark-c);
-  font: 34px "comfortaa";
-  opacity: 0.65;
-  cursor: crosshair;
-  user-select: none;
-  transition: color 0.45s, opacity 0.3s;
+  position    : fixed;
+  display     : block;
+  left        : 75px;
+  bottom      : 13px;
+  z-index     : 10;
+  color       : var(--watermark-c);
+  font        : 34px "comfortaa";
+  opacity     : 0.65;
+  cursor      : crosshair;
+  user-select : none;
+  transition  : color 0.45s, opacity 0.3s;
 }
 
 .main__watermark:hover {
-  color: var(--watermark-hover-c);
-  opacity: 1;
+  color   : var(--watermark-hover-c);
+  opacity : 1;
 }

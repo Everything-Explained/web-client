@@ -2,12 +2,12 @@
 
 body,
 html {
-  height: 100%;
-  font-size: var(--body-f-sz);
-  background: var(--body-bg-c);
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  height                  : 100%;
+  font-size               : var(--body-f-sz);
+  background              : var(--body-bg-c);
+  overflow                : hidden;
+  -webkit-font-smoothing  : antialiased;
+  -moz-osx-font-smoothing : grayscale;
 }
 
 ::selection {
@@ -20,35 +20,35 @@ html {
 
 
 .main {
-  display: flex;
-  flex-flow: column;
-  min-height: 100%;
+  display    : flex;
+  flex-flow  : column;
+  min-height : 100%;
 }
 
 .main__header {
-  height: 10rem;
-  border-bottom: 7px solid var(--panel-c);
+  height        : 10rem;
+  border-bottom : 7px solid var(--panel-c);
 }
 
 
 .main__header-ribbon {
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--body-head-ribbon-c);
+  position   : absolute;
+  display    : block;
+  top        : 0;
+  left       : 0;
+  right      : 0;
+  height     : 3px;
+  background : var(--body-head-ribbon-c);
 }
 
 .main__header_title {
-  display: block;
-  position: absolute;
-  top: 10px; left: 0; right: 0; bottom: 0;
-  text-align: center;
-  color: var(--body-head-title-c);
-  font: var(--body-head-title-f-sz) 'Pique N Meex';
-  margin: 0 auto;
+  display    : block;
+  position   : absolute;
+  top        : 10px; left: 0; right: 0; bottom: 0;
+  text-align : center;
+  color      : var(--body-head-title-c);
+  font       : var(--body-head-title-f-sz) 'Pique N Meex';
+  margin     : 0 auto;
 }
 
 

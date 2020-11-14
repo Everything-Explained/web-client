@@ -5,14 +5,14 @@
 }
 
 .--default-scrollbar::-webkit-scrollbar {
-  width: 10px;
-  background: var(--scrollbar-track-c);
-  border: 1px solid var(--scrollbar-c);
-  border-radius: 3px;
+  width         : 10px;
+  background    : var(--scrollbar-track-c);
+  border        : 1px solid var(--scrollbar-c);
+  border-radius : 3px;
 }
 .--default-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-c);
-  border-radius: 3px;
+  background    : var(--scrollbar-c);
+  border-radius : 3px;
 }
 .--default-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-hov-c);

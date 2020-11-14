@@ -17,10 +17,10 @@
 }
 
 .main__menu li {
-  position: relative;
-  display: inline;
-  padding: 3px 7px 0 7px;
-  background: var(--sub-panel);
+  position   : relative;
+  display    : inline;
+  padding    : 3px 7px 0 7px;
+  background : var(--sub-panel);
 }
 .main__menu li:nth-child(even) {
   margin: 0 13px;

@@ -1,5 +1,3 @@
 @media only screen and (max-width: 600px) {
-  .main__menu {
-    display: none;
-  }
+  .main__menu { display: none; }
 }
