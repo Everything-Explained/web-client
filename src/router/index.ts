@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home from '@/views/home/home.vue';
+import Blog from '@/views/blog/blog.vue';
 import FAQ from '@/views/faq/faq.vue';
 import Literature from '@/views/literature/literature.vue';
 import Changelog from '@/views/changelog/changelog.vue';
@@ -19,22 +20,28 @@ const routes: Array<RouteRecordRaw> = [
     meta: { display: true, order: 1, title: 'About Us' }
   },
   {
+    path: '/blog',
+    name: 'blog',
+    component: Blog,
+    meta: { display: true, order: 2, title: 'Blog' }
+  },
+  {
     path: '/faq/:page?',
     name: 'faq',
     component: FAQ,
-    meta: { display: true, order: 2, title: 'Frequently Asked Questions' }
+    meta: { display: true, order: 3, title: 'Frequently Asked Questions' }
   },
   {
     path: '/literature/:category?/:page?',
     name: 'lit',
     component: Literature,
-    meta: { display: true, order: 3, title: 'Literature' }
+    meta: { display: true, order: 4, title: 'Literature' }
   },
   {
     path: '/changelog/:page?',
     name: 'chg.log',
     component: Changelog,
-    meta: { display: false, order: 4, title: 'Changelog' }
+    meta: { display: false, order: 5, title: 'Changelog' }
   },
   {
     path: '/:pathMatch(.*)*',
