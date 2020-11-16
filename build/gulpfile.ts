@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const gulp = require('gulp');
-const postcss = require('gulp-postcss');
-const sourcemaps = require('gulp-sourcemaps');
-const rename = require('gulp-rename');
+import gulp from 'gulp';
+import postcss from 'gulp-postcss';
+import sourcemaps from 'gulp-sourcemaps';
+import rename from 'gulp-rename';
+
 
 const watch = gulp.watch;
 
 
-function parseCSS(cb) {
-  gulp.src('./src/_app.css')
+function parseCSS() {
+  return gulp.src('../src/_app.css')
     .pipe(sourcemaps.init())
     .pipe(postcss([
       require('postcss-easy-import'),
@@ -20,15 +20,13 @@ function parseCSS(cb) {
     .on('warning', (warn) => { console.log(warn.message);}))
     .pipe(rename('main.css'))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./public'))
+    .pipe(gulp.dest('../public'))
   ;
-  cb();
 }
 
 
 function watchCSS() {
-  watch(['./src/**/**.css', '!./src/main.css'], parseCSS);
+  watch(['../src/**/**.css', '!../src/main.css'], parseCSS);
 }
 
-
-exports.css = watchCSS;
+gulp.task('css', watchCSS);
