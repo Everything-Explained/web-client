@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-build/gulpfile.js
+build/*.js
 
 
 # local env files

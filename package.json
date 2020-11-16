@@ -4,14 +4,20 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "build-static": "node ./build/build-md.js static | bunyan -o short",
+    "build-blog": "node ./build/build-md.js blog | bunyan -o short"
   },
   "dependencies": {
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
+    "@everything_explained/web-md-bundler": "^2.4.3",
     "@types/gulp": "^4.0.7",
+    "@types/gulp-postcss": "^8.0.0",
+    "@types/gulp-rename": "0.0.33",
+    "@types/gulp-sourcemaps": "0.0.32",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -19,6 +25,7 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "autoprefixer": "^10.0.1",
+    "contentful": "^7.14.12",
     "eslint": "^7.12.1",
     "gulp": "^4.0.2",
     "gulp-postcss": "^9.0.0",
@@ -30,7 +37,6 @@
     "postcss-easy-import": "^3.0.0",
     "reset-css": "^5.0.1",
     "sass": "^1.29.0",
-    "ts-node": "^9.0.0",
     "typescript": "~3.9.3"
   },
   "browserslist": [
