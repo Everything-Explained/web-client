@@ -20,7 +20,9 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: hsl(0, 0%, 7%);
+      padding-left: 15px;
+      padding-right: 15px;
+      background-color: hsl(197, 30%, 6.5%);
       z-index: 10000;
     }
     .conditions .response {
@@ -33,13 +35,13 @@
       letter-spacing: 2px;
       line-height: 50px;
       word-spacing: 1px;
-      color: hsl(50, 90%, 60%);
+      color: hsl(0, 0%, 85%);
       padding-top: 100px;
       text-align: center;
     }
     .conditions span {
       position: relative;
-      color: hsl(126, 70%, 70%);
+      color: hsl(30, 100%, 72%);
     }
     .conditions .container {
       position: relative;
@@ -54,16 +56,15 @@
       text-decoration: none !important;
       border: none !important;
     }
-    .conditions .fail {
-      position: relative;
-      color: hsl(324, 100%, 75%);
-    }
     .conditions .icon {
       display: inline-block;
       width: 180px;
       height: 128px;
       background-position: center center;
       background-repeat: no-repeat;
+    }
+    .conditions .choice {
+      padding: 0 5%;
     }
     .conditions .icon:before {
       position: absolute;
@@ -112,6 +113,34 @@
   </style>
 </head>
 <body>
+  <noscript>
+    <div class="conditions" style="display: inline-block">
+      <div class="response">
+        you must <span>enable javascript</span> for this site to
+        <span class="fail">operate properly</span>
+      </div>
+    </div>
+  </noscript>
+  <div id="NoCookies" class="conditions">
+    <div class="response">
+      you must <span>enable cookies</span>
+      for this site to <span>operate properly</span>
+    </div>
+  </div>
+  <div id="Failure" class="conditions">
+    <div class="response">
+      your <span>browser</span> has <span class="fail">failed</span> you<br/>
+      <div style="height: 20px"></div>
+      <div class="choice">you either need to <span>upgrade</span> or <span>download</span>
+      one of the following</div>
+    </div>
+    <div class="container">
+      <a href="https://chrome.google.com" class="chrome icon"></a>
+      <a href="https://www.mozilla.com" class="firefox icon"></a>
+      <a href="https://www.opera.com" class="opera icon"></a>
+      <a href="https://www.microsoft.com/edge" class="edge icon"></a>
+    </div>
+  </div>
   <main id="app" class="main"></main>
   <script type="module" src="/src/main.js"></script>
 </body>
