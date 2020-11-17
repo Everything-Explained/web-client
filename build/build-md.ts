@@ -1,5 +1,5 @@
 import bundler from '@everything_explained/web-md-bundler';
-import { getBlogPosts } from '../src/apis/api_blog';
+import { getBlogPosts } from './api_blog';
 
 const staticPageDirs = [
   './src/views/home',
@@ -19,7 +19,7 @@ function bundleStaticPages() {
   bundler.bundleMDPages(staticPageDirs, 'html');
 }
 
-const [exe, path, arg] = process.argv;
+const arg = process.argv[2];
 
 if (arg == 'blog') {
   bundleBlog();

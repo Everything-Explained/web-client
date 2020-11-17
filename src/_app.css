@@ -1,3 +1,4 @@
+
 @import "./styles/page/app/_app_base.css";
 @import './styles/page/app/_app_base.mobile.css';
 @import "./styles/page/app/_app_watermark.css";
@@ -5,5 +6,5 @@
 @import './styles/page/app/_app_menu.mobile.css';
 @import "./styles/_markdown.css";
 @import './styles/_scrollbars.css';
-@import "./views/errors/_404.css";
+@import "./views/errors/_i404.css";
 @import "./components/md-pages/_md-pages.css";

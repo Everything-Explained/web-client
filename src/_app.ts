@@ -5,11 +5,11 @@ export default defineComponent({
   setup() {
     const version     = '36';
     const versionType = 'α';
-    const verDesc = `
-      We shall carry on by 12's until we reach β;
-      a shift from the arbitrary past into the ever
-      present - a gift to Me, Myself, and I.
-    `.trim();
+    // const verDesc = `
+    //   We shall carry on by 12's until we reach β;
+    //   a shift from the arbitrary past into the ever
+    //   present - a gift to Me, Myself, and I.
+    // `.trim();
 
     const router = useRouter();
 

@@ -13,21 +13,54 @@
 .md h1, .md h2,
 .md h3, .md h4,
 .md h5 {
-  margin-top     : 8px;
-  font-family    : 20px "Comfortaa";
+  margin-top     : 15px;
+  color          : hsl(0, 0%, 94%);
+  font           : "Comfortaa";
+  font-variant   : small-caps;
   font-weight    : 300;
   letter-spacing : 1px;
 }
 
 .md h1 {
-  margin-left: 10px;
+  margin: 15px 0 -5px 25px;
+  margin-left: 25px;
+  font-size: 2.25rem;
 }
 
 .md h2 {
-  position  : relative;
-  margin    : 30px 0 10px 50px;
-  font-size : 1.125rem;
-  color     : hsl(50, 55%, 63%);
+  position    : relative;
+  margin-left : 40px;
+  margin-bottom: -3px;
+  font-size   : 1.8rem;
+}
+
+.md h3 {
+  position: relative;
+  margin: 0;
+  margin-bottom: 7px;
+  padding: 33px 0;
+  text-align: center;
+  font-size: 1.35rem;
+  font-family: "Delius";
+  font-variant: normal;
+  font-weight: normal;
+  color: hsl(30, 100%, 77%);
+}
+.md h3::before,
+.md h3::after {
+  position: absolute;
+  content: " ";
+  height: 2px;
+  width: 50%;
+  left: 50%;
+  background: linear-gradient(to right, hsla(0, 0%, 0%, 0) 0%, hsla(0, 57%, 55%, 0.85) 50%, hsla(0, 0%, 0%, 0) 100%);
+  transform: translateX(-50%);
+}
+.md h3::before {
+  top: 10px;
+}
+.md h3::after {
+  bottom: 10px;
 }
 
 

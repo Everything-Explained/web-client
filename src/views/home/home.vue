@@ -1,5 +1,5 @@
 <template>
-  <div class="md" v-html="pageContent">
+  <div class="md" v-html="content">
   </div>
 </template>
 
