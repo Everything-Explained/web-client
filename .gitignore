@@ -1,9 +1,12 @@
 .DS_Store
 node_modules
+
+# Built Files/Folders
 /dist
 build/*.js
+src/views/**/*.json
+src/views/blog/*.md
 src/main.css
-
 
 # local env files
 .env.local
