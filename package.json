@@ -12,7 +12,7 @@
     "markdown-it-deflist": "^2.1.0",
     "vue": "^2.6.12",
     "vue-property-decorator": "^8.5.1",
-    "vue-router": "^3.4.7"
+    "vue-router": "^3.4.8"
   },
   "devDependencies": {
     "@types/markdown-it": "0.0.7",
