@@ -13,11 +13,11 @@ const getElement = (id) => {
 const browserIsSupported = (() => {
   const isValidBrowser =
        navigator.cookieEnabled != undefined
-    || window['Promise']
-    || window['DOMParser']
-    || document.body.dataset
-    || (new DOMParser()).parseFromString
-    || document.importNode
+    && window['Promise']
+    && window['DOMParser']
+    && document.body.dataset
+    && (new DOMParser()).parseFromString
+    && document.importNode
   ;
   if (!isValidBrowser) {
     const el = getElement('Failure');
@@ -34,7 +34,6 @@ const cookiesAreEnabled = (() => {
     return false;
   } return true;
 })();
-
 
 
 if (cookiesAreEnabled && browserIsSupported) {
