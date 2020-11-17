@@ -1,4 +1,5 @@
 import * as contentful from 'contentful';
+import config from './build-config.json';
 
 interface BlogPost {
   title: string;
@@ -8,8 +9,8 @@ interface BlogPost {
 
 export async function getBlogPosts() {
   const client = contentful.createClient({
-    space: 'd19u7a1621pm',
-    accessToken: 'qge6UaNRaVqaKtoqRL_0Qep0Co0TZ4bUA9FvpB_F7rg'
+    space: config.apis.contentfulSpaceID,
+    accessToken: config.apis.contentfulToken
   });
   const blogData =
     await client.getEntries<BlogPost>({
