@@ -8,7 +8,7 @@ const watch = gulp.watch;
 
 
 function parseCSS() {
-  return gulp.src('../src/_app.css')
+  return gulp.src('../src/styles/_main.css')
     .pipe(postcss([
         require('postcss-easy-import'),
         // require('precss'),
@@ -20,13 +20,13 @@ function parseCSS() {
       restructure: false,
     }))
     .pipe(rename('main.css'))
-    .pipe(gulp.dest('../src'))
+    .pipe(gulp.dest('../src/styles'))
   ;
 }
 
 
 function watchCSS() {
-  watch(['../src/**/**.css', '!../src/main.css'], parseCSS);
+  watch(['../src/**/**.css', '!../src/styles/main.css'], parseCSS);
 }
 
 gulp.task('css', watchCSS);

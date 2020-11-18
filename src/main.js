@@ -1,8 +1,8 @@
 /* eslint-disable */
 import { createApp } from 'vue';
-import App from './App.vue';
+import App from './views/app/app.vue';
 import router from './router';
-import './main.css';
+import './styles/main.css';
 
 
 const getElement = (id) => {
