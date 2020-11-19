@@ -6,7 +6,7 @@ node_modules
 build/*.js
 src/views/**/*.json
 src/views/blog/*.md
-src/main.css
+src/styles/main.css
 
 # local env files
 .env.local
