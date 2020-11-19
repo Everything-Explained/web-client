@@ -1,3 +1,4 @@
+@import './fonts/_fonts-base.css';
 @import './base/_base.css';
 @import '../views/app/_app.css';
 @import '../views/blog/_blog.css';
