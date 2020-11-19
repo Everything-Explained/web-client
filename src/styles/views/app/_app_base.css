@@ -10,7 +10,7 @@ html {
 }
 
 ::selection {
-  background: var(--selection-c);
+  background: var(--selection-bg-c);
 }
 
 ::-moz-selection {
