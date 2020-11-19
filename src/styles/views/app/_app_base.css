@@ -53,8 +53,10 @@ html {
 
 .main__body {
   display: flex;
+  margin: 7px 10px 7px 10px;
   flex: 1 0;
   flex-flow: row nowrap;
+  overflow: auto;
 }
 
 .main__body-left-section {
@@ -65,10 +67,10 @@ html {
 .main__body-content {
   position : absolute;
   display  : flex;
-  top: 7px; right: 7px; left: 0; bottom: 10px;
+  top: 0; right: 10px; left: 0; bottom: 0;
   margin         : 0 auto;
   flex           : 1 0;
   flex-direction : column;
   max-width      : 1024px;
-  overflow       : auto;
+  overflow       : visible;
 }

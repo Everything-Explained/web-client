@@ -14,7 +14,7 @@
   </header>
     <!-- In case firefox needs some css polyfills -->
     <!-- main_body-content :class="{ firefox: isFirefox }" -->
-  <section class="main__body">
+  <section class="main__body --default-scrollbar">
     <!-- <section class="main__body-left-section">
 
       <aside class="main__watermark">

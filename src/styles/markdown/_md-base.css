@@ -74,7 +74,7 @@
   transition              : background 0.25s, color 0.25s;
 }
 .md > p {
-  margin: auto 7px 7px 7px;
+  margin-bottom: 7px;
 }
 .md > p:hover {
   background-color : var(--md-pg-bg-hov-c);
