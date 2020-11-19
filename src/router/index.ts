@@ -8,12 +8,8 @@ import i404       from '../views/errors/i404.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    redirect: 'home',
-    component: Home,
-  },
-  {
     path: '/home',
+    alias: '/',
     name: 'home',
     component: Home,
     meta: { display: true, order: 1, title: 'About Us' }
