@@ -14,7 +14,10 @@ export default defineComponent({
     const router = useRouter();
 
     const routes     = router.getRoutes();
-    const realRoutes = routes.filter(route => route.meta.display == true);
+    const realRoutes = routes.filter(
+      route => route.meta.display == true && !route.aliasOf
+    );
+
     const orderedRoutes = realRoutes.sort((r1, r2) => {
       return r1.meta.order - r2.meta.order;
     });
