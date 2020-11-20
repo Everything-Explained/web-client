@@ -4,9 +4,6 @@
   font-size   : var(--md-f-sz);
   color       : var(--md-c);
 }
-.md > :last-child {
-  margin-bottom: 333px;
-}
 
 
 
