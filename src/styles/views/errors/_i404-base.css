@@ -8,8 +8,8 @@
   font-variant   : small-caps;
   letter-spacing : 2px;
   word-spacing   : 2px;
-  font-size      : 28px;
-  color          : hsl(50, 90%, 60%);
+  font-size      : 2.5rem;
+  color          : hsl(0, 0%, 84%);
 }
 .i404__fail-text {
   top   : 10px;
