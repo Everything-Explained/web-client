@@ -104,16 +104,18 @@
 .md a:visited {
   color           : var(--md-link-c);
   text-decoration : none;
+  font-weight: 400;
   border-bottom   : 1px dashed var(--md-link-bdr-c);
   transition      : border .25s ease, color .25s ease;
-}
-.md a:hover {
-  color: var(--md-link-hov-c);
 }
 .md > p:hover a:link,
 .md > p:hover a:active,
 .md > p:hover a:visited {
+  color: var(--md-pg-hov-link-c);
   border-color: var(--md-pg-hov-link-bdr-c);
+}
+.md > p:hover a:hover {
+  color: var(--md-link-hov-c);
 }
 
 
