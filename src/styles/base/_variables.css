@@ -27,7 +27,7 @@
   --panel-c              : hsl(197, 20%, 17%);
   --panel-hov-c          : hsl(197, 17%, 12%);
   --sub-panel-c          : hsl(197, 20%, 10%);
-  --sub-panel-hov-c      : hsl(197, 10%, 13%);
+  --sub-panel-hov-c      : hsl(33, 11%, 16%);
 
   --body-f-sz            : 1em;
   --body-bg-c            : hsl(197, 30%, 6.5%);
@@ -35,7 +35,7 @@
   --body-head-title-f-sz : 5rem;
   --body-head-title-c    : hsl(0, 100%, 63%);
 
-  --selection-bg-c       : rgba(67, 187, 235, 0.219);
+  --selection-bg-c       : hsla(197, 81%, 59%, 0.219);
 
   --scrollbar-c          : var(--panel-c);
   --scrollbar-hov-c      : hsl(197, 7%, 43%);
