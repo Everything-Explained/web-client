@@ -12,7 +12,7 @@
 .md h5 {
   margin-top     : 15px;
   color          : hsl(0, 0%, 94%);
-  font           : "Comfortaa";
+  font           : "Nunito";
   font-variant   : small-caps;
   font-weight    : 300;
   letter-spacing : 1px;
@@ -136,9 +136,9 @@
 .md blockquote > p em {
   display        : block;
   margin-top     : 8px;
-  font-family    : 'Comfortaa';
+  font-family    : 'Nunito';
   font-variant   : small-caps;
-  letter-spacing : 0.5px;
+  letter-spacing : 1px;
   color          : var(--md-bq-c);
 }
 .md blockquote > p::before,
