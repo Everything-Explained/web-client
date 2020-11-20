@@ -1,8 +1,9 @@
 <template>
-  <div class="blog__entries" v-if="posts.length">
+  <div class="blog__entries" v-if="posts.length && !activePost">
     <div class="blog__entry"
       v-for="(post, i) of posts"
       :key="i"
+      @click="readPost(post)"
     >
       <h1 class="blog_title">{{post.title.toUpperCase()}}</h1>
       <div class="blog_date"
@@ -14,6 +15,7 @@
       <article class="md blog_snippet" v-html="post.content"></article>
     </div>
   </div>
+  <div class="md blog__content" v-if="activePost" v-html="activePost"></div>
 </template>
 
 <script lang='ts' src='./_blog.ts'></script>

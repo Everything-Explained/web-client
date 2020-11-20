@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { display: true, order: 1, title: 'About Us' }
   },
   {
-    path: '/blog',
+    path: '/blog/:page?',
     name: 'blog',
     component: () => import(/* webpackChunkName: "blog" */ '../views/blog/blog.vue'),
     meta: { display: true, order: 2, title: 'Blog' }

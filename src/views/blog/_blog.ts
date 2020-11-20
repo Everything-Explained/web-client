@@ -1,10 +1,14 @@
-import { defineComponent } from "vue";
+import { defineComponent, Ref, ref, watch } from "vue";
 import blogPosts from './blog.json';
 import icon from '../../components/icon/icon.vue';
 import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-utils";
+import { routeLocationKey, RouteLocationNormalized, RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-router";
 
 
-const extractP = /<p>(.*)<\/p>/;
+type BlogPost = typeof blogPosts[0];
+type Route = RouteLocationNormalizedLoaded;
+
+const extractP = /<p>.*<\/p>/;
 
 
 export default defineComponent({
@@ -13,30 +17,71 @@ export default defineComponent({
   },
 
   setup() {
-    const sortedPosts = blogPosts.sort((d1, d2) => {
-      return new Date(d2.date).getTime() - new Date(d1.date).getTime();
-    });
+    const activePost = ref('');
+    const router     = useRouter();
+    const route      = useRoute();
+    const page       = route.params.page as string|undefined;
 
-    const snippetPosts = sortedPosts.map(post => {
-      const snippet = extractP.exec(post.content);
-      if (!snippet) throw Error('blog::snippet regex failed');
-      post.content = snippet[0];
-      return post;
-    });
+    const sortedPosts = sortPosts(blogPosts);
+    const shortPosts  = shortenPostContent(sortedPosts);
 
-    return { posts: snippetPosts };
+    detectPageRoute(route, router, sortedPosts, activePost);
+    if (page) displayBlogPost(page, sortedPosts, router, activePost);
+
+    function readPost(post: BlogPost) {
+      router.push(`/blog/${post.uri}`);
+    }
+
+    return {
+      posts: shortPosts,
+      activePost,
+      readPost,
+    };
   },
 
 
   methods: {
-
     formatDate(isoDateStr: string) {
       return dateToShortMDY(isoDateStr);
     },
-
-
     formatTime(isoDateStr: string) {
       return dateTo12HourTimeStr(isoDateStr);
     }
   }
 });
+
+
+
+function sortPosts(posts: BlogPost[]) {
+  return posts.sort((d1, d2) => (
+    new Date(d2.date).getTime() - new Date(d1.date).getTime()
+  ));
+}
+
+function shortenPostContent(posts: BlogPost[]) {
+  return posts.map(post => {
+    const snippet = extractP.exec(post.content);
+    if (!snippet) throw Error('blog::snippet regex failed');
+    return {
+      ...post,
+      content: snippet[0]
+    };
+  });
+}
+
+function detectPageRoute(route: Route, router: Router, posts: BlogPost[], contentRef: Ref<string>) {
+  watch(
+    () => route.params,
+    async (params) => {
+      if (!route.path.includes('/blog')) return;
+      if (!params.page) { contentRef.value = ''; return; }
+      displayBlogPost(params.page as string, posts, router, contentRef);
+    }
+  );
+}
+
+function displayBlogPost(uri: string, posts: BlogPost[], router: Router, contentRef: Ref<string>) {
+  const post = posts.find(post => post.uri == uri);
+  if (!post) { router.push('/404'); return; }
+  contentRef.value = post.content;
+}
