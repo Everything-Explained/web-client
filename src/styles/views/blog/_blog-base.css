@@ -26,6 +26,10 @@
   font: 1.8rem 'Nunito';
   font-weight: 300;
   letter-spacing: 1px;
+  transition: color .3s ease;
+}
+.blog__entry:hover .blog_title {
+  color: hsl(30, 100%, 80%);
 }
 
 .blog_date, .blog_time {
@@ -57,6 +61,17 @@
   font: var(--md-f-sz) 'Nunito';
   font-weight: 300;
   overflow: hidden;
+}
+.blog__entry:hover p {
+  color: var(--md-pg-hov-c);
+}
+.blog__entry:hover p i,
+.blog__entry:hover p em {
+  color: var(--md-pg-hov-i-c);
+}
+.blog__entry:hover p b,
+.blog__entry:hover p strong {
+  color: var(--md-pg-hov-b-c);
 }
 /* Blog Content Snippet Overlay */
 .blog_snippet::before, .blog_snippet::after {
