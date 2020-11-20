@@ -4,7 +4,7 @@
       v-for="(post, i) of posts"
       :key="i"
     >
-      <h1 class="blog_title">{{post.title}}</h1>
+      <h1 class="blog_title">{{post.title.toUpperCase()}}</h1>
       <div class="blog_date"
         ><icon class="blog_icon" :type='"calendar"'></icon>{{ formatDate(post.date) }}
       </div>
