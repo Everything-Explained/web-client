@@ -1,5 +1,8 @@
+# Extraneous
 .DS_Store
 node_modules
+src/styles/fonts/font-files
+test.md
 
 # Built Files/Folders
 /dist
