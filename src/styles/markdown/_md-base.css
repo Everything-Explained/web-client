@@ -121,7 +121,7 @@
 
 .md blockquote > p {
   margin           : 20px 3rem 20px 3rem;
-  padding          : 8px 2.2rem 8px 2.2rem;
+  padding          : 8px 2.3rem 8px 2.5rem;
   font-size        : 1.5rem;
   background-color : var(--md-bq-bg-c);
   color            : var(--md-bq-c);
@@ -150,7 +150,7 @@
 }
 .md blockquote > p::before {
   margin-top  : 28px;    /* blockquote (margin-top + padding-top)  */
-  margin-left : -2.2rem; /* blockquote (padding-left * -1) */
+  margin-left : -2.5rem; /* blockquote (padding-left * -1) */
   content     : '“';
 }
 .md blockquote > p::after {
