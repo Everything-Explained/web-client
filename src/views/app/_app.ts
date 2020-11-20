@@ -22,7 +22,15 @@ export default defineComponent({
       return r1.meta.order - r2.meta.order;
     });
 
-    return { version, versionType, routes: orderedRoutes };
+    const routeList = orderedRoutes.map(route => {
+      return {
+        path: route.path.includes('/:') ? route.path.split('/:')[0] : route.path,
+        meta: route.meta,
+        name: route.name
+      };
+    });
+
+    return { version, versionType, routes: routeList };
   },
   methods: {
     test() {
