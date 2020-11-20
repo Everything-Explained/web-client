@@ -20,22 +20,21 @@ export default defineComponent({
     const activePost = ref('');
     const router     = useRouter();
     const route      = useRoute();
-    const postURI    = route.params.post as string|undefined;
-
+    const postURI    = route.params.post as string|undefined
+    ;
     const sortedPosts = sortPosts(blogPosts);
-    const shortPosts  = shortenPostContent(sortedPosts);
-
-    detectPageRoute(route, router, sortedPosts, activePost);
-    if (postURI) displayBlogPost(postURI, sortedPosts, router, activePost);
-
-    function readPost(post: BlogPost) {
-      router.push(`/blog/${post.uri}`);
+    const shortPosts  = shortenPostContent(sortedPosts)
+    ;
+    onBlogRouteChange(route, router, sortedPosts, activePost);
+    if (postURI) displayBlogPost(postURI, sortedPosts, router, activePost)
+    ;
+    function goTo(uri: string) {
+      router.push(`/blog/${uri}`);
     }
-
     return {
       posts: shortPosts,
       activePost,
-      readPost,
+      goTo,
     };
   },
 
@@ -69,7 +68,7 @@ function shortenPostContent(posts: BlogPost[]) {
   });
 }
 
-function detectPageRoute(route: Route, router: Router, posts: BlogPost[], contentRef: Ref<string>) {
+function onBlogRouteChange(route: Route, router: Router, posts: BlogPost[], contentRef: Ref<string>) {
   watch(
     () => route.params,
     async (params) => {

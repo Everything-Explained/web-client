@@ -3,7 +3,7 @@
     <div class="blog__entry"
       v-for="(post, i) of posts"
       :key="i"
-      @click="readPost(post)"
+      @click="goTo(post.uri)"
     >
       <h1 class="blog_title">{{post.title.toUpperCase()}}</h1>
       <div class="blog_date"
