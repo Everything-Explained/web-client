@@ -4,11 +4,14 @@
       v-for="(post, i) of posts"
       :key="i"
     >
-      <div class="blog_title">{{post.title}}</div>
-      <div class="blog_date">{{ post.date }}</div>
-      <article class="blog_snippet"
-        >{{ post.content.substr(0, 50) }}
-      </article>
+      <h1 class="blog_title">{{post.title}}</h1>
+      <div class="blog_date"
+        ><icon class="blog_icon" :type='"calendar"'></icon>{{ formatDate(post.date) }}
+      </div>
+      <div class="blog_time"
+        ><icon class="blog_icon" :type='"clock"'></icon>{{ formatTime(post.date)}}
+      </div>
+      <article class="md blog_snippet" v-html="post.content"></article>
     </div>
   </div>
 </template>
