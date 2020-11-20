@@ -2,7 +2,7 @@ import { defineComponent, Ref, ref, watch } from "vue";
 import blogPosts from './blog.json';
 import icon from '../../components/icon/icon.vue';
 import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-utils";
-import { routeLocationKey, RouteLocationNormalized, RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-router";
+import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-router";
 
 
 type BlogPost = typeof blogPosts[0];
@@ -20,13 +20,13 @@ export default defineComponent({
     const activePost = ref('');
     const router     = useRouter();
     const route      = useRoute();
-    const page       = route.params.page as string|undefined;
+    const postURI    = route.params.post as string|undefined;
 
     const sortedPosts = sortPosts(blogPosts);
     const shortPosts  = shortenPostContent(sortedPosts);
 
     detectPageRoute(route, router, sortedPosts, activePost);
-    if (page) displayBlogPost(page, sortedPosts, router, activePost);
+    if (postURI) displayBlogPost(postURI, sortedPosts, router, activePost);
 
     function readPost(post: BlogPost) {
       router.push(`/blog/${post.uri}`);
@@ -74,8 +74,8 @@ function detectPageRoute(route: Route, router: Router, posts: BlogPost[], conten
     () => route.params,
     async (params) => {
       if (!route.path.includes('/blog')) return;
-      if (!params.page) { contentRef.value = ''; return; }
-      displayBlogPost(params.page as string, posts, router, contentRef);
+      if (!params.post) { contentRef.value = ''; return; }
+      displayBlogPost(params.post as string, posts, router, contentRef);
     }
   );
 }
