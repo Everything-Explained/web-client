@@ -1,0 +1,9 @@
+.blog_header {
+  margin         : 1rem 0 1.3rem 0;
+  font           : 2rem 'Nunito';
+  font-weight    : 300;
+  text-align     : center;
+  text-decoration: dashed;
+  letter-spacing : 1px;
+  color          : hsl(193, 15%, 76%);
+}

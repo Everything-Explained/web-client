@@ -7,6 +7,7 @@ import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-
 
 type BlogPost = typeof blogPosts[0];
 type Route = RouteLocationNormalizedLoaded;
+type BlogPostRef = Ref<BlogPost|null>;
 
 const extractP = /<p>.*<\/p>/;
 
@@ -17,13 +18,13 @@ export default defineComponent({
   },
 
   setup() {
-    const activePost = ref('');
+    const activePost = ref<BlogPost|null>(null);
     const router     = useRouter();
     const route      = useRoute();
     const postURI    = route.params.post as string|undefined
     ;
     const sortedPosts = sortPosts(blogPosts);
-    const shortPosts  = shortenPostContent(sortedPosts)
+    const shortPosts  = shortenPostsContent(sortedPosts)
     ;
     onBlogRouteChange(route, router, sortedPosts, activePost);
     if (postURI) displayBlogPost(postURI, sortedPosts, router, activePost)
@@ -57,7 +58,7 @@ function sortPosts(posts: BlogPost[]) {
   ));
 }
 
-function shortenPostContent(posts: BlogPost[]) {
+function shortenPostsContent(posts: BlogPost[]) {
   return posts.map(post => {
     const snippet = extractP.exec(post.content);
     if (!snippet) throw Error('blog::snippet regex failed');
@@ -68,19 +69,29 @@ function shortenPostContent(posts: BlogPost[]) {
   });
 }
 
-function onBlogRouteChange(route: Route, router: Router, posts: BlogPost[], contentRef: Ref<string>) {
+function onBlogRouteChange(
+    route      : Route,
+    router     : Router,
+    posts      : BlogPost[],
+    contentRef : BlogPostRef
+) {
   watch(
     () => route.params,
     async (params) => {
       if (!route.path.includes('/blog')) return;
-      if (!params.post) { contentRef.value = ''; return; }
+      if (!params.post) { contentRef.value = null; return; }
       displayBlogPost(params.post as string, posts, router, contentRef);
     }
   );
 }
 
-function displayBlogPost(uri: string, posts: BlogPost[], router: Router, contentRef: Ref<string>) {
+function displayBlogPost(
+  uri        : string,
+  posts      : BlogPost[],
+  router     : Router,
+  contentRef : BlogPostRef
+) {
   const post = posts.find(post => post.uri == uri);
   if (!post) { router.push('/404'); return; }
-  contentRef.value = post.content;
+  contentRef.value = post;
 }

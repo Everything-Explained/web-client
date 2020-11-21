@@ -15,7 +15,10 @@
       <article class="md blog_snippet" v-html="post.content"></article>
     </div>
   </div>
-  <div class="md blog__content" v-if="activePost" v-html="activePost"></div>
+  <div class="blog__display" v-if="activePost">
+    <header class="blog_header">{{ activePost.title.toUpperCase() }}</header>
+    <article class="md blog_content" v-html="activePost.content"></article>
+  </div>
 </template>
 
 <script lang='ts' src='./_blog.ts'></script>
