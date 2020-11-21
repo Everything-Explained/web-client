@@ -3,10 +3,10 @@ import blogPosts from './blog.json';
 import icon from '../../components/icon/icon.vue';
 import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-utils";
 import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-router";
+import { Route } from "../../global-types";
 
 
 type BlogPost = typeof blogPosts[0];
-type Route = RouteLocationNormalizedLoaded;
 type BlogPostRef = Ref<BlogPost|null>;
 
 const extractP = /<p>.*<\/p>/;
