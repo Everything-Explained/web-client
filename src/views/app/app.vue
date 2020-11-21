@@ -11,8 +11,9 @@
       </ul>
     </menu>
   </header>
-    <div class="main__body-content --default-scrollbar">
-        <router-view />
+  <section ref="body" class="main__body --default-scrollbar">
+    <div class="main__body-content">
+      <router-view />
     </div>
   </section>
 </template>

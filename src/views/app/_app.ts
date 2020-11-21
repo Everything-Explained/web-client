@@ -1,10 +1,12 @@
 import { defineComponent, ref, watch } from "vue";
 import { Router, useRoute, useRouter } from "vue-router";
+import { Route } from "../../global-types";
 
 export default defineComponent({
   setup() {
     // const version     = '36';
     // const versionType = 'α';
+    const body = ref<HTMLElement|null>();
     // const verDesc = `
     //   We shall carry on by 12's until we reach β;
     //   a shift from the arbitrary past into the ever
@@ -30,11 +32,23 @@ export default defineComponent({
       };
     });
 
-    return { version, versionType, routes: routeList };
+    // Prevents needing scroll reset in every view.
+    onRouteChange(useRoute(), router, () => {
+      body.value!.scrollTop = 0;
+    });
+
+    return { routes: routeList, body };
   },
-  methods: {
-    test() {
-      console.log('testing 123');
-    }
-  }
 });
+
+
+
+function onRouteChange(route: Route, router: Router, exec: () => void) {
+  watch(
+    () => route.path,
+    async () => {
+      await router.isReady();
+      exec();
+    }
+  );
+}
