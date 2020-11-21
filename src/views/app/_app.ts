@@ -1,10 +1,10 @@
-import { defineComponent } from "vue";
-import { useRouter } from "vue-router";
+import { defineComponent, ref, watch } from "vue";
+import { Router, useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   setup() {
-    const version     = '36';
-    const versionType = 'α';
+    // const version     = '36';
+    // const versionType = 'α';
     // const verDesc = `
     //   We shall carry on by 12's until we reach β;
     //   a shift from the arbitrary past into the ever
