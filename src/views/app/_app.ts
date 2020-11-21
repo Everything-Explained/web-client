@@ -1,4 +1,4 @@
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, Ref, ref, watch } from "vue";
 import { Router, useRoute, useRouter } from "vue-router";
 import { Route } from "../../global-types";
 
@@ -6,7 +6,8 @@ export default defineComponent({
   setup() {
     // const version     = '36';
     // const versionType = 'α';
-    const body = ref<HTMLElement|null>();
+    const body = ref<HTMLElement|null>(null);
+    const blogScrollPos = ref(0);
     // const verDesc = `
     //   We shall carry on by 12's until we reach β;
     //   a shift from the arbitrary past into the ever
@@ -14,6 +15,7 @@ export default defineComponent({
     // `.trim();
 
     const router = useRouter();
+    const route = useRoute();
 
     const routes     = router.getRoutes();
     const realRoutes = routes.filter(
@@ -32,8 +34,11 @@ export default defineComponent({
       };
     });
 
-    // Prevents needing scroll reset in every view.
-    onRouteChange(useRoute(), router, () => {
+    // Prevents needing scroll position reset in every view.
+    onRouteChange(route, router, () => {
+      if (route.path.includes('/blog')) {
+        retainBlogScrollPos(route, body, blogScrollPos); return;
+      }
       body.value!.scrollTop = 0;
     });
 
@@ -51,4 +56,19 @@ function onRouteChange(route: Route, router: Router, exec: () => void) {
       exec();
     }
   );
+}
+
+
+async function retainBlogScrollPos(
+  route: Route,
+  body: Ref<HTMLElement|null>,
+  scrollPos: Ref<number>
+) {
+  if (route.path.includes('/blog/')) {
+    scrollPos.value = body.value!.scrollTop;
+    body.value!.scrollTop = 0;
+  }
+  if (route.path == '/blog') {
+    body.value!.scrollTop = scrollPos.value;
+  }
 }
