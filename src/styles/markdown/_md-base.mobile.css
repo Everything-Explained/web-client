@@ -16,6 +16,10 @@
     margin    : 10px 7px;
     font-size : 1.28rem;
   }
+  .md > .embed-responsive {
+    width: 98%;
+    height: 300px;
+  }
 }
 
 
@@ -34,5 +38,9 @@
     margin-top    : 5px;
     margin-bottom : 5px;
     font-size     : 1.13rem;
+  }
+
+  .md > .embed-responsive {
+    height: 150px;
   }
 }

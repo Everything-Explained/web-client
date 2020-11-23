@@ -73,6 +73,9 @@
 .md > p {
   margin-bottom: 7px;
 }
+.md > p:empty {
+  display: none;
+}
 .md > p:hover {
   background-color : var(--md-pg-bg-hov-c);
   color            : var(--md-pg-hov-c);
@@ -174,6 +177,19 @@
   background : var(--md-code-bg-hov-c);
   color      : var(--md-code-hov-c);
 }
+
+
+.md > .embed-responsive {
+  margin: 20px auto;
+  width: 90%;
+  height: 460px;
+}
+.md > .embed-responsive iframe {
+  width: 100%;
+  height: 100%;
+}
+
+
 
 
 .md b,  .md i,
