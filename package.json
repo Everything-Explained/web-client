@@ -1,5 +1,5 @@
 {
-  "name": "web_client_vue3_vite",
+  "name": "web_client",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
