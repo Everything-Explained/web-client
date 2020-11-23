@@ -75,6 +75,6 @@ html {
   overflow       : visible;
 }
 /* Should always scroll past content */
-.main__body-content > :last-child {
+.main__body-content > :last-child > :last-child {
   margin-bottom: 333px;
 }
