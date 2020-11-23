@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build-static": "node ./build/build-md.js static | bunyan -o short",
-    "build-blog": "node ./build/build-md.js blog | bunyan -o short"
+    "build": "vite build"
   },
   "dependencies": {
     "vue": "^3.0.2",
