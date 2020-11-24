@@ -179,6 +179,19 @@
 }
 
 
+.md > p > img {
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  max-width: 100%;
+}
+.md > p > img + br {
+  display: none;
+}
+
+
+/* ### Embeded Video Styles ### */
 .md > .embed-responsive {
   margin: 20px auto;
   width: 90%;
@@ -188,6 +201,7 @@
   width: 100%;
   height: 100%;
 }
+
 
 
 
