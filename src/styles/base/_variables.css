@@ -24,13 +24,13 @@
   --accent-2-c   : hsl(30, 100%, 75%); /* apricot */
   --accent-3-c   : hsl(161, 67%, 73%); /* Magic Mint */
 
-  --panel-c              : hsl(197, 20%, 17%);
+  --panel-c              : hsl(197, 10%, 25%);
   --panel-hov-c          : hsl(197, 17%, 12%);
   --sub-panel-c          : hsl(197, 20%, 10%);
   --sub-panel-hov-c      : hsl(30, 9%, 15%);
 
   --body-f-sz            : 1em;
-  --body-bg-c            : hsl(197, 30%, 6.5%);
+  --body-bg-c            : hsl(197, 20%, 6.5%);
   --body-head-title-f-sz : 5rem;
   --body-head-title-c    : hsl(0, 100%, 64%);
   --body-head-ribbon-c   : var(--body-head-title-c);
@@ -38,7 +38,7 @@
   --selection-bg-c       : hsla(197, 81%, 59%, 0.219);
 
   --scrollbar-c          : var(--panel-c);
-  --scrollbar-hov-c      : hsl(197, 7%, 43%);
+  --scrollbar-hov-c      : hsl(197, 9%, 43%);
   --scrollbar-track-c    : hsl(0, 0%, 0%);
 
   /* --watermark-c       : hsl(0, 0%, 35%);
