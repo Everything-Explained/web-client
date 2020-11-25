@@ -1,6 +1,6 @@
 <template>
+  <div class="main__ribbon"></div>
   <header class="main__header">
-    <div class="main__header-ribbon"></div>
     <div class="main__header_title" alt="">Everything Explained</div>
     <menu class="main__menu">
       <ul>
@@ -11,7 +11,7 @@
       </ul>
     </menu>
   </header>
-  <section ref="body" class="main__body --default-scrollbar">
+  <section class="main__body">
     <div class="main__body-content">
       <router-view />
     </div>

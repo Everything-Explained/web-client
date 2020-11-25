@@ -8,6 +8,10 @@ html {
   -webkit-font-smoothing  : antialiased;
   -moz-osx-font-smoothing : grayscale;
 }
+body {
+  margin-right: 5px;
+  overflow: auto;
+}
 
 ::selection {
   background: var(--selection-bg-c);
@@ -27,10 +31,10 @@ html {
 .main__header {
   height        : 10rem;
   border-bottom : 7px solid var(--panel-c);
+.main__ribbon {
 }
 
 
-.main__header-ribbon {
   position   : absolute;
   display    : block;
   top        : 0;
