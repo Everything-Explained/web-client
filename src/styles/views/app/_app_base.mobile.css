@@ -1,6 +1,6 @@
 
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 750px) {
   .main__header       { height: 7.5rem; }
 
   .main__header_title { font-size: 3.5rem; }

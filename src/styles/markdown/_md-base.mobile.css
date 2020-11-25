@@ -1,4 +1,4 @@
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 750px) {
   .md { font-size: var(--md-mobile-f-sz); }
 
   .md p {
