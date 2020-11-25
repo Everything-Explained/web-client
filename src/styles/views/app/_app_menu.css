@@ -7,7 +7,7 @@
 }
 
 .main__menu ul {
-  display         : flex;
+  display         :  none;
   margin-left     : 7px;
   width           : 100%;
   height          : 100%;
