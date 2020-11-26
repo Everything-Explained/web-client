@@ -124,13 +124,14 @@
 
 
 .md blockquote > p {
-  margin           : 20px 3rem 20px 3rem;
+  margin           : 2.7rem 3rem;
   padding          : 8px 2.3rem 8px 2.5rem;
   font-size        : 1.5rem;
   background-color : var(--md-bq-bg-c);
   color            : var(--md-bq-c);
   quotes           : '“' '”';
-  border-radius    : 8px;
+  border: 4px solid black;
+  outline: 2px solid hsl(197, 20%, 12%);
 }
 /*
  * Should be used as an authors name at
@@ -150,7 +151,7 @@
   position       : absolute;
   font-size      : 6rem;
   vertical-align : baseline;
-  color          : hsl(30, 100%, 75%);
+  color          : hsl(197, 13%, 65%);
 }
 .md blockquote > p::before {
   margin-top  : 28px;    /* blockquote (margin-top + padding-top)  */
