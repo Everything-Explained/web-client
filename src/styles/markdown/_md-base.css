@@ -1,4 +1,6 @@
 .md {
+  max-width: 1024px;
+  margin: 0 auto;
   font-family : 'Nunito';
   font-weight : 300;
   font-size   : var(--md-f-sz);
@@ -12,7 +14,7 @@
 .md h5 {
   margin-top     : 15px;
   color          : hsl(0, 0%, 94%);
-  font           : "Nunito";
+  font-family    : "Nunito";
   font-variant   : small-caps;
   font-weight    : 300;
   letter-spacing : 1px;
@@ -63,6 +65,7 @@
 
 .md p {
   display                 : block;
+  margin-left             : 10px;
   padding                 : 7px 13px;
   line-height             : 27px;
   background              : var(--md-pg-bg-c);
@@ -72,6 +75,7 @@
 }
 .md > p {
   margin-bottom: 7px;
+  box-shadow: 0 10px 7px -5px black;
 }
 .md > p:empty {
   display: none;
@@ -128,7 +132,7 @@
   font-size        : 1.5rem;
   background-color : var(--md-bq-bg-c);
   color            : var(--md-bq-c);
-  border           : 2px solid black;
+  quotes           : '“' '”';
   border-radius    : 8px;
 }
 /*
@@ -154,11 +158,11 @@
 .md blockquote > p::before {
   margin-top  : 28px;    /* blockquote (margin-top + padding-top)  */
   margin-left : -2.5rem; /* blockquote (padding-left * -1) */
-  content     : '“';
+  content     : open-quote;
 }
 .md blockquote > p::after {
   right: 4px; bottom: -20px;
-  content: '”'
+  content: close-quote;
 }
 
 

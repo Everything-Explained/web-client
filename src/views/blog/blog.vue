@@ -17,7 +17,7 @@
   </div>
   <div class="blog__display" v-if="activePost">
     <header class="blog_header">
-      <span>{{ activePost.title.toUpperCase() }}</span>
+      <span>{{ activePost.title }}</span>
     </header>
     <article class="md blog_content" v-html="activePost.content"></article>
   </div>
