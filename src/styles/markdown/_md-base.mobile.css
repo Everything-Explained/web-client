@@ -13,8 +13,10 @@
 
 @media only screen and (max-width: 600px) {
   .md blockquote > p {
-    margin    : 10px 7px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     font-size : 1.28rem;
+    width: 90%;
   }
   .md > .embed-responsive {
     width: 98%;
@@ -35,9 +37,9 @@
   .md > p { margin: auto 5px 5px 5px; }
 
   .md blockquote > p {
-    margin-top    : 5px;
-    margin-bottom : 5px;
-    font-size     : 1.13rem;
+    font-size   : 1.1rem;
+    width       : 95%;
+    margin-left : 7px;
   }
 
   .md > .embed-responsive {
