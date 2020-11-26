@@ -70,7 +70,7 @@
   --md-pg-hov-link-c     : var(--md-pg-hov-b-c);
   --md-link-bdr-c        : var(--md-i-c);
   --md-pg-hov-link-bdr-c : var(--md-link-hov-c);
-  --md-bq-c              : hsl(30, 60%, 70%); /* hsl(0, 50%, 70%)  */
+  --md-bq-c              : hsl(30, 60%, 70%);
   --md-bq-bg-c           : hsl(197, 20%, 5%);
   --md-code-c            : hsl(0, 0%, 80%);
   --md-code-bg-c         : hsl(0, 0%, 25%);
