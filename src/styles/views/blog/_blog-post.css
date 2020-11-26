@@ -1,13 +1,23 @@
 .blog_header {
-  padding         : 0.5rem 0 0.7rem 0;
-  margin          : 0 0 7px 0;
-  font           : 2rem 'Nunito';
-  font-weight    : 400;
+  position: sticky;
+  top            : 0;
+  padding        : 0.5rem 0 0.5rem 0;
+  margin         : 0 0 20px 0;
+  color          : hsl(197, 9%, 90%);
+  font-family    : 'Nunito';
+  font-size      : 1.7rem;
+  font-weight    : 300;
+  text-transform : capitalize;
   text-align     : center;
-  letter-spacing : 1px;
-  color          : hsl(197, 9%, 75%);
+  background-color: var(--sub-panel-c);
+  box-shadow: 0 10px 8px -3px black;
+  text-shadow: 3px 3px 0 black;
+  overflow: visible;
+  z-index: 10;
 }
 .blog_header span {
-  border-bottom: 2px dashed hsl(0, 60%, 63%);
+  padding-bottom: 5px;
+  /* border-bottom: 2px dashed hsl(0, 60%, 63%); */
   opacity: 0.8;
+  z-index: 10;
 }

@@ -28,20 +28,24 @@ body {
   min-height : 100%;
 }
 
-.main__header {
-  height        : 10rem;
-  border-bottom : 7px solid var(--panel-c);
 .main__ribbon {
+  top: 0; left: 0; right: 0;
+  position     : sticky;
+  margin-right : 7px;
+  display      : block;
+  height       : 3px;
+  box-shadow   : 0 4px 3px 0px black;
+  background   : var(--body-head-ribbon-c);
+  z-index      : 13;
 }
 
-
-  position   : absolute;
-  display    : block;
-  top        : 0;
-  left       : 0;
-  right      : 0;
-  height     : 3px;
-  background : var(--body-head-ribbon-c);
+.main__header {
+  top: 0; left: 0;
+  height           : 8rem;
+  border-bottom    : 7px solid var(--panel-c);
+  background-color : var(--body-bg-c);
+  margin-right     : 7px;
+  z-index          : 12;
 }
 
 .main__header_title {
@@ -50,17 +54,17 @@ body {
   top        : 10px; left: 0; right: 0; bottom: 0;
   text-align : center;
   color      : var(--body-head-title-c);
-  font       : var(--body-head-title-f-sz) 'Pique N Meex';
+  font-size  : var(--body-head-title-f-sz);
+  font-family: 'Pique N Meex';
   margin     : 0 auto;
 }
 
 
 .main__body {
-  display: flex;
-  margin: 7px 10px 7px 10px;
-  flex: 1 0;
-  flex-flow: row nowrap;
-  overflow: auto;
+  display   : flex;
+  margin    : 0 7px 7px 0;
+  flex      : 1 0;
+  flex-flow : row nowrap;
 }
 
 .main__body-left-section {
@@ -69,13 +73,11 @@ body {
 }
 
 .main__body-content {
-  position : absolute;
-  display  : flex;
-  top: 0; right: 10px; left: 0; bottom: 0;
+  display        : flex;
   margin         : 0 auto;
   flex           : 1 0;
   flex-direction : column;
-  max-width      : 1024px;
+  /* max-width      : 1024px; */
   overflow       : visible;
 }
 /* Should always scroll past content */
