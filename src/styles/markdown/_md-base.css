@@ -12,8 +12,8 @@
 .md h1, .md h2,
 .md h3, .md h4,
 .md h5 {
-  margin-top     : 15px;
-  color          : hsl(0, 0%, 94%);
+  margin-top     : 20px;
+  color          : hsl(197, 20%, 80%);
   font-family    : "Nunito";
   font-variant   : small-caps;
   font-weight    : 300;
@@ -21,16 +21,13 @@
 }
 
 .md h1 {
-  margin: 15px 0 -5px 25px;
   margin-left: 25px;
   font-size: 2.25rem;
 }
 
 .md h2 {
-  position    : relative;
-  margin-left : 40px;
-  margin-bottom: -3px;
-  font-size   : 1.8rem;
+  margin-left   : 40px;
+  font-size     : 1.8rem;
 }
 
 .md h3 {
