@@ -1,4 +1,4 @@
-import { defineComponent, Ref, ref, watch } from "vue";
+import { defineComponent, onMounted, Ref, ref, watch } from "vue";
 import { Router, useRoute, useRouter } from "vue-router";
 import { Route } from "../../global-types";
 
@@ -6,7 +6,7 @@ export default defineComponent({
   setup() {
     // const version     = '36';
     // const versionType = 'α';
-    const body = ref<HTMLElement|null>(null);
+    const body = ref<HTMLBodyElement|null>(null);
     const blogScrollPos = ref(0);
     // const verDesc = `
     //   We shall carry on by 12's until we reach β;
@@ -26,6 +26,10 @@ export default defineComponent({
       return r1.meta.order - r2.meta.order;
     });
 
+    onMounted(() => {
+      body.value = document.getElementsByTagName('body')[0];
+    });
+
     const routeList = orderedRoutes.map(route => {
       return {
         path: route.path.includes('/:') ? route.path.split('/:')[0] : route.path,
@@ -42,7 +46,7 @@ export default defineComponent({
       body.value!.scrollTop = 0;
     });
 
-    return { routes: routeList, body };
+    return { routes: routeList };
   },
 });
 
