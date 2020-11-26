@@ -124,14 +124,15 @@
 
 
 .md blockquote > p {
-  margin           : 2.7rem 3rem;
+  margin           : 2.7rem auto;
   padding          : 8px 2.3rem 8px 2.5rem;
+  width            : 85%;
+  color            : var(--md-bq-c);
   font-size        : 1.5rem;
   background-color : var(--md-bq-bg-c);
-  color            : var(--md-bq-c);
   quotes           : '“' '”';
-  border: 4px solid black;
-  outline: 2px solid hsl(197, 20%, 12%);
+  border           : 4px solid black;
+  outline          : 2px solid hsl(197, 20%, 12%);
 }
 /*
  * Should be used as an authors name at
