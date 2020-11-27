@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, ref } from "vue";
+import { computed, defineComponent, onMounted, ref, Ref, toRef, toRefs } from "vue";
 
 
 type StringMap = { [key: string]: string };
@@ -26,25 +26,17 @@ const iconMap: StringMap = {
 
 export default defineComponent({
   name: 'icon',
-
-  props: {
-    type: String
-  },
+  props: { type: String },
 
   setup(props) {
-    const icon = ref<HTMLElement>();
-
-    onMounted(() => {
-      if (!props.type)
-        throw Error('<icon>::missing "type" prop')
-      ;
-      const iconValue = iconMap[props.type];
-      if (!iconValue)
-        throw Error(`<icon>::invalid icon type: "${props.type}"`)
-      ;
-      icon.value!.dataset.icon = iconValue;
-    });
-
-    return { icon };
+    const type = toRef(props, 'type');
+    if (!type.value)
+      throw Error('<icon>::missing "type" prop')
+    ;
+    if (!iconMap[type.value])
+      throw Error(`<icon>::invalid icon type: ${type.value}`)
+    ;
+    const icon = computed(() => iconMap[type.value!]);
+    return { icon, type };
   }
 });
