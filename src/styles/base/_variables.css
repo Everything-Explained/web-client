@@ -56,7 +56,7 @@
   --md-f-sz              : 1.27rem;
   --md-mobile-f-sz       : 1.15rem;
   --md-mobile-sm-f-sz    : 0.97rem;
-  --md-c                 : hsl(197, 11%, 75%);
+  --md-c                 : hsl(197, 9%, 75%);
   --md-pg-hov-c          : hsl(30, 9%, 80%);
   --md-pg-bg-c           : var(--sub-panel-c);
   --md-pg-bg-hov-c       : var(--sub-panel-hov-c);
