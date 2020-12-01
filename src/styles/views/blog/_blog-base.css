@@ -25,7 +25,7 @@
 .blog_title {
   padding        : 15px;
   color          : hsl(30, 82%, 67%);
-  font           : 1.8rem 'Nunito';
+  font-size      : 1.8rem;
   font-weight    : 300;
   letter-spacing : 1px;
   transition     : color .3s ease;
@@ -36,7 +36,7 @@
 
 .blog_date, .blog_time {
   display        : inline;
-  font           : 1.15rem 'Nunito';
+  font-size      : 1.15rem;
   font-variant   : small-caps;
   color          : hsl(199, 7%, 55%);
   letter-spacing : 1px;
@@ -60,7 +60,6 @@
   max-width     : 95%;
   text-align    : left;
   border-radius : 10px;
-  font-family   : 'Nunito';
   font-size     : var(--md-f-sz);
   font-weight   : 300;
   overflow      : hidden;
