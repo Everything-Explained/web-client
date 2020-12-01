@@ -22,7 +22,7 @@
   display    : inline;
   margin-bottom: -3px;
   padding    : 3px 7px 0 7px;
-  background : var(--sub-panel);
+  background : var(--sub-panel-c);
 }
 .main__menu li:nth-child(even) {
   margin-left: 13px;
