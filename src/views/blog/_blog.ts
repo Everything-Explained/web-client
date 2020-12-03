@@ -3,6 +3,8 @@ import blogPosts from './blog.json';
 import icon from '../../components/icon/icon.vue';
 import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-utils";
 import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-router";
+import { Store, useStore } from "vuex";
+import { VuexStore } from "../../vuex/vuex-store";
 
 
 type BlogPost = typeof blogPosts[0];
@@ -21,17 +23,19 @@ export default defineComponent({
     const activePost = ref<BlogPost|null>(null);
     const router     = useRouter();
     const route      = useRoute();
-    const postURI    = route.params.post as string|undefined
+    const postURI    = route.params.post as string|undefined;
+    const store      = useStore<VuexStore>()
     ;
     const sortedPosts = sortPosts(blogPosts);
     const shortPosts  = shortenPostsContent(sortedPosts)
     ;
-    onBlogRouteChange(route, router, sortedPosts, activePost);
-    if (postURI) displayBlogPost(postURI, sortedPosts, router, activePost)
+    onBlogRouteChange(route, router, sortedPosts, activePost, store);
+    if (postURI) displayBlogPost(postURI, sortedPosts, router, activePost, store)
     ;
     function goTo(uri: string) {
       router.push(`/blog/${uri}`);
     }
+    store.commit('page-title', 'Blog Entries');
     return {
       posts: shortPosts,
       activePost,
@@ -73,14 +77,19 @@ function onBlogRouteChange(
     route      : Route,
     router     : Router,
     posts      : BlogPost[],
-    contentRef : BlogPostRef
+    contentRef : BlogPostRef,
+    store      : Store<VuexStore>,
 ) {
   watch(
     () => route.params,
     async (params) => {
       if (!route.path.includes('/blog')) return;
-      if (!params.post) { contentRef.value = null; return; }
-      displayBlogPost(params.post as string, posts, router, contentRef);
+      if (!params.post) {
+        contentRef.value = null;
+        store.commit('page-title', 'Blog Entries');
+        return;
+      }
+      displayBlogPost(params.post as string, posts, router, contentRef, store);
     }
   );
 }
@@ -89,9 +98,11 @@ function displayBlogPost(
   uri        : string,
   posts      : BlogPost[],
   router     : Router,
-  contentRef : BlogPostRef
+  contentRef : BlogPostRef,
+  store      : Store<VuexStore>
 ) {
   const post = posts.find(post => post.uri == uri);
   if (!post) { router.push('/404'); return; }
+  store.commit('page-title', post.title);
   contentRef.value = post;
 }

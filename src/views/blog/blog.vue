@@ -5,7 +5,7 @@
       :key="i"
       @click="goTo(post.uri)"
     >
-      <h1 class="blog_title">{{post.title.toUpperCase()}}</h1>
+      <h1 class="blog_title">{{post.title}}</h1>
       <div class="blog_date"
         ><icon class="blog_icon" :type='"calendar"'></icon>{{ formatDate(post.date) }}
       </div>
@@ -16,9 +16,6 @@
     </div>
   </div>
   <div class="blog__display" v-if="activePost">
-    <header class="blog_header">
-      <span>{{ activePost.title }}</span>
-    </header>
     <article class="md blog_content" v-html="activePost.content"></article>
   </div>
 </template>
