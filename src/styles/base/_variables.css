@@ -19,10 +19,15 @@
  */
 
 :root {
+  --screen-large: 750px;
+  --screen-medium: 600px;
+  --screen-small: 361px;
+
   --primary-c    : hsl(0, 100%, 63%);  /* Tart Orange */
   --compliment-c : hsl(197, 41%, 60%); /* Maximum blue */
   --accent-2-c   : hsl(30, 100%, 75%); /* apricot */
   --accent-3-c   : hsl(161, 67%, 73%); /* Magic Mint */
+  --accent-4-c   : hsl(46, 50%, 50%);  /* Gold */
 
   --panel-c              : hsl(197, 11%, 25%);
   --panel-hov-c          : hsl(197, 11%, 12%);
@@ -64,18 +69,18 @@
   --md-b-c               : hsl(197, 9%, 82%);
   --md-pg-hov-b-c        : hsl(30, 11%, 89%);
   --md-i-c               : hsl(0, 74%, 77%);
-  --md-pg-hov-i-c        : hsl(30, 100%, 86%);
+  --md-pg-hov-i-c        : hsl(46, 80%, 70%);
   --md-b-i-c             : hsl(197, 45%, 69%);
   --md-link-c            : var(--md-b-c);
   --md-link-hov-c        : var(--md-pg-hov-i-c);
   --md-pg-hov-link-c     : var(--md-pg-hov-b-c);
   --md-link-bdr-c        : var(--md-i-c);
   --md-pg-hov-link-bdr-c : var(--md-link-hov-c);
-  --md-bq-c              : hsl(30, 60%, 70%);
+  --md-bq-c              : hsl(46, 68%, 61%);
   --md-bq-bg-c           : hsl(197, 20%, 5%);
   --md-code-c            : hsl(0, 0%, 80%);
   --md-code-bg-c         : hsl(0, 0%, 25%);
   --md-code-hov-c        : hsl(279, 20%, 80%);
-  --md-code-bg-hov-c     : hsl(278, 25%, 30%);
+  --md-code-bg-hov-c     : hsl(278, 25%, 47%);
 
 }
