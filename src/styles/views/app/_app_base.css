@@ -85,8 +85,7 @@ body {
 .main__title-bar {
   position         : sticky;
   top              : 0;
-  padding          : 0.5rem 0 0.5rem 0;
-  margin           : 0 0 20px 0;
+  padding          : 0.5rem 0 0.4rem 0;
   color            : hsl(197, 11%, 83%);
   font-size        : 1.7rem;
   font-weight      : 300;
@@ -100,11 +99,12 @@ body {
 }
 .main__title-bar_menu-icon {
   position: absolute;
-  top: 0.6rem; left: 15px;
+  top: 0.6rem; left: 10px;
   font-size: 2rem;
   color: hsl(197, 11%, 33%);
   opacity: 1;
   transition: opacity .3s ease, color .3s ease;
+  z-index: 2;
   cursor: pointer;
 }
 .main__title-bar_menu-icon:hover {
