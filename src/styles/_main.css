@@ -3,3 +3,4 @@
 @import '../views/app/_app.css';
 @import '../views/blog/_blog.css';
 @import '../views/errors/_i404.css';
+@import '../components/menu/_menu.css';

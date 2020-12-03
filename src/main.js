@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import App from './views/app/app.vue';
 import router from './router';
 import './styles/main.css';
+import vuex from './vuex/vuex-store';
 
 
 const getElement = (id) => {
@@ -38,6 +39,7 @@ const cookiesAreEnabled = (() => {
 
 if (cookiesAreEnabled && browserIsSupported) {
   createApp(App)
+    .use(vuex)
     .use(router)
     .mount('#app')
   ;
