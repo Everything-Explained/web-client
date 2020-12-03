@@ -19,9 +19,10 @@
  */
 
 :root {
-  --screen-large: 750px;
-  --screen-medium: 600px;
-  --screen-small: 361px;
+  --screen-large: 711px;
+  --screen-medium: 511px;
+  --screen-small: 380px;
+  --screen-tiny: 320px;
 
   --primary-c    : hsl(0, 100%, 63%);  /* Tart Orange */
   --compliment-c : hsl(197, 41%, 60%); /* Maximum blue */
