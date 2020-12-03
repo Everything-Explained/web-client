@@ -13,7 +13,7 @@
             @mousedown="openMenu"
             :class="{ '--menu-open': isMenuOpen }" :type='"menu"'
           ></icon>
-          <span>{{title}}</span>
+          <div class="main__title-bar_text">{{title}}</div>
         </div>
         <router-view />
       </div>
