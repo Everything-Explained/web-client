@@ -10,34 +10,34 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/home',
     alias: '/',
-    name: 'home',
+    name: 'Home',
     component: Home,
     meta: { display: true, order: 1, title: 'About Us' }
   },
   {
     path: '/blog/:post?',
-    name: 'blog',
+    name: 'Blog',
     component: () => import(/* webpackChunkName: "blog" */ '../views/blog/blog.vue'),
     meta: { display: true, order: 2, title: 'Blog' }
   },
-  {
-    path: '/faq/:page?',
-    name: 'faq',
-    component: FAQ,
-    meta: { display: true, order: 3, title: 'Frequently Asked Questions' }
-  },
-  {
-    path: '/literature/:category?/:page?',
-    name: 'lit',
-    component: Literature,
-    meta: { display: true, order: 4, title: 'Literature' }
-  },
-  {
-    path: '/changelog/:page?',
-    name: 'chg.log',
-    component: Changelog,
-    meta: { display: false, order: 5, title: 'Changelog' }
-  },
+  // {
+  //   path: '/faq/:page?',
+  //   name: 'FAQ',
+  //   component: FAQ,
+  //   meta: { display: true, order: 3, title: 'Frequently Asked Questions' }
+  // },
+  // {
+  //   path: '/literature/:category?/:page?',
+  //   name: 'Literature',
+  //   component: Literature,
+  //   meta: { display: true, order: 4, title: 'Literature' }
+  // },
+  // {
+  //   path: '/changelog/:page?',
+  //   name: 'chg.log',
+  //   component: Changelog,
+  //   meta: { display: false, order: 5, title: 'Changelog' }
+  // },
   {
     path: '/:pathMatch(.*)*',
     name: '404',
