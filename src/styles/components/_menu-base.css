@@ -6,7 +6,7 @@
   border-right : 3px solid black;
   transform    : translateX(-100%);
   z-index      : 10;
-  transition: opacity .5s ease, transform .5s ease;
+  transition: opacity .4s ease, transform .4s ease;
 }
 .main__menu.--opened {
   transform: translateX(0%);
@@ -33,34 +33,38 @@
   background: hsl(0, 100%, 64%);
   box-shadow: 0 4px 5px 1px black;
 }
-.menu-header_exit {
+.menu-header_exit-icon {
   position: absolute;
   right: 0;
   font-size: 1.9rem;
   color: hsl(0, 70%, 63%);
   user-select: none;
   cursor: pointer;
+  transition: color .3s ease;
+}
+.menu-header_exit-icon:hover {
+  color: hsl(46, 100%, 50%);
 }
 
-.main__menu li a {
+.menu_item a {
   display: block;
-  padding: 5px 2rem;
+  padding: 2px 2rem;
   box-sizing: border-box;
   font-size: 1.35rem;
   text-align: center;
   color: var(--md-c);
-  /* border-bottom: 1px dashed hsl(197, 12%, 5%); */
-  /* border-right: 4px solid hsl(197, 12%, 5%); */
-  transition: all .5s ease;
+  border-top: 2px solid var(--body-bg-c);
+  border-bottom: 2px solid var(--body-bg-c);
+  transition: color .3s ease, border .3s ease, background .3s ease;
+  user-select: none;
 }
-.main__menu li a:hover {
-  color: hsl(47, 75%, 60%);
+.menu_item a:hover {
+  color: hsl(46, 80%, 63%);
 }
-.main__menu li a.router-link-active {
-  color: hsl(47, 75%, 60%);
-  background: var(--sub-panel-c);
-  box-shadow: 0 4px 5px 1px black;
+.menu_item a.router-link-active {
+  color: hsl(46, 80%, 63%);
+  background: var(--sub-panel-hov-c);
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
   z-index: 1;
-  /* border-bottom: 1px dashed hsl(47, 70%, 50%); */
-  /* border-right: 4px solid hsl(47, 70%, 50%); */
 }

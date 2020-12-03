@@ -1,13 +1,22 @@
-import { defineComponent, onMounted, Ref, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, Ref, ref, watch } from "vue";
 import { Router, useRoute, useRouter } from "vue-router";
 import { Route } from "../../global-types";
+import Menu from '../../components/menu/menu.vue';
+import icon from '../../components/icon/icon.vue';
+import { useStore } from "vuex";
+import { VuexStore } from "../../vuex/vuex-store";
 
 export default defineComponent({
+  components: {
+    'main-menu': Menu,
+    icon,
+  },
   setup() {
     // const version     = '36';
     // const versionType = 'α';
     const body = ref<HTMLBodyElement|null>(null);
     const blogScrollPos = ref(0);
+    const store = useStore<VuexStore>();
     // const verDesc = `
     //   We shall carry on by 12's until we reach β;
     //   a shift from the arbitrary past into the ever
@@ -17,25 +26,8 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
 
-    const routes     = router.getRoutes();
-    const realRoutes = routes.filter(
-      route => route.meta.display == true && !route.aliasOf
-    );
-
-    const orderedRoutes = realRoutes.sort((r1, r2) => {
-      return r1.meta.order - r2.meta.order;
-    });
-
     onMounted(() => {
       body.value = document.getElementsByTagName('body')[0];
-    });
-
-    const routeList = orderedRoutes.map(route => {
-      return {
-        path: route.path.includes('/:') ? route.path.split('/:')[0] : route.path,
-        meta: route.meta,
-        name: route.name
-      };
     });
 
     // Prevents needing scroll position reset in every view.
@@ -46,7 +38,11 @@ export default defineComponent({
       body.value!.scrollTop = 0;
     });
 
-    return { routes: routeList };
+    return {
+      title: computed(() => store.state.pageTitle),
+      openMenu: () => store.commit('open-menu'),
+      isMenuOpen: computed(() => store.state.isMenuOpen),
+    };
   },
 });
 

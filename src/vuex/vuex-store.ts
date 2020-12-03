@@ -1,22 +1,22 @@
 import { createStore } from "vuex";
 
 export interface VuexStore {
-  headerText: string;
+  pageTitle: string;
   isMenuOpen: boolean;
 }
 
 export default createStore<VuexStore>({
   state() {
     return {
-      headerText: '',
+      pageTitle: '',
       isMenuOpen: false,
     };
   },
   mutations: {
-    setHeader(state, text: string) {
-      state.headerText = text;
+    'page-title': (state, text: string) => {
+      state.pageTitle = text;
     },
-    openMenu(state)  { state.isMenuOpen = true;  },
-    closeMenu(state) { state.isMenuOpen = false; },
+    'open-menu' : (state) => { state.isMenuOpen = true;  },
+    'close-menu': (state) => { state.isMenuOpen = false; },
   }
 });

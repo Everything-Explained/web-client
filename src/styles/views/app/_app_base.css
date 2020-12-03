@@ -2,6 +2,7 @@
 body,
 html {
   height                  : 100%;
+  color                   : var(--body-c);
   font-size               : var(--body-f-sz);
   background              : var(--body-bg-c);
   overflow                : hidden;
@@ -12,7 +13,7 @@ body {
   margin-right: 5px;
   font-family: 'Nunito Sans', 'Arial', 'Verdana';
   font-weight: 300;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 ::selection {
@@ -30,13 +31,24 @@ body {
   min-height : 100%;
 }
 
+.main__container {
+  position: relative;
+  opacity: 1;
+  transition: transform .4s ease, opacity .4s ease;
+}
+.main__container.--menu-open {
+  opacity: 0.2;
+  pointer-events: none;
+  user-select: none;
+}
+
 .main__ribbon {
   top: 0; left: 0; right: 0;
   position     : sticky;
   margin-right : 7px;
   display      : block;
   height       : 3px;
-  box-shadow   : 0 4px 3px 0px black;
+  box-shadow   : 0 4px 5px 1px black;
   background   : var(--body-head-ribbon-c);
   z-index      : 13;
 }
@@ -44,9 +56,10 @@ body {
 .main__header {
   top: 0; left: 0;
   height           : 8rem;
+  margin-right     : 7px;
   border-bottom    : 7px solid var(--panel-c);
   background-color : var(--body-bg-c);
-  margin-right     : 7px;
+  box-shadow       : 0 4px 5px -1px black;
   z-index          : 12;
 }
 
@@ -67,6 +80,40 @@ body {
   margin    : 0 7px 7px 0;
   flex      : 1 0;
   flex-flow : row nowrap;
+}
+
+.main__title-bar {
+  position         : sticky;
+  top              : 0;
+  padding          : 0.5rem 0 0.5rem 0;
+  margin           : 0 0 20px 0;
+  color            : hsl(197, 11%, 83%);
+  font-size        : 1.7rem;
+  font-weight      : 300;
+  text-transform   : capitalize;
+  text-align       : center;
+  background-color : var(--sub-panel-c);
+  box-shadow       : 0 10px 8px -3px black;
+  text-shadow      : 3px 3px 0 black, 2px 0 0 black, 0 3px 0 black;
+  overflow         : visible;
+  z-index          : 10;
+}
+.main__title-bar_menu-icon {
+  position: absolute;
+  top: 0.6rem; left: 15px;
+  font-size: 2rem;
+  color: hsl(197, 11%, 33%);
+  opacity: 1;
+  transition: opacity .3s ease, color .3s ease;
+  cursor: pointer;
+}
+.main__title-bar_menu-icon:hover {
+  color: hsl(0, 65%, 65%);
+}
+.main__title-bar_menu-icon.--menu-open {
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
 }
 
 .main__body-left-section {

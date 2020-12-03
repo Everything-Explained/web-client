@@ -47,11 +47,10 @@ export default defineComponent({
         contentToSlide?.classList.remove('--menu-open');
     });
 
-    const closeMenu = () => store.commit('closeMenu');
     return {
       menu: menuRef,
       opened,
-      closeMenu,
+      closeMenu: () => store.commit('close-menu'),
       routes: routeList
     };
   }

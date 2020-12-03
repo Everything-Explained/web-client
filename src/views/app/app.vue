@@ -1,21 +1,24 @@
 <template>
-  <div class="main__ribbon"></div>
-  <header class="main__header">
-    <div class="main__header_title" alt="">Everything Explained</div>
-    <menu class="main__menu">
-      <ul>
-        <li v-for="(route, i) of routes" :key="i">
-          <router-link :to='route.path' :title="route.meta.title"
-          >{{route.name.toUpperCase()}}</router-link>
-        </li>
-      </ul>
-    </menu>
-  </header>
-  <section class="main__body">
-    <div class="main__body-content">
-      <router-view />
-    </div>
-  </section>
+  <main-menu></main-menu>
+  <div ref='container' id="MainContainer" class="main__container">
+    <div class="main__ribbon"></div>
+    <header class="main__header">
+      <div class="main__header_title">Everything Explained</div>
+    </header>
+    <section class="main__body">
+      <div class="main__body-content">
+        <div class="main__title-bar">
+          <icon
+            class="main__title-bar_menu-icon"
+            @mousedown="openMenu"
+            :class="{ '--menu-open': isMenuOpen }" :type='"menu"'
+          ></icon>
+          <span>{{title}}</span>
+        </div>
+        <router-view />
+      </div>
+    </section>
+  </div>
 </template>
 
 <script lang='ts' src='./_app.ts'></script>
