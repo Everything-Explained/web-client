@@ -4,27 +4,26 @@
   flex           : 1 0;
   align-items    : center;
   flex-direction : column;
-  text-align     : center;
-  color          : white;
   user-select    : none;
 }
 
 .blog-entry {
   margin-bottom    : 1rem;
-  background-color : var(--sub-panel-c);
-  border-radius    : 10px;
+  background-color : var(--blog-entry-bg-c);
   min-width        : 75%;
   max-width        : 75%;
+  border-radius    : 10px;
+  text-align       : center;
   cursor           : pointer;
   transition       : background .3s ease;
 }
 .blog-entry:hover {
-  background-color: var(--sub-panel-hov-c);
+  background-color: var(--blog-entry-bg-hov-c);
 }
 
 .blog-entry__title {
   padding        : 15px;
-  color          : hsl(46, 62%, 62%);
+  color          : var(--blog-entry-title-c);
   font-size      : 1.7rem;
   font-weight    : 300;
   text-transform : capitalize;
@@ -32,7 +31,7 @@
   transition     : color .3s ease;
 }
 .blog-entry__title:hover .blog_title {
-  color: hsl(46, 100%, 73%);
+  color: var(--blog-entry-title-hov-c);
 }
 
 .blog-entry__date,
@@ -40,7 +39,8 @@
   display        : inline;
   font-size      : 1.15rem;
   font-variant   : small-caps;
-  color          : hsl(199, 7%, 55%);
+  font-weight    : 400;
+  color          : var(--blog-entry-stat-c);
   letter-spacing : 1px;
 }
 .blog-entry__date + .blog-entry__time {
@@ -51,7 +51,7 @@
   top            : 0.15rem;
   margin-right   : 7px;
   vertical-align : baseline;
-  color          : hsl(198, 12%, 66%);
+  color          : var(--blog-entry-icon-c);
 }
 
 .blog-entry__snippet {
@@ -70,18 +70,16 @@
   box-shadow: none
 }
 .blog-entry:hover .blog-entry__snippet p {
-  color: var(--md-p-hov-c);
+  color: var(--blog-entry-hov-snip-c);
+  background-color: var(--blog-entry-hov-snip-bg-c);
 }
 .blog-entry:hover .blog-entry__snippet p i,
 .blog-entry:hover .blog-entry__snippet p em {
-  color: var(--md-p-hov-i-c);
+  color: var(--blog-entry-hov-snip-i-c);
 }
 .blog-entry:hover .blog-entry__snippet p b,
 .blog-entry:hover .blog-entry__snippet p strong {
-  color: var(--md-p-hov-b-c);
-}
-.blog-entry:hover .blog-entry__snippet > p {
-  background-color: var(--sub-panel-hov-c);
+  color: var(--blog-entry-hov-snip-b-c);
 }
 /* Blog Content Snippet Overlay */
 .blog-entry__snippet::before, .blog-entry__snippet::after {

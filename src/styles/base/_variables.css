@@ -53,6 +53,19 @@
   --app-titlebar-icon-hov-c : hsl(0, 65%, 65%);
 
 
+  /*** Blog Styles ***/
+  --blog-entry-bg-c          : var(--sub-panel-c);
+  --blog-entry-bg-hov-c      : var(--sub-panel-hov-c);
+  --blog-entry-title-c       : hsl(46, 62%, 62%);
+  --blog-entry-title-hov-c   : hsl(46, 100%, 73%);
+  --blog-entry-stat-c        : hsl(197, 11%, 55%);
+  --blog-entry-icon-c        : hsl(198, 11%, 66%);
+  --blog-entry-hov-snip-c    : var(--md-p-hov-c);
+  --blog-entry-hov-snip-bg-c : var(--sub-panel-hov-c);
+  --blog-entry-hov-snip-i-c  : var(--md-p-hov-i-c);
+  --blog-entry-hov-snip-b-c  : var(--md-p-hov-b-c);
+
+
   /*** Markdown ***/
   --md-f-sz             : 1.27rem;
   --md-mobile-f-sz      : 1.15rem;
