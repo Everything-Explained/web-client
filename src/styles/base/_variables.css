@@ -38,18 +38,19 @@
   --body-f-sz            : 1em;
   --body-bg-c            : hsl(197, 11%, 6.5%);
   --body-c               : hsl(197, 11%, 73%);
-  --body-head-title-f-sz : 5rem;
-  --body-head-title-c    : hsl(0, 100%, 64%);
-  --body-head-ribbon-c   : var(--body-head-title-c);
-
   --selection-bg-c       : hsla(197, 11%, 25%, 0.993); /* hsla(0, 40%, 41%, 0.993); */
-
   --scrollbar-c          : var(--panel-c);
   --scrollbar-hov-c      : hsl(197, 9%, 43%);
   --scrollbar-track-c    : hsl(0, 0%, 0%);
 
-  /* --watermark-c       : hsl(0, 0%, 35%);
-  --watermark-hov-c   : hsl(0, 100%, 75%); */
+
+  /*** App Styles ***/
+  --app-ribbon-c            : hsl(0, 100%, 64%);
+  --app-head-f-sz           : 5rem;
+  --app-head-c              : var(--app-ribbon-c);
+  --app-titlebar-c          : hsl(197, 11%, 83%);
+  --app-titlebar-icon-c     : hsl(197, 11%, 33%);
+  --app-titlebar-icon-hov-c : hsl(0, 65%, 65%);
 
 
   /*** MARKDOWN ***/

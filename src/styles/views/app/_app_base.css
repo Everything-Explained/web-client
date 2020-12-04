@@ -19,7 +19,6 @@ body {
 ::selection {
   background: var(--selection-bg-c);
 }
-
 ::-moz-selection {
   background: var(--selection-bg-c);
 }
@@ -49,7 +48,7 @@ body {
   display      : block;
   height       : 3px;
   box-shadow   : 0 4px 5px 1px black;
-  background   : var(--body-head-ribbon-c);
+  background   : var(--app-ribbon-c);
   z-index      : 13;
 }
 
@@ -67,8 +66,8 @@ body {
   position   : absolute;
   top        : 10px; left: 0; right: 0; bottom: 0;
   text-align : center;
-  color      : var(--body-head-title-c);
-  font-size  : var(--body-head-title-f-sz);
+  color      : var(--app-head-c);
+  font-size  : var(--app-head-f-sz);
   font-family: 'Pique N Meex';
   margin     : 0 auto;
 }
@@ -96,7 +95,7 @@ body {
   position         : sticky;
   top              : 0;
   padding          : 0.5rem 0 0.4rem 0;
-  color            : hsl(197, 11%, 83%);
+  color            : var(--app-titlebar-c);
   font-size        : 1.7rem;
   font-weight      : 300;
   text-transform   : capitalize;
@@ -111,14 +110,14 @@ body {
   position   : absolute;
   top        : 0.6rem; left: 10px;
   font-size  : 2rem;
-  color      : hsl(197, 11%, 33%);
+  color      : var(--app-titlebar-icon-c);
   opacity    : 1;
   transition : opacity .3s ease, color .3s ease;
   z-index    : 2;
   cursor     : pointer;
 }
 .app-title-bar__menu-icon:hover {
-  color: hsl(0, 65%, 65%);
+  color: var(--app-titlebar-icon-hov-c);
 }
 .app-title-bar__menu-icon.--menu-open {
   opacity: 0;
