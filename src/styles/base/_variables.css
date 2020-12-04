@@ -37,7 +37,7 @@
 
   --body-f-sz            : 1em;
   --body-bg-c            : hsl(197, 11%, 6.5%);
-  --body-c               : hsl(197, 11%, 75%);
+  --body-c               : hsl(197, 11%, 73%);
   --body-head-title-f-sz : 5rem;
   --body-head-title-c    : hsl(0, 100%, 64%);
   --body-head-ribbon-c   : var(--body-head-title-c);
