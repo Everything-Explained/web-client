@@ -86,13 +86,23 @@
   top: 0; bottom: 0; left: 0; right: 0;
   position   : absolute;
   content    : '';
-  background : linear-gradient(to bottom, hsla(197, 22%, 10%, 0) 35%, var(--sub-panel-c) 95%);
+  background :
+    linear-gradient(
+      to bottom,
+      hsla(197, 22%, 10%, 0) 35%,
+      var(--sub-panel-c) 95%
+  );
   z-index    : 5;
   transition : opacity .3s ease;
 }
 .blog-entry__snippet::after {
   opacity: 0;
-  background: linear-gradient(to bottom, hsla(33, 11%, 16%, 0) 35%, var(--sub-panel-hov-c) 95%);
+  background:
+    linear-gradient(
+      to bottom,
+      hsla(33, 11%, 16%, 0) 35%,
+      var(--sub-panel-hov-c) 95%
+  );
 }
 .blog-entry:hover .blog-entry__snippet::before { opacity: 0; }
 .blog-entry:hover .blog-entry__snippet::after  { opacity: 1; }
