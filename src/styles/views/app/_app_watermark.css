@@ -4,7 +4,7 @@
   left        : 75px;
   bottom      : 13px;
   z-index     : 10;
-  color       : var(--watermark-c);
+  /* color       : var(--watermark-c); */
   font        : 34px "Nunito";
   opacity     : 0.65;
   cursor      : crosshair;
@@ -13,6 +13,6 @@
 }
 
 .main__watermark:hover {
-  color   : var(--watermark-hover-c);
+  /* color   : var(--watermark-hover-c); */
   opacity : 1;
 }

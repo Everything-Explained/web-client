@@ -51,13 +51,6 @@
   /* --watermark-c       : hsl(0, 0%, 35%);
   --watermark-hov-c   : hsl(0, 100%, 75%); */
 
-  --main-menu-f-sz        : 1.8rem;
-  --main-menu-mobile-f-sz : 1.15rem;
-  --main-menu-c           :hsl(0, 0%, 30%);
-  --main-menu-act-c       :hsl(197, 34%, 87%);
-  --main-menu-hov-c       : var(--main-menu-act-c);
-  --main-menu-bg-c        : var(--panel-c);
-  --main-menu-act-bdr-c   : hsl(52, 37%, 50%);
 
   /*** MARKDOWN ***/
   --md-f-sz              : 1.27rem;
