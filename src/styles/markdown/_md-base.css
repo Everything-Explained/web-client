@@ -63,7 +63,7 @@
   margin-left             : 10px;
   padding                 : 7px 13px;
   line-height             : 27px;
-  background              : var(--md-pg-bg-c);
+  background              : var(--md-p-bg-c);
   border-top-right-radius : 6.5px;
   border-top-left-radius  : 3.5px;
   transition              : background 0.25s, color 0.25s;
@@ -76,8 +76,8 @@
   display: none;
 }
 .md > p:hover {
-  background-color : var(--md-pg-bg-hov-c);
-  color            : var(--md-pg-hov-c);
+  background-color : var(--md-p-bg-hov-c);
+  color            : var(--md-p-hov-c);
 }
 
 
@@ -87,7 +87,7 @@
   color       : var(--md-b-c);
 }
 .md > p:hover strong {
-  color: var(--md-pg-hov-b-c);
+  color: var(--md-p-hov-b-c);
 }
 
 
@@ -97,7 +97,7 @@
   font-style : normal;
 }
 .md > p:hover em {
-  color: var(--md-pg-hov-i-c);
+  color: var(--md-p-hov-i-c);
 }
 
 
@@ -113,8 +113,8 @@
 .md > p:hover a:link,
 .md > p:hover a:active,
 .md > p:hover a:visited {
-  color: var(--md-pg-hov-link-c);
-  border-color: var(--md-pg-hov-link-bdr-c);
+  color: var(--md-p-hov-link-c);
+  border-color: var(--md-p-hov-link-bdr-c);
 }
 .md > p:hover a:hover {
   color: var(--md-link-hov-c);

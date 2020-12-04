@@ -69,15 +69,15 @@
   box-shadow: none
 }
 .blog__entry:hover p {
-  color: var(--md-pg-hov-c);
+  color: var(--md-p-hov-c);
 }
 .blog__entry:hover p i,
 .blog__entry:hover p em {
-  color: var(--md-pg-hov-i-c);
+  color: var(--md-p-hov-i-c);
 }
 .blog__entry:hover p b,
 .blog__entry:hover p strong {
-  color: var(--md-pg-hov-b-c);
+  color: var(--md-p-hov-b-c);
 }
 .blog__entry:hover .blog_snippet > p {
   background-color: var(--sub-panel-hov-c);
