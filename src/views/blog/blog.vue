@@ -1,18 +1,24 @@
 <template>
-  <div class="blog__entries" v-if="posts.length && !activePost">
-    <div class="blog__entry"
+  <div class="blog" v-if="posts.length && !activePost">
+    <div class="blog-entry"
       v-for="(post, i) of posts"
       :key="i"
       @click="goTo(post.uri)"
     >
-      <h1 class="blog_title">{{post.title}}</h1>
-      <div class="blog_date"
-        ><icon class="blog_icon" :type='"calendar"'></icon>{{ formatDate(post.date) }}
+      <h1 class="blog-entry__title">{{post.title}}</h1>
+      <div class="blog-entry__date">
+        <icon
+          class="blog-entry__icon"
+          :type='"calendar"'
+        ></icon>{{ formatDate(post.date) }}
       </div>
-      <div class="blog_time"
-        ><icon class="blog_icon" :type='"clock"'></icon>{{ formatTime(post.date)}}
+      <div class="blog-entry__time">
+        <icon
+          class="blog-entry__icon"
+          :type='"clock"'
+        ></icon>{{ formatTime(post.date)}}
       </div>
-      <article class="md blog_snippet" v-html="post.content"></article>
+      <article class="md blog-entry__snippet" v-html="post.content"></article>
     </div>
   </div>
   <div class="blog__display" v-if="activePost">

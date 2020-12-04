@@ -1,4 +1,4 @@
-.blog__entries {
+.blog {
   display        : flex;
   margin-top     : 1rem;
   flex           : 1 0;
@@ -9,7 +9,7 @@
   user-select    : none;
 }
 
-.blog__entry {
+.blog-entry {
   margin-bottom    : 1rem;
   background-color : var(--sub-panel-c);
   border-radius    : 10px;
@@ -18,11 +18,11 @@
   cursor           : pointer;
   transition       : background .3s ease;
 }
-.blog__entry:hover {
+.blog-entry:hover {
   background-color: var(--sub-panel-hov-c);
 }
 
-.blog_title {
+.blog-entry__title {
   padding        : 15px;
   color          : hsl(46, 62%, 62%);
   font-size      : 1.7rem;
@@ -31,29 +31,30 @@
   letter-spacing : 1px;
   transition     : color .3s ease;
 }
-.blog__entry:hover .blog_title {
+.blog-entry__title:hover .blog_title {
   color: hsl(46, 100%, 73%);
 }
 
-.blog_date, .blog_time {
+.blog-entry__date,
+.blog-entry__time {
   display        : inline;
   font-size      : 1.15rem;
   font-variant   : small-caps;
   color          : hsl(199, 7%, 55%);
   letter-spacing : 1px;
 }
-.blog_date + .blog_time {
+.blog-entry__date + .blog-entry__time {
   margin-left: 20px;
 }
 
-.blog_icon {
+.blog-entry__icon {
   top            : 0.15rem;
   margin-right   : 7px;
   vertical-align : baseline;
   color          : hsl(198, 12%, 66%);
 }
 
-.blog_snippet {
+.blog-entry__snippet {
   margin        : 0 auto;
   margin-bottom : 15px;
   padding       : 15px 0;
@@ -65,25 +66,25 @@
   font-weight   : 300;
   overflow      : hidden;
 }
-.blog_snippet > p {
+.blog-entry__snippet > p {
   box-shadow: none
 }
-.blog__entry:hover p {
+.blog-entry:hover .blog-entry__snippet p {
   color: var(--md-p-hov-c);
 }
-.blog__entry:hover p i,
-.blog__entry:hover p em {
+.blog-entry:hover .blog-entry__snippet p i,
+.blog-entry:hover .blog-entry__snippet p em {
   color: var(--md-p-hov-i-c);
 }
-.blog__entry:hover p b,
-.blog__entry:hover p strong {
+.blog-entry:hover .blog-entry__snippet p b,
+.blog-entry:hover .blog-entry__snippet p strong {
   color: var(--md-p-hov-b-c);
 }
-.blog__entry:hover .blog_snippet > p {
+.blog-entry:hover .blog-entry__snippet > p {
   background-color: var(--sub-panel-hov-c);
 }
 /* Blog Content Snippet Overlay */
-.blog_snippet::before, .blog_snippet::after {
+.blog-entry__snippet::before, .blog-entry__snippet::after {
   top: 0; bottom: 0; left: 0; right: 0;
   position   : absolute;
   content    : '';
@@ -91,10 +92,10 @@
   z-index    : 5;
   transition : opacity .3s ease;
 }
-.blog_snippet::after {
+.blog-entry__snippet::after {
   opacity: 0;
   background: linear-gradient(to bottom, hsla(33, 11%, 16%, 0) 35%, var(--sub-panel-hov-c) 95%);
 }
-.blog__entry:hover .blog_snippet::before { opacity: 0; }
-.blog__entry:hover .blog_snippet::after  { opacity: 1; }
+.blog-entry:hover .blog-entry__snippet::before { opacity: 0; }
+.blog-entry:hover .blog-entry__snippet::after  { opacity: 1; }
 
