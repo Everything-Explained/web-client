@@ -1,10 +1,12 @@
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { VuexStore } from "../../vuex/vuex-store";
 import icon from '../icon/icon.vue';
 
-let isStyleCreated = false;
+const getSlideStyle = () => {
+  return document.getElementById('SlideStyle');
+};
 
 export default defineComponent({
   components: {
@@ -35,7 +37,9 @@ export default defineComponent({
     onMounted(() => {
       contentToSlide = document.getElementById('MainContainer');
       if (menuRef.value && contentToSlide) {
-        createContainerStyle(menuRef.value);
+        if (!getSlideStyle())
+          createSlideStyle(menuRef.value)
+        ;
       }
     });
 
@@ -56,13 +60,11 @@ export default defineComponent({
   }
 });
 
-function createContainerStyle(menu: HTMLElement) {
-  if (isStyleCreated) { console.log('return'); return; }
-  console.log('not returning');
-  const style = document.createElement('style');
+function createSlideStyle(menu: HTMLElement) {
+  const style = getSlideStyle() || document.createElement('style');
+  style.id = 'SlideStyle';
   style.innerHTML =
-    `.main__container.--menu-open { transform: translate(${menu.clientWidth}px); }`
+    `.app-container.--menu-open { transform: translate(${menu.clientWidth}px); }`
   ;
   document.head.append(style);
-  isStyleCreated = true;
 }
