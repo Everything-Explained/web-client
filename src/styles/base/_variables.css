@@ -53,6 +53,21 @@
   --app-titlebar-icon-hov-c : hsl(0, 65%, 65%);
 
 
+  /*** App Menu ***/
+  --menu-bg-c              : var(--body-bg-c);
+  --menu-header-c          : hsl(197, 11%, 80%);
+  --menu-header-bg-c       : var(--sub-panel-c);
+  --menu-header-ribbon-c   : hsl(0, 100%, 64%);
+  --menu-exit-icon-c       : hsl(0, 70%, 63%);
+  --menu-exist-icon-hov-c  : hsl(46, 100%, 50%);
+  --menu-item-c            : var(--md-c);
+  --menu-item-hov-c        : hsl(46, 80%, 63%);
+  --menu-item-bdr-c        : var(--body-bg-c);
+  --menu-active-item-c     : var(--menu-item-hov-c);
+  --menu-active-item-bg-c  : var(--sub-panel-hov-c);
+  --menu-active-item-bdr-c : black;
+
+
   /*** Blog Styles ***/
   --blog-entry-bg-c          : var(--sub-panel-c);
   --blog-entry-bg-hov-c      : var(--sub-panel-hov-c);
