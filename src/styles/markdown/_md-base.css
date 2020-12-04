@@ -107,7 +107,7 @@
   color           : var(--md-link-c);
   text-decoration : none;
   font-weight: 400;
-  border-bottom   : 1px dashed var(--md-link-bdr-c);
+  border-bottom   : 1px solid var(--md-link-bdr-c);
   transition      : border .25s ease, color .25s ease;
 }
 .md > p:hover a:link,
