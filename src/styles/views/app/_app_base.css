@@ -25,24 +25,24 @@ body {
 }
 
 
-.main {
+.app {
   display    : flex;
   flex-flow  : column;
   min-height : 100%;
 }
 
-.main__container {
+.app-container {
   position: relative;
   opacity: 1;
   transition: transform .4s ease, opacity .4s ease;
 }
-.main__container.--menu-open {
+.app-container.--menu-open {
   opacity: 0.2;
   pointer-events: none;
   user-select: none;
 }
 
-.main__ribbon {
+.app-ribbon {
   top: 0; left: 0; right: 0;
   position     : sticky;
   margin-right : 7px;
@@ -53,7 +53,7 @@ body {
   z-index      : 13;
 }
 
-.main__header {
+.app-header {
   top: 0; left: 0;
   height           : 8rem;
   margin-right     : 7px;
@@ -62,8 +62,7 @@ body {
   box-shadow       : 0 4px 5px -1px black;
   z-index          : 12;
 }
-
-.main__header_title {
+.app-header__title {
   display    : block;
   position   : absolute;
   top        : 10px; left: 0; right: 0; bottom: 0;
@@ -75,14 +74,25 @@ body {
 }
 
 
-.main__body {
+.app-body {
   display   : flex;
   margin    : 0 7px 7px 0;
   flex      : 1 0;
   flex-flow : row nowrap;
 }
+.app-body__content {
+  display        : flex;
+  margin         : 0 auto;
+  flex           : 1 0;
+  flex-direction : column;
+  overflow       : visible;
+}
+/* Should always scroll past content */
+.app-body__content > :last-child > :last-child {
+  margin-bottom: 333px;
+}
 
-.main__title-bar {
+.app-title-bar {
   position         : sticky;
   top              : 0;
   padding          : 0.5rem 0 0.4rem 0;
@@ -97,39 +107,22 @@ body {
   overflow         : visible;
   z-index          : 10;
 }
-.main__title-bar_menu-icon {
-  position: absolute;
-  top: 0.6rem; left: 10px;
-  font-size: 2rem;
-  color: hsl(197, 11%, 33%);
-  opacity: 1;
-  transition: opacity .3s ease, color .3s ease;
-  z-index: 2;
-  cursor: pointer;
+.app-title-bar__menu-icon {
+  position   : absolute;
+  top        : 0.6rem; left: 10px;
+  font-size  : 2rem;
+  color      : hsl(197, 11%, 33%);
+  opacity    : 1;
+  transition : opacity .3s ease, color .3s ease;
+  z-index    : 2;
+  cursor     : pointer;
 }
-.main__title-bar_menu-icon:hover {
+.app-title-bar__menu-icon:hover {
   color: hsl(0, 65%, 65%);
 }
-.main__title-bar_menu-icon.--menu-open {
+.app-title-bar__menu-icon.--menu-open {
   opacity: 0;
   pointer-events: none;
   user-select: none;
 }
 
-.main__body-left-section {
-  min-width: 150px;
-  max-width: 150px;
-}
-
-.main__body-content {
-  display        : flex;
-  margin         : 0 auto;
-  flex           : 1 0;
-  flex-direction : column;
-  /* max-width      : 1024px; */
-  overflow       : visible;
-}
-/* Should always scroll past content */
-.main__body-content > :last-child > :last-child {
-  margin-bottom: 333px;
-}

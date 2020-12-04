@@ -35,7 +35,7 @@ export default defineComponent({
 
     let contentToSlide: HTMLElement|null = null;
     onMounted(() => {
-      contentToSlide = document.getElementById('MainContainer');
+      contentToSlide = document.getElementById('App');
       if (menuRef.value && contentToSlide) {
         if (!getSlideStyle())
           createSlideStyle(menuRef.value)

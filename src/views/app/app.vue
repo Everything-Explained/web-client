@@ -1,19 +1,19 @@
 <template>
   <main-menu></main-menu>
-  <div ref='container' id="MainContainer" class="main__container">
-    <div class="main__ribbon"></div>
-    <header class="main__header">
-      <div class="main__header_title">Everything Explained</div>
+  <div id="App" class="app-container">
+    <div class="app-ribbon"></div>
+    <header class="app-header">
+      <div class="app-header__title">Everything Explained</div>
     </header>
-    <section class="main__body">
-      <div class="main__body-content">
-        <div class="main__title-bar">
+    <section class="app-body">
+      <div class="app-body__content">
+        <div class="app-title-bar">
           <icon
-            class="main__title-bar_menu-icon"
+            class="app-title-bar__menu-icon"
             @mousedown="openMenu"
             :class="{ '--menu-open': isMenuOpen }" :type='"menu"'
           ></icon>
-          <div class="main__title-bar_text">{{title}}</div>
+          <div class="app-title-bar__text">{{title}}</div>
         </div>
         <router-view />
       </div>
