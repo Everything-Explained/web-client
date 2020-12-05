@@ -6,8 +6,8 @@
   border-right : 3px solid black;
   transform    : translateX(-100%);
   z-index      : 10;
-  transition: opacity .4s ease,
-              transform .4s ease;
+  transition: opacity .6s ease,
+              transform .6s ease;
 }
 .app-menu.--opened {
   transform: translateX(0%);

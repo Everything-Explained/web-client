@@ -34,7 +34,7 @@ body {
 .app-container {
   position: relative;
   opacity: 1;
-  transition: transform .4s ease, opacity .4s ease;
+  transition: transform .6s ease, opacity .6s ease;
 }
 .app-container.--menu-open {
   opacity: 0.2;
@@ -109,9 +109,9 @@ body {
   font-size  : 2rem;
   color      : var(--app-titlebar-icon-c);
   opacity    : 1;
-  transition : opacity .3s ease, color .3s ease;
   z-index    : 2;
   cursor     : pointer;
+  transition : opacity .3s ease, color .3s ease;
 }
 .app-title-bar__menu-icon:hover {
   color: var(--app-titlebar-icon-hov-c);
