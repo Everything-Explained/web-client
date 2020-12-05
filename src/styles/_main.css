@@ -14,6 +14,7 @@
 /*** Blog View ***/
 @import './views/blog/_blog.css';
 @import './views/blog/_blog.mobile.css';
+@import './views/blog/_blog.animations.css';
 /*** 404 View ***/
 @import './views/errors/_i404.css';
 
