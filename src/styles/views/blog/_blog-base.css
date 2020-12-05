@@ -1,6 +1,7 @@
 .blog {
   display        : flex;
   margin-top     : 1rem;
+  margin-bottom  : 50%;
   flex           : 1 0;
   align-items    : center;
   flex-direction : column;
@@ -106,4 +107,8 @@
 }
 .blog-entry:hover .blog-entry__snippet::before { opacity: 0; }
 .blog-entry:hover .blog-entry__snippet::after  { opacity: 1; }
+
+.blog-display {
+  padding-bottom: 50%;
+}
 

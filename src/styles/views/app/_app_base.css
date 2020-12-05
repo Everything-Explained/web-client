@@ -86,10 +86,6 @@ body {
   flex-direction : column;
   overflow       : visible;
 }
-/* Should always scroll past content */
-.app-body__content > :last-child > :last-child {
-  margin-bottom: 333px;
-}
 
 .app-title-bar {
   position         : sticky;
