@@ -1,8 +1,8 @@
 <template>
   <div class="blog">
-    <transition name='fade'>
-      <div class="blog-entries" v-if="posts.length && !activePost">
     <title-bar></title-bar>
+    <transition name='fade' @enter='onEnter' mode="out-in">
+      <div class="blog-entries" v-if="posts.length && !activePost" key="postInactive">
         <div class="blog-entry"
           v-for="(post, i) of posts"
           :key="i"
@@ -24,11 +24,9 @@
           <article class="md blog-entry__snippet" v-html="post.content"></article>
         </div>
       </div>
-      <div class="blog-display" v-else-if="activePost">
+      <div class="blog-display" v-else-if="activePost" key="postActive">
         <article class="md blog_content" v-html="activePost.content"></article>
       </div>
-    </transition>
-    <transition name='fade'>
     </transition>
   </div>
 </template>
