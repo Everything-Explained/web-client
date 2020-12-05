@@ -1,9 +1,9 @@
 import { defineComponent, Ref, ref, watch } from "vue";
 import blogPosts from './blog.json';
-import icon from '../../components/icon/icon.vue';
+import icon from '../../components/icon.vue';
 import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-utils";
 import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-router";
-import { Store, useStore } from "vuex";
+import { useStore } from "vuex";
 import { VuexStore } from "../../vuex/vuex-store";
 
 

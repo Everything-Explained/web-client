@@ -18,4 +18,4 @@
 </template>
 
 
-<script lang='ts'  src='./_menu.ts' ></script>
+<script lang='ts'  src='./menu.ts' ></script>

@@ -1,8 +1,8 @@
 import { defineComponent, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { VuexStore } from "../../vuex/vuex-store";
-import icon from '../icon/icon.vue';
+import { VuexStore } from "../vuex/vuex-store";
+import icon from './icon.vue';
 
 const getSlideStyle = () => {
   return document.getElementById('SlideStyle');

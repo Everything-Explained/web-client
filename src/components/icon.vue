@@ -3,4 +3,4 @@
 </template>
 
 
-<script lang='ts' src='./_icon.ts'></script>
+<script lang='ts' src='./icon.ts'></script>

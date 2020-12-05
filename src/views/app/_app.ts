@@ -1,8 +1,8 @@
 import { computed, defineComponent, onMounted, Ref, ref, watch } from "vue";
 import { Router, useRoute, useRouter } from "vue-router";
 import { Route } from "../../global-types";
-import Menu from '../../components/menu/menu.vue';
-import icon from '../../components/icon/icon.vue';
+import Menu from '../../components/menu.vue';
+import icon from '../../components/icon.vue';
 import { useStore } from "vuex";
 import { VuexStore } from "../../vuex/vuex-store";
 
