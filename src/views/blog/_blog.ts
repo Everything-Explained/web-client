@@ -26,14 +26,16 @@ export default defineComponent({
     const router     = useRouter();
     const route      = useRoute();
     const postURI    = route.params.post as string|undefined;
-    const store      = useStore<VuexStore>()
+    const store      = useStore<VuexStore>();
+    const title      = ref('')
     ;
     const sortedPosts = sortPosts(blogPosts);
     const shortPosts  = shortenPostsContent(sortedPosts)
     ;
-    store.commit('page-title', 'Blog Entries');
-    onBlogRouteChange(route, router, sortedPosts, activePost, store);
-    if (postURI) displayBlogPost(postURI, sortedPosts, router, activePost, store)
+    title.value = 'Blog Entries';
+    onBlogRouteChange(route, router, sortedPosts, activePost, title);
+    if (postURI) displayBlogPost(postURI, sortedPosts, router, activePost, title);
+    store.commit('page-title', title.value)
     ;
     function goTo(uri: string) {
       router.push(`/blog/${uri}`);
@@ -42,6 +44,7 @@ export default defineComponent({
       posts: shortPosts,
       activePost,
       goTo,
+      onBeforeTransLeave: () => store.commit('page-title', title.value)
     };
   },
 
@@ -80,7 +83,7 @@ function onBlogRouteChange(
     router     : Router,
     posts      : BlogPost[],
     contentRef : BlogPostRef,
-    store      : Store<VuexStore>,
+    titleRef      : Ref<string>,
 ) {
   watch(
     () => route.params,
@@ -88,10 +91,10 @@ function onBlogRouteChange(
       if (!route.path.includes('/blog')) return;
       if (!params.post) {
         contentRef.value = null;
-        store.commit('page-title', 'Blog Entries');
+        titleRef.value = 'Blog Entires';
         return;
       }
-      displayBlogPost(params.post as string, posts, router, contentRef, store);
+      displayBlogPost(params.post as string, posts, router, contentRef, titleRef);
     }
   );
 }
@@ -101,10 +104,10 @@ function displayBlogPost(
   posts      : BlogPost[],
   router     : Router,
   contentRef : BlogPostRef,
-  store      : Store<VuexStore>
+  titleRef   : Ref<string>,
 ) {
   const post = posts.find(post => post.uri == uri);
   if (!post) { router.push('/404'); return; }
-  store.commit('page-title', post.title);
+  titleRef.value = post.title;
   contentRef.value = post;
 }

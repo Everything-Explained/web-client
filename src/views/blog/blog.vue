@@ -1,7 +1,7 @@
 <template>
   <div class="blog">
-    <title-bar></title-bar>
-    <transition name='fade' @enter='onEnter' mode="out-in">
+    <title-bar :easeIn='350' :easeOut='350'></title-bar>
+    <transition name='fade' @before-leave="onBeforeTransLeave" mode="out-in">
       <div class="blog-entries" v-if="posts.length && !activePost" key="postInactive">
         <div class="blog-entry"
           v-for="(post, i) of posts"

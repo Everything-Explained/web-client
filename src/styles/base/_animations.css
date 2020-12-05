@@ -11,13 +11,7 @@
 
 
 
-.blog .fade-enter-active {
-  animation: fadeIn 1s ease !important;
-}
-.blog .fade-leave-active {
-  margin-bottom: 50%; /* Fixes jerky scroll animation */
-  animation: fadeOut 0.3s ease !important;
-}
+
 
 @keyframes fadeIn {
   from { opacity: 0; }
