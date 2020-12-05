@@ -3,19 +3,20 @@
   to   { opacity: 0.3; }
 }
 .fade-enter-active {
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.4s ease;
 }
 .fade-leave-active {
-  animation: fadeOut 0.2s ease;
+  animation: fadeOut 0.4s ease;
 }
+
 
 
 .blog .fade-enter-active {
-  animation: fadeIn 0.5s ease !important;
+  animation: fadeIn 1s ease !important;
 }
 .blog .fade-leave-active {
   margin-bottom: 50%; /* Fixes jerky scroll animation */
-  animation: fadeOut 0.15s ease !important;
+  animation: fadeOut 0.3s ease !important;
 }
 
 @keyframes fadeIn {
