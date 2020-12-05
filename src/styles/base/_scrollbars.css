@@ -5,9 +5,8 @@
 }
 
 .--default-scrollbar::-webkit-scrollbar {
-  width         : 10px;
+  width         : 7px;
   background    : var(--scrollbar-track-c);
-  border        : 1px solid var(--scrollbar-c);
   border-radius : 3px;
 }
 .--default-scrollbar::-webkit-scrollbar-thumb {
