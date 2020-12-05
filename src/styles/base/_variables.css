@@ -44,6 +44,32 @@
   --scrollbar-track-c    : hsl(0, 0%, 0%);
 
 
+  /*** Markdown ***/
+  --md-f-sz             : 1.27rem;
+  --md-mobile-f-sz      : 1.15rem;
+  --md-mobile-sm-f-sz   : 0.97rem;
+  --md-c                : var(--body-c);
+  --md-p-hov-c          : hsl(30, 11%, 80%);
+  --md-p-bg-c           : var(--sub-panel-c);
+  --md-p-bg-hov-c       : var(--sub-panel-hov-c);
+  --md-b-c              : hsl(197, 9%, 82%);
+  --md-p-hov-b-c        : hsl(30, 11%, 89%);
+  --md-i-c              : hsl(0, 74%, 77%);
+  --md-p-hov-i-c        : hsl(46, 80%, 70%);
+  --md-b-i-c            : hsl(197, 45%, 69%);
+  --md-link-c           : var(--md-b-c);
+  --md-link-hov-c       : var(--md-p-hov-i-c);
+  --md-p-hov-link-c     : var(--md-p-hov-b-c);
+  --md-link-bdr-c       : var(--md-i-c);
+  --md-p-hov-link-bdr-c : var(--md-link-hov-c);
+  --md-bq-c             : hsl(46, 68%, 61%);
+  --md-bq-bg-c          : hsl(197, 20%, 5%);
+  --md-code-c           : hsl(0, 0%, 80%);
+  --md-code-bg-c        : hsl(0, 0%, 25%);
+  --md-code-hov-c       : hsl(279, 20%, 80%);
+  --md-code-bg-hov-c    : hsl(278, 25%, 47%);
+
+
   /*** App Styles ***/
   --app-ribbon-c            : hsl(0, 100%, 64%);
   --app-head-f-sz           : 5rem;
@@ -79,31 +105,5 @@
   --blog-entry-hov-snip-bg-c : var(--sub-panel-hov-c);
   --blog-entry-hov-snip-i-c  : var(--md-p-hov-i-c);
   --blog-entry-hov-snip-b-c  : var(--md-p-hov-b-c);
-
-
-  /*** Markdown ***/
-  --md-f-sz             : 1.27rem;
-  --md-mobile-f-sz      : 1.15rem;
-  --md-mobile-sm-f-sz   : 0.97rem;
-  --md-c                : var(--body-c);
-  --md-p-hov-c          : hsl(30, 11%, 80%);
-  --md-p-bg-c           : var(--sub-panel-c);
-  --md-p-bg-hov-c       : var(--sub-panel-hov-c);
-  --md-b-c              : hsl(197, 9%, 82%);
-  --md-p-hov-b-c        : hsl(30, 11%, 89%);
-  --md-i-c              : hsl(0, 74%, 77%);
-  --md-p-hov-i-c        : hsl(46, 80%, 70%);
-  --md-b-i-c            : hsl(197, 45%, 69%);
-  --md-link-c           : var(--md-b-c);
-  --md-link-hov-c       : var(--md-p-hov-i-c);
-  --md-p-hov-link-c     : var(--md-p-hov-b-c);
-  --md-link-bdr-c       : var(--md-i-c);
-  --md-p-hov-link-bdr-c : var(--md-link-hov-c);
-  --md-bq-c             : hsl(46, 68%, 61%);
-  --md-bq-bg-c          : hsl(197, 20%, 5%);
-  --md-code-c           : hsl(0, 0%, 80%);
-  --md-code-bg-c        : hsl(0, 0%, 25%);
-  --md-code-hov-c       : hsl(279, 20%, 80%);
-  --md-code-bg-hov-c    : hsl(278, 25%, 47%);
 
 }
