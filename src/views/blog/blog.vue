@@ -2,6 +2,7 @@
   <div class="blog">
     <transition name='fade'>
       <div class="blog-entries" v-if="posts.length && !activePost">
+    <title-bar></title-bar>
         <div class="blog-entry"
           v-for="(post, i) of posts"
           :key="i"

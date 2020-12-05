@@ -5,6 +5,7 @@ import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-uti
 import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { VuexStore } from "../../vuex/vuex-store";
+import titlebar from '../../components/titlebar.vue';
 
 
 type BlogPost = typeof blogPosts[0];
@@ -17,6 +18,7 @@ const extractP = /<p>.*<\/p>/;
 export default defineComponent({
   components: {
     icon,
+    'title-bar': titlebar,
   },
 
   setup() {

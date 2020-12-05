@@ -7,14 +7,6 @@
     </header>
     <section class="app-body">
       <div class="app-body__content">
-        <div class="app-title-bar">
-          <icon
-            class="app-title-bar__menu-icon"
-            @mousedown="openMenu"
-            :class="{ '--menu-open': isMenuOpen }" :type='"menu"'
-          ></icon>
-          <div class="app-title-bar__text">{{title}}</div>
-        </div>
         <router-view v-slot='{ Component }'>
           <transition name='fade'>
             <component :is="Component" />

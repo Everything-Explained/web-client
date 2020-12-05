@@ -1,22 +1,24 @@
-import { computed, defineComponent, onMounted, Ref, ref, watch } from "vue";
+import { defineComponent, onMounted, Ref, ref, watch } from "vue";
 import { Router, useRoute, useRouter } from "vue-router";
 import { Route } from "../../global-types";
 import Menu from '../../components/menu.vue';
 import icon from '../../components/icon.vue';
-import { useStore } from "vuex";
-import { VuexStore } from "../../vuex/vuex-store";
 
 export default defineComponent({
   components: {
     'main-menu': Menu,
     icon,
   },
+  data: () => {
+    return {
+      title: ''
+    };
+  },
   setup() {
     // const version     = '36';
     // const versionType = 'α';
     const body = ref<HTMLBodyElement|null>(null);
     const blogScrollPos = ref(0);
-    const store = useStore<VuexStore>();
     // const verDesc = `
     //   We shall carry on by 12's until we reach β;
     //   a shift from the arbitrary past into the ever
@@ -37,12 +39,6 @@ export default defineComponent({
       }
       body.value!.scrollTop = 0;
     });
-
-    return {
-      title: computed(() => store.state.pageTitle),
-      openMenu: () => store.commit('open-menu'),
-      isMenuOpen: computed(() => store.state.isMenuOpen),
-    };
   },
 });
 

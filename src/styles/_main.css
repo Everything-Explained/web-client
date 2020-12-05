@@ -23,3 +23,5 @@
 /*#######################*/
 /*** Menu View ***/
 @import './components/_menu.css';
+/*** Title Bar ***/
+@import './components/_titlebar.css';
