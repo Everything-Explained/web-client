@@ -29,13 +29,13 @@ export default defineComponent({
     const sortedPosts = sortPosts(blogPosts);
     const shortPosts  = shortenPostsContent(sortedPosts)
     ;
+    store.commit('page-title', 'Blog Entries');
     onBlogRouteChange(route, router, sortedPosts, activePost, store);
     if (postURI) displayBlogPost(postURI, sortedPosts, router, activePost, store)
     ;
     function goTo(uri: string) {
       router.push(`/blog/${uri}`);
     }
-    store.commit('page-title', 'Blog Entries');
     return {
       posts: shortPosts,
       activePost,
