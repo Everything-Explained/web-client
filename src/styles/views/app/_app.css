@@ -45,7 +45,7 @@ body {
   height       : 3px;
   box-shadow   : 0 4px 5px 1px black;
   background   : var(--app-ribbon-c);
-  z-index      : 13;
+  z-index      : 5;
 }
 
 .app-header {
@@ -55,7 +55,6 @@ body {
   border-bottom    : 7px solid var(--panel-c);
   background-color : var(--body-bg-c);
   box-shadow       : 0 4px 5px -1px black;
-  z-index          : 12;
 }
 .app-header__title {
   display    : block;
