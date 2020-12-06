@@ -1,11 +1,11 @@
 .app-menu {
-  position     : fixed;
-  height       : 100%;
+  top: 0; bottom: 0;
+  position     : absolute;
   color        : inherit;
   background   : var(--body-bg-c);
   border-right : 3px solid black;
   transform    : translateX(-100%);
-  z-index      : 10;
+  z-index      : 3;
   transition: opacity .6s ease,
               transform .6s ease;
 }

@@ -36,11 +36,6 @@ body {
   opacity: 1;
   transition: transform .6s ease, opacity .6s ease;
 }
-.app-container.--menu-open {
-  opacity: 0.2;
-  pointer-events: none;
-  user-select: none;
-}
 
 .app-ribbon {
   top: 0; left: 0; right: 0;
@@ -86,5 +81,11 @@ body {
   flex           : 1 0;
   flex-direction : column;
   overflow       : visible;
+  transition: transform .6s ease, opacity .6s ease;
+}
+.app-body__content.--menu-open {
+  opacity: 0.2;
+  pointer-events: none;
+  user-select: none;
 }
 
