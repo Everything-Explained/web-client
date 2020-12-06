@@ -61,7 +61,7 @@ export default defineComponent({
     onMounted(() => {
       contentToSlide = document.getElementById(props.contentId);
       if (menuRef.value && contentToSlide) {
-        setupOnScroll(menuRef.value, props.headerOffsetId);
+        floatOnScroll(menuRef.value, props.headerOffsetId);
         if (!getSlideStyle())
           createSlideStyle(menuRef.value, props.contentId)
         ;
@@ -101,7 +101,7 @@ function createSlideStyle(menu: HTMLElement, contentId: string) {
 }
 
 
-function setupOnScroll(menu: HTMLElement, headerId: string) {
+function floatOnScroll(menu: HTMLElement, headerId: string) {
   const headerEl = document.getElementById(headerId);
   document.body.addEventListener('scroll', (e) => {
     const scrollTop = document.body.scrollTop;
