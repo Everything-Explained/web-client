@@ -15,12 +15,11 @@
 
 .app-menu__header {
   width          : 100%;
-  padding        : 5px 10px;
+  padding        : 0.5rem 10px 0.4rem 10px;
   padding-right  : 3.5rem;
   color          : var(--menu-header-c);
-  font-size      : 1.5rem;
+  font-size      : 1.7rem;
   font-weight    : 400;
-  letter-spacing : 3px;
   background     : var(--menu-header-bg-c);
   text-shadow    : 3px 3px 0 black,
                    2px  0  0 black,

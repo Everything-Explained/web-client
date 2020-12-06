@@ -1,8 +1,7 @@
 <template>
   <menu ref='menu' class="app-menu" :class="{ '--opened': opened }">
     <header class="app-menu__header">
-      <div class="app-menu__header_ribbon"></div>
-      <span class="app-menu__header_text">MENU</span>
+      <span class="app-menu__header_text">Menu</span>
       <icon
         class='app-menu__header_exit-icon'
         :type='"cross"'
@@ -20,26 +19,28 @@
 
 
 <script lang='ts'>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, HtmlHTMLAttributes, onMounted, ref, Ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { VuexStore } from "../vuex/vuex-store";
 import icon from './icon.vue';
 
-const getSlideStyle = () => {
-  return document.getElementById('SlideStyle');
-};
 
 export default defineComponent({
   components: {
     icon,
   },
-  setup() {
+  props: {
+    contentId: String,
+    headerOffsetId: String,
+  },
+  setup(props) {
     const menuRef = ref<HTMLDivElement|null>(null);
     const opened  = ref(false);
     const store   = useStore<VuexStore>();
     const router  = useRouter();
     const routes  = router.getRoutes();
+    if (!props.contentId) throw Error('Missing content ID');
 
     const realRoutes = routes.filter(
       route => route.meta.display == true && !route.aliasOf
@@ -56,11 +57,13 @@ export default defineComponent({
     });
 
     let contentToSlide: HTMLElement|null = null;
+    let headerEl: HTMLElement|null = null;
     onMounted(() => {
-      contentToSlide = document.getElementById('App');
+      contentToSlide = document.getElementById(props.contentId);
       if (menuRef.value && contentToSlide) {
+        setupOnScroll(menuRef.value, props.headerOffsetId);
         if (!getSlideStyle())
-          createSlideStyle(menuRef.value)
+          createSlideStyle(menuRef.value, props.contentId)
         ;
       }
     });
@@ -82,13 +85,34 @@ export default defineComponent({
   }
 });
 
-function createSlideStyle(menu: HTMLElement) {
+
+function getSlideStyle() {
+  return document.getElementById('SlideStyle');
+};
+
+
+function createSlideStyle(menu: HTMLElement, contentId: string) {
   const style = getSlideStyle() || document.createElement('style');
   style.id = 'SlideStyle';
   style.innerHTML =
-    `.app-container.--menu-open { transform: translate(${menu.clientWidth}px); }`
+    `#${contentId}.--menu-open { transform: translate(${menu.clientWidth}px); }`
   ;
   document.head.append(style);
+}
+
+
+function setupOnScroll(menu: HTMLElement, headerId: string) {
+  const headerEl = document.getElementById(headerId);
+  document.body.addEventListener('scroll', (e) => {
+    const scrollTop = document.body.scrollTop;
+    const pos       = menu.style.position
+    ;
+    if (scrollTop >= headerEl.offsetHeight) {
+      if (pos != 'fixed') menu.style.position = 'fixed';
+      return;
+    }
+    if (pos != 'absolute') menu.style.position = 'absolute';
+  });
 }
 
 </script>
