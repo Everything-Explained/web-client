@@ -1,7 +1,7 @@
 .title-bar {
   position         : sticky;
   top              : 0;
-  padding          : 0.5rem 0 0.4rem 0;
+  padding          : 0.5rem 0 0.1rem 0;
   color            : var(--app-titlebar-c);
   font-size        : 1.7rem;
   font-weight      : 300;
@@ -9,13 +9,16 @@
   text-align       : center;
   background-color : var(--sub-panel-c);
   box-shadow       : 0 10px 8px -3px black;
-  text-shadow      : 3px 3px 0 black, 2px 0 0 black, 0 3px 0 black;
+  text-shadow      : 3px 3px 0 black,
+                     2px  0  0 black,
+                      0  3px 0 black
+                   ;
   overflow         : visible;
   z-index          : 2;
 }
 .title-bar__menu-icon {
   position   : absolute;
-  top        : 0.6rem; left: 10px;
+  top        : 0.45rem; left: 10px;
   font-size  : 2rem;
   color      : var(--app-titlebar-icon-c);
   opacity    : 1;
