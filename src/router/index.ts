@@ -10,13 +10,13 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/home',
     alias: '/',
-    name: 'Home',
+    name: 'home',
     component: Home,
     meta: { display: true, order: 1, title: 'About Us' }
   },
   {
     path: '/blog/:post?',
-    name: 'Blog',
+    name: 'blog',
     component: () => import(/* webpackChunkName: "blog" */ '../views/blog/blog.vue'),
     meta: { display: true, order: 2, title: 'Blog' }
   },
