@@ -10,7 +10,7 @@
     </header>
     <ul>
       <li class="app-menu_item" v-for="(route, i) of routes" :key="i" @click="closeMenu">
-        <router-link :to="route.path">{{ route.name }}</router-link>
+        <router-link :to="route.path">{{ route.meta.title }}</router-link>
       </li>
     </ul>
   </menu>
