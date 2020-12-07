@@ -102,13 +102,8 @@ export default defineComponent({
         .filter(isValidRoute)
         .sort(orderRouteAsc)
         .map(route => {
-          const path =
-            route.path.includes('/:')
-              ? route.path.split('/:')[0] // Remove path aliases
-              : route.path
-          ;
           return {
-            path,
+            path: { name: route.name },
             meta: route.meta,
             name: route.name
           };
