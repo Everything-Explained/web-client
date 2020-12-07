@@ -20,11 +20,18 @@
 
 <script lang='ts'>
 import { defineComponent, HtmlHTMLAttributes, onMounted, ref, Ref, watch } from "vue";
-import { useRouter } from "vue-router";
+import { RouteRecordNormalized, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { VuexStore } from "../vuex/vuex-store";
 import icon from './icon.vue';
 
+type Route = RouteRecordNormalized;
+type Routes = Route[];
+
+interface ExternalElements {
+  contentToSlide: HTMLElement|null;
+  header: HTMLElement|null;
+}
 
 export default defineComponent({
   components: {
@@ -32,7 +39,7 @@ export default defineComponent({
   },
   props: {
     contentId: String,
-    headerOffsetId: String,
+    headerId: String,
   },
   setup(props) {
     const menuRef = ref<HTMLDivElement|null>(null);
@@ -40,79 +47,86 @@ export default defineComponent({
     const store   = useStore<VuexStore>();
     const router  = useRouter();
     const routes  = router.getRoutes();
+
     if (!props.contentId) throw Error('Missing content ID');
 
-    const realRoutes = routes.filter(
-      route => route.meta.display == true && !route.aliasOf
-    );
-    const orderedRoutes = realRoutes.sort((r1, r2) => {
-      return r1.meta.order - r2.meta.order;
-    });
-    const routeList = orderedRoutes.map(route => {
-      return {
-        path: route.path.includes('/:') ? route.path.split('/:')[0] : route.path,
-        meta: route.meta,
-        name: route.name
-      };
-    });
+    const els: ExternalElements = {
+      contentToSlide: null,
+      header: null
+    }
 
-    let contentToSlide: HTMLElement|null = null;
-    let headerEl: HTMLElement|null = null;
-    onMounted(() => {
-      contentToSlide = document.getElementById(props.contentId);
-      if (menuRef.value && contentToSlide) {
-        floatOnScroll(menuRef.value, props.headerOffsetId);
-        if (!getSlideStyle())
-          createSlideStyle(menuRef.value, props.contentId)
+    const floatOnScroll = () => {
+      document.body.addEventListener('scroll', (e) => {
+        const scrollTop = document.body.scrollTop;
+        const pos       = menuRef.value.style.position
         ;
+        if (scrollTop >= els.header.offsetHeight) {
+          if (pos != 'fixed') menuRef.value.style.position = 'fixed';
+          return;
+        }
+        if (pos != 'absolute') menuRef.value.style.position = 'absolute';
+      });
+    }
+
+    const createSlideStyle = () => {
+      const style = document.createElement('style');
+      style.id = 'SlideStyle';
+      style.innerHTML =
+        `#${props.contentId}.--menu-open { transform: translate(${menuRef.value.clientWidth}px); }`
+      ;
+      document.head.append(style);
+    }
+
+    onMounted(() => {
+      els.contentToSlide = document.getElementById(props.contentId);
+      els.header = document.getElementById(props.headerId);
+
+      if (menuRef.value && els.contentToSlide) {
+        floatOnScroll();
+        createSlideStyle();
       }
     });
 
-    watch(
-      () => store.state.isMenuOpen,
-      async (isOpen) => {
-        opened.value = isOpen;
-        if (isOpen) return contentToSlide?.classList.add('--menu-open');
-        contentToSlide?.classList.remove('--menu-open');
-    });
+    const toggleMenu = async (isOpen: boolean) => {
+      opened.value = isOpen;
+      if (isOpen) return els.contentToSlide?.classList.add('--menu-open');
+      els.contentToSlide?.classList.remove('--menu-open');
+    }
+    watch(() => store.state.isMenuOpen, toggleMenu);
+
+
+    const isValidRoute  = (route: Route) => route.meta.display == true && !route.aliasOf;
+    const orderRouteAsc = (r1: Route, r2: Route) => r1.meta.order - r2.meta.order;
+    const normalizedRoutes = (() => {
+      return routes
+        .filter(isValidRoute)
+        .sort(orderRouteAsc)
+        .map(route => {
+          const path =
+            route.path.includes('/:')
+              ? route.path.split('/:')[0] // Remove path aliases
+              : route.path
+          ;
+          return {
+            path,
+            meta: route.meta,
+            name: route.name
+          };
+        })
+    })();
+
+    console.log(normalizedRoutes);
 
     return {
       menu: menuRef,
       opened,
       closeMenu: () => store.commit('close-menu'),
-      routes: routeList
+      routes: normalizedRoutes
     };
   }
 });
 
 
-function getSlideStyle() {
-  return document.getElementById('SlideStyle');
-};
 
-
-function createSlideStyle(menu: HTMLElement, contentId: string) {
-  const style = getSlideStyle() || document.createElement('style');
-  style.id = 'SlideStyle';
-  style.innerHTML =
-    `#${contentId}.--menu-open { transform: translate(${menu.clientWidth}px); }`
-  ;
-  document.head.append(style);
-}
-
-
-function floatOnScroll(menu: HTMLElement, headerId: string) {
-  const headerEl = document.getElementById(headerId);
-  document.body.addEventListener('scroll', (e) => {
-    const scrollTop = document.body.scrollTop;
-    const pos       = menu.style.position
-    ;
-    if (scrollTop >= headerEl.offsetHeight) {
-      if (pos != 'fixed') menu.style.position = 'fixed';
-      return;
-    }
-    if (pos != 'absolute') menu.style.position = 'absolute';
-  });
-}
 
 </script>
