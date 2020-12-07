@@ -6,7 +6,7 @@
     </header>
     <section class="app-body">
       <main-menu
-        :headerOffsetId='"AppHeader"'
+        :headerId='"AppHeader"'
         :contentId='"AppBodyContent"'
       ></main-menu>
       <div id='AppBodyContent' class="app-body__content">
