@@ -96,8 +96,8 @@
   /*** Blog Styles ***/
   --blog-entry-bg-c          : var(--sub-panel-c);
   --blog-entry-bg-hov-c      : var(--sub-panel-hov-c);
-  --blog-entry-title-c       : hsl(47, 58%, 55%);
-  --blog-entry-title-hov-c   : hsl(47, 100%, 73%);
+  --blog-entry-title-c       : hsl(47, 53%, 62%);
+  --blog-entry-title-hov-c   : var(--md-p-hov-i-c);
   --blog-entry-stat-c        : hsl(197, 11%, 55%);
   --blog-entry-icon-c        : hsl(198, 11%, 66%);
   --blog-entry-hov-snip-c    : var(--md-p-hov-c);
