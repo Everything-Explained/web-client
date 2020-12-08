@@ -31,7 +31,7 @@
   letter-spacing : 1px;
   transition     : color .3s ease;
 }
-.blog-entry__title:hover .blog_title {
+.blog-entry:hover .blog-entry__title {
   color: var(--blog-entry-title-hov-c);
 }
 
