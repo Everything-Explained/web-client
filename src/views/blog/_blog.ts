@@ -27,19 +27,36 @@ export default defineComponent({
     const route      = useRoute();
     const postURI    = route.params.post as string|undefined;
     const store      = useStore<VuexStore>();
-    const title      = ref('')
+    const title      = ref('Blog Entries')
     ;
     const sortedPosts = sortPosts(blogPosts);
     const shortPosts  = shortenPostsContent(sortedPosts)
     ;
-    title.value = 'Blog Entries';
-    onBlogRouteChange(route, router, sortedPosts, activePost, title);
-    if (postURI) displayBlogPost(postURI, sortedPosts, router, activePost, title);
+    const displayBlogPost = (uri: string) => {
+      const post = sortedPosts.find(post => post.uri == uri);
+      if (!post) { router.push('/404'); return; }
+      title.value = post.title;
+      activePost.value = post;
+    };
+    // onBlogRouteChange
+    watch(() => route.params,
+      async (params) => {
+        if (!route.path.includes('/blog')) return;
+        if (!params.post) {
+          activePost.value = null;
+          title.value = 'Blog Entires';
+          return;
+        }
+        displayBlogPost(params.post as string);
+      }
+    );
+    if (postURI) displayBlogPost(postURI);
     store.commit('page-title', title.value)
     ;
     function goTo(uri: string) {
       router.push(`/blog/${uri}`);
     }
+
     return {
       posts: shortPosts,
       activePost,
@@ -76,38 +93,4 @@ function shortenPostsContent(posts: BlogPost[]) {
       content: snippet[0]
     };
   });
-}
-
-function onBlogRouteChange(
-    route      : Route,
-    router     : Router,
-    posts      : BlogPost[],
-    contentRef : BlogPostRef,
-    titleRef      : Ref<string>,
-) {
-  watch(
-    () => route.params,
-    async (params) => {
-      if (!route.path.includes('/blog')) return;
-      if (!params.post) {
-        contentRef.value = null;
-        titleRef.value = 'Blog Entires';
-        return;
-      }
-      displayBlogPost(params.post as string, posts, router, contentRef, titleRef);
-    }
-  );
-}
-
-function displayBlogPost(
-  uri        : string,
-  posts      : BlogPost[],
-  router     : Router,
-  contentRef : BlogPostRef,
-  titleRef   : Ref<string>,
-) {
-  const post = posts.find(post => post.uri == uri);
-  if (!post) { router.push('/404'); return; }
-  titleRef.value = post.title;
-  contentRef.value = post;
 }
