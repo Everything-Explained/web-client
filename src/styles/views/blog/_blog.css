@@ -43,16 +43,25 @@
   font-weight    : 400;
   color          : var(--blog-entry-stat-c);
   letter-spacing : 1px;
+  transition: color .3s ease;
 }
 .blog-entry__date + .blog-entry__time {
   margin-left: 20px;
 }
+.blog-entry:hover .blog-entry__date,
+.blog-entry:hover .blog-entry__time {
+  color: var(--blog-entry-hov-stat-c);
+}
 
 .blog-entry__icon {
-  top            : 0.15rem;
+  top            : 0.1rem;
   margin-right   : 7px;
   vertical-align : baseline;
   color          : var(--blog-entry-icon-c);
+  transition     : color .3s ease;
+}
+.blog-entry:hover .blog-entry__icon {
+  color: var(--blog-entry-hov-icon-c);
 }
 
 .blog-entry__snippet {

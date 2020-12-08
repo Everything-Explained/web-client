@@ -99,7 +99,9 @@
   --blog-entry-title-c       : hsl(47, 53%, 62%);
   --blog-entry-title-hov-c   : var(--md-p-hov-i-c);
   --blog-entry-stat-c        : hsl(197, 11%, 55%);
+  --blog-entry-hov-stat-c    : var(--md-p-hov-c);
   --blog-entry-icon-c        : hsl(198, 11%, 66%);
+  --blog-entry-hov-icon-c    : var(--md-p-hov-i-c);
   --blog-entry-hov-snip-c    : var(--md-p-hov-c);
   --blog-entry-hov-snip-bg-c : var(--sub-panel-hov-c);
   --blog-entry-hov-snip-i-c  : var(--md-p-hov-i-c);
