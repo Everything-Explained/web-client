@@ -50,51 +50,6 @@ export default defineComponent({
 
     if (!props.contentId) throw Error('Missing content ID');
 
-    const els: ExternalElements = {
-      contentToSlide: null,
-      header: null
-    }
-
-    const floatOnScroll = () => {
-      document.body.addEventListener('scroll', (e) => {
-        const scrollTop = document.body.scrollTop;
-        const pos       = menuRef.value.style.position
-        ;
-        if (scrollTop >= els.header.offsetHeight) {
-          if (pos != 'fixed') menuRef.value.style.position = 'fixed';
-          return;
-        }
-        if (pos != 'absolute') menuRef.value.style.position = 'absolute';
-      });
-    }
-
-    const createSlideStyle = () => {
-      const style = document.createElement('style');
-      style.id = 'SlideStyle';
-      style.innerHTML =
-        `#${props.contentId}.--menu-open { transform: translate(${menuRef.value.clientWidth}px); }`
-      ;
-      document.head.append(style);
-    }
-
-    onMounted(() => {
-      els.contentToSlide = document.getElementById(props.contentId);
-      els.header = document.getElementById(props.headerId);
-
-      if (menuRef.value && els.contentToSlide) {
-        floatOnScroll();
-        createSlideStyle();
-      }
-    });
-
-    const toggleMenu = async (isOpen: boolean) => {
-      opened.value = isOpen;
-      if (isOpen) return els.contentToSlide?.classList.add('--menu-open');
-      els.contentToSlide?.classList.remove('--menu-open');
-    }
-    watch(() => store.state.isMenuOpen, toggleMenu);
-
-
     const isValidRoute  = (route: Route) => route.meta.display == true && !route.aliasOf;
     const orderRouteAsc = (r1: Route, r2: Route) => r1.meta.order - r2.meta.order;
     const normalizedRoutes = (() => {
@@ -109,8 +64,47 @@ export default defineComponent({
           };
         })
     })();
+    const els: ExternalElements = {
+      contentToSlide: null,
+      header: null
+    }
 
-    console.log(normalizedRoutes);
+    const floatOnScroll = () => {
+      document.body.addEventListener('scroll', (e) => {
+        const scrollTop = document.body.scrollTop;
+        const pos       = menuRef.value.style.position
+        ;
+        if (scrollTop >= els.header.offsetHeight + 1) {
+          if (pos != 'fixed') menuRef.value.style.position = 'fixed';
+          return;
+        }
+        if (pos != 'absolute') menuRef.value.style.position = 'absolute';
+      });
+    }
+    const createSlideStyle = () => {
+      const style = document.createElement('style');
+      style.id = 'SlideStyle';
+      style.innerHTML =
+        `#${props.contentId}.--menu-open { transform: translate(${menuRef.value.clientWidth}px); }`
+      ;
+      document.head.append(style);
+    }
+    onMounted(() => {
+      els.contentToSlide = document.getElementById(props.contentId);
+      els.header = document.getElementById(props.headerId);
+
+      if (menuRef.value && els.contentToSlide) {
+        floatOnScroll();
+        createSlideStyle();
+      }
+    });
+    // toggle menu
+    watch(() => store.state.isMenuOpening,
+      async (isOpening) => {
+        opened.value = isOpening;
+        if (isOpening) els.contentToSlide?.classList.add('--menu-open');
+        else           els.contentToSlide?.classList.remove('--menu-open');
+      });
 
     return {
       menu: menuRef,
