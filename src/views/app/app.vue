@@ -15,6 +15,12 @@
             <component :is="Component" />
           </transition>
         </router-view>
+        <footer class="app-footer">
+          <span class="app-footer_copyright">
+           Copyright &#169; 2020 - 2021 <br/>
+           Everything Explained, All Rights Reserved
+          </span>
+        </footer>
       </div>
     </section>
   </div>

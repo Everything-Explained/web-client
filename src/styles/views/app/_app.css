@@ -75,7 +75,7 @@ body {
 
 .app-body {
   display   : flex;
-  margin    : 0 7px 7px 0;
+  margin    : 0 7px 0 0;
   flex      : 1 0;
   flex-flow : row nowrap;
 }
@@ -91,5 +91,43 @@ body {
   opacity: 0.2;
   pointer-events: none;
   user-select: none;
+}
+
+.app-footer {
+  display: flex;
+  text-align: center;
+  flex: 1 0;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: 400;
+  background: var(--sub-panel-c);
+  box-shadow: 0 -7px 10px 3px black;
+  /* background: linear-gradient(
+    to bottom,
+    var(--body-bg-c) 0%,
+    black 60%
+  ); */
+}
+.app-footer::before {
+  top: 0; left: 0; right: 0;
+  height: 7px;
+  content: '';
+  background: var(--panel-c);
+  border-bottom: 1px solid black;
+}
+.app-footer::after {
+  bottom: 0; left: 0; right: 0;
+  position: absolute;
+  content: '';
+  height: 3px;
+  background: var(--app-ribbon-c);
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.app-footer_copyright {
+  padding: 20px 0;
+  color: hsl(197, 11%, 25%);
+  text-shadow: 1px 1px 0 black,
+               2px 2px 0 black
 }
 
