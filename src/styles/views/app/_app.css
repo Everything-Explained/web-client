@@ -6,6 +6,7 @@ html {
   font-size               : var(--body-f-sz);
   background              : var(--body-bg-c);
   overflow                : hidden;
+  transform: translateZ(0);
   scroll-behavior: smooth;
   -webkit-font-smoothing  : antialiased;
   -moz-osx-font-smoothing : grayscale;

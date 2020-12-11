@@ -17,10 +17,11 @@
   width: 300px;
   margin-right: 7px;
   margin-bottom: 70px;
-  border: 1px solid #888;
-  /* overflow: hidden; */
   user-select: none;
   cursor: pointer;
+}
+.red33m-video:hover {
+  color: var(--red33m-video-hov-c);
 }
 /* Title */
 .red33m-video::after {
@@ -29,9 +30,6 @@
   content: attr(data-title);
   height: 40px;
   font-size: 1.2rem;
-}
-.red33m-video:hover .red33m-video_title {
-  color: var(--red33m-video-hov-c);
 }
 .red33m-video_thumbnail-container {
   width: 100%;
