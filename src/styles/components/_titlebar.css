@@ -1,7 +1,7 @@
 .title-bar {
   position         : sticky;
   top              : 0;
-  padding          : 0.5rem 0 0.1rem 0;
+  padding          : 0.3rem 0 0.3rem 0;
   color            : var(--app-titlebar-c);
   font-size        : 1.7rem;
   font-weight      : 300;
@@ -18,7 +18,7 @@
 }
 .title-bar__menu-icon {
   position   : absolute;
-  top        : 0.45rem; left: 10px;
+  top        : 0.40rem; left: 10px;
   font-size  : 2rem;
   color      : var(--app-titlebar-icon-c);
   opacity    : 1;

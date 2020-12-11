@@ -4,9 +4,6 @@
   .app-header        { height: 6rem; }
 
   .app-header__title { font-size: 3.5rem; }
-
-  .app-title-bar { font-size: 1.5rem; }
-  .app-title-bar__menu-icon { font-size: 1.65rem; }
 }
 
 
@@ -14,12 +11,6 @@
   .app-header       { height: 4.6rem; }
 
   .app-header__title { font-size: 2.5rem; }
-
-  .app-title-bar { font-size: 1.4rem; }
-  .app-title-bar__text {
-    padding-left: 2.8rem;
-    text-align: left;
-  }
 }
 
 
@@ -27,13 +18,6 @@
   .app-header       { height: 3.9rem; }
 
   .app-header__title { font-size: 2rem; }
-
-  .app-title-bar { font-size: 1.3rem; }
-  .app-title-bar__text {
-    padding-left: 2.5rem;
-    text-align: left;
-  }
-  .app-title-bar__menu-icon { font-size: 1.35rem; }
 }
 
 
@@ -41,12 +25,4 @@
   .app-header       { height: 3.7rem; }
 
   .app-header__title { font-size: 1.8rem; }
-
-  .app-title-bar { font-size: 1.1rem; }
-  .app-title-bar__text {
-    top: 1px;
-    padding-left: 2.3rem;
-    text-align: left;
-  }
-  .app-title-bar__menu-icon { font-size: 1.2rem; }
 }
