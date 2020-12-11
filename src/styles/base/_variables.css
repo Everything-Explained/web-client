@@ -107,4 +107,6 @@
   --blog-entry-hov-snip-i-c  : var(--md-p-hov-i-c);
   --blog-entry-hov-snip-b-c  : var(--md-p-hov-b-c);
 
+  /*** red33m Styles ***/
+  --red33m-video-hov-c: var(--menu-active-item-c);
 }

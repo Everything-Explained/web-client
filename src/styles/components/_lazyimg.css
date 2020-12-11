@@ -1,0 +1,23 @@
+.lazyimg {
+  position: relative;
+  width: 100%;
+}
+.lazyimg_preloader {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 50%;
+  height: 90%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.lazyimg_preloader.--disabled {
+  opacity: 0;
+}
+.lazyimg_image {
+  width: 100%;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.lazyimg_image.--loaded {
+  opacity: 1;
+}

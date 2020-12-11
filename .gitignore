@@ -7,8 +7,14 @@ test.md
 # Built Files/Folders
 /dist
 build/*.js
-src/views/**/*.json
+src/views/home/*.json
+src/views/literature/*.json
+src/views/home/*.json
+src/views/blog/*.json
+src/views/faq/*.json
+src/views/red33m/red33m.json
 src/views/blog/*.md
+src/views/red33m/*.md
 src/styles/main.css
 
 # local env files
