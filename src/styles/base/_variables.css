@@ -38,7 +38,7 @@
   --body-f-sz            : 1em;
   --body-bg-c            : hsl(197, 11%, 6.5%);
   --body-c               : hsl(197, 11%, 73%);
-  --selection-bg-c       : hsla(197, 11%, 25%, 0.993); /* hsla(0, 40%, 41%, 0.993); */
+  --selection-bg-c       : hsla(197, 9%, 30%, 0.993); /* hsla(0, 40%, 41%, 0.993); */
   --scrollbar-c          : var(--panel-c);
   --scrollbar-hov-c      : hsl(197, 9%, 43%);
   --scrollbar-track-c    : hsl(0, 0%, 0%);
