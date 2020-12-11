@@ -28,7 +28,7 @@ export default defineComponent({
 
   setup(props) {
     const store      = useStore<VuexStore>();
-    const isMenuOpen = computed(() => store.state.isMenuOpen);
+    const isMenuOpen = computed(() => store.state.isMenuOpening);
     const title      = computed(() => store.state.pageTitle);
     const duration = {
       enter: props.easeIn ?? 400,
