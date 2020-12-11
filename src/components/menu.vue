@@ -72,26 +72,26 @@ export default defineComponent({
     const floatOnScroll = () => {
       document.body.addEventListener('scroll', (e) => {
         const scrollTop = document.body.scrollTop;
-        const pos       = menuRef.value.style.position
+        const pos       = menuRef.value!.style.position
         ;
-        if (scrollTop >= els.header.offsetHeight + 1) {
-          if (pos != 'fixed') menuRef.value.style.position = 'fixed';
+        if (scrollTop >= els.header!.offsetHeight + 1) {
+          if (pos != 'fixed') menuRef.value!.style.position = 'fixed';
           return;
         }
-        if (pos != 'absolute') menuRef.value.style.position = 'absolute';
+        if (pos != 'absolute') menuRef.value!.style.position = 'absolute';
       });
     }
     const createSlideStyle = () => {
       const style = document.createElement('style');
       style.id = 'SlideStyle';
       style.innerHTML =
-        `#${props.contentId}.--menu-open { transform: translate(${menuRef.value.clientWidth}px); }`
+        `#${props.contentId}.--menu-open { transform: translate(${menuRef.value!.clientWidth}px); }`
       ;
       document.head.append(style);
     }
     onMounted(() => {
-      els.contentToSlide = document.getElementById(props.contentId);
-      els.header = document.getElementById(props.headerId);
+      els.contentToSlide = document.getElementById(props.contentId!);
+      els.header = document.getElementById(props.headerId!);
 
       if (menuRef.value && els.contentToSlide) {
         floatOnScroll();
@@ -114,8 +114,5 @@ export default defineComponent({
     };
   }
 });
-
-
-
 
 </script>
