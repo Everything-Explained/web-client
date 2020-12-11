@@ -1,10 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home       from '../views/home/home.vue';
-import Blog       from '../views/blog/blog.vue';
-import FAQ        from '../views/faq/faq.vue';
-import Literature from '../views/literature/literature.vue';
-import Changelog  from '../views/changelog/changelog.vue';
 import i404       from '../views/errors/i404.vue';
+import Test from '../views/test/test.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -19,6 +16,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'blog',
     component: () => import(/* webpackChunkName: "blog" */ '../views/blog/blog.vue'),
     meta: { display: true, order: 2, title: 'Blog' }
+  },
+  {
+    path: '/red33m',
+    name: 'red33m',
+    component: () => import(/* webpackChunkName: "red33m" */ '../views/red33m/red33m.vue'),
+    meta: { display: true, order: 3, title: 'red33m' }
   },
   {
     path: '/test',
