@@ -75,7 +75,7 @@ body {
 
 .app-body {
   display   : flex;
-  margin    : 0 7px 0 0;
+  margin    : 0 5px 0 0;
   flex      : 1 0;
   flex-flow : row nowrap;
 }
@@ -125,8 +125,9 @@ body {
   border-bottom: 1px solid black;
 }
 .app-footer_copyright {
-  padding: 20px 0;
-  color: hsl(197, 11%, 25%);
+  padding: 13px 0 20px 0;
+  font-size: 0.85rem;
+  color: hsl(197, 11%, 30%);
   text-shadow: 1px 1px 0 black,
                2px 2px 0 black
 }
