@@ -34,3 +34,5 @@
 @import './components/_lazyimg.css';
 /*** Preloader ***/
 @import './components/_preloader.css';
+/*** Toggle ***/
+@import './components/_toggle.css';

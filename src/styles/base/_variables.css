@@ -109,4 +109,6 @@
 
   /*** red33m Styles ***/
   --red33m-video-hov-c: var(--menu-active-item-c);
+
+  --switch-off-c: hsl(0, 100%, 67%);
 }

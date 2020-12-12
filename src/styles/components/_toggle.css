@@ -1,0 +1,92 @@
+:root {
+  --switch-width: 80px;
+}
+
+.input-switch {
+  position: relative;
+  display: inline-block;
+  width: var(--switch-width);
+  height: 40px;
+  font-family: 'Nunito Sans';
+  font-weight: 400;
+  text-align: left !important;
+  cursor: pointer;
+}
+
+.input-switch [type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.input-switch [type='checkbox'] ~ .slider {
+  position: absolute;
+  width: var(--switch-width);
+  height: 40px;
+  border: 2px solid var(--switch-off-c);
+  border-radius: 20px;
+  box-shadow: 0 0 10px 0 var(--switch-off-c);
+  transition: all 0.4s ease;
+}
+
+.input-switch [type='checkbox'] ~ .slider::before {
+  position: absolute;
+  content: '';
+  top: 4px;
+  width: 28px;
+  bottom: 4px;
+  right: 44px;
+  border-radius: 19px;
+  box-sizing: border-box;
+  background-color: var(--switch-off-c);
+  transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+}
+
+.input-switch [type='checkbox'] + .switch-text-off {
+  position: absolute;
+  right: 8px;
+  line-height: 42px;
+  color: var(--switch-off-c);
+  text-align: right;
+  font-size: 18px;
+  user-select: none;
+}
+
+.input-switch [type='checkbox'] ~ .switch-text-on {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 42px;
+  text-align: center;
+  font-size: 22px;
+  color: hsla(0, 0%, 0%, 0);
+  user-select: none;
+}
+
+.input-switch [type='checkbox']:checked ~ .slider {
+  border-color: hsl(161, 74%, 49%);
+  box-shadow: 0 0 10px 0 hsla(0, 100%, 63%, 0);
+  transition: all 0.5s ease;
+}
+
+.input-switch [type='checkbox']:checked ~ .slider::before {
+  top: 3px; right: 3px; bottom: 3px;
+  width: 70px;
+  border-radius: 23px;
+  background-color: hsl(161, 74%, 49%);
+  box-shadow: 0 0 20px hsl(161, 100%, 62%);
+  transition: all .2s .1s, right .1s;
+}
+
+.input-switch [type='checkbox']:checked ~ .switch-text-on {
+  color: #31683d;
+  transition: color .3s .15s;
+}
+
+.input-switch [type='checkbox']:checked ~ .switch-text-off {
+  color: rgba(0, 0, 0, 0);
+}
