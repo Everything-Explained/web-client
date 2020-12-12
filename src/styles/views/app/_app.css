@@ -10,7 +10,6 @@ html {
   -webkit-font-smoothing  : antialiased;
   -moz-osx-font-smoothing : grayscale;
 }
-html { transform: translateZ(0);}
 body {
   margin-right: 5px;
   font-family: 'Nunito Sans', 'Arial', 'Verdana';
