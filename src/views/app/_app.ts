@@ -1,6 +1,5 @@
-import { defineComponent, onMounted, Ref, ref, watch } from "vue";
-import { Router, useRoute, useRouter } from "vue-router";
-import { Route } from "../../global-types";
+import { defineComponent, onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import Menu from '../../components/menu.vue';
 import icon from '../../components/icon.vue';
 
