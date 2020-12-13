@@ -1,6 +1,13 @@
 <template>
   <div class="red33m">
     <title-bar></title-bar>
+    <toggle
+      :legend='"Sort By"'
+      :leftText='"Oldest"'
+      :rightText='"Latest"'
+      :callback='toggle'
+      class='red33m-toggle'
+    ></toggle>
     <div class="red33m-video-list">
       <div
         v-for="(v, i) of videos"

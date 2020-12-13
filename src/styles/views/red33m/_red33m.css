@@ -2,9 +2,16 @@
   display: block;
   width: 100%;
 }
+
+.red33m-toggle {
+  margin-top: 1rem;
+  width: 235px;
+  text-align: center;
+}
+
 .red33m-video-list {
   display: flex;
-  margin-top: 20px;
+  margin-top: 2rem;
   margin-right: -15px;
   padding-bottom: 300px;
   flex-wrap: wrap;
@@ -19,6 +26,7 @@
   margin-bottom: 70px;
   user-select: none;
   cursor: pointer;
+  transition: color .3s ease;
 }
 .red33m-video:hover {
   color: var(--red33m-video-hov-c);
