@@ -1,92 +1,112 @@
-:root {
-  --switch-width: 80px;
-}
 
-.input-switch {
-  position: relative;
-  display: inline-block;
-  width: var(--switch-width);
-  height: 40px;
-  font-family: 'Nunito Sans';
+fieldset {
+  display: block;
+  margin: 0 auto;
+  padding: 1.2rem;
+  padding-top: 0.6rem; /* Accommodate legend */
+  border: none;
+  border: solid 2px hsl(197, 11%, 40%);
+  box-shadow: 0 0 10px 0 hsl(197, 11%, 40%);
+  border-radius: 10px;
+}
+fieldset legend {
+  padding: 0 10px;
+  font-size: 1.3rem;
   font-weight: 400;
-  text-align: left !important;
-  cursor: pointer;
+  word-spacing: 2px;
+  background-color: var(--body-bg-c);
+}
+/* TOGGLE STYLING */
+.toggle {
+  margin: 0 auto;
+  font-family: 'Nunito Sans';
+  font-size: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: stretch;
 }
 
-.input-switch [type='checkbox'] {
-  position: absolute;
-  opacity: 0;
+.toggle input {
+  position: fixed;
+  top: 0;
   width: 0;
   height: 0;
-  pointer-events: none;
+  left:-100%;
 }
 
-.input-switch [type='checkbox'] ~ .slider {
-  position: absolute;
-  width: var(--switch-width);
-  height: 40px;
-  border: 2px solid var(--switch-off-c);
-  border-radius: 20px;
-  box-shadow: 0 0 10px 0 var(--switch-off-c);
-  transition: all 0.4s ease;
-}
-
-.input-switch [type='checkbox'] ~ .slider::before {
-  position: absolute;
-  content: '';
-  top: 4px;
-  width: 28px;
-  bottom: 4px;
-  right: 44px;
-  border-radius: 19px;
-  box-sizing: border-box;
-  background-color: var(--switch-off-c);
-  transition: all .3s .1s, width .1s, top .1s, bottom .1s;
-}
-
-.input-switch [type='checkbox'] + .switch-text-off {
-  position: absolute;
-  right: 8px;
-  line-height: 42px;
-  color: var(--switch-off-c);
-  text-align: right;
-  font-size: 18px;
-  user-select: none;
-}
-
-.input-switch [type='checkbox'] ~ .switch-text-on {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  line-height: 42px;
+.toggle input + label {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: .75rem 2rem;
+  border: solid 1px hsl(197, 11%, 28%);
+  background-color: hsl(197, 11%, 18%);
+  font-size: 1.15rem;
   text-align: center;
-  font-size: 22px;
-  color: hsla(0, 0%, 0%, 0);
+  font-weight: 400;
+  box-shadow: 0 0 0 0 transparent;
   user-select: none;
+  cursor: pointer;
+  transition: border-color .15s ease-out,  color .25s ease-out,  background-color .15s ease-out, box-shadow .15s ease-out;
+  /* ADD THESE PROPERTIES TO SWITCH FROM AUTO WIDTH TO FULL WIDTH */
+  /*flex: 0 0 50%; display: flex; justify-content: center; align-items: center;*/
+  /* ----- */
 }
 
-.input-switch [type='checkbox']:checked ~ .slider {
-  border-color: hsl(161, 74%, 49%);
-  box-shadow: 0 0 10px 0 hsla(0, 100%, 63%, 0);
-  transition: all 0.5s ease;
+.toggle label:first-of-type {
+  border-radius: 6px 0 0 6px;
+  border-right: none;
 }
 
-.input-switch [type='checkbox']:checked ~ .slider::before {
-  top: 3px; right: 3px; bottom: 3px;
-  width: 70px;
-  border-radius: 23px;
+.toggle label:last-of-type {
+  border-radius: 0 6px 6px 0;
+  border-left: none;
+}
+
+/* .toggle input:hover + label {
+  color: hsl(0, 74%, 70%);
+}
+
+.toggle input:checked + label {
+  background-color: hsl(0, 74%, 49%);
+  color: hsl(197, 75%, 85%);
+  box-shadow: 0 0 7px 0 hsl(0, 100%, 62%);
+  border-color: hsl(0, 74%, 70%);
+  z-index: 1;
+  cursor: default;
+} */
+/* .toggle input:hover + label {
+  color: hsl(47, 74%, 70%);
+}
+
+.toggle input:checked + label {
+  background-color: hsl(47, 74%, 49%);
+  color: black;
+  box-shadow: 0 0 7px 0 hsl(47, 100%, 62%);
+  border-color: hsl(47, 74%, 70%);
+  z-index: 1;
+  cursor: default;
+} */
+.toggle input:hover + label {
+  color: hsl(161, 74%, 70%);
+}
+
+.toggle input:checked + label {
   background-color: hsl(161, 74%, 49%);
-  box-shadow: 0 0 20px hsl(161, 100%, 62%);
-  transition: all .2s .1s, right .1s;
+  color: black;
+  box-shadow: 0 0 7px 0 hsl(161, 100%, 62%);
+  border-color: hsl(161, 74%, 70%);
+  z-index: 1;
+  cursor: default;
 }
 
-.input-switch [type='checkbox']:checked ~ .switch-text-on {
-  color: #31683d;
-  transition: color .3s .15s;
-}
-
-.input-switch [type='checkbox']:checked ~ .switch-text-off {
-  color: rgba(0, 0, 0, 0);
-}
+/* @media (max-width: 800px) {
+  .toggle input + label {
+      padding: .75rem .25rem;
+      flex: 0 0 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+} */
