@@ -2,11 +2,12 @@
 fieldset {
   display: block;
   margin: 0 auto;
-  padding: 1.2rem;
+  padding: 1.4rem;
   padding-top: 0.6rem; /* Accommodate legend */
   border: none;
-  border: solid 2px hsl(197, 11%, 40%);
-  box-shadow: 0 0 10px 0 hsl(197, 11%, 40%);
+  border: solid 2px hsl(0, 100%, 67%);
+  box-shadow:       0 0 10px 0 hsl(0, 100%, 63%),
+              inset 0 0 10px 0 hsl(0, 100%, 63%);
   border-radius: 10px;
 }
 fieldset legend {
@@ -76,7 +77,7 @@ fieldset legend {
   z-index: 1;
   cursor: default;
 } */
-/* .toggle input:hover + label {
+.toggle input:hover + label {
   color: hsl(47, 74%, 70%);
 }
 
@@ -87,8 +88,8 @@ fieldset legend {
   border-color: hsl(47, 74%, 70%);
   z-index: 1;
   cursor: default;
-} */
-.toggle input:hover + label {
+}
+/* .toggle input:hover + label {
   color: hsl(161, 74%, 70%);
 }
 
@@ -99,7 +100,7 @@ fieldset legend {
   border-color: hsl(161, 74%, 70%);
   z-index: 1;
   cursor: default;
-}
+} */
 
 /* @media (max-width: 800px) {
   .toggle input + label {
