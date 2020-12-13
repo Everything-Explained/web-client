@@ -5,8 +5,9 @@ html {
   color                   : var(--body-c);
   font-size               : var(--body-f-sz);
   background              : var(--body-bg-c);
+  /* DO NOT REMOVE - menu and scroll depend on this */
   overflow                : hidden;
-  /* scroll-behavior: smooth; */
+  /**************************************************/
   -webkit-font-smoothing  : antialiased;
   -moz-osx-font-smoothing : grayscale;
 }
