@@ -39,6 +39,9 @@
   border-top-left-radius  : 3.5px;
   transition              : background 0.25s, color 0.25s;
 }
+.md p + p {
+  margin-top: 15px;
+}
 .md > p {
   margin-bottom: 7px;
   box-shadow: 0 10px 7px -5px hsla(0, 0%, 0%, 0.4);
