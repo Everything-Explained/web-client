@@ -53,7 +53,7 @@ body {
   top: 0; left: 0;
   height           : 8rem;
   margin-right     : 7px;
-  border-bottom    : 7px solid var(--panel-c);
+  border-bottom    : 3px solid var(--panel-c);
   background-color : var(--body-bg-c);
   box-shadow       : 0 4px 5px -1px black;
 }
