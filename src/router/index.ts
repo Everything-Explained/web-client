@@ -23,12 +23,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "red33m" */ '../views/red33m/red33m.vue'),
     meta: { display: true, order: 3, title: 'red33m' }
   },
-  {
-    path: '/test',
-    name: 'test',
-    component: Test,
-    meta: { display: true, order: 4, title: 'Test' }
-  },
+  // {
+  //   path: '/test',
+  //   name: 'test',
+  //   component: Test,
+  //   meta: { display: true, order: 4, title: 'Test' }
+  // },
 
   // {
   //   path: '/faq/:page?',
