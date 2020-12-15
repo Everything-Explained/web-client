@@ -1,0 +1,26 @@
+/*** 711px ***/
+@media only screen and (max-width: var(--screen-large)) {
+  .title-bar__text {
+    margin-left: 3.3rem;
+    text-align: left;
+  }
+}
+/*** 511px ***/
+@media only screen and (max-width: var(--screen-medium)) {
+  .title-bar { font-size: 1.5rem; }
+  .title-bar__text {
+    margin-left: 3rem;
+  }
+  .title-bar__menu-icon {
+    top: 0.35rem;
+    font-size: 1.8rem;
+  }
+}
+/*** 380px ***/
+@media only screen and (max-width: var(--screen-small)) {
+  .title-bar { font-size: 1.2rem; }
+  .title-bar__menu-icon { font-size: 1.5rem; }
+}
+/*** 320px ***/
+@media only screen and (max-width: var(--screen-tiny)) {
+}

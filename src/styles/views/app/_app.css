@@ -1,0 +1,135 @@
+
+body,
+html {
+  height                  : 100%;
+  color                   : var(--body-c);
+  font-size               : var(--body-f-sz);
+  background              : var(--body-bg-c);
+  /* DO NOT REMOVE - menu and scroll depend on this */
+  overflow                : hidden;
+  /**************************************************/
+  -webkit-font-smoothing  : antialiased;
+  -moz-osx-font-smoothing : grayscale;
+}
+body {
+  margin-right: 5px;
+  font-family: 'Nunito Sans', 'Arial', 'Verdana';
+  font-weight: 300;
+  overflow-y: auto;
+}
+
+::selection {
+  background: var(--selection-bg-c);
+}
+::-moz-selection {
+  background: var(--selection-bg-c);
+}
+
+
+.app {
+  display    : flex;
+  flex-flow  : column;
+  min-height : 100%;
+}
+
+.app-container {
+  position: relative;
+  opacity: 1;
+  transition: transform .6s ease, opacity .6s ease;
+}
+
+.app-ribbon {
+  top: 0; left: 0; right: 0;
+  position     : sticky;
+  margin-right : 7px;
+  display      : block;
+  height       : 3px;
+  box-shadow   : 0 4px 5px 1px black;
+  background   : var(--app-ribbon-c);
+  z-index      : 5;
+}
+
+.app-header {
+  top: 0; left: 0;
+  height           : 8rem;
+  margin-right     : 7px;
+  border-bottom    : 3px solid var(--panel-c);
+  background-color : var(--body-bg-c);
+  box-shadow       : 0 4px 5px -1px black;
+}
+.app-header__title {
+  top        : 10px; left: 0; right: 0; bottom: 0;
+  position   : absolute;
+  margin     : 0 auto;
+  text-align : center;
+  color      : var(--app-head-c);
+  font-size  : var(--app-head-f-sz);
+  font-family: 'Pique N Meex';
+  text-shadow: 1px 1px 0 black,
+               2px  0  0 black,
+                0  2px 0 black,
+               3px 3px 0 black,
+               4px 4px 0 black,
+               5px 5px 0 black;
+}
+
+
+.app-body {
+  display   : flex;
+  margin    : 0 5px 0 0;
+  flex      : 1 0;
+  flex-flow : row nowrap;
+}
+.app-body__content {
+  display        : flex;
+  margin         : 0 auto;
+  flex           : 1 0;
+  flex-direction : column;
+  overflow       : visible;
+  transition: transform .6s ease, opacity .6s ease;
+}
+.app-body__content.--menu-open {
+  opacity: 0.2;
+  pointer-events: none;
+  user-select: none;
+}
+
+.app-footer {
+  display: flex;
+  text-align: center;
+  flex: 1 0;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: 400;
+  background: var(--sub-panel-c);
+  box-shadow: 0 -7px 10px 3px black;
+  /* background: linear-gradient(
+    to bottom,
+    var(--body-bg-c) 0%,
+    black 60%
+  ); */
+}
+.app-footer::before {
+  top: 0; left: 0; right: 0;
+  height: 7px;
+  content: '';
+  background: var(--panel-c);
+  border-bottom: 1px solid black;
+}
+.app-footer::after {
+  bottom: 0; left: 0; right: 0;
+  position: absolute;
+  content: '';
+  height: 3px;
+  background: var(--app-ribbon-c);
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+.app-footer_copyright {
+  padding: 13px 0 20px 0;
+  font-size: 0.85rem;
+  color: hsl(197, 11%, 30%);
+  text-shadow: 1px 1px 0 black,
+               2px 2px 0 black
+}
+

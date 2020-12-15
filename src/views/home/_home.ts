@@ -1,37 +1,23 @@
-import { Vue, Prop, Component } from 'vue-property-decorator';
-import homeData from './home.json';
-import MarkdownPaging from '@/components/md-paging/MdPaging.vue';
-import { IPage } from '@/components/md-paging/md-paging.js';
+import mdHomePages from './home.json';
+import { computed, defineComponent } from "vue";
+import { useStore } from 'vuex';
+import { VuexStore } from '../../vuex/vuex-store';
+import titlebar from '../../components/titlebar.vue';
 
 
-
-@Component({
+export default defineComponent({
   components: {
-    MarkdownPaging
+    'title-bar': titlebar,
+  },
+  setup() {
+    const store = useStore<VuexStore>();
+    const state = store.state;
+
+    store.commit('page-title', mdHomePages[0].title);
+
+    return {
+      content: mdHomePages[0].content,
+      title: computed(() => state.pageTitle),
+    };
   }
-})
-export default class Home extends Vue {
-
-  // From route property /home/:page
-  @Prop() public page!: string;
-
-  public home: IPage[] = [];
-
-
-
-  created() {
-    this.home.push(
-      ...homeData.map(page => {
-        return {
-          title: page.title.split(':'),
-          content: page.content,
-          date: new Date(page.date)
-        }
-      })
-    )
-  }
-
-
-
-
-}
+});

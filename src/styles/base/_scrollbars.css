@@ -1,0 +1,18 @@
+/* FireFox compatibility */
+.--default-scrollbar {
+  scrollbar-color: var(--scrollbar-c) black;
+  scrollbar-width: thin;
+}
+
+.--default-scrollbar::-webkit-scrollbar {
+  width         : 7px;
+  background    : var(--scrollbar-track-c);
+  border-radius : 3px;
+}
+.--default-scrollbar::-webkit-scrollbar-thumb {
+  background    : var(--scrollbar-c);
+  border-radius : 3px;
+}
+.--default-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hov-c);
+}

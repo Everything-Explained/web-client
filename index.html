@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <title>Everything Explained</title>
+  <style>
+    .conditions {
+      position: absolute;
+      display: none;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding-left: 15px;
+      padding-right: 15px;
+      background-color: hsl(197, 30%, 6.5%);
+      z-index: 100;
+    }
+    .conditions .response {
+      display: block;
+      width: 100%;
+      font-family: Verdana, Geneva, sans-serif;
+      font-size: 28px;
+      font-weight: 300;
+      font-variant: small-caps;
+      letter-spacing: 2px;
+      line-height: 50px;
+      word-spacing: 1px;
+      color: hsl(0, 0%, 85%);
+      padding-top: 100px;
+      text-align: center;
+    }
+    .conditions span {
+      position: relative;
+      color: hsl(30, 100%, 72%);
+    }
+    .conditions .container {
+      position: relative;
+      display: block;
+      margin-top: 50px;
+      text-align: center;
+    }
+    .conditions a:link,
+    .conditions a:hover,
+    .conditions a:active,
+    .conditions a:visited {
+      text-decoration: none !important;
+      border: none !important;
+    }
+    .conditions .icon {
+      display: inline-block;
+      width: 180px;
+      height: 128px;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .conditions .choice {
+      padding: 0 5%;
+    }
+    .conditions .icon:before {
+      position: absolute;
+      display: block;
+      width: 180px;
+      font-family: Verdana, Geneva, sans-serif;
+      font-variant: small-caps;
+      letter-spacing: 1px;
+      word-spacing: 2px;
+      font-size: 24px;
+      opacity: 0;
+      color: hsl(126, 70%, 70%);
+      text-align: center;
+      top: 100%;
+      box-sizing: border-box;
+      white-space: pre;
+      transition: all 0.3s;
+    }
+    .conditions .icon:hover:before {
+      opacity: 1;
+    }
+    .conditions .firefox {
+      background-image: url("http://img04.deviantart.net/1fbf/i/2004/09/3/5/firefox_dock_icon_v3.png");
+    }
+    .conditions .firefox:before {
+      content: 'firefox';
+    }
+    .conditions .chrome {
+      background-image: url("http://icons.iconarchive.com/icons/franksouza183/fs/128/Apps-google-chrome-icon.png");
+    }
+    .conditions .chrome:before {
+      content: 'google chrome';
+    }
+    .conditions .opera {
+      background-image: url("//upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/128px-Opera_2015_icon.svg.png");
+    }
+    .conditions .opera:before {
+      content: 'opera';
+    }
+    .conditions .edge {
+      background-image: url("//upload.wikimedia.org/wikipedia/en/thumb/9/98/Microsoft_Edge_logo_%282019%29.svg/128px-Microsoft_Edge_logo_%282019%29.svg.png");
+    }
+    .conditions .edge:before {
+      content: 'microsoft edge';
+    }
+  </style>
+</head>
+<body class="--default-scrollbar">
+  <noscript>
+    <div class="conditions" style="display: inline-block">
+      <div class="response">
+        you must <span>enable javascript</span> for this site to
+        <span class="fail">operate properly</span>
+      </div>
+    </div>
+  </noscript>
+  <div id="NoCookies" class="conditions">
+    <div class="response">
+      you must <span>enable cookies</span>
+      for this site to <span>operate properly</span>
+    </div>
+  </div>
+  <div id="Failure" class="conditions">
+    <div class="response">
+      your <span>browser</span> has <span class="fail">failed</span> you<br/>
+      <div style="height: 20px"></div>
+      <div class="choice">you either need to <span>upgrade</span> or <span>download</span>
+      one of the following</div>
+    </div>
+    <div class="container">
+      <a href="https://chrome.google.com" class="chrome icon"></a>
+      <a href="https://www.mozilla.com" class="firefox icon"></a>
+      <a href="https://www.opera.com" class="opera icon"></a>
+      <a href="https://www.microsoft.com/edge" class="edge icon"></a>
+    </div>
+  </div>
+  <main id="app" class="app"></main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

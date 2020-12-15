@@ -1,0 +1,114 @@
+/*** Abbreviation LEGEND ***
+ * c  : color
+ * f  : font
+ * i  : italic/emphasis
+ * b  : bold/strong
+ * p  : paragraph
+ * md : markdown
+ * bg : background
+ * hv : hover
+ * sz : size
+ * sm : small
+ * lg : large
+ * bq : blockquote
+ * bdr: border
+ * hov: hover
+ * act: active
+ * dis: disabled
+ *
+ */
+
+:root {
+  --screen-large: 711px;
+  --screen-medium: 511px;
+  --screen-small: 380px;
+  --screen-tiny: 320px;
+
+  --primary-c    : hsl(0, 100%, 63%);  /* Tart Orange */
+  --compliment-c : hsl(197, 41%, 60%); /* Maximum blue */
+  --accent-2-c   : hsl(30, 100%, 75%); /* apricot */
+  --accent-3-c   : hsl(161, 67%, 73%); /* Magic Mint */
+  --accent-4-c   : hsl(47, 50%, 50%);  /* Gold */
+
+  --panel-c              : hsl(197, 11%, 25%);
+  --panel-hov-c          : hsl(197, 11%, 12%);
+  --sub-panel-c          : hsl(197, 11%, 10%);
+  --sub-panel-hov-c      : hsl(30, 11%, 15%);
+
+  --body-f-sz            : 1em;
+  --body-bg-c            : hsl(197, 11%, 6.5%);
+  --body-c               : hsl(197, 11%, 73%);
+  --selection-bg-c       : hsla(197, 9%, 30%, 0.993); /* hsla(0, 40%, 41%, 0.993); */
+  --scrollbar-c          : var(--panel-c);
+  --scrollbar-hov-c      : hsl(197, 9%, 43%);
+  --scrollbar-track-c    : hsl(0, 0%, 0%);
+
+
+  /*** Markdown ***/
+  --md-f-sz             : 1.27rem;
+  --md-mobile-f-sz      : 1.15rem;
+  --md-mobile-sm-f-sz   : 0.97rem;
+  --md-c                : var(--body-c);
+  --md-p-hov-c          : hsl(30, 11%, 80%);
+  --md-p-bg-c           : var(--sub-panel-c);
+  --md-p-bg-hov-c       : var(--sub-panel-hov-c);
+  --md-b-c              : hsl(197, 9%, 82%);
+  --md-p-hov-b-c        : hsl(30, 11%, 89%);
+  --md-i-c              : hsl(0, 74%, 77%);
+  --md-p-hov-i-c        : hsl(47, 80%, 70%);
+  --md-b-i-c            : hsl(197, 45%, 69%);
+  --md-link-c           : var(--md-b-c);
+  --md-link-hov-c       : var(--md-p-hov-i-c);
+  --md-p-hov-link-c     : var(--md-p-hov-b-c);
+  --md-link-bdr-c       : var(--md-i-c);
+  --md-p-hov-link-bdr-c : var(--md-link-hov-c);
+  --md-bq-c             : hsl(47, 68%, 61%);
+  --md-bq-bg-c          : hsl(197, 20%, 5%);
+  --md-code-c           : hsl(0, 0%, 80%);
+  --md-code-bg-c        : hsl(0, 0%, 25%);
+  --md-code-hov-c       : hsl(279, 20%, 80%);
+  --md-code-bg-hov-c    : hsl(278, 25%, 47%);
+
+
+  /*** App Styles ***/
+  --app-ribbon-c            : hsl(0, 100%, 64%);
+  --app-head-f-sz           : 5rem;
+  --app-head-c              : var(--app-ribbon-c);
+  --app-titlebar-c          : hsl(197, 11%, 83%);
+  --app-titlebar-icon-c     : hsl(197, 11%, 70%);
+  --app-titlebar-icon-hov-c : hsl(0, 70%, 64%);
+
+
+  /*** Menu ***/
+  --menu-bg-c              : var(--body-bg-c);
+  --menu-header-c          : hsl(47, 70%, 60%);
+  --menu-header-bg-c       : var(--sub-panel-c);
+  --menu-exit-icon-c       : hsl(197, 12%, 70%);
+  --menu-exit-icon-hov-c   : var(--app-ribbon-c);
+  --menu-item-c            : var(--md-c);
+  --menu-item-hov-c        : hsl(197, 11%, 88%);
+  --menu-item-bdr-c        : var(--body-bg-c);
+  --menu-active-item-c     : hsl(47, 80%, 63%);
+  --menu-active-item-bg-c  : var(--sub-panel-hov-c);
+  --menu-active-item-bdr-c : black;
+
+
+  /*** Blog Styles ***/
+  --blog-entry-bg-c          : var(--sub-panel-c);
+  --blog-entry-bg-hov-c      : var(--sub-panel-hov-c);
+  --blog-entry-title-c       : hsl(47, 53%, 62%);
+  --blog-entry-title-hov-c   : var(--md-p-hov-i-c);
+  --blog-entry-stat-c        : hsl(197, 11%, 55%);
+  --blog-entry-hov-stat-c    : var(--md-p-hov-c);
+  --blog-entry-icon-c        : hsl(198, 11%, 66%);
+  --blog-entry-hov-icon-c    : var(--md-p-hov-i-c);
+  --blog-entry-hov-snip-c    : var(--md-p-hov-c);
+  --blog-entry-hov-snip-bg-c : var(--sub-panel-hov-c);
+  --blog-entry-hov-snip-i-c  : var(--md-p-hov-i-c);
+  --blog-entry-hov-snip-b-c  : var(--md-p-hov-b-c);
+
+  /*** red33m Styles ***/
+  --red33m-video-hov-c: var(--menu-active-item-c);
+
+  --switch-off-c: hsl(0, 100%, 67%);
+}

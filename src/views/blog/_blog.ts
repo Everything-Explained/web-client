@@ -1,51 +1,96 @@
+import { defineComponent, Ref, ref, watch } from "vue";
+import blogPosts from './blog.json';
+import icon from '../../components/icon.vue';
+import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-utils";
+import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { VuexStore } from "../../vuex/vuex-store";
+import titlebar from '../../components/titlebar.vue';
 
-import { Prop, Vue, Component } from 'vue-property-decorator';
-import MarkdownPaging from '@/components/md-paging/MdPaging.vue';
-import { IPage } from '@/components/md-paging/md-paging.js';
-import Utils from '@/libs/utils';
+
+type BlogPost = typeof blogPosts[0];
+type BlogPostRef = Ref<BlogPost|null>;
+type Route = RouteLocationNormalizedLoaded;
+
+const extractP = /<p>.*<\/p>/;
 
 
-
-@Component({
+export default defineComponent({
   components: {
-    MarkdownPaging
-  }
-})
-export default class Blog extends Vue {
+    icon,
+    'title-bar': titlebar,
+  },
 
-  // From route property /blog/:page
-  @Prop() public page!: string;
-
-  public blog: IPage[] = [];
-
-
-
-  async created() {
-    let client = contentful.createClient({
-      accessToken: '87e615a6111bb8d7e772187bdf84f7fcd649c086da0043beac321cf52754556a',
-      space: 's2rp7j0ifide'
-    })
-    let blogdata = await client.getEntries({ order: '-sys.createdAt' });
-
-    let blogItems = blogdata.items.map(item => {
-      return {
-        title: item.fields.title.split(':'),
-        content: item.fields.body,
-        date: new Date(item.sys.createdAt)
+  setup() {
+    const activePost = ref<BlogPost|null>(null);
+    const router     = useRouter();
+    const route      = useRoute();
+    const postURI    = route.params.post as string|undefined;
+    const store      = useStore<VuexStore>();
+    const title      = ref('Blog Entries')
+    ;
+    const sortedPosts = sortPosts(blogPosts);
+    const shortPosts  = shortenPostsContent(sortedPosts)
+    ;
+    const displayBlogPost = (uri: string) => {
+      const post = sortedPosts.find(post => post.uri == uri);
+      if (!post) { router.push('/404'); return; }
+      title.value = post.title;
+      activePost.value = post;
+    };
+    // onBlogRouteChange
+    watch(() => route.params,
+      async (params) => {
+        if (!route.path.includes('/blog')) return;
+        if (!params.post) {
+          activePost.value = null;
+          title.value = 'Blog Entires';
+          return;
+        }
+        displayBlogPost(params.post as string);
       }
-    })
-    this.blog.push(...blogItems);
+    );
+    if (postURI) displayBlogPost(postURI);
+    store.commit('page-title', title.value)
+    ;
+    function goTo(uri: string) {
+      router.push(`/blog/${uri}`);
+    }
+
+    return {
+      posts: shortPosts,
+      activePost,
+      goTo,
+      onBeforeTransLeave: () => store.commit('page-title', title.value)
+    };
+  },
+
+
+  methods: {
+    formatDate(isoDateStr: string) {
+      return dateToShortMDY(isoDateStr);
+    },
+    formatTime(isoDateStr: string) {
+      return dateTo12HourTimeStr(isoDateStr);
+    }
   }
-
-  async beforeRouteEnter(to, from, next) {
-    await Utils.loadScript(
-      'contentfulLoaded',
-      '//cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js'
-    )
-    next();
-  }
+});
 
 
 
+function sortPosts(posts: BlogPost[]) {
+  return posts.sort((d1, d2) => (
+    new Date(d2.date).getTime() - new Date(d1.date).getTime()
+  ));
+}
 
+function shortenPostsContent(posts: BlogPost[]) {
+  return posts.map(post => {
+    const snippet = extractP.exec(post.content);
+    if (!snippet) throw Error('blog::snippet regex failed');
+    return {
+      ...post,
+      content: snippet[0]
+    };
+  });
 }

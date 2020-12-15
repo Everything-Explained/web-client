@@ -1,6 +1,21 @@
+# Extraneous
 .DS_Store
 node_modules
+src/styles/fonts/font-files
+test.md
+
+# Built Files/Folders
 /dist
+build/*.js
+src/views/home/*.json
+src/views/literature/*.json
+src/views/home/*.json
+src/views/blog/*.json
+src/views/faq/*.json
+src/views/red33m/red33m.json
+src/views/blog/*.md
+src/views/red33m/*.md
+src/styles/main.css
 
 # local env files
 .env.local
@@ -10,6 +25,10 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+
+# Sensitive Config Files
+build/build-config.json
 
 # Editor directories and files
 .idea
@@ -18,4 +37,5 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
-*.sw*
+*.sw?
+*.map

@@ -1,0 +1,66 @@
+.app-menu {
+  top: 0; bottom: 0;
+  position     : absolute;
+  color        : inherit;
+  background   : var(--body-bg-c);
+  border-right : 3px solid black;
+  transform    : translateX(-100%);
+  z-index      : 3;
+  transition: transform .6s ease;
+}
+.app-menu.--opened {
+  transform: translateX(0%);
+}
+
+.app-menu__header {
+  padding        : 0.5rem 10px 0.1rem 10px;
+  padding-right  : 3.5rem;
+  color          : var(--menu-header-c);
+  font-size      : 1.7rem;
+  font-weight    : 400;
+  background     : var(--menu-header-bg-c);
+  text-shadow    : 3px 3px 0 black,
+                   2px  0  0 black,
+                    0  3px 0 black
+                 ;
+  box-shadow: 0 4px 5px -1px black;
+  z-index        : 2;
+}
+
+.app-menu__header_exit-icon {
+  top: 5px; right: 1px;
+  position    : absolute;
+  font-size   : 1.6rem;
+  color       : var(--menu-exit-icon-c);
+  user-select : none;
+  cursor      : pointer;
+  transition  : color .3s ease;
+}
+.app-menu__header_exit-icon:hover {
+  color: var(--menu-exit-icon-hov-c);
+}
+
+.app-menu_item a {
+  display       : block;
+  padding       : 2px 2rem;
+  box-sizing    : border-box;
+  font-size     : 1.35rem;
+  text-align    : center;
+  color         : var(--menu-item-c);
+  border-top    : 2px solid var(--menu-item-bdr-c);
+  border-bottom : 2px solid var(--menu-item-bdr-c);
+  transition    : color .3s ease,
+                  border .3s ease,
+                  background .3s ease;
+  user-select   : none;
+}
+.app-menu_item a:hover {
+  color: var(--menu-item-hov-c);
+}
+.app-menu_item a.router-link-active {
+  color         : var(--menu-active-item-c);
+  background    : var(--menu-active-item-bg-c);
+  border-top    : 2px solid var(--menu-active-item-bdr-c);
+  border-bottom : 2px solid var(--menu-active-item-bdr-c);
+  z-index       : 1;
+}

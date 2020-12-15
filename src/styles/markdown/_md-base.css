@@ -1,0 +1,187 @@
+.md {
+  max-width   : 1024px;
+  margin      : 0 auto;
+  margin-top: 10px;
+  font-weight : 300;
+  font-size   : var(--md-f-sz);
+  color       : var(--md-c);
+}
+
+
+
+.md h1, .md h2,
+.md h3, .md h4,
+.md h5 {
+  margin-top     : 20px;
+  color          : hsl(197, 20%, 80%);
+  font-variant   : small-caps;
+  font-weight    : 300;
+  letter-spacing : 1px;
+}
+
+.md h1, .md h2, .md h3 {
+  margin-left: 25px;
+  font-size: 2.25rem;
+}
+
+.md h2, .md h3 {
+  font-size     : 1.8rem;
+}
+
+
+.md p {
+  display                 : block;
+  margin-left             : 10px;
+  padding                 : 7px 13px;
+  line-height             : 27px;
+  background              : var(--md-p-bg-c);
+  border-top-right-radius : 6.5px;
+  border-top-left-radius  : 3.5px;
+  transition              : background 0.25s, color 0.25s;
+}
+.md p + p {
+  margin-top: 15px;
+}
+.md > p {
+  margin-bottom: 7px;
+  box-shadow: 0 10px 7px -5px hsla(0, 0%, 0%, 0.4);
+}
+.md > p:empty {
+  display: none;
+}
+.md > p:hover {
+  background-color : var(--md-p-bg-hov-c);
+  color            : var(--md-p-hov-c);
+}
+
+
+.md b,
+.md strong {
+  font-weight : 400;
+  color       : var(--md-b-c);
+}
+.md > p:hover strong {
+  color: var(--md-p-hov-b-c);
+}
+
+
+.md i,
+.md em {
+  color      : var(--md-i-c);
+  font-style : normal;
+}
+.md > p:hover em {
+  color: var(--md-p-hov-i-c);
+}
+
+
+.md a:link,
+.md a:active,
+.md a:visited {
+  color           : var(--md-link-c);
+  text-decoration : none;
+  font-weight: 400;
+  border-bottom   : 1px solid var(--md-link-bdr-c);
+  transition      : border .25s ease, color .25s ease;
+}
+.md > p:hover a:link,
+.md > p:hover a:active,
+.md > p:hover a:visited {
+  color: var(--md-p-hov-link-c);
+  border-color: var(--md-p-hov-link-bdr-c);
+}
+.md > p:hover a:hover {
+  color: var(--md-link-hov-c);
+}
+
+.md blockquote > p {
+  margin           : 2.7rem auto;
+  padding          : 8px 2.3rem 8px 2.5rem;
+  width            : 85%;
+  color            : var(--md-bq-c);
+  font-size        : 1.5rem;
+  background-color : var(--md-bq-bg-c);
+  quotes           : '“' '”';
+  border           : 4px solid black;
+  outline          : 2px solid hsl(197, 12%, 12%);
+}
+/*
+ * Should be used as an authors name at
+ * the end of a blockquote
+ */
+.md blockquote > p i,
+.md blockquote > p em {
+  display        : block;
+  margin-top     : 8px;
+  font-variant   : small-caps;
+  letter-spacing : 1px;
+  color          : var(--md-bq-c);
+}
+.md blockquote > p::before,
+.md blockquote > p::after {
+  position       : absolute;
+  font-size      : 6rem;
+  vertical-align : baseline;
+  color          : hsl(197, 12%, 65%);
+}
+.md blockquote > p::before {
+  margin-top  : 28px;    /* blockquote (margin-top + padding-top)  */
+  margin-left : -2.5rem; /* blockquote (padding-left * -1) */
+  content     : open-quote;
+}
+.md blockquote > p::after {
+  right: 4px; bottom: -20px;
+  content: close-quote;
+}
+
+
+.md code {
+  padding       : 2px 3px 0 3px;
+  color         : var(--md-code-c);
+  font-family   : "Cousine";
+  background    : var(--md-code-bg-c);
+  border        : 1px solid black;
+  font-size     : 1.125rem;
+  border-radius : 5px;
+  white-space   : nowrap;
+  word-spacing  : -3px;
+}
+.md > p:hover code {
+  background : var(--md-code-bg-hov-c);
+  color      : var(--md-code-hov-c);
+}
+
+
+.md > p > img {
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  max-width: 100%;
+}
+.md > p > img + br {
+  display: none;
+}
+
+
+/* ### Embeded Video Styles ### */
+.md > .embed-responsive {
+  margin: 20px auto;
+  width: 90%;
+  height: 460px;
+}
+.md > .embed-responsive iframe {
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+
+.md b,  .md i,
+.md em, .md dt,
+.md dd, .md code,
+.md strong, .md blockquote {
+  transition: color 0.25s ease, background 0.25s ease;
+}

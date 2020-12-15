@@ -1,0 +1,21 @@
+.i404__error-container {
+  text-align: center;
+}
+.i404__h1 {
+  padding-top     : 20%;
+  padding-bottom  : 100%;
+  font-weight    : 300;
+  letter-spacing : 2px;
+  word-spacing   : 2px;
+  font-size      : 2.5rem;
+  color          : hsl(0, 0%, 84%);
+}
+.i404__fail-text {
+  color : hsl(324, 100%, 75%);
+}
+.i404__info-text {
+  color : hsl(126, 70%, 70%);
+}
+/* .error-container img {
+  margin-top: 20px;
+} */
