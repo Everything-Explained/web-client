@@ -7,6 +7,7 @@ export default defineComponent({
     legend: String,
     leftText: String,
     rightText: String,
+    prevent: Boolean,
   },
   setup(props) {
     const callback = props.callback;
@@ -19,11 +20,12 @@ export default defineComponent({
     const legend = props.legend ?? 'Legend';
 
     const toggle = (val: boolean) => {
+      if (props.prevent) return;
       if (val == state.value) return;
       state.value = val;
       callback(state.value);
     };
 
-    return { leftText, rightText, state, legend, toggle };
+    return { leftText, rightText, state, legend, toggle, props };
   }
 });

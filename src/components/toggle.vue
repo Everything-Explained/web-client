@@ -2,10 +2,29 @@
   <fieldset>
     <legend>{{ legend }}</legend>
     <div class="toggle">
-      <input type="radio" name="sizeBy" value="weight" id="sizeWeight" checked="checked" />
-      <label @click="toggle(false)" for="sizeWeight">{{ leftText }}</label>
-      <input type="radio" name="sizeBy" value="dimensions" id="sizeDimensions" />
-      <label @click="toggle(true)" for="sizeDimensions">{{ rightText }}</label>
+      <input
+        type="radio"
+        name="toggle"
+        id="toggleLeft"
+        checked="checked"
+        :disabled='props.prevent'
+      />
+      <label
+        :class="{ '--wait': props.prevent }"
+        @click="toggle(false)"
+        for="toggleLeft"
+      >{{ leftText }}</label>
+      <input
+        type="radio"
+        name="toggle"
+        id="toggleRight"
+        :disabled='props.prevent'
+      />
+      <label
+        :class="{ '--wait': props.prevent }"
+        @click="toggle(true)"
+        for="toggleRight"
+      >{{ rightText }}</label>
     </div>
   </fieldset>
 </template>

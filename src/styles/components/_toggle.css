@@ -65,6 +65,10 @@ fieldset legend {
   border-left: none;
 }
 
+.toggle label.--wait {
+  cursor: not-allowed;
+}
+
 /* .toggle input:hover + label {
   color: hsl(0, 74%, 70%);
 }
