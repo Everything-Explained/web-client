@@ -6,6 +6,7 @@
       :leftText='"Oldest"'
       :rightText='"Latest"'
       :callback='toggle'
+      :prevent='isLoading'
       class='red33m-toggle'
     ></toggle>
     <div class="red33m-video-list">

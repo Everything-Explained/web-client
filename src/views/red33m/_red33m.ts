@@ -17,12 +17,21 @@ export default defineComponent({
   setup() {
     const store = useStore<VuexStore>();
     const videos = ref(videoIds);
+    const isLoading = ref(false);
 
     store.commit('page-title', 'Red33m Videos');
 
-    const toggle = () => { videos.value.reverse(); };
+    const toggle = () => {
+      if (isLoading.value) return;
+      videos.value.reverse();
+      // Wait for radio element to be "checked"
+      setTimeout(() => isLoading.value = true, 1);
+      // Debounce toggling
+      setTimeout(() => isLoading.value = false, 500);
+    };
 
-    return { videos, toggle };
+
+    return { videos, toggle, isLoading };
   },
   methods: {
     openVideo(url: string) {
