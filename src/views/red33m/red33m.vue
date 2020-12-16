@@ -14,7 +14,7 @@
         :key="i"
         class="red33m-video"
         :data-title='v[1]'
-        @click="openVideo('//www.youtube.com/watch?v='+ v[0] +'&rel=0')"
+        @click="openVideo('//www.youtube-nocookie.com/embed/'+ v[0] +'?rel=0')"
       >
         <lazy-img
           :src="'//img.youtube.com/vi/' + v[0] + '/0.jpg'"
