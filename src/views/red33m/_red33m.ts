@@ -24,10 +24,10 @@ export default defineComponent({
     const toggle = () => {
       if (isLoading.value) return;
       videos.value.reverse();
-      // Wait for radio element to be "checked"
+      // Wait for toggle input element to be "checked"
       setTimeout(() => isLoading.value = true, 1);
       // Debounce toggling
-      setTimeout(() => isLoading.value = false, 500);
+      setTimeout(() => isLoading.value = false, 300);
     };
 
 
