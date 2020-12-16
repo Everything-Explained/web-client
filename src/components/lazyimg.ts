@@ -43,6 +43,7 @@ export default defineComponent({
       // Reload image if src changes
       watch(() => props.src, () => {
         loaded.value = false;
+        img.value!.src = '';
         observeImage();
       });
     });
