@@ -12,7 +12,7 @@ export default defineComponent({
     if (!props?.src)
       throw Error('LazyImg::missing SRC attribute')
     ;
-    const imgRef = ref<HTMLImageElement>();
+    const img = ref<HTMLImageElement>();
     const containerRef = ref<HTMLElement>();
     const loaded = ref(false);
     const loading = ref(false)
@@ -22,7 +22,7 @@ export default defineComponent({
     const loadImage = (entries: IntersectionObserverEntry[], obs: IntersectionObserver) => {
       if (entries[0].isIntersecting) {
         loading.value = true;
-        imgRef.value!.src = props.src!;
+        img.value!.src = props.src!;
         obs.unobserve(containerRef.value!);
       }
     };
@@ -31,8 +31,8 @@ export default defineComponent({
     let loadEvents = true;
     const observeImage = () => {
       if (loadEvents) {
-        imgRef.value!.addEventListener('transitionend', hidePreloader);
-        imgRef.value!.addEventListener('load', onImgLoad);
+        img.value!.addEventListener('transitionend', hidePreloader);
+        img.value!.addEventListener('load', onImgLoad);
         loadEvents = false;
       }
       observer.observe(containerRef.value!);
@@ -48,6 +48,6 @@ export default defineComponent({
     });
 
 
-    return { imgRef, containerRef, loaded, loading };
+    return { imgRef: img, containerRef, loaded, loading };
   }
 });
