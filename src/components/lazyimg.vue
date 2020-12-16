@@ -2,7 +2,7 @@
 <template>
   <div ref='containerRef' class="lazyimg">
     <preloader
-      v-if="loading"
+      v-if="showPreloader"
       id='LazyPreloader'
       class="lazyimg_preloader"
       :class="{ '--disabled': loaded }"
