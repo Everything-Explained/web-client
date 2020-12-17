@@ -89,11 +89,12 @@
 }
 
 .blog-display_image-header {
-  display     : block;
-  margin-top  : 25px;
-  margin-left : 7px;
-  padding     : 7px 13px;
-  line-height : 27px;
+  display      : block;
+  max-width    : 1024px;
+  margin       : 25px auto 0 auto;
+  padding      : 7px 13px;
+  padding-left : 17px;
+  line-height  : 27px;
 }
 
 .blog-display_image-header img {
