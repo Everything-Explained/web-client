@@ -18,7 +18,7 @@ export default defineComponent({
     const videos = ref(videoIds);
     const isLoading = ref(false);
 
-    store.commit('page-title', 'RED33M Videos');
+    store.commit('page-title', 'RED33M');
 
     const toggle = () => {
       if (isLoading.value) return;

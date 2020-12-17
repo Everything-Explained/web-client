@@ -3,6 +3,10 @@
   width: 100%;
 }
 
+.red33m .title-bar__text {
+  color: hsl(47, 100%, 61%);
+}
+
 .red33m-toggle {
   margin-top: 1rem;
   width: 235px;
@@ -31,7 +35,7 @@
 .red33m-video:hover {
   color: var(--red33m-video-hov-c);
 }
-/* Title */
+/* Video Title */
 .red33m-video::after {
   position: absolute;
   bottom: -40px;
