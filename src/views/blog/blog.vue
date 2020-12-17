@@ -21,10 +21,13 @@
               :type='"clock"'
             ></icon>{{ formatTime(post.date)}}
           </div>
-          <article class="md blog-entry__snippet" v-html="post.content"></article>
+          <article class="blog-entry__summary" v-html="post.summary"></article>
         </div>
       </div>
       <div class="blog-display" v-else-if="activePost" key="postActive">
+        <div v-if="activePost.image_header" class="blog-display_image-header">
+          <img :src="activePost.image_header" >
+        </div>
         <article class="md blog_content" v-html="activePost.content"></article>
       </div>
     </transition>

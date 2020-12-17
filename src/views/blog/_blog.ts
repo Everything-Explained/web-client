@@ -1,18 +1,14 @@
-import { defineComponent, Ref, ref, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import blogPosts from './blog.json';
 import icon from '../../components/icon.vue';
 import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-utils";
-import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { VuexStore } from "../../vuex/vuex-store";
 import titlebar from '../../components/titlebar.vue';
 
 
 type BlogPost = typeof blogPosts[0];
-type BlogPostRef = Ref<BlogPost|null>;
-type Route = RouteLocationNormalizedLoaded;
-
-const extractP = /<p>.*<\/p>/;
 
 
 export default defineComponent({
@@ -29,11 +25,8 @@ export default defineComponent({
     const store      = useStore<VuexStore>();
     const title      = ref('Blog Entries')
     ;
-    const sortedPosts = sortPosts(blogPosts);
-    const shortPosts  = shortenPostsContent(sortedPosts)
-    ;
     const displayBlogPost = (uri: string) => {
-      const post = sortedPosts.find(post => post.uri == uri);
+      const post = blogPosts.find(post => post.uri == uri);
       if (!post) { router.push('/404'); return; }
       title.value = post.title;
       activePost.value = post;
@@ -58,7 +51,7 @@ export default defineComponent({
     }
 
     return {
-      posts: shortPosts,
+      posts: blogPosts.reverse(), // order by latest first
       activePost,
       goTo,
       onBeforeTransLeave: () => store.commit('page-title', title.value)
@@ -75,22 +68,3 @@ export default defineComponent({
     }
   }
 });
-
-
-
-function sortPosts(posts: BlogPost[]) {
-  return posts.sort((d1, d2) => (
-    new Date(d2.date).getTime() - new Date(d1.date).getTime()
-  ));
-}
-
-function shortenPostsContent(posts: BlogPost[]) {
-  return posts.map(post => {
-    const snippet = extractP.exec(post.content);
-    if (!snippet) throw Error('blog::snippet regex failed');
-    return {
-      ...post,
-      content: snippet[0]
-    };
-  });
-}
