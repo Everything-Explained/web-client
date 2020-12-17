@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/red33m',
     name: 'red33m',
     component: () => import(/* webpackChunkName: "red33m" */ '../views/red33m/red33m.vue'),
-    meta: { display: true, order: 3, title: 'red33m' }
+    meta: { display: true, order: 3, title: 'RED33M' }
   },
   // {
   //   path: '/test',
