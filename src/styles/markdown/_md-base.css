@@ -32,12 +32,19 @@
 .md p {
   display                 : block;
   margin-left             : 10px;
+  margin-right            : 5px;
   padding                 : 7px 13px;
   line-height             : 27px;
   background              : var(--md-p-bg-c);
   border-top-right-radius : 6.5px;
   border-top-left-radius  : 3.5px;
   transition              : background 0.25s, color 0.25s;
+}
+/* Maintain height with floated images */
+.md p::after {
+  clear: both;
+  content: '';
+  display: block;
 }
 .md p + p {
   margin-top: 15px;
@@ -153,11 +160,11 @@
 
 
 .md > p > img {
-  display: block;
-  margin: 0 auto;
-  margin-top: 10px;
-  margin-bottom: 15px;
+  display: inline;
+  float: left;
+  margin: 15px 15px 2px 0;
   max-width: 100%;
+  box-shadow: 0 0 10px 3px hsla(0, 0%, 0%, 0.4);
 }
 .md > p > img + br {
   display: none;
