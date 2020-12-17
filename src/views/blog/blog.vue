@@ -34,4 +34,4 @@
   </div>
 </template>
 
-<script lang='ts' src='./_blog.ts'></script>
+<script lang='ts' src='./blog.ts'></script>

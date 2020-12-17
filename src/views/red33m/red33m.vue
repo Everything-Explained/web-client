@@ -26,4 +26,4 @@
   </div>
 </template>
 
-<script lang='ts' src='./_red33m'></script>
+<script lang='ts' src='./red33m.ts'></script>

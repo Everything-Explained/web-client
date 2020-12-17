@@ -6,8 +6,7 @@ import videoIds from './videos.json';
 import lazyimg from '../../components/lazyimg.vue';
 import toggle from '../../components/toggle.vue';
 
-// thumbnail API
-// https://img.youtube.com/vi/MkmtRgFOE7Y/0.jpg
+
 export default defineComponent({
   components: {
     'title-bar': titlebar,

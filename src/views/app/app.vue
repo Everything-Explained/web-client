@@ -26,4 +26,4 @@
   </div>
 </template>
 
-<script lang='ts' src='./_app.ts'></script>
+<script lang='ts' src='./app.ts'></script>
