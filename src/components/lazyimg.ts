@@ -8,25 +8,35 @@ export default defineComponent({
     preloader,
   },
   props: {
-    src: String
+    src: String,
+    asset: Boolean,
   },
   setup(props) {
     if (!props?.src)
       throw Error('LazyImg::missing SRC attribute')
     ;
-    const img           = ref<HTMLImageElement>();
+    const imgRef           = ref<HTMLImageElement>();
     const containerRef  = ref<HTMLElement>();
     const loaded        = ref(false);
     const showPreloader = ref(false);
     const store         = useStore<VuexStore>();
     const imageCache    = computed(() => store.state.lazyimgCache);
     const newSrc        = computed(() => props.src!);
+    const img           = computed(() => imgRef.value!);
+    const isAsset       = props.asset ?? false;
 
     const isImageCached = (uri: string) => {
       const uriSlug = uri ? uri.split('//', 2)[1] : uri;
       return imageCache.value.find(v => v.includes(uriSlug));
     };
-    const updateImageSrc = () => img.value!.src = newSrc.value!;
+    const detectAssetSize = () => {
+      if (isAsset) {
+        const [width, height] = newSrc.value.split('/')[5].split('x');
+        img.value.height = parseInt(height);
+        img.value.width = parseInt(width);
+      }
+    };
+    const updateImageSrc = () => img.value.src = newSrc.value!;
     const loadImage = (entries: IntersectionObserverEntry[], obs: IntersectionObserver) => {
       if (entries[0].isIntersecting) {
         if (!isImageCached(newSrc.value)) {
@@ -45,24 +55,25 @@ export default defineComponent({
     let loadEvents = true;
     const observeImage = () => {
       if (loadEvents) {
-        img.value!.addEventListener('load', () => loaded.value = true);
-        img.value!.addEventListener('animationend', () => showPreloader.value = false);
+        img.value.addEventListener('load', () => loaded.value = true);
+        img.value.addEventListener('animationend', () => showPreloader.value = false);
         loadEvents = false;
       }
       observer.observe(containerRef.value!);
     };
 
     onMounted(() => {
+      detectAssetSize();
       observeImage();
       // Reload image if src changes
       watch(() => props.src, () => {
-        img.value!.src = '';
+        img.value.src = '';
         loaded.value = false;
         observeImage();
       });
     });
 
 
-    return { imgRef: img, containerRef, loaded, showPreloader };
+    return { imgRef, containerRef, loaded, showPreloader, imageCache };
   }
 });
