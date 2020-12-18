@@ -3,6 +3,12 @@
   .red33m-video { width: 210px; }
   .red33m-video_thumbnail-container { height: calc(210px * 0.5625); }
   .red33m-video::after { font-size: 1.1rem; }
+  .red33m-video .lazyimg_preloader {
+    min-width: 100px;
+    min-height: 100px;
+  }
+  .red33m-video .lazyimg_preloader::before,
+  .red33m-video .lazyimg_preloader::after { border-width: 4px; }
   /* .red33m-video_thumbnail-container img { margin-bottom: -50px; } */
 }
 /*** 511px ***/
