@@ -15,7 +15,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore<VuexStore>();
-    const videos = ref(videoIds);
+    const videos = ref(videoIds.slice());
     const isLoading = ref(false);
 
     store.commit('page-title', 'RED33M');
