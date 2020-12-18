@@ -26,7 +26,7 @@
       </div>
       <div class="blog-display" v-else-if="activePost" key="postActive">
         <div v-if="activePost.image_header" class="blog-display_image-header">
-          <lazy-image :src="activePost.image_header" :asset='true'>
+          <lazy-image :src="activePost.image_header" :asset='true'></lazy-image>
         </div>
         <article class="md blog_content" v-html="activePost.content"></article>
       </div>

@@ -53,7 +53,7 @@ export default defineComponent({
     }
 
     return {
-      posts: blogPosts.reverse(), // order by latest first
+      posts: blogPosts.slice().reverse(), // order by latest first
       activePost,
       goTo,
       onBeforeTransLeave: () => store.commit('page-title', title.value)
