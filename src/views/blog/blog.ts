@@ -6,6 +6,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { VuexStore } from "../../vuex/vuex-store";
 import titlebar from '../../components/titlebar.vue';
+import lazyimg from '../../components/lazyimg.vue';
 
 
 type BlogPost = typeof blogPosts[0];
@@ -15,6 +16,7 @@ export default defineComponent({
   components: {
     icon,
     'title-bar': titlebar,
+    'lazy-image': lazyimg,
   },
 
   setup() {
