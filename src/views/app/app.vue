@@ -17,8 +17,13 @@
         </router-view>
         <footer class="app-footer">
           <span class="app-footer_copyright">
-           Copyright &#169; 2020 - 2021 <br/>
-           Everything Explained, All Rights Reserved
+            <span>Copyright &#169; 2020 - 2021</span><br/>
+            <a
+              rel="license"
+              href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+              target="_blank"
+            >Creative Commons BY-NC-SA-4.0 License</a><br/>
+            <span>Everything Explained, Some Rights Reserved</span> <br>
           </span>
         </footer>
       </div>
