@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home       from '../views/home/home.vue';
 import i404       from '../views/errors/i404.vue';
-import Test from '../views/test/test.vue';
+// import Test from '../views/test/test.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/red33m',
     name: 'red33m',
     component: () => import(/* webpackChunkName: "red33m" */ '../views/red33m/red33m.vue'),
-    meta: { display: true, order: 3, title: 'RED33M' }
+    meta: { display: false, order: 3, title: 'RED33M' }
   },
   // {
   //   path: '/test',
