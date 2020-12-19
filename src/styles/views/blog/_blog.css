@@ -8,6 +8,14 @@
   user-select    : none;
 }
 
+.blog .temp {
+  margin: 100px auto;
+  padding-bottom: 700px;
+  font-size: 2rem;
+  color: hsl(47, 80%, 63%);
+  text-align: center;
+}
+
 .blog-entry {
   margin-bottom    : 1rem;
   background-color : var(--blog-entry-bg-c);
