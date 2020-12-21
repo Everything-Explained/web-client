@@ -49,9 +49,9 @@
   color         : var(--menu-item-c);
   border-top    : 2px solid var(--menu-item-bdr-c);
   border-bottom : 2px solid var(--menu-item-bdr-c);
-  transition    : color .3s ease,
-                  border .3s ease,
-                  background .3s ease;
+  transition    : color .35s ease,
+                  border .35s ease,
+                  background .35s ease;
   user-select   : none;
 }
 .app-menu_item a:hover {

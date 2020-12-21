@@ -1,5 +1,6 @@
 @import './_style-reset.css';
 @import './_variables.css';
+@import './_defaults.css';
 @import './_animations.css';
 @import './_scrollbars.css';
 @import '../markdown/_md.css';

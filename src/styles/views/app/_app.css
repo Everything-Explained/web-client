@@ -1,23 +1,4 @@
 
-body,
-html {
-  height                  : 100%;
-  color                   : var(--body-c);
-  font-size               : var(--body-f-sz);
-  background              : var(--body-bg-c);
-  /* DO NOT REMOVE - menu and scroll depend on this */
-  overflow                : hidden;
-  /**************************************************/
-  -webkit-font-smoothing  : antialiased;
-  -moz-osx-font-smoothing : grayscale;
-}
-body {
-  margin-right: 5px;
-  font-family: 'Nunito Sans', 'Arial', 'Verdana';
-  font-weight: 300;
-  overflow-y: auto;
-}
-
 ::selection {
   background: var(--selection-bg-c);
 }
@@ -122,9 +103,24 @@ body {
 }
 .app-footer_copyright {
   padding: 13px 0 20px 0;
-  font-size: 0.85rem;
+  font-size: 0.87rem;
   color: hsl(197, 11%, 35%);
   text-shadow: 1px 1px 0 black,
                2px 2px 0 black
+  ;
+}
+.app-footer_copyright a:link,
+.app-footer_copyright a:visited {
+  display: inline-block;
+  margin: 5px 0;
+  color: hsl(197, 11%, 50%);
+  text-shadow: none;
+  text-decoration: underline;
+  /* border-bottom: 1px solid hsl(197, 11%, 50%); */
+  transition: color .3s ease, border .3s ease;
+}
+.app-footer_copyright a:hover {
+  color: hsl(0, 50%, 60%);
+  border-color: hsl(0, 50%, 60%);
 }
 

@@ -30,6 +30,7 @@
   margin-bottom: 70px;
   user-select: none;
   cursor: pointer;
+  transform   : translateZ(0);
   transition: color .3s ease;
 }
 .red33m-video:hover {
