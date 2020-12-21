@@ -27,6 +27,7 @@ export default defineComponent({
     const store      = useStore<VuexStore>();
     const title      = ref('Blog Entries')
     ;
+    const sortedPosts = blogPosts.sort((p1, p2) => Date.parse(p2.date) - Date.parse(p1.date));
     const displayBlogPost = (uri: string) => {
       const post = blogPosts.find(post => post.uri == uri);
       if (!post) { router.push('/404'); return; }
@@ -53,7 +54,7 @@ export default defineComponent({
     }
 
     return {
-      posts: blogPosts.slice().reverse(), // order by latest first
+      posts: sortedPosts, // order by latest first
       activePost,
       goTo,
       onBeforeTransLeave: () => store.commit('page-title', title.value)
