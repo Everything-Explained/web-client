@@ -23,7 +23,7 @@ const getAMPM = (hours: number) => (
 const getDateStrings = (date: ISODateStr|Date) => {
   const dateObj = toDateObj(date);
   return {
-    month: padTime(dateObj.getMonth()),
+    month: padTime(dateObj.getMonth() + 1), // 0 is first month
     day: padTime(dateObj.getDate()),
     year: dateObj.getFullYear()
   };
