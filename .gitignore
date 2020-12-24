@@ -7,8 +7,6 @@ test.md
 # Built Files/Folders
 /dist
 /release
-build/scripts/*.js
-build/api/*.js
 src/views/**/*.json
 src/styles/main.css
 
