@@ -2,7 +2,6 @@ import gulp from 'gulp';
 import { bundleMDPages } from './scripts/build_md';
 import { cleanClient, compileClient, compressToBrotli, compressToGzip, copyClient } from './scripts/build_client';
 import { buildCSS, watchCSS } from './scripts/build_css';
-import config from './config.json';
 
 
 const task     = gulp.task;
