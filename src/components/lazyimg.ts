@@ -15,7 +15,7 @@ export default defineComponent({
     if (!props?.src)
       throw Error('LazyImg::missing SRC attribute')
     ;
-    const imgRef           = ref<HTMLImageElement>();
+    const imgRef        = ref<HTMLImageElement>();
     const containerRef  = ref<HTMLElement>();
     const loaded        = ref(false);
     const showPreloader = ref(false);
