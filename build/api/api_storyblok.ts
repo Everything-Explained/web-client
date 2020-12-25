@@ -22,6 +22,10 @@ interface BlogContent extends PageContent {
   summary: string;
   image_header: BlogImage;
 }
+interface VideoContent extends PageContent {
+  id          : string;
+  datetime    : ISODateString;
+}
 
 interface SinglePageStory {
   id                  : number;
@@ -30,10 +34,13 @@ interface SinglePageStory {
   created_at          : ISODateString;
   published_at?       : ISODateString;
   first_published_at? : ISODateString;
-  content             : PageContent
+  content             : PageContent;
 }
 interface BlogStory extends SinglePageStory {
   content: BlogContent;
+}
+interface VideoStory extends SinglePageStory {
+  content: VideoContent;
 }
 
 interface SinglePages {
@@ -55,6 +62,27 @@ export async function getBlogPosts() {
       .then(res => { rs(mapBlogPosts(res.data.stories)); })
       .catch(err => rj(err));
   });
+}
+
+export async function getVideos() {
+  try {
+    const allStories = [];
+    for(let i = 1; i < 100; i++) {
+      const stories =
+        await blok.get(
+          'cdn/stories/',
+          { version: 'draft', starts_with: 'videos/', per_page: 100, page: i }
+        )
+      ;
+      if (stories.data.stories.length) {
+        allStories.push(...stories.data.stories);
+        continue;
+      }
+      return mapVideos(allStories);
+    }
+    throw Error('No Videos');
+  }
+  catch (err) { throw Error(err); }
 }
 
 export async function getSinglePages() {
@@ -80,6 +108,14 @@ function mapSinglePages(stories: SinglePageStory[]) {
   const singlePages = {} as SinglePages;
   stories.forEach(story => singlePages[story.slug] = mapStoryDefaults(story));
   return singlePages;
+}
+
+function mapVideos(stories: VideoStory[]) {
+  return stories.map(story => {
+    const page = mapStoryDefaults(story);
+    page.id = story.content.id;
+    return page;
+  });
 }
 
 function mapStoryDefaults(story: BlogStory|SinglePageStory) {

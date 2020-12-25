@@ -9,9 +9,11 @@ const api_storyblok_1 = require("../api/api_storyblok");
 async function bundleMDPages() {
     const posts = await api_storyblok_1.getBlogPosts();
     const singlePages = await api_storyblok_1.getSinglePages();
+    const videos = await api_storyblok_1.getVideos();
     await web_md_bundler_1.default.bundlePageMaps([
         { dir: '../src/views/blog', pages: posts },
-        { dir: '../src/views/home', pages: [singlePages.home] }
+        { dir: '../src/views/home', pages: [singlePages.home] },
+        { dir: '../src/views/red33m', pages: videos }
     ], 'html');
 }
 exports.bundleMDPages = bundleMDPages;
