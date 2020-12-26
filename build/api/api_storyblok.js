@@ -23,7 +23,7 @@ async function getVideos() {
     try {
         const allStories = [];
         for (let i = 1; i < 100; i++) {
-            const stories = await blok.get('cdn/stories/', { version: 'draft', starts_with: 'videos/', per_page: 100, page: i });
+            const stories = await blok.get('cdn/stories/', { version: 'draft', starts_with: 'videos/', per_page: 100, page: i, sort_by: 'position:desc' });
             if (stories.data.stories.length) {
                 allStories.push(...stories.data.stories);
                 continue;

@@ -71,7 +71,7 @@ export async function getVideos() {
       const stories =
         await blok.get(
           'cdn/stories/',
-          { version: 'draft', starts_with: 'videos/', per_page: 100, page: i }
+          { version: 'draft', starts_with: 'videos/', per_page: 100, page: i, sort_by: 'position:desc' }
         )
       ;
       if (stories.data.stories.length) {
