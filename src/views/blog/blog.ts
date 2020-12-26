@@ -40,7 +40,7 @@ export default defineComponent({
         if (!route.path.includes('/blog')) return;
         if (!params.post) {
           activePost.value = null;
-          title.value = 'Blog Entires';
+          title.value = 'Blog Entries';
           return;
         }
         displayBlogPost(params.post as string);
