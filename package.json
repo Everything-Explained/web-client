@@ -1,8 +1,12 @@
 {
   "name": "web_client",
   "version": "0.0.0",
+  "scripts": {
+    "dev": "vite serve"
+  },
   "dependencies": {
     "vue": "^3.0.4",
+    "vue-concurrency": "^2.0.3",
     "vue-router": "^4.0.1",
     "vuex": "^4.0.0-rc.2"
   },
