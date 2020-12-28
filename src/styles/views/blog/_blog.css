@@ -1,3 +1,11 @@
+.blog .--no-entries {
+  margin: 100px auto;
+  padding-bottom: 700px;
+  font-size: 2rem;
+  color: hsl(47, 80%, 63%);
+  text-align: center;
+}
+
 .blog-entries {
   display        : flex;
   margin-top     : 1rem;
@@ -8,12 +16,12 @@
   user-select    : none;
 }
 
-.blog .temp {
-  margin: 100px auto;
-  padding-bottom: 700px;
-  font-size: 2rem;
-  color: hsl(47, 80%, 63%);
-  text-align: center;
+.blog .preloader {
+  margin: 0 auto;
+  margin-top: 20%;
+  margin-bottom: 1000px;
+  width: 200px;
+  height: 200px;
 }
 
 .blog-entry {
@@ -109,4 +117,3 @@
   max-width: 100%;
   box-shadow: 0 0 10px 8px hsla(0, 0%, 0%, 0.4);
 }
-
