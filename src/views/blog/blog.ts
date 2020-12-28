@@ -11,7 +11,7 @@ import { useTask } from 'vue-concurrency';
 import { usePageDateAPI as usePageDataAPI } from "../../services/api_pagedata";
 import preloader from '../../components/preloader.vue';
 
-type BlogPost = typeof blogPosts[0];
+export type BlogPost = typeof blogPosts[0];
 
 
 export default defineComponent({
@@ -33,9 +33,9 @@ export default defineComponent({
     const pageDataAPI = usePageDataAPI();
     const getBlogPosts = useTask(function*() {
       const blogData = yield pageDataAPI.get('blog');
-      return blogData as BlogPost[];
+      store.commit('blog-cache-add', blogData);
     });
-    const posts = computed(() => getBlogPosts.last!.value!);
+    const posts = computed(() => store.state.blogPostCache);
     const displayBlogPost = (uri: string) => {
       const post = posts.value.find(post => post.uri == uri);
       if (!post) { router.push('/404'); return; }
@@ -56,7 +56,7 @@ export default defineComponent({
       }
     );
 
-    getBlogPosts.perform();
+    if (!store.state.blogPostCache.length) getBlogPosts.perform();
     if (postURI) displayBlogPost(postURI);
     store.commit('page-title', title.value);
 
