@@ -1,6 +1,6 @@
 import gulp from 'gulp';
 import { bundleMDPages } from './scripts/build_md';
-import { cleanClient, compileClient, compressToBrotli, compressToGzip, copyClient } from './scripts/build_client';
+import { cleanClient, compileClient, compressToBrotli, compressToGzip, copyClient, copyPageData, compressDirs, releasePageData } from './scripts/build_client';
 import { buildCSS, watchCSS } from './scripts/build_css';
 
 
@@ -10,13 +10,22 @@ const series   = gulp.series;
 
 task('release',
   series(
-    parallel(bundleMDPages, buildCSS),
+    parallel(buildCSS),
     compileClient,
-    parallel(compressToBrotli, compressToGzip, cleanClient),
+    parallel(compressToBrotli(compressDirs, '../dist/vue'), compressToGzip(compressDirs, '../dist/vue'), cleanClient),
     copyClient
   )
 );
 
-task('compress', compressToBrotli);
-task('build-md', bundleMDPages);
+task('build-md',
+  series(
+    bundleMDPages,
+    copyPageData,
+    parallel(
+      compressToBrotli(['../dist/_data/*.json'], '../dist/_data', 'json'),
+      compressToGzip(['../dist/_data/*.json'], '../dist/_data', 'json')
+    ),
+    releasePageData
+  )
+);
 task('watch-css', watchCSS);
