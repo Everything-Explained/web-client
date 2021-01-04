@@ -1,8 +1,8 @@
 
 const api_root_url =
   process.env.NODE_ENV  == 'production'
-    ? '/pageData'
-    : '//localhost:3003/pageData'
+    ? 'api/pageData'
+    : 'https://localhost:3003/api/pageData'
 ;
 
 export function usePageDateAPI() {
