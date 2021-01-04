@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import { cleanClient, compileClient, compressToBrotli, compressToGzip, copyClient } from './scripts/build_client';
-import { buildCSS, watchCSS } from './scripts/build_css';
 
+process.env.NODE_ENV = 'production';
 
 const task     = gulp.task;
 const parallel = gulp.parallel;
@@ -9,10 +9,8 @@ const series   = gulp.series;
 
 task('release',
   series(
-    parallel(buildCSS),
     compileClient,
     parallel(compressToBrotli, compressToGzip, cleanClient),
     copyClient
   )
 );
-task('watch-css', watchCSS);

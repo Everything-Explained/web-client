@@ -5,7 +5,7 @@ import { src, dest } from 'gulp';
 import del from 'del';
 import gzip from 'gulp-gzip';
 
-const root = '../';
+const root = '..';
 const distDir = `${root}/dist`;
 const releaseDir = `${root}/release`;
 
@@ -59,5 +59,6 @@ export function cleanClient() {
   return del([
     `${releaseDir}/web_client/**`,
     `!${releaseDir}/web_client`,
+    `!${releaseDir}/web_client/_data`
   ], { force: true });
 }
