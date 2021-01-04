@@ -1,9 +1,9 @@
 /*** 711px ***/
-@media only screen and (max-width: var(--screen-large)) {
+@media only screen and (--large-screen) {
   .blog-entry { max-width: 93%; }
 }
 /*** 511px ***/
-@media only screen and (max-width: var(--screen-medium)) {
+@media only screen and (--medium-screen) {
   .blog-entry__title {
     padding-bottom: 7px;
     font-size: 1.5rem;
@@ -20,7 +20,7 @@
   }
 }
 /*** 380px ***/
-@media only screen and (max-width: var(--screen-small)) {
+@media only screen and (--small-screen) {
   .blog-entry          { max-width: 99%;    }
   .blog-entry__title   { font-size: 1.3rem; }
   .blog-entry__summary { font-size: 1rem;   }
@@ -30,5 +30,5 @@
   }
 }
 /*** 320px ***/
-@media only screen and (max-width: var(--screen-tiny)) {
+@media only screen and (--tiny-screen) {
 }

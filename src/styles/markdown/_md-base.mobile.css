@@ -1,4 +1,4 @@
-@media only screen and (max-width: var(--screen-large)) {
+@media only screen and (--large-screen) {
   .md { font-size: var(--md-mobile-f-sz); }
 
   .md p {
@@ -11,7 +11,7 @@
 }
 
 
-@media only screen and (max-width: var(--screen-medium)) {
+@media only screen and (--medium-screen) {
   .md blockquote > p {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -25,7 +25,7 @@
 }
 
 
-@media only screen and (max-width: var(--screen-tiny)) {
+@media only screen and (--tiny-screen) {
   .md             { font-size : var(--md-mobile-sm-f-sz); }
   .md:first-child { margin-top: 5px; }
 
