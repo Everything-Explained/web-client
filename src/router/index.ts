@@ -2,6 +2,9 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home       from '../views/home/home.vue';
 import i404       from '../views/errors/i404.vue';
 // import Test from '../views/test/test.vue';
+import Red33m from '../views/red33m/red33m.vue';
+import Test from '../views/test/test.vue';
+import Blog from '../views/blog/blog.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
