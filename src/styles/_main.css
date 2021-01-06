@@ -34,6 +34,8 @@
 @import './components/_lazyimg.css';
 /*** Preloader ***/
 @import './components/_preloader.css';
+/*** Icon ***/
+@import './components/_icon.css';
 /*** on/off Switch ***/
 @import './components/_onoff-switch.css';
 /*** Toggle ***/

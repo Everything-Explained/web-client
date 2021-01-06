@@ -6,12 +6,3 @@
   font-display: swap;
   speak: none;
 }
-
-.dripicon {
-  display: inline;
-  font-family  : 'dripicons' !important;
-  font-weight  : normal !important;
-  font-style   : normal !important;
-  font-display : swap !important;
-  speak        : none !important;
-}
