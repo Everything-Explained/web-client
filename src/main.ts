@@ -2,8 +2,8 @@
 import { createApp } from 'vue';
 import App from './views/app/app.vue';
 import router from './router';
-import './styles/_main.css';
 import vuex from './vuex/vuex-store';
+import './styles/_main.css';
 
 
 const getElement = (id: string) => {
