@@ -34,6 +34,8 @@ export default defineComponent({
     const getBlogPosts = useTask(function*() {
       const blogData = yield pageDataAPI.get('blog');
       store.commit('page-cache-add', { name: 'blog', data: blogData });
+      // The URL points to a specific blog-post on page load
+      if (postURI) displayBlogPost(postURI);
     });
     const posts = computed(() => store.state.pageCache['blog']);
     const displayBlogPost = (uri: string) => {
@@ -57,7 +59,6 @@ export default defineComponent({
     );
 
     if (!posts.value) getBlogPosts.perform();
-    if (postURI) displayBlogPost(postURI);
     store.commit('page-title', title.value);
 
     return {
