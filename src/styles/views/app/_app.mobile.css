@@ -1,27 +1,27 @@
 
 
-@media only screen and (max-width: var(--screen-large)) {
+@media only screen and (--large-screen) {
   .app-header        { height: 6rem; }
 
   .app-header__title { font-size: 3.5rem; }
 }
 
 
-@media only screen and (max-width: var(--screen-medium)) {
+@media only screen and (--medium-screen) {
   .app-header       { height: 4.6rem; }
 
   .app-header__title { font-size: 2.5rem; }
 }
 
 
-@media only screen and (max-width: var(--screen-small)) {
+@media only screen and (--small-screen) {
   .app-header       { height: 3.9rem; }
 
   .app-header__title { font-size: 2rem; }
 }
 
 
-@media only screen and (max-width: var(--screen-tiny)) {
+@media only screen and (--tiny-screen) {
   .app-header       { height: 3.7rem; }
 
   .app-header__title { font-size: 1.8rem; }

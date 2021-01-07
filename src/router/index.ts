@@ -2,6 +2,9 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home       from '../views/home/home.vue';
 import i404       from '../views/errors/i404.vue';
 // import Test from '../views/test/test.vue';
+import Red33m from '../views/red33m/red33m.vue';
+import Test from '../views/test/test.vue';
+import Blog from '../views/blog/blog.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,14 +17,14 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/blog/:post?',
     name: 'blog',
-    component: () => import(/* webpackChunkName: "blog" */ '../views/blog/blog.vue'),
+    component: Blog,
     meta: { display: true, order: 2, title: 'Blog' }
   },
   {
     path: '/red33m',
     name: 'red33m',
-    component: () => import(/* webpackChunkName: "red33m" */ '../views/red33m/red33m.vue'),
     meta: { display: false, order: 3, title: 'RED33M' }
+    component: Red33m,
   },
   // {
   //   path: '/test',

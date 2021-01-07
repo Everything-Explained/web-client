@@ -1,4 +1,4 @@
-import { defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, ref, watch } from "vue";
 import blogPosts from './blog.json';
 import icon from '../../components/icon.vue';
 import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-utils";
@@ -7,9 +7,11 @@ import { useStore } from "vuex";
 import { VuexStore } from "../../vuex/vuex-store";
 import titlebar from '../../components/titlebar.vue';
 import lazyimg from '../../components/lazyimg.vue';
+import { useTask } from 'vue-concurrency';
+import { usePageDateAPI as usePageDataAPI } from "../../services/api_pagedata";
+import preloader from '../../components/preloader.vue';
 
-
-type BlogPost = typeof blogPosts[0];
+export type BlogPost = typeof blogPosts[0];
 
 
 export default defineComponent({
@@ -17,6 +19,7 @@ export default defineComponent({
     icon,
     'title-bar': titlebar,
     'lazy-image': lazyimg,
+    preloader,
   },
 
   setup() {
@@ -27,34 +30,43 @@ export default defineComponent({
     const store      = useStore<VuexStore>();
     const title      = ref('Blog Entries')
     ;
-    const sortedPosts = blogPosts.sort((p1, p2) => Date.parse(p2.date) - Date.parse(p1.date));
+    const pageDataAPI = usePageDataAPI();
+    const getBlogPosts = useTask(function*() {
+      const blogData = yield pageDataAPI.get('blog');
+      store.commit('page-cache-add', { name: 'blog', data: blogData });
+      // The URL points to a specific blog-post on page load
+      if (postURI) displayBlogPost(postURI);
+    });
+    const posts = computed(() => store.state.pageCache['blog']);
     const displayBlogPost = (uri: string) => {
-      const post = blogPosts.find(post => post.uri == uri);
+      const post = posts.value.find(post => post.uri == uri);
       if (!post) { router.push('/404'); return; }
       title.value = post.title;
       activePost.value = post;
     };
+    const goTo = (uri: string) => { router.push(`/blog/${uri}`); };
     // onBlogRouteChange
     watch(() => route.params,
       async (params) => {
         if (!route.path.includes('/blog')) return;
         if (!params.post) {
           activePost.value = null;
-          title.value = 'Blog Entires';
+          title.value = 'Blog Entries';
           return;
         }
         displayBlogPost(params.post as string);
       }
     );
-    if (postURI) displayBlogPost(postURI);
-    store.commit('page-title', title.value)
-    ;
-    function goTo(uri: string) {
-      router.push(`/blog/${uri}`);
-    }
+
+    if (!posts.value) getBlogPosts.perform();
+    // An edge case when navigating away from a blog post to a
+    // non-blog page, then backing the history to that blog post.
+    if (posts.value && postURI) displayBlogPost(postURI);
+    store.commit('page-title', title.value);
 
     return {
-      posts: sortedPosts, // order by latest first
+      getBlogPosts,
+      posts, // order by latest first
       activePost,
       goTo,
       onBeforeTransLeave: () => store.commit('page-title', title.value)

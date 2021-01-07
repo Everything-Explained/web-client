@@ -1,12 +1,12 @@
 /*** 711px ***/
-@media only screen and (max-width: var(--screen-large)) {
+@media only screen and (--large-screen) {
   .title-bar__text {
     margin-left: 3.3rem;
     text-align: left;
   }
 }
 /*** 511px ***/
-@media only screen and (max-width: var(--screen-medium)) {
+@media only screen and (--medium-screen) {
   .title-bar { font-size: 1.5rem; }
   .title-bar__text {
     margin-left: 3rem;
@@ -17,10 +17,10 @@
   }
 }
 /*** 380px ***/
-@media only screen and (max-width: var(--screen-small)) {
+@media only screen and (--small-screen) {
   .title-bar { font-size: 1.2rem; }
   .title-bar__menu-icon { font-size: 1.5rem; }
 }
 /*** 320px ***/
-@media only screen and (max-width: var(--screen-tiny)) {
+@media only screen and (--tiny-screen) {
 }

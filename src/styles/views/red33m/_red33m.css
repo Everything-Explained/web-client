@@ -3,13 +3,21 @@
   width: 100%;
 }
 
+.red33m .preloader.data-loader {
+  margin: 0 auto;
+  margin-top: 20%;
+  margin-bottom: 1000px;
+  width: 200px;
+  height: 200px;
+}
+
 .red33m .title-bar__text {
   color: hsl(47, 100%, 61%);
 }
 
 .red33m-toggle {
   margin-top: 1rem;
-  width: 235px;
+  width: 100px;
   text-align: center;
 }
 

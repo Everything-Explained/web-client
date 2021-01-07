@@ -2,12 +2,12 @@
 import { createApp } from 'vue';
 import App from './views/app/app.vue';
 import router from './router';
-import './styles/main.css';
 import vuex from './vuex/vuex-store';
+import './styles/_main.css';
 
 
-const getElement = (id) => {
-  return document.getElementById(id);
+const getElement = (id: string) => {
+  return document.getElementById(id)!;
 };
 
 
@@ -21,7 +21,7 @@ const browserIsSupported = (() => {
     && document.importNode
   ;
   if (!isValidBrowser) {
-    const el = getElement('Failure');
+    const el: HTMLElement = getElement('Failure');
     el.style.display = 'inline-block';
     return false;
   } return true;
@@ -30,7 +30,7 @@ const browserIsSupported = (() => {
 
 const cookiesAreEnabled = (() => {
   if (!navigator.cookieEnabled) {
-    const el = getElement('NoCookies');
+    const el: HTMLElement = getElement('NoCookies');
     el.style.display = 'inline-block';
     return false;
   } return true;

@@ -1,5 +1,5 @@
 <template>
-  <div class="dripicon" v-html="icon"></div>
+  <div class='icon' v-html="icon"></div>
 </template>
 
 

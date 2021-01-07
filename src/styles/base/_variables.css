@@ -18,12 +18,12 @@
  *
  */
 
-:root {
-  --screen-large: 711px;
-  --screen-medium: 511px;
-  --screen-small: 380px;
-  --screen-tiny: 320px;
+@custom-media --large-screen  (max-width: 711px);
+@custom-media --medium-screen (max-width: 511px);
+@custom-media --small-screen  (max-width: 380px);
+@custom-media --tiny-screen   (max-width: 320px);
 
+:root {
   --primary-c    : hsl(0, 100%, 63%);  /* Tart Orange */
   --compliment-c : hsl(197, 41%, 60%); /* Maximum blue */
   --accent-2-c   : hsl(30, 100%, 75%); /* apricot */
