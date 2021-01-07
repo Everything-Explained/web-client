@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home       from '../views/home/home.vue';
 import i404       from '../views/errors/i404.vue';
-// import Test from '../views/test/test.vue';
 import Red33m from '../views/red33m/red33m.vue';
 import Test from '../views/test/test.vue';
 import Blog from '../views/blog/blog.vue';
@@ -23,8 +22,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/red33m',
     name: 'red33m',
-    meta: { display: false, order: 3, title: 'RED33M' }
     component: Red33m,
+    meta: { display: false, order: 3, title: 'RED33M' }
   },
   // {
   //   path: '/test',
@@ -57,14 +56,6 @@ const routes: Array<RouteRecordRaw> = [
     component: i404,
     meta: { display: false }
   }
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
 ];
 
 const router = createRouter({
