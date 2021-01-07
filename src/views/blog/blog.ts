@@ -59,6 +59,9 @@ export default defineComponent({
     );
 
     if (!posts.value) getBlogPosts.perform();
+    // An edge case when navigating away from a blog post to a
+    // non-blog page, then backing the history to that blog post.
+    if (posts.value && postURI) displayBlogPost(postURI);
     store.commit('page-title', title.value);
 
     return {
