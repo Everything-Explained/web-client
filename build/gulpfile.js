@@ -9,4 +9,4 @@ process.env.NODE_ENV = 'production';
 const task = gulp_1.default.task;
 const parallel = gulp_1.default.parallel;
 const series = gulp_1.default.series;
-task('release', series(build_client_1.compileClient, parallel(build_client_1.compressToBrotli, build_client_1.compressToGzip, build_client_1.cleanClient), build_client_1.copyClient));
+task('release', series(build_client_1.compileClient, parallel(build_client_1.compressToGzip, build_client_1.cleanClient), build_client_1.deleteRawFiles, build_client_1.copyClient));

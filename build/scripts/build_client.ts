@@ -1,5 +1,5 @@
-import brotli from 'gulp-brotli';
-import { constants } from 'zlib';
+// import brotli from 'gulp-brotli';
+// import { constants } from 'zlib';
 import { build } from 'vite';
 import { src, dest } from 'gulp';
 import del from 'del';
@@ -22,20 +22,20 @@ export function compileClient() {
 }
 
 
-export function compressToBrotli() {
-  return src([
-    `${distDir}/**/*.js`,
-    `${distDir}/**/*.css`,
-    `${distDir}/index.html`
-  ])
-  .pipe(brotli.compress({
-    extension: 'br',
-    params: {
-      [constants.BROTLI_PARAM_QUALITY]: constants.BROTLI_MAX_QUALITY
-    }
-  }))
-  .pipe(dest(`${distDir}`));
-}
+// export function compressToBrotli() {
+//   return src([
+//     `${distDir}/**/*.js`,
+//     `${distDir}/**/*.css`,
+//     `${distDir}/index.html`
+//   ])
+//   .pipe(brotli.compress({
+//     extension: 'br',
+//     params: {
+//       [constants.BROTLI_PARAM_QUALITY]: constants.BROTLI_MAX_QUALITY
+//     }
+//   }))
+//   .pipe(dest(`${distDir}`));
+// }
 
 
 export function compressToGzip() {
@@ -46,6 +46,14 @@ export function compressToGzip() {
   ])
   .pipe(gzip({ append: true, gzipOptions: { level: 9 }}))
   .pipe(dest(`${distDir}`));
+}
+
+export function deleteRawFiles() {
+  return del([
+    `${distDir}/assets/*.js`,
+    `${distDir}/assets/*.css`,
+    `${distDir}/index.html`,
+  ], { force: true });
 }
 
 /** Copies all client files to the release dir */

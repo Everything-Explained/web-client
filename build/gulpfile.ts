@@ -1,5 +1,5 @@
 import gulp from 'gulp';
-import { cleanClient, compileClient, compressToBrotli, compressToGzip, copyClient } from './scripts/build_client';
+import { cleanClient, compileClient, compressToGzip, copyClient, deleteRawFiles } from './scripts/build_client';
 
 process.env.NODE_ENV = 'production';
 
@@ -10,7 +10,8 @@ const series   = gulp.series;
 task('release',
   series(
     compileClient,
-    parallel(compressToBrotli, compressToGzip, cleanClient),
+    parallel(compressToGzip, cleanClient),
+    deleteRawFiles,
     copyClient
   )
 );
