@@ -4,6 +4,8 @@ import i404       from '../views/errors/i404.vue';
 import Red33m from '../views/red33m/red33m.vue';
 import Test from '../views/test/test.vue';
 import Blog from '../views/blog/blog.vue';
+import Videos from '../views/library/videos.vue';
+import Literature from '../views/library/literature.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -11,19 +13,26 @@ const routes: Array<RouteRecordRaw> = [
     alias: '/',
     name: 'home',
     component: Home,
-    meta: { display: true, order: 1, title: 'About Us' }
   },
   {
     path: '/blog/:post?',
     name: 'blog',
     component: Blog,
-    meta: { display: true, order: 2, title: 'Blog' }
   },
   {
     path: '/red33m',
     name: 'red33m',
     component: Red33m,
-    meta: { display: false, order: 3, title: 'RED33M' }
+  },
+  {
+    path: '/videos',
+    name: 'videos',
+    component: Videos,
+  },
+  {
+    path: '/literature',
+    name: 'literature',
+    component: Literature,
   },
   // {
   //   path: '/test',

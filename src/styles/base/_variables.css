@@ -81,7 +81,7 @@
 
   /*** Menu ***/
   --menu-bg-c              : var(--body-bg-c);
-  --menu-header-c          : hsl(47, 70%, 60%);
+  --menu-header-c          : hsl(197, 20%, 83%);  /* hsl(47, 70%, 60%); */
   --menu-header-bg-c       : var(--sub-panel-c);
   --menu-exit-icon-c       : hsl(197, 12%, 70%);
   --menu-exit-icon-hov-c   : var(--app-ribbon-c);
