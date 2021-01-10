@@ -15,7 +15,6 @@
 .app-menu_category {
   padding     : 0.3rem 2.5rem 0.3rem 2.5rem;
   font-size   : 1.7rem;
-  font-weight : 400;
   text-align  : center;
   color: var(--menu-header-c);
   background  : var(--menu-header-bg-c);
@@ -28,27 +27,24 @@
 }
 
 .app-menu_category {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
   padding: 0;
-  padding-top: 2px;
   padding-right: 0.5rem;
   font-size: 1.3rem;
   letter-spacing: 2px;
-  border-top: 4px solid black;
-  border-bottom: 4px double hsl(0, 100%, 67%);
-  background-color: transparent;
-  box-shadow: none;
+  /* border-top: 1px dashed hsl(0, 100%, 67%); */
+  border-bottom: 1px solid hsl(47, 60%, 50%);
+  box-shadow: -3px 1px 10px 2px black;
 }
 
 .app-menu__header_exit-icon {
   top: 1px;
   position    : absolute;
-  font-size   : 2.7rem;
+  font-size   : 2.6rem;
   color       : var(--menu-exit-icon-c);
   user-select : none;
   cursor      : pointer;
-  opacity: 0;
+  opacity     : 0;
   transform   : scale(0.1, 0.1);
   transition  : transform .6s ease,
                 opacity .45s ease,
