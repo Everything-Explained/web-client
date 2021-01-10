@@ -22,4 +22,4 @@
 
 
 
-<script lang='ts' src='./menu'></script>
+<script lang='ts' src='./menu.ts'></script>
