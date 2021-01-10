@@ -1,10 +1,10 @@
+import { isDevelopment } from "../globals";
+
 type Route = {
   path: { name: string }
   title: string;
   visible: boolean;
 }
-
-const isDevelopment = process.env.NODE_ENV == 'development';
 
 const mapRoute = (name: string, title: string, visible?: boolean) => (
   { path: { name }, title, visible: visible ?? true } as Route

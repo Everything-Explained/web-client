@@ -1,6 +1,7 @@
+import { isProduction } from "../globals";
 
 const api_root_url =
-  process.env.NODE_ENV  == 'production'
+  isProduction
     ? '/api/pageData'
     : 'https://localhost:3003/api/pageData'
 ;
