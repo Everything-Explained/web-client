@@ -15,8 +15,6 @@
 
 .app-container {
   position: relative;
-  opacity: 1;
-  transition: transform .6s ease, opacity .6s ease;
 }
 
 .app-ribbon {
@@ -67,7 +65,7 @@
   flex           : 1 0;
   flex-direction : column;
   overflow       : visible;
-  transition: transform .6s ease, opacity .6s ease;
+  transition: transform .6s, opacity .6s;
 }
 .app-body__content.--menu-open {
   opacity: 0.2;
@@ -116,8 +114,7 @@
   color: hsl(197, 11%, 50%);
   text-shadow: none;
   text-decoration: underline;
-  /* border-bottom: 1px solid hsl(197, 11%, 50%); */
-  transition: color .3s ease, border .3s ease;
+  transition: color .3s, border .3s;
 }
 .app-footer_copyright a:hover {
   color: hsl(0, 50%, 60%);

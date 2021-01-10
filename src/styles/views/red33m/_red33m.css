@@ -39,7 +39,7 @@
   user-select: none;
   cursor: pointer;
   transform   : translateZ(0);
-  transition: color .3s ease;
+  transition: color .3s;
 }
 .red33m-video:hover {
   color: var(--red33m-video-hov-c);

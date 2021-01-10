@@ -1,13 +1,13 @@
 .blog-entries.fade-enter-active {
-  animation: fadeIn 0.35s ease !important;
+  animation: fadeIn 0.35s !important;
 }
 .blog-entries.fade-leave-active {
   margin-bottom: 50%; /* Fixes jerky scroll animation */
-  animation: fadeOut 0.35s ease !important;
+  animation: fadeOut 0.35s !important;
 }
 .blog-display.fade-enter-active {
-  animation: fadeIn 2.3s ease !important;
+  animation: fadeIn 2.3s !important;
 }
 .blog-display.fade-leave-active {
-  animation: fadeOut 0.35s ease !important;
+  animation: fadeOut 0.35s !important;
 }
