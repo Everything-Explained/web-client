@@ -12,7 +12,7 @@
       <li class="app-menu_item" v-for="(route, i) of stdRoutes" :key="i" @click="closeMenu">
         <router-link :to="route.path">{{ route.title }}</router-link>
       </li>
-      <li class="app-menu_category">LIBRARY</li>
+      <li class="app-menu_category">Library</li>
       <li class="app-menu_item" v-for="(route, i) of libRoutes" :key="i" @click="closeMenu">
         <router-link :to="route.path">{{ route.title }}</router-link>
       </li>
