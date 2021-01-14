@@ -2,8 +2,8 @@ import { isProduction } from "../globals";
 
 const api_root_url =
   isProduction
-    ? '/api/pageData'
-    : 'https://localhost:3003/api/pageData'
+    ? '/api/data/pages'
+    : 'https://localhost:3003/api/data/pages'
 ;
 
 export function usePageDateAPI() {

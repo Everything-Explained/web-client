@@ -2,7 +2,7 @@ import { computed, defineComponent, ref } from "vue";
 import { useStore }       from "vuex";
 import { VuexStore }      from "../../vuex/vuex-store";
 import { useTask }        from "vue-concurrency";
-import { usePageDateAPI } from "../../services/api_pagedata";
+import { usePageDateAPI } from "../../services/api_data";
 // Components
 import titlebar  from '../../components/titlebar.vue';
 import lazyimg   from '../../components/lazyimg.vue';

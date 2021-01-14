@@ -8,7 +8,7 @@ import { VuexStore } from "../../vuex/vuex-store";
 import titlebar from '../../components/titlebar.vue';
 import lazyimg from '../../components/lazyimg.vue';
 import { useTask } from 'vue-concurrency';
-import { usePageDateAPI as usePageDataAPI } from "../../services/api_pagedata";
+import { usePageDateAPI as usePageDataAPI } from "../../services/api_data";
 import preloader from '../../components/preloader.vue';
 
 export type BlogPost = typeof blogPosts[0];
