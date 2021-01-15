@@ -1,8 +1,8 @@
 import mdHomePages from './home.json';
 import { computed, defineComponent } from "vue";
 import { useStore } from 'vuex';
-import { VuexStore } from '../../vuex/vuex-store';
-import titlebar from '../../components/titlebar.vue';
+import { VuexStore } from '@/vuex/vuex-store';
+import titlebar from '@/components/titlebar.vue';
 
 
 export default defineComponent({

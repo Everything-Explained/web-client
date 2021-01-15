@@ -1,15 +1,15 @@
 import { computed, defineComponent, ref, watch } from "vue";
 import blogPosts from './blog.json';
-import icon from '../../components/icon.vue';
-import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-utils";
+import icon from '@/components/icon.vue';
+import { dateToShortMDY, dateTo12HourTimeStr } from "@/composeables/date-utils";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { VuexStore } from "../../vuex/vuex-store";
-import titlebar from '../../components/titlebar.vue';
-import lazyimg from '../../components/lazyimg.vue';
+import { VuexStore } from "@/vuex/vuex-store";
+import titlebar from '@/components/titlebar.vue';
+import lazyimg from '@/components/lazyimg.vue';
 import { useTask } from 'vue-concurrency';
 import { usePageDateAPI as usePageDataAPI } from "../../services/api_data";
-import preloader from '../../components/preloader.vue';
+import preloader from '@/components/preloader.vue';
 
 export type BlogPost = typeof blogPosts[0];
 
