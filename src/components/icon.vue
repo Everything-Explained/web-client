@@ -18,6 +18,7 @@ const iconMap: StringMap = {
   'left-chev'  : 'U',
   'log-in'     : '<',
   'log-out'    : '=',
+  'doc'        : 'y',
   'heart'      : '&#xe004',
   'home'       : '&#xe006',
   'mail'       : '&#xe015',
