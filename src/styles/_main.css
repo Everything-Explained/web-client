@@ -18,6 +18,8 @@
 /*** Red33m ***/
 @import './views/red33m/_red33m.css';
 @import './views/red33m/_red33m.mobile.css';
+/*** Library Videos ***/
+@import './views/library/_videos.css';
 /*** 404 View ***/
 @import './views/errors/_i404.css';
 

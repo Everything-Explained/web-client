@@ -8,7 +8,7 @@ import { VuexStore } from "@/vuex/vuex-store";
 import titlebar from '@/components/titlebar.vue';
 import lazyimg from '@/components/lazyimg.vue';
 import { useTask } from 'vue-concurrency';
-import { usePageDateAPI as usePageDataAPI } from "../../services/api_data";
+import { useDataAPI as usePageDataAPI } from "@/services/api_data";
 import preloader from '@/components/preloader.vue';
 
 export type BlogPost = typeof blogPosts[0];
@@ -32,11 +32,12 @@ export default defineComponent({
     ;
     const pageDataAPI = usePageDataAPI();
     const getBlogPosts = useTask(function*() {
-      const blogData = yield pageDataAPI.get('blog');
+      const blogData = yield pageDataAPI.get('pages', 'blog');
       store.commit('page-cache-add', { name: 'blog', data: blogData });
       // The URL points to a specific blog-post on page load
       if (postURI) displayBlogPost(postURI);
     });
+
     const posts = computed(() => store.state.pageCache['blog']);
     const displayBlogPost = (uri: string) => {
       const post = posts.value.find(post => post.uri == uri);
@@ -44,7 +45,9 @@ export default defineComponent({
       title.value = post.title;
       activePost.value = post;
     };
+
     const goTo = (uri: string) => { router.push(`/blog/${uri}`); };
+
     // onBlogRouteChange
     watch(() => route.params,
       async (params) => {

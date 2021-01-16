@@ -2,7 +2,7 @@ import { computed, defineComponent, ref } from "vue";
 import { useStore }       from "vuex";
 import { VuexStore }      from "@/vuex/vuex-store";
 import { useTask }        from "vue-concurrency";
-import { usePageDateAPI } from "../../services/api_data";
+import { useDataAPI } from "@/services/api_data";
 // Components
 import titlebar  from '@/components/titlebar.vue';
 import lazyimg   from '@/components/lazyimg.vue';
@@ -27,9 +27,9 @@ export default defineComponent({
     const videos = computed(() => store.state.pageCache['red33m']?.slice());
     const isLoading = ref(false);
 
-    const api = usePageDateAPI();
+    const api = useDataAPI();
     const getVideos = useTask(function*() {
-      const red33mData = yield api.get('red33m');
+      const red33mData = yield api.get('pages', 'red33m');
       store.commit('page-cache-add', { name: 'red33m', data: red33mData });
     });
 
