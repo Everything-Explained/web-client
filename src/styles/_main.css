@@ -40,5 +40,7 @@
 @import './components/_icon.css';
 /*** on/off Switch ***/
 @import './components/_onoff-switch.css';
+/*** EE Video ***/
+@import './components/_ee-video.css';
 /*** Toggle ***/
 @import './components/_toggle.css';
