@@ -27,14 +27,7 @@ export default defineComponent({
       );
     };
 
-    /** Prevents mouse events from propagating to parent elements */
-    const preventBubble = (e: MouseEvent) => {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-    };
-
-    const setDescState = (e: MouseEvent, state: 'closed'|'open') => {
-      preventBubble(e);
+    const setDescState = (state: 'closed'|'open') => {
       descStateRef.value = state == 'open';
     };
 
@@ -42,7 +35,7 @@ export default defineComponent({
       thumbnail: thumbnailRef,
       description: descRef,
       descState: descStateRef,
-      openVideo, preventBubble, setDescState
+      openVideo, setDescState
     };
   }
 });
