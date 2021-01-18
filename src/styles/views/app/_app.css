@@ -54,10 +54,7 @@
 
 
 .app-body {
-  display   : flex;
   margin    : 0 5px 0 0;
-  flex      : 1 0;
-  flex-flow : row nowrap;
 }
 .app-body__content {
   display        : flex;
