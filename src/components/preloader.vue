@@ -4,6 +4,8 @@
 
 
 <script lang="ts">
-import Vue from 'vue'
-export default {}
+import Vue, { defineComponent } from 'vue'
+export default defineComponent({
+  setup() {}
+})
 </script>

@@ -16,7 +16,7 @@
   padding     : 0.3rem 2.5rem 0.3rem 2.5rem;
   font-size   : 1.7rem;
   text-align  : center;
-  color: var(--menu-header-c);
+  color       : var(--menu-header-c);
   background  : var(--menu-header-bg-c);
   text-shadow : 3px 3px 0 black,
                 2px  0  0 black,
