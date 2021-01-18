@@ -20,6 +20,7 @@
 @import './views/red33m/_red33m.mobile.css';
 /*** Library Videos ***/
 @import './views/library/_videos.css';
+@import './views/library/_videos.mobile.css';
 /*** 404 View ***/
 @import './views/errors/_i404.css';
 

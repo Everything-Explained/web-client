@@ -1,4 +1,4 @@
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent } from "vue";
 import { useTask } from "vue-concurrency";
 import { useStore } from "vuex";
 import titlebar from '@/components/titlebar.vue';
@@ -14,26 +14,20 @@ export default defineComponent({
   setup() {
     const store = useStore<VuexStore>();
     const api = useDataAPI();
+    const categories = computed(() => store.state.dataCache['library/videos']);
 
-    const videos = ref([
-      { title: 'A video title', id: 'W_H2qeqyHPw' },
-      { title: 'Another Video Title', id: 'MkmtRgFOE7Y' }
-    ]);
+    const getVideos = useTask(function*() {
+      const videoData = yield api.get('library', 'videos');
+      const videos = [];
+      for (const cat in videoData) {
+        videos.push({name: cat, videos: videoData[cat]});
+      }
+      store.commit('data-cache-add', { name: 'library/videos', data: videos });
+    });
 
-    setTimeout(() => {
-      console.log('reversing');
-      videos.value.reverse();
-    }, 2000);
-    // const getVideos = useTask(function*() {
-    //   const videos = yield api.get('library', 'videos');
-    //   for (const cat in videos) {
-    //     console.log(cat);
-    //   }
-    // });
-
-    // getVideos.perform();
+    getVideos.perform();
 
     store.commit('page-title', 'Library Videos');
-    return { videos };
+    return { categories, };
   }
 });

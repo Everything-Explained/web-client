@@ -1,0 +1,18 @@
+/*** 711px ***/
+@media only screen and (--large-screen) {
+  :root { --lib-vid-width: 300px; }
+  .category_name {font-size: 1.2rem;}
+  .lib-videos_video .ee-video_title {font-size: 1.1rem;}
+  .cat_video-tray { margin-top: 2.3rem; }
+}
+/*** 511px ***/
+@media only screen and (--medium-screen) {
+  :root { --lib-vid-width: 250px; }
+}
+/*** 380px ***/
+@media only screen and (--small-screen) {
+  .category_name { font-size: 1.15rem; }
+}
+/*** 320px ***/
+@media only screen and (--tiny-screen) {
+}
