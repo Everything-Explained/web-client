@@ -5,7 +5,7 @@
 .ee-video_desc {
   top: 0; left: 0; right: 0; bottom: 0;
   position         : absolute;
-  padding          : 7px;
+  padding          : 7px 3px 0 7px;
   font-size        : 1.1rem;
   background-color : hsla(0, 0%, 0%, 0.85);
   outline          : 1px dotted transparent;
@@ -74,10 +74,11 @@
   border-bottom: 1px dotted hsl(197, 11%, 45%);
   color: var(--app-titlebar-c);
   font-size: 1.3rem;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 .ee-video-desc_text p {
   margin-bottom: 13px;
+  line-height: 1.7rem;
 }
 .ee-video-desc_text strong {
   color: var(--md-b-c);
@@ -94,4 +95,8 @@
 .ee-video-desc_text a:hover {
   color: var(--menu-active-item-c);
   border-bottom: 1px solid var(--menu-active-item-c);
+}
+
+.ee-video_title {
+  padding: 5px 0 0 5px;
 }
