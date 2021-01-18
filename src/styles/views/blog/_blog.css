@@ -100,6 +100,30 @@
   color: var(--blog-entry-hov-sum-c);
 }
 
+.blog-entry__author {
+  margin: 0 auto;
+  margin-bottom: 10px;
+  max-width: 95%;
+  padding-left: 10px;
+  font-size: var(--md-f-sz);
+  color: hsl(47, 60%, 63%);
+  font-weight: 400;
+  text-align: left;
+  text-shadow: 1px 1px 0 black,
+               2px 2px 0 black;
+}
+.blog-entry__author.ethan {
+  color: hsl(0, 100%, 68%);
+}
+.blog-entry__author-icon {
+  top: 3px;
+  color: var(--blog-entry-icon-c);
+  transition: color .3s;
+}
+.blog-entry:hover .blog-entry__author-icon {
+  color: var(--blog-entry-hov-icon-c);
+}
+
 .blog-display {
   padding-bottom: 50%;
 }

@@ -26,6 +26,12 @@
                 ></icon>{{ formatTime(post.date)}}
               </div>
               <article class="blog-entry__summary" v-html="post.summary"></article>
+              <div class="blog-entry__author"
+                :class="{ 'ethan': isEthan(post.author) }"
+              >
+                <icon class="blog-entry__author-icon" :type='"user"'></icon>
+                {{ post.author }}
+              </div>
             </div>
           </div>
           <div class="blog-display" v-else-if="activePost" key="postActive">

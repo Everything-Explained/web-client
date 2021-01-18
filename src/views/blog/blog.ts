@@ -83,6 +83,7 @@ export default defineComponent({
     },
     formatTime(isoDateStr: string) {
       return dateTo12HourTimeStr(isoDateStr);
-    }
+    },
+    isEthan(author: string) { return author.trim() == 'Ethan Kahn'; }
   }
 });
