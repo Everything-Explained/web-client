@@ -33,12 +33,12 @@ export default defineComponent({
     const pageDataAPI = usePageDataAPI();
     const getBlogPosts = useTask(function*() {
       const blogData = yield pageDataAPI.get('pages', 'blog');
-      store.commit('page-cache-add', { name: 'blog', data: blogData });
+      store.commit('data-cache-add', { name: 'blog', data: blogData });
       // The URL points to a specific blog-post on page load
       if (postURI) displayBlogPost(postURI);
     });
 
-    const posts = computed(() => store.state.pageCache['blog']);
+    const posts = computed(() => store.state.dataCache['blog']);
     const displayBlogPost = (uri: string) => {
       const post = posts.value.find(post => post.uri == uri);
       if (!post) { router.push('/404'); return; }

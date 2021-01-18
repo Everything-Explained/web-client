@@ -24,13 +24,13 @@ export default defineComponent({
   },
   setup() {
     const store = useStore<VuexStore>();
-    const videos = computed(() => store.state.pageCache['red33m']?.slice());
+    const videos = computed(() => store.state.dataCache['red33m']?.slice());
     const isLoading = ref(false);
 
     const api = useDataAPI();
     const getVideos = useTask(function*() {
       const red33mData = yield api.get('pages', 'red33m');
-      store.commit('page-cache-add', { name: 'red33m', data: red33mData });
+      store.commit('data-cache-add', { name: 'red33m', data: red33mData });
     });
 
     const toggle = () => {
