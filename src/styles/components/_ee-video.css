@@ -6,7 +6,7 @@
   top: 0; left: 0; right: 0; bottom: 0;
   position         : absolute;
   padding          : 7px 3px 0 7px;
-  font-size        : 1.1rem;
+  font-size        : 1.07rem;
   background-color : hsla(0, 0%, 0%, 0.85);
   outline          : 1px dotted transparent;
   opacity          : 0;
@@ -73,7 +73,8 @@
 .ee-video-desc_text h1 {
   border-bottom: 1px dotted hsl(197, 11%, 45%);
   color: var(--app-titlebar-c);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  font-weight: 400;
   margin-bottom: 5px;
 }
 .ee-video-desc_text p {
@@ -98,5 +99,5 @@
 }
 
 .ee-video_title {
-  padding: 5px 0 0 5px;
+  padding: 5px 0 0 2px;
 }
