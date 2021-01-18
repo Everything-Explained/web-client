@@ -6,15 +6,11 @@ module.exports = (ctx) => ({
     'postcss-css-variables'      : null,
     'autoprefixer'               : null,
     'postcss-custom-media'       : null,
-
-    'postcss-sort-media-queries' :
-      ctx.env == 'production'
-        ? { sort: 'desktop-first' }
-        : false,
+    'postcss-sort-media-queries' : { sort: 'desktop-first'},
 
     'cssnano' :
       ctx.env == 'production'
         ? { preset: 'advanced' }
-        : false,
+        : { preset: 'default' },
   }
 });
