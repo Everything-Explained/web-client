@@ -31,15 +31,16 @@
   justify-content: center;
 }
 
+:root { --r3d-vid-width: 300px }
 .red33m-video {
-  width: 300px;
+  width: var(--r3d-vid-width);
   margin-right: 7px;
   margin-bottom: 20px;
   user-select: none;
   transition: color .3s;
 }
 .red33m-video .ee-video_img {
-  height: calc(300px / (16 / 9));
+  height: calc(var(--r3d-vid-width) / (16 / 9));
 }
 .red33m-video .ee-video_title {
   font-size: 1.2rem;
