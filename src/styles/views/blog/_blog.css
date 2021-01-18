@@ -1,6 +1,5 @@
 .blog .--no-entries {
   margin: 100px auto;
-  padding-bottom: 700px;
   font-size: 2rem;
   color: hsl(47, 80%, 63%);
   text-align: center;
@@ -9,7 +8,6 @@
 .blog-entries {
   display        : flex;
   margin-top     : 1rem;
-  margin-bottom  : 50%;
   flex           : 1 0;
   align-items    : center;
   flex-direction : column;
@@ -122,10 +120,6 @@
 }
 .blog-entry:hover .blog-entry__author-icon {
   color: var(--blog-entry-hov-icon-c);
-}
-
-.blog-display {
-  padding-bottom: 50%;
 }
 
 .blog-display_image-header {

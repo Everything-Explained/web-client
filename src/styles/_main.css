@@ -9,8 +9,6 @@
 @import './views/app/_app.css';
 @import './views/app/_app.mobile.css';
 @import './views/app/_app_watermark.css';
-/*** Home View ***/
-@import './views/home/_home.css';
 /*** Blog View ***/
 @import './views/blog/_blog.css';
 @import './views/blog/_blog.mobile.css';
@@ -45,3 +43,5 @@
 @import './components/_ee-video.css';
 /*** Toggle ***/
 @import './components/_toggle.css';
+/*** Footer ***/
+@import './components/_footer.css'

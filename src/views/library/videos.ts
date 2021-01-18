@@ -5,11 +5,13 @@ import titlebar from '@/components/titlebar.vue';
 import { useDataAPI } from "@/services/api_data";
 import { VuexStore } from "@/vuex/vuex-store";
 import EeVideo from '@/components/ee-video.vue';
+import Footer from '@/components/footer.vue';
 
 export default defineComponent({
   components: {
     'title-bar': titlebar,
     'ee-video': EeVideo,
+    'ee-footer': Footer,
   },
   setup() {
     const store = useStore<VuexStore>();

@@ -3,11 +3,13 @@ import { computed, defineComponent } from "vue";
 import { useStore } from 'vuex';
 import { VuexStore } from '@/vuex/vuex-store';
 import titlebar from '@/components/titlebar.vue';
+import Footer from '@/components/footer.vue';
 
 
 export default defineComponent({
   components: {
     'title-bar': titlebar,
+    'ee-footer': Footer,
   },
   setup() {
     const store = useStore<VuexStore>();

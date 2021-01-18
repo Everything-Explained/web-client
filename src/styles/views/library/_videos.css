@@ -8,9 +8,6 @@
 .category:nth-child(2) {
   margin-top: 1.3rem;
 }
-.category:last-child {
-  margin-bottom: 100px;
-}
 
 .cat_video-tray {
   display: flex;

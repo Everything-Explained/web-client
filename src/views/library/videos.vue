@@ -14,6 +14,7 @@
         >{{ v.title }}</ee-video>
       </div>
     </div>
+    <ee-footer></ee-footer>
   </div>
 </template>
 

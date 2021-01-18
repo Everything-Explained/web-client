@@ -19,8 +19,8 @@
             class="red33m-video"
           >{{ v.title }}</ee-video>
         </div>
+        <ee-footer></ee-footer>
       </div>
-
     </transition>
   </div>
 </template>
