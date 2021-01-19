@@ -67,7 +67,7 @@ button.standard,
     text-shadow: 1px 1px 0 #7a7a7a;
     box-shadow: -2px 3px 0 2px #333333;
     cursor: pointer;
-    transition: border .3s, background .3s, color .3s, box-shadow .1s, text-shadow .3s, transform .1s ease;
+    transition: border .3s, background .3s, color .3s, box-shadow .1s, text-shadow .3s, transform .1s;
 }
 
 button.standard:hover,

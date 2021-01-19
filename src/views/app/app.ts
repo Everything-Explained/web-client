@@ -1,12 +1,10 @@
 import { defineComponent, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import Menu from '../../components/menu.vue';
-import icon from '../../components/icon.vue';
+import Menu from '@/components/menu.vue';
 
 export default defineComponent({
   components: {
     'main-menu': Menu,
-    icon,
   },
   data: () => {
     return {

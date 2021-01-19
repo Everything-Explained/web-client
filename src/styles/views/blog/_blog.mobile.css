@@ -24,6 +24,7 @@
   .blog-entry          { max-width: 99%;    }
   .blog-entry__title   { font-size: 1.3rem; }
   .blog-entry__summary { font-size: 1rem;   }
+  .blog-entry__author  { max-width: 99%; font-size: 1.05rem;   }
   .blog-entry__date,
   .blog-entry__time {
     font-size: 0.95rem;

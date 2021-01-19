@@ -81,16 +81,17 @@
 
   /*** Menu ***/
   --menu-bg-c              : var(--body-bg-c);
-  --menu-header-c          : hsl(47, 70%, 60%);
+  --menu-header-c          : hsl(197, 20%, 83%);
   --menu-header-bg-c       : var(--sub-panel-c);
   --menu-exit-icon-c       : hsl(197, 12%, 70%);
   --menu-exit-icon-hov-c   : var(--app-ribbon-c);
   --menu-item-c            : var(--md-c);
   --menu-item-hov-c        : hsl(197, 11%, 88%);
-  --menu-item-bdr-c        : var(--body-bg-c);
+  --menu-item-bdr-c        : var(--panel-c);
+  --menu-item-bdr-hov-c    : hsl(197, 11%, 75%);
   --menu-active-item-c     : hsl(47, 80%, 63%);
   --menu-active-item-bg-c  : var(--sub-panel-hov-c);
-  --menu-active-item-bdr-c : black;
+  --menu-active-item-bdr-c : hsl(47, 80%, 63%);
 
 
   /*** Blog Styles ***/

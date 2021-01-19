@@ -13,21 +13,14 @@
           class='red33m-toggle'
         ></toggle>
         <div class="red33m-video-list">
-          <div
-            v-for="(v, i) of videos"
-            :key="i"
+          <ee-video v-for="(v, i) of videos" :key="i"
+            :videoId='v.id'
+            :desc='v.content'
             class="red33m-video"
-            :data-title='v.title'
-            @click="openVideo('//www.youtube-nocookie.com/embed/'+ v.id +'?rel=0')"
-          >
-            <lazy-img
-              :src="'//img.youtube.com/vi/' + v.id + '/0.jpg'"
-              class="red33m-video_thumbnail-container"
-            />
-          </div>
+          >{{ v.title }}</ee-video>
         </div>
+        <ee-footer></ee-footer>
       </div>
-
     </transition>
   </div>
 </template>

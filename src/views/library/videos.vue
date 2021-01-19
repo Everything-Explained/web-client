@@ -1,0 +1,22 @@
+<template>
+  <div class="lib-videos">
+    <title-bar :easeIn='350' :easeOut='350'></title-bar>
+    <div class="category"
+      v-for="(cat, i) of categories"
+      :key="i"
+    >
+      <div class="category_name">{{ cat.name }}</div>
+      <div class="cat_video-tray --default-scrollbar">
+        <ee-video v-for="(v, i) of cat.videos" :key="i"
+          :videoId='v.id'
+          :desc='v.content'
+          class="lib-videos_video"
+        >{{ v.title }}</ee-video>
+      </div>
+    </div>
+    <ee-footer></ee-footer>
+  </div>
+</template>
+
+
+<script lang="ts" src='./videos.ts'></script>

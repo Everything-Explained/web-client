@@ -21,7 +21,7 @@
   z-index    : 2;
   cursor     : pointer;
   text-shadow: 2px 2px 1px black;
-  transition : opacity .3s ease, color .3s ease;
+  transition : opacity .3s, color .3s;
 }
 .title-bar__menu-icon:hover {
   color: var(--app-titlebar-icon-hov-c);

@@ -1,0 +1,103 @@
+
+.ee-video_img     { overflow : hidden;         }
+.ee-video_img img { margin   : -9.5% 0 -11% 0; }
+
+.ee-video_desc {
+  top: 0; left: 0; right: 0; bottom: 0;
+  position         : absolute;
+  padding          : 7px 3px 0 7px;
+  font-size        : 1.07rem;
+  background-color : hsla(0, 0%, 0%, 0.85);
+  outline          : 1px dotted transparent;
+  opacity          : 0;
+  pointer-events   : none;
+  z-index          : 2;
+  transition       : opacity .5s, outline .4s;
+}
+.ee-video_desc.--open {
+  opacity: 1;
+  pointer-events: all;
+  outline: 1px dotted hsl(197, 11%, 35%);
+}
+
+.ee-video_widget {
+  position         : absolute;
+  padding          : 5px;
+  font-size        : 1.7rem;
+  color            : var(--app-titlebar-c);
+  background-color : hsla(0, 0%, 10%, 0.53);
+  border-radius    : 5px;
+  user-select      : none;
+  cursor           : pointer;
+  transition       : color .3s, background .3s, opacity .3s;
+}
+.ee-video_widget:hover {
+  color: var(--menu-active-item-c);
+  background-color: hsla(0, 0%, 10%, 0.7);
+}
+.ee-video_widget.--open {
+  opacity: 0;
+}
+
+.ee-video_widget-open-video {
+  bottom: 7px; right: 7px;
+  padding-left: 7px;
+}
+
+.ee-video_widget-open-desc {
+  top: 7px; right: 7px;
+}
+
+.ee-video_widget-close-desc {
+  top: 3px; right: 7px;
+  font-size: 1.9rem;
+  padding: 0;
+  background-color: transparent;
+  z-index: 2;
+}
+.ee-video_widget-close-desc:hover {
+  color: var(--menu-exit-icon-hov-c);
+  background-color: transparent;
+}
+
+
+.ee-video-desc_text {
+  display: flex;
+  max-height: 100%;
+  flex-direction: column;
+}
+.ee-video-desc_text span {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.ee-video-desc_text h1 {
+  border-bottom: 1px dotted hsl(197, 11%, 45%);
+  color: var(--app-titlebar-c);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+.ee-video-desc_text p {
+  margin-bottom: 13px;
+  line-height: 1.7rem;
+}
+.ee-video-desc_text strong {
+  color: var(--md-b-c);
+  font-weight: 400;
+}
+.ee-video-desc_text a:link,
+.ee-video-desc_text a:active,
+.ee-video-desc_text a:visited {
+  font-weight: 400;
+  color: var(--md-b-c);
+  border-bottom: 1px solid var(--md-b-c);
+  transition: color .3s, border .3s;
+}
+.ee-video-desc_text a:hover {
+  color: var(--menu-active-item-c);
+  border-bottom: 1px solid var(--menu-active-item-c);
+}
+
+.ee-video_title {
+  padding: 5px 0 0 2px;
+}

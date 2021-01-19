@@ -89,7 +89,7 @@
   text-decoration : none;
   font-weight: 400;
   border-bottom   : 1px solid var(--md-link-bdr-c);
-  transition      : border .25s ease, color .25s ease;
+  transition      : border .25s, color .25s;
 }
 .md > p:hover a:link,
 .md > p:hover a:active,
@@ -190,5 +190,5 @@
 .md em, .md dt,
 .md dd, .md code,
 .md strong, .md blockquote {
-  transition: color 0.25s ease, background 0.25s ease;
+  transition: color 0.25s, background 0.25s;
 }

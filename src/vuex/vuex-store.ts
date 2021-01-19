@@ -1,11 +1,10 @@
 import { createStore } from "vuex";
-import { BlogPost } from "../views/blog/blog";
 
 export interface VuexStore {
   pageTitle     : string;
   isMenuOpening : boolean;
   lazyimgCache  : string[];
-  pageCache     : { [key: string]: any[] };
+  dataCache     : { [key: string]: any[] };
 }
 
 export default createStore<VuexStore>({
@@ -14,7 +13,7 @@ export default createStore<VuexStore>({
       pageTitle: '',
       isMenuOpening: false,
       lazyimgCache: [],
-      pageCache: {},
+      dataCache: {},
     };
   },
   mutations: {
@@ -25,8 +24,8 @@ export default createStore<VuexStore>({
     'close-menu'     : (state) => { state.isMenuOpening = false; },
     'lazyimg-cache-add':
       (state, URI: string) => { state.lazyimgCache.push(URI); },
-    'page-cache-add':
+    'data-cache-add':
       (state, payload: { name: string; data: any[] }) =>
-          state.pageCache[payload.name] = payload.data.slice()
+          state.dataCache[payload.name] = payload.data.slice()
   }
 });

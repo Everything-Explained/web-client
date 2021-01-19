@@ -1,15 +1,17 @@
 import { computed, defineComponent, ref, watch } from "vue";
 import blogPosts from './blog.json';
-import icon from '../../components/icon.vue';
-import { dateToShortMDY, dateTo12HourTimeStr } from "../../composeables/date-utils";
+import icon from '@/components/icon.vue';
+import { dateToShortMDY, dateTo12HourTimeStr } from "@/composeables/date-utils";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { VuexStore } from "../../vuex/vuex-store";
-import titlebar from '../../components/titlebar.vue';
-import lazyimg from '../../components/lazyimg.vue';
+import { VuexStore } from "@/vuex/vuex-store";
+import titlebar from '@/components/titlebar.vue';
+import lazyimg from '@/components/lazyimg.vue';
 import { useTask } from 'vue-concurrency';
-import { usePageDateAPI as usePageDataAPI } from "../../services/api_pagedata";
-import preloader from '../../components/preloader.vue';
+import { useDataAPI as usePageDataAPI } from "@/services/api_data";
+import preloader from '@/components/preloader.vue';
+import Footer from '@/components/footer.vue';
+
 
 export type BlogPost = typeof blogPosts[0];
 
@@ -20,6 +22,7 @@ export default defineComponent({
     'title-bar': titlebar,
     'lazy-image': lazyimg,
     preloader,
+    'ee-footer': Footer,
   },
 
   setup() {
@@ -30,21 +33,24 @@ export default defineComponent({
     const store      = useStore<VuexStore>();
     const title      = ref('Blog Entries')
     ;
-    const pageDataAPI = usePageDataAPI();
-    const getBlogPosts = useTask(function*() {
-      const blogData = yield pageDataAPI.get('blog');
-      store.commit('page-cache-add', { name: 'blog', data: blogData });
-      // The URL points to a specific blog-post on page load
-      if (postURI) displayBlogPost(postURI);
-    });
-    const posts = computed(() => store.state.pageCache['blog']);
+    const posts = computed(() => store.state.dataCache['blog']);
     const displayBlogPost = (uri: string) => {
       const post = posts.value.find(post => post.uri == uri);
       if (!post) { router.push('/404'); return; }
       title.value = post.title;
       activePost.value = post;
     };
+
+    const pageDataAPI = usePageDataAPI();
+    const getBlogPosts = useTask(function*() {
+      const blogData = yield pageDataAPI.get('pages', 'blog');
+      store.commit('data-cache-add', { name: 'blog', data: blogData });
+      // The URL points to a specific blog-post on page load
+      if (postURI) displayBlogPost(postURI);
+    });
+
     const goTo = (uri: string) => { router.push(`/blog/${uri}`); };
+
     // onBlogRouteChange
     watch(() => route.params,
       async (params) => {
@@ -80,6 +86,7 @@ export default defineComponent({
     },
     formatTime(isoDateStr: string) {
       return dateTo12HourTimeStr(isoDateStr);
-    }
+    },
+    isEthan(author: string) { return author.trim() == 'Ethan Kahn'; }
   }
 });
