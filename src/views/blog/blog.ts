@@ -33,14 +33,6 @@ export default defineComponent({
     const store      = useStore<VuexStore>();
     const title      = ref('Blog Entries')
     ;
-    const pageDataAPI = usePageDataAPI();
-    const getBlogPosts = useTask(function*() {
-      const blogData = yield pageDataAPI.get('pages', 'blog');
-      store.commit('data-cache-add', { name: 'blog', data: blogData });
-      // The URL points to a specific blog-post on page load
-      if (postURI) displayBlogPost(postURI);
-    });
-
     const posts = computed(() => store.state.dataCache['blog']);
     const displayBlogPost = (uri: string) => {
       const post = posts.value.find(post => post.uri == uri);
@@ -48,6 +40,14 @@ export default defineComponent({
       title.value = post.title;
       activePost.value = post;
     };
+
+    const pageDataAPI = usePageDataAPI();
+    const getBlogPosts = useTask(function*() {
+      const blogData = yield pageDataAPI.get('pages', 'blog');
+      store.commit('data-cache-add', { name: 'blog', data: blogData });
+      // The URL points to a specific blog-post on page load
+      if (postURI) displayBlogPost(postURI);
+    });
 
     const goTo = (uri: string) => { router.push(`/blog/${uri}`); };
 
