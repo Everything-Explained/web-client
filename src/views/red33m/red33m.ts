@@ -6,7 +6,6 @@ import { useDataAPI } from "@/services/api_data";
 // Components
 import titlebar  from '@/components/titlebar.vue';
 import toggle    from '@/components/toggle.vue';
-import preloader from '@/components/preloader.vue';
 import EeVideo from '@/components/ee-video.vue';
 import Footer from '@/components/footer.vue';
 
@@ -20,7 +19,6 @@ export default defineComponent({
     'title-bar': titlebar,
     'toggle': toggle,
     'ee-video': EeVideo,
-    preloader,
     'ee-footer': Footer,
   },
   setup() {

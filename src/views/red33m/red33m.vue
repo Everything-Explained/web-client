@@ -2,7 +2,7 @@
   <div class="red33m">
     <title-bar></title-bar>
     <transition name='fade' mode="out-in">
-      <preloader class="data-loader" v-if="getVideos.isRunning"></preloader>
+      <div class="preloader page" v-if="getVideos.isRunning"></div>
       <div v-else>
         <toggle
           :legend='"Sort By"'

@@ -14,13 +14,6 @@
   user-select    : none;
 }
 
-.blog .preloader {
-  margin: 0 auto;
-  margin-top: 20%;
-  width: 200px;
-  height: 200px;
-}
-
 .blog-entry {
   margin-bottom    : 1rem;
   background-color : var(--blog-entry-bg-c);

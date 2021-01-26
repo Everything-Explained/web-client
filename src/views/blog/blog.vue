@@ -2,7 +2,7 @@
   <div class="blog">
     <title-bar :easeIn='350' :easeOut='350'></title-bar>
     <transition name='fade' mode='out-in'>
-      <preloader v-if="getBlogPosts.isRunning"></preloader>
+      <div class="preloader page" v-if="getBlogPosts.isRunning"></div>
       <div v-else>
         <div v-if="!posts.length" class="--no-entries">No Blog Entries Yet!</div>
         <transition name='fade' @before-leave="onBeforeTransLeave" mode="out-in">

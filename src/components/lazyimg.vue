@@ -1,12 +1,12 @@
 
 <template>
   <div ref='containerRef' class="lazyimg">
-    <preloader
+    <div
       v-if="showPreloader"
       id='LazyPreloader'
-      class="lazyimg_preloader"
+      class="preloader lazyimg_preloader"
       :class="{ '--disabled': loaded }"
-    ></preloader>
+    ></div>
     <img
       ref="imgRef"
       class="lazyimg_image"

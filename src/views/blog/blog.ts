@@ -9,7 +9,6 @@ import titlebar from '@/components/titlebar.vue';
 import lazyimg from '@/components/lazyimg.vue';
 import { useTask } from 'vue-concurrency';
 import { useDataAPI as usePageDataAPI } from "@/services/api_data";
-import preloader from '@/components/preloader.vue';
 import Footer from '@/components/footer.vue';
 
 
@@ -21,7 +20,6 @@ export default defineComponent({
     icon,
     'title-bar': titlebar,
     'lazy-image': lazyimg,
-    preloader,
     'ee-footer': Footer,
   },
 

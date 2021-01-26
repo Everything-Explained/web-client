@@ -1,12 +1,8 @@
 import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { VuexStore } from "../vuex/vuex-store";
-import preloader from './preloader.vue';
 
 export default defineComponent({
-  components: {
-    preloader,
-  },
   props: {
     src: String,
     asset: Boolean,
