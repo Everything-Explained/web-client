@@ -30,4 +30,11 @@
                   inset 0 0 56px hsl(0, 100%, 63%);
 }
 
+.preloader.page {
+  margin: 0 auto;
+  margin-top: 20%;
+  width: 200px;
+  height: 200px;
+}
+
 
