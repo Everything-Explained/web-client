@@ -1,7 +1,7 @@
 <template>
   <div class="ee-video">
     <div class="ee-video_img-container">
-      <lazy-img :src='thumbnail' class="ee-video_img"></lazy-img>
+      <ee-img :src='thumbnail' class="ee-video_img"></ee-img>
       <icon class="ee-video_widget ee-video_widget-open-video"
         @click="openVideo"
         :class="{ '--open': descState }"

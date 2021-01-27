@@ -1,10 +1,10 @@
 import { computed, defineComponent, ref } from "vue";
-import Lazyimg from '@/components/lazyimg.vue';
-import Icon from '@/components/icon.vue';
+import EEImg from '@/components/ui/ee-img.vue';
+import Icon from '@/components/ui/icon.vue';
 
 export default defineComponent({
   components: {
-    'lazy-img': Lazyimg,
+    'ee-img': EEImg,
     'icon': Icon,
   },
   props: {

@@ -4,10 +4,10 @@ import { VuexStore }      from "@/vuex/vuex-store";
 import { useTask }        from "vue-concurrency";
 import { useDataAPI } from "@/services/api_data";
 // Components
-import titlebar  from '@/components/titlebar.vue';
-import toggle    from '@/components/toggle.vue';
-import EeVideo from '@/components/ee-video.vue';
-import Footer from '@/components/footer.vue';
+import titlebar  from '@/components/layout/titlebar.vue';
+import toggle    from '@/components/ui/toggle.vue';
+import EEVideo from '@/components/ui/ee-video.vue';
+import Footer from '@/components/layout/footer.vue';
 
 import videoData from './red33m.json';
 type Videos = typeof videoData;
@@ -18,7 +18,7 @@ export default defineComponent({
   components: {
     'title-bar': titlebar,
     'toggle': toggle,
-    'ee-video': EeVideo,
+    'ee-video': EEVideo,
     'ee-footer': Footer,
   },
   setup() {

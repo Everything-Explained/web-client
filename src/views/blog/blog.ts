@@ -1,15 +1,15 @@
 import { computed, defineComponent, ref, watch } from "vue";
 import blogPosts from './blog.json';
-import icon from '@/components/icon.vue';
+import icon from '@/components/ui/icon.vue';
 import { dateToShortMDY, dateTo12HourTimeStr } from "@/composeables/date-utils";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { VuexStore } from "@/vuex/vuex-store";
-import titlebar from '@/components/titlebar.vue';
-import lazyimg from '@/components/lazyimg.vue';
+import titlebar from '@/components/layout/titlebar.vue';
+import EEImg from '@/components/ui/ee-img.vue';
 import { useTask } from 'vue-concurrency';
 import { useDataAPI as usePageDataAPI } from "@/services/api_data";
-import Footer from '@/components/footer.vue';
+import Footer from '@/components/layout/footer.vue';
 
 
 export type BlogPost = typeof blogPosts[0];
@@ -19,7 +19,7 @@ export default defineComponent({
   components: {
     icon,
     'title-bar': titlebar,
-    'lazy-image': lazyimg,
+    'ee-img': EEImg,
     'ee-footer': Footer,
   },
 

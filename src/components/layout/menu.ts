@@ -1,8 +1,8 @@
 import { defineComponent, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
-import { useRouteMap } from "../composeables/route-map";
-import { VuexStore } from "../vuex/vuex-store";
-import icon from './icon.vue';
+import { useRouteMap } from "@/composeables/route-map";
+import { VuexStore } from "@/vuex/vuex-store";
+import icon from '@/components/ui/icon.vue';
 
 interface ExternalElements {
   contentToSlide: HTMLElement|null;

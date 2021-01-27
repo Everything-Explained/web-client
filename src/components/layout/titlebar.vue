@@ -18,8 +18,8 @@
 <script lang='ts'>
 import { computed, defineComponent, reactive, toRefs } from "vue";
 import { useStore } from "vuex";
-import { VuexStore } from "../vuex/vuex-store";
-import icon from './icon.vue';
+import { VuexStore } from "@/vuex/vuex-store";
+import icon from '@/components/ui/icon.vue';
 
 
 export default defineComponent({

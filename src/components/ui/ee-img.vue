@@ -1,19 +1,16 @@
 
 <template>
   <div ref='containerRef' class="lazyimg">
-    <div
+    <div class="preloader lazyimg_preloader"
       v-if="showPreloader"
-      id='LazyPreloader'
-      class="preloader lazyimg_preloader"
       :class="{ '--disabled': loaded }"
     ></div>
-    <img
-      ref="imgRef"
-      class="lazyimg_image"
+    <img class="lazyimg_image"
       :class="{ '--loaded': loaded }"
+      ref="imgRef"
       alt="">
   </div>
 </template>
 
 
-<script lang="ts" src='./lazyimg.ts'></script>
+<script lang="ts" src='./ee-img.ts'></script>

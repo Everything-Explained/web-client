@@ -1,6 +1,6 @@
 import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
-import { VuexStore } from "../vuex/vuex-store";
+import { VuexStore } from "../../vuex/vuex-store";
 
 export default defineComponent({
   props: {

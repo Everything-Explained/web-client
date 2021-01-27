@@ -1,11 +1,11 @@
 import { computed, defineComponent } from "vue";
 import { useTask } from "vue-concurrency";
 import { useStore } from "vuex";
-import titlebar from '@/components/titlebar.vue';
+import titlebar from '@/components/layout/titlebar.vue';
 import { useDataAPI } from "@/services/api_data";
 import { VuexStore } from "@/vuex/vuex-store";
-import EeVideo from '@/components/ee-video.vue';
-import Footer from '@/components/footer.vue';
+import EeVideo from '@/components/ui/ee-video.vue';
+import Footer from '@/components/layout/footer.vue';
 
 export default defineComponent({
   components: {

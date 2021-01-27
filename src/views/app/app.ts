@@ -1,6 +1,6 @@
 import { defineComponent, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import Menu from '@/components/menu.vue';
+import Menu from '@/components/layout/menu.vue';
 
 export default defineComponent({
   components: {
