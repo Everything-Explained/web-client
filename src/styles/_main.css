@@ -44,4 +44,6 @@
 /*** Toggle ***/
 @import './components/_toggle.css';
 /*** Footer ***/
-@import './components/_footer.css'
+@import './components/_footer.css';
+/*** Input Field ***/
+@import './components/ui/_ee-input-field.css';
