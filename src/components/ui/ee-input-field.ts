@@ -6,6 +6,7 @@ const _inputTypes = ['text', 'email', 'password'];
 
 export default defineComponent({
   props: {
+    'modelValue': String,
     name: {
       type: String,
       default: null,
@@ -21,6 +22,7 @@ export default defineComponent({
       validator: (val: number) => val < 255
     }
   },
+  emits: ['update:modelValue'],
   setup(props) {
     const base36RndNum = Math.floor(Math.random() * 10000).toString(36);
     const base36Time = Date.now().toString(36);
