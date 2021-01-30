@@ -47,7 +47,7 @@ export default defineComponent({
       const style = document.createElement('style');
       style.id = 'SlideStyle';
       style.innerHTML =
-        `#${props.contentId}.--menu-open { transform: translate(${menuElRef.value!.clientWidth}px); }`
+        `#${props.contentId}.--menu-open { left: ${menuElRef.value!.clientWidth}px; }`
       ;
       document.head.append(style);
     };
