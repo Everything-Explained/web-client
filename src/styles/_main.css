@@ -26,24 +26,26 @@
 /*#######################*/
 /*###### COMPONENTS #####*/
 /*#######################*/
-/*** Menu ***/
-@import './components/_menu.css';
 /*** Title Bar ***/
-@import './components/_titlebar.css';
-@import './components/_titlebar.mobile.css';
-/*** Lazy Image ***/
-@import './components/_lazyimg.css';
-/*** Preloader ***/
-@import './components/_preloader.css';
-/*** Icon ***/
-@import './components/_icon.css';
-/*** on/off Switch ***/
-@import './components/_onoff-switch.css';
-/*** EE Video ***/
-@import './components/_ee-video.css';
-/*** Toggle ***/
-@import './components/_toggle.css';
+@import './components/layout/_titlebar.css';
+@import './components/layout/_titlebar.mobile.css';
+/*** Menu ***/
+@import './components/layout/_menu.css';
 /*** Footer ***/
-@import './components/_footer.css';
+@import './components/layout/_footer.css';
+
+/*** Lazy Image ***/
+@import './components/ui/_lazyimg.css';
+/*** Icon ***/
+@import './components/ui/_icon.css';
+/*** on/off Switch ***/
+@import './components/ui/_onoff-switch.css';
+/*** EE Video ***/
+@import './components/ui/_ee-video.css';
+/*** Toggle ***/
+@import './components/ui/_toggle.css';
 /*** Input Field ***/
 @import './components/ui/_ee-input-field.css';
+
+/*** Preloader ***/
+@import './components/_preloader.css';
