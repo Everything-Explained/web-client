@@ -1,5 +1,6 @@
 @import './fonts/_fonts.css';
 @import './base/_base.css';
+@import './base/_inputs.css';
 
 
 /*#####################*/
@@ -46,6 +47,8 @@
 @import './components/ui/_toggle.css';
 /*** Input Field ***/
 @import './components/ui/_ee-input-field.css';
+/*** EE Button ***/
+@import './components/ui/_ee-button.css';
 
 /*** Preloader ***/
 @import './components/_preloader.css';
