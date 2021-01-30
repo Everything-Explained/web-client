@@ -8,9 +8,8 @@ import titlebar  from '@/components/layout/titlebar.vue';
 import toggle    from '@/components/ui/toggle.vue';
 import EEVideo from '@/components/ui/ee-video.vue';
 import Footer from '@/components/layout/footer.vue';
-
-import videoData from './red33m.json';
-type Videos = typeof videoData;
+import EEInput from '@/components/ui/ee-input-field.vue';
+import EEButton from '@/components/ui/ee-button.vue';
 
 
 
@@ -20,11 +19,16 @@ export default defineComponent({
     'toggle': toggle,
     'ee-video': EEVideo,
     'ee-footer': Footer,
+    'ee-input': EEInput,
+    'ee-button': EEButton,
   },
   setup() {
     const store = useStore<VuexStore>();
-    const videos = computed(() => store.state.dataCache['red33m']?.slice());
     const isLoading = ref(false);
+    const codeLength = 6;
+    const code = ref('');
+    const hasValidCode = computed(() => code.value.length == codeLength);
+    const videos = computed(() => store.state.dataCache['red33m']?.slice());
 
     const api = useDataAPI();
     const getVideos = useTask(function*() {
@@ -41,9 +45,23 @@ export default defineComponent({
       setTimeout(() => isLoading.value = false, 300);
     };
 
+
+    const toggleLoad = () => {
+      isLoading.value = !isLoading.value;
+      setTimeout(() => { isLoading.value = false; }, 2000);
+    };
     store.commit('page-title', 'RED33M');
     if (!videos.value) getVideos.perform();
 
-    return { videos, getVideos, toggle, isLoading };
+    return {
+      videos,
+      getVideos,
+      toggle,
+      toggleLoad,
+      isLoading,
+      passcode: code,
+      hasValidCode,
+      codeLength
+    };
   }
 });

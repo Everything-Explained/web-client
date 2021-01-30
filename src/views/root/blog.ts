@@ -1,18 +1,14 @@
 import { computed, defineComponent, ref, watch } from "vue";
-import blogPosts from './blog.json';
-import icon from '@/components/ui/icon.vue';
-import { dateToShortMDY, dateTo12HourTimeStr } from "@/composeables/date-utils";
-import { useRoute, useRouter } from "vue-router";
-import { useStore } from "vuex";
-import { VuexStore } from "@/vuex/vuex-store";
-import titlebar from '@/components/layout/titlebar.vue';
-import EEImg from '@/components/ui/ee-img.vue';
-import { useTask } from 'vue-concurrency';
-import { useDataAPI as usePageDataAPI } from "@/services/api_data";
-import Footer from '@/components/layout/footer.vue';
-
-
-export type BlogPost = typeof blogPosts[0];
+import icon                                      from '@/components/ui/icon.vue';
+import { dateToShortMDY, dateTo12HourTimeStr }   from "@/composeables/date-utils";
+import { useRoute, useRouter }                   from "vue-router";
+import { useStore }                              from "vuex";
+import { VuexStore }                             from "@/vuex/vuex-store";
+import titlebar                                  from '@/components/layout/titlebar.vue';
+import EEImg                                     from '@/components/ui/ee-img.vue';
+import { useTask }                               from 'vue-concurrency';
+import { useDataAPI as usePageDataAPI }          from "@/services/api_data";
+import Footer                                    from '@/components/layout/footer.vue';
 
 
 export default defineComponent({
@@ -24,7 +20,7 @@ export default defineComponent({
   },
 
   setup() {
-    const activePost = ref<BlogPost|null>(null);
+    const activePost = ref<any|null>(null);
     const router     = useRouter();
     const route      = useRoute();
     const postURI    = route.params.post as string|undefined;

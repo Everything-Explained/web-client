@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Home       from '../views/home/home.vue';
+import Home       from '../views/root/home.vue';
 import i404       from '../views/errors/i404.vue';
-import Red33m from '../views/red33m/red33m.vue';
-import Test from '../views/test/test.vue';
-import Blog from '../views/blog/blog.vue';
-import Videos from '../views/library/videos.vue';
+import Red33m     from '../views/root/red33m.vue';
+import Blog       from '../views/root/blog.vue';
+import Videos     from '../views/library/videos.vue';
 import Literature from '../views/library/literature.vue';
 
 const routes: Array<RouteRecordRaw> = [
@@ -34,12 +33,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'literature',
     component: Literature,
   },
-  // {
-  //   path: '/test',
-  //   name: 'test',
-  //   component: Test,
-  //   meta: { display: true, order: 4, title: 'Test' }
-  // },
+
 
   // {
   //   path: '/faq/:page?',
