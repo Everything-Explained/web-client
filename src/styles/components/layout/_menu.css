@@ -61,15 +61,15 @@
   font-size   : 1.3rem;
   text-align  : left;
   color       : var(--menu-item-c);
-  border-left : 2px solid var(--menu-item-bdr-c);
+  border-left : 3px solid var(--menu-item-bdr-c);
   transition  : color .3s, border .3s;
   user-select : none;
 }
 .app-menu_item a:hover {
   color       : var(--menu-item-hov-c);
-  border-left : 2px solid var(--menu-item-bdr-hov-c);
+  border-left : 3px solid var(--menu-item-bdr-hov-c);
 }
 .app-menu_item a.router-link-active {
   color       : var(--menu-active-item-c);
-  border-left : 2px solid var(--menu-active-item-bdr-c);
+  border-left : 3px solid var(--menu-active-item-bdr-c);
 }
