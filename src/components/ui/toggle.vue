@@ -6,7 +6,7 @@
         type="radio"
         name="toggle"
         id="toggleLeft"
-        checked="checked"
+        :checked="true"
         :disabled='props.prevent'
       />
       <label
