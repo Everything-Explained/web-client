@@ -1,31 +1,7 @@
 <template>
   <div class="red33m">
     <title-bar></title-bar>
-    <div class="disclaimer">
-      This page contains sensitive content which requires authentication.
-      If you have a passcode, enter it below.
-    </div>
-    <div class="form">
-      <!-- <input class="red33m_input" type="text"
-        v-model="passcode"
-        placeholder="Passcode..."
-        maxlength="10"
-        required
-        pattern="[a-zA-Z0-9]{10}"
-      /> -->
-      <ee-input class="red33m__passcode"
-        v-model="passcode"
-        :maxlength='codeLength'
-      >Passcode</ee-input>
-
-      <ee-button
-        @click="toggleLoad"
-        :loading='isLoading'
-        :disabled='!hasValidCode'
-      >ENTER</ee-button>
-    </div>
-    <ee-footer></ee-footer>
-    <!-- <transition name='fade' mode="out-in">
+    <transition name='fade' mode="out-in">
       <div class="preloader page" v-if="getVideos.isRunning"></div>
       <div v-else>
         <toggle
@@ -45,7 +21,7 @@
         </div>
         <ee-footer></ee-footer>
       </div>
-    </transition> -->
+    </transition>
   </div>
 </template>
 

@@ -5,6 +5,7 @@ import Red33m     from '../views/root/red33m.vue';
 import Blog       from '../views/root/blog.vue';
 import Videos     from '../views/library/videos.vue';
 import Literature from '../views/library/literature.vue';
+import red33mAuth from '@/views/accessory/red33m-auth.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -32,6 +33,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/literature',
     name: 'literature',
     component: Literature,
+  },
+  {
+    path: '/red33m-auth',
+    name: 'red33m-auth',
+    component: red33mAuth,
   },
 
 
