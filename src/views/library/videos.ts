@@ -2,7 +2,7 @@ import { computed, defineComponent } from "vue";
 import { useTask } from "vue-concurrency";
 import { useStore } from "vuex";
 import titlebar from '@/components/layout/titlebar.vue';
-import { useDataAPI } from "@/services/api_data";
+import { useDataAPI } from "@/services/api_internal";
 import { VuexStore } from "@/vuex/vuex-store";
 import EeVideo from '@/components/ui/ee-video.vue';
 import Footer from '@/components/layout/footer.vue';

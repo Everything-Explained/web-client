@@ -7,7 +7,7 @@ import { VuexStore }                             from "@/vuex/vuex-store";
 import titlebar                                  from '@/components/layout/titlebar.vue';
 import EEImg                                     from '@/components/ui/ee-img.vue';
 import { useTask }                               from 'vue-concurrency';
-import { useDataAPI as usePageDataAPI }          from "@/services/api_data";
+import { useDataAPI as usePageDataAPI }          from "@/services/api_internal";
 import Footer                                    from '@/components/layout/footer.vue';
 
 
