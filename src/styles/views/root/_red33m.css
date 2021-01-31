@@ -1,10 +1,9 @@
 .red33m {
   display: block;
   width: 100%;
-}
+  backface-visibility: hidden;
+  }
 
-  margin: 0 auto;
-}
 
 .red33m .title-bar__text {
   color: hsl(47, 100%, 61%);
@@ -39,3 +38,9 @@
 .red33m-video .ee-video_title {
   font-size: 1.2rem;
 }
+
+
+
+
+
+
