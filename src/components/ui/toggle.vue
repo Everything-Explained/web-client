@@ -29,4 +29,4 @@
   </fieldset>
 </template>
 
-<script lang="ts" src='./toggle.ts'></script>
+<script lang="ts" src='./toggle'></script>

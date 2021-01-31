@@ -13,4 +13,4 @@
 </template>
 
 
-<script lang="ts" src='./ee-img.ts'></script>
+<script lang="ts" src='./ee-img'></script>

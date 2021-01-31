@@ -33,4 +33,4 @@
 </template>
 
 
-<script lang='ts' src='./ee-video.ts'></script>
+<script lang='ts' src='./ee-video'></script>

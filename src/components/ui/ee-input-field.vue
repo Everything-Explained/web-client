@@ -14,4 +14,4 @@
 </template>
 
 
-<script lang='ts' src='./ee-input-field.ts'></script>
+<script lang='ts' src='./ee-input-field'></script>

@@ -7,4 +7,4 @@
   </div>
 </template>
 
-<script lang="ts" src='./onoff-switch.ts'></script>
+<script lang="ts" src='./onoff-switch'></script>

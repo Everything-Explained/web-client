@@ -27,4 +27,4 @@
 
 
 
-<script lang='ts' src='./menu.ts'></script>
+<script lang='ts' src='./menu'></script>

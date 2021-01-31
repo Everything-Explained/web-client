@@ -49,4 +49,4 @@
 
 </template>
 
-<script lang='ts' src='./blog.ts'></script>
+<script lang='ts' src='./blog'></script>

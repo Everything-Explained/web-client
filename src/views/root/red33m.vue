@@ -49,4 +49,4 @@
   </div>
 </template>
 
-<script lang='ts' src='./red33m.ts'></script>
+<script lang='ts' src='./red33m'></script>

@@ -6,4 +6,4 @@
 
 
 
-<script src='./ee-button.ts' lang='ts'></script>
+<script src='./ee-button' lang='ts'></script>

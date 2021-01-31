@@ -20,4 +20,4 @@
   </div>
 </template>
 
-<script lang='ts' src='./app.ts'></script>
+<script lang='ts' src='./app'></script>
