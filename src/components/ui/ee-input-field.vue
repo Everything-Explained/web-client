@@ -5,7 +5,7 @@
       :type="type"
       :maxlength="maxLength"
       :value='modelValue'
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('update:modelValue', getVal($event))"
       placeholder="placeholder"
     >
     <label class="ee-input__label" :for='id'><slot></slot></label>
