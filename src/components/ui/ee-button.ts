@@ -1,18 +1,18 @@
 import { computed, defineComponent } from "vue";
 
 
-const _buttonTypes = ['standard', 'dangerous'];
+const _buttonThemes = ['neutral', 'attention', 'dangerous'];
 
 
 export default defineComponent({
   props: {
-    type:     { type: String,  default: 'standard' },
+    theme:    { type: String,  default: 'neutral' },
     loading:  { type: Boolean, default: false,     },
     disabled: { type: Boolean, default: false,     },
   },
   setup(props) {
-    if (!_buttonTypes.includes(props.type))
-      throw Error(`ee-button:: invalid button type ${props.type}`)
+    if (!_buttonThemes.includes(props.theme))
+      throw Error(`ee-button:: invalid button type ${props.theme}`)
     ;
 
     const loading  = computed(() => props.loading);
@@ -24,7 +24,7 @@ export default defineComponent({
     });
 
     return {
-      disabled, loading, type: props.type
+      disabled, loading, theme: props.theme
     };
    }
 });

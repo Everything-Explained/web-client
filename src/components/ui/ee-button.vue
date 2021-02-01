@@ -1,6 +1,6 @@
 <template>
-  <button :class='["ee-btn", type, { "--loading": loading }]'
-    type="submit"
+  <button :class='["ee-btn", theme, { "--loading": loading }]'
+    :type='undefined'
     :disabled='disabled'
   ><slot></slot></button>
 </template>
