@@ -14,13 +14,15 @@ const menuMap = {
   root: [
     mapRoute('home', 'Home'),
     mapRoute('blog', 'Blog'),
-    mapRoute('red33m-auth', 'Auth'),
     mapRoute('red33m', 'RED33M', isDevelopment),
   ],
   library: [
     mapRoute('videos', 'Videos'),
     mapRoute('literature', 'Literature', isDevelopment),
   ] as Route[],
+  accessory: [
+    mapRoute('red33m-auth', 'Auth', isDevelopment),
+  ]
 };
 
 type RouteMap = typeof menuMap;

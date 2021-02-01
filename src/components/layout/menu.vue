@@ -21,6 +21,12 @@
       >
         <router-link :to="route.path">{{ route.title }}</router-link>
       </li>
+      <li v-if="accRoutes.length" class="app-menu_category">Accessory</li>
+      <li class="app-menu_item"
+        v-for="(route, i) of accRoutes" :key="i"
+      >
+        <router-link :to="route.path">{{ route.title }}</router-link>
+      </li>
     </ul>
   </menu>
 </template>
