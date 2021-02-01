@@ -23,6 +23,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/red33m',
     name: 'red33m',
     component: Red33m,
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem('passcode')) {
+        return next({ name: 'red33m-auth'});
+      }
+      next();
+    }
   },
   {
     path: '/videos',
