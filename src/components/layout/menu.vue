@@ -8,25 +8,15 @@
       ></icon>
     </header>
     <ul>
-      <li class="app-menu_item"
-        v-for="(route, i) of stdRoutes" :key="i"
-        @click="closeMenu"
-      >
-        <router-link :to="route.path">{{ route.title }}</router-link>
-      </li>
-      <li class="app-menu_category">Library</li>
-      <li class="app-menu_item"
-        v-for="(route, i) of libRoutes" :key="i"
-        @click="closeMenu"
-      >
-        <router-link :to="route.path">{{ route.title }}</router-link>
-      </li>
-      <li v-if="accRoutes.length" class="app-menu_category">Accessory</li>
-      <li class="app-menu_item"
-        v-for="(route, i) of accRoutes" :key="i"
-      >
-        <router-link :to="route.path">{{ route.title }}</router-link>
-      </li>
+      <template v-for="(map, i) of routeMap" :key="i">
+        <li v-if="map.name != 'root'" class="app-menu_category">{{ map.name }}</li>
+        <li class="app-menu_item"
+          v-for="(route, i) of map.routes" :key="i"
+          @click="closeMenu"
+        >
+          <router-link :to='route.path'>{{ route.title }}</router-link>
+        </li>
+      </template>
     </ul>
   </menu>
 </template>

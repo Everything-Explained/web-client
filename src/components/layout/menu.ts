@@ -75,9 +75,7 @@ export default defineComponent({
       menu: menuElRef,
       opened,
       closeMenu: () => store.commit('close-menu'),
-      stdRoutes: routeMap.root,
-      libRoutes: routeMap.library,
-      accRoutes: routeMap.accessory,
+      routeMap,
     };
   }
 });

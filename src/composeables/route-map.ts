@@ -10,34 +10,36 @@ const mapRoute = (name: string, title: string, visible?: boolean) => (
   { path: { name }, title, visible: visible ?? true } as Route
 );
 
-const menuMap = {
-  root: [
+const routeMap = [
+  { name: 'root', routes: [
     mapRoute('home', 'Home'),
     mapRoute('blog', 'Blog'),
     mapRoute('red33m', 'RED33M', isDevelopment),
-  ],
-  library: [
+  ]},
+  { name: 'Library', routes: [
     mapRoute('videos', 'Videos'),
     mapRoute('literature', 'Literature', isDevelopment),
-  ] as Route[],
-  accessory: [
+  ]},
+  { name: 'Accessory', routes: [
     mapRoute('red33m-auth', 'Auth', isDevelopment),
-  ]
-};
+  ]},
+];
 
-type RouteMap = typeof menuMap;
+type RouteMap = typeof routeMap;
 
 function normalizeRoutes(map: RouteMap) {
   // Not a performant clone
   const newMap = JSON.parse(JSON.stringify(map)) as RouteMap;
   let mapName: keyof RouteMap;
   for (mapName in newMap) {
-    newMap[mapName] = newMap[mapName].filter(route => route.visible);
+    newMap[mapName].routes =
+      newMap[mapName].routes.filter(route => route.visible)
+    ;
   }
   return newMap;
 }
 
 
 export function useRouteMap() {
-  return normalizeRoutes(menuMap);
+  return normalizeRoutes(routeMap);
 }
