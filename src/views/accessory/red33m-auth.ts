@@ -41,12 +41,9 @@ export default defineComponent({
       const params = new URLSearchParams([['passcode', passcode]]);
       try {
         const res = await authAPI.post('red33m', params, 500);
-        if (res.status == 404) { return setError('Endpoint Not Found'); }
-        if (res.status > 200)  { return setError(await res.text());     }
-        if (res.status == 200) {
-          localStorage.setItem('passcode', passcode);
-          router.push('/red33m');
-        }
+        if (typeof res == 'string') return setError(res);
+        localStorage.setItem('passcode', passcode);
+        router.push('/red33m');
       }
       catch (err) { setError(err?.message || err); }
     };
