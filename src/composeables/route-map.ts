@@ -17,21 +17,21 @@ const menuMap = {
     mapRoute('red33m-auth', 'Auth'),
     mapRoute('red33m', 'RED33M', isDevelopment),
   ],
-  categories: {
-    library: [
-      mapRoute('videos', 'Videos'),
-      mapRoute('literature', 'Literature', isDevelopment),
-    ] as Route[]
-  }
+  library: [
+    mapRoute('videos', 'Videos'),
+    mapRoute('literature', 'Literature', isDevelopment),
+  ] as Route[],
 };
 
 type RouteMap = typeof menuMap;
 
 function normalizeRoutes(map: RouteMap) {
-  // Not performant
+  // Not a performant clone
   const newMap = JSON.parse(JSON.stringify(map)) as RouteMap;
-  newMap.root = map.root.filter(route => route.visible);
-  newMap.categories.library = map.categories.library.filter(route => route.visible);
+  let mapName: keyof RouteMap;
+  for (mapName in newMap) {
+    newMap[mapName] = newMap[mapName].filter(route => route.visible);
+  }
   return newMap;
 }
 
