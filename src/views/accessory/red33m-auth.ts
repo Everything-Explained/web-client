@@ -6,6 +6,8 @@ import footer from '@/components/layout/footer.vue';
 import { useStore } from "vuex";
 import { VuexStore } from "@/vuex/vuex-store";
 import { useAuthAPI } from "@/services/api_internal";
+import eeText from '@/components/ui/ee-text.vue';
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   components: {
@@ -13,33 +15,40 @@ export default defineComponent({
     'ee-button': eeButton,
     'title-bar': titlebar,
     'ee-footer': footer,
+    'ee-text': eeText,
   },
   setup() {
-    const codeLength = 6;
-    const code = ref('');
-    const hasValidCode = computed(() => code.value.length == codeLength);
-    const store = useStore<VuexStore>();
-    const isError = ref(false);
-    const errorText = ref('');
-    const authAPI = useAuthAPI();
+    const codeLength   = 6;
+    const codeRef      = ref('');
+    const errorTextRef = ref('');
+    const isErrorRef   = ref(false);
+    const hasValidCode = computed(() => codeRef.value.length == codeLength);
+    const store        = useStore<VuexStore>();
+    const authAPI      = useAuthAPI();
+    const router       = useRouter();
 
     let errorTimeout = 0;
     const setError = (msg: string) => {
       clearTimeout(errorTimeout);
-      errorText.value = msg.toUpperCase();
-      isError.value = true;
-      errorTimeout = setTimeout(() => isError.value = false, 2500);
+      errorTextRef.value = msg.toUpperCase();
+      isErrorRef.value   = true;
+      errorTimeout       = setTimeout(() => isErrorRef.value = false, 2500);
     };
 
     const submit = async (e: MouseEvent) => {
       e.preventDefault();
-      const params = new URLSearchParams([['passcode', code.value.toUpperCase()]]);
+      const passcode = codeRef.value.toUpperCase();
+      const params = new URLSearchParams([['passcode', passcode]]);
       try {
         const res = await authAPI.post('red33m', params, 500);
         if (res.status == 404) { return setError('Endpoint Not Found'); }
         if (res.status > 200)  { return setError(await res.text());     }
+        if (res.status == 200) {
+          localStorage.setItem('passcode', passcode);
+          router.push('/red33m');
+        }
       }
-      catch (err) { setError(err); }
+      catch (err) { setError(err?.message || err); }
     };
 
     store.commit('page-title', 'RED33M Authentication');
@@ -47,11 +56,11 @@ export default defineComponent({
     return {
       isLoading: authAPI.isLoading,
       hasValidCode,
-      code,
+      code: codeRef,
       codeLength,
-      isError,
+      isError: isErrorRef,
       submit,
-      errorText,
+      errorText: errorTextRef,
     };
   }
 });
