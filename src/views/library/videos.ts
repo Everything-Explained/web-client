@@ -29,7 +29,6 @@ export default defineComponent({
 
     getVideos.perform();
 
-    store.commit('page-title', 'Library Videos');
     return { categories, };
   }
 });

@@ -3,8 +3,6 @@ import eeButton from "@/components/ui/ee-button.vue";
 import eeInputField from "@/components/ui/ee-input-field.vue";
 import titlebar from "@/components/layout/titlebar.vue";
 import footer from '@/components/layout/footer.vue';
-import { useStore } from "vuex";
-import { VuexStore } from "@/vuex/vuex-store";
 import { useAuthAPI } from "@/services/api_internal";
 import eeText from '@/components/ui/ee-text.vue';
 import { useRouter } from "vue-router";
@@ -23,7 +21,6 @@ export default defineComponent({
     const errorTextRef = ref('');
     const isErrorRef   = ref(false);
     const hasValidCode = computed(() => codeRef.value.length == codeLength);
-    const store        = useStore<VuexStore>();
     const authAPI      = useAuthAPI();
     const router       = useRouter();
 
@@ -47,8 +44,6 @@ export default defineComponent({
       }
       catch (err) { setError(err?.message || err); }
     };
-
-    store.commit('page-title', 'RED33M Authentication');
 
     return {
       isLoading: authAPI.isLoading,

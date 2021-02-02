@@ -42,7 +42,6 @@ export default defineComponent({
       setTimeout(() => isLoading.value = false, 300);
     };
 
-    store.commit('page-title', 'RED33M');
     if (!videos.value) getVideos.perform();
 
     return {

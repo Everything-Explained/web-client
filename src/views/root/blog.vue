@@ -1,11 +1,11 @@
 <template>
   <div class="blog">
-    <title-bar :easeIn='350' :easeOut='350'></title-bar>
+    <title-bar :easeIn='350' :easeOut='350' :text='title'></title-bar>
     <transition name='fade' mode='out-in'>
       <div class="preloader page" v-if="getBlogPosts.isRunning"></div>
       <div v-else>
         <div v-if="!posts.length" class="--no-entries">No Blog Entries Yet!</div>
-        <transition name='fade' @before-leave="onBeforeTransLeave" mode="out-in">
+        <transition name='fade' mode="out-in">
           <div class="blog-entries" v-if="posts.length && !activePost" key="postInactive">
             <div class="blog-entry"
               v-for="(post, i) of posts"

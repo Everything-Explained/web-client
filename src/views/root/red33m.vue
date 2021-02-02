@@ -1,6 +1,6 @@
 <template>
   <div class="red33m">
-    <title-bar></title-bar>
+    <title-bar>RED33M</title-bar>
     <transition name='fade' mode="out-in">
       <div class="preloader page" v-if="getVideos.isRunning"></div>
       <div v-else>

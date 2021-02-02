@@ -1,6 +1,6 @@
 <template>
   <div class="lib-videos">
-    <title-bar :easeIn='350' :easeOut='350'></title-bar>
+    <title-bar :easeIn='350' :easeOut='350'>Library Videos</title-bar>
     <transition name='fade' mode='out-in'>
       <div class="preloader page" v-if="!categories"></div>
       <div v-else>
@@ -24,4 +24,4 @@
 </template>
 
 
-<script lang="ts" src='./videos.ts'></script>
+<script lang="ts" src='./videos'></script>

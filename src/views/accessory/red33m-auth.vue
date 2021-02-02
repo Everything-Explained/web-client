@@ -1,6 +1,6 @@
 <template>
   <div class="red33m-auth">
-    <title-bar></title-bar>
+    <title-bar>RED33M Authentication</title-bar>
 
     <ee-text type='block' class="r3d-auth__disclaimer"><br>
 

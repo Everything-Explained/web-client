@@ -62,14 +62,13 @@ export default defineComponent({
     // An edge case when navigating away from a blog post to a
     // non-blog page, then backing the history to that blog post.
     if (posts.value && postURI) displayBlogPost(postURI);
-    store.commit('page-title', title.value);
 
     return {
       getBlogPosts,
       posts, // order by latest first
       activePost,
       goTo,
-      onBeforeTransLeave: () => store.commit('page-title', title.value)
+      title,
     };
   },
 
