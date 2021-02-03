@@ -17,7 +17,7 @@
       You <em>must enter the passcode again</em> on those devices.<br><br>
 
       <strong>Don't have a Passcode?</strong> Fill out the
-      <a href="/red33m-invite-form">RED33M Form</a>
+      <router-link to='/red33m-form'>RED33M Form</router-link>
       to gain eligibility; filling out the form <em>does not</em>
       guarantee a Passcode, it only makes you eligible.<br><br>
 
