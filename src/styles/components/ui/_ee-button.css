@@ -1,7 +1,7 @@
 .ee-btn {
   position       : relative;
   padding        : 0.3rem 1rem;
-  letter-spacing : 0.15rem;
+  letter-spacing : 0.1rem;
   font-family    : inherit;
   font-weight    : bold;
   font-size      : 1.1rem;
@@ -69,10 +69,10 @@
 
 .ee-btn.dangerous {
   color       : white;
-  background  : hsl(0, 100%, 63%);
-  border-top  : 1px solid hsl(0, 100%, 73%);
-  border-left : 1px solid hsl(0, 100%, 73%);
-  box-shadow  : 0 0 12px 0 hsla(0, 100%, 63%, 0.6);
+  background  : hsl(0, 100%, 60%);
+  border-top  : 1px solid hsl(0, 100%, 69%);
+  border-left : 1px solid hsl(0, 100%, 69%);
+  box-shadow  : 0 0 12px 0 hsla(0, 100%, 63%, 0.7);
 }
 .ee-btn.dangerous:hover {
   background : hsl(0, 100%, 69%);
