@@ -40,6 +40,8 @@ export default defineComponent({
         const res = await authAPI.post('red33m', params, 500);
         if (typeof res == 'string') return setError(res);
         localStorage.setItem('passcode', passcode);
+        const uniqID = btoa(`${Date.now()}|${Math.floor(Math.random() * 10000)}`);
+        localStorage.setItem('userid', uniqID);
         router.push('/red33m');
       }
       catch (err) { setError(err?.message || err); }
