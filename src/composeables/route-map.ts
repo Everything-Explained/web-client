@@ -21,7 +21,8 @@ const routeMap = [
     mapRoute('literature', 'Literature', isDevelopment),
   ]},
   { name: 'Accessory', routes: [
-    mapRoute('red33m-auth', 'Auth', isDevelopment),
+    mapRoute('red33m-auth', 'R3D Auth', isDevelopment),
+    mapRoute('red33m-form', 'R3D Form', isDevelopment)
   ]},
 ];
 

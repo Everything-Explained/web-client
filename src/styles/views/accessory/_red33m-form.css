@@ -1,0 +1,8 @@
+.r3d-form__list-item p { margin-left: 3rem; }
+.r3d-form__container:last-child { margin-bottom: 200px; }
+
+.r3d-form__button-accept {
+  display: block;
+  margin: 0 auto;
+  margin-top: 2rem;
+}

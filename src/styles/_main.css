@@ -22,6 +22,8 @@
 @import './views/library/_videos.mobile.css';
 /*** Red33m Authentication ***/
 @import './views/accessory/_red33m-auth.css';
+/*** Red33m Access Form ***/
+@import './views/accessory/_red33m-form.css';
 /*** 404 View ***/
 @import './views/errors/_i404.css';
 

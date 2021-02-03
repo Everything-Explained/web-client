@@ -158,6 +158,21 @@
   color      : var(--md-code-hov-c);
 }
 
+.md > p > ul {
+  margin-left: 1rem;
+}
+.md > p > ul > li::before {
+  content: '\2022';
+  width: 1rem;
+  font-size: 1.5rem;
+  margin-left: -1rem;
+  color: hsl(0, 100%, 64%);
+  transition: color 0.3s;
+}
+.md > p:hover li::before {
+  color: hsl(47, 100%, 50%);
+}
+
 
 .md > p > img {
   display: inline;
