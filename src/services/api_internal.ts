@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { isProduction } from "../globals";
 
 const sanitizeURLForEnv = (url: string) => {
-  return isProduction ? url : `https://localhost:3003${url}/as`;
+  return isProduction ? url : `https://localhost:3003${url}`;
 };
 
 const _apiDataURL = sanitizeURLForEnv('/api/data');
