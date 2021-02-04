@@ -3,11 +3,39 @@
 @import './base/_inputs.css';
 
 
+/*#######################*/
+/*###### COMPONENTS #####*/
+/*#######################*/
+/*** Title Bar ***/
+@import './components/layout/_titlebar.css';
+@import './components/layout/_titlebar.mobile.css';
+/*** Menu ***/
+@import './components/layout/_menu.css';
+/*** Footer ***/
+@import './components/layout/_footer.css';
+
+/*** Icon ***/
+@import './components/ui/_icon.css';
 /*** Input Field ***/
 @import './components/ui/_ee-input-field.css';
 @import './components/ui/_ee-input-field.mobile.css';
+/*** EE Button ***/
+@import './components/ui/_ee-button.css';
 /*** EE Text ***/
 @import './components/ui/_ee-text.css';
+/*** Lazy Image ***/
+@import './components/ui/_lazyimg.css';
+/*** on/off Switch ***/
+@import './components/ui/_onoff-switch.css';
+/*** EE Video ***/
+@import './components/ui/_ee-video.css';
+/*** Toggle ***/
+@import './components/ui/_toggle.css';
+/*** Preloader ***/
+@import './components/_preloader.css';
+
+
+
 /*#####################*/
 /*####### VIEWS #######*/
 /*#####################*/
@@ -31,31 +59,3 @@
 @import './views/accessory/_red33m-form.css';
 /*** 404 View ***/
 @import './views/errors/_i404.css';
-
-
-/*#######################*/
-/*###### COMPONENTS #####*/
-/*#######################*/
-/*** Title Bar ***/
-@import './components/layout/_titlebar.css';
-@import './components/layout/_titlebar.mobile.css';
-/*** Menu ***/
-@import './components/layout/_menu.css';
-/*** Footer ***/
-@import './components/layout/_footer.css';
-
-/*** Lazy Image ***/
-@import './components/ui/_lazyimg.css';
-/*** Icon ***/
-@import './components/ui/_icon.css';
-/*** on/off Switch ***/
-@import './components/ui/_onoff-switch.css';
-/*** EE Video ***/
-@import './components/ui/_ee-video.css';
-/*** Toggle ***/
-@import './components/ui/_toggle.css';
-/*** EE Button ***/
-@import './components/ui/_ee-button.css';
-
-/*** Preloader ***/
-@import './components/_preloader.css';
