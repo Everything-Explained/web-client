@@ -1,14 +1,22 @@
 <template>
   <div class="ee-input__container">
     <input class="ee-input__text"
+      v-if="type != 'area'"
+      @input="$emit('update:modelValue', getVal($event))"
       :id='id'
       :type="type"
       :maxlength="maxLength"
       :value='modelValue'
-      @input="$emit('update:modelValue', getVal($event))"
       placeholder="placeholder"
     >
-    <label class="ee-input__label" :for='id'><slot></slot></label>
+    <label v-if="type != 'area'" class="ee-input__label" :for='id'><slot></slot></label>
+    <textarea class="ee-input__area"
+      v-if="type == 'area'"
+      @input="autoHeight($event), $emit('update:modelValue', getVal($event))"
+      :value="modelValue"
+      :placeholder="placeholder"
+      :maxlength="maxLength"
+    ></textarea>
     <span class="ee-input__bar"></span>
   </div>
 </template>
@@ -36,7 +44,8 @@ export default defineComponent({
     maxlength: {
       type: Number,
       default: 255,
-    }
+    },
+    placeholder: String,
   },
   emits: ['update:modelValue'],
   setup(props) {
@@ -45,11 +54,19 @@ export default defineComponent({
     const id = `i${base36Time}${base36RndNum}`;
     if (props.maxlength > 255) throw Error('ee-input-field:: maxLength should be less than 255.');
 
+    function autoHeight(e: Event) {
+      const el = e.target as HTMLTextAreaElement;
+      el.style.height = '44px';
+      el.style.height = `${el.scrollHeight}px`;
+    }
+
     return {
       id,
       type: props.type,
       maxLength: props.maxlength,
-      getVal: (e: Event) => (e.target as HTMLInputElement).value
+      getVal: (e: Event) => (e.target as HTMLInputElement).value,
+      autoHeight,
+      placeholder: props.placeholder,
     };
   }
 });

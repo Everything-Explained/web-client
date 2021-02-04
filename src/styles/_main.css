@@ -3,6 +3,9 @@
 @import './base/_inputs.css';
 
 
+/*** Input Field ***/
+@import './components/ui/_ee-input-field.css';
+@import './components/ui/_ee-input-field.mobile.css';
 /*#####################*/
 /*####### VIEWS #######*/
 /*#####################*/
@@ -49,8 +52,6 @@
 @import './components/ui/_ee-video.css';
 /*** Toggle ***/
 @import './components/ui/_toggle.css';
-/*** Input Field ***/
-@import './components/ui/_ee-input-field.css';
 /*** EE Button ***/
 @import './components/ui/_ee-button.css';
 

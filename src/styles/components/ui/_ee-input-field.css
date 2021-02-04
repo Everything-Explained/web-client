@@ -1,5 +1,4 @@
 .ee-input__container {
-  display: inline-block;
   text-align: left;
 }
 
@@ -28,6 +27,30 @@
   color: hsl(197, 11%, 65%);
 }
 
+.ee-input__text { font-size: 1.25rem;  }
+.ee-input__area { font-size: 1.45rem; }
+
+.ee-input__text,
+.ee-input__area {
+  margin: 0 auto;
+  margin-top: 1rem;
+  padding: 7px 0 5px 3px;
+  width: 100%;
+  border-bottom: 1px solid hsl(197, 11%, 27%);
+  font-family: "Verdana";
+  text-transform: inherit;
+  transition: border .25s, color 0.3s;
+}
+.ee-input__text::placeholder {
+  color: transparent;
+  font-family: inherit;
+  text-transform: none;
+}
+.ee-input__text:focus,
+.ee-input__area:focus {
+  color: hsl(47, 70%, 73%);
+}
+
 .ee-input__bar {
   position: absolute;
   bottom: -1px;
@@ -37,25 +60,24 @@
   pointer-events: none;
   transition: width 0.25s;
 }
-.ee-input__text:focus ~ .ee-input__bar {
+.ee-input__text:focus ~ .ee-input__bar,
+.ee-input__area:focus ~ .ee-input__bar {
   width: 100%;
 }
 
-.ee-input__text {
-  margin: 0 auto;
-  margin-top: 1rem;
-  padding: 7px 0 5px 3px;
-  width: 100%;
-  border-bottom: 1px solid hsl(197, 11%, 27%);
-  font-family: "Verdana";
-  font-size: 1.2rem;
-  text-transform: inherit;
-  transition: border .25s;
+
+.ee-input__area {
+  height: 44px;
+  resize: none;
+  overflow: hidden;
+  font-family: 'Nunito Sans';
+  font-weight: 300;
+  line-height: 2rem;
+  overflow-wrap: break-word;
 }
-.ee-input__text::placeholder {
-  color: transparent;
-  font-family: inherit;
-  text-transform: none;
+.ee-input__area::placeholder {
+  color: hsl(197, 11%, 23%);
+  font-weight: 400;
 }
 
 
