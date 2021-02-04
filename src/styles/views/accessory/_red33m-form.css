@@ -1,3 +1,9 @@
+
+.r3d-form__form {
+  display: block;
+  margin: 0 auto;
+  max-width: 1024px;
+}
 .r3d-form__list-item p { margin-left: 3rem; }
 .r3d-form__container:last-child { margin-bottom: 200px; }
 
@@ -5,4 +11,30 @@
   display: block;
   margin: 0 auto;
   margin-top: 2rem;
+}
+
+.r3d-form__input-block {
+  margin: 0 auto;
+  margin-bottom: 100px;
+  width: 70%;
+}
+
+.r3d-form__text-block {
+  display: block;
+  font-size: 1.15rem;
+  width: 100%;
+}
+.r3d-form__text-block::before {
+  position: absolute;
+  top: -0.03rem;
+  margin-left: -1.5rem;
+  content: attr(data-num);
+  font-weight: 400;
+  font-size: 1.3rem;
+  color: hsl(0, 100%, 73%);
+}
+
+.r3d-form__area {
+  display: block;
+  width: 100%;
 }

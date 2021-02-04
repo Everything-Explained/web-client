@@ -57,5 +57,6 @@
 @import './views/accessory/_red33m-auth.css';
 /*** Red33m Access Form ***/
 @import './views/accessory/_red33m-form.css';
+@import './views/accessory/_red33m-form.mobile.css';
 /*** 404 View ***/
 @import './views/errors/_i404.css';
