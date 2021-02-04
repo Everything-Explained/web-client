@@ -6,6 +6,8 @@
 /*** Input Field ***/
 @import './components/ui/_ee-input-field.css';
 @import './components/ui/_ee-input-field.mobile.css';
+/*** EE Text ***/
+@import './components/ui/_ee-text.css';
 /*#####################*/
 /*####### VIEWS #######*/
 /*#####################*/

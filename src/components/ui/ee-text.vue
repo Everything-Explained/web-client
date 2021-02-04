@@ -4,7 +4,7 @@
   <div v-else-if="type == 'block'" :class="['md', customClass]">
     <p><slot></slot></p>
   </div>
-  <span v-else :class="['md', customClass]"><slot></slot></span>
+  <span v-else :class="['md', 'ee-text', customClass]"><slot></slot></span>
 </template>
 
 
