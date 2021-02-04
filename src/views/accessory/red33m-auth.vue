@@ -7,9 +7,9 @@
       This page contains sensitive content which <em>requires authentication</em>.
       If you have a passcode, use the form below to grant yourself access.<br><br>
 
-      <strong>NOTE:</strong> When you've <strong>successfully</strong> entered
-      the code, it is saved in your browser cache so that you don't have to keep
-      entering it over and over...<br><br>
+      <strong>NOTE:</strong> Do not clear your browser cache, otherwise you
+      will need to enter the code again, when you come back to this page
+      later.<br><br>
 
       <strong>CAVEAT:</strong> The passcode will only be saved for <em>this device</em>.
       In order to view this content on your other devices:
