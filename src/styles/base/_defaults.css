@@ -17,6 +17,7 @@ body {
   margin-right: 5px;
   overflow: hidden;
   overflow-y: auto;
+  scroll-behavior: smooth;
 }
 a {
   word-wrap: break-word;
