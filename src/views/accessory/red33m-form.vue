@@ -21,12 +21,16 @@
           and all associated persons are <em>not</em> responsible in any way for your (re)actions based on
           the exclusive content.
         </ee-text>
-        <ee-button @click="accept" class="r3d-form__button-accept" theme='attention'>ACCEPT AND ENTER</ee-button>
+        <ee-button class="r3d-form__button-accept"
+          @click="accept"
+          theme='attention'
+        >ACCEPT AND BEGIN</ee-button>
       </div>
+
       <div v-else class="r3d-form__form">
         <ee-text type='block'>
-          <strong>Please respond to the questions in an honest manner.</strong> <em>Do not</em> enter
-          responses that are intended to make you seem more advanced or Enlightened. This isn’t
+          <strong>Please respond to the following questions in an honest manner.</strong> <em>Do not</em>
+          enter responses that are intended to make you seem more advanced or Enlightened. This isn’t
           necessarily a test and even if you’re very Enlightened, it <strong>doesn’t</strong> mean that
           this content is going to be beneficial to you.
         </ee-text>
@@ -35,10 +39,11 @@
           <ee-text class="r3d-form__text-block"
             type='text'
             :data-num='i + 1 + "⁍"'
-          ><span v-html='q.text'></span></ee-text>
-          <ee-input-field class="r3d-form__area"
+          >
+            <span v-html='q.text'></span>
+          </ee-text>
+          <ee-input-field class="r3d-form__area" type='area'
             v-model='q.answer.value'
-            type='area'
             placeholder='Enter your answer here...'
           ></ee-input-field>
         </div>
