@@ -12,7 +12,7 @@
         <ee-text class="r3d-form__list-item" type='block'
           v-for="(risk, i) of risks" :key="i"
         >
-          <ul><li>{{ risk }}</li></ul>
+          <ul><li v-html='risk'></li></ul>
         </ee-text>
         <ee-text type='block'>
           By clicking the <strong>ENTER</strong> button below, you're agreeing to take full responsibility for
@@ -64,41 +64,40 @@ import eeTextVue    from "@/components/ui/ee-text.vue";
 
 
 const _risks = [
-'It can be especially toxic for those pursuing Enlightenment.'
+' It can be especially toxic for those pursuing Enlightenment.'
 ,
 
-`It can be exceedingly difficult to understand even for those who have undergone
+` It can be exceedingly difficult to understand even for those who have undergone
 high-level Awakenings. It’s <strong>guaranteed</strong> to be misunderstood and mis-contextualized
 by anyone who doesn’t at least have a conceptual understanding of Enlightenment.
 Understanding Enlightenment is a pre-requisite.
 `,
 
-`
-The content is <em>overtly illogical & contradictory</em>. Distributing logically-dissonant information
+` The content is <em>overtly illogical & contradictory</em>. Distributing logically-dissonant information
 like this puts the distributor in an unbalanced and potentially dangerous position
 of power that must be accounted for responsibly.
 `,
 
-`The topics discussed are <strong>unverifiable</strong> even through spiritual methods, let alone scientific
+` The topics discussed are <strong>unverifiable</strong> even through spiritual methods, let alone scientific
 evidence. This makes the distributor similar to an unquestionable religious authority and they
 <em>absolutely will not</em> supplant themselves in such a position publicly.
 `,
 
-`Before going unlisted, this content had about 30 initial subscribers and two of them openly contemplated
+` Before going unlisted, this content had about 30 initial subscribers and two of them openly contemplated
 suicide. <strong>1 in 15 is too irresponsible a risk</strong>.
 `,
 
-`This content can solicit <em>deep existential crises</em> but those weren’t the reasons for suicidal
+` This content can solicit <em>deep existential crises</em> but those weren’t the reasons for suicidal
 thoughts; it provides very compelling information about the hereafter, which can make some people desire
 to go there as soon as possible, while seeing very little reason to stay.
 `,
 
-`You may have a more difficult time finding purpose in life after viewing this material. For some,
+` You may have a more difficult time finding purpose in life after viewing this material. For some,
 the content has left them feeling adrift while for others, it’s been credited as having
 “saved their lives.” This content is very extreme in that manner; it either greatly helps or hurts.
 `,
 
-`We feel that we should only choose to distribute this content to those who will find priceless value
+` We feel that we should only choose to distribute this content to those who will find priceless value
 in it so as to not bring anyone harm.
 `,
 
