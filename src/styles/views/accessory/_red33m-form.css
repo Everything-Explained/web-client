@@ -22,6 +22,8 @@
 .r3d-form__text-block {
   display: block;
   font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 1px;
   width: 100%;
 }
 .r3d-form__text-block::before {

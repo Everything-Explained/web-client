@@ -6,7 +6,7 @@ textarea {
     background-color  : var(--body-bg-c);
     font-family       : "Verdana";
     border            : none;
-    color             : hsl(30, 20%, 63%);
+    color             : hsl(30, 23%, 63%);
     transition        : border 0.3s;
     -webkit-transform : translateZ(0);
 }
