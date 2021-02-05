@@ -26,7 +26,7 @@ export default defineComponent({
     const setScrollTop = (top: number) => {
       // Prevents user from noticing scroll reset.
       // Resets when view is hidden in transition.
-      setTimeout(() => body.value!.scrollTop = top, 350);
+      setTimeout(() => body.value!.scrollTop = top, 400);
     };
 
     const setBlogScrollPos = () => {
