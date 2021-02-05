@@ -44,6 +44,7 @@
           </ee-text>
           <ee-input-field class="r3d-form__area" type='area'
             v-model='q.answer.value'
+            :max-length="500"
             placeholder='Enter your answer here...'
           ></ee-input-field>
         </div>
