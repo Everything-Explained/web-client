@@ -16,6 +16,7 @@ const browserIsSupported = (() => {
        navigator.cookieEnabled != undefined
     && window['Promise']
     && window['DOMParser']
+    && window['crypto']
     && document.body.dataset
     && (new DOMParser()).parseFromString
     && document.importNode
