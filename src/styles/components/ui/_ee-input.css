@@ -27,7 +27,7 @@
   color: hsl(197, 11%, 65%);
 }
 
-.ee-input__text { font-size: 1.25rem;  }
+.ee-input__text { font-size: 1.25rem; }
 .ee-input__area { font-size: 1.45rem; }
 
 .ee-input__text,
@@ -48,7 +48,7 @@
 }
 .ee-input__text:focus,
 .ee-input__area:focus {
-  color: hsl(47, 70%, 73%);
+  color: hsl(161, 45%, 65%);
 }
 
 .ee-input__bar {
@@ -58,7 +58,7 @@
   height: 2px;
   background-color: hsl(197, 11%, 45%);
   pointer-events: none;
-  transition: width 0.25s;
+  transition: width 0.29s;
 }
 .ee-input__text:focus ~ .ee-input__bar,
 .ee-input__area:focus ~ .ee-input__bar {
