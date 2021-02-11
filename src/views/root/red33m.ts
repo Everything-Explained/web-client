@@ -24,7 +24,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore<VuexStore>();
-    const isLoading = ref(false);
+    const isToggling = ref(false);
     const videos = computed(() => store.state.dataCache['red33m']?.slice());
 
     const api = useDataAPI();
@@ -34,12 +34,12 @@ export default defineComponent({
     });
 
     const toggle = () => {
-      if (isLoading.value) return;
+      if (isToggling.value) return;
       videos.value.reverse();
       // Wait for toggle input element to be "checked"
-      setTimeout(() => isLoading.value = true, 1);
+      setTimeout(() => isToggling.value = true, 1);
       // Debounce toggling
-      setTimeout(() => isLoading.value = false, 300);
+      setTimeout(() => isToggling.value = false, 300);
     };
 
     if (!videos.value) getVideos.perform();
@@ -48,7 +48,7 @@ export default defineComponent({
       videos,
       getVideos,
       toggle,
-      isLoading,
+      isToggling,
     };
   }
 });
