@@ -39,6 +39,20 @@
           this content is going to be beneficial to you.
         </ee-text>
         <br><br>
+        <div class="r3d-form__input-container">
+          <ee-input class="r3d-form__text-input"
+                    name="name"
+                    type="text"
+          >
+            Name or Alias
+          </ee-input><br>
+          <ee-input class="r3d-form__text-input"
+                    name="email"
+                    type="text"
+          >
+            E-mail
+          </ee-input>
+        </div>
         <div v-for="(q, i) of questions"
              :key="i"
              class="r3d-form__input-block"

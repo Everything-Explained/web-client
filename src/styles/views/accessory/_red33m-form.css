@@ -51,3 +51,15 @@
   display: block;
   width: 100%;
 }
+
+.r3d-form__input-container {
+  margin: 0 auto;
+  margin-bottom: 50px;
+  width: 70%;
+}
+
+.r3d-form__text-input {
+  display: inline-block;
+  margin-bottom: 30px;
+  width: 50%;
+}
