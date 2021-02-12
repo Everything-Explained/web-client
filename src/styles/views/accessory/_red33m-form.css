@@ -36,6 +36,17 @@
   color: hsl(47, 80%, 60%);
 }
 
+.r3d-form__submission-text { margin-top: 10vh; }
+.r3d-form__submission-text p {
+  margin: 0 auto;
+  width: 70%;
+}
+.r3d-form__submission-text h1 {
+  margin: 0;
+  text-align: center;
+  color: hsl(161, 80%, 60%);
+}
+
 .r3d-form__area {
   display: block;
   width: 100%;

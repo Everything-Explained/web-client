@@ -8,6 +8,7 @@
   .r3d-form__text-block::before {
     font-size: 1.15rem; margin-left: -1.2rem;
   }
+  .r3d-form__submission-text p { width: 95%; margin: 0 auto; }
 }
 /*** 380px ***/
 @media only screen and (--small-screen) {

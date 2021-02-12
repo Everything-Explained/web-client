@@ -31,7 +31,7 @@
         </ee-button>
       </div>
 
-      <div v-else class="r3d-form__form">
+      <div v-else-if="!hasSubmitted" class="r3d-form__form">
         <ee-text type="block">
           <strong>Please respond to the following questions in an honest manner.</strong> <em>Do not</em>
           enter responses that are intended to make you seem more advanced or Enlightened. This isn’t
@@ -49,15 +49,28 @@
           >
             <span v-html="q.text" />
           </ee-text>
-          <ee-input-field v-model="q.answer.value"
-                          class="r3d-form__area"
-                          type="area"
-                          :minchars="120"
-                          :maxchars="500"
-                          :showchars="true"
-                          placeholder="Enter your answer here..."
+          <ee-input v-model="q.answer.value"
+                    class="r3d-form__area"
+                    type="area"
+                    :minchars="120"
+                    :maxchars="500"
+                    :showchars="true"
+                    placeholder="Enter your answer here..."
           />
         </div>
+        <ee-button @click="submit">SUBMIT</ee-button>
+      </div>
+
+      <div v-else-if="hasSubmitted">
+        <ee-text class="r3d-form__submission-text" type="block">
+          <h1>request submitted</h1>
+          <strong>Thank you for your interest in this exclusive content</strong>; we'll get back to
+          you as soon as we can. Remember, submission does not necessarily mean admission, just as
+          being enlightened doesn't mean this content will be beneficial for you.<br><br>
+
+          I would expect a response within 7 days, whether that response is to <strong>grant</strong> or
+          <em>reject</em> access to this content.
+        </ee-text>
       </div>
     </transition>
   </div>
@@ -68,7 +81,7 @@
 import { defineComponent, ref, Ref } from "vue";
 import titlebarVue  from "@/components/layout/titlebar.vue";
 import eeButton     from "@/components/ui/ee-button.vue";
-import eeInputField from "@/components/ui/ee-input.vue";
+import eeInput      from "@/components/ui/ee-input.vue";
 import eeTextVue    from "@/components/ui/ee-text.vue";
 
 
@@ -132,10 +145,10 @@ const _questions = [
 
 export default defineComponent({
   components: {
-    'title-bar'      : titlebarVue,
-    'ee-text'        : eeTextVue,
-    'ee-button'      : eeButton,
-    'ee-input-field' : eeInputField,
+    'title-bar' : titlebarVue,
+    'ee-text'   : eeTextVue,
+    'ee-button' : eeButton,
+    'ee-input'  : eeInput,
   },
   setup() {
     const hasAccepted = ref(false);
@@ -150,11 +163,13 @@ export default defineComponent({
     }
 
     const accept = () => forwardState(hasAccepted);
-    const submit = () => forwardState(hasSubmitted);
+    const submit = () => {
+      forwardState(hasSubmitted);
+    };
 
     return {
       complete: (data: unknown) => console.log(data),
-      hasAccepted,
+      hasAccepted, hasSubmitted,
       accept, submit,
       questions,
       risks: _risks,
