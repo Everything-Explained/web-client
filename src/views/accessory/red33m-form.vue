@@ -139,23 +139,29 @@ export default defineComponent({
   },
   setup() {
     const hasAccepted = ref(false);
+    const hasSubmitted = ref(false);
     const questions = _questions.map(
       q => ({ text: q, answer: ref('')})
-    )
+    );
 
-    const accept = () => {
-      hasAccepted.value = true;
+    function forwardState(refVar: Ref<boolean>) {
+      refVar.value = true;
       document.body.scrollTo(0, 0);
     }
+
+    const accept = () => forwardState(hasAccepted);
+    const submit = () => forwardState(hasSubmitted);
 
     return {
       complete: (data: unknown) => console.log(data),
       hasAccepted,
-      accept,
+      accept, submit,
       questions,
       risks: _risks,
-    }
+    };
   }
-})
+});
 
 </script>
+
+
