@@ -1,20 +1,22 @@
 <template>
   <div class="r3d-form__container">
     <title-bar>RED33M Access Form</title-bar>
-    <transition name='fade' mode='out-in'>
+    <transition name="fade" mode="out-in">
       <div v-if="!hasAccepted" class="r3d-form__disclaimer">
-        <ee-text type='block'>
+        <ee-text type="block">
           This form functions as an application for access to exclusive content.
           It is <em>by no means</em> a test for a single specific type of personality, intelligence,
           or level of advancement in spirituality. <br><br>
           <strong>Our team keeps this content exclusive for various significant reasons:</strong>
         </ee-text>
-        <ee-text class="r3d-form__list-item" type='block'
-          v-for="(risk, i) of risks" :key="i"
+        <ee-text v-for="(risk, i) of risks"
+                 :key="i"
+                 class="r3d-form__list-item"
+                 type="block"
         >
-          <ul><li v-html='risk'></li></ul>
+          <ul><li v-html="risk" /></ul>
         </ee-text>
-        <ee-text type='block'>
+        <ee-text type="block">
           By clicking the <strong>ENTER</strong> button below, you're agreeing to take full responsibility for
           all your (re)actions based on the exclusive content, <em>including but not limited to</em>,
           <strong>all risks mentioned above</strong>. You also agree that <strong>everything-explained.org</strong>
@@ -22,31 +24,39 @@
           the exclusive content.
         </ee-text>
         <ee-button class="r3d-form__button-accept"
-          @click="accept"
-          theme='attention'
-        >ACCEPT AND BEGIN</ee-button>
+                   theme="attention"
+                   @click="accept"
+        >
+          ACCEPT AND BEGIN
+        </ee-button>
       </div>
 
       <div v-else class="r3d-form__form">
-        <ee-text type='block'>
+        <ee-text type="block">
           <strong>Please respond to the following questions in an honest manner.</strong> <em>Do not</em>
           enter responses that are intended to make you seem more advanced or Enlightened. This isn’t
           necessarily a test and even if you’re very Enlightened, it <strong>doesn’t</strong> mean that
           this content is going to be beneficial to you.
         </ee-text>
         <br><br>
-        <div class="r3d-form__input-block" v-for="(q, i) of questions" :key="i">
+        <div v-for="(q, i) of questions"
+             :key="i"
+             class="r3d-form__input-block"
+        >
           <ee-text class="r3d-form__text-block"
-            type='text'
-            :data-num='i + 1 + "⁍"'
+                   type="text"
+                   :data-num="i + 1 + '⁍'"
           >
-            <span v-html='q.text'></span>
+            <span v-html="q.text" />
           </ee-text>
-          <ee-input-field class="r3d-form__area" type='area'
-            v-model='q.answer.value'
-            :max-length="500"
-            placeholder='Enter your answer here...'
-          ></ee-input-field>
+          <ee-input-field v-model="q.answer.value"
+                          class="r3d-form__area"
+                          type="area"
+                          :minchars="120"
+                          :maxchars="500"
+                          :showchars="true"
+                          placeholder="Enter your answer here..."
+          />
         </div>
       </div>
     </transition>
@@ -54,10 +64,8 @@
 </template>
 
 
-
-
 <script lang='ts'>
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, Ref } from "vue";
 import titlebarVue  from "@/components/layout/titlebar.vue";
 import eeButton     from "@/components/ui/ee-button.vue";
 import eeInputField from "@/components/ui/ee-input.vue";
@@ -102,7 +110,7 @@ the content has left them feeling adrift while for others, it’s been credited 
 in it so as to not bring anyone harm.
 `,
 
-]
+];
 
 
 const _questions = [
@@ -119,7 +127,7 @@ const _questions = [
 
   'Do you think that egoic desires can be good or are they problematic by nature? Does \
    the ego provide any beneficial functions or is it inherently-destructive?'
-]
+];
 
 
 export default defineComponent({
