@@ -80,7 +80,31 @@
   font-weight: 400;
 }
 
+.ee-input__char-limit-msg {
+  position: absolute;
+  left: 0.5rem; bottom: -1.65rem;
+  color       : hsl(197, 11%, 40%);
+  font-weight : 400;
+  font-size   : 1.05rem;
+}
+.ee-input__char-limit-msg .num {
+  color: hsl(47, 80%, 60%);
+}
 
+.ee-input__char-limit {
+  position: absolute;
+  right: 0; bottom: -1.5rem;
+  font-weight : 400;
+  color       : hsl(197, 11%, 40%);
+  transition  : color 0.3s;
+}
+
+
+.ee-input__char-limit.--limit-reached { color            : hsl(161, 35%, 45%); }
+.ee-input__bar.--limit-reached        { background-color : hsl(161, 35%, 50%); }
+.ee-input__area.--limit-reached       { border-color     : hsl(161, 35%, 45%); }
+
+.ee-input__char-limit.--length-reached { color: hsl(47, 63%, 50%); }
 
 
 
