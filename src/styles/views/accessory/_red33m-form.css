@@ -33,7 +33,7 @@
   content: attr(data-num);
   font-weight: 400;
   font-size: 1.3rem;
-  color: hsl(0, 100%, 73%);
+  color: hsl(47, 80%, 60%);
 }
 
 .r3d-form__area {
