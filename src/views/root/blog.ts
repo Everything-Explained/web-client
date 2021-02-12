@@ -37,7 +37,7 @@ export default defineComponent({
 
     const pageDataAPI = usePageDataAPI();
     const getBlogPosts = useTask(function*() {
-      const blogData = yield pageDataAPI.get('pages', 'blog');
+      const blogData = yield pageDataAPI.get('/pages/blog', console.error);
       store.commit('data-cache-add', { name: 'blog', data: blogData });
       // The URL points to a specific blog-post on page load
       if (postURI) displayBlogPost(postURI);

@@ -25,7 +25,8 @@ const routes: Array<RouteRecordRaw> = [
     name: 'red33m',
     component: Red33m,
     beforeEnter: (to, from, next) => {
-      if (!localStorage.getItem('passcode')) {
+      const passcode = localStorage.getItem('passcode');
+      if (!passcode || passcode == 'no') {
         return next({ name: 'red33m-auth'});
       }
       next();

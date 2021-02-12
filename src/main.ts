@@ -4,6 +4,21 @@ import App from './views/app.vue';
 import router from './router';
 import vuex from './vuex/vuex-store';
 import './styles/_main.css';
+import { useAuthAPI } from './services/api_internal';
+
+
+// Init passcode and user ID
+setTimeout(() => {
+  if (localStorage.getItem('userid')) return;
+  const api    = useAuthAPI();
+  const keys   = crypto.getRandomValues(new Uint8Array(20));
+  const userid = keys.reduce((pv, cv) => pv += `${cv.toString(36)}`, '');
+  localStorage.setItem('passcode', 'no');
+  api
+    .post('/user', { userid }, console.error)
+    .then(() => localStorage.setItem('userid', userid))
+  ;
+}, 1000);
 
 
 const getElement = (id: string) => {

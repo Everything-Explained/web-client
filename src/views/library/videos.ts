@@ -19,7 +19,7 @@ export default defineComponent({
     const categories = computed(() => store.state.dataCache['library/videos']);
 
     const getVideos = useTask(function*() {
-      const videoData = yield api.get('library', 'videos');
+      const videoData = yield api.get('/library/videos', console.error);
       const videos = [];
       for (const cat in videoData) {
         videos.push({name: cat, videos: videoData[cat]});

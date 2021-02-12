@@ -26,6 +26,7 @@
     <form class="r3d-auth__form">
       <ee-input class="r3d-auth__passcode"
         v-model="code"
+        :maxchars="6"
       >Passcode</ee-input>
 
       <ee-button
@@ -73,26 +74,30 @@ export default defineComponent({
     const router       = useRouter();
 
     let errorTimeout = 0;
-    const setError = (msg: string) => {
+    function setError(msg: string) {
       clearTimeout(errorTimeout);
       errorTextRef.value = msg.toUpperCase();
       isErrorRef.value   = true;
       errorTimeout       = setTimeout(() => isErrorRef.value = false, 2500);
     };
 
-    const submit = async (e: MouseEvent) => {
+    function genID() {
+      return btoa(`${Date.now()}|${Math.floor(Math.random() * 10000)}`);
+    }
+
+    const submit = (e: MouseEvent) => {
       e.preventDefault();
       const passcode = codeRef.value.toUpperCase();
-      const params = new URLSearchParams([['passcode', passcode]]);
-      try {
-        const res = await authAPI.post('red33m', params, 500);
-        if (typeof res == 'string') return setError(res);
-        localStorage.setItem('passcode', passcode);
-        const uniqID = btoa(`${Date.now()}|${Math.floor(Math.random() * 10000)}`);
-        localStorage.setItem('userid', uniqID);
-        router.push('/red33m');
+      const params = {
+        passcode,
+        userid: localStorage.getItem('userid')!
       }
-      catch (err) { setError(err?.message || err); }
+      authAPI
+        .post('/red33m', params, setError, 500)
+        .then(() => {
+          localStorage.setItem('passcode', 'yes');
+          router.push('/red33m')
+        })
     };
 
     return {
