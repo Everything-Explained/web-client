@@ -60,7 +60,7 @@
 import { defineComponent, ref, watch } from "vue";
 import titlebarVue  from "@/components/layout/titlebar.vue";
 import eeButton     from "@/components/ui/ee-button.vue";
-import eeInputField from "@/components/ui/ee-input-field.vue";
+import eeInputField from "@/components/ui/ee-input.vue";
 import eeTextVue    from "@/components/ui/ee-text.vue";
 
 

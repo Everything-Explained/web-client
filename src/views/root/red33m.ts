@@ -8,7 +8,7 @@ import titlebar from '@/components/layout/titlebar.vue';
 import toggle   from '@/components/ui/toggle.vue';
 import EEVideo  from '@/components/ui/ee-video.vue';
 import Footer   from '@/components/layout/footer.vue';
-import EEInput  from '@/components/ui/ee-input-field.vue';
+import EEInput  from '@/components/ui/ee-input.vue';
 import EEButton from '@/components/ui/ee-button.vue';
 
 
