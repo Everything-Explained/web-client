@@ -1,4 +1,4 @@
-import { isDevelopment } from "../globals";
+import { isDevelopment, isProduction } from "../globals";
 
 type Route = {
   path: { name: string }
@@ -14,13 +14,13 @@ const routeMap = [
   { name: 'root', routes: [
     mapRoute('home', 'Home'),
     mapRoute('blog', 'Blog'),
-    mapRoute('red33m', 'RED33M', isDevelopment),
+    mapRoute('red33m', 'RED33M'),
   ]},
   { name: 'Library', routes: [
     mapRoute('videos', 'Videos'),
     mapRoute('literature', 'Literature', isDevelopment),
   ]},
-  { name: 'Accessory', routes: [
+  { name: 'Accessory', hidden: isProduction, routes: [
     mapRoute('red33m-auth', 'R3D Auth', isDevelopment),
     mapRoute('red33m-form', 'R3D Form', isDevelopment)
   ]},
