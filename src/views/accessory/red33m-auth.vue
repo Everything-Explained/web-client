@@ -40,9 +40,6 @@
 
       <div :class="['r3d-auth__error', { '--on': isError }]">{{ errorText }}</div>
     </form>
-
-    <ee-footer></ee-footer>
-
   </div>
 </template>
 
@@ -51,7 +48,6 @@ import { computed, defineComponent, ref } from "vue";
 import eeButton from "@/components/ui/ee-button.vue";
 import eeInputField from "@/components/ui/ee-input.vue";
 import titlebar from "@/components/layout/titlebar.vue";
-import footer from '@/components/layout/footer.vue';
 import { useAuthAPI } from "@/services/api_internal";
 import eeText from '@/components/ui/ee-text.vue';
 import { useRouter } from "vue-router";
@@ -61,7 +57,6 @@ export default defineComponent({
     'ee-input' : eeInputField,
     'ee-button': eeButton,
     'title-bar': titlebar,
-    'ee-footer': footer,
     'ee-text'  : eeText,
   },
   setup() {
@@ -79,10 +74,6 @@ export default defineComponent({
       errorTextRef.value = msg.toUpperCase();
       isErrorRef.value   = true;
       errorTimeout       = setTimeout(() => isErrorRef.value = false, 2500);
-    };
-
-    function genID() {
-      return btoa(`${Date.now()}|${Math.floor(Math.random() * 10000)}`);
     }
 
     const submit = (e: MouseEvent) => {
@@ -91,13 +82,15 @@ export default defineComponent({
       const params = {
         passcode,
         userid: localStorage.getItem('userid')!
-      }
+      };
       authAPI
-        .post('/red33m', params, setError, 500)
+        .put('/red33m', params, 500)
         .then(() => {
           localStorage.setItem('passcode', 'yes');
-          router.push('/red33m')
+          router.push('/red33m');
         })
+        .catch((err) => setError(err))
+      ;
     };
 
     return {

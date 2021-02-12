@@ -15,8 +15,9 @@ setTimeout(() => {
   const userid = keys.reduce((pv, cv) => pv += `${cv.toString(36)}`, '');
   localStorage.setItem('passcode', 'no');
   api
-    .post('/user', { userid }, console.error)
+    .post('/user', { userid })
     .then(() => localStorage.setItem('userid', userid))
+    .catch(err => console.error(err))
   ;
 }, 1000);
 

@@ -1,6 +1,8 @@
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import { isProduction } from "../globals";
-import wretch from 'wretch';
+import wretch, { ResponseChain, Wretcher } from 'wretch';
+
+type RequestBody = { [key: string]: string|number|boolean }
 
 const sanitizeURLForEnv = (url: string) => {
   return isProduction ? url : `//localhost:3003${url}`;
@@ -39,37 +41,29 @@ export function useDataAPI() {
 export function useAuthAPI() {
   const isLoading = ref(false);
   const api = wretch().url(sanitizeURLForEnv('/api/auth'));
+  function exec( method: 'put'|'post', res: Wretcher, delay = 0): Promise<true|string> {
+    return new Promise((rs, rj) => {
+      setTimeout(() => {
+        res[method]()
+          .notFound(() => rj('Endpoint Not Found'))
+          .res(() => rs(true))
+          .catch(err => rj(err?.message))
+          .finally(() => isLoading.value = false)
+        ;
+      }, delay);
+    });
+  }
+  function setAPI(endpoint: string, body: RequestBody) {
+    return api.url(endpoint).formUrl(body);
+  }
   return {
-    /**
-     * POSTs data to the specified authentication endpoint.
-     *
-     * @param endpoint Name of the authentication endpoint to use
-     * @param body The form data to send with the POST
-     * @param delay How long to wait in `ms" until executing request. The default is "0`
-     */
-    post(
-        endpoint   : string,
-        body       : { [key: string]: string|number },
-        errHandler : null | ((err: string) => void),
-        delay = 0
-    ): Promise<true|string> {
+    post(endpoint: string, body: RequestBody, delay = 0): Promise<true|string> {
       isLoading.value = true;
-      return new Promise((rs) => {
-        const sendError = (() => {
-          return errHandler ? errHandler : rs;
-        })();
-        setTimeout(() => {
-          api
-            .url(endpoint)
-            .formUrl(body)
-            .post()
-            .notFound(() => sendError('Endpoint Not Found'))
-            .res(() => rs(true))
-            .catch(err => sendError(err?.message))
-            .finally(() => isLoading.value = false)
-          ;
-        }, delay);
-      });
+      return exec('post', setAPI(endpoint, body), delay);
+    },
+    put(endpoint: string, body: RequestBody, delay = 0) {
+      isLoading.value = true;
+      return exec('put', setAPI(endpoint, body), delay);
     },
     isLoading
   };
