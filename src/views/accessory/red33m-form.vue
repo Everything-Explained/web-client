@@ -64,11 +64,14 @@
       <div v-else-if="hasSubmitted">
         <ee-text class="r3d-form__submission-text" type="block">
           <h1>request submitted</h1>
-          <strong>Thank you for your interest in this exclusive content</strong>; we'll get back to
-          you as soon as we can. Remember, submission does not necessarily mean admission, just as
-          being enlightened doesn't mean this content will be beneficial for you.<br><br>
+          <strong>Thank you for your interest in this exclusive content.</strong> Our team will get back to
+          you as soon as possible. Whatever the results may be, <em>do not take them personally</em>.<br><br>
 
-          I would expect a response within 7 days, whether that response is to <strong>grant</strong> or
+          Ethan is friends with some of the most Enlightened people on the planet and has shared this exclusive
+          content with some of them; <strong>even they</strong> have not all found it beneficial. Negative
+          results should not be taken as a negative reflection on you. <br><br>
+
+          Expect a response <strong>within 7 days</strong>, whether that response is to <strong>grant</strong> or
           <em>reject</em> access to this content.
         </ee-text>
       </div>
