@@ -2,8 +2,8 @@
   <div class="red33m-auth">
     <title-bar>RED33M Authentication</title-bar>
 
-    <ee-text type='block' class="r3d-auth__disclaimer"><br>
-
+    <ee-text type="block" class="r3d-auth__disclaimer">
+      <br>
       This page contains sensitive content which <em>requires authentication</em>.
       If you have a passcode, use the form below to grant yourself access.<br><br>
 
@@ -17,28 +17,34 @@
       You <em>must enter the passcode again</em> on those devices.<br><br>
 
       <strong>Don't have a Passcode?</strong> Fill out the
-      <router-link to='/red33m-form'>RED33M Form</router-link>
+      <router-link to="/red33m-form">
+        RED33M Form
+      </router-link>
       to gain eligibility; filling out the form <em>does not</em>
       guarantee a Passcode, it only makes you eligible.<br><br>
-
     </ee-text>
 
     <form class="r3d-auth__form">
-      <ee-input class="r3d-auth__passcode"
-        v-model="code"
-        :maxchars="6"
-      >Passcode</ee-input>
+      <ee-input v-model="code"
+                class="r3d-auth__passcode"
+                :maxchars="6"
+      >
+        Passcode
+      </ee-input>
 
-      <ee-button
-        @click="submit"
-        type='submit'
-        theme='attention'
-        class="r3d-auth__button"
-        :loading='isLoading'
-        :disabled='!hasValidCode'
-      >ENTER</ee-button>
+      <ee-button class="r3d-auth__button"
+                 type="submit"
+                 theme="attention"
+                 :loading="isLoading"
+                 :disabled="!hasValidCode"
+                 @click="submit"
+      >
+        ENTER
+      </ee-button>
 
-      <div :class="['r3d-auth__error', { '--on': isError }]">{{ errorText }}</div>
+      <div :class="['r3d-auth__error', { '--on': isError }]">
+        {{ errorText }}
+      </div>
     </form>
   </div>
 </template>
