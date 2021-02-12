@@ -19,7 +19,7 @@ export default defineConfig({
         indent_level: 2,
       },
       compress: {
-        drop_console: true,
+        // drop_console: true,
         ecma: 2018,
       }
     }
