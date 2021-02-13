@@ -6,11 +6,6 @@ export default defineComponent({
   components: {
     'main-menu': Menu,
   },
-  data: () => {
-    return {
-      title: ''
-    };
-  },
   setup() {
     // const version     = '36';
     // const versionType = 'α';
@@ -26,7 +21,7 @@ export default defineComponent({
     const setScrollTop = (top: number) => {
       // Prevents user from noticing scroll reset.
       // Resets when view is hidden in transition.
-      setTimeout(() => body.value!.scrollTop = top, 400);
+      setTimeout(() => body.value!.scrollTop = top, 450);
     };
 
     const setBlogScrollPos = () => {
@@ -49,5 +44,10 @@ export default defineComponent({
         setScrollTop(0);
       }
     );
+  },
+  data: () => {
+    return {
+      title: ''
+    };
   },
 });
