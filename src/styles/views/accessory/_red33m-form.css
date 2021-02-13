@@ -7,44 +7,69 @@
 .r3d-form__list-item p { margin-left: 3rem; }
 .r3d-form__container:last-child { margin-bottom: 200px; }
 
-.r3d-form__button-accept {
-  display: block;
-  margin: 0 auto;
-  margin-top: 2rem;
-}
-
 .r3d-form__input-block {
   margin: 0 auto;
   margin-bottom: 100px;
   width: 70%;
 }
 
-.r3d-form__text-block {
+.r3d-form__question {
   display: block;
   font-size: 1.15rem;
   font-weight: 400;
   letter-spacing: 1px;
   width: 100%;
 }
-.r3d-form__text-block::before {
+.r3d-form__question::before {
   position: absolute;
   top: -0.03rem;
   margin-left: -1.5rem;
   content: attr(data-num);
   font-weight: 400;
   font-size: 1.3rem;
+  color: hsl(0, 100%, 68%);
+}
+
+.r3d-form__disclaimer {
+  margin: 0 auto;
+  margin-bottom: 25px;
+  width: 80%;
+}
+.r3d-form__begin-text em {
+  color: hsl(47, 80%, 65%);
+}
+
+.r3d-form__field-counter {
+  display: block;
+  margin-top: 20px !important;
+  color: hsl(197, 11%, 40%);
+  font-weight: 400;
+  width: 70%;
+  text-align: center;
+}
+.r3d-form__field-counter strong {
   color: hsl(47, 80%, 60%);
 }
 
-.r3d-form__submission-text { margin-top: 10vh; }
-.r3d-form__submission-text p {
+
+.r3d-form__text-block { margin-top: 3vh; margin-bottom: 1vh; }
+.r3d-form__text-block p {
   margin: 0 auto;
-  width: 70%;
+  width: 98%;
 }
-.r3d-form__submission-text h1 {
+.r3d-form__text-block.submission h1 {
   margin: 0;
   text-align: center;
   color: hsl(161, 80%, 60%);
+}
+
+.r3d-form__button {
+  display: block;
+  margin: 0 auto;
+  margin-top: 2rem;
+}
+.r3d-form__button.submit {
+  margin: 2rem 0 0 0;
 }
 
 .r3d-form__area {
@@ -60,6 +85,6 @@
 
 .r3d-form__text-input {
   display: inline-block;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   width: 50%;
 }

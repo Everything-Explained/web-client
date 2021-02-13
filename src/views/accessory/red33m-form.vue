@@ -2,7 +2,7 @@
   <div class="r3d-form__container">
     <title-bar>RED33M Access Form</title-bar>
     <transition name="fade" mode="out-in">
-      <div v-if="!hasAccepted" class="r3d-form__disclaimer">
+      <div v-if="!hasAccepted">
         <ee-text type="block">
           This form functions as an application for access to exclusive content.
           It is <em>by no means</em> a test for a single specific type of personality, intelligence,
@@ -23,7 +23,7 @@
           and all associated persons are <em>not</em> responsible in any way for your (re)actions based on
           the exclusive content.
         </ee-text>
-        <ee-button class="r3d-form__button-accept"
+        <ee-button class="r3d-form__button"
                    theme="attention"
                    @click="accept"
         >
@@ -31,33 +31,38 @@
         </ee-button>
       </div>
 
-      <div v-else-if="!hasSubmitted" class="r3d-form__form">
-        <ee-text type="block">
-          <strong>Please respond to the following questions in an honest manner.</strong> <em>Do not</em>
-          enter responses that are intended to make you seem more advanced or Enlightened. This isn’t
-          necessarily a test and even if you’re very Enlightened, it <strong>doesn’t</strong> mean that
-          this content is going to be beneficial to you.
-        </ee-text>
-        <br><br>
-        <div class="r3d-form__input-container">
-          <ee-input class="r3d-form__text-input"
-                    name="name"
-                    type="text"
+      <div v-else-if="!hasCompleted" class="r3d-form__form">
+        <div class="r3d-form__disclaimer">
+          <ee-text type="block">
+            <strong>Please respond to the following questions in an honest manner.</strong> This form will
+            determine if you’re more or less likely to <strong>gain value</strong> from the exclusive content.
+            <br><br>
+            <em>Do not</em> enter responses that are intended to make you seem more advanced or Enlightened.
+            This isn’t necessarily a test and even if you’re very Enlightened, it <strong>doesn’t</strong>
+            mean that this content is going to be beneficial to you.
+            <br><br>
+            This application is meant to gauge you on the following:
+          </ee-text>
+          <ee-text v-for="(aptitude, i) of aptitudes"
+                   :key="i"
+                   class="r3d-form__list-item"
+                   type="block"
           >
-            Name or Alias
-          </ee-input><br>
-          <ee-input class="r3d-form__text-input"
-                    name="email"
-                    type="text"
-          >
-            E-mail
-          </ee-input>
+            <ul><li v-html="aptitude" /></ul>
+          </ee-text>
+          <ee-text class="r3d-form__begin-text" type="block">
+            <em>
+              If you feel like you're ready to undergo this process, begin filling out
+              the sections below:
+            </em>
+          </ee-text>
         </div>
+        <br><br>
         <div v-for="(q, i) of questions"
              :key="i"
              class="r3d-form__input-block"
         >
-          <ee-text class="r3d-form__text-block"
+          <ee-text class="r3d-form__question"
                    type="text"
                    :data-num="i + 1 + '⁍'"
           >
@@ -66,13 +71,57 @@
           <ee-input v-model="q.answer.value"
                     class="r3d-form__area"
                     type="area"
-                    :minchars="120"
-                    :maxchars="500"
+                    :minchars="minAreaChars"
+                    :maxchars="maxAreaChars"
                     :showchars="true"
                     placeholder="Enter your answer here..."
           />
         </div>
-        <ee-button @click="submit">SUBMIT</ee-button>
+        <ee-button class="r3d-form__button"
+                   :theme="'attention'"
+                   type="submit"
+                   :disabled="!!fieldsToFill"
+                   @click="complete"
+        >
+          CONTINUE
+        </ee-button>
+        <transition name="fade">
+          <ee-text v-if="fieldsToFill" class="r3d-form__field-counter">
+            <strong>{{ fieldsToFill }}</strong> more field(s) require(s) attention.
+          </ee-text>
+        </transition>
+      </div>
+
+      <div v-else-if="!hasSubmitted">
+        <ee-text class="r3d-form__text-block" type="block">
+          <strong>Last but not least</strong>, please fill out your contact information below so we can
+          get in touch with you once we've reviewed your responses.
+        </ee-text>
+        <br>
+        <div class="r3d-form__input-container">
+          <ee-input v-model="name"
+                    class="r3d-form__text-input"
+                    name="name"
+                    type="text"
+                    :minchars="minFieldChars"
+                    :maxchars="maxFieldChars"
+          >
+            First Name or Alias
+          </ee-input><br>
+          <ee-input v-model="email"
+                    class="r3d-form__text-input"
+                    name="email"
+                    type="text"
+          >
+            E-mail
+          </ee-input><br>
+          <ee-button class="r3d-form__button submit"
+                     theme="attention"
+                     type="submit"
+          >
+            SUBMIT
+          </ee-button>
+        </div>
       </div>
 
       <div v-else-if="hasSubmitted">
@@ -95,7 +144,7 @@
 
 
 <script lang='ts'>
-import { defineComponent, ref, Ref } from "vue";
+import { computed, defineComponent, ref, Ref } from "vue";
 import titlebarVue  from "@/components/layout/titlebar.vue";
 import eeButton     from "@/components/ui/ee-button.vue";
 import eeInput      from "@/components/ui/ee-input.vue";
@@ -160,6 +209,14 @@ const _questions = [
 ];
 
 
+const _aptitudes = [
+  ' Your understanding of Enlightenment (not necessarily about how Enlightened you are).',
+  ' Your flexibility in entertaining different concepts and your reasons for entertaining them.',
+  ' Your mental fortitude',
+  ' Your religious inclinations',
+  ' Your spiritual inclinations and your application of them in life.'
+];
+
 export default defineComponent({
   components: {
     'title-bar' : titlebarVue,
@@ -169,10 +226,24 @@ export default defineComponent({
   },
   setup() {
     const hasAccepted = ref(false);
+    const hasCompleted = ref(false);
     const hasSubmitted = ref(false);
+    const name = ref('');
+    const email = ref('');
+    const minFieldChars = 4; const maxFieldChars = 30;
+    const minAreaChars = 120; const maxAreaChars = 500;
+
     const questions = _questions.map(
       q => ({ text: q, answer: ref('')})
     );
+
+    const fieldsToFill = computed(() => {
+      let fields = 0;
+      fields += questions.reduce((pv, cv) => {
+        return cv.answer.value.length < minAreaChars ? pv + 1 : pv;
+      }, 0);
+      return fields;
+    });
 
     function forwardState(refVar: Ref<boolean>) {
       refVar.value = true;
@@ -180,16 +251,18 @@ export default defineComponent({
     }
 
     const accept = () => forwardState(hasAccepted);
+    const complete = () => forwardState(hasCompleted);
     const submit = () => {
       forwardState(hasSubmitted);
     };
 
     return {
-      complete: (data: unknown) => console.log(data),
-      hasAccepted, hasSubmitted,
-      accept, submit,
-      questions,
-      risks: _risks,
+      hasAccepted, hasCompleted, hasSubmitted,
+      accept, complete, submit,
+      name, email,
+      questions, fieldsToFill,
+      minFieldChars, maxFieldChars, maxAreaChars, minAreaChars,
+      risks: _risks, aptitudes: _aptitudes,
     };
   }
 });
