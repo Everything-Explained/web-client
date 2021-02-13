@@ -6,24 +6,26 @@
   position: absolute;
   top: 0; left: 0.5rem;
   padding-left: 5px;
-  font-family: "Verdana";
+  font-family: "Nunito Sans";
+  font-weight: 400;
+  font-size: 1.05rem;
   color: hsl(197, 11%, 65%);
   pointer-events: none;
   text-transform: none;
   transition: 0.25s;
 }
 .ee-input__text:placeholder-shown ~ .ee-input__label {
-  top: 1.25rem;
+  top: 1.3rem;
   left: 0;
   color: hsl(197, 11%, 37%);
-  font-size: 1.25rem;
+  font-size: 1.3rem;
 }
 .ee-input__text:focus ~ .ee-input__label {
   position: absolute;
   display: block;
   top: 0;
+  font-size: 1.05rem;
   left: 0.5rem;
-  font-size: 1rem;
   color: hsl(197, 11%, 65%);
 }
 
@@ -58,7 +60,7 @@
   height: 2px;
   background-color: hsl(197, 11%, 45%);
   pointer-events: none;
-  transition: width 0.29s;
+  transition: width 0.29s, background 0.3s;
 }
 .ee-input__text:focus ~ .ee-input__bar,
 .ee-input__area:focus ~ .ee-input__bar {
@@ -102,7 +104,8 @@
 
 .ee-input__char-limit.--limit-reached { color            : hsl(161, 35%, 45%); }
 .ee-input__bar.--limit-reached        { background-color : hsl(161, 35%, 50%); }
-.ee-input__area.--limit-reached       { border-color     : hsl(161, 35%, 45%); }
+.ee-input__area.--limit-reached,
+.ee-input__text.--limit-reached       { border-color     : hsl(161, 35%, 43%); }
 
 .ee-input__char-limit.--length-reached { color: hsl(47, 63%, 50%); }
 
