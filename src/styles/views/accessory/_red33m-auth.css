@@ -1,3 +1,7 @@
+.r3d-auth__titlebar {
+  color: hsl(47, 100%, 61%);
+}
+
 .r3d-auth__disclaimer {
   margin-top: 30px;
   width: 70%;

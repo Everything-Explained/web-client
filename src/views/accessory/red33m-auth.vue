@@ -1,6 +1,6 @@
 <template>
   <div class="red33m-auth">
-    <title-bar>RED33M Authentication</title-bar>
+    <title-bar class="r3d-auth__titlebar">RED33M</title-bar>
 
     <ee-text type="block" class="r3d-auth__disclaimer">
       <br>
@@ -27,6 +27,7 @@
     <form class="r3d-auth__form">
       <ee-input v-model="code"
                 class="r3d-auth__passcode"
+                :minchars="3"
                 :maxchars="6"
       >
         Passcode
