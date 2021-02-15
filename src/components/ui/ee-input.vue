@@ -1,48 +1,67 @@
 <template>
   <div class="ee-input__container">
-    <input class="ee-input__text"
-      v-if="type != 'area'"
-      @input="$emit('update:modelValue', getVal($event))"
-      :id='id'
-      :type="type"
-      :maxlength="maxchars"
-      :value='modelValue'
-      placeholder="placeholder"
+    <!-- TEXT FIELD -->
+    <input v-if="isTextField"
+           :id="id"
+           :class="['ee-input__text', { '--limit-reached': charLimitReached && hasValidInput }]"
+           :type="type"
+           :minlength="minchars"
+           :maxlength="maxchars"
+           :value="modelValue"
+           placeholder="placeholder"
+           @input="onInput($event), $emit('update:modelValue', getVal($event))"
     >
-    <label v-if="type != 'area'" class="ee-input__label" :for='id'><slot></slot></label>
+    <!-- Floating LABEL -->
+    <label v-if="isTextField"
+           class="ee-input__label"
+           :for="id"
+    ><slot /></label>
 
-    <textarea :class="['ee-input__area', { '--limit-reached': charLimitReached }]"
-      v-if="type == 'area'"
-      @input="onAreaInput($event), $emit('update:modelValue', getVal($event))"
-      :value="modelValue"
-      :placeholder="placeholder"
-      :maxlength="maxchars"
-    ></textarea>
+    <textarea v-if="type == 'area'"
+              ref="areaText"
+              :class="['ee-input__area', { '--limit-reached': charLimitReached }]"
+              :value="modelValue"
+              :placeholder="placeholder"
+              :maxlength="maxchars"
+              @input="onInput($event), $emit('update:modelValue', getVal($event))"
+    />
 
-    <span :class="['ee-input__bar', { '--limit-reached': charLimitReached }]"></span>
-    <transition name='fade'>
-      <span :class="[
-                      'ee-input__char-limit',
-                      { '--length-reached': charLengthReached,
-                        '--limit-reached' : charLimitReached }
-                    ]"
-          v-if="showCharLength"
-        >{{ charLength }}&nbsp;/&nbsp;{{ maxchars }}
+    <!-- Animated Bottom Border -->
+    <span :class="['ee-input__bar', { '--limit-reached': charLimitReached && hasValidInput }]" />
+
+    <!-- Character Length Tally **/** -->
+    <transition name="fade">
+      <span v-if="isTextField ? showCharTally && tally : tally || showCharTally"
+            :class="[
+              'ee-input__char-limit',
+              { '--length-reached': charLengthReached,
+                '--limit-reached' : charLimitReached }
+            ]"
+      >
+        {{ charLength }}&nbsp;/&nbsp;{{ maxchars }}
       </span>
     </transition>
-    <transition name='fade'>
-      <span class="ee-input__char-limit-msg"
-        v-if="showCharLimit"
+
+    <!-- Required Chars Message -->
+    <transition name="fade">
+      <span v-if="isTextField ? showCharLimit && tally : showCharLimit"
+            class="ee-input__char-limit-msg"
       >
         <span class="num">{{ charsRequired }}</span> more chars required
       </span>
+    </transition>
+    <transition name="fade">
+      <span v-if="!hasValidInput && charLength > 0"
+            class="ee-input__error-msg"
+            v-html="errmsg"
+      />
     </transition>
   </div>
 </template>
 
 
 <script lang='ts'>
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 
 
 const _inputTypes = ['text', 'area', 'email', 'password'];
@@ -50,30 +69,35 @@ const _inputTypes = ['text', 'area', 'email', 'password'];
 
 export default defineComponent({
   props: {
-    name        : { type: String  , default: null   },
-    type        : { type: String  , default: 'text' },
-    minchars    : { type: Number  , default: 30     },
-    maxchars    : { type: Number  , default: 255    },
-    showchars   : { type: Boolean , default: false  },
-    placeholder : { type: String },
-    modelValue  : { type: String },
+    name        : { type: String  , default: ''               },
+    type        : { type: String  , default: 'text'           },
+    minchars    : { type: Number  , default: 0                },
+    maxchars    : { type: Number  , default: 255              },
+    tally       : { type: Boolean , default: false            },
+    regex       : { type: RegExp  , default: /.*/             },
+    errmsg      : { type: String  , default: '<b>Invalid</b>' },
+    placeholder : { type: String  , default: ''               },
+    modelValue  : { type: String  , default: ''               },
   },
   emits: ['update:modelValue'],
   setup(props) {
-    const { placeholder, maxchars, minchars, type, showchars } = props;
+    const { maxchars, minchars, type, regex } = props;
     const charLength = ref(0);
-    const charsRequired = computed(() => minchars - charLength.value)
+    const areaText = ref<HTMLTextAreaElement>();
+    const hasValidInput = computed(() => regex.test(props.modelValue));
+    const isTextField = type == 'text';
+    const charsRequired = computed(() => minchars - charLength.value);
     const showCharLimit = computed(() =>
-      showchars && charLength.value > 0 && charsRequired.value > 0
-    )
-    const showCharLength    = computed(() => type == 'area' && charLength.value > 0);
+      charLength.value > 0 && charsRequired.value > 0
+    );
+    const showCharTally     = computed(() => charLength.value > 0);
     const charLimitReached  = computed(() => charsRequired.value <= 0);
     const charLengthReached = computed(() => charLength.value == maxchars);
 
     if (maxchars > 255 && type == 'text')
       throw Error('ee-input:: text input has a 255 character max-limit.')
     ;
-    if (!_inputTypes.includes(props.type)) throw Error('ee-input:: invalid input type')
+    if (!_inputTypes.includes(props.type)) throw Error('ee-input:: invalid input type');
 
     function genID() {
       const base36RndNum = Math.floor(Math.random() * 10000).toString(36);
@@ -86,19 +110,30 @@ export default defineComponent({
       el.style.height = `${el.scrollHeight}px`;
     }
 
-    function onAreaInput(e: Event) {
+    function onInput(e: Event) {
       const el = e.target as HTMLTextAreaElement;
-      autoHeight(el);
-      charLength.value = el.value.length;
+      const val = el.value;
+      if (type == 'area') autoHeight(el);
+      charLength.value = val.length;
     }
+
+    onMounted(() => {
+      // Update textarea if it starts with a value.
+      if (props.modelValue.length) {
+        charLength.value = props.modelValue.length;
+        autoHeight(areaText.value!);
+      }
+    });
 
     return {
       id: type == 'text' ? genID() : '',
-      type, minchars, maxchars, placeholder, charLength, charsRequired, showCharLimit,
-      charLengthReached, charLimitReached, showCharLength,
+      charLength, charsRequired, showCharLimit, isTextField,
+      areaText,
+      charLengthReached, charLimitReached, showCharTally,
       getVal: (e: Event) => (e.target as HTMLInputElement).value,
-      onAreaInput,
+      hasValidInput,
+      onInput, autoHeight
     };
-  }
+  },
 });
 </script>
