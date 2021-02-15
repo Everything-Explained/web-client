@@ -166,7 +166,7 @@
   width: 1rem;
   font-size: 1.5rem;
   margin-left: -1rem;
-  color: hsl(0, 100%, 64%);
+  color: hsl(197, 20%, 80%);
   transition: color 0.3s;
 }
 .md > p:hover li::before {
