@@ -7,6 +7,7 @@ import Videos     from '@/views/library/videos.vue';
 import Literature from '@/views/library/literature.vue';
 import red33mAuth from '@/views/accessory/red33m-auth.vue';
 import red33mForm from '@/views/accessory/red33m-form.vue';
+import { isAuthed } from '@/globals';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,8 +26,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'red33m',
     component: Red33m,
     beforeEnter: (to, from, next) => {
-      const passcode = localStorage.getItem('passcode');
-      if (!passcode || passcode == 'no') {
+      if (!isAuthed()) {
         return next({ name: 'red33m-auth'});
       }
       next();
