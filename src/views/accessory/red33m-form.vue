@@ -120,15 +120,20 @@
                     :regex="emailRegex"
           >
             Enter E-mail
-          </ee-input><br>
+          </ee-input>
+          <br>
           <ee-button class="r3d-form__button submit"
                      theme="attention"
                      type="submit"
-                     @click="submit"
+                     :loading="isSubmitting"
                      :disabled="!userDataValid"
+                     @click="submit"
           >
             SUBMIT
           </ee-button>
+          <div :class="['r3d-form__submit-error', { '--on': hasSubmitError }]">
+            {{ submitError }}
+          </div>
         </div>
       </div>
 
@@ -158,6 +163,7 @@ import eeInput      from "@/components/ui/ee-input.vue";
 import eeTextVue    from "@/components/ui/ee-text.vue";
 import { useStore } from "vuex";
 import { VuexStore } from "@/vuex/vuex-store";
+import { useAuthAPI } from "@/services/api_internal";
 
 type Question = { text: string, answer: string };
 
@@ -241,18 +247,22 @@ export default defineComponent({
     const minAreaChars = 120; const maxAreaChars = 500;
 
     const formState = reactive({
-      isAccepted    : false,
-      isCompleted   : false,
-      isSubmitted   : false,
-      userDataValid : computed(() => emailRegex.test(email.value) && name.value.length >= minFieldChars),
-      fieldsToFill  : computed(() => {
+      isAccepted     : false,
+      isCompleted    : false,
+      isSubmitted    : false,
+      hasSubmitError : false,
+      submitError    : '',
+      userDataValid  : computed(() => emailRegex.test(email.value) && name.value.length >= minFieldChars),
+      fieldsToFill   : computed(() => {
                         let fields = 0;
                         fields += questions.reduce((pv, cv) => {
                           return cv.answer.length < minAreaChars ? pv + 1 : pv;
                         }, 0);
                         return fields;
-                    }),
+                     }),
     });
+
+    const api = useAuthAPI();
 
     const titleBarVal = computed(() =>
       formState.isSubmitted ? 'REQUEST SUBMITTED' : 'Exclusive Content Form'
@@ -261,7 +271,7 @@ export default defineComponent({
     const store          = useStore<VuexStore>();
     const savedQuestions = store.state.dataCache['form-questions'] as Question[];
     const questionToRef  = (q: string) => reactive({ text: q, answer: '' });
-    const questions      = savedQuestions || _questions.map(questionToRef);
+    const questions      = savedQuestions?.length ? savedQuestions : _questions.map(questionToRef);
 
     if (!savedQuestions)
       store.commit('data-cache-add', { name: 'form-questions', data: questions })
@@ -272,16 +282,33 @@ export default defineComponent({
       document.body.scrollTo(0, 0);
     }
 
+    function setSubmitError(err: string) {
+      formState.hasSubmitError = true;
+      formState.submitError = err;
+      setTimeout(() => formState.hasSubmitError = false, 2000);
+    }
+
     const accept   = () => forwardState('isAccepted');
     const complete = () => forwardState('isCompleted');
     const submit = () => {
-      forwardState('isSubmitted');
-      // api.post('/red33m', { test: 'hello world' });
+      const formData = {
+        name      : name.value,
+        email     : email.value,
+        questions : questions.map(q => [q.text, q.answer])
+      };
+      api.post('/red33m', formData)
+        .then(() => {
+          forwardState('isSubmitted');
+          // Clear questions store
+          store.commit('data-cache-add', { name: 'form-questions', data: _questions.map(questionToRef) });
+        })
+        .catch(setSubmitError);
     };
 
     return {
       ...toRefs(formState),
       accept, complete, submit,
+      isSubmitting: api.isLoading,
       titleBarVal,
       name, email,
       questions, emailRegex,
