@@ -16,6 +16,18 @@
         >
           <ul><li v-html="risk" /></ul>
         </ee-text>
+        <br><br>
+        <ee-text class="r3d-form__begin-text" type="block">
+          <em>This application is meant to gauge you on the following:</em>
+        </ee-text>
+        <ee-text v-for="(aptitude, i) of aptitudes"
+                 :key="i"
+                 class="r3d-form__list-item"
+                 type="block"
+        >
+          <ul><li v-html="aptitude" /></ul>
+        </ee-text>
+        <br><br>
         <ee-text type="block">
           By clicking the <strong>ENTER</strong> button below, you're agreeing to take full responsibility for
           all your (re)actions based on the exclusive content, <em>including but not limited to</em>,
@@ -40,21 +52,6 @@
             <em>Do not</em> enter responses that are intended to make you seem more advanced or Enlightened.
             This isn’t necessarily a test and even if you’re very Enlightened, it <strong>doesn’t</strong>
             mean that this content is going to be beneficial to you.
-            <br><br>
-            This application is meant to gauge you on the following:
-          </ee-text>
-          <ee-text v-for="(aptitude, i) of aptitudes"
-                   :key="i"
-                   class="r3d-form__list-item"
-                   type="block"
-          >
-            <ul><li v-html="aptitude" /></ul>
-          </ee-text>
-          <ee-text class="r3d-form__begin-text" type="block">
-            <em>
-              If you feel like you're ready to undergo this process, begin filling out
-              the sections below:
-            </em>
           </ee-text>
         </div>
         <br><br>
@@ -93,9 +90,11 @@
       </div>
 
       <div v-else-if="!hasSubmitted">
-        <ee-text class="r3d-form__text-block" type="block">
+        <ee-text class="r3d-form__text-block before-submit" type="block">
           <strong>Last but not least</strong>, please fill out your contact information below so we can
           get in touch with you once we've reviewed your responses.
+          <br><br>
+          <strong>Both fields are required.</strong>
         </ee-text>
         <br>
         <div class="r3d-form__input-container">
@@ -106,14 +105,14 @@
                     :minchars="minFieldChars"
                     :maxchars="maxFieldChars"
           >
-            First Name or Alias
+            Enter First Name or Alias
           </ee-input><br>
           <ee-input v-model="email"
                     class="r3d-form__text-input"
                     name="email"
                     type="text"
           >
-            E-mail
+            Enter E-mail
           </ee-input><br>
           <ee-button class="r3d-form__button submit"
                      theme="attention"
@@ -125,8 +124,8 @@
       </div>
 
       <div v-else-if="hasSubmitted">
-        <ee-text class="r3d-form__submission-text" type="block">
           <h1>request submitted</h1>
+        <ee-text class="r3d-form__text-block submitted" type="block">
           <strong>Thank you for your interest in this exclusive content.</strong> Our team will get back to
           you as soon as possible. Whatever the results may be, <em>do not take them personally</em>.<br><br>
 
