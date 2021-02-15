@@ -4,6 +4,10 @@
   margin: 0 auto;
   max-width: 1024px;
 }
+.r3d-form__titlebar.--submitted {
+  color: hsl(161, 80%, 60%);
+  transition: color 800ms;
+}
 .r3d-form__list-item p { margin-left: 3rem; }
 .r3d-form__container:last-child { margin-bottom: 200px; }
 

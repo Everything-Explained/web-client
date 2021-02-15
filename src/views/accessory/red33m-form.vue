@@ -1,8 +1,13 @@
 <template>
   <div class="r3d-form__container">
-    <title-bar>RED33M Access Form</title-bar>
+    <title-bar
+      :ease-in="350"
+      :ease-out="350"
+      :text="titleBarVal"
+      :class="['r3d-form__titlebar', { '--submitted': isSubmitted }]"
+    />
     <transition name="fade" mode="out-in">
-      <div v-if="!hasAccepted">
+      <div v-if="!isAccepted">
         <ee-text type="block">
           This form functions as an application for access to exclusive content.
           It is <em>by no means</em> a test for a single specific type of personality, intelligence,
@@ -43,7 +48,7 @@
         </ee-button>
       </div>
 
-      <div v-else-if="!hasCompleted" class="r3d-form__form">
+      <div v-else-if="!isCompleted" class="r3d-form__form">
         <div class="r3d-form__disclaimer">
           <ee-text type="block">
             <strong>Please respond to the following questions in an honest manner.</strong> This form will
@@ -65,12 +70,11 @@
           >
             <span v-html="q.text" />
           </ee-text>
-          <ee-input v-model="q.answer.value"
+          <ee-input v-model="q.answer"
                     class="r3d-form__area"
                     type="area"
                     :minchars="minAreaChars"
                     :maxchars="maxAreaChars"
-                    :showchars="true"
                     placeholder="Enter your answer here..."
           />
         </div>
@@ -89,7 +93,7 @@
         </transition>
       </div>
 
-      <div v-else-if="!hasSubmitted">
+      <div v-else-if="!isSubmitted">
         <ee-text class="r3d-form__text-block before-submit" type="block">
           <strong>Last but not least</strong>, please fill out your contact information below so we can
           get in touch with you once we've reviewed your responses.
@@ -102,6 +106,7 @@
                     class="r3d-form__text-input"
                     name="name"
                     type="text"
+                    :tally="true"
                     :minchars="minFieldChars"
                     :maxchars="maxFieldChars"
           >
@@ -111,20 +116,23 @@
                     class="r3d-form__text-input"
                     name="email"
                     type="text"
+                    errmsg="Enter a <b>valid</b> E-mail"
+                    :regex="emailRegex"
           >
             Enter E-mail
           </ee-input><br>
           <ee-button class="r3d-form__button submit"
                      theme="attention"
                      type="submit"
+                     @click="submit"
+                     :disabled="!userDataValid"
           >
             SUBMIT
           </ee-button>
         </div>
       </div>
 
-      <div v-else-if="hasSubmitted">
-          <h1>request submitted</h1>
+      <div v-else-if="isSubmitted">
         <ee-text class="r3d-form__text-block submitted" type="block">
           <strong>Thank you for your interest in this exclusive content.</strong> Our team will get back to
           you as soon as possible. Whatever the results may be, <em>do not take them personally</em>.<br><br>
@@ -143,12 +151,15 @@
 
 
 <script lang='ts'>
-import { computed, defineComponent, ref, Ref } from "vue";
+import { computed, defineComponent, reactive, ref, toRefs } from "vue";
 import titlebarVue  from "@/components/layout/titlebar.vue";
 import eeButton     from "@/components/ui/ee-button.vue";
 import eeInput      from "@/components/ui/ee-input.vue";
 import eeTextVue    from "@/components/ui/ee-text.vue";
+import { useStore } from "vuex";
+import { VuexStore } from "@/vuex/vuex-store";
 
+type Question = { text: string, answer: string };
 
 const _risks = [
 ' It can be especially toxic for those pursuing Enlightenment.'
@@ -224,42 +235,56 @@ export default defineComponent({
     'ee-input'  : eeInput,
   },
   setup() {
-    const hasAccepted = ref(false);
-    const hasCompleted = ref(false);
-    const hasSubmitted = ref(false);
-    const name = ref('');
-    const email = ref('');
-    const minFieldChars = 4; const maxFieldChars = 30;
+    const name       = ref(''); const minFieldChars = 2; const maxFieldChars = 30;
+    const email      = ref('');
+    const emailRegex = /^[a-z0-9]+@[a-z0-9]+\..{2,4}$/;
     const minAreaChars = 120; const maxAreaChars = 500;
 
-    const questions = _questions.map(
-      q => ({ text: q, answer: ref('')})
-    );
-
-    const fieldsToFill = computed(() => {
-      let fields = 0;
-      fields += questions.reduce((pv, cv) => {
-        return cv.answer.value.length < minAreaChars ? pv + 1 : pv;
-      }, 0);
-      return fields;
+    const formState = reactive({
+      isAccepted    : false,
+      isCompleted   : false,
+      isSubmitted   : false,
+      userDataValid : computed(() => emailRegex.test(email.value) && name.value.length >= minFieldChars),
+      fieldsToFill  : computed(() => {
+                        let fields = 0;
+                        fields += questions.reduce((pv, cv) => {
+                          return cv.answer.length < minAreaChars ? pv + 1 : pv;
+                        }, 0);
+                        return fields;
+                    }),
     });
 
-    function forwardState(refVar: Ref<boolean>) {
-      refVar.value = true;
+    const titleBarVal = computed(() =>
+      formState.isSubmitted ? 'REQUEST SUBMITTED' : 'RED33M Access Form'
+    );
+
+    const store          = useStore<VuexStore>();
+    const savedQuestions = store.state.dataCache['form-questions'] as Question[];
+    const questionToRef  = (q: string) => reactive({ text: q, answer: '' });
+    const questions      = savedQuestions || _questions.map(questionToRef);
+
+    if (!savedQuestions)
+      store.commit('data-cache-add', { name: 'form-questions', data: questions })
+    ;
+
+    function forwardState(state: 'isAccepted'|'isCompleted'|'isSubmitted') {
+      formState[state] = true;
       document.body.scrollTo(0, 0);
     }
 
-    const accept = () => forwardState(hasAccepted);
-    const complete = () => forwardState(hasCompleted);
+    const accept   = () => forwardState('isAccepted');
+    const complete = () => forwardState('isCompleted');
     const submit = () => {
-      forwardState(hasSubmitted);
+      forwardState('isSubmitted');
+      // api.post('/red33m', { test: 'hello world' });
     };
 
     return {
-      hasAccepted, hasCompleted, hasSubmitted,
+      ...toRefs(formState),
       accept, complete, submit,
+      titleBarVal,
       name, email,
-      questions, fieldsToFill,
+      questions, emailRegex,
       minFieldChars, maxFieldChars, maxAreaChars, minAreaChars,
       risks: _risks, aptitudes: _aptitudes,
     };
