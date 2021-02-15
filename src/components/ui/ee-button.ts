@@ -15,16 +15,16 @@ export default defineComponent({
       throw Error(`ee-button:: invalid button type ${props.theme}`)
     ;
 
-    const loading  = computed(() => props.loading);
+    const isLoading  = computed(() => props.loading);
 
-    const disabled = computed(() => {
+    const isDisabled = computed(() => {
       // Prevent clicks when loading
-      if (loading.value) return true;
+      if (isLoading.value) return true;
       return props.disabled;
     });
 
     return {
-      disabled, loading, theme: props.theme
+      isDisabled, isLoading
     };
    }
 });
