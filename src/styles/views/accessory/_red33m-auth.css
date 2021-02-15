@@ -1,9 +1,8 @@
-.r3d-auth__titlebar {
-  color: hsl(47, 100%, 61%);
-}
+.r3d-auth__titlebar { color: hsl(47, 100%, 61%); }
 
-.r3d-auth__disclaimer {
-  margin-top: 30px;
+.r3d-auth__disclaimer,
+.r3d-auth__note p {
+  margin-top: 20px;
   width: 70%;
 }
 
@@ -50,4 +49,8 @@
               opacity 0.15s ease-out,
               visibility 0.15s ease-out
             ;
+}
+
+.r3d-auth__note {
+
 }

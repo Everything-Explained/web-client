@@ -55,6 +55,7 @@
 @import './views/library/_videos.mobile.css';
 /*** Red33m Authentication ***/
 @import './views/accessory/_red33m-auth.css';
+@import './views/accessory/_red33m-auth.mobile.css';
 /*** Red33m Access Form ***/
 @import './views/accessory/_red33m-form.css';
 @import './views/accessory/_red33m-form.mobile.css';

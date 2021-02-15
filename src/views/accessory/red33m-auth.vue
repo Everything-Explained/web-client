@@ -1,29 +1,19 @@
 <template>
   <div class="red33m-auth">
     <title-bar class="r3d-auth__titlebar">RED33M</title-bar>
-
     <ee-text type="block" class="r3d-auth__disclaimer">
-      <br>
       This page contains sensitive content which <em>requires authentication</em>.
-      If you have a passcode, use the form below to grant yourself access.<br><br>
-
-      <strong>NOTE:</strong> Do not clear your browser cache, otherwise you
-      will need to enter the code again, when you come back to this page
-      later.<br><br>
-
-      <strong>CAVEAT:</strong> The passcode will only be saved for <em>this device</em>.
-      In order to view this content on your other devices:
-      <strong>computer, phone, tablet, etc...</strong>
-      You <em>must enter the passcode again</em> on those devices.<br><br>
-
-      <strong>Don't have a Passcode?</strong> Fill out the
+      If you have a passcode, use the form below to grant yourself access.
+      <br><br>
+      <strong>Don't have a Passcode?</strong>
+      <br>
+      Fill out the
       <router-link to="/red33m-form">
         RED33M Form
       </router-link>
       to gain eligibility; filling out the form <em>does not</em>
-      guarantee a Passcode, it only makes you eligible.<br><br>
+      guarantee a Passcode, it only makes you eligible.
     </ee-text>
-
     <form class="r3d-auth__form">
       <ee-input v-model="code"
                 class="r3d-auth__passcode"
@@ -47,6 +37,19 @@
         {{ errorText }}
       </div>
     </form>
+    <br>
+    <ee-text type='span-block' class="r3d-auth__note">
+      <strong>NOTE:</strong> Do not clear your browser cache, otherwise you
+      will need to enter the code again, when you come back to this page
+      later.
+    </ee-text>
+    <ee-text class="r3d-auth__note" type='span-block'>
+      <strong>CAVEAT:</strong> The passcode will only be saved for <em>this device</em>.
+      In order to view this content on your other devices:
+      <strong>computer, phone, tablet, etc...</strong>
+      You <em>must enter the passcode again</em> on those devices.<br><br>
+    </ee-text>
+    <ee-footer />
   </div>
 </template>
 
@@ -58,6 +61,7 @@ import titlebar from "@/components/layout/titlebar.vue";
 import { useAuthAPI } from "@/services/api_internal";
 import eeText from '@/components/ui/ee-text.vue';
 import { useRouter } from "vue-router";
+import footerVue from "@/components/layout/footer.vue";
 
 export default defineComponent({
   components: {
@@ -65,6 +69,7 @@ export default defineComponent({
     'ee-button': eeButton,
     'title-bar': titlebar,
     'ee-text'  : eeText,
+    'ee-footer': footerVue,
   },
   setup() {
     const codeLength   = 6;
