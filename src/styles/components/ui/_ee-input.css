@@ -15,7 +15,7 @@
   transition: 0.25s;
 }
 .ee-input__text:placeholder-shown ~ .ee-input__label {
-  top: 1.3rem; left: 0;
+  top: 1.7rem; left: 0;
   color: hsl(197, 11%, 37%);
   font-size: 1.3rem;
 }
