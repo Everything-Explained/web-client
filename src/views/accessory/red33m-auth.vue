@@ -9,7 +9,7 @@
       <br>
       Fill out the
       <router-link to="/red33m-form">
-        RED33M Form
+        EC Form
       </router-link>
       to gain eligibility; filling out the form <em>does not</em>
       guarantee a Passcode, it only makes you eligible.

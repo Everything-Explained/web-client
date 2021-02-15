@@ -9,7 +9,7 @@
     <transition name="fade" mode="out-in">
       <div v-if="!isAccepted">
         <ee-text type="block">
-          This form functions as an application for access to exclusive content.
+          This form functions as an application for access to EC (exclusive content).
           It is <em>by no means</em> a test for a single specific type of personality, intelligence,
           or level of advancement in spirituality. <br><br>
           <strong>Our team keeps this content exclusive for various significant reasons:</strong>
@@ -34,7 +34,7 @@
         </ee-text>
         <br><br>
         <ee-text type="block">
-          By clicking the <strong>ENTER</strong> button below, you're agreeing to take full responsibility for
+          By clicking the <strong>ACCEPT</strong> button below, you're agreeing to take full responsibility for
           all your (re)actions based on the exclusive content, <em>including but not limited to</em>,
           <strong>all risks mentioned above</strong>. You also agree that <strong>everything-explained.org</strong>
           and all associated persons are <em>not</em> responsible in any way for your (re)actions based on
@@ -255,7 +255,7 @@ export default defineComponent({
     });
 
     const titleBarVal = computed(() =>
-      formState.isSubmitted ? 'REQUEST SUBMITTED' : 'RED33M Access Form'
+      formState.isSubmitted ? 'REQUEST SUBMITTED' : 'Exclusive Content Form'
     );
 
     const store          = useStore<VuexStore>();
