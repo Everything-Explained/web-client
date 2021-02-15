@@ -41,29 +41,29 @@ export function useDataAPI() {
 export function useAuthAPI() {
   const isLoading = ref(false);
   const api = wretch().url(sanitizeURLForEnv('/api/auth'));
-  function exec( method: 'put'|'post', res: Wretcher, delay = 0): Promise<true|string> {
+  function exec( method: 'put'|'post', endpoint: string, body: RequestBody, delay = 0): Promise<true|string> {
     return new Promise((rs, rj) => {
+      const id = localStorage.getItem('userid');
       setTimeout(() => {
-        res[method]()
-          .notFound(() => rj('Endpoint Not Found'))
-          .res(() => rs(true))
-          .catch(err => rj(err?.message))
-          .finally(() => isLoading.value = false)
+        api
+          .url(endpoint)
+          .auth(`Bearer ${id || 'none'}`)[method](body)
+            .notFound(() => rj('Endpoint Not Found'))
+            .res(() => rs(true))
+            .catch((err) => { rj(err?.message); })
+            .finally(() => isLoading.value = false)
         ;
       }, delay);
     });
   }
-  function setAPI(endpoint: string, body: RequestBody) {
-    return api.url(endpoint).formUrl(body);
-  }
   return {
-    post(endpoint: string, body: RequestBody, delay = 0): Promise<true|string> {
+    post(endpoint: string, body: any, delay = 0): Promise<true|string> {
       isLoading.value = true;
-      return exec('post', setAPI(endpoint, body), delay);
+      return exec('post', endpoint, body, delay);
     },
-    put(endpoint: string, body: RequestBody, delay = 0) {
+    put(endpoint: string, body: any, delay = 0) {
       isLoading.value = true;
-      return exec('put', setAPI(endpoint, body), delay);
+      return exec('put', endpoint, body, delay);
     },
     isLoading
   };
