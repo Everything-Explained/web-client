@@ -19,7 +19,7 @@ setTimeout(() => {
     .then(() => localStorage.setItem('userid', userid))
     .catch(err => console.error(err))
   ;
-}, 1000);
+}, 1300);
 
 
 const getElement = (id: string) => {

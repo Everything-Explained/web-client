@@ -19,19 +19,26 @@ export function useDataAPI() {
     ) {
       isLoading.value = true;
       return new Promise((rs, rj) => {
-        const sendError = (() => {
-          return errHandler ? errHandler : rs;
-        })();
+        const exec = () => {
+          const id = localStorage.getItem('userid');
+          // Wait for user ID
+          if (!id) return setTimeout(() => exec(), 300);
+          const sendError = (() => {
+            return errHandler ? errHandler : rs;
+          })();
 
-        let api = baseAPI.url(`${endpoint}.json`);
-        if (query) api = api.query(query);
-        api
-          .get()
-          .notFound(() => sendError('Endpoint Not Found'))
-          .json(res => rs(res))
-          .catch(err => sendError(err?.message))
-          .finally(() => isLoading.value = false)
-        ;
+          let api = baseAPI.url(`${endpoint}.json`).auth(`Bearer ${id || 'none'}`);
+          if (query) api = api.query(query);
+          api
+            .get()
+            .notFound(() => sendError('Endpoint Not Found'))
+            .json(res => rs(res))
+            .catch(err => sendError(err?.message))
+            .finally(() => isLoading.value = false)
+          ;
+        };
+
+        exec();
       });
     },
     isLoading
