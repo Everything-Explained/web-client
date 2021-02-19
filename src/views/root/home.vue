@@ -11,12 +11,12 @@
 <script lang='ts'>
 import mdHomePages from './home.json';
 import { defineComponent } from "vue";
-import titlebar from '@/components/layout/titlebar.vue';
-import Footer from '@/components/layout/footer.vue';
+import titlebar from '@/components/layout/ee-titlebar.vue';
+import eeFooterVue from '@/components/layout/ee-footer.vue';
 
 
 export default defineComponent({
-  components: { 'title-bar': titlebar, 'ee-footer': Footer },
+  components: { 'title-bar': titlebar, 'ee-footer': eeFooterVue },
   setup() { return { content: mdHomePages[0].content }; }
 });
 </script>

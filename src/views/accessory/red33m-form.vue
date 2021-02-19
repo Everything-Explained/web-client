@@ -157,7 +157,7 @@
 
 <script lang='ts'>
 import { computed, defineComponent, reactive, ref, toRefs } from "vue";
-import titlebarVue  from "@/components/layout/titlebar.vue";
+import titlebarVue  from "@/components/layout/ee-titlebar.vue";
 import eeButton     from "@/components/ui/ee-button.vue";
 import eeInput      from "@/components/ui/ee-input.vue";
 import eeTextVue    from "@/components/ui/ee-text.vue";

@@ -4,11 +4,11 @@ import { dateToShortMDY, dateTo12HourTimeStr }   from "@/composeables/date-utils
 import { useRoute, useRouter }                   from "vue-router";
 import { useStore }                              from "vuex";
 import { VuexStore }                             from "@/vuex/vuex-store";
-import titlebar                                  from '@/components/layout/titlebar.vue';
+import titlebar                                  from '@/components/layout/ee-titlebar.vue';
 import EEImg                                     from '@/components/ui/ee-img.vue';
 import { useTask }                               from 'vue-concurrency';
 import { useDataAPI as usePageDataAPI }          from "@/services/api_internal";
-import Footer                                    from '@/components/layout/footer.vue';
+import Footer                                    from '@/components/layout/ee-footer.vue';
 
 
 export default defineComponent({

@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import { useStore } from "vuex";
-import titlebar from '@/components/layout/titlebar.vue';
+import titlebar from '@/components/layout/ee-titlebar.vue';
 import { VuexStore } from "@/vuex/vuex-store";
 
 export default defineComponent({

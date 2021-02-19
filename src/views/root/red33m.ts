@@ -4,10 +4,10 @@ import { VuexStore }      from "@/vuex/vuex-store";
 import { useTask }        from "vue-concurrency";
 import { useDataAPI }     from "@/services/api_internal";
 // Components
-import titlebar from '@/components/layout/titlebar.vue';
+import titlebar from '@/components/layout/ee-titlebar.vue';
 import toggle   from '@/components/ui/toggle.vue';
 import EEVideo  from '@/components/ui/ee-video.vue';
-import Footer   from '@/components/layout/footer.vue';
+import Footer   from '@/components/layout/ee-footer.vue';
 import EEInput  from '@/components/ui/ee-input.vue';
 import EEButton from '@/components/ui/ee-button.vue';
 

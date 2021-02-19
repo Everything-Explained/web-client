@@ -57,11 +57,11 @@
 import { computed, defineComponent, ref } from "vue";
 import eeButton from "@/components/ui/ee-button.vue";
 import eeInputField from "@/components/ui/ee-input.vue";
-import titlebar from "@/components/layout/titlebar.vue";
+import titlebar from "@/components/layout/ee-titlebar.vue";
 import { useAuthAPI } from "@/services/api_internal";
 import eeText from '@/components/ui/ee-text.vue';
 import { useRouter } from "vue-router";
-import footerVue from "@/components/layout/footer.vue";
+import footerVue from "@/components/layout/ee-footer.vue";
 
 export default defineComponent({
   components: {
