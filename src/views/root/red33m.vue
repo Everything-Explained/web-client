@@ -1,28 +1,81 @@
 <template>
   <div class="red33m">
-    <title-bar>RED33M</title-bar>
-    <transition name='fade' mode="out-in">
-      <div class="preloader page" v-if="getVideos.isRunning"></div>
+    <ee-titlebar>RED33M</ee-titlebar>
+    <transition name="fade" mode="out-in">
+      <div v-if="getVideos.isRunning" class="preloader page" />
       <div v-else>
-        <toggle
-          :legend='"Sort By"'
-          :leftText='"Oldest"'
-          :rightText='"Latest"'
-          :callback='toggle'
-          :prevent='isToggling'
-          class='red33m-toggle'
-        ></toggle>
+        <toggle class="red33m-toggle"
+                legend="Sort By"
+                left-text="Oldest"
+                right-text="Latest"
+                :callback="toggle"
+                :prevent="isToggling"
+        />
         <div class="red33m-video-list">
-          <ee-video v-for="(v, i) of videos" :key="i"
-            :videoId='v.id'
-            :desc='v.content'
-            class="red33m-video"
-          >{{ v.title }}</ee-video>
+          <ee-video v-for="(v, i) of videos"
+                    :key="i"
+                    :video-id="v.id"
+                    :desc="v.content"
+                    class="red33m-video"
+          >
+            {{ v.title }}
+          </ee-video>
         </div>
-        <ee-footer></ee-footer>
+        <ee-footer />
       </div>
     </transition>
   </div>
 </template>
 
-<script lang='ts' src='./red33m'></script>
+<script lang='ts'>
+import { computed, defineComponent, ref } from "vue";
+import { useStore }       from "vuex";
+import { VuexStore }      from "@/vuex/vuex-store";
+import { useTask }        from "vue-concurrency";
+import { useDataAPI }     from "@/services/api_internal";
+// Components
+import toggle        from '@/components/ui/toggle.vue';
+import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
+import eeFooterVue   from "@/components/layout/ee-footer.vue";
+import eeVideo       from "@/components/ui/ee-video.vue";
+
+
+
+export default defineComponent({
+  components: {
+    'ee-titlebar' : eeTitlebarVue,
+    'toggle'      : toggle,
+    'ee-video'    : eeVideo,
+    'ee-footer'   : eeFooterVue,
+  },
+  setup() {
+    const store = useStore<VuexStore>();
+    const isToggling = ref(false);
+    const videos = computed(() => store.state.dataCache['red33m']?.slice());
+
+    const api = useDataAPI();
+    const getVideos = useTask(function*() {
+      const red33mData = yield api.get('/pages/red33m', console.error);
+      store.commit('data-cache-add', { name: 'red33m', data: red33mData });
+    });
+
+    const toggle = () => {
+      if (isToggling.value) return;
+      videos.value.reverse();
+      // Wait for toggle input element to be "checked"
+      setTimeout(() => isToggling.value = true, 1);
+      // Debounce toggling
+      setTimeout(() => isToggling.value = false, 300);
+    };
+
+    if (!videos.value) getVideos.perform();
+
+    return {
+      videos,
+      getVideos,
+      toggle,
+      isToggling,
+    };
+  }
+});
+</script>
