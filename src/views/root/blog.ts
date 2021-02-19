@@ -1,5 +1,5 @@
 import { computed, defineComponent, ref, watch } from "vue";
-import icon                                      from '@/components/ui/icon.vue';
+import eeIconVue                                 from '@/components/ui/ee-icon.vue';
 import { dateToShortMDY, dateTo12HourTimeStr }   from "@/composeables/date-utils";
 import { useRoute, useRouter }                   from "vue-router";
 import { useStore }                              from "vuex";
@@ -13,7 +13,7 @@ import Footer                                    from '@/components/layout/ee-fo
 
 export default defineComponent({
   components: {
-    icon,
+    'ee-icon': eeIconVue,
     'title-bar': titlebar,
     'ee-img': EEImg,
     'ee-footer': Footer,

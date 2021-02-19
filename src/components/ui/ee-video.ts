@@ -1,11 +1,11 @@
 import { computed, defineComponent, ref } from "vue";
 import EEImg from '@/components/ui/ee-img.vue';
-import Icon from '@/components/ui/icon.vue';
+import eeIconVue from '@/components/ui/ee-icon.vue';
 
 export default defineComponent({
   components: {
     'ee-img': EEImg,
-    'icon': Icon,
+    'ee-icon': eeIconVue,
   },
   props: {
     desc: String,

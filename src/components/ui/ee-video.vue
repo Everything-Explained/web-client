@@ -2,24 +2,24 @@
   <div class="ee-video">
     <div class="ee-video_img-container">
       <ee-img :src='thumbnail' class="ee-video_img"></ee-img>
-      <icon class="ee-video_widget ee-video_widget-open-video"
+      <ee-icon class="ee-video_widget ee-video_widget-open-video"
         @click="openVideo"
         :class="{ '--open': descState }"
         :type='"export"'
-      ></icon>
-      <icon class="ee-video_widget ee-video_widget-open-desc"
+      ></ee-icon>
+      <ee-icon class="ee-video_widget ee-video_widget-open-desc"
         v-if="description"
         @click="setDescState('open')"
         :class="{ '--open': descState }"
         :type='"info"'
-      ></icon>
+      ></ee-icon>
       <div class="ee-video_desc"
         :class="{ '--open': descState }"
       >
-        <icon class="ee-video_widget ee-video_widget-close-desc"
+        <ee-icon class="ee-video_widget ee-video_widget-close-desc"
           @click="setDescState('closed')"
           :type='"cross"'
-        ></icon>
+        ></ee-icon>
         <div class="ee-video-desc_text">
           <h1>Description</h1>
           <span class="--default-scrollbar"

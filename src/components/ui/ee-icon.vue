@@ -1,5 +1,5 @@
 <template>
-  <div class='icon' v-html="icon"></div>
+  <div class="icon" v-html="icon" />
 </template>
 
 
@@ -35,9 +35,9 @@ const iconMap: StringMap = {
 
 
 export default defineComponent({
-  name: 'icon',
-  props: { type: String },
-
+  props: {
+    type: { type: String, default: '' }
+  },
   setup(props) {
     const type = toRef(props, 'type');
     if (!type.value)
@@ -47,7 +47,7 @@ export default defineComponent({
       throw Error(`<icon>::invalid icon type: ${type.value}`)
     ;
     const icon = computed(() => iconMap[type.value!]);
-    return { icon, type };
+    return { icon };
   }
 });
 

@@ -14,22 +14,22 @@
             >
               <h1 class="blog-entry__title">{{post.title}}</h1>
               <div class="blog-entry__date">
-                <icon
+                <ee-icon
                   class="blog-entry__icon"
                   :type='"calendar"'
-                ></icon>{{ formatDate(post.date) }}
+                ></ee-icon>{{ formatDate(post.date) }}
               </div>
               <div class="blog-entry__time">
-                <icon
+                <ee-icon
                   class="blog-entry__icon"
                   :type='"clock"'
-                ></icon>{{ formatTime(post.date)}}
+                ></ee-icon>{{ formatTime(post.date)}}
               </div>
               <article class="blog-entry__summary" v-html="post.summary"></article>
               <div class="blog-entry__author"
                 :class="{ 'ethan': isEthan(post.author) }"
               >
-                <icon class="blog-entry__author-icon" :type='"user"'></icon>
+                <ee-icon class="blog-entry__author-icon" :type='"user"'></ee-icon>
                 {{ post.author }}
               </div>
             </div>

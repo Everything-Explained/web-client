@@ -1,8 +1,8 @@
 <template>
   <div class="title-bar">
-    <icon :class="['title-bar__menu-icon', { '--menu-open': isMenuOpen }]"
-          :type="'menu'"
-          @mousedown="openMenu"
+    <ee-icon :class="['title-bar__menu-icon', { '--menu-open': isMenuOpen }]"
+             :type="'menu'"
+             @mousedown="openMenu"
     />
     <transition name="fade"
                 :duration="{ enter, leave }"
@@ -21,11 +21,11 @@
 import { computed, defineComponent } from "vue";
 import { useStore } from "vuex";
 import { VuexStore } from "@/vuex/vuex-store";
-import icon from '@/components/ui/icon.vue';
+import eeIconVue from '@/components/ui/ee-icon.vue';
 
 
 export default defineComponent({
-  components : { icon, },
+  components : { 'ee-icon': eeIconVue, },
   props      : {
     easeIn:  { type: Number, default: 400 },
     easeOut: { type: Number, default: 400 },

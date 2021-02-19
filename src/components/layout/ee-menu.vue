@@ -2,9 +2,9 @@
   <menu ref="menu" :class="['app-menu', { '--opened': opened }]">
     <header class="app-menu__header">
       <span class="app-menu__header_text">Menu</span>
-      <icon class="app-menu__header_exit-icon"
-            :type="'cross'"
-            @mousedown="closeMenu"
+      <ee-icon class="app-menu__header_exit-icon"
+               :type="'cross'"
+               @mousedown="closeMenu"
       />
     </header>
     <ul>
@@ -35,7 +35,7 @@ import { defineComponent, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { useRouteMap } from "@/composeables/route-map";
 import { VuexStore } from "@/vuex/vuex-store";
-import icon from '@/components/ui/icon.vue';
+import eeIconVue from '@/components/ui/ee-icon.vue';
 
 interface ExternalElements {
   contentToSlide ?: HTMLElement;
@@ -45,7 +45,7 @@ interface ExternalElements {
 
 export default defineComponent({
   components: {
-    icon,
+    'ee-icon': eeIconVue,
   },
   props: {
     contentId : { type: String, default: '' },
