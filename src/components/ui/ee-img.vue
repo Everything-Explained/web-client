@@ -13,7 +13,7 @@
 
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, reactive, ref, toRefs, watch } from "vue";
 import { useStore } from "vuex";
 import { VuexStore } from "../../vuex/vuex-store";
 
@@ -27,66 +27,68 @@ export default defineComponent({
 
     const imgRef        = ref<HTMLImageElement>();
     const containerRef  = ref<HTMLElement>();
-    const loaded        = ref(false);
-    const showPreloader = ref(false);
     const store         = useStore<VuexStore>();
-    const imageCache    = computed(() => store.state.lazyimgCache);
-    const newSrc        = computed(() => props.src!);
-    const img           = computed(() => imgRef.value!);
-    const isAsset       = props.asset ?? false;
+
+    const state = reactive({
+      img           : computed(() => imgRef.value!),
+      loaded        : false,
+      showPreloader : false,
+      activeSrc     : computed(() => props.src!),
+      cache         : computed(() => store.state.lazyimgCache)
+    });
 
     function isImageCached(uri: string) {
       const uriSlug = uri ? uri.split('//', 2)[1] : uri;
-      return imageCache.value.find(v => v.includes(uriSlug));
+      return state.cache.find(v => v.includes(uriSlug));
     }
 
     function detectAssetSize() {
-      if (isAsset) {
-        const [width, height] = newSrc.value.split('/')[5].split('x');
-        img.value.height = parseInt(height);
-        img.value.width = parseInt(width);
+      if (props.asset) {
+        const [width, height] = state.activeSrc.split('/')[5].split('x');
+        state.img.height = parseInt(height);
+        state.img.width = parseInt(width);
       }
     }
 
-    const updateImageSrc = () => img.value.src = newSrc.value!;
-    const loadImage = (entries: IntersectionObserverEntry[], obs: IntersectionObserver) => {
+    const updateImageSrc = () => state.img.src = state.activeSrc;
+    function loadImage(entries: IntersectionObserverEntry[], obs: IntersectionObserver) {
       if (entries[0].isIntersecting) {
-        if (!isImageCached(newSrc.value)) {
-          showPreloader.value = true;
+        if (!isImageCached(state.activeSrc)) {
+          state.showPreloader = true;
           // Provides a smoother transition with fast loading images
           setTimeout(updateImageSrc, 150);
-          store.commit('lazyimg-cache-add', newSrc.value);
+          store.commit('lazyimg-cache-add', state.activeSrc);
         }
         else updateImageSrc();
 
         obs.unobserve(containerRef.value!);
       }
-    };
-    const observer = new IntersectionObserver(loadImage);
+    }
 
+    const observer = new IntersectionObserver(loadImage);
     let loadEvents = true;
-    const observeImage = () => {
+    function observeImage() {
       if (loadEvents) {
-        img.value.addEventListener('load', () => loaded.value = true);
-        img.value.addEventListener('animationend', () => showPreloader.value = false);
+        state.img.addEventListener('load', () => state.loaded = true);
+        state.img.addEventListener('animationend', () => state.showPreloader = false);
         loadEvents = false;
       }
       observer.observe(containerRef.value!);
-    };
+    }
 
     onMounted(() => {
       detectAssetSize();
       observeImage();
       // Reload image if src changes
       watch(() => props.src, () => {
-        img.value.src = '';
-        loaded.value = false;
+        state.img.src = '';
+        state.loaded = false;
         observeImage();
       });
     });
 
 
-    return { imgRef, containerRef, loaded, showPreloader, imageCache };
+    return { imgRef, containerRef, ...toRefs(state) };
   }
 });
 </script>
