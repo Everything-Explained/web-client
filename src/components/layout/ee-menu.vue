@@ -1,3 +1,36 @@
+<template>
+  <menu ref="menu" :class="['app-menu', { '--opened': opened }]">
+    <header class="app-menu__header">
+      <span class="app-menu__header_text">Menu</span>
+      <icon class="app-menu__header_exit-icon"
+            :type="'cross'"
+            @mousedown="closeMenu"
+      />
+    </header>
+    <ul>
+      <template v-for="(map, i) of routeMap" :key="i">
+        <li v-if="map.name != 'root' && !map.hidden"
+            class="app-menu_category"
+        >
+          {{ map.name }}
+        </li>
+        <li v-for="(route, j) of map.routes"
+            :key="j"
+            class="app-menu_item"
+            @click="closeMenu"
+        >
+          <router-link :to="route.path">
+            {{ route.title }}
+          </router-link>
+        </li>
+      </template>
+    </ul>
+  </menu>
+</template>
+
+
+
+<script lang='ts'>
 import { defineComponent, onMounted, ref, watch } from "vue";
 import { useStore } from "vuex";
 import { useRouteMap } from "@/composeables/route-map";
@@ -5,8 +38,9 @@ import { VuexStore } from "@/vuex/vuex-store";
 import icon from '@/components/ui/icon.vue';
 
 interface ExternalElements {
-  contentToSlide: HTMLElement|null;
-  header: HTMLElement|null;
+  contentToSlide ?: HTMLElement;
+  header         ?: HTMLElement;
+  menu           ?: HTMLDivElement;
 }
 
 export default defineComponent({
@@ -14,8 +48,8 @@ export default defineComponent({
     icon,
   },
   props: {
-    contentId: String,
-    headerId: String,
+    contentId : { type: String, default: '' },
+    headerId  : { type: String, default: '' },
   },
   setup(props) {
     const menuElRef = ref<HTMLDivElement|null>(null);
@@ -25,37 +59,35 @@ export default defineComponent({
 
     if (!props.contentId) throw Error('Missing content ID');
 
-    const els: ExternalElements = {
-      contentToSlide: null,
-      header: null
-    };
+    const els: ExternalElements = { menu: menuElRef.value! };
 
-    const floatOnScroll = () => {
+    function floatOnScroll() {
       document.body.addEventListener('scroll', () => {
         const scrollTop = document.body.scrollTop;
-        const pos       = menuElRef.value!.style.position
+        const menu      = els.menu!;
+        const pos       = menu.style.position
         ;
         if (scrollTop >= els.header!.offsetHeight + 1) {
-          if (pos != 'fixed') menuElRef.value!.style.position = 'fixed';
+          if (pos != 'fixed') menu.style.position = 'fixed';
           return;
         }
-        if (pos != 'absolute') menuElRef.value!.style.position = 'absolute';
+        if (pos != 'absolute') menu.style.position = 'absolute';
       });
-    };
+    }
 
-    const createSlideStyle = () => {
+    function createSlideStyle() {
       const style = document.createElement('style');
       style.id = 'SlideStyle';
       style.innerHTML =
         `#${props.contentId}.--menu-open { left: ${menuElRef.value!.clientWidth}px; }`
       ;
       document.head.append(style);
-    };
+    }
 
     // Setup events and animation style
     onMounted(() => {
-      els.contentToSlide = document.getElementById(props.contentId!);
-      els.header = document.getElementById(props.headerId!);
+      els.contentToSlide = document.getElementById(props.contentId!)!;
+      els.header         = document.getElementById(props.headerId!)!;
 
       if (menuElRef.value && els.contentToSlide) {
         floatOnScroll();
@@ -79,3 +111,4 @@ export default defineComponent({
     };
   }
 });
+</script>
