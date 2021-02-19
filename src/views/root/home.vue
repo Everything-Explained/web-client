@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <ee-titlebar>Home</ee-titlebar>
+    <ee-titlebar>About Us</ee-titlebar>
     <div class="home md" v-html="content" />
     <ee-footer />
   </div>
