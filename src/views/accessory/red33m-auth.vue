@@ -1,6 +1,8 @@
 <template>
   <div class="red33m-auth">
-    <title-bar class="r3d-auth__titlebar">RED33M</title-bar>
+    <ee-titlebar class="r3d-auth__titlebar">
+      RED33M
+    </ee-titlebar>
     <ee-text type="block" class="r3d-auth__disclaimer">
       This page contains sensitive content which <em>requires authentication</em>.
       If you have a passcode, use the form below to grant yourself access.
@@ -57,19 +59,19 @@
 import { computed, defineComponent, ref } from "vue";
 import eeButton from "@/components/ui/ee-button.vue";
 import eeInputField from "@/components/ui/ee-input.vue";
-import titlebar from "@/components/layout/ee-titlebar.vue";
 import { useAuthAPI } from "@/services/api_internal";
 import eeText from '@/components/ui/ee-text.vue';
 import { useRouter } from "vue-router";
-import footerVue from "@/components/layout/ee-footer.vue";
+import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
+import eeFooterVue from "@/components/layout/ee-footer.vue";
 
 export default defineComponent({
   components: {
-    'ee-input' : eeInputField,
-    'ee-button': eeButton,
-    'title-bar': titlebar,
-    'ee-text'  : eeText,
-    'ee-footer': footerVue,
+    'ee-input'    : eeInputField,
+    'ee-button'   : eeButton,
+    'ee-titlebar' : eeTitlebarVue,
+    'ee-text'     : eeText,
+    'ee-footer'   : eeFooterVue,
   },
   setup() {
     const codeLength   = 6;

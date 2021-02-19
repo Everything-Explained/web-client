@@ -1,8 +1,8 @@
 <template>
   <div class="blog">
-    <title-bar :ease-in="350"
-               :ease-out="350"
-               :text="title"
+    <ee-titlebar :ease-in="350"
+                 :ease-out="350"
+                 :text="title"
     />
     <transition name="fade" mode="out-in">
       <div v-if="getBlogPosts.isRunning" class="preloader page" />
@@ -75,10 +75,10 @@ import eeFooterVue   from '@/components/layout/ee-footer.vue';
 
 export default defineComponent({
   components: {
-    'ee-icon'   : eeIconVue,
-    'title-bar' : eeTitlebarVue,
-    'ee-img'    : eeImgVue,
-    'ee-footer' : eeFooterVue,
+    'ee-icon'     : eeIconVue,
+    'ee-titlebar' : eeTitlebarVue,
+    'ee-img'      : eeImgVue,
+    'ee-footer'   : eeFooterVue,
   },
 
   setup() {

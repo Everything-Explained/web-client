@@ -1,8 +1,8 @@
 <template>
   <div class="lib-videos">
-    <title-bar :ease-in="350" :ease-out="350">
+    <ee-titlebar :ease-in="350" :ease-out="350">
       Library Videos
-    </title-bar>
+    </ee-titlebar>
     <transition name="fade" mode="out-in">
       <div v-if="!categories" class="preloader page" />
       <div v-else>
@@ -46,9 +46,9 @@ import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
 
 export default defineComponent({
   components: {
-    'title-bar' : eeTitlebarVue,
-    'ee-video'  : eeVideo,
-    'ee-footer' : eeFooterVue,
+    'ee-titlebar' : eeTitlebarVue,
+    'ee-video'    : eeVideo,
+    'ee-footer'   : eeFooterVue,
   },
   setup() {
     const store      = useStore<VuexStore>();

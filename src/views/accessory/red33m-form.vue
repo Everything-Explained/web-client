@@ -1,6 +1,6 @@
 <template>
   <div class="r3d-form__container">
-    <title-bar
+    <ee-titlebar
       :ease-in="350"
       :ease-out="350"
       :text="titleBarVal"
@@ -240,11 +240,11 @@ const _aptitudes = [
 
 export default defineComponent({
   components: {
-    'title-bar' : titlebarVue,
-    'ee-text'   : eeTextVue,
-    'ee-button' : eeButton,
-    'ee-input'  : eeInput,
-    'ee-footer' : eeFooterVue,
+    'ee-titlebar' : titlebarVue,
+    'ee-text'     : eeTextVue,
+    'ee-button'   : eeButton,
+    'ee-input'    : eeInput,
+    'ee-footer'   : eeFooterVue,
   },
   setup() {
     const titleBarVal = computed(() =>
