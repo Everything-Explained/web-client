@@ -4,12 +4,12 @@
     <transition name="fade" mode="out-in">
       <div v-if="getVideos.isRunning" class="preloader page" />
       <div v-else>
-        <toggle class="red33m-toggle"
-                legend="Sort By"
-                left-text="Oldest"
-                right-text="Latest"
-                :callback="toggle"
-                :prevent="isToggling"
+        <ee-toggle class="red33m-toggle"
+                   legend="Sort By"
+                   left-text="Oldest"
+                   right-text="Latest"
+                   :callback="toggle"
+                   :prevent="isToggling"
         />
         <div class="red33m-video-list">
           <ee-video v-for="(v, i) of videos"
@@ -34,17 +34,17 @@ import { VuexStore }      from "@/vuex/vuex-store";
 import { useTask }        from "vue-concurrency";
 import { useDataAPI }     from "@/services/api_internal";
 // Components
-import toggle        from '@/components/ui/toggle.vue';
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
 import eeVideo       from "@/components/ui/ee-video.vue";
+import eeToggleVue   from "@/components/ui/ee-toggle.vue";
 
 
 
 export default defineComponent({
   components: {
     'ee-titlebar' : eeTitlebarVue,
-    'toggle'      : toggle,
+    'ee-toggle'   : eeToggleVue,
     'ee-video'    : eeVideo,
     'ee-footer'   : eeFooterVue,
   },
