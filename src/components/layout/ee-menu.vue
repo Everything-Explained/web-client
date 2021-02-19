@@ -31,7 +31,7 @@
 
 
 <script lang='ts'>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, ref, watch, Ref } from "vue";
 import { useStore } from "vuex";
 import { useRouteMap } from "@/composeables/route-map";
 import { VuexStore } from "@/vuex/vuex-store";
@@ -40,7 +40,7 @@ import eeIconVue from '@/components/ui/ee-icon.vue';
 interface ExternalElements {
   contentToSlide ?: HTMLElement;
   header         ?: HTMLElement;
-  menu           ?: HTMLDivElement;
+  menu           ?: Ref<HTMLDivElement>;
 }
 
 export default defineComponent({
@@ -59,19 +59,19 @@ export default defineComponent({
 
     if (!props.contentId) throw Error('Missing content ID');
 
-    const els: ExternalElements = { menu: menuElRef.value! };
+    const els: ExternalElements = { menu: computed(() => menuElRef.value!) };
 
     function floatOnScroll() {
       document.body.addEventListener('scroll', () => {
         const scrollTop = document.body.scrollTop;
         const menu      = els.menu!;
-        const pos       = menu.style.position
+        const pos       = menu.value.style.position
         ;
         if (scrollTop >= els.header!.offsetHeight + 1) {
-          if (pos != 'fixed') menu.style.position = 'fixed';
+          if (pos != 'fixed') menu.value.style.position = 'fixed';
           return;
         }
-        if (pos != 'absolute') menu.style.position = 'absolute';
+        if (pos != 'absolute') menu.value.style.position = 'absolute';
       });
     }
 
