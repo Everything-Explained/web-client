@@ -244,13 +244,19 @@ export default defineComponent({
     'ee-text'   : eeTextVue,
     'ee-button' : eeButton,
     'ee-input'  : eeInput,
+    'ee-footer' : eeFooterVue,
   },
   setup() {
-    const name       = ref(''); const minFieldChars = 2; const maxFieldChars = 30;
+    const titleBarVal = computed(() =>
+      formState.isSubmitted ? 'REQUEST SUBMITTED' : 'Exclusive Content Form'
+    );
+    const name       = ref('');
     const email      = ref('');
-    const emailRegex = /^[a-z0-9]+@[a-z0-9]+\..{2,4}$/;
-    const minAreaChars = 120; const maxAreaChars = 500;
-
+    const emailRegex = /^[a-z0-9]+@[a-z0-9]+\..{2,4}$/
+    ;
+    const minFieldChars = 2;   const maxFieldChars = 30;
+    const minAreaChars  = 120; const maxAreaChars  = 500
+    ;
     const formState = reactive({
       isAccepted     : false,
       isCompleted    : false,
@@ -266,13 +272,7 @@ export default defineComponent({
                         return fields;
                      }),
     });
-
-    const api = useAuthAPI();
-
-    const titleBarVal = computed(() =>
-      formState.isSubmitted ? 'REQUEST SUBMITTED' : 'Exclusive Content Form'
-    );
-
+    const api            = useAuthAPI();
     const store          = useStore<VuexStore>();
     const savedQuestions = store.state.dataCache['form-questions'] as Question[];
     const questionToRef  = (q: string) => reactive({ text: q, answer: '' });
