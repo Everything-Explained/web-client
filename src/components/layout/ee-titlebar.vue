@@ -1,11 +1,16 @@
 <template>
   <div class="title-bar">
-    <icon class="title-bar__menu-icon"
-      @mousedown="openMenu"
-      :class="{ '--menu-open': isMenuOpen }" :type='"menu"'
-    ></icon>
-    <transition name="fade" :duration="{ enter, leave }" mode="out-in">
-      <div class="title-bar__text" :key="text">{{text}}<slot></slot></div>
+    <icon :class="['title-bar__menu-icon', { '--menu-open': isMenuOpen }]"
+          :type="'menu'"
+          @mousedown="openMenu"
+    />
+    <transition name="fade"
+                :duration="{ enter, leave }"
+                mode="out-in"
+    >
+      <div :key="text" class="title-bar__text">
+        {{ text }} <slot />
+      </div>
     </transition>
   </div>
 </template>
@@ -21,19 +26,21 @@ import icon from '@/components/ui/icon.vue';
 
 export default defineComponent({
   components : { icon, },
-  props      : { easeIn: Number, easeOut: Number, text: String },
-
+  props      : {
+    easeIn:  { type: Number, default: 400 },
+    easeOut: { type: Number, default: 400 },
+    text:    { type: String, default: '' }
+  },
   setup(props) {
     const store      = useStore<VuexStore>();
     const isMenuOpen = computed(() => store.state.isMenuOpening);
-    const text       = computed(() => props.text);
     const duration = {
       enter: props.easeIn ?? 400,
       leave: props.easeOut ?? 400
     };
     const openMenu = () => store.commit('open-menu');
 
-    return { openMenu, isMenuOpen, text, ...duration };
+    return { openMenu, isMenuOpen, ...duration };
   }
 });
 </script>
