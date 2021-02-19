@@ -39,7 +39,7 @@ import { useDataAPI } from "@/services/api_internal";
 import { VuexStore } from "@/vuex/vuex-store"
 ;
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
-import eeVideo       from "@/components/ui/ee-video";
+import eeVideo       from "@/components/ui/ee-video.vue";
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
 
 
