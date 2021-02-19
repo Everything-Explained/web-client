@@ -83,11 +83,11 @@ export default defineComponent({
 
   setup() {
     const activePost = ref<any|null>(null);
+    const title      = ref('Blog Entries');
     const router     = useRouter();
     const route      = useRoute();
     const postURI    = route.params.post as string|undefined;
-    const store      = useStore<VuexStore>();
-    const title      = ref('Blog Entries')
+    const store      = useStore<VuexStore>()
     ;
     const posts = computed(() => store.state.dataCache['blog']);
     const displayBlogPost = (uri: string) => {
