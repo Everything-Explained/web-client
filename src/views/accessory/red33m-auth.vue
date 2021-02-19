@@ -91,12 +91,8 @@ export default defineComponent({
     const submit = (e: MouseEvent) => {
       e.preventDefault();
       const passcode = codeRef.value.toUpperCase();
-      const params = {
-        passcode,
-        userid: localStorage.getItem('userid')!
-      };
       authAPI
-        .put('/red33m', params, 500)
+        .put('/red33m', { passcode }, 500)
         .then(() => {
           localStorage.setItem('passcode', 'yes');
           router.push('/red33m');

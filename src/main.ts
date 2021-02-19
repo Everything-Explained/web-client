@@ -9,14 +9,21 @@ import { useAuthAPI } from './services/api_internal';
 
 // Init passcode and user ID
 setTimeout(() => {
-  if (localStorage.getItem('userid')) return;
   const api    = useAuthAPI();
   const keys   = crypto.getRandomValues(new Uint8Array(20));
-  const userid = keys.reduce((pv, cv) => pv += `${cv.toString(36)}`, '');
-  localStorage.setItem('passcode', 'no');
+  const userid =
+       localStorage.getItem('userid')
+    || keys.reduce((pv, cv) => pv += `${cv.toString(36)}`, '')
+  ;
+
+  // Will always be the most valid ID
+  localStorage.setItem('userid', userid);
+
   api
     .post('/user', { userid })
-    .then(() => localStorage.setItem('userid', userid))
+    .then(res => {
+      if (res.status == 201) { localStorage.setItem('passcode', 'no') }
+    })
     .catch(err => console.error(err))
   ;
 }, 1300);

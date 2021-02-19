@@ -48,7 +48,7 @@ export function useDataAPI() {
 export function useAuthAPI() {
   const isLoading = ref(false);
   const api = wretch().url(sanitizeURLForEnv('/api/auth'));
-  function exec( method: 'put'|'post', endpoint: string, body: RequestBody, delay = 0): Promise<true|string> {
+  function exec( method: 'put'|'post', endpoint: string, body: RequestBody, delay = 0): Promise<{ status: number, data: any }> {
     return new Promise((rs, rj) => {
       const id = localStorage.getItem('userid');
       setTimeout(() => {
@@ -56,7 +56,7 @@ export function useAuthAPI() {
           .url(endpoint)
           .auth(`Bearer ${id || 'none'}`)[method](body)
             .notFound(() => rj('Endpoint Not Found'))
-            .res(() => rs(true))
+            .res((res) => rs({ status: res.status, data: res }))
             .catch((err) => { rj(err?.message); })
             .finally(() => isLoading.value = false)
         ;
@@ -64,7 +64,7 @@ export function useAuthAPI() {
     });
   }
   return {
-    post(endpoint: string, body: any, delay = 0): Promise<true|string> {
+    post(endpoint: string, body: any, delay = 0) {
       isLoading.value = true;
       return exec('post', endpoint, body, delay);
     },
