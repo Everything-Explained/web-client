@@ -46,6 +46,7 @@
         >
           ACCEPT AND BEGIN
         </ee-button>
+        <ee-footer />
       </div>
 
       <div v-else-if="!isCompleted" class="r3d-form__form">
@@ -91,6 +92,7 @@
             <strong>{{ fieldsToFill }}</strong> more field(s) require(s) attention.
           </ee-text>
         </transition>
+        <ee-footer />
       </div>
 
       <div v-else-if="!isSubmitted">
@@ -135,6 +137,7 @@
             {{ submitError }}
           </div>
         </div>
+        <ee-footer />
       </div>
 
       <div v-else-if="isSubmitted">
@@ -149,6 +152,7 @@
           Expect a response <strong>within 7 days</strong>, whether that response is to <strong>grant</strong> or
           <em>reject</em> access to this content.
         </ee-text>
+        <ee-footer />
       </div>
     </transition>
   </div>
@@ -161,6 +165,7 @@ import titlebarVue  from "@/components/layout/ee-titlebar.vue";
 import eeButton     from "@/components/ui/ee-button.vue";
 import eeInput      from "@/components/ui/ee-input.vue";
 import eeTextVue    from "@/components/ui/ee-text.vue";
+import eeFooterVue  from '@/components/layout/ee-footer.vue';
 import { useStore } from "vuex";
 import { VuexStore } from "@/vuex/vuex-store";
 import { useAuthAPI } from "@/services/api_internal";
