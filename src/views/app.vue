@@ -2,9 +2,9 @@
   <div id="App" class="app-container">
     <div class="app-ribbon" />
     <header id="AppHeader" class="app-header">
-      <div class="app-header__title">
+      <router-link :to="{ name: 'home' }" class="app-header__title">
         Everything Explained
-      </div>
+      </router-link>
     </header>
     <section class="app-body">
       <main-menu :header-id="'AppHeader'" :content-id="'AppBodyContent'" />
