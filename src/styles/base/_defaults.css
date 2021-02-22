@@ -9,7 +9,7 @@ html {
   /* DO NOT REMOVE - menu and scroll depend on this */
   overflow    : hidden;
   /**************************************************/
-  -webkit-font-smoothing  : antialiased;
+  -webkit-font-smoothing  : subpixel-antialiased;
   -moz-osx-font-smoothing : grayscale;
 }
 body {
@@ -17,6 +17,7 @@ body {
   margin-right: 5px;
   overflow: hidden;
   overflow-y: auto;
+  scroll-behavior: smooth;
 }
 a {
   word-wrap: break-word;

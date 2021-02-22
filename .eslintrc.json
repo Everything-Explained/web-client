@@ -5,11 +5,12 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:vue/vue3-recommended"
     ],
-    "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 11,
+        "parser": "@typescript-eslint/parser",
+        "ecmaVersion": 2018,
         "sourceType": "module"
     },
     "plugins": [
@@ -19,6 +20,15 @@
       "semi": "warn",
       "@typescript-eslint/explicit-module-boundary-types": 0,
       "@typescript-eslint/no-explicit-any": 0,
-      "@typescript-eslint/no-non-null-assertion": 0
+      "@typescript-eslint/no-non-null-assertion": 0,
+      "vue/max-attributes-per-line": ["error", {
+        "singleline": 2,
+        "multiline": {
+          "max": 1,
+          "allowFirstLine": true
+        }
+      }],
+      "vue/no-v-html": 0,
+      "vue/no-setup-props-destructure": 0
     }
 }

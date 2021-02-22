@@ -1,4 +1,4 @@
-import { isDevelopment } from "../globals";
+import { isDevelopment, isProduction } from "../globals";
 
 type Route = {
   path: { name: string }
@@ -10,31 +10,39 @@ const mapRoute = (name: string, title: string, visible?: boolean) => (
   { path: { name }, title, visible: visible ?? true } as Route
 );
 
-const menuMap = {
-  root: [
+const routeMap = [
+  { name: 'root', routes: [
     mapRoute('home', 'Home'),
     mapRoute('blog', 'Blog'),
-    mapRoute('red33m', 'RED33M', isDevelopment)
-  ],
-  categories: {
-    library: [
-      mapRoute('videos', 'Videos'),
-      mapRoute('literature', 'Literature', isDevelopment),
-    ] as Route[]
-  }
-};
+  ]},
+  { name: 'Library', routes: [
+    mapRoute('videos', 'Videos'),
+    mapRoute('literature', 'Literature', isDevelopment),
+  ]},
+  { name: 'RED33M', routes: [
+    mapRoute('red33m', 'Videos')
+  ]},
+  { name: 'Accessory', hidden: isProduction, routes: [
+    mapRoute('red33m-auth', 'R3D Auth', isDevelopment),
+    mapRoute('red33m-form', 'R3D Form', isDevelopment)
+  ]},
+];
 
-type RouteMap = typeof menuMap;
+type RouteMap = typeof routeMap;
 
 function normalizeRoutes(map: RouteMap) {
-  // Not performant
+  // Not a performant clone
   const newMap = JSON.parse(JSON.stringify(map)) as RouteMap;
-  newMap.root = map.root.filter(route => route.visible);
-  newMap.categories.library = map.categories.library.filter(route => route.visible);
+  let mapName: keyof RouteMap;
+  for (mapName in newMap) {
+    newMap[mapName].routes =
+      newMap[mapName].routes.filter(route => route.visible)
+    ;
+  }
   return newMap;
 }
 
 
 export function useRouteMap() {
-  return normalizeRoutes(menuMap);
+  return normalizeRoutes(routeMap);
 }

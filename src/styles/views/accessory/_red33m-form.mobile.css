@@ -1,0 +1,26 @@
+/*** 711px ***/
+@media only screen and (--large-screen) {
+}
+/*** 511px ***/
+@media only screen and (--medium-screen) {
+  .r3d-form__input-block { width: 95%; }
+
+  .r3d-form__text-block,
+  .r3d-form__disclaimer,
+  .r3d-form__text-block.submitted,
+  .r3d-form__text-block.before-submit { width: 98%; }
+
+  .r3d-form__text-input { width: 100% }
+  .r3d-form__question { padding-left: 0.8rem; }
+  .r3d-form__question::before {
+    font-size: 1.15rem; margin-left: -1.2rem;
+  }
+  .r3d-form__input-container { width: 95%; }
+  .r3d-form__submission-text p { width: 95%; margin: 0 auto; }
+}
+/*** 380px ***/
+@media only screen and (--small-screen) {
+}
+/*** 320px ***/
+@media only screen and (--tiny-screen) {
+}

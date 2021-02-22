@@ -1,0 +1,107 @@
+.ee-btn {
+  position       : relative;
+  padding        : 0.3rem 1rem;
+  letter-spacing : 0.1rem;
+  font-family    : inherit;
+  font-weight    : bold;
+  font-size      : 1.1rem;
+  transition: all 0.3s;
+}
+.ee-btn:active { top: 2px; left: 2px; }
+
+
+.ee-btn.neutral {
+  color       : black;
+  background  : hsl(197, 11%, 68%);
+  border-top  : 1px solid hsl(197, 20%, 90%);
+  border-left : 1px solid hsl(197, 20%, 90%);
+  box-shadow  : 0 0 12px 0 hsla(197, 20%, 75%, 0.5);
+}
+.ee-btn.neutral:hover {
+  background : hsl(197, 20%, 75%);
+  box-shadow : 0 0 12px 0 hsla(197, 20%, 75%, 0.8);
+}
+.ee-btn.neutral:disabled.--loading {
+  color            : hsla(0, 0%, 0%, 0.5);
+  border-color     : hsl(197, 11%, 78%);
+  background-color : hsl(197, 11%, 75%);
+  box-shadow       : 0 0 12px 0 hsla(197, 20%, 75%, 0.8);
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 1rem,
+      hsl(197, 20%, 85%) 1rem,
+      hsl(197, 20%, 85%) 2rem
+    );
+}
+
+.ee-btn.attention {
+  color       : black;
+  background  : hsl(47, 100%, 50%);
+  border-top  : 1px solid hsl(47, 100%, 78%);
+  border-left : 1px solid hsl(47, 100%, 78%);
+  box-shadow  : 0 0 12px 0 hsla(47, 100%, 70%, 0.5);
+}
+.ee-btn.attention:hover {
+  background : hsl(47, 100%, 70%);
+  box-shadow : 0 0 12px 0 hsla(47, 100%, 70%, 0.8);
+}
+.ee-btn.attention:disabled.--loading {
+  color            : hsla(0, 0%, 0%, 0.5);
+  border-color     : hsl(47, 100%, 78%);
+  background-color : hsl(47, 100%, 75%);
+  box-shadow       : 0 0 12px 0 hsla(47, 100%, 70%, 0.8);
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 1rem,
+      hsl(47, 100%, 47%) 1rem,
+      hsl(47, 100%, 47%) 2rem
+    );
+}
+
+.ee-btn.dangerous {
+  color       : white;
+  background  : hsl(0, 100%, 60%);
+  border-top  : 1px solid hsl(0, 100%, 69%);
+  border-left : 1px solid hsl(0, 100%, 69%);
+  box-shadow  : 0 0 12px 0 hsla(0, 100%, 63%, 0.7);
+}
+.ee-btn.dangerous:hover {
+  background : hsl(0, 100%, 69%);
+  box-shadow : 0 0 15px 0 hsla(0, 100%, 69%, 0.9);
+}
+.ee-btn.dangerous:disabled.--loading {
+  color            : hsla(0, 100%, 100%, 0.6);
+  background-color : hsl(0, 100%, 70%);
+  border-color     : hsl(0, 100%, 73%);
+  box-shadow       : 0 0 15px 0 hsla(0, 100%, 69%, 0.9);
+  background-image:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 1rem,
+      hsl(0, 100%, 63%) 1rem,
+      hsl(0, 100%, 63%) 2rem
+    );
+}
+
+
+.ee-btn.attention:disabled,
+.ee-btn.dangerous:disabled,
+.ee-btn.neutral:disabled {
+  color        : hsl(197, 11%, 30%);
+  background   : hsl(197, 11%, 15%);
+  border-color : transparent;
+  box-shadow   : none;
+  cursor       : not-allowed;
+}
+
+.ee-btn.attention.--loading,
+.ee-btn.dangerous.--loading,
+.ee-btn.neutral.--loading {
+  background-size: 200% 200%;
+  animation: barberpole 1.5s linear infinite forwards;
+}

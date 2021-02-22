@@ -1,0 +1,46 @@
+.red33m {
+  display: block;
+  width: 100%;
+  backface-visibility: hidden;
+  }
+
+
+.red33m .title-bar__text {
+  color: hsl(47, 100%, 61%);
+}
+
+.red33m-toggle {
+  margin-top: 1rem;
+  width: 100px;
+  text-align: center;
+}
+
+.red33m-video-list {
+  display: flex;
+  margin-top: 2rem;
+  margin-right: -15px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+:root { --r3d-vid-width: 300px }
+.red33m-video {
+  width: var(--r3d-vid-width);
+  margin-right: 7px;
+  margin-bottom: 20px;
+  user-select: none;
+  transition: color .3s;
+}
+.red33m-video .ee-video_img {
+  height: calc(var(--r3d-vid-width) / (16 / 9));
+}
+.red33m-video .ee-video_title {
+  font-size: 1.2rem;
+}
+
+
+
+
+
+

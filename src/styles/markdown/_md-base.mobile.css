@@ -22,6 +22,8 @@
     width: 98%;
     height: 300px;
   }
+  .md h1         { font-size: 1.9rem; }
+  .md h2, .md h3 { font-size: 1.5rem; }
 }
 
 

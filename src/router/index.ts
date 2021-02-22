@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import Home       from '../views/home/home.vue';
-import i404       from '../views/errors/i404.vue';
-import Red33m from '../views/red33m/red33m.vue';
-import Test from '../views/test/test.vue';
-import Blog from '../views/blog/blog.vue';
-import Videos from '../views/library/videos.vue';
-import Literature from '../views/library/literature.vue';
+import Home       from '@/views/root/home.vue';
+import i404       from '@/views/errors/i404.vue';
+import Red33m     from '@/views/root/red33m.vue';
+import Blog       from '@/views/root/blog.vue';
+import Videos     from '@/views/library/videos.vue';
+import Literature from '@/views/library/literature.vue';
+import red33mAuth from '@/views/accessory/red33m-auth.vue';
+import red33mForm from '@/views/accessory/red33m-form.vue';
+import { isAuthed } from '@/globals';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -23,6 +25,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/red33m',
     name: 'red33m',
     component: Red33m,
+    beforeEnter: (to, from, next) => {
+      if (!isAuthed()) {
+        return next({ name: 'red33m-auth'});
+      }
+      next();
+    }
   },
   {
     path: '/videos',
@@ -34,12 +42,17 @@ const routes: Array<RouteRecordRaw> = [
     name: 'literature',
     component: Literature,
   },
-  // {
-  //   path: '/test',
-  //   name: 'test',
-  //   component: Test,
-  //   meta: { display: true, order: 4, title: 'Test' }
-  // },
+  {
+    path: '/red33m-auth',
+    name: 'red33m-auth',
+    component: red33mAuth,
+  },
+  {
+    path: '/red33m-form',
+    name: 'red33m-form',
+    component: red33mForm,
+  },
+
 
   // {
   //   path: '/faq/:page?',
