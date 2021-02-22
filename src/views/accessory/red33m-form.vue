@@ -7,7 +7,7 @@
       :class="['r3d-form__titlebar', { '--submitted': isSubmitted }]"
     />
     <transition name="fade" mode="out-in">
-      <div v-if="!isAccepted">
+      <div v-if="!isAccepted" class="r3d-form__acceptance">
         <ee-text type="block">
           This form functions as an application for access to EC (exclusive content).
           It is <em>by no means</em> a test for a single specific type of personality, intelligence,
@@ -21,7 +21,15 @@
         >
           <ul><li v-html="risk" /></ul>
         </ee-text>
-        <br><br>
+        <br>
+        <div class="r3d-form__iframe-parent">
+          <iframe src="//www.youtube-nocookie.com/embed/qskMClpUmvk?vq=hd1080&modestbranding=1&rel=0"
+                  frameborder="0"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+          />
+        </div>
+        <br>
         <ee-text class="r3d-form__begin-text" type="block">
           <em>This application is meant to gauge you on the following:</em>
         </ee-text>

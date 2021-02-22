@@ -16,6 +16,27 @@
   width: 70%;
 }
 
+.r3d-form__acceptance {
+  display: block;
+  margin: 0 auto;
+  max-width: 1024px;
+}
+
+.r3d-form__iframe-parent {
+  position: relative;
+  margin: 0 auto;
+  width: 90%;
+  height: 0;
+  padding-bottom: calc(100% / (16 / 9));
+  overflow: visible;
+}
+iframe {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .r3d-form__question {
   display: block;
   font-size: 1.15rem;
