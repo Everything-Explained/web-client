@@ -7,7 +7,7 @@
       </router-link>
     </header>
     <section class="app-body">
-      <main-menu :header-id="'AppHeader'" :content-id="'AppBodyContent'" />
+      <ee-menu :header-id="'AppHeader'" :content-id="'AppBodyContent'" />
       <div id="AppBodyContent" class="app-body__content">
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
@@ -28,7 +28,7 @@ import eeMenuVue from "@/components/layout/ee-menu.vue";
 
 export default defineComponent({
   components: {
-    'main-menu': eeMenuVue,
+    'ee-menu': eeMenuVue,
   },
   setup() {
     // const version     = '36';

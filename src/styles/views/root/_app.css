@@ -64,11 +64,11 @@
   flex-direction : column;
   overflow       : visible;
   transition     : left 0.5s,
-                   opacity 0.5s,
+                   opacity 0.3s,
                    background 0.5s;
 }
 .app-body__content.--menu-open {
-  opacity: 0.2;
+  opacity: 0.15;
   pointer-events: none;
   user-select: none;
 }

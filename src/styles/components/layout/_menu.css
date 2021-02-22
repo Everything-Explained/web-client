@@ -1,11 +1,12 @@
 .app-menu {
   top: 0; bottom: 0;
+  z-index      : 3;
   position     : absolute;
   background   : var(--body-bg-c);
-  border-right : 3px solid black;
-  transform    : translateX(-100%);
-  z-index      : 3;
-  transition   : transform .5s, opacity .3s;
+  opacity      : 0.8;
+  box-shadow   : 5px 10px 10px 0 black;
+  transform    : translateX(-110%);
+  transition   : transform .4s;
 }
 .app-menu.--opened {
   transform: translateX(0%);

@@ -38,9 +38,9 @@ import { VuexStore } from "@/vuex/vuex-store";
 import eeIconVue from '@/components/ui/ee-icon.vue';
 
 interface ExternalElements {
-  contentToSlide ?: HTMLElement;
-  header         ?: HTMLElement;
-  menu           ?: Ref<HTMLDivElement>;
+  body   ?: HTMLElement;
+  header ?: HTMLElement;
+  menu   ?: Ref<HTMLDivElement>;
 }
 
 export default defineComponent({
@@ -68,39 +68,24 @@ export default defineComponent({
         const pos       = menu.value.style.position
         ;
         if (scrollTop >= els.header!.offsetHeight + 1) {
-          if (pos != 'fixed') menu.value.style.position = 'fixed';
-          return;
-        }
-        if (pos != 'absolute') menu.value.style.position = 'absolute';
+               if (pos != 'fixed')    menu.value.style.position = 'fixed';
+        } else if (pos != 'absolute') menu.value.style.position = 'absolute';
       });
-    }
-
-    function createSlideStyle() {
-      const style = document.createElement('style');
-      style.id = 'SlideStyle';
-      style.innerHTML =
-        `#${props.contentId}.--menu-open { left: ${menuElRef.value!.clientWidth}px; }`
-      ;
-      document.head.append(style);
     }
 
     // Setup events and animation style
     onMounted(() => {
-      els.contentToSlide = document.getElementById(props.contentId!)!;
-      els.header         = document.getElementById(props.headerId!)!;
+      els.body    = document.getElementById(props.contentId!)!;
+      els.header  = document.getElementById(props.headerId!)!;
 
-      if (menuElRef.value && els.contentToSlide) {
-        floatOnScroll();
-        createSlideStyle();
-      }
+      if (menuElRef.value && els.body) { floatOnScroll(); }
     });
 
     // Toggle menu
     watch(() => store.state.isMenuOpening,
       async (isOpening) => {
         opened.value = isOpening;
-        if (isOpening) els.contentToSlide?.classList.add('--menu-open');
-        else           els.contentToSlide?.classList.remove('--menu-open');
+        els.body?.classList[isOpening ? 'add' : 'remove']('--menu-open');
     });
 
     return {
