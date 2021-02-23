@@ -2,8 +2,7 @@
   top: 0; bottom: 0;
   z-index      : 3;
   position     : absolute;
-  background   : var(--body-bg-c);
-  opacity      : 0.8;
+  background   : hsla(197, 11%, 6.5%, 0.75);
   box-shadow   : 5px 10px 10px 0 black;
   transform    : translateX(-110%);
   transition   : transform .4s;
