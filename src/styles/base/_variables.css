@@ -99,6 +99,13 @@
   --menu-active-item-bdr-c : hsl(47, 80%, 63%);
 
 
+  /*** Footer ***/
+  --footer-bxs-c: hsla(0, 0%, 0%, 0.4);
+  --footer-copyright-c: hsl(197, 11%, 35%);
+  --footer-copyright-link-c: hsl(197, 11%, 50%);
+  --footer-copyright-link-hov-c: hsl(0, 50%, 60%);
+
+
   /*** Blog Styles ***/
   --blog-entry-bg-c          : var(--sub-panel-c);
   --blog-entry-bg-hov-c      : var(--sub-panel-hov-c);
