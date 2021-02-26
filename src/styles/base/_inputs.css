@@ -6,28 +6,10 @@ textarea {
     background-color  : var(--body-bg-c);
     font-family       : "Verdana";
     border            : none;
-    color             : hsl(161, 27%, 60%);
+    color             : var(--input-c);
     transition        : border 0.3s;
     -webkit-transform : translateZ(0);
 }
-
-/* [type='text']::placeholder {
-    text-shadow: 1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000;
-    word-spacing: normal;
-    color: hsla(197, 11%, 40%, 0.5);
-    transition: all .3s;
-} */
-/* input[type='text']:focus {
-  border-color: hsl(197, 11%, 40%);
-} */
-/* Invalid Entry */
-/* input[type='text']:not(:placeholder-shown) {
-  border-color: hsl(0, 100%, 66%);
-} */
-/* input[type='text']:valid {
-  border-color: hsl(161, 50%, 50%);
-  color: hsl(161, 50%, 50%) !important;
-} */
 
 button {
   border: none;

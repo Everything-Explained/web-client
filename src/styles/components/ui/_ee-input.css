@@ -1,31 +1,30 @@
-.ee-input__container {
-  text-align: left;
-}
+.ee-input__container { text-align : left; }
 
 .ee-input__label {
-  position: absolute;
-  top: 0; left: 0.5rem;
-  padding-left: 5px;
-  font-family: "Nunito Sans";
-  font-weight: 400;
-  font-size: 1.15rem;
-  color: hsl(197, 11%, 65%);
-  pointer-events: none;
-  text-transform: none;
-  transition: 0.25s;
+  position       : absolute;
+  top            : 0;
+  left           : 0.5rem;
+  padding-left   : 5px;
+  font-family    : "Nunito Sans";
+  font-weight    : 400;
+  font-size      : 1.15rem;
+  color          : var(--input-label-c);
+  pointer-events : none;
+  text-transform : none;
+  transition     : 0.25s;
 }
 .ee-input__text:placeholder-shown ~ .ee-input__label {
-  top: 1.7rem; left: 0;
-  color: hsl(197, 11%, 37%);
-  font-size: 1.3rem;
+  top       : 1.7rem; left: 0;
+  color     : var(--input-placeholder-c);
+  font-size : 1.3rem;
 }
 .ee-input__text:focus ~ .ee-input__label {
-  position: absolute;
-  display: block;
-  top: 0;
-  font-size: 1.15rem;
-  left: 0.5rem;
-  color: hsl(197, 11%, 65%);
+  display   : block;
+  position  : absolute;
+  top       : 0;
+  font-size : 1.15rem;
+  left      : 0.5rem;
+  color     : var(--input-focus-label-c);
 }
 
 .ee-input__text { font-size: 1.25rem; }
@@ -33,84 +32,87 @@
 
 .ee-input__text,
 .ee-input__area {
-  margin: 0 auto;
-  margin-top: 1.3rem;
-  padding: 7px 0 5px 3px;
-  width: 100%;
-  border-bottom: 1px solid hsl(197, 11%, 27%);
-  font-family: "Verdana";
-  text-transform: inherit;
-  transition: border .25s, color 0.3s;
+  margin         : 0 auto;
+  margin-top     : 1.3rem;
+  padding        : 7px 0 5px 3px;
+  width          : 100%;
+  border-bottom  : 1px solid var(--input-bdr-c);
+  font-family    : "Verdana";
+  text-transform : inherit;
+  transition     : border .25s, color 0.3s;
 }
 .ee-input__text::placeholder {
-  color: transparent;
-  font-family: inherit;
-  text-transform: none;
+  color          : transparent;
+  font-family    : inherit;
+  text-transform : none;
 }
 .ee-input__text:focus,
-.ee-input__area:focus {
-  color: hsl(161, 45%, 65%);
-}
+.ee-input__area:focus
+{ color : var(--input-focus-c); }
 
 .ee-input__bar {
-  position: absolute;
-  bottom: -1px;
-  width: 0;
-  height: 2px;
-  background-color: hsl(197, 11%, 45%);
-  pointer-events: none;
-  transition: width 0.29s ease, background 0.3s;
+  position         : absolute;
+  bottom           : -1px;
+  width            : 0;
+  height           : 2px;
+  background-color : var(--input-bar-c);
+  pointer-events   : none;
+  transition       : width 0.29s ease-in-out, background 0.3s;
 }
 .ee-input__text:focus ~ .ee-input__bar,
 .ee-input__area:focus ~ .ee-input__bar {
-  width: 100%;
+  width : 100%;
 }
-
 
 .ee-input__area {
-  height: 44px;
-  resize: none;
-  overflow: hidden;
-  font-family: 'Nunito Sans';
-  font-weight: 300;
-  line-height: 2rem;
-  overflow-wrap: break-word;
+  height        : 44px;
+  resize        : none;
+  overflow      : hidden;
+  font-family   : 'Nunito Sans';
+  font-weight   : 300;
+  line-height   : 2rem;
+  overflow-wrap : break-word;
 }
 .ee-input__area::placeholder {
-  color: hsl(197, 11%, 23%);
-  font-weight: 400;
+  color       : var(--input-placeholder-c);
+  font-weight : 400;
 }
 
 .ee-input__char-limit-msg,
 .ee-input__error-msg {
-  position: absolute;
-  left: 0.5rem; bottom: -1.65rem;
-  color       : hsl(197, 11%, 40%);
+  position    : absolute;
+  left        : 0.5rem; bottom: -1.65rem;
+  color       : var(--input-metadata-c);
   font-weight : 400;
   font-size   : 1.1rem;
 }
-.ee-input__char-limit-msg .num {
-  color: hsl(47, 80%, 60%);
-}
-.ee-input__error-msg b {
-  color:hsl(47, 80%, 60%);
+.ee-input__char-limit-msg em,
+.ee-input__error-msg em {
+  color       : var(--input-metadata-em-c);
+  font-weight : 400;
 }
 
 .ee-input__char-limit {
-  position: absolute;
-  right: 0; bottom: -1.5rem;
+  position    : absolute;
+  right       : 0;
+  bottom      : -1.5rem;
   font-weight : 400;
-  color       : hsl(197, 11%, 40%);
+  color       : var(--input-metadata-c);
   transition  : color 0.3s;
 }
 
+.ee-input__bar.--limit-reached
+{ background-color : var(--input-bar-valid-c); }
 
-.ee-input__char-limit.--limit-reached { color            : hsl(161, 35%, 45%); }
-.ee-input__bar.--limit-reached        { background-color : hsl(161, 35%, 50%); }
+.ee-input__char-limit.--limit-reached
+{ color: var(--input-valid-c); }
+
 .ee-input__area.--limit-reached,
-.ee-input__text.--limit-reached       { border-color     : hsl(161, 35%, 43%); }
+.ee-input__text.--limit-reached
+{ border-color : var(--input-valid-c); }
 
-.ee-input__char-limit.--length-reached { color: hsl(47, 63%, 50%); }
+.ee-input__char-limit.--length-reached
+{ color : var(--input-metadata-em-c); }
 
 
 

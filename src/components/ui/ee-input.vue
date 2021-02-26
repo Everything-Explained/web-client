@@ -47,7 +47,7 @@
       <span v-if="isTextField ? showCharLimit && tally : showCharLimit"
             class="ee-input__char-limit-msg"
       >
-        <span class="num">{{ charsRequired }}</span> more chars required
+        <em>{{ charsRequired }}</em> more chars required
       </span>
     </transition>
     <transition name="fade">
