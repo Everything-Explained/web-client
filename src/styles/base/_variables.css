@@ -133,16 +133,16 @@
   --button-dangerous-loading-lgr-c : hsl(0, 100%, 63%);
 
   /*** Text Input ***/
-  --input-label-c: hsl(197, 11%, 65%);
-  --input-focus-c: hsl(161, 45%, 65%);
-  --input-focus-label-c: var(--input-label-c);
-  --input-placeholder-c: hsl(197, 11%, 27%);
-  --input-bdr-c: hsl(197, 11%, 27%);
-  --input-bar-c: hsl(197, 11%, 33%);
-  --input-bar-valid-c: hsl(161, 50%, 45%);
-  --input-valid-c: hsl(161, 35%, 45%);
-  --input-metadata-c: hsl(197, 11%, 40%);
-  --input-metadata-em-c: hsl(47, 80%, 60%);
+  --input-label-c       : hsl(197, 11%, 65%);
+  --input-focus-c       : hsl(161, 45%, 65%);
+  --input-focus-label-c : var(--input-label-c);
+  --input-placeholder-c : hsl(197, 11%, 27%);
+  --input-bdr-c         : hsl(197, 11%, 27%);
+  --input-bar-c         : hsl(197, 11%, 33%);
+  --input-bar-valid-c   : hsl(161, 50%, 45%);
+  --input-valid-c       : hsl(161, 35%, 45%);
+  --input-metadata-c    : hsl(197, 11%, 40%);
+  --input-metadata-em-c : hsl(47, 80%, 60%);
 
 
   /*** Menu ***/
