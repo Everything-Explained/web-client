@@ -93,7 +93,7 @@
   /*** Preloader ***/
   --preloader-bdr-c       : hsl(0, 100%, 76%);
   --preloader-bxs-c       : hsl(0, 65%, 47%);
-  --preloader-bxs-inset-c : hsl(0, 100%, 63%);
+  --preloader-bxs-inset-c : var(--app-ribbon-c);
 
 
   /*** Button - Disabled ***/
@@ -137,7 +137,7 @@
   --button-dangerous-loading-bg-c  : hsl(0, 100%, 70%);
   --button-dangerous-loading-bdr-c : hsl(0, 100%, 73%);
   --button-dangerous-loading-bxs-c : var(--button-dangerous-bxs-hov-c);
-  --button-dangerous-loading-lgr-c : hsl(0, 100%, 63%);
+  --button-dangerous-loading-lgr-c : var(--app-ribbon-c);
 
   /*** Text Input ***/
   --input-label-c       : hsl(197, 11%, 65%);
@@ -166,6 +166,36 @@
   --menu-active-item-c     : hsl(47, 80%, 63%);
   --menu-active-item-bg-c  : var(--sub-panel-hov-c);
   --menu-active-item-bdr-c : hsl(47, 80%, 63%);
+
+
+  /*** Video ***/
+  --video-desc-c              : hsla(0, 0%, 0%, 0.85);
+  --video-desc-b-c            : var(--md-b-c);
+  --video-desc-link-c         : var(--md-b-c);
+  --video-desc-link-hov-c     : var(--menu-active-item-c);
+  --video-desc-link-bdr-c     : var(--md-b-c);
+  --video-desc-link-bdr-hov-c : var(--menu-active-item-c);
+  --video-desc-outline-c      : hsl(197, 11%, 35%);
+  --video-desc-head-c         : var(--app-titlebar-c);
+  --video-desc-head-bdr-c     : hsl(197, 11%, 45%);
+  --video-widget-c            : var(--app-titlebar-c);
+  --video-widget-hov-c        : var(--menu-active-item-c);
+  --video-widget-bg-c         : hsla(0, 0%, 10%, 0.53);
+  --video-widget-bg-hov-c     : hsla(0, 0%, 10%, 0.7);
+  --video-widget-close-hov-c  : var(--menu-exit-icon-hov-c);
+
+  /*** Toggle ***/
+  --toggle-fieldset-bdr-c: hsl(0, 100%, 67%);
+  --toggle-fieldset-bxs-c: var(--app-ribbon-c);
+  --toggle-legend-c: var(--body-bg-c);
+  --toggle-inactive-c: var(--body-c);
+  --toggle-inactive-hov-c: hsl(47, 74%, 70%);
+  --toggle-inactive-bdr-c: hsl(197, 11%, 28%);
+  --toggle-inactive-bg-c: hsl(197, 11%, 18%);
+  --toggle-active-c: black;
+  --toggle-active-bg-c: hsl(47, 74%, 49%);
+  --toggle-active-bdr-c: hsl(47, 74%, 70%);
+  --toggle-active-bxs-c: hsl(47, 100%, 62%);
 
 
   /*** Blog Styles ***/
