@@ -16,6 +16,8 @@
  * hov: hover
  * act: active
  * dis: disabled
+ * img: image
+ * lgr: linear gradient
  *
  */
 
@@ -43,6 +45,7 @@
   --scrollbar-c          : var(--panel-c);
   --scrollbar-hov-c      : hsl(197, 9%, 43%);
   --scrollbar-track-c    : hsl(0, 0%, 0%);
+  --input-c              : hsl(161, 27%, 60%);
 
 
   /*** Markdown ***/
@@ -84,6 +87,50 @@
   --preloader-bdr-c       : hsl(0, 100%, 76%);
   --preloader-bxs-c       : hsl(0, 65%, 47%);
   --preloader-bxs-inset-c : hsl(0, 100%, 63%);
+
+
+  /*** Button - Disabled ***/
+  --button-disabled-c: hsl(197, 11%, 30%);
+  --button-disabled-bg-c: hsl(197, 11%, 15%);
+
+  /*** Button - Neutral ***/
+  --button-neutral-c             : black;
+  --button-neutral-bg-c          : hsl(197, 11%, 68%);
+  --button-neutral-bg-hov-c      : hsl(197, 20%, 75%);
+  --button-neutral-bdr-c         : hsl(197, 20%, 90%);
+  --button-neutral-bxs-c         : hsla(197, 20%, 75%, 0.5);
+  --button-neutral-bxs-hov-c     : hsla(197, 20%, 75%, 0.8);
+  --button-neutral-loading-c     : hsla(0, 0%, 0%, 0.5);
+  --button-neutral-loading-bg-c  : hsl(197, 11%, 75%);
+  --button-neutral-loading-bdr-c : hsl(197, 11%, 78%);
+  --button-neutral-loading-bxs-c : var(--button-neutral-bxs-hov-c);
+  --button-neutral-loading-lgr-c : hsl(197, 20%, 85%);
+
+  /*** Button - Attention ***/
+  --button-attention-c             : black;
+  --button-attention-bg-c          : hsl(47, 100%, 50%);
+  --button-attention-bg-hov-c      : hsl(47, 100%, 70%);
+  --button-attention-bdr-c         : hsl(47, 100%, 78%);
+  --button-attention-bxs-c         : hsla(47, 100%, 70%, 0.5);
+  --button-attention-bxs-hov-c     : hsla(47, 100%, 70%, 0.8);
+  --button-attention-loading-c     : hsla(0, 0%, 0%, 0.5);
+  --button-attention-loading-bg-c  : hsl(47, 100%, 78%);
+  --button-attention-loading-bdr-c : hsl(47, 100%, 75%);
+  --button-attention-loading-bxs-c : var(--button-attention-bxs-hov-c);
+  --button-attention-loading-lgr-c : hsl(47, 100%, 47%);
+
+  /*** Button - Dangerous ***/
+  --button-dangerous-c             : white;
+  --button-dangerous-bg-c          : hsl(0, 100%, 60%);
+  --button-dangerous-bg-hov-c      : hsl(0, 100%, 69%);
+  --button-dangerous-bdr-c         : var(--button-dangerous-bg-hov-c);
+  --button-dangerous-bxs-c         : hsla(0, 100%, 63%, 0.7);
+  --button-dangerous-bxs-hov-c     : hsla(0, 100%, 69%, 0.9);
+  --button-dangerous-loading-c     : hsla(0, 100%, 100%, 0.6);
+  --button-dangerous-loading-bg-c  : hsl(0, 100%, 70%);
+  --button-dangerous-loading-bdr-c : hsl(0, 100%, 73%);
+  --button-dangerous-loading-bxs-c : var(--button-dangerous-bxs-hov-c);
+  --button-dangerous-loading-lgr-c : hsl(0, 100%, 63%);
   /*** Menu ***/
   --menu-bg-c              : hsla(197, 11%, 6.5%, 0.75);
   --menu-bxs-c             : hsla(0, 0%, 0%, 0.85);
