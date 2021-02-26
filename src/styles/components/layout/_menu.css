@@ -2,8 +2,8 @@
   top: 0; bottom: 0;
   z-index      : 3;
   position     : absolute;
-  background   : hsla(197, 11%, 6.5%, 0.75);
-  box-shadow   : 5px 10px 10px 0 black;
+  background   : var(--menu-bg-c);
+  box-shadow   : 5px 10px 10px 0 var(--menu-bxs-c);
   transform    : translateX(-110%);
   transition   : transform .4s;
 }

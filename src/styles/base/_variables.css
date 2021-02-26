@@ -85,7 +85,8 @@
   --preloader-bxs-c       : hsl(0, 65%, 47%);
   --preloader-bxs-inset-c : hsl(0, 100%, 63%);
   /*** Menu ***/
-  --menu-bg-c              : var(--body-bg-c);
+  --menu-bg-c              : hsla(197, 11%, 6.5%, 0.75);
+  --menu-bxs-c             : hsla(0, 0%, 0%, 0.85);
   --menu-header-c          : hsl(197, 20%, 83%);
   --menu-header-bg-c       : var(--sub-panel-c);
   --menu-exit-icon-c       : hsl(197, 12%, 70%);
