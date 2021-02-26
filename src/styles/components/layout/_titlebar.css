@@ -1,7 +1,7 @@
 .title-bar {
   position         : sticky;
   top              : 0;
-  padding          : 0.3rem 0 0.3rem 0;
+  padding          : 0.45rem 0 0.15rem 0;
   color            : var(--app-titlebar-c);
   font-size        : 1.7rem;
   font-weight      : 300;
