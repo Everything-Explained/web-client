@@ -12,6 +12,7 @@
  * lg : large
  * bq : blockquote
  * bdr: border
+ * bxs: box shadow
  * hov: hover
  * act: active
  * dis: disabled
@@ -79,6 +80,10 @@
   --app-titlebar-icon-hov-c : hsl(0, 70%, 64%);
 
 
+  /*** Preloader ***/
+  --preloader-bdr-c       : hsl(0, 100%, 76%);
+  --preloader-bxs-c       : hsl(0, 65%, 47%);
+  --preloader-bxs-inset-c : hsl(0, 100%, 63%);
   /*** Menu ***/
   --menu-bg-c              : var(--body-bg-c);
   --menu-header-c          : hsl(197, 20%, 83%);
