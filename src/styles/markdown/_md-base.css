@@ -8,25 +8,18 @@
 }
 
 
-
 .md h1, .md h2,
 .md h3, .md h4,
 .md h5 {
   margin-top     : 20px;
   margin-left    : 25px;
-  color          : hsl(197, 20%, 80%);
+  color          : var(--md-head-c);
   font-variant   : small-caps;
   font-weight    : 300;
   letter-spacing : 1px;
 }
-
-.md h1 {
-  font-size: 2.25rem;
-}
-
-.md h2, .md h3 {
-  font-size: 1.8rem;
-}
+.md h1         { font-size: 2.25rem; }
+.md h2, .md h3 { font-size: 1.8rem; }
 
 
 .md p {
@@ -42,20 +35,18 @@
 }
 /* Maintain height with floated images */
 .md p::after {
-  clear: both;
-  content: '';
-  display: block;
+  clear   : both;
+  content : '';
+  display : block;
 }
 .md p + p {
   margin-top: 15px;
 }
 .md > p {
-  margin-bottom: 7px;
-  box-shadow: 0 10px 7px -5px hsla(0, 0%, 0%, 0.4);
+  margin-bottom : 7px;
+  box-shadow    : 0 10px 7px -5px var(--md-p-bxs-c);
 }
-.md > p:empty {
-  display: none;
-}
+.md > p:empty { display: none; }
 .md > p:hover {
   background-color : var(--md-p-bg-hov-c);
   color            : var(--md-p-hov-c);
@@ -67,9 +58,7 @@
   font-weight : 400;
   color       : var(--md-b-c);
 }
-.md > p:hover strong {
-  color: var(--md-p-hov-b-c);
-}
+.md > p:hover strong { color: var(--md-p-hov-b-c); }
 
 
 .md i,
@@ -77,9 +66,7 @@
   color      : var(--md-i-c);
   font-style : normal;
 }
-.md > p:hover em {
-  color: var(--md-p-hov-i-c);
-}
+.md > p:hover em { color: var(--md-p-hov-i-c); }
 
 
 .md a:link,
@@ -87,19 +74,17 @@
 .md a:visited {
   color           : var(--md-link-c);
   text-decoration : none;
-  font-weight: 400;
+  font-weight     : 400;
   border-bottom   : 1px solid var(--md-link-bdr-c);
   transition      : border .25s, color .25s;
 }
 .md > p:hover a:link,
 .md > p:hover a:active,
 .md > p:hover a:visited {
-  color: var(--md-p-hov-link-c);
-  border-color: var(--md-p-hov-link-bdr-c);
+  color        : var(--md-p-hov-link-c);
+  border-color : var(--md-p-hov-link-bdr-c);
 }
-.md > p:hover a:hover {
-  color: var(--md-link-hov-c);
-}
+.md > p:hover a:hover { color: var(--md-link-hov-c); }
 
 .md blockquote > p {
   margin           : 2.7rem auto;
@@ -109,8 +94,8 @@
   font-size        : 1.4rem;
   background-color : var(--md-bq-bg-c);
   quotes           : '“' '”';
-  border           : 4px solid black;
-  outline          : 2px solid hsl(197, 12%, 12%);
+  border           : 4px solid var(--md-bq-bdr-c);
+  outline          : 2px solid var(--md-bq-outline-c);
 }
 /*
  * Should be used as an authors name at
@@ -129,7 +114,7 @@
   position       : absolute;
   font-size      : 6rem;
   vertical-align : baseline;
-  color          : hsl(197, 12%, 65%);
+  color          : var(--md-bq-quote-c);
 }
 .md blockquote > p::before {
   margin-top  : 28px;    /* blockquote (margin-top + padding-top)  */
@@ -137,8 +122,9 @@
   content     : open-quote;
 }
 .md blockquote > p::after {
-  right: 4px; bottom: -20px;
-  content: close-quote;
+  right   : 4px;
+  bottom  : -20px;
+  content : close-quote;
 }
 
 
@@ -158,43 +144,37 @@
   color      : var(--md-code-hov-c);
 }
 
-.md > p > ul {
-  margin-left: 1rem;
-}
+.md > p > ul { margin-left: 1rem; }
 .md > p > ul > li::before {
-  content: '\2022';
-  width: 1rem;
-  font-size: 1.5rem;
-  margin-left: -1rem;
-  color: hsl(197, 20%, 80%);
-  transition: color 0.3s;
+  content     : '\2022';
+  width       : 1rem;
+  font-size   : 1.5rem;
+  margin-left : -1rem;
+  color       : var(--md-bullet-c);
+  transition  : color 0.3s;
 }
-.md > p:hover li::before {
-  color: hsl(47, 100%, 50%);
-}
+.md > p:hover li::before { color: var(--md-bullet-hov-c); }
 
 
 .md > p > img {
-  display: inline;
-  float: left;
-  margin: 15px 15px 2px 0;
-  max-width: 100%;
-  box-shadow: 0 0 10px 3px hsla(0, 0%, 0%, 0.4);
+  display    : inline;
+  float      : left;
+  margin     : 15px 15px 2px 0;
+  max-width  : 100%;
+  box-shadow : 0 0 10px 3px var(--md-img-bxs-c);
 }
-.md > p > img + br {
-  display: none;
-}
+.md > p > img + br { display: none; }
 
 
 /* ### Embeded Video Styles ### */
 .md > .embed-responsive {
-  margin: 20px auto;
-  width: 90%;
-  height: 460px;
+  margin : 20px auto;
+  width  : 90%;
+  height : 460px;
 }
 .md > .embed-responsive iframe {
-  width: 100%;
-  height: 100%;
+  width  : 100%;
+  height : 100%;
 }
 
 
@@ -204,6 +184,5 @@
 .md b,  .md i,
 .md em, .md dt,
 .md dd, .md code,
-.md strong, .md blockquote {
-  transition: color 0.25s, background 0.25s;
-}
+.md strong, .md blockquote
+{ transition: color 0.25s, background 0.25s; }
