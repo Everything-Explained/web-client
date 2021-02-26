@@ -83,6 +83,13 @@
   --app-titlebar-icon-hov-c : hsl(0, 70%, 64%);
 
 
+  /*** Footer ***/
+  --footer-bxs-c: hsla(0, 0%, 0%, 0.4);
+  --footer-copyright-c: hsl(197, 11%, 35%);
+  --footer-copyright-link-c: hsl(197, 11%, 50%);
+  --footer-copyright-link-hov-c: hsl(0, 50%, 60%);
+
+
   /*** Preloader ***/
   --preloader-bdr-c       : hsl(0, 100%, 76%);
   --preloader-bxs-c       : hsl(0, 65%, 47%);
@@ -159,13 +166,6 @@
   --menu-active-item-c     : hsl(47, 80%, 63%);
   --menu-active-item-bg-c  : var(--sub-panel-hov-c);
   --menu-active-item-bdr-c : hsl(47, 80%, 63%);
-
-
-  /*** Footer ***/
-  --footer-bxs-c: hsla(0, 0%, 0%, 0.4);
-  --footer-copyright-c: hsl(197, 11%, 35%);
-  --footer-copyright-link-c: hsl(197, 11%, 50%);
-  --footer-copyright-link-hov-c: hsl(0, 50%, 60%);
 
 
   /*** Blog Styles ***/
