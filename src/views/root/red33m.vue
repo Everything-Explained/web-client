@@ -55,7 +55,7 @@ export default defineComponent({
 
     const api = useDataAPI();
     const getVideos = useTask(function*() {
-      const red33mData = yield api.get('/pages/red33m', console.error);
+      const red33mData = yield api.get('/red33m/videos', console.error);
       store.commit('data-cache-add', { name: 'red33m', data: red33mData });
     });
 
