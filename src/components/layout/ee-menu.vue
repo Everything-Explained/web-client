@@ -33,7 +33,7 @@
 <script lang='ts'>
 import { computed, defineComponent, onMounted, ref, watch, Ref } from "vue";
 import { useStore } from "vuex";
-import { useRouteMap } from "@/composeables/route-map";
+import { useRouteMap } from "@/router/map";
 import { VuexStore } from "@/vuex/vuex-store";
 import eeIconVue from '@/components/ui/ee-icon.vue';
 
