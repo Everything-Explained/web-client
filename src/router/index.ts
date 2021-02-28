@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import Home       from '@/views/root/home.vue';
 import i404       from '@/views/errors/i404.vue';
-import Red33m     from '@/views/root/red33m.vue';
+import R3dVideos     from '@/views/red33m/r3d_videos.vue';
 import Blog       from '@/views/root/blog.vue';
-import Videos     from '@/views/library/videos.vue';
-import Literature from '@/views/library/literature.vue';
+import Videos     from '@/views/library/lib_videos.vue';
+import Literature from '@/views/library/lib_lit.vue';
 import red33mAuth from '@/views/accessory/red33m-auth.vue';
 import red33mForm from '@/views/accessory/red33m-form.vue';
 import { isAuthed } from '@/globals';
+import r3d_litVue from '@/views/red33m/r3d_lit.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,7 +25,18 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/red33m/videos',
     name: 'r3d-videos',
-    component: Red33m,
+    component: R3dVideos,
+    beforeEnter: (to, from, next) => {
+      if (!isAuthed()) {
+        return next({ name: 'red33m-auth'});
+      }
+      next();
+    }
+  },
+  {
+    path: '/red33m/literature/:article?',
+    name: 'r3d-lit',
+    component: r3d_litVue,
     beforeEnter: (to, from, next) => {
       if (!isAuthed()) {
         return next({ name: 'red33m-auth'});
