@@ -34,8 +34,8 @@
 /*** Preloader ***/
 @import './components/_preloader.css';
 /*** Literature ***/
-@import './views/library/_literature.css';
-@import './views/library/_literature.mobile.css';
+@import './components/layout/_literature.css';
+@import './components/layout/_literature.mobile.css';
 
 
 
