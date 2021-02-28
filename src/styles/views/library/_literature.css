@@ -1,0 +1,40 @@
+.lib-lit__cards {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  margin: 20px 10px;
+  box-shadow: 0 0 10px 1px black;
+  width: 340px;
+  font-size: 1.2rem;
+  align-self: center;
+  overflow: hidden;
+}
+.card header {
+  padding: 10px;
+  text-align: center;
+  font-size: 1.4rem;
+  background-color: var(--sub-panel-c);
+  border-bottom: 1px solid hsl(197, 11%, 20%);
+  border-radius: 7px 7px 0 0;
+  box-shadow: 0 5px 20px 1px black;
+  z-index: 1;
+}
+.card article {
+  padding: 5px 7px 10px 10px;
+  height: 250px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.card footer {
+  padding: 7px 0;
+  text-align: center;
+  background-color: var(--sub-panel-c);
+  border-top: 1px solid hsl(197, 11%, 20%);
+  border-radius: 0 0 7px 7px;
+  box-shadow: 0 -5px 20px 1px black;
+}
