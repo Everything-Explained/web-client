@@ -157,9 +157,8 @@
 
 
 .md > p > img {
-  display    : inline;
-  float      : left;
-  margin     : 15px 15px 2px 0;
+  display    : block;
+  margin     : 10px auto;
   max-width  : 100%;
   box-shadow : 0 0 10px 3px var(--md-img-bxs-c);
 }
@@ -180,8 +179,6 @@
   width  : 100%;
   height : 100%;
 }
-
-
 
 
 
