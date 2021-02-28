@@ -38,7 +38,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Videos,
   },
   {
-    path: '/library/literature',
+    path: '/library/literature/:article?',
     name: 'lib-lit',
     component: Literature,
   },

@@ -35,6 +35,7 @@
 @import './components/_preloader.css';
 /*** Literature ***/
 @import './views/library/_literature.css';
+@import './views/library/_literature.mobile.css';
 
 
 

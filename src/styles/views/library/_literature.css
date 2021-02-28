@@ -6,35 +6,73 @@
   justify-content: center;
 }
 
-.card {
-  margin: 20px 10px;
+.lib-lit__card {
+  margin: 20px 15px;
   box-shadow: 0 0 10px 1px black;
   width: 340px;
   font-size: 1.2rem;
   align-self: center;
   overflow: hidden;
 }
-.card header {
-  padding: 10px;
+.lib-lit__card:first-child {
+  margin-top: 30px;
+}
+.lib-lit__card header {
+  padding: 7px 10px 5px 10px;
   text-align: center;
   font-size: 1.4rem;
+  text-shadow: 1px 1px 0 black,
+               2px 2px 0 black;
   background-color: var(--sub-panel-c);
   border-bottom: 1px solid hsl(197, 11%, 20%);
   border-radius: 7px 7px 0 0;
   box-shadow: 0 5px 20px 1px black;
+  cursor: pointer;
   z-index: 1;
+  transition: all .3s;
 }
-.card article {
+.lib-lit__card article {
   padding: 5px 7px 10px 10px;
   height: 250px;
   overflow: hidden;
   overflow-y: auto;
 }
-.card footer {
+.lib-lit__card footer {
   padding: 7px 0;
   text-align: center;
+  font-weight: 400;
   background-color: var(--sub-panel-c);
   border-top: 1px solid hsl(197, 11%, 20%);
   border-radius: 0 0 7px 7px;
   box-shadow: 0 -5px 20px 1px black;
+  transition: all .3s;
+}
+.lib-lit__card .icon {
+  top: 3px;
+  margin-right: 5px;
+  color: hsl(197, 11%, 40%);
+  transition: color .3s;
+}
+.lib-lit-card__author {
+  color: hsl(47, 60%, 63%);
+  text-shadow: 1px 1px 0 black,
+               2px 2px 0 black;
+}
+.lib-lit-card__author.--is-ethan {
+  color: hsl(0, 100%, 70%);
+}
+.lib-lit-card__timestamp {
+  color: hsl(197, 11%, 40%);
+  transition: color .3s;
+}
+
+.lib-lit__card:hover header,
+.lib-lit__card:hover footer {
+  color: var(--md-p-hov-i-c);
+  background-color: var(--sub-panel-hov-c);
+  border-color: hsl(30, 11%, 27%);
+}
+.lib-lit__card:hover .lib-lit-card__timestamp,
+.lib-lit__card:hover .icon {
+  color: hsl(30, 11%, 45%);
 }
