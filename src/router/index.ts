@@ -22,8 +22,8 @@ const routes: Array<RouteRecordRaw> = [
     component: Blog,
   },
   {
-    path: '/red33m',
-    name: 'red33m',
+    path: '/red33m/videos',
+    name: 'r3d-videos',
     component: Red33m,
     beforeEnter: (to, from, next) => {
       if (!isAuthed()) {
@@ -33,13 +33,13 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/videos',
-    name: 'videos',
+    path: '/library/videos',
+    name: 'lib-videos',
     component: Videos,
   },
   {
-    path: '/literature',
-    name: 'literature',
+    path: '/library/literature',
+    name: 'lib-lit',
     component: Literature,
   },
   {
