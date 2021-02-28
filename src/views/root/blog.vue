@@ -25,11 +25,11 @@
               </h1>
               <div class="blog-entry__date">
                 <ee-icon class="blog-entry__icon" :type="'calendar'" />
-                {{ formatDate(post.date) }}
+                {{ useDate(post.date).toShortDate() }}
               </div>
               <div class="blog-entry__time">
                 <ee-icon class="blog-entry__icon" :type="'clock'" />
-                {{ formatTime(post.date) }}
+                {{ useDate(post.date).to12HourFormat() }}
               </div>
               <article class="blog-entry__summary" v-html="post.summary" />
               <div :class="['blog-entry__author', { 'ethan': isEthan(post.author) }]">
@@ -59,7 +59,6 @@
 
 <script lang='ts'>
 import { computed, defineComponent, ref, watch } from "vue";
-import { dateToShortMDY, dateTo12HourTimeStr }   from "@/composeables/date-utils";
 import { useRoute, useRouter }                   from "vue-router";
 import { useStore }                              from "vuex";
 import { VuexStore }                             from "@/vuex/vuex-store";
@@ -70,6 +69,7 @@ import eeIconVue     from '@/components/ui/ee-icon.vue';
 import eeTitlebarVue from '@/components/layout/ee-titlebar.vue';
 import eeImgVue      from '@/components/ui/ee-img.vue';
 import eeFooterVue   from '@/components/layout/ee-footer.vue';
+import { useDate } from "@/composeables/date";
 
 
 
@@ -131,12 +131,11 @@ export default defineComponent({
       activePost,
       goTo,
       title,
+      useDate,
     };
   },
 
   methods: {
-    formatDate(isoDateStr: string) { return dateToShortMDY(isoDateStr); },
-    formatTime(isoDateStr: string) { return dateTo12HourTimeStr(isoDateStr); },
     isEthan(author: string)        { return author.trim() == 'Ethan Kahn'; }
   }
 });
