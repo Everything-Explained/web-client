@@ -1,0 +1,78 @@
+.lit__cards {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lit__card {
+  margin: 20px 15px;
+  box-shadow: 0 0 10px 1px black;
+  width: 340px;
+  font-size: 1.2rem;
+  align-self: center;
+  overflow: hidden;
+}
+.lit__card:first-child {
+  margin-top: 30px;
+}
+.lit__card header {
+  padding: 7px 10px 5px 10px;
+  text-align: center;
+  font-size: 1.4rem;
+  text-shadow: 1px 1px 0 black,
+               2px 2px 0 black;
+  background-color: var(--sub-panel-c);
+  border-bottom: 1px solid hsl(197, 11%, 20%);
+  border-radius: 7px 7px 0 0;
+  box-shadow: 0 5px 20px 1px black;
+  cursor: pointer;
+  z-index: 1;
+  transition: all .3s;
+}
+.lit__card article {
+  padding: 5px 7px 10px 10px;
+  height: 250px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.lit__card footer {
+  padding: 7px 0;
+  text-align: center;
+  font-weight: 400;
+  background-color: var(--sub-panel-c);
+  border-top: 1px solid hsl(197, 11%, 20%);
+  border-radius: 0 0 7px 7px;
+  box-shadow: 0 -5px 20px 1px black;
+  transition: all .3s;
+}
+.lit__card .icon {
+  top: 3px;
+  margin-right: 5px;
+  color: hsl(197, 11%, 40%);
+  transition: color .3s;
+}
+.lit-card__author {
+  color: hsl(47, 60%, 63%);
+  text-shadow: 1px 1px 0 black,
+               2px 2px 0 black;
+}
+.lit-card__author.--is-ethan {
+  color: hsl(0, 100%, 70%);
+}
+.lit-card__timestamp {
+  color: hsl(197, 11%, 40%);
+  transition: color .3s;
+}
+
+.lit__card:hover header,
+.lit__card:hover footer {
+  color: var(--md-p-hov-i-c);
+  background-color: var(--sub-panel-hov-c);
+  border-color: hsl(30, 11%, 27%);
+}
+.lit__card:hover .lit-card__timestamp,
+.lit__card:hover .icon {
+  color: hsl(30, 11%, 45%);
+}

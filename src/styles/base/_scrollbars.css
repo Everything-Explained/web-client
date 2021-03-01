@@ -1,19 +1,35 @@
 /* FireFox compatibility */
-.--default-scrollbar {
+.--default-scrollbar,
+.--subtle-scrollbar {
   scrollbar-color: var(--scrollbar-c) black;
   scrollbar-width: thin;
 }
 
-.--default-scrollbar::-webkit-scrollbar {
+.--subtle-scrollbar {
+  scrollbar-color: hsl(197, 11%, 15%) black;
+}
+
+.--default-scrollbar::-webkit-scrollbar,
+.--subtle-scrollbar::-webkit-scrollbar {
   width         : 7px;
   height        : 7px;
   background    : var(--scrollbar-track-c);
   border-radius : 3px;
 }
-.--default-scrollbar::-webkit-scrollbar-thumb {
+.--default-scrollbar::-webkit-scrollbar-thumb,
+.--subtle-scrollbar::-webkit-scrollbar-thumb {
   background    : var(--scrollbar-c);
   border-radius : 3px;
 }
+
+.--subtle-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(197, 11%, 15%);
+}
+
 .--default-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-hov-c);
+}
+
+.--subtle-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(197, 11%, 25%);
 }

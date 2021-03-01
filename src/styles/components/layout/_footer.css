@@ -8,7 +8,7 @@
   justify-content: center;
   font-weight: 400;
   background: var(--sub-panel-c);
-  box-shadow: 0 -10px 7px -1px hsla(0, 0%, 0%, 0.4);
+  box-shadow: 0 -10px 7px -1px var(--footer-bxs-c);
 }
 .app-footer::before {
   top: 0; left: 0; right: 0;
@@ -29,7 +29,7 @@
 .app-footer_copyright {
   padding: 13px 0 20px 0;
   font-size: 0.87rem;
-  color: hsl(197, 11%, 35%);
+  color: var(--footer-copyright-c);
   text-shadow: 1px 1px 0 black,
                2px 2px 0 black
   ;
@@ -38,12 +38,12 @@
 .app-footer_copyright a:visited {
   display: inline-block;
   margin: 5px 0;
-  color: hsl(197, 11%, 50%);
+  color: var(--footer-copyright-link-c);
   text-shadow: none;
   text-decoration: underline;
   transition: color .3s, border .3s;
 }
 .app-footer_copyright a:hover {
-  color: hsl(0, 50%, 60%);
-  border-color: hsl(0, 50%, 60%);
+  color: var(--footer-copyright-link-hov-c);
+  border-color: var(--footer-copyright-link-hov-c);
 }

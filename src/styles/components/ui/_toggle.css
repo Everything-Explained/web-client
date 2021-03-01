@@ -1,73 +1,77 @@
 
 fieldset {
-  display: block;
-  margin: 0 auto;
-  padding: 1.2rem;
-  padding-bottom: 1rem;
-  padding-top: 0.4rem; /* Accommodate legend */
-  border: none;
-  border: solid 2px hsl(0, 100%, 67%);
-  box-shadow:       0 0 10px 0 hsl(0, 100%, 63%),
-              inset 0 0 10px 0 hsl(0, 100%, 63%);
-  border-radius: 10px;
+  display        : block;
+  margin         : 0 auto;
+  padding        : 1.2rem;
+  padding-top    : 0.4rem; /* Accommodate legend */
+  padding-bottom : 1rem;
+  border         : 2px solid var(--toggle-fieldset-bdr-c);
+  border-radius  : 10px;
+  box-shadow     :
+                   0 0 10px 0 var(--toggle-fieldset-bxs-c),
+                   inset 0 0 10px 0 var(--toggle-fieldset-bxs-c)
+                 ;
 }
 fieldset legend {
-  padding: 0 10px;
-  font-size: 1.3rem;
-  font-weight: 400;
-  word-spacing: 2px;
-  background-color: var(--body-bg-c);
+  padding          : 0 10px;
+  font-size        : 1.3rem;
+  font-weight      : 400;
+  word-spacing     : 2px;
+  background-color : var(--toggle-legend-c);
 }
 /* TOGGLE STYLING */
 .toggle {
-  margin: 0 auto;
-  font-family: 'Nunito Sans';
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: stretch;
+  margin          : 0 auto;
+  font-family     : 'Nunito Sans';
+  display         : flex;
+  flex-flow       : row nowrap;
+  justify-content : center;
+  align-items     : stretch;
 }
 
 .toggle input {
-  position: fixed;
-  top: 0;
-  width: 0;
-  height: 0;
-  left:-100%;
+  position : fixed;
+  top      : 0;
+  width    : 0;
+  height   : 0;
+  left     : -100%;
 }
 
 .toggle input + label {
-  position: relative;
-  display: inline-block;
-  margin: 0;
-  padding: .3rem 1.2rem;
-  border: solid 1px hsl(197, 11%, 28%);
-  background-color: hsl(197, 11%, 18%);
-  font-size: 1.2rem;
-  text-align: center;
-  font-weight: 400;
-  box-shadow: 0 0 0 0 transparent;
-  user-select: none;
-  cursor: pointer;
-  transition: border-color .15s ease-out,  color .25s ease-out,  background-color .15s ease-out, box-shadow .15s ease-out;
+  position         : relative;
+  display          : inline-block;
+  margin           : 0;
+  padding          : .3rem 1.2rem;
+  font-size        : 1.2rem;
+  text-align       : center;
+  font-weight      : 400;
+  color            : var(--toggle-inactive-c);
+  background-color : var(--toggle-inactive-bg-c);
+  border           : solid 1px var(--toggle-inactive-bdr-c);
+  box-shadow       : 0 0 0 0 transparent;
+  user-select      : none;
+  cursor           : pointer;
+  transition       : border-color     .15s ease-out,
+                     color            .25s ease-out,
+                     background-color .15s ease-out,
+                     box-shadow       .15s ease-out
+                   ;
   /* ADD THESE PROPERTIES TO SWITCH FROM AUTO WIDTH TO FULL WIDTH */
   /*flex: 0 0 50%; display: flex; justify-content: center; align-items: center;*/
   /* ----- */
 }
 
 .toggle label:first-of-type {
-  border-radius: 6px 0 0 6px;
-  border-right: none;
+  border-radius : 6px 0 0 6px;
+  border-right  : none;
 }
 
 .toggle label:last-of-type {
-  border-radius: 0 6px 6px 0;
-  border-left: none;
+  border-radius : 0 6px 6px 0;
+  border-left   : none;
 }
 
-.toggle label.--wait {
-  cursor: not-allowed;
-}
+.toggle label.--wait { cursor: not-allowed; }
 
 /* .toggle input:hover + label {
   color: hsl(0, 74%, 70%);
@@ -81,17 +85,16 @@ fieldset legend {
   z-index: 1;
   cursor: default;
 } */
-.toggle input:hover + label {
-  color: hsl(47, 74%, 70%);
-}
+.toggle input:hover + label
+{ color: hsl(47, 74%, 70%); }
 
 .toggle input:checked + label {
-  background-color: hsl(47, 74%, 49%);
-  color: black;
-  box-shadow: 0 0 7px 0 hsl(47, 100%, 62%);
-  border-color: hsl(47, 74%, 70%);
-  z-index: 1;
-  cursor: default;
+  color            : var(--toggle-active-c);
+  background-color : var(--toggle-active-bg-c);
+  border-color     : var(--toggle-active-bdr-c);
+  box-shadow       : 0 0 7px 0 var(--toggle-active-bxs-c);
+  z-index          : 1;
+  cursor           : default;
 }
 /* .toggle input:hover + label {
   color: hsl(161, 74%, 70%);

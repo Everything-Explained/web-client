@@ -12,9 +12,12 @@
  * lg : large
  * bq : blockquote
  * bdr: border
+ * bxs: box shadow
  * hov: hover
  * act: active
  * dis: disabled
+ * img: image
+ * lgr: linear gradient
  *
  */
 
@@ -42,17 +45,20 @@
   --scrollbar-c          : var(--panel-c);
   --scrollbar-hov-c      : hsl(197, 9%, 43%);
   --scrollbar-track-c    : hsl(0, 0%, 0%);
+  --input-c              : hsl(161, 27%, 60%);
 
 
   /*** Markdown ***/
   --md-f-sz             : 1.27rem;
   --md-mobile-f-sz      : 1.15rem;
   --md-mobile-sm-f-sz   : 0.97rem;
+  --md-head-c           : hsl(197, 20%, 80%);
   --md-c                : var(--body-c);
   --md-p-hov-c          : hsl(30, 11%, 80%);
   --md-p-bg-c           : var(--sub-panel-c);
   --md-p-bg-hov-c       : var(--sub-panel-hov-c);
-  --md-b-c              : hsl(197, 9%, 82%);
+  --md-p-bxs-c          : hsla(0, 0%, 0%, 0.4);
+  --md-b-c              : hsl(197, 11%, 82%);
   --md-p-hov-b-c        : hsl(30, 11%, 89%);
   --md-i-c              : hsl(0, 74%, 77%);
   --md-p-hov-i-c        : hsl(47, 80%, 70%);
@@ -64,10 +70,16 @@
   --md-p-hov-link-bdr-c : var(--md-link-hov-c);
   --md-bq-c             : hsl(47, 68%, 61%);
   --md-bq-bg-c          : hsl(197, 20%, 5%);
+  --md-bq-bdr-c         : black;
+  --md-bq-outline-c     : hsl(197, 11%, 12%);
+  --md-bq-quote-c       : hsl(197, 11%, 65%);
+  --md-bullet-c         : var(--md-head-c);
+  --md-bullet-hov-c     : hsl(47, 100%, 50%);
   --md-code-c           : hsl(0, 0%, 80%);
   --md-code-bg-c        : hsl(0, 0%, 25%);
   --md-code-hov-c       : hsl(279, 20%, 80%);
   --md-code-bg-hov-c    : hsl(278, 25%, 47%);
+  --md-img-bxs-c        : hsla(0, 0%, 0%, 0.4);
 
 
   /*** App Styles ***/
@@ -79,8 +91,78 @@
   --app-titlebar-icon-hov-c : hsl(0, 70%, 64%);
 
 
+  /*** Footer ***/
+  --footer-bxs-c: hsla(0, 0%, 0%, 0.4);
+  --footer-copyright-c: hsl(197, 11%, 35%);
+  --footer-copyright-link-c: hsl(197, 11%, 50%);
+  --footer-copyright-link-hov-c: hsl(0, 50%, 60%);
+
+
+  /*** Preloader ***/
+  --preloader-bdr-c       : hsl(0, 100%, 76%);
+  --preloader-bxs-c       : hsl(0, 65%, 47%);
+  --preloader-bxs-inset-c : var(--app-ribbon-c);
+
+
+  /*** Button - Disabled ***/
+  --button-disabled-c: hsl(197, 11%, 30%);
+  --button-disabled-bg-c: hsl(197, 11%, 15%);
+
+  /*** Button - Neutral ***/
+  --button-neutral-c             : black;
+  --button-neutral-bg-c          : hsl(197, 11%, 68%);
+  --button-neutral-bg-hov-c      : hsl(197, 20%, 75%);
+  --button-neutral-bdr-c         : hsl(197, 20%, 90%);
+  --button-neutral-bxs-c         : hsla(197, 20%, 75%, 0.5);
+  --button-neutral-bxs-hov-c     : hsla(197, 20%, 75%, 0.8);
+  --button-neutral-loading-c     : hsla(0, 0%, 0%, 0.5);
+  --button-neutral-loading-bg-c  : hsl(197, 11%, 75%);
+  --button-neutral-loading-bdr-c : hsl(197, 11%, 78%);
+  --button-neutral-loading-bxs-c : var(--button-neutral-bxs-hov-c);
+  --button-neutral-loading-lgr-c : hsl(197, 20%, 85%);
+
+  /*** Button - Attention ***/
+  --button-attention-c             : black;
+  --button-attention-bg-c          : hsl(47, 100%, 50%);
+  --button-attention-bg-hov-c      : hsl(47, 100%, 70%);
+  --button-attention-bdr-c         : hsl(47, 100%, 78%);
+  --button-attention-bxs-c         : hsla(47, 100%, 70%, 0.5);
+  --button-attention-bxs-hov-c     : hsla(47, 100%, 70%, 0.8);
+  --button-attention-loading-c     : hsla(0, 0%, 0%, 0.5);
+  --button-attention-loading-bg-c  : hsl(47, 100%, 78%);
+  --button-attention-loading-bdr-c : hsl(47, 100%, 75%);
+  --button-attention-loading-bxs-c : var(--button-attention-bxs-hov-c);
+  --button-attention-loading-lgr-c : hsl(47, 100%, 47%);
+
+  /*** Button - Dangerous ***/
+  --button-dangerous-c             : white;
+  --button-dangerous-bg-c          : hsl(0, 100%, 60%);
+  --button-dangerous-bg-hov-c      : hsl(0, 100%, 69%);
+  --button-dangerous-bdr-c         : var(--button-dangerous-bg-hov-c);
+  --button-dangerous-bxs-c         : hsla(0, 100%, 63%, 0.7);
+  --button-dangerous-bxs-hov-c     : hsla(0, 100%, 69%, 0.9);
+  --button-dangerous-loading-c     : hsla(0, 100%, 100%, 0.6);
+  --button-dangerous-loading-bg-c  : hsl(0, 100%, 70%);
+  --button-dangerous-loading-bdr-c : hsl(0, 100%, 73%);
+  --button-dangerous-loading-bxs-c : var(--button-dangerous-bxs-hov-c);
+  --button-dangerous-loading-lgr-c : var(--app-ribbon-c);
+
+  /*** Text Input ***/
+  --input-label-c       : hsl(197, 11%, 65%);
+  --input-focus-c       : hsl(161, 45%, 65%);
+  --input-focus-label-c : var(--input-label-c);
+  --input-placeholder-c : hsl(197, 11%, 27%);
+  --input-bdr-c         : hsl(197, 11%, 27%);
+  --input-bar-c         : hsl(197, 11%, 33%);
+  --input-bar-valid-c   : hsl(161, 50%, 45%);
+  --input-valid-c       : hsl(161, 35%, 45%);
+  --input-metadata-c    : hsl(197, 11%, 40%);
+  --input-metadata-em-c : hsl(47, 80%, 60%);
+
+
   /*** Menu ***/
-  --menu-bg-c              : var(--body-bg-c);
+  --menu-bg-c              : hsla(197, 11%, 6.5%, 0.75);
+  --menu-bxs-c             : hsla(0, 0%, 0%, 0.85);
   --menu-header-c          : hsl(197, 20%, 83%);
   --menu-header-bg-c       : var(--sub-panel-c);
   --menu-exit-icon-c       : hsl(197, 12%, 70%);
@@ -92,6 +174,36 @@
   --menu-active-item-c     : hsl(47, 80%, 63%);
   --menu-active-item-bg-c  : var(--sub-panel-hov-c);
   --menu-active-item-bdr-c : hsl(47, 80%, 63%);
+
+
+  /*** Video ***/
+  --video-desc-c              : hsla(0, 0%, 0%, 0.85);
+  --video-desc-b-c            : var(--md-b-c);
+  --video-desc-link-c         : var(--md-b-c);
+  --video-desc-link-hov-c     : var(--menu-active-item-c);
+  --video-desc-link-bdr-c     : var(--md-b-c);
+  --video-desc-link-bdr-hov-c : var(--menu-active-item-c);
+  --video-desc-outline-c      : hsl(197, 11%, 35%);
+  --video-desc-head-c         : var(--app-titlebar-c);
+  --video-desc-head-bdr-c     : hsl(197, 11%, 45%);
+  --video-widget-c            : var(--app-titlebar-c);
+  --video-widget-hov-c        : var(--menu-active-item-c);
+  --video-widget-bg-c         : hsla(0, 0%, 10%, 0.53);
+  --video-widget-bg-hov-c     : hsla(0, 0%, 10%, 0.7);
+  --video-widget-close-hov-c  : var(--menu-exit-icon-hov-c);
+
+  /*** Toggle ***/
+  --toggle-fieldset-bdr-c: hsl(0, 100%, 67%);
+  --toggle-fieldset-bxs-c: var(--app-ribbon-c);
+  --toggle-legend-c: var(--body-bg-c);
+  --toggle-inactive-c: var(--body-c);
+  --toggle-inactive-hov-c: hsl(47, 74%, 70%);
+  --toggle-inactive-bdr-c: hsl(197, 11%, 28%);
+  --toggle-inactive-bg-c: hsl(197, 11%, 18%);
+  --toggle-active-c: black;
+  --toggle-active-bg-c: hsl(47, 74%, 49%);
+  --toggle-active-bdr-c: hsl(47, 74%, 70%);
+  --toggle-active-bxs-c: hsl(47, 100%, 62%);
 
 
   /*** Blog Styles ***/

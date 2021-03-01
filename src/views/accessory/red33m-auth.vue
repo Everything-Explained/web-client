@@ -97,7 +97,7 @@ export default defineComponent({
         .put('/red33m', { passcode }, 500)
         .then(() => {
           localStorage.setItem('passcode', 'yes');
-          router.push('/red33m');
+          router.push('/red33m/videos');
         })
         .catch((err) => setError(err))
       ;

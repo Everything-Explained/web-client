@@ -1,6 +1,6 @@
-import { Ref, ref } from "vue";
+import { ref } from "vue";
 import { isProduction } from "../globals";
-import wretch, { ResponseChain, Wretcher } from 'wretch';
+import wretch from 'wretch';
 
 type RequestBody = { [key: string]: string|number|boolean }
 

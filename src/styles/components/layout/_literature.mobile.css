@@ -1,0 +1,20 @@
+/*** 711px ***/
+@media only screen and (--large-screen) {
+  .lib-lit__card { width: 250px; }
+}
+/*** 511px ***/
+@media only screen and (--medium-screen) {
+  .lib-lit__card {
+    margin: 15px 0;
+    width: 95%;
+    font-size: 1.15rem;
+  }
+  .lib-lit__card article { height: 150px; }
+  .lib-lit__card header { font-size: 1.2rem;}
+}
+/*** 380px ***/
+@media only screen and (--small-screen) {
+}
+/*** 320px ***/
+@media only screen and (--tiny-screen) {
+}

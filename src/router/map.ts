@@ -16,11 +16,12 @@ const routeMap = [
     mapRoute('blog', 'Blog'),
   ]},
   { name: 'Library', routes: [
-    mapRoute('videos', 'Videos'),
-    mapRoute('literature', 'Literature', isDevelopment),
+    mapRoute('lib-videos', 'Videos'),
+    mapRoute('lib-lit', 'Literature'),
   ]},
   { name: 'RED33M', routes: [
-    mapRoute('red33m', 'Videos')
+    mapRoute('r3d-videos', 'Videos'),
+    mapRoute('r3d-lit', 'Literature'),
   ]},
   { name: 'Accessory', hidden: isProduction, routes: [
     mapRoute('red33m-auth', 'R3D Auth', isDevelopment),

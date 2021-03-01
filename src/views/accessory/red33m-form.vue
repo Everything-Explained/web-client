@@ -126,7 +126,7 @@
                     class="r3d-form__text-input"
                     name="email"
                     type="text"
-                    errmsg="Enter a <b>valid</b> E-mail"
+                    errmsg="Enter a <em>valid</em> E-mail"
                     :regex="emailRegex"
           >
             Enter E-mail
