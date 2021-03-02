@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/red33m/literature/:article?',
+    path: '/red33m/literature/:page?',
     name: 'r3d-lit',
     component: r3d_litVue,
     beforeEnter: (to, from, next) => {
@@ -50,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Videos,
   },
   {
-    path: '/library/literature/:article?',
+    path: '/library/literature/:page?',
     name: 'lib-lit',
     component: Literature,
   },
