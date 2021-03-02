@@ -51,7 +51,6 @@ export function useStaticPager<T extends StaticPage>(url: string) {
         pageTitle.value = '';
         return;
       }
-      console.log('displaying page');
       displayPage(params.page as string);
     }
   );
