@@ -64,9 +64,9 @@ export function useDate(date: Date|ISODateStr) {
 
       let span: keyof typeof timeSpan;
       for (span in timeSpan) {
-        if (diff <= 3) return "a moment ago";
+        if (diff <= 13) return "a moment ago";
         if (diff > timeSpan[span]) {
-          return rtf.format(-Math.floor(diff / timeSpan[span]), span);
+          return rtf.format(-Math.round(diff / timeSpan[span]), span);
         }
       }
     }
