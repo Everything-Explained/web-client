@@ -12,13 +12,10 @@
 import { defineComponent } from "vue"
 ;
 import eeLiteratureVue from "@/components/layout/ee-literature.vue";
-import eeFooterVue from "@/components/layout/ee-footer.vue";
+import eeFooterVue     from "@/components/layout/ee-footer.vue";
 
 
 export default defineComponent({
-  components: {
-    'ee-footer': eeFooterVue,
-    'ee-literature': eeLiteratureVue,
-  }
+  components: { 'ee-footer': eeFooterVue, 'ee-literature': eeLiteratureVue, }
 });
 </script>
