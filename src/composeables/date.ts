@@ -56,6 +56,7 @@ export function useDate(date: Date|ISODateStr) {
       const timeSpan = {
         year   : 31536000,
         month  : 2592000,
+        week   : 604800,
         day    : 86400,
         hour   : 3600,
         minute : 60,
@@ -66,7 +67,11 @@ export function useDate(date: Date|ISODateStr) {
       for (span in timeSpan) {
         if (diff <= 13) return "a moment ago";
         if (diff > timeSpan[span]) {
-          return rtf.format(-Math.round(diff / timeSpan[span]), span);
+          const relNum = Math.round(diff / timeSpan[span]);
+          if (span == 'week' && relNum == 4) {
+            return rtf.format(-1, 'month');
+          }
+          return rtf.format(-relNum, span);
         }
       }
     }
