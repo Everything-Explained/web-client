@@ -26,7 +26,7 @@ setTimeout(() => {
     })
     .catch(err => console.error(err))
   ;
-}, 1300);
+}, 500);
 
 
 const getElement = (id: string) => {
