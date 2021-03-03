@@ -21,7 +21,7 @@
 }
 /*** 380px ***/
 @media only screen and (--small-screen) {
-  .blog-entry          { max-width: 99%;    }
+  .blog-entry          { max-width: 98%; margin-left: 5px; }
   .blog-entry__title   { font-size: 1.3rem; }
   .blog-entry__summary { font-size: 1rem;   }
   .blog-entry__author  { max-width: 99%; font-size: 1.05rem;   }
