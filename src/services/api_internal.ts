@@ -21,14 +21,14 @@ export function useDataAPI() {
       return new Promise((rs, rj) => {
         const exec = () => {
           const id = localStorage.getItem('userid');
+          const version = localStorage.getItem('version');
           // Wait for user ID
-          if (!id) return setTimeout(() => exec(), 300);
+          if (!id || !version) return setTimeout(() => exec(), 300);
           const sendError = (() => {
             return errHandler ? errHandler : rs;
           })();
-
           let api = baseAPI.url(`${endpoint}.json`).auth(`Bearer ${id || 'none'}`);
-          if (query) api = api.query(query);
+          api = query ? api.query({ ...query, version }) : api.query({ version });
           api
             .get()
             .notFound(() => sendError('Endpoint Not Found'))
@@ -48,15 +48,25 @@ export function useDataAPI() {
 export function useAuthAPI() {
   const isLoading = ref(false);
   const api = wretch().url(sanitizeURLForEnv('/api/auth'));
-  function exec( method: 'put'|'post', endpoint: string, body: RequestBody, delay = 0): Promise<{ status: number, data: any }> {
+  function exec<T>(
+      method: 'put'|'post'|'get',
+      endpoint: string,
+      body: RequestBody,
+      delay = 0
+  ): Promise<{ status: number, data: Promise<T> }>
+  {
     return new Promise((rs, rj) => {
       const id = localStorage.getItem('userid');
       setTimeout(() => {
-        api
-          .url(endpoint)
-          .auth(`Bearer ${id || 'none'}`)[method](body)
+        const apiAuth = api.url(endpoint).auth(`Bearer ${id || 'none'}`);
+        const apiExec =
+          method == 'get'
+            ? apiAuth.query(body)[method]() // get requests have no body
+            : apiAuth[method](body)
+        ;
+        apiExec
             .notFound(() => rj('Endpoint Not Found'))
-            .res((res) => rs({ status: res.status, data: res }))
+            .res((res) => rs({ status: res.status, data: res.json() }))
             .catch((err) => { rj(err?.message); })
             .finally(() => isLoading.value = false)
         ;
@@ -71,6 +81,10 @@ export function useAuthAPI() {
     put(endpoint: string, body: any, delay = 0) {
       isLoading.value = true;
       return exec('put', endpoint, body, delay);
+    },
+    get<T>(endpoint: string, body: any, delay = 0) {
+      isLoading.value = true;
+      return exec<T>('get', endpoint, body, delay);
     },
     isLoading
   };

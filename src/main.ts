@@ -20,9 +20,14 @@ setTimeout(() => {
   localStorage.setItem('userid', userid);
 
   api
-    .post('/user', { userid })
-    .then(res => {
+    .get<{version: string}>('/setup', { userid })
+    .then(async (res) => {
       if (res.status == 201) { localStorage.setItem('passcode', 'no') }
+      const data = await res.data;
+      const oldVer = localStorage.getItem('version');
+      if (!oldVer || oldVer != data.version) {
+        localStorage.setItem('version', data.version);
+      }
     })
     .catch(err => console.error(err))
   ;
