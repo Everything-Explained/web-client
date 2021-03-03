@@ -1,6 +1,7 @@
 .lit__cards {
   display: flex;
   margin: 0 auto;
+  margin-top: 30px;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
@@ -13,9 +14,6 @@
   font-size: 1.2rem;
   align-self: center;
   overflow: hidden;
-}
-.lit__card:first-child {
-  margin-top: 30px;
 }
 .lit__card header {
   padding: 7px 10px 5px 10px;
