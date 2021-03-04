@@ -11,8 +11,8 @@
 
 .--default-scrollbar::-webkit-scrollbar,
 .--subtle-scrollbar::-webkit-scrollbar {
-  width         : 7px;
-  height        : 7px;
+  width         : 5px;
+  height        : 5px;
   background    : var(--scrollbar-track-c);
   border-radius : 3px;
 }
