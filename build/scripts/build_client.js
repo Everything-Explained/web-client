@@ -67,6 +67,7 @@ function cleanClient() {
     return del_1.default([
         `${releaseDir}/web_client/**`,
         `!${releaseDir}/web_client`,
+        `!${releaseDir}/web_client/version.txt`,
         `!${releaseDir}/web_client/_data`
     ], { force: true });
 }
