@@ -7,10 +7,17 @@
   .lit__card {
     margin: 15px 0;
     width: 95%;
-    font-size: 1.15rem;
+    font-size: 1.10rem;
   }
-  .lit__card article { height: 150px; }
-  .lit__card header { font-size: 1.15rem;}
+  .lit-expanded .lit__card { margin-bottom: 1rem; }
+  .lit-expanded .lit__card:first-child { margin-top: 0; }
+  .lit__card header,
+  .lit-expanded .lit__card header { font-size: 1.17rem;}
+  .lit-expanded .lit__card header { padding: 5px 10px; }
+  .lit__card article { height: 140px; }
+  .lit__card article,
+  .lit-expanded .lit__card article { font-size: 1.07rem; line-height: 1.35rem; }
+  .lit__card footer { font-size: 1rem; padding: 3px 0; }
 }
 /*** 380px ***/
 @media only screen and (--small-screen) {

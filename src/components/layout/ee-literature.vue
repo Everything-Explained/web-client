@@ -1,5 +1,5 @@
 <template>
-  <div class="lit">
+  <div :class="['lit', sizeClass]">
     <ee-titlebar :ease-in="350"
                  :ease-out="350"
                  :text="titleRef"
@@ -51,6 +51,8 @@ interface Article extends StaticPage {
   summary: string;
 }
 
+const _sizes = ['compact', 'expanded'];
+
 
 export default defineComponent({
   components: {
@@ -58,14 +60,20 @@ export default defineComponent({
     'ee-icon': eeIconVue,
   },
   props: {
+    size:  { type: String, default: 'compact'       },
     url:   { type: String, default: ''              },
     title: { type: String, default: 'Default Title' }
   },
   setup(props) {
-    if (!props.url) throw Error('literature::Missing URL')
+    const { size, url } = props;
+    const sizeClass = {
+      'lit-expanded': size == 'expanded'
+    };
+    if (!url) throw Error('literature::Missing URL');
+    if (!_sizes.includes(size)) throw Error('literature::Invalid Size')
     ;
-    const pager  = useStaticPager<Article>(props.url);
-    const titleRef      = computed(
+    const pager    = useStaticPager<Article>(url);
+    const titleRef = computed(
       () => pager.pageTitle.value || props.title
     );
 
@@ -78,6 +86,7 @@ export default defineComponent({
       ...pager,
       useDate,
       isEthan,
+      sizeClass,
     };
   }
 });
