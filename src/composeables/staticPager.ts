@@ -29,9 +29,9 @@ export function useStaticPager<T extends StaticPage>(url: string) {
     pageTitle.value = page.title;
   }
 
-  const api = useDataAPI();
+  const api = useAPI();
   const getPageData = useTask(function*() {
-    const data = yield api.get(url, console.error);
+    const data = yield api.data.get(url, console.error);
     store.commit('data-cache-add', { name: url, data });
     // The URL points to a specific page on index load
     if (pageURI) displayPage(pageURI);
@@ -55,10 +55,12 @@ export function useStaticPager<T extends StaticPage>(url: string) {
     }
   );
 
-  if (!pages.value) getPageData.perform();
+  // True when pages are NOT in cache
+  if (!pages.value.length) getPageData.perform();
+
   // An edge case when navigating away from a custom
   // route, then backing the history to that same custom route.
-  if (pages.value && pageURI) displayPage(pageURI);
+  if (pages.value.length && pageURI) displayPage(pageURI);
 
   return {
     goTo,

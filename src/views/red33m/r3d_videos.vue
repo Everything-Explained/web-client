@@ -32,7 +32,7 @@ import { computed, defineComponent, ref } from "vue";
 import { useStore }       from "vuex";
 import { VuexStore }      from "@/vuex/vuex-store";
 import { useTask }        from "vue-concurrency";
-import { useDataAPI }     from "@/services/api_internal";
+import { useAPI }         from "@/services/api_internal";
 // Components
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
@@ -53,7 +53,7 @@ export default defineComponent({
     const isToggling = ref(false);
     const videos = computed(() => store.state.dataCache['red33m']?.slice());
 
-    const api = useDataAPI();
+    const api = useAPI().data;
     const getVideos = useTask(function*() {
       const red33mData = yield api.get('/red33m/videos', console.error);
       store.commit('data-cache-add', { name: 'red33m', data: red33mData });

@@ -176,7 +176,7 @@ import eeTextVue    from "@/components/ui/ee-text.vue";
 import eeFooterVue  from '@/components/layout/ee-footer.vue';
 import { useStore } from "vuex";
 import { VuexStore } from "@/vuex/vuex-store";
-import { useAuthAPI } from "@/services/api_internal";
+import { useAPI } from "@/services/api_internal";
 
 type Question = { text: string, answer: string };
 
@@ -280,7 +280,8 @@ export default defineComponent({
                         return fields;
                      }),
     });
-    const api            = useAuthAPI();
+    const api            = useAPI();
+    const authAPI        = api.auth;
     const store          = useStore<VuexStore>();
     const savedQuestions = store.state.dataCache['form-questions'] as Question[];
     const questionToRef  = (q: string) => reactive({ text: q, answer: '' });
@@ -309,7 +310,7 @@ export default defineComponent({
         email     : email.value,
         questions : questions.map(q => [q.text, q.answer])
       };
-      api.post('/red33m', formData)
+      authAPI.post('/red33m', formData)
         .then(() => {
           forwardState('isSubmitted');
           // Clear questions store
@@ -319,9 +320,10 @@ export default defineComponent({
     };
 
     return {
+
       ...toRefs(formState),
       accept, complete, submit,
-      isSubmitting: api.isLoading,
+      isSubmitting: api.isPending,
       titleBarVal,
       name, email,
       questions, emailRegex,

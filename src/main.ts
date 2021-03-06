@@ -4,34 +4,12 @@ import App from './views/app.vue';
 import router from './router';
 import vuex from './vuex/vuex-store';
 import './styles/_main.css';
-import { useAuthAPI } from './services/api_internal';
+import { useAPI } from './services/api_internal';
 
 
-// Init passcode and user ID
-setTimeout(() => {
-  const api    = useAuthAPI();
-  const keys   = crypto.getRandomValues(new Uint8Array(20));
-  const userid =
-       localStorage.getItem('userid')
-    || keys.reduce((pv, cv) => pv += `${cv.toString(36)}`, '')
-  ;
-
-  // Will always be the most valid ID
-  localStorage.setItem('userid', userid);
-
-  api
-    .get<{version: string}>('/setup', { userid })
-    .then(async (res) => {
-      if (res.status == 201) { localStorage.setItem('passcode', 'no') }
-      const data = await res.data;
-      const oldVer = localStorage.getItem('version');
-      if (!oldVer || oldVer != data.version) {
-        localStorage.setItem('version', data.version);
-      }
-    })
-    .catch(err => console.error(err))
-  ;
-}, 500);
+// Initialize API
+const api = useAPI();
+api.init();
 
 
 const getElement = (id: string) => {
