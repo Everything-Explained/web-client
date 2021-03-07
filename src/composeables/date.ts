@@ -35,7 +35,7 @@ export function useDate(date: Date|ISODateStr) {
     },
 
     /** Returns a time formatted in: `h:mm ampm` */
-    to12HourFormat() {
+    to12HourTime() {
       const ts = this.to12HourTimeStrings();
       return `${ts.hours}:${ts.minutes} ${ts.amPM}`;
     },

@@ -72,6 +72,7 @@
   padding: 5px 0;
   text-align: center;
   font-weight: 400;
+  color: hsl(197, 11%, 40%);
   background-color: var(--sub-panel-c);
   border-top: 1px solid hsl(197, 11%, 20%);
   border-radius: 0 0 7px 7px;
@@ -82,6 +83,7 @@
 }
 .lit-expanded .lit__card footer {
   padding: 3px 0.7rem;
+  padding-left: 5px;
   text-align: right;
 }
 
@@ -91,16 +93,15 @@
   color: hsl(197, 11%, 40%);
   transition: color var(--lit-transition-speed);
 }
-.lit-card__author {
+
+.lit-card__author-text {
   color: hsl(47, 60%, 63%);
   text-shadow: 1px 1px 0 black,
-               2px 2px 0 black;
-}
-.lit-card__author.--is-ethan {
-  color: hsl(0, 100%, 70%);
-}
+               2px 2px 0 black; }
+  .lit-card__author-text.--is-ethan
+    { color: hsl(0, 100%, 70%); }
+
 .lit-card__timestamp {
-  color: hsl(197, 11%, 40%);
   transition: color var(--lit-transition-speed);
 }
 

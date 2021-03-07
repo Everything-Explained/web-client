@@ -18,19 +18,24 @@
             {{ article.summary }}
           </article>
           <footer>
-            <ee-icon type="user" />
-            <!-- by -->
-            <span :class="['lit-card__author', { '--is-ethan': isEthan(article.author) }]">
-              {{ article.author }}
+            <span v-if="showAuthor" class="lit-card__author">
+              <ee-icon type="user" />
+              <span :class="['lit-card__author-text', { '--is-ethan': isEthan(article.author) }]">
+                {{ article.author }}
+              </span>
             </span>
             <span class="lit-card__timestamp">
-              &#x2022; {{ useDate(article.date).toRelativeTime() }}
+              <span v-if="showFullDate" class="lit-card__full-datetime">
+                <span class="lit-card__date"> <ee-bullet /> {{ useDate(article.date).toShortDate() }}</span>
+                <span class="lit-card__time"> <ee-bullet /> {{ useDate(article.date).to12HourTime() }}</span>
+              </span>
+              <span v-else class="lit-card__relative-time">{{ useDate(article.date).toRelativeTime() }}</span>
             </span>
           </footer>
         </div>
       </div>
       <div v-else-if="activePage">
-        <article class="md" v-html="activePage.content" />
+        <article :class="['md', contentClass]" v-html="activePage.content" />
       </div>
     </transition>
   </div>
@@ -44,6 +49,7 @@ import { useDate }    from "@/composeables/date"
 import eeIconVue      from "@/components/ui/ee-icon.vue";
 import eeTitlebarVue  from "@/components/layout/ee-titlebar.vue";
 import { StaticPage, useStaticPager } from "@/composeables/staticPager";
+import eeBulletVue from "../ui/ee-bullet.vue";
 
 
 
@@ -58,11 +64,15 @@ export default defineComponent({
   components: {
     'ee-titlebar': eeTitlebarVue,
     'ee-icon': eeIconVue,
+    'ee-bullet': eeBulletVue,
   },
   props: {
-    size:  { type: String, default: 'compact'       },
-    url:   { type: String, default: ''              },
-    title: { type: String, default: 'Default Title' }
+    size         : { type: String,  default: 'compact'       },
+    url          : { type: String,  default: ''              },
+    title        : { type: String,  default: 'Default Title' },
+    contentClass : { type: String,  default: ''              },
+    showAuthor   : { type: Boolean, default: true            },
+    showFullDate : { type: Boolean, default: false           },
   },
   setup(props) {
     const { size, url } = props;
