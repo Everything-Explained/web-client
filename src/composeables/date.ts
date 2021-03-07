@@ -23,14 +23,14 @@ export function useDate(date: Date|ISODateStr) {
         hours   : `${dateObj.getHours()}`,
         minutes : padTime(dateObj.getMinutes()),
         seconds : padTime(dateObj.getSeconds()),
-        amPM    : getAMPM(dateObj.getHours())
       };
     },
 
     to12HourTimeStrings() {
       return {
+        amPM: getAMPM(dateObj.getHours()),
         ...this.toTimeStrings(),
-        hours: `${get12HourClock(dateObj.getHours())}`
+        hours: `${get12HourClock(dateObj.getHours())}`,
       };
     },
 
