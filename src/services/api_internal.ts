@@ -2,15 +2,14 @@ import { reactive, computed } from "vue";
 import { isProduction } from "../globals";
 import wretch from 'wretch';
 
+
+
 type RequestBody   = { [key: string]: string|number|boolean }
 type ErrorHandler  = null|((msg: string) => void);
 type Query         = { [key: string]: string|number };
 type AuthMethod    = 'put'|'post'|'get';
 type AuthReturn    = Promise<{ status: number, data: string }>;
 
-const sanitizeURLForEnv = (url: string) => {
-  return isProduction ? url : `//localhost:3003${url}`;
-};
 
 const genUniqueID = () =>
   crypto
@@ -26,6 +25,10 @@ const state = reactive({
   isLoading: false,
   isDebouncing: false,
 });
+
+const sanitizeURLForEnv = (url: string) => {
+  return isProduction ? url : `//localhost:3003${url}`;
+};
 
 const dataEndpoint =
   wretch().url(sanitizeURLForEnv('/api/data')).auth(`Bearer ${state.userid || 'none'}`)
