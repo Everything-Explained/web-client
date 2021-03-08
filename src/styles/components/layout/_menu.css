@@ -32,7 +32,7 @@
   padding-right: 0.5rem;
   font-size: 1.4rem;
   letter-spacing: 1px;
-  border-top: 4px solid black;
+  border-top: 2px solid black;
 }
 
 .app-menu__header_exit-icon {
@@ -66,10 +66,10 @@
   user-select : none;
 }
 .app-menu_item a:hover {
-  color       : var(--menu-item-hov-c);
-  border-left : 3px solid var(--menu-item-bdr-hov-c);
+  color        : var(--menu-item-hov-c);
+  border-color : var(--menu-item-bdr-hov-c);
 }
 .app-menu_item a.router-link-active {
-  color       : var(--menu-active-item-c);
-  border-left : 3px solid var(--menu-active-item-bdr-c);
+  color        : var(--menu-active-item-c);
+  border-color : var(--menu-active-item-bdr-c);
 }
