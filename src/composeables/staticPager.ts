@@ -1,4 +1,4 @@
-import { useDataAPI } from "@/services/api_internal";
+import { useAPI } from "@/services/api_internal";
 import { VuexStore } from "@/vuex/vuex-store";
 import { computed, ref, watch } from "vue";
 import { useTask } from "vue-concurrency";
@@ -19,7 +19,7 @@ export function useStaticPager<T extends StaticPage>(url: string) {
   const store      = useStore<VuexStore>();
   const activePage = ref<T|null>();
   const pageURI    = route.value.params.page as string|undefined;
-  const pages      = computed(() => store.state.dataCache[url] as T[]);
+  const pages      = computed(() => store.state.dataCache[url] as T[] || []);
   const pageTitle  = ref('');
 
   function displayPage(uri: string) {
@@ -43,6 +43,7 @@ export function useStaticPager<T extends StaticPage>(url: string) {
     router.push(`${url}/${uri}`);
   }
 
+  // onRouteChange
   watch(() => route.value.params,
     (params) => {
       if (!route.value.path.includes(url)) return;
