@@ -26,10 +26,17 @@
             </span>
             <span class="lit-card__timestamp">
               <span v-if="showFullDate" class="lit-card__full-datetime">
-                <span class="lit-card__date"> <ee-bullet /> {{ useDate(article.date).toShortDate() }}</span>
-                <span class="lit-card__time"> <ee-bullet /> {{ useDate(article.date).to12HourTime() }}</span>
+                <span class="lit-card__date">
+                  {{ useDate(article.date).toShortDate() }}
+                </span>
+                <span class="lit-card__time">
+                  <ee-bullet />
+                  {{ useDate(article.date).to12HourTime() }}
+                </span>
               </span>
-              <span v-else class="lit-card__relative-time">{{ useDate(article.date).toRelativeTime() }}</span>
+              <span v-else class="lit-card__relative-time">
+                {{ useDate(article.date).toRelativeTime() }}
+              </span>
             </span>
           </footer>
         </div>
