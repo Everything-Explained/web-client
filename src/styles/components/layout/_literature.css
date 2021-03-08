@@ -94,7 +94,8 @@
   transition: color var(--lit-transition-speed);
 }
 
-.lit-card__author { float: left; }
+
+.lit-expanded .lit-card__author { float: left; }
 
 .lit-card__author-text {
   color: hsl(47, 60%, 63%);
