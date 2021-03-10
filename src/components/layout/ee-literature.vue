@@ -80,7 +80,7 @@ export default defineComponent({
     title        : { type: String,  default: 'Default Title' },
     contentClass : { type: String,  default: ''              },
     showAuthor   : { type: Boolean, default: true            },
-    showFullDate : { type: Boolean, default: false           },
+    showDateTime : { type: Boolean, default: false           },
   },
   setup(props) {
     const { size, url } = props;
