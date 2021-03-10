@@ -35,6 +35,7 @@
                 </span>
               </span>
               <span v-else class="lit-card__relative-time">
+                <ee-bullet />
                 {{ useDate(article.date).toRelativeTime() }}
               </span>
             </span>
