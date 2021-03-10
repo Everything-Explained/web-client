@@ -2,6 +2,7 @@
   <div class="blog">
     <ee-literature title="Blog Entires"
                    size="expanded"
+                   :show-date-time="true"
                    url="/blog"
     />
     <ee-footer />
