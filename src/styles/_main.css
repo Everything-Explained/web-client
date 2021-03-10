@@ -11,6 +11,7 @@
 @import './components/layout/_titlebar.mobile.css';
 /*** Menu ***/
 @import './components/layout/_menu.css';
+@import './components/layout/_menu.mobile.css';
 /*** Footer ***/
 @import './components/layout/_footer.css';
 
