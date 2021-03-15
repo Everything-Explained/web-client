@@ -79,7 +79,7 @@
   color           : var(--md-link-c);
   text-decoration : none;
   font-weight     : 300;
-  border-bottom   : 1px solid var(--md-link-bdr-c);
+  text-decoration: underline var(--md-link-bdr-c);
   transition      : border var(--md-trans-speed),
                     color var(--md-trans-speed);
 }
