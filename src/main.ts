@@ -45,7 +45,7 @@ const cookiesAreEnabled = (() => {
 
 
 if (cookiesAreEnabled && browserIsSupported) {
-  createApp(App)
+  window['app'] = createApp(App)
     .use(vuex)
     .use(router)
     .mount('#app')
