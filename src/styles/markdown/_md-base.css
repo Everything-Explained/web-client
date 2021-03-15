@@ -7,6 +7,10 @@
   color       : var(--md-c);
 }
 
+:root {
+  --md-trans-speed: 0.18s;
+}
+
 
 .md h1, .md h2,
 .md h3, .md h4,
@@ -22,7 +26,7 @@
 .md h2, .md h3 { font-size: 1.8rem; }
 
 
-.md p {
+.md p, .md ol {
   display                 : block;
   margin-left             : 10px;
   margin-right            : 5px;
@@ -31,7 +35,8 @@
   background              : var(--md-p-bg-c);
   border-top-right-radius : 6.5px;
   border-top-left-radius  : 3.5px;
-  transition              : background 0.25s, color 0.25s;
+  transition              : background var(--md-trans-speed),
+                            color var(--md-trans-speed);
 }
 /* Maintain height with floated images */
 .md p::after {
@@ -151,9 +156,18 @@
   font-size   : 1.5rem;
   margin-left : -1rem;
   color       : var(--md-bullet-c);
-  transition  : color 0.3s;
+  transition  : color var(--md-trans-speed);
 }
 .md > p:hover li::before { color: var(--md-bullet-hov-c); }
+
+.md > ol {
+  padding-left: 2.5rem;
+  list-style: decimal;
+  background-color: transparent;
+  color: hsl(197, 11%, 67%);
+  box-shadow: none;
+}
+.md > ol li { margin-bottom: 0.5rem; }
 
 
 .md > p > img {
@@ -186,4 +200,4 @@
 .md em, .md dt,
 .md dd, .md code,
 .md strong, .md blockquote
-{ transition: color 0.25s, background 0.25s; }
+{ transition: color var(--md-trans-speed), background var(--md-trans-speed); }
