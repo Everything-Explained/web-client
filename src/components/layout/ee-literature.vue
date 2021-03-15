@@ -25,7 +25,7 @@
               </span>
             </span>
             <span class="lit-card__timestamp">
-              <span v-if="showFullDate" class="lit-card__full-datetime">
+              <span v-if="showDateTime" class="lit-card__full-datetime">
                 <span class="lit-card__date">
                   {{ useDate(article.date).toShortDate() }}
                 </span>
