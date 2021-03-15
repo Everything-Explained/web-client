@@ -1,0 +1,17 @@
+/*** 711px ***/
+@media only screen and (--large-screen) {
+}
+/*** 511px ***/
+@media only screen and (--medium-screen) {
+  .chglog blockquote { width: 97%; margin-bottom: 2rem; }
+  .chglog h1 {
+    padding-left: 1rem;
+    margin-top: 3rem;
+  }
+}
+/*** 380px ***/
+@media only screen and (--small-screen) {
+}
+/*** 320px ***/
+@media only screen and (--tiny-screen) {
+}

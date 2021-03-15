@@ -1,0 +1,42 @@
+.chglog h1 {
+  position: relative;
+  margin: 5rem auto -0.5rem auto;
+  padding-left: 2rem;
+  width: 90%;
+  color: hsl(197, 11%, 75%); }
+  .chglog h1:first-child { margin-top: 2rem; }
+
+.chglog blockquote {
+  margin: 0 auto;
+  width: 90%;
+  margin-bottom: 3rem; }
+  .chglog blockquote::after {
+    position         : absolute;
+    left             : 50%;
+    width            : 90%;
+    height           : 100%;
+    content          : '';
+    bottom           : -10px;
+    background-color : hsl(197, 11%, 15%);
+    transform        : translateX(-50%);
+    z-index          : -1;
+    transition       : background var(--md-trans-speed); }
+  .chglog blockquote:hover
+    { color: var(--md-p-hov-c); background-color: transparent; }
+  .chglog blockquote:hover li
+    { background-color: var(--sub-panel-hov-c); }
+  .chglog blockquote:hover::after
+    { background-color: hsl(30, 11%, 23%); }
+  .chglog blockquote:hover code
+    { color: var(--md-p-hov-i-c); background: hsl(30, 20%, 30%); }
+
+.chglog li {
+  position         : relative;
+  margin-top       : 7px;
+  padding          : 15px 8px 15px 15px;
+  background-color : var(--sub-panel-c);
+  border-top       : 3px solid var(--body-bg-c);
+  word-spacing     : 1px;
+  transition       : background var(--md-trans-speed); }
+  .chglog li:first-child { border-top-left-radius     : 15px; }
+  .chglog li:last-child  { border-bottom-right-radius : 13px; }

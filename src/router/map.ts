@@ -23,6 +23,9 @@ const routeMap = [
     mapRoute('r3d-videos', 'Videos'),
     mapRoute('r3d-lit', 'Literature'),
   ]},
+  { name: 'Utility', routes: [
+    mapRoute('changelog', 'ChangeLog')
+  ]},
   { name: 'Accessory', hidden: isProduction, routes: [
     mapRoute('red33m-auth', 'R3D Auth', isDevelopment),
     mapRoute('red33m-form', 'R3D Form', isDevelopment)

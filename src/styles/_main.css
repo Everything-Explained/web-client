@@ -61,5 +61,8 @@
 /*** Red33m Access Form ***/
 @import './views/accessory/_red33m-form.css';
 @import './views/accessory/_red33m-form.mobile.css';
+/*** Changelog ***/
+@import './views/utilities/_changelog.css';
+@import './views/utilities/_changelog.mobile.css';
 /*** 404 View ***/
 @import './views/errors/_i404.css';

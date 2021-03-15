@@ -1,14 +1,16 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { isAuthed } from '@/globals';
 import Home       from '@/views/root/home.vue';
 import i404       from '@/views/errors/i404.vue';
-import R3dVideos     from '@/views/red33m/r3d_videos.vue';
+import R3dVideos  from '@/views/red33m/r3d_videos.vue';
 import Blog       from '@/views/root/blog.vue';
 import Videos     from '@/views/library/lib_videos.vue';
 import Literature from '@/views/library/lib_lit.vue';
 import red33mAuth from '@/views/accessory/red33m-auth.vue';
 import red33mForm from '@/views/accessory/red33m-form.vue';
-import { isAuthed } from '@/globals';
 import r3d_litVue from '@/views/red33m/r3d_lit.vue';
+
+const Changelog = () => import('@/views/utility/changelog.vue');
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -63,6 +65,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/red33m-form',
     name: 'red33m-form',
     component: red33mForm,
+  },
+  {
+    path: '/changelog/:page?',
+    name: 'changelog',
+    component: Changelog,
   },
 
 
