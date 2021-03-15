@@ -78,9 +78,10 @@
 .md a:visited {
   color           : var(--md-link-c);
   text-decoration : none;
-  font-weight     : 400;
+  font-weight     : 300;
   border-bottom   : 1px solid var(--md-link-bdr-c);
-  transition      : border .25s, color .25s;
+  transition      : border var(--md-trans-speed),
+                    color var(--md-trans-speed);
 }
 .md > p:hover a:link,
 .md > p:hover a:active,
@@ -135,10 +136,10 @@
 .md code {
   padding       : 2px 3px 0 3px;
   color         : var(--md-code-c);
-  font-family   : "Cousine";
   background    : var(--md-code-bg-c);
   border        : 1px solid black;
   font-size     : 1.125rem;
+  font-family   : Consolas, 'Courier New', Courier, monospace;
   border-radius : 5px;
   white-space   : nowrap;
   word-spacing  : -3px;
