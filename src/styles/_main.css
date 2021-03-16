@@ -32,7 +32,7 @@
 /*** Toggle ***/
 @import './components/ui/_toggle.css';
 /*** Preloader ***/
-@import './components/_preloader.css';
+@import './components/ui/_preloader.css';
 /*** Literature ***/
 @import './components/layout/_literature.css';
 @import './components/layout/_literature.mobile.css';
