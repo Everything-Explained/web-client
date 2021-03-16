@@ -80,14 +80,14 @@
   text-decoration : none;
   font-weight     : 300;
   text-decoration: underline var(--md-link-bdr-c);
-  transition      : border var(--md-trans-speed),
+  transition      : text-decoration var(--md-trans-speed),
                     color var(--md-trans-speed);
 }
 .md > p:hover a:link,
 .md > p:hover a:active,
 .md > p:hover a:visited {
-  color        : var(--md-p-hov-link-c);
-  border-color : var(--md-p-hov-link-bdr-c);
+  color                 : var(--md-p-hov-link-c);
+  text-decoration-color : var(--md-p-hov-link-bdr-c);
 }
 .md > p:hover a:hover { color: var(--md-link-hov-c); }
 
