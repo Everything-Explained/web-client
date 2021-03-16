@@ -30,7 +30,7 @@
   .chglog blockquote:hover a:link,
   .chglog blockquote:hover a:active,
   .chglog blockquote:hover a:visited
-    {color: var(--md-p-hov-link-c); border-color : var(--md-p-hov-link-bdr-c); }
+    {color: var(--md-p-hov-link-c); text-decoration-color : var(--md-p-hov-link-bdr-c); }
   .chglog blockquote:hover a:hover
     { color: var(--md-link-hov-c); }
   .chglog blockquote:hover li
