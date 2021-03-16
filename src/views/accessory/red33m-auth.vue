@@ -10,7 +10,7 @@
       <strong>Don't have a Passcode?</strong>
       <br>
       Fill out the
-      <router-link to="/red33m/literature/the-infinite-game">
+      <router-link to="/red33m-form">
         {{ "EC Form" }} <!-- Removes spaces when rendered -->
       </router-link>
       to gain eligibility; filling out the form <em>does not</em>
