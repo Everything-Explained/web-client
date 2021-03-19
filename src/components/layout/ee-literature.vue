@@ -6,44 +6,48 @@
     />
     <transition name="fade" mode="out-in">
       <div v-if="isRunning" class="preloader page" />
-      <div v-else-if="pages.length && !activePage" class="lit__cards">
-        <div v-for="(article, i) of pages"
-             :key="i"
-             class="lit__card"
-        >
-          <header @click="goTo(article.uri)">
-            {{ article.title }}
-          </header>
-          <article class="--subtle-scrollbar">
-            {{ article.summary }}
-          </article>
-          <footer>
-            <span v-if="showAuthor" class="lit-card__author">
-              <ee-icon type="user" />
-              <span :class="['lit-card__author-text', { '--is-ethan': isEthan(article.author) }]">
-                {{ article.author }}
-              </span>
-            </span>
-            <span class="lit-card__timestamp">
-              <span v-if="showDateTime" class="lit-card__full-datetime">
-                <span class="lit-card__date">
-                  {{ useDate(article.date).toShortDate() }}
+      <div v-else-if="pages.length && !activePage" class="lit-cards__container">
+        <div class="lit__cards">
+          <div v-for="(article, i) of pages"
+               :key="i"
+               class="lit__card"
+          >
+            <header @click="goTo(article.uri)">
+              {{ article.title }}
+            </header>
+            <article class="--subtle-scrollbar">
+              {{ article.summary }}
+            </article>
+            <footer>
+              <span v-if="showAuthor" class="lit-card__author">
+                <ee-icon type="user" />
+                <span :class="['lit-card__author-text', { '--is-ethan': isEthan(article.author) }]">
+                  {{ article.author }}
                 </span>
-                <span class="lit-card__time">
+              </span>
+              <span class="lit-card__timestamp">
+                <span v-if="showDateTime" class="lit-card__full-datetime">
+                  <span class="lit-card__date">
+                    {{ useDate(article.date).toShortDate() }}
+                  </span>
+                  <span class="lit-card__time">
+                    <ee-bullet />
+                    {{ useDate(article.date).to12HourTime() }}
+                  </span>
+                </span>
+                <span v-else class="lit-card__relative-time">
                   <ee-bullet />
-                  {{ useDate(article.date).to12HourTime() }}
+                  {{ useDate(article.date).toRelativeTime() }}
                 </span>
               </span>
-              <span v-else class="lit-card__relative-time">
-                <ee-bullet />
-                {{ useDate(article.date).toRelativeTime() }}
-              </span>
-            </span>
-          </footer>
+            </footer>
+          </div>
         </div>
+        <ee-footer />
       </div>
       <div v-else-if="activePage">
         <article :class="['md', contentClass]" v-html="activePage.content" />
+        <ee-footer />
       </div>
     </transition>
   </div>
@@ -58,6 +62,7 @@ import eeIconVue      from "@/components/ui/ee-icon.vue";
 import eeTitlebarVue  from "@/components/layout/ee-titlebar.vue";
 import { StaticPage, useStaticPager } from "@/composeables/staticPager";
 import eeBulletVue from "../ui/ee-bullet.vue";
+import eeFooterVue from "./ee-footer.vue";
 
 
 
@@ -73,6 +78,7 @@ export default defineComponent({
     'ee-titlebar': eeTitlebarVue,
     'ee-icon': eeIconVue,
     'ee-bullet': eeBulletVue,
+    'ee-footer': eeFooterVue,
   },
   props: {
     size         : { type: String,  default: 'compact'       },
