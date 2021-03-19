@@ -141,9 +141,10 @@
           >
             SUBMIT
           </ee-button>
-          <div :class="['r3d-form__submit-error', { '--on': hasSubmitError }]">
-            {{ submitError }}
-          </div>
+          <ee-form-error :update="errorUpdVal"
+                         :text="errorText"
+                         custom-class="r3d-form__submit-error"
+          />
         </div>
         <ee-footer />
       </div>
@@ -177,6 +178,7 @@ import eeFooterVue  from '@/components/layout/ee-footer.vue';
 import { useStore } from "vuex";
 import { VuexStore } from "@/vuex/vuex-store";
 import { useAPI } from "@/services/api_internal";
+import eeFormErrorVue from "@/components/ui/ee-form-error.vue";
 
 type Question = { text: string, answer: string };
 
@@ -248,11 +250,12 @@ const _aptitudes = [
 
 export default defineComponent({
   components: {
-    'ee-titlebar' : titlebarVue,
-    'ee-text'     : eeTextVue,
-    'ee-button'   : eeButton,
-    'ee-input'    : eeInput,
-    'ee-footer'   : eeFooterVue,
+    'ee-titlebar'   : titlebarVue,
+    'ee-text'       : eeTextVue,
+    'ee-button'     : eeButton,
+    'ee-input'      : eeInput,
+    'ee-footer'     : eeFooterVue,
+    'ee-form-error' : eeFormErrorVue,
   },
   setup() {
     const titleBarVal = computed(() =>
@@ -269,8 +272,8 @@ export default defineComponent({
       isAccepted     : false,
       isCompleted    : false,
       isSubmitted    : false,
-      hasSubmitError : false,
-      submitError    : '',
+      errorUpdVal    : 0,
+      errorText      : '',
       userDataValid  : computed(() => emailRegex.test(email.value) && name.value.length >= minFieldChars),
       fieldsToFill   : computed(() => {
                         let fields = 0;
@@ -297,9 +300,8 @@ export default defineComponent({
     }
 
     function setSubmitError(err: string) {
-      formState.hasSubmitError = true;
-      formState.submitError = err;
-      setTimeout(() => formState.hasSubmitError = false, 2000);
+      formState.errorUpdVal = Date.now();
+      formState.errorText = err;
     }
 
     const accept   = () => forwardState('isAccepted');

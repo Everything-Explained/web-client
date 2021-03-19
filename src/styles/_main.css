@@ -18,6 +18,8 @@
 
 /*** Icon ***/
 @import '../components/ui/ee-icon.css';
+/*** Form Error **/
+@import '../components/ui/ee-form-error.css';
 /*** Input Field ***/
 @import '../components/ui/ee-input.css';
 @import '../components/ui/ee-input.mobile.css';

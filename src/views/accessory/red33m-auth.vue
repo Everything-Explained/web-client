@@ -34,18 +34,18 @@
       >
         ENTER
       </ee-button>
-
-      <div :class="['r3d-auth__error', { '--on': isError }]">
-        {{ errorText }}
-      </div>
+      <ee-form-error :update="errorUpdVal"
+                     :text="errorText"
+                     custom-class="r3d-auth__error"
+      />
     </form>
     <br>
-    <ee-text type='span-block' class="r3d-auth__note">
+    <ee-text type="span-block" class="r3d-auth__note">
       <strong>NOTE:</strong> Do not clear your browser cache, otherwise you
       will need to enter the code again, when you come back to this page
       later.
     </ee-text>
-    <ee-text class="r3d-auth__note" type='span-block'>
+    <ee-text class="r3d-auth__note" type="span-block">
       <strong>CAVEAT:</strong> The passcode will only be saved for <em>this device</em>.
       In order to view this content on your other devices:
       <strong>computer, phone, tablet, etc...</strong>
@@ -64,31 +64,30 @@ import eeText from '@/components/ui/ee-text.vue';
 import { useRouter } from "vue-router";
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
 import eeFooterVue from "@/components/layout/ee-footer.vue";
+import eeFormErrorVue from "@/components/ui/ee-form-error.vue";
 
 export default defineComponent({
   components: {
-    'ee-input'    : eeInputField,
-    'ee-button'   : eeButton,
-    'ee-titlebar' : eeTitlebarVue,
-    'ee-text'     : eeText,
-    'ee-footer'   : eeFooterVue,
+    'ee-input'      : eeInputField,
+    'ee-button'     : eeButton,
+    'ee-titlebar'   : eeTitlebarVue,
+    'ee-text'       : eeText,
+    'ee-footer'     : eeFooterVue,
+    'ee-form-error' : eeFormErrorVue,
   },
   setup() {
     const codeLength   = 6;
     const codeRef      = ref('');
     const errorTextRef = ref('');
-    const isErrorRef   = ref(false);
+    const errorUpdVal  = ref(0);
     const hasValidCode = computed(() => codeRef.value.length == codeLength);
     const api          = useAPI();
     const authAPI      = api.auth;
     const router       = useRouter();
 
-    let errorTimeout = 0;
     function setError(msg: string) {
-      clearTimeout(errorTimeout);
       errorTextRef.value = msg.toUpperCase();
-      isErrorRef.value   = true;
-      errorTimeout       = setTimeout(() => isErrorRef.value = false, 2500);
+      errorUpdVal.value = Date.now();
     }
 
     const submit = (e: MouseEvent) => {
@@ -111,9 +110,9 @@ export default defineComponent({
       hasValidCode,
       code: codeRef,
       codeLength,
-      isError: isErrorRef,
       submit,
       errorText: errorTextRef,
+      errorUpdVal,
     };
   }
 });

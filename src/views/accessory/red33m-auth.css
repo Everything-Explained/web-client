@@ -26,27 +26,4 @@
 
 .r3d-auth__error {
   margin-top: 30px;
-  font-size: 1.2rem;
-  letter-spacing: 2px;
-  word-spacing: 3px;
-  font-weight: 400;
-  color: hsl(0, 100%, 80%);
-  opacity: 0;
-  visibility: hidden;
-  transition:
-              opacity 2s ease-in,
-              visibility 2s ease-in
-            ;
-  text-shadow:  0    0    0   transparent,
-                0    0   10px hsl(0, 100%, 65%),
-                0    0   20px hsl(0, 100%, 65%),
-                0    0   40px hsl(0, 100%, 65%);
-}
-.r3d-auth__error.--on {
-  opacity: 1;
-  visibility: visible;
-  transition:
-              opacity 0.15s ease-out,
-              visibility 0.15s ease-out
-            ;
 }
