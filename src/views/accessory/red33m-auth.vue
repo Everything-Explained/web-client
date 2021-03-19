@@ -93,7 +93,7 @@ export default defineComponent({
     const submit = (e: MouseEvent) => {
       e.preventDefault();
       const passcode = codeRef.value.toUpperCase();
-      api.debounce(600, () => {
+      api.debounce(200, () => {
         authAPI
           .put('/red33m', { passcode })
           .then(() => {

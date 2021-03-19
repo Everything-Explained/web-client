@@ -312,13 +312,15 @@ export default defineComponent({
         email     : email.value,
         questions : questions.map(q => [q.text, q.answer])
       };
-      authAPI.post('/red33m', formData)
-        .then(() => {
-          forwardState('isSubmitted');
-          // Clear questions store
-          store.commit('data-cache-add', { name: 'form-questions', data: _questions.map(questionToRef) });
-        })
-        .catch(setSubmitError);
+      api.debounce(200, () => {
+        authAPI.post('/red33m', formData)
+          .then(() => {
+            forwardState('isSubmitted');
+            // Clear questions store
+            store.commit('data-cache-add', { name: 'form-questions', data: _questions.map(questionToRef) });
+          })
+          .catch(setSubmitError);
+      });
     };
 
     return {
