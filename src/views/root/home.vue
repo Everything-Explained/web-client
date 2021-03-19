@@ -9,7 +9,7 @@
 
 
 <script lang='ts'>
-import mdHomePages from '../../../release/web_client/_data/pages/home.json';
+import mdHomePages from '../../../release/web_client/_data/home.json';
 import { defineComponent } from "vue"
 ;
 import eeTitlebarVue from '@/components/layout/ee-titlebar.vue';

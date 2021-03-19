@@ -15,15 +15,8 @@
 import eeFooterVue from "@/components/layout/ee-footer.vue";
 import eeLiteratureVue from "@/components/layout/ee-literature.vue";
 import { defineComponent } from "vue";
-import logs from './changelog.json';
 
 export default defineComponent({
-  components: {
-    'ee-literature': eeLiteratureVue,
-    'ee-footer': eeFooterVue,
-  },
-  setup() {
-    return { logs };
-  }
+  components: { 'ee-literature': eeLiteratureVue, 'ee-footer': eeFooterVue, },
 });
 </script>
