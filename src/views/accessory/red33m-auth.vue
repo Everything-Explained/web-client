@@ -10,8 +10,8 @@
       <strong>Don't have a Passcode?</strong>
       <br>
       Fill out the
-      <router-link to="/red33m-form">
-        EC Form
+      <router-link to="/red33m/form">
+        {{ "EC Form" }} <!-- Removes spaces when rendered -->
       </router-link>
       to gain eligibility; filling out the form <em>does not</em>
       guarantee a Passcode, it only makes you eligible.
@@ -59,7 +59,7 @@
 import { computed, defineComponent, ref } from "vue";
 import eeButton from "@/components/ui/ee-button.vue";
 import eeInputField from "@/components/ui/ee-input.vue";
-import { useAuthAPI } from "@/services/api_internal";
+import { useAPI } from "@/services/api_internal";
 import eeText from '@/components/ui/ee-text.vue';
 import { useRouter } from "vue-router";
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
@@ -79,7 +79,8 @@ export default defineComponent({
     const errorTextRef = ref('');
     const isErrorRef   = ref(false);
     const hasValidCode = computed(() => codeRef.value.length == codeLength);
-    const authAPI      = useAuthAPI();
+    const api          = useAPI();
+    const authAPI      = api.auth;
     const router       = useRouter();
 
     let errorTimeout = 0;
@@ -93,18 +94,20 @@ export default defineComponent({
     const submit = (e: MouseEvent) => {
       e.preventDefault();
       const passcode = codeRef.value.toUpperCase();
-      authAPI
-        .put('/red33m', { passcode }, 500)
-        .then(() => {
-          localStorage.setItem('passcode', 'yes');
-          router.push('/red33m/videos');
-        })
-        .catch((err) => setError(err))
-      ;
+      api.debounce(600, () => {
+        authAPI
+          .put('/red33m', { passcode })
+          .then(() => {
+            localStorage.setItem('passcode', 'yes');
+            router.push('/red33m/videos');
+          })
+          .catch((err) => setError(err))
+        ;
+      });
     };
 
     return {
-      isLoading: authAPI.isLoading,
+      isLoading: api.isPending,
       hasValidCode,
       code: codeRef,
       codeLength,

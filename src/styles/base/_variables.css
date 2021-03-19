@@ -41,6 +41,7 @@
   --body-f-sz            : 1em;
   --body-bg-c            : hsl(197, 11%, 6.5%);
   --body-c               : hsl(197, 11%, 73%);
+  --body-dark-c          : hsl(197, 11%, 65%);
   --selection-bg-c       : hsla(197, 9%, 30%, 0.993); /* hsla(0, 40%, 41%, 0.993); */
   --scrollbar-c          : var(--panel-c);
   --scrollbar-hov-c      : hsl(197, 9%, 43%);
@@ -75,8 +76,8 @@
   --md-bq-quote-c       : hsl(197, 11%, 65%);
   --md-bullet-c         : var(--md-head-c);
   --md-bullet-hov-c     : hsl(47, 100%, 50%);
-  --md-code-c           : hsl(0, 0%, 80%);
-  --md-code-bg-c        : hsl(0, 0%, 25%);
+  --md-code-c           : var(--md-b-c);
+  --md-code-bg-c        : var(--panel-c);
   --md-code-hov-c       : hsl(279, 20%, 80%);
   --md-code-bg-hov-c    : hsl(278, 25%, 47%);
   --md-img-bxs-c        : hsla(0, 0%, 0%, 0.4);

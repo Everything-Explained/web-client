@@ -23,8 +23,14 @@
     width: 93%;
     padding-bottom: calc(93% / (16 / 9));
   }
-  .md h1         { font-size: 1.9rem; }
+  .md h1         { font-size: 1.5rem; }
   .md h2, .md h3 { font-size: 1.5rem; }
+}
+
+/*** 380px ***/
+@media only screen and (--small-screen) {
+  .md h1         { font-size: 1.4rem; }
+  .md h2, .md h3 { font-size: 1.4rem; }
 }
 
 

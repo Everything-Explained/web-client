@@ -1,0 +1,19 @@
+/*** 711px ***/
+@media only screen and (--large-screen) {
+}
+/*** 511px ***/
+@media only screen and (--medium-screen) {
+  .app-menu__header  { font-size: 1.4rem; padding-bottom: 0.2rem; }
+  .app-menu_category { font-size: 1.25rem; margin-top: 0.7rem; }
+  .app-menu_item a   { font-size: 1.13rem; }
+}
+/*** 380px ***/
+@media only screen and (--small-screen) {
+  .app-menu_category { font-size: 1.15rem; margin-top: 0.5rem; }
+  .app-menu_item a   { font-size: 1.05rem; }
+}
+/*** 320px ***/
+@media only screen and (--tiny-screen) {
+  .app-menu_category { font-size: 1.1rem; margin-top: 0.3rem; }
+  .app-menu_item a   { font-size: 1rem; }
+}

@@ -3,5 +3,6 @@
 @import './_defaults.css';
 @import './_animations.css';
 @import './_scrollbars.css';
-@import '../markdown/_md.css';
+@import './_inputs.css';
+
 

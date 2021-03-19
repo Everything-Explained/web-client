@@ -1,31 +1,34 @@
 import { isDevelopment, isProduction } from "../globals";
 
 type Route = {
-  path: { name: string }
+  path: string
   title: string;
   visible: boolean;
 }
 
-const mapRoute = (name: string, title: string, visible?: boolean) => (
-  { path: { name }, title, visible: visible ?? true } as Route
+const mapRoute = (path: string, title: string, visible?: boolean) => (
+  { path, title, visible: visible ?? true } as Route
 );
 
 const routeMap = [
   { name: 'root', routes: [
-    mapRoute('home', 'Home'),
-    mapRoute('blog', 'Blog'),
+    mapRoute('/home', 'Home'),
+    mapRoute('/blog', 'Blog'),
   ]},
   { name: 'Library', routes: [
-    mapRoute('lib-videos', 'Videos'),
-    mapRoute('lib-lit', 'Literature'),
+    mapRoute('/library/videos', 'Videos'),
+    mapRoute('/library/literature', 'Literature'),
   ]},
   { name: 'RED33M', routes: [
-    mapRoute('r3d-videos', 'Videos'),
-    mapRoute('r3d-lit', 'Literature'),
+    mapRoute('/red33m/videos', 'Videos'),
+    mapRoute('/red33m/literature', 'Literature'),
+  ]},
+  { name: 'Utility', routes: [
+    mapRoute('/changelog', 'ChangeLog')
   ]},
   { name: 'Accessory', hidden: isProduction, routes: [
-    mapRoute('red33m-auth', 'R3D Auth', isDevelopment),
-    mapRoute('red33m-form', 'R3D Form', isDevelopment)
+    mapRoute('/red33m/auth', 'R3D Auth', isDevelopment),
+    mapRoute('/red33m/form', 'R3D Form', isDevelopment)
   ]},
 ];
 

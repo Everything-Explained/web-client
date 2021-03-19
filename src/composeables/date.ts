@@ -23,19 +23,19 @@ export function useDate(date: Date|ISODateStr) {
         hours   : `${dateObj.getHours()}`,
         minutes : padTime(dateObj.getMinutes()),
         seconds : padTime(dateObj.getSeconds()),
-        amPM    : getAMPM(dateObj.getHours())
       };
     },
 
     to12HourTimeStrings() {
       return {
+        amPM: getAMPM(dateObj.getHours()),
         ...this.toTimeStrings(),
-        hours: `${get12HourClock(dateObj.getHours())}`
+        hours: `${get12HourClock(dateObj.getHours())}`,
       };
     },
 
     /** Returns a time formatted in: `h:mm ampm` */
-    to12HourFormat() {
+    to12HourTime() {
       const ts = this.to12HourTimeStrings();
       return `${ts.hours}:${ts.minutes} ${ts.amPM}`;
     },
@@ -56,6 +56,7 @@ export function useDate(date: Date|ISODateStr) {
       const timeSpan = {
         year   : 31536000,
         month  : 2592000,
+        week   : 604800,
         day    : 86400,
         hour   : 3600,
         minute : 60,
@@ -64,9 +65,13 @@ export function useDate(date: Date|ISODateStr) {
 
       let span: keyof typeof timeSpan;
       for (span in timeSpan) {
-        if (diff <= 3) return "a moment ago";
+        if (diff <= 13) return "a moment ago";
         if (diff > timeSpan[span]) {
-          return rtf.format(-Math.floor(diff / timeSpan[span]), span);
+          const relNum = Math.round(diff / timeSpan[span]);
+          if (span == 'week' && relNum == 4) {
+            return rtf.format(-1, 'month');
+          }
+          return rtf.format(-relNum, span);
         }
       }
     }

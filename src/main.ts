@@ -4,29 +4,12 @@ import App from './views/app.vue';
 import router from './router';
 import vuex from './vuex/vuex-store';
 import './styles/_main.css';
-import { useAuthAPI } from './services/api_internal';
+import { useAPI } from './services/api_internal';
 
 
-// Init passcode and user ID
-setTimeout(() => {
-  const api    = useAuthAPI();
-  const keys   = crypto.getRandomValues(new Uint8Array(20));
-  const userid =
-       localStorage.getItem('userid')
-    || keys.reduce((pv, cv) => pv += `${cv.toString(36)}`, '')
-  ;
-
-  // Will always be the most valid ID
-  localStorage.setItem('userid', userid);
-
-  api
-    .post('/user', { userid })
-    .then(res => {
-      if (res.status == 201) { localStorage.setItem('passcode', 'no') }
-    })
-    .catch(err => console.error(err))
-  ;
-}, 1300);
+// Initialize API
+const api = useAPI();
+api.init();
 
 
 const getElement = (id: string) => {
@@ -62,7 +45,7 @@ const cookiesAreEnabled = (() => {
 
 
 if (cookiesAreEnabled && browserIsSupported) {
-  createApp(App)
+  window['app'] = createApp(App)
     .use(vuex)
     .use(router)
     .mount('#app')
