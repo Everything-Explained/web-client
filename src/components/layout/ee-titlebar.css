@@ -11,6 +11,9 @@
   overflow         : visible;
   z-index          : 2;
 }
+.title-bar__text {
+  padding-right: 5px;
+}
 .title-bar__menu-icon {
   position   : absolute;
   top        : 0.45rem; left: 10px;
