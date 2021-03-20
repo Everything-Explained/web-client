@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { createApp } from 'vue';
-import App from './views/app.vue';
+import App from './app.vue';
 import router from './router';
 import vuex from './vuex/vuex-store';
 import './styles/_main.css';

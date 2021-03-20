@@ -47,9 +47,9 @@
 /*####### VIEWS #######*/
 /*#####################*/
 /*** App View ***/
-@import '../views/app.css';
-@import '../views/app.mobile.css';
-@import '../views/app.watermark.css';
+@import '../app.css';
+@import '../app.mobile.css';
+@import '../app.watermark.css';
 /*** Blog View -- Not Required ***/
 /*** Red33m ***/
 @import '../views/red33m/r3d.videos.css';

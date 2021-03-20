@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw } from 'vue-router';
 import { isAuthed } from '@/globals';
-import Home       from '@/views/root/home.vue';
+import Home       from '@/views/home.vue';
 import i404       from '@/views/errors/i404.vue';
 import R3dVideos  from '@/views/red33m/r3d.videos.vue';
-import Blog       from '@/views/root/blog.vue';
+import Blog       from '@/views/blog.vue';
 import Videos     from '@/views/library/lib.videos.vue';
 import Literature from '@/views/library/lib.literature.vue';
 import red33mAuth from '@/views/accessory/red33m-auth.vue';
