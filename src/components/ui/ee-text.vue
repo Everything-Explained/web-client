@@ -1,6 +1,6 @@
 
 <template>
-  <a v-if="type == 'link'" :href='href'><slot /></a>
+  <a v-if="type == 'link'" :href="href"><slot /></a>
   <div v-else-if="type == 'block'" :class="['md', customClass]">
     <p><slot /></p>
   </div>
@@ -18,27 +18,23 @@ const _textType = ['text', 'block', 'span-block', 'link'];
 
 export default defineComponent({
   props: {
-    href: String,
-    type: {
-      type: String,
-      default: 'text',
-      required: true,
-    },
-    class: String,
+    href:  { type: String, default: ''                      },
+    type:  { type: String, default: 'text', required: true, },
+    class: { type: String, default: ''                      },
   },
   setup(props) {
-    if (!_textType.includes(props.type))
-      throw Error(`ee-text:: Invalid type ${props.type} `)
+    const { type } = props;
+    if (!_textType.includes(type))
+      throw Error(`ee-text:: Invalid type ${type} `)
     ;
 
-    const isSpanBlock = props.type == 'span-block';
+    const isSpanBlock = type == 'span-block';
 
     return {
-      href: props.href || '',
-      customClass: props.class || '',
+      customClass: props.class,
       isSpanBlock,
-    }
+    };
   }
-})
+});
 
 </script>
