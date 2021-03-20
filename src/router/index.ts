@@ -10,6 +10,7 @@ import red33mAuth from '@/views/accessory/red33m-auth.vue';
 import red33mForm from '@/views/accessory/red33m-form.vue';
 import r3d_litVue from '@/views/red33m/r3d.literature.vue';
 import changelogVue from '@/views/utility/changelog.vue';
+import supportVue from '@/views/support.vue';
 
 
 function isAuthedGuard(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
@@ -20,6 +21,7 @@ function isAuthedGuard(to: RouteLocationNormalized, from: RouteLocationNormalize
 const routes: Array<RouteRecordRaw> = [
   { path: '/home', alias: '/',          name: 'home',        component: Home,         },
   { path: '/blog/:page?',               name: 'blog',        component: Blog,         },
+  { path: '/support',                   name: 'support',     component: supportVue,   },
   { path: '/red33m/videos',             name: 'r3d-videos',  component: R3dVideos,  beforeEnter: isAuthedGuard },
   { path: '/red33m/literature/:page?',  name: 'r3d-lit',     component: r3d_litVue, beforeEnter: isAuthedGuard },
   { path: '/red33m/auth',               name: 'red33m-auth', component: red33mAuth,   },

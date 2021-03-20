@@ -51,6 +51,9 @@
 @import '../app.mobile.css';
 @import '../app.watermark.css';
 /*** Blog View -- Not Required ***/
+/*** Support ***/
+@import '../views/support.css';
+@import '../views/support.mobile.css';
 /*** Red33m ***/
 @import '../views/red33m/r3d.videos.css';
 @import '../views/red33m/r3d.videos.mobile.css';
