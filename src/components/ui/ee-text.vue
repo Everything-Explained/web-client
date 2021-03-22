@@ -1,6 +1,9 @@
 
 <template>
   <a v-if="type == 'link'" :href="href"><slot /></a>
+  <div v-else-if="type == 'header'" :class="['md', customClass]">
+    <h1><slot /></h1>
+  </div>
   <div v-else-if="type == 'block'" :class="['md', customClass]">
     <p><slot /></p>
   </div>
@@ -14,7 +17,7 @@
 <script lang='ts'>
 import { defineComponent } from "vue";
 
-const _textType = ['text', 'block', 'span-block', 'link'];
+const _textType = ['text', 'block', 'header', 'span-block', 'link'];
 
 export default defineComponent({
   props: {
