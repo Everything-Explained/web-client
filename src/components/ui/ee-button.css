@@ -5,7 +5,12 @@
   font-family    : inherit;
   font-weight    : bold;
   font-size      : 1.1rem;
-  transition     : all 0.3s;
+  transition     :
+                   color 0.3s,
+                   background 0.3s,
+                   border 0.3s,
+                   box-shadow 0.3s
+                 ;
 }
 .ee-btn:active { top: 2px; left: 2px; }
 
