@@ -33,21 +33,21 @@
       want to share your own content?
     </ee-text>
     <ee-text type="block" class="support__after-header">
-      If you think you’ve got something of significant value and would like to use our platform to share your
-      unique content, <b>click the button below</b> and shoot us a message.
-      <em>We’re excited to see what you can bring to the table!</em>
+      Think you’ve got something of significant value and want to produce your own content for the community?
+      <b>Click the button below</b> and shoot us a message. We’re excited to see what you
+      can bring to the table!
     </ee-text>
-    <ee-button class="support__button">
+    <ee-button class="support__button" theme="dangerous">
       SHARE CONTENT WITH US
     </ee-button>
     <ee-text type="header">
       want to collaborate?
     </ee-text>
     <ee-text type="block" class="support__question">
-      If you've got the urge to collaborate with any of our team members, <b>click the button</b> below
-      and give yourself the chance to make it happen! <em>We're always open to broadening our content</em>.
+      Have the urge to collaborate with a member of the team? <b>Click the button below</b> and give yourself
+      the chance to make it happen!
     </ee-text>
-    <ee-button class="support__button">
+    <ee-button class="support__button" theme="dangerous">
       COLLABORATE WITH US
     </ee-button>
     <ee-text type="header">
@@ -58,7 +58,7 @@
       your organization or area of expertise? <b>Click the button below</b> and let us know what we
       need to correct.
     </ee-text>
-    <ee-button class="support__button">
+    <ee-button class="support__button" theme="dangerous">
       CORRECT US
     </ee-button>
     <ee-footer />
