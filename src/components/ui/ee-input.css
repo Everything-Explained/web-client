@@ -1,4 +1,7 @@
-.ee-input__container { text-align : left; }
+.ee-input__container {
+  display: inline-block;
+  text-align : left;
+}
 
 .ee-input__label {
   position       : absolute;
