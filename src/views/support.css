@@ -1,4 +1,4 @@
-
+.support
 
 .support__patreon {
   display: flex;
@@ -13,4 +13,13 @@
   border-bottom: 1px solid hsl(357, 100%, 63%);
   width: var(--patreon-width);
   height: calc(var(--patreon-width) * 0.20);
+}
+
+.support__after-header { margin-top: 0; }
+
+.support__button {
+  display: block;
+  margin-left: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
 }

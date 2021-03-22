@@ -15,11 +15,9 @@
     </ee-text>
     <ee-text type="block">
       Even if you’d simply like to help our contributors <b>make a living</b> through producing
-      more content, <em>your support furthers that possibility</em>.
-    </ee-text>
-    <ee-text type="block">
-      If any single one of these communal benefits appeals to your vision, then consider
-      becoming one of our beloved benefactors!
+      more content, <em>your support furthers that possibility</em>. If any single one of these
+      communal benefits appeals to your vision, then consider becoming one of our beloved
+      benefactors!
     </ee-text>
     <ee-text class="support__patreon">
       <span>Support our <b>ORG</b> on</span>
@@ -31,14 +29,38 @@
       Donations of any amount are <b>highly appreciated</b> and you can trust our commitment
       to create the transformations you’re passionate about!
     </ee-text>
-    <ee-text type="block">
-      Think you’ve got something of significant value and want to produce your own content for the community?
-      Click the link below and shoot us a message. We’re excited to see what you can bring to the table!
-      (insert link here)
+    <ee-text type="header">
+      want to share your own content?
     </ee-text>
-    <ee-text type="block"></ee-text>
-    <ee-text type="block"></ee-text>
-    <ee-text type="block"></ee-text>
+    <ee-text type="block" class="support__after-header">
+      If you think you’ve got something of significant value and would like to use our platform to share your
+      unique content, <b>click the button below</b> and shoot us a message.
+      <em>We’re excited to see what you can bring to the table!</em>
+    </ee-text>
+    <ee-button class="support__button">
+      SHARE CONTENT WITH US
+    </ee-button>
+    <ee-text type="header">
+      want to collaborate?
+    </ee-text>
+    <ee-text type="block" class="support__question">
+      If you've got the urge to collaborate with any of our team members, <b>click the button</b> below
+      and give yourself the chance to make it happen! <em>We're always open to broadening our content</em>.
+    </ee-text>
+    <ee-button class="support__button">
+      COLLABORATE WITH US
+    </ee-button>
+    <ee-text type="header">
+      is something incorrect?
+    </ee-text>
+    <ee-text type="block">
+      Did you see something posted in an article or video that you felt <b>inaccurately</b> represented
+      your organization or area of expertise? <b>Click the button below</b> and let us know what we
+      need to correct.
+    </ee-text>
+    <ee-button class="support__button">
+      CORRECT US
+    </ee-button>
     <ee-footer />
   </div>
 </template>
@@ -46,6 +68,7 @@
 
 <script lang='ts'>import eeFooterVue from "@/components/layout/ee-footer.vue";
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
+import eeButtonVue from "@/components/ui/ee-button.vue";
 import eeTextVue from "@/components/ui/ee-text.vue";
 import { defineComponent } from "@vue/runtime-core";
 
@@ -54,6 +77,7 @@ export default defineComponent({
     'ee-titlebar': eeTitlebarVue,
     'ee-footer': eeFooterVue,
     'ee-text': eeTextVue,
+    'ee-button': eeButtonVue,
   },
   setup() {
     //
