@@ -1,0 +1,27 @@
+/*** 711px ***/
+@media only screen and (--large-screen) {
+  .qnaf__input { width: 100% }
+  .qnaf__form { width: 90%; }
+}
+/*** 511px ***/
+@media only screen and (--medium-screen) {
+  .qnaf__form { width: 95%; }
+  .qnaf__question-container { padding-left: 0.8rem; }
+  .qnaf__question { font-size: 1.1rem; }
+  .qnaf__question::before {
+    font-size: 1.1rem;
+    margin-left: -1.2rem;
+  }
+  .qnaf__subtext { font-size: 1rem; }
+  .qnaf__validation-text {
+    margin: 0 auto !important;
+    margin-top: 1rem !important;
+  }
+  .qnaf__controls { justify-content: center; }
+}
+/*** 380px ***/
+@media only screen and (--small-screen) {
+}
+/*** 320px ***/
+@media only screen and (--tiny-screen) {
+}
