@@ -15,6 +15,9 @@
 @import '../components/layout/ee-menu.mobile.css';
 /*** Footer ***/
 @import '../components/layout/ee-footer.css';
+/*** QnA Form ***/
+@import '../components/layout/ee-qnaform.css';
+@import '../components/layout/ee-qnaform.mobile.css';
 
 /*** Icon ***/
 @import '../components/ui/ee-icon.css';
