@@ -10,14 +10,12 @@
 
 .qnaf__input,
 .qnaf__area-input {
-  margin-bottom: 2rem;
   width: 50%;
 }
 
-
 .qnaf__question-block {
-  margin-top: 2rem;
-}
+  margin-top: 2rem; }
+  .qnaf__question-block:nth-child(odd) { margin-top: 1rem; }
 
 .qnaf__question {
   font-size      : 1.20rem;
