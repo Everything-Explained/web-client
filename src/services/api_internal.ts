@@ -4,7 +4,7 @@ import wretch from 'wretch';
 
 
 
-type RequestBody   = { [key: string]: string|number|boolean }
+type RequestBody   = { [key: string]: string|number|boolean|Array<any> }
 type ErrorHandler  = null|((msg: string) => void);
 type Query         = { [key: string]: string|number };
 type AuthMethod    = 'put'|'post'|'get';
@@ -80,27 +80,29 @@ const dataAPI = {
 
 
 const authAPI = {
-  exec(resource: string, method: AuthMethod, body: RequestBody): AuthReturn {
-    return new Promise((rs, rj) => {
-      checkInitialization();
-      if (debounceOnPending(rs, () => authAPI.exec(resource, method, body))) return;
-      state.isLoading = true;
-      const api = method == 'get'
-        ? authEndpoint.url(resource).query(body)[method]()
-        : authEndpoint.url(resource)[method](body)
-      ;
-      api
-        .notFound(    () => rj('Endpoint Not Found'))
-        .res(async (res) => rs({ status: res.status, data: await res.text() }))
-        .catch(    (err) => rj(err?.message))
-        .finally(     () => state.isLoading = false)
-      ;
-    });
-  },
-  post: (endpoint: string, body: any) => authAPI.exec(endpoint, 'post', body),
-  put : (endpoint: string, body: any) => authAPI.exec(endpoint, 'put',  body),
-  get : (endpoint: string, body: any) => authAPI.exec(endpoint, 'get',  body)
+  post: (endpoint: string, body: RequestBody) => callAuthAPI(endpoint, 'post', body),
+  put : (endpoint: string, body: RequestBody) => callAuthAPI(endpoint, 'put',  body),
+  get : (endpoint: string, body: RequestBody) => callAuthAPI(endpoint, 'get',  body)
 };
+
+
+function callAuthAPI(resource: string, method: AuthMethod, body: RequestBody): AuthReturn {
+  return new Promise((rs, rj) => {
+    checkInitialization();
+    if (debounceOnPending(rs, () => callAuthAPI(resource, method, body))) return;
+    state.isLoading = true;
+    const api = method == 'get'
+      ? authEndpoint.url(resource).query(body)[method]()
+      : authEndpoint.url(resource)[method](body)
+    ;
+    api
+      .notFound(    () => rj('Endpoint Not Found'))
+      .res(async (res) => rs({ status: res.status, data: await res.text() }))
+      .catch(    (err) => rj(err?.message))
+      .finally(     () => state.isLoading = false)
+    ;
+  });
+}
 
 
 function checkInitialization() {
