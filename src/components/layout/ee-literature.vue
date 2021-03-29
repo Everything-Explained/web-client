@@ -82,21 +82,21 @@ export default defineComponent({
   },
   props: {
     size         : { type: String,  default: 'compact'       },
-    url          : { type: String,  default: ''              },
+    uri          : { type: String,  default: ''              },
     title        : { type: String,  default: 'Default Title' },
     contentClass : { type: String,  default: ''              },
     showAuthor   : { type: Boolean, default: true            },
     showDateTime : { type: Boolean, default: false           },
   },
   setup(props) {
-    const { size, url } = props;
+    const { size, uri } = props;
     const sizeClass = {
       'lit-expanded': size == 'expanded'
     };
-    if (!url) throw Error('literature::Missing URL');
+    if (!uri) throw Error('literature::Missing URL');
     if (!_sizes.includes(size)) throw Error('literature::Invalid Size')
     ;
-    const pager    = useStaticPager<Article>(url);
+    const pager    = useStaticPager<Article>(uri);
     const titleRef = computed(
       () => pager.pageTitle.value || props.title
     );

@@ -2,7 +2,7 @@
   <ee-literature title="Blog Entires"
                  size="expanded"
                  :show-date-time="true"
-                 url="/blog"
+                 uri="blog"
   />
 </template>
 
@@ -18,3 +18,4 @@ export default defineComponent({
   components: { 'ee-literature': eeLiteratureVue, },
 });
 </script>
+

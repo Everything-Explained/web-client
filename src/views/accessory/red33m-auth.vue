@@ -94,13 +94,13 @@ export default defineComponent({
       e.preventDefault();
       const passcode = codeRef.value.toUpperCase();
       api.debounce(200, () => {
-        authAPI
-          .put('/red33m', { passcode })
+        api
+          .put('/auth/red33m', { passcode })
           .then(() => {
             localStorage.setItem('passcode', 'yes');
             router.push('/red33m/videos');
           })
-          .catch((err) => setError(err))
+          .catch((err) => setError(err.message))
         ;
       });
     };

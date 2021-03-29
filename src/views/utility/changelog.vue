@@ -1,5 +1,5 @@
 <template>
-  <ee-literature url="/changelog"
+  <ee-literature uri="changelog"
                  size="expanded"
                  :show-date-time="true"
                  :show-author="false"
@@ -16,3 +16,4 @@ export default defineComponent({
   components: { 'ee-literature': eeLiteratureVue, },
 });
 </script>
+

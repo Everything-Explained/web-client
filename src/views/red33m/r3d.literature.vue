@@ -1,7 +1,7 @@
 <template>
   <div class="r3d-lit">
     <ee-literature title="RED33M Literature"
-                   url="/red33m/literature"
+                   uri="red33m/literature"
     />
   </div>
 </template>

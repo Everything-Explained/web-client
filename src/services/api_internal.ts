@@ -3,12 +3,20 @@ import { isProduction } from "../globals";
 import wretch from 'wretch';
 
 
+export interface APIResponse<T> {
+  status: number;
+  data: T
+}
 
+interface APIOptions {
+  endpoint: string;
+  method: 'get'|'put'|'post';
+  body: RequestBody;
+  type?: APIReqType;
+}
+
+type APIReqType    = 'dynamic'|'static';
 type RequestBody   = { [key: string]: string|number|boolean|Array<any> }
-type ErrorHandler  = null|((msg: string) => void);
-type Query         = { [key: string]: string|number };
-type AuthMethod    = 'put'|'post'|'get';
-type AuthReturn    = Promise<{ status: number, data: string }>;
 
 
 const genUniqueID = () =>
@@ -30,76 +38,51 @@ const sanitizeURLForEnv = (url: string) => {
   return isProduction ? url : `//localhost:3003${url}`;
 };
 
-const dataEndpoint =
-  wretch().url(sanitizeURLForEnv('/api/data')).auth(`Bearer ${state.userid || 'none'}`)
+const apiEndpoint =
+  wretch().url(sanitizeURLForEnv('/api')).auth(`Bearer ${state.userid || 'none'}`)
 ;
 
-const authEndpoint =
-  wretch().url(sanitizeURLForEnv('/api/auth')).auth(`Bearer ${state.userid || 'none'}`)
-;
+
 
 async function init() {
   state.initializing = true;
   // Is always a valid userid
   localStorage.setItem('userid', state.userid)
   ;
-  const res = await authAPI.get('/setup', { userid: state.userid });
+  const res = await API.get<{version: string}>('/auth/setup', { userid: state.userid });
   // User id created
   if (res.status == 201) localStorage.setItem('passcode', 'no');
-  if (!state.version || state.version != res.data) {
-    localStorage.setItem('version', res.data);
-    state.version = res.data;
+  if (!state.version || state.version != res.data.version) {
+    localStorage.setItem('version', res.data.version);
+    state.version = res.data.version;
   }
   state.isInitialized = true;
 }
 
 
-const dataAPI = {
-  get(resource: string, errHandler?: ErrorHandler, query?: Query) {
-    return new Promise((rs) => {
-      checkInitialization();
-      if (debounceOnPending(rs, () => dataAPI.get(resource, errHandler, query))) return;
-      state.isLoading = true;
-      const sendError = errHandler ? errHandler : rs;
-      const queryObj = query
-        ? { ...query, version: state.version }
-        : { version: state.version }
-      ;
-      dataEndpoint
-        .url(`${resource}.json`)
-        .query(queryObj)
-        .get()
-        .notFound(() => sendError('Endpoint Not Found'))
-        .json(res => rs(res))
-        .catch(err => sendError(err?.message))
-        .finally(() => state.isLoading = false)
-      ;
-    });
-  }
-};
-
-
-const authAPI = {
-  post: (endpoint: string, body: RequestBody) => callAuthAPI(endpoint, 'post', body),
-  put : (endpoint: string, body: RequestBody) => callAuthAPI(endpoint, 'put',  body),
-  get : (endpoint: string, body: RequestBody) => callAuthAPI(endpoint, 'get',  body)
-};
-
-
-function callAuthAPI(resource: string, method: AuthMethod, body: RequestBody): AuthReturn {
+function callAPI<T>(opts: APIOptions): Promise<APIResponse<T>> {
+  opts.type = opts.type || 'dynamic';
+  const { endpoint, method, body, type } = opts;
+  checkInitialization();
   return new Promise((rs, rj) => {
-    checkInitialization();
-    if (debounceOnPending(rs, () => callAuthAPI(resource, method, body))) return;
+    if (debounceOnPending(rs, () => callAPI(opts))) return;
     state.isLoading = true;
+    const query = type == 'static'
+      ? { ...body, version: state.version }
+      : body
+    ;
     const api = method == 'get'
-      ? authEndpoint.url(resource).query(body)[method]()
-      : authEndpoint.url(resource)[method](body)
+      ? apiEndpoint.url(endpoint).query(query)[method]()
+      : apiEndpoint.url(endpoint)[method](body)
     ;
     api
-      .notFound(    () => rj('Endpoint Not Found'))
-      .res(async (res) => rs({ status: res.status, data: await res.text() }))
-      .catch(    (err) => rj(err?.message))
-      .finally(     () => state.isLoading = false)
+      .notFound(() => rj('Endpoint Not Found'))
+      .res(async (res) => rs({
+        status: res.status,
+        data: method == 'get' ? await res.json() : await res.text()
+      }))
+      .catch(rj)
+      .finally(() => state.isLoading = false)
     ;
   });
 }
@@ -132,12 +115,25 @@ function debounce(delay: number, func: () => void) {
 }
 
 
+const API = {
+  get<T>(endpoint: string, query: RequestBody|null, type: APIReqType = 'dynamic') {
+    return callAPI<T>({ endpoint, method: 'get', body: query || {}, type });
+  },
+  post<T>(endpoint: string, body: RequestBody) {
+    return callAPI<T>({ endpoint, method: 'post', body });
+  },
+  put<T>(endpoint: string, body: RequestBody) {
+    return callAPI<T>({ endpoint, method: 'put', body });
+  }
+};
+
+
+
 export function useAPI() {
   return {
     init,
     debounce,
-    auth: authAPI,
-    data: dataAPI,
+    ...API,
     isPending: computed(() => state.isDebouncing || state.isLoading)
   };
 }

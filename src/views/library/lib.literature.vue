@@ -1,6 +1,6 @@
 <template>
   <ee-literature title="Library Literature"
-                 url="/library/literature"
+                 uri="library/literature"
   />
 </template>
 

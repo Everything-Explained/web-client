@@ -35,7 +35,7 @@
 import { computed, defineComponent } from "vue";
 import { useTask } from "vue-concurrency";
 import { useStore } from "vuex";
-import { useAPI } from "@/services/api_internal";
+import { APIResponse, useAPI } from "@/services/api_internal";
 import { VuexStore } from "@/vuex/vuex-store"
 ;
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
@@ -52,14 +52,14 @@ export default defineComponent({
   },
   setup() {
     const store      = useStore<VuexStore>();
-    const api        = useAPI().data;
+    const api        = useAPI();
     const categories = computed(() => store.state.dataCache['library/videos']);
 
     const getVideos = useTask(function*() {
-      const videoData = yield api.get('/library/videos', console.error);
+      const resp: APIResponse<any> = yield api.get('/data/library/videos.json', null, 'static');
       const videos = [];
-      for (const cat in videoData) {
-        videos.push({name: cat, videos: videoData[cat]});
+      for (const cat in resp.data) {
+        videos.push({name: cat, videos: resp.data[cat]});
       }
       store.commit('data-cache-add', { name: 'library/videos', data: videos });
     });

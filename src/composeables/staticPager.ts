@@ -1,4 +1,4 @@
-import { useAPI } from "@/services/api_internal";
+import { APIResponse, useAPI } from "@/services/api_internal";
 import { VuexStore } from "@/vuex/vuex-store";
 import { computed, ref, watch } from "vue";
 import { useTask } from "vue-concurrency";
@@ -31,8 +31,8 @@ export function useStaticPager<T extends StaticPage>(url: string) {
 
   const api = useAPI();
   const getPageData = useTask(function*() {
-    const data = yield api.data.get(url, console.error);
-    store.commit('data-cache-add', { name: url, data });
+    const resp: APIResponse<StaticPage[]> = yield api.get(`/data/${url}.json`, null, 'static');
+    store.commit('data-cache-add', { name: url, data: resp.data });
     // The URL points to a specific page on index load
     if (pageURI) displayPage(pageURI);
   });
@@ -40,7 +40,7 @@ export function useStaticPager<T extends StaticPage>(url: string) {
   const isRunning = computed(() => getPageData.isRunning);
 
   function goTo(uri: string) {
-    router.push(`${url}/${uri}`);
+    router.push(`/${url}/${uri}`);
   }
 
   // onRouteChange
