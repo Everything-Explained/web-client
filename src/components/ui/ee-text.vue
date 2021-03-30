@@ -21,9 +21,9 @@ const _textType = ['text', 'block', 'header', 'span-block', 'link'];
 
 export default defineComponent({
   props: {
-    href:  { type: String, default: ''                      },
-    type:  { type: String, default: 'text', required: true, },
-    class: { type: String, default: ''                      },
+    href:  { type: String, default: ''     },
+    type:  { type: String, default: 'text' },
+    class: { type: String, default: ''     },
   },
   setup(props) {
     const { type } = props;
