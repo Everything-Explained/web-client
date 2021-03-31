@@ -1,4 +1,10 @@
-.support
+.support .title-bar {
+  text-transform: capitalize;
+}
+
+.support .title-bar.--submitted {
+  color: hsl(161, 67%, 67%);
+}
 
 .support__patreon {
   display: flex;
@@ -17,9 +23,22 @@
 
 .support__after-header { margin-top: 0; }
 
+.support__text-input {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  width: 250px;
+}
+
 .support__button {
   display: block;
   margin-left: 1rem;
   margin-top: 2rem;
   margin-bottom: 4rem;
 }
+
+
+.support__submitted {
+  margin-top: 3rem;
+  width: 70%;
+}
+
