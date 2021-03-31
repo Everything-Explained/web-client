@@ -56,6 +56,11 @@
     font-size: 1.3rem;
     color: hsl(47, 80%, 60%); }
 
+.qnaf__error-text {
+  margin: auto;
+  margin-left: 1rem;
+}
+
 .qnaf__back-button {
   margin-right: 1rem;
 }

@@ -6,7 +6,9 @@
                 :minchars="3"
                 :maxchars="20"
                 :validate="validateInput"
+                :regex="nameRegex"
                 :tally="true"
+                :errmsg="'<em>Special characters</em> are not allowed'"
       >
         {{ nameLabel }}
       </ee-input>
@@ -20,7 +22,7 @@
         E-Mail
       </ee-input>
       <br>
-      <div v-for="(q, i) of questionObjs"
+      <div v-for="(q, i) of questionRefs"
            :key="i"
            class="qnaf__question-block"
       >
@@ -48,14 +50,21 @@
         >
           BACK
         </ee-button>
-        <ee-button :theme="'attention'" :disabled="!areInputsValidated">
+        <ee-button :theme="'attention'"
+                   :disabled="!areInputsValidated"
+                   :loading="isSubmitting"
+                   @click="submit"
+        >
           SUBMIT
         </ee-button>
-        <transition name="fade">
-          <ee-text v-if="remainingInputs > 0" class="qnaf__validation-text">
-            <strong>{{ remainingInputs }}</strong> field(s) require(s) attention
-          </ee-text>
-        </transition>
+        <ee-text v-if="remainingInputs > 0" class="qnaf__validation-text">
+          <strong>{{ remainingInputs }}</strong> field(s) require(s) attention
+        </ee-text>
+        <ee-form-error v-else
+                       class="qnaf__error-text"
+                       :update="errorUpdate"
+                       :text="errorText"
+        />
       </div>
     </div>
   </div>
@@ -63,52 +72,78 @@
 
 
 <script lang='ts'>
-import useInputValidation from "@/composeables/inputValidation";
-import { defineComponent, PropType, reactive, toRefs } from "@vue/runtime-core";
-import eeButtonVue from "../ui/ee-button.vue";
-import eeInputVue from "../ui/ee-input.vue";
-import eeTextVue from "../ui/ee-text.vue";
+  import { computed, defineComponent, PropType, reactive, toRefs } from "@vue/runtime-core";
+  import useInputValidation from "@/composeables/inputValidation";
+  import { useAPI }         from "@/services/api_internal";
+  import eeButtonVue        from "../ui/ee-button.vue";
+  import eeFormErrorVue     from "../ui/ee-form-error.vue";
+  import eeInputVue         from "../ui/ee-input.vue";
+  import eeTextVue          from "../ui/ee-text.vue";
 
 
-export type FormQuestion = { text: string; subtext?: string; answer: string; }
+export type FormQuestion = { text: string; subtext?: string; answer?: string; }
 
 
 export default defineComponent({
   components: {
-    'ee-text': eeTextVue,
-    'ee-input': eeInputVue,
-    'ee-button': eeButtonVue,
+    'ee-text'       : eeTextVue,
+    'ee-input'      : eeInputVue,
+    'ee-button'     : eeButtonVue,
+    'ee-form-error' : eeFormErrorVue,
   },
   props: {
+    type      : { type: Number  as PropType<number>,         required: true       },
     questions : { type: Array   as PropType<FormQuestion[]>, default: []          },
     nameLabel : { type: String  as PropType<string>,         default: 'Your Name' },
     showBack  : { type: Boolean as PropType<boolean>,        default: false       },
-    uri       : { type: String  as PropType<string>,         default: ''          },
     minchars  : { type: Number  as PropType<number>,         default: 100         },
     maxchars  : { type: Number  as PropType<number>,         default: 500         },
   },
   emits: ['back', 'submitted'],
   setup(props, ctx) {
-    const { questions, uri } = props;
-    const questionObjs  = props.questions.map(reactive);
-
+    const api             = useAPI();
+    const nameRegex       = /^[^(){}\-[\]!@#$%^&*_+=<>.,?'";:|\\/`~]+$/i;
+    const questions       = computed(() => props.questions.map(q => reactive({ ...q, answer: q.answer || ''})));
     const inputValidation = useInputValidation(2 + props.questions.length);
+    const formData        = reactive({ name: '', email: '', });
+    const formState       = reactive({ errorUpdate: 0, errorText: '' });
 
-    const formData = reactive({
-      name: '',
-      email: '',
-    });
+    if (!props.questions.length) throw Error('qnaform::Missing Questions');
 
-    if (!questions.length) throw Error('qnaform::Missing Questions');
+    function setFormError(msg: string) {
+      formState.errorUpdate = Date.now();
+      formState.errorText = msg;
+    }
+
+
+
+    function submit() {
+      const qData = {
+        ...formData,
+        type: props.type,
+        questions: questions.value.map(q => ({ text: q.text, answer: q.answer }))
+      };
+      api
+        .post('/form/qna', qData)
+        .then(() => ctx.emit('submitted'))
+        .catch(setFormError)
+      ;
+    }
 
     return {
       ...toRefs(formData),
+      ...toRefs(formState),
       validateInput: inputValidation.validate,
       remainingInputs: inputValidation.remaining,
       areInputsValidated: inputValidation.isValidated,
-      questionObjs,
+      questionRefs: questions,
+      isSubmitting: api.isPending,
+      submit,
+      nameRegex,
     };
   }
 });
 
 </script>
+
+
