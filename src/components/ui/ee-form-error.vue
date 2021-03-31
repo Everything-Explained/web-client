@@ -1,7 +1,7 @@
 <template>
-  <div :class="['eeform-error',{ '--show': showError}, customClass]">
+  <span :class="['eeform-error',{ '--show': showError}, customClass]">
     {{ text }}
-  </div>
+  </span>
 </template>
 
 
@@ -11,9 +11,9 @@ import { defineComponent, ref, watch } from "@vue/runtime-core";
 
 export default defineComponent({
   props: {
-    update:      { type: Number,  default: 0              },
-    text:        { type: String,  default: 'Default Text' },
-    customClass: { type: String,  default: ''             },
+    update : { type: Number,  default: 0              },
+    text   : { type: String,  default: 'Default Text' },
+    class  : { type: String,  default: ''             },
   },
   setup(props) {
     const showError = ref(false);
@@ -26,7 +26,7 @@ export default defineComponent({
     }
 
     watch(() => props.update, toggleError);
-    return { showError };
+    return { showError, customClass: props.class };
   }
 });
 
