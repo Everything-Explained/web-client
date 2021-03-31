@@ -1,8 +1,9 @@
 <template>
-  <ee-literature title="Blog Entires"
-                 size="expanded"
-                 :show-date-time="true"
-                 uri="blog"
+  <ee-literature
+    title="Blog Entires"
+    size="expanded"
+    :show-date-time="true"
+    uri="blog"
   />
 </template>
 

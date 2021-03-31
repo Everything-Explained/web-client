@@ -1,30 +1,34 @@
 <template>
   <div class="qnaf">
     <div class="qnaf__form">
-      <ee-input v-model="name"
-                class="qnaf__input"
-                :minchars="3"
-                :maxchars="20"
-                :validate="validateInput"
-                :regex="nameRegex"
-                :tally="true"
-                :errmsg="'<em>Special characters</em> are not allowed'"
+      <ee-input
+        v-model="name"
+        class="qnaf__input"
+        :minchars="3"
+        :maxchars="20"
+        :validate="validateInput"
+        :regex="nameRegex"
+        :tally="true"
+        :errmsg="'<em>Special characters</em> are not allowed'"
       >
         {{ nameLabel }}
       </ee-input>
       <br>
 
-      <ee-input v-model="email"
-                class="qnaf__input"
-                type="email"
-                :validate="validateInput"
+      <ee-input
+        v-model="email"
+        class="qnaf__input"
+        type="email"
+        :validate="validateInput"
       >
         E-Mail
       </ee-input>
       <br>
-      <div v-for="(q, i) of questionRefs"
-           :key="i"
-           class="qnaf__question-block"
+
+      <div
+        v-for="(q, i) of questionRefs"
+        :key="i"
+        class="qnaf__question-block"
       >
         <div class="qnaf__question-container">
           <span :data-num="i + 1 + '⁍'" class="qnaf__question">{{ q.text }}</span>
@@ -33,37 +37,41 @@
             {{ q.subtext }}
           </div>
         </div>
-        <ee-input v-model="q.answer"
-                  type="area"
-                  class="qnaf__area-input"
-                  :minchars="minchars"
-                  :maxchars="maxchars"
-                  :placeholder="'Answer here...'"
-                  :validate="validateInput"
+        <ee-input
+          v-model="q.answer"
+          type="area"
+          class="qnaf__area-input"
+          :minchars="minchars"
+          :maxchars="maxchars"
+          :placeholder="'Answer here...'"
+          :validate="validateInput"
         />
       </div>
       <div class="qnaf__controls">
-        <ee-button v-if="showBack"
-                   class="qnaf__back-button"
-                   type="neutral"
-                   @click="$emit('back')"
+        <ee-button
+          v-if="showBack"
+          class="qnaf__back-button"
+          type="neutral"
+          @click="$emit('back')"
         >
           BACK
         </ee-button>
-        <ee-button :theme="'attention'"
-                   :disabled="!areInputsValidated"
-                   :loading="isSubmitting"
-                   @click="submit"
+        <ee-button
+          :theme="'attention'"
+          :disabled="!areInputsValidated"
+          :loading="isSubmitting"
+          @click="submit"
         >
           SUBMIT
         </ee-button>
         <ee-text v-if="remainingInputs > 0" class="qnaf__validation-text">
           <strong>{{ remainingInputs }}</strong> field(s) require(s) attention
         </ee-text>
-        <ee-form-error v-else
-                       class="qnaf__error-text"
-                       :update="errorUpdate"
-                       :text="errorText"
+        <ee-form-error
+          v-else
+          class="qnaf__error-text"
+          :update="errorUpdate"
+          :text="errorText"
         />
       </div>
     </div>

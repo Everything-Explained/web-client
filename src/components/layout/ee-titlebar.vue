@@ -1,12 +1,14 @@
 <template>
   <div class="title-bar">
-    <ee-icon :class="['title-bar__menu-icon', { '--menu-open': isMenuOpen }]"
-             :type="'menu'"
-             @mousedown="openMenu"
+    <ee-icon
+      :class="['title-bar__menu-icon', { '--menu-open': isMenuOpen }]"
+      :type="'menu'"
+      @mousedown="openMenu"
     />
-    <transition name="fade"
-                :duration="{ enter, leave }"
-                mode="out-in"
+    <transition
+      name="fade"
+      :duration="{ enter, leave }"
+      mode="out-in"
     >
       <div :key="text" class="title-bar__text">
         {{ text }} <slot />

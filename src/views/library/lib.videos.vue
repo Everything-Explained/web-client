@@ -6,19 +6,21 @@
     <transition name="fade" mode="out-in">
       <div v-if="!categories" class="preloader page" />
       <div v-else>
-        <div v-for="(cat, i) of categories"
-             :key="i"
-             class="category"
+        <div
+          v-for="(cat, i) of categories"
+          :key="i"
+          class="category"
         >
           <div class="category_name">
             {{ cat.name }}
           </div>
           <div class="cat_video-tray --default-scrollbar">
-            <ee-video v-for="(v, j) of cat.videos"
-                      :key="j"
-                      class="lib-videos_video"
-                      :video-id="v.id"
-                      :desc="v.content"
+            <ee-video
+              v-for="(v, j) of cat.videos"
+              :key="j"
+              class="lib-videos_video"
+              :video-id="v.id"
+              :desc="v.content"
             >
               {{ v.title }}
             </ee-video>

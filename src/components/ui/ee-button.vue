@@ -1,7 +1,8 @@
 <template>
-  <button :class="['ee-btn', theme, { '--loading': loading }]"
-          :type="undefined"
-          :disabled="isDisabled"
+  <button
+    :class="['ee-btn', theme, { '--loading': loading }]"
+    :type="undefined"
+    :disabled="isDisabled"
   >
     <slot />
   </button>

@@ -2,19 +2,22 @@
   <div class="ee-video">
     <div class="ee-video_img-container">
       <ee-img :src="thumbnail" class="ee-video_img" />
-      <ee-icon :class="['ee-video_widget ee-video_widget-open-video', { '--open': descState }]"
-               type="export"
-               @click="openVideo"
+      <ee-icon
+        :class="['ee-video_widget ee-video_widget-open-video', { '--open': descState }]"
+        type="export"
+        @click="openVideo"
       />
-      <ee-icon v-if="description"
-               :class="['ee-video_widget ee-video_widget-open-desc', { '--open': descState }]"
-               type="info"
-               @click="setDescState('open')"
+      <ee-icon
+        v-if="description"
+        :class="['ee-video_widget ee-video_widget-open-desc', { '--open': descState }]"
+        type="info"
+        @click="setDescState('open')"
       />
       <div :class="['ee-video_desc', { '--open': descState }]">
-        <ee-icon class="ee-video_widget ee-video_widget-close-desc"
-                 type="cross"
-                 @click="setDescState('closed')"
+        <ee-icon
+          class="ee-video_widget ee-video_widget-close-desc"
+          type="cross"
+          @click="setDescState('closed')"
         />
         <div class="ee-video-desc_text">
           <h1>Description</h1>

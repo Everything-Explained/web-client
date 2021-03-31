@@ -1,8 +1,9 @@
 <template>
   <div :class="['lit', sizeClass]">
-    <ee-titlebar :ease-in="350"
-                 :ease-out="350"
-                 :text="titleRef"
+    <ee-titlebar
+      :ease-in="350"
+      :ease-out="350"
+      :text="titleRef"
     />
     <transition name="fade" mode="out-in">
       <div v-if="isRunning" class="preloader page" />

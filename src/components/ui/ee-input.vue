@@ -1,31 +1,34 @@
 <template>
   <div class="ee-input__container">
     <!-- TEXT FIELD -->
-    <input v-if="isTextField"
-           :id="id"
-           :class="['ee-input__text', { '--limit-reached': charLimitReached && hasValidInput }]"
-           :type="type"
-           :minlength="minchars"
-           :maxlength="maxchars"
-           :value="modelValue"
-           placeholder="placeholder"
-           @input="onInput($event), $emit('update:modelValue', getVal($event))"
+    <input
+      v-if="isTextField"
+      :id="id"
+      :class="['ee-input__text', { '--limit-reached': charLimitReached && hasValidInput }]"
+      :type="type"
+      :minlength="minchars"
+      :maxlength="maxchars"
+      :value="modelValue"
+      placeholder="placeholder"
+      @input="onInput($event), $emit('update:modelValue', getVal($event))"
     >
     <!-- Floating LABEL -->
-    <label v-if="isTextField"
-           class="ee-input__label"
-           :for="id"
+    <label
+      v-if="isTextField"
+      class="ee-input__label"
+      :for="id"
     ><slot /></label>
 
-    <textarea v-if="type == 'area'"
-              :id="id"
-              ref="areaText"
-              :class="['ee-input__area', { '--limit-reached': charLimitReached }]"
-              :value="modelValue"
-              :placeholder="placeholder"
-              :maxlength="maxchars"
-              @keyup="validate(charLimitReached && hasValidInput, id)"
-              @input="onInput($event), $emit('update:modelValue', getVal($event))"
+    <textarea
+      v-if="type == 'area'"
+      :id="id"
+      ref="areaText"
+      :class="['ee-input__area', { '--limit-reached': charLimitReached }]"
+      :value="modelValue"
+      :placeholder="placeholder"
+      :maxlength="maxchars"
+      @keyup="validate(charLimitReached && hasValidInput, id)"
+      @input="onInput($event), $emit('update:modelValue', getVal($event))"
     />
 
     <!-- Animated Bottom Border -->
@@ -33,25 +36,28 @@
 
     <!-- Character Length Tally **/** -->
     <transition name="fade">
-      <span v-if="isTextField ? showCharTally && tally : tally || showCharTally"
-            :class="[
-              'ee-input__char-limit',
-              { '--length-reached': charLengthReached,
-                '--limit-reached' : charLimitReached }
-            ]"
+      <span
+        v-if="isTextField ? showCharTally && tally : tally || showCharTally"
+        :class="[
+          'ee-input__char-limit',
+          { '--length-reached': charLengthReached,
+            '--limit-reached' : charLimitReached }
+        ]"
       >
         {{ charLength }}&nbsp;/&nbsp;{{ maxchars }}
       </span>
     </transition>
     <transition name="fade">
-      <span v-if="isTextField ? showCharLimit && tally : showCharLimit"
-            class="ee-input__char-limit-msg"
+      <span
+        v-if="isTextField ? showCharLimit && tally : showCharLimit"
+        class="ee-input__char-limit-msg"
       >
         <em>{{ charsRequired }}</em> more chars required
       </span>
-      <span v-else-if="!hasValidInput && charLength > 0"
-            class="ee-input__error-msg"
-            v-html="errorMessage"
+      <span
+        v-else-if="!hasValidInput && charLength > 0"
+        class="ee-input__error-msg"
+        v-html="errorMessage"
       />
     </transition>
   </div>

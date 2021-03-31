@@ -2,24 +2,28 @@
   <fieldset>
     <legend>{{ legend }}</legend>
     <div class="toggle">
-      <input id="toggleLeft"
-             type="radio"
-             name="toggle"
-             :checked="true"
-             :disabled="props.prevent"
+      <input
+        id="toggleLeft"
+        type="radio"
+        name="toggle"
+        :checked="true"
+        :disabled="props.prevent"
       >
-      <label :class="{ '--wait': props.prevent }"
-             for="toggleLeft"
-             @click="toggle(false)"
+      <label
+        :class="{ '--wait': props.prevent }"
+        for="toggleLeft"
+        @click="toggle(false)"
       >{{ leftText }}</label>
-      <input id="toggleRight"
-             type="radio"
-             name="toggle"
-             :disabled="props.prevent"
+      <input
+        id="toggleRight"
+        type="radio"
+        name="toggle"
+        :disabled="props.prevent"
       >
-      <label :class="{ '--wait': props.prevent }"
-             for="toggleRight"
-             @click="toggle(true)"
+      <label
+        :class="{ '--wait': props.prevent }"
+        for="toggleRight"
+        @click="toggle(true)"
       >{{ rightText }}</label>
     </div>
   </fieldset>

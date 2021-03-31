@@ -1,9 +1,10 @@
 <template>
   <div class="support">
-    <ee-titlebar :class="{ '--submitted': isSubmitted}"
-                 :text="pageTitle"
-                 :ease-in="350"
-                 :ease-out="350"
+    <ee-titlebar
+      :class="{ '--submitted': isSubmitted}"
+      :text="pageTitle"
+      :ease-in="350"
+      :ease-out="350"
     />
     <transition name="fade" mode="out-in">
       <div v-if="!isFormActive">
@@ -79,18 +80,20 @@
         <ee-footer />
       </div>
       <div v-else-if="!isSubmitted">
-        <ee-qnaform :questions="questions"
-                    :type="formType"
-                    :name-label="'Name or Preferred Title'"
-                    :show-back="true"
-                    @back="back"
-                    @submitted="submitted"
+        <ee-qnaform
+          :questions="questions"
+          :type="formType"
+          :name-label="'Name or Preferred Title'"
+          :show-back="true"
+          @back="back"
+          @submitted="submitted"
         />
         <ee-footer />
       </div>
-      <ee-text v-else
-               class="support__submitted"
-               type="block"
+      <ee-text
+        v-else
+        class="support__submitted"
+        type="block"
       >
         Thank you for your interest in our platform! Our team will try to get
         back to you <strong>within 7 days</strong> for our response.

@@ -4,19 +4,21 @@
     <transition name="fade" mode="out-in">
       <div v-if="getVideos.isRunning" class="preloader page" />
       <div v-else>
-        <ee-toggle class="red33m-toggle"
-                   legend="Sort By"
-                   left-text="Oldest"
-                   right-text="Latest"
-                   :callback="toggle"
-                   :prevent="isToggling"
+        <ee-toggle
+          class="red33m-toggle"
+          legend="Sort By"
+          left-text="Oldest"
+          right-text="Latest"
+          :callback="toggle"
+          :prevent="isToggling"
         />
         <div class="red33m-video-list">
-          <ee-video v-for="(v, i) of videos"
-                    :key="i"
-                    :video-id="v.id"
-                    :desc="v.content"
-                    class="red33m-video"
+          <ee-video
+            v-for="(v, i) of videos"
+            :key="i"
+            :video-id="v.id"
+            :desc="v.content"
+            class="red33m-video"
           >
             {{ v.title }}
           </ee-video>
