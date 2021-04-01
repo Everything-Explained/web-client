@@ -98,7 +98,7 @@
         class="support__submitted"
         type="block"
       >
-        Thank you for your interest in our platform! Our team will try to get
+        Thank you for your interest in our content! Our team will try to get
         back to you <strong>within 7 days</strong> for our response.
       </ee-text>
     </transition>
