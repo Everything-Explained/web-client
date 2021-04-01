@@ -28,6 +28,7 @@
 @import '../components/ui/ee-input.mobile.css';
 /*** EE Button ***/
 @import '../components/ui/ee-button.css';
+@import '../components/ui/ee-button.mobile.css';
 /*** EE Text ***/
 @import '../components/ui/ee-text.css';
 /*** Lazy Image ***/
