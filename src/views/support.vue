@@ -56,7 +56,7 @@
         <ee-text type="header">
           want to collaborate?
         </ee-text>
-        <ee-text type="block" class="support__question">
+        <ee-text type="block" class="support__after-header">
           Have the urge to collaborate with a member of the team? <b>Click the button below</b> and give yourself
           the chance to make it happen!
         </ee-text>
@@ -69,7 +69,7 @@
         <ee-text type="header">
           is something incorrect?
         </ee-text>
-        <ee-text type="block">
+        <ee-text type="block" class="support__after-header">
           Did you see something posted in an article or video that you felt <b>inaccurately</b> represented
           your organization or area of expertise? <b>Click the button below</b> and let us know what we
           need to correct.
