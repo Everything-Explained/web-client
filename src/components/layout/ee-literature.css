@@ -77,8 +77,7 @@
   border-top: 1px solid hsl(197, 11%, 20%);
   border-radius: 0 0 7px 7px;
   box-shadow: 0 -5px 15px -2px black;
-  transition: color var(--lit-transition-speed),
-              background var(--lit-transition-speed),
+  transition: background var(--lit-transition-speed),
               border var(--lit-transition-speed);
 }
 .lit-expanded .lit__card footer {
