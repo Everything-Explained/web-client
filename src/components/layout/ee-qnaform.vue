@@ -31,7 +31,11 @@
         class="qnaf__question-block"
       >
         <div class="qnaf__question-container">
-          <span :data-num="i + 1 + '⁍'" class="qnaf__question">{{ q.text }}</span>
+          <span
+            :data-num="i + 1 + '⁍'"
+            class="qnaf__question md"
+            v-html="q.text"
+          />
           <br>
           <div v-if="q.subtext" class="qnaf__subtext">
             {{ q.subtext }}
