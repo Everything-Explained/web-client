@@ -1,10 +1,10 @@
-.support .title-bar {
-  text-transform: capitalize;
-}
 
-.support .title-bar.--submitted {
-  color: hsl(161, 67%, 67%);
-}
+.support .title-bar
+  { text-transform: capitalize; }
+  .support .title-bar.--submitted
+    { color: hsl(161, 67%, 67%); }
+
+.support__content { max-width: 1024px; margin: 0 auto; }
 
 .support__patreon {
   display: flex;
