@@ -84,14 +84,14 @@
 
 
 <script lang='ts'>
-  import { computed, defineComponent, PropType, reactive, toRefs } from "@vue/runtime-core";
-  import useInputValidation from "@/composeables/inputValidation";
-  import { useAPI }         from "@/services/api_internal";
-  import eeButtonVue        from "../ui/ee-button.vue";
-  import eeFormErrorVue     from "../ui/ee-form-error.vue";
-  import eeInputVue         from "../ui/ee-input.vue";
-  import eeTextVue          from "../ui/ee-text.vue";
-import vuexStore, { VuexStore } from "@/vuex/vuex-store";
+import { defineComponent, PropType, reactive, toRefs } from "@vue/runtime-core";
+import useInputValidation from "@/composeables/inputValidation";
+import { useAPI }         from "@/services/api_internal";
+import eeButtonVue        from "../ui/ee-button.vue";
+import eeFormErrorVue     from "../ui/ee-form-error.vue";
+import eeInputVue         from "../ui/ee-input.vue";
+import eeTextVue          from "../ui/ee-text.vue";
+import { VuexStore } from "@/vuex/vuex-store";
 import { useStore } from "vuex";
 
 
