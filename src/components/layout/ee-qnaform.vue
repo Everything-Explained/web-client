@@ -116,20 +116,20 @@ export default defineComponent({
     const store           = useStore<VuexStore>();
     const nameRegex       = /^[^(){}\-[\]!@#$%^&*_+=<>.,?'";:|\\/`~]+$/i;
     const oldQuestions    = store.state.dataCache[props.id];
-    const questions       = computed(() => oldQuestions || toReactiveQuestions());
+    const questions       = oldQuestions || getReactiveQuestions();
     const inputValidation = useInputValidation(2 + props.questions.length);
     const formData        = reactive({ name: '', email: '', });
     const formState       = reactive({ errorUpdate: 0, errorText: '' });
 
     if (!props.questions.length) throw Error('qnaform::Missing Questions');
-    if (!oldQuestions) store.commit('data-cache-add', { name: props.id, data: questions.value });
+    if (!oldQuestions) store.commit('data-cache-add', { name: props.id, data: questions });
 
     function setFormError(msg: string) {
       formState.errorUpdate = Date.now();
       formState.errorText = msg;
     }
 
-    function toReactiveQuestions() {
+    function getReactiveQuestions() {
       return props.questions.map(q => reactive({ ...q, answer: q.answer || ''}));
     }
 
@@ -137,13 +137,13 @@ export default defineComponent({
       const qData = {
         ...formData,
         type: props.type,
-        questions: questions.value.map(q => ({ text: q.text, answer: q.answer }))
+        questions: questions.map(q => ({ text: q.text, answer: q.answer }))
       };
       api
         .post('/form/qna', qData)
         .then(() => {
           // Clear answers in cache
-          store.commit('data-cache-add', { name: props.id, data: toReactiveQuestions() });
+          store.commit('data-cache-add', { name: props.id, data: getReactiveQuestions() });
           ctx.emit('submitted');
         })
         .catch(setFormError)
