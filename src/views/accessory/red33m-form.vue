@@ -57,7 +57,7 @@
         <ee-footer />
       </div>
 
-      <div v-else-if="!isCompleted" class="r3d-form__form">
+      <div v-else-if="!isSubmitted" class="r3d-form__form">
         <div class="r3d-form__disclaimer">
           <ee-text type="block">
             <strong>Please respond to the following questions in an honest manner.</strong> This form will
@@ -68,84 +68,16 @@
             mean that this content is going to be beneficial to you.
           </ee-text>
         </div>
-        <br><br>
-        <div v-for="(q, i) of questions"
-             :key="i"
-             class="r3d-form__input-block"
-        >
-          <ee-text class="r3d-form__question"
-                   type="text"
-                   :data-num="i + 1 + '⁍'"
-          >
-            <span v-html="q.text" />
-          </ee-text>
-          <ee-input v-model="q.answer"
-                    class="r3d-form__area"
-                    type="area"
-                    :minchars="minAreaChars"
-                    :maxchars="maxAreaChars"
-                    placeholder="Enter your answer here..."
-          />
-        </div>
-        <ee-button class="r3d-form__button"
-                   :theme="'attention'"
-                   type="submit"
-                   :disabled="!!fieldsToFill"
-                   @click="complete"
-        >
-          CONTINUE
-        </ee-button>
-        <transition name="fade">
-          <ee-text v-if="fieldsToFill" class="r3d-form__field-counter">
-            <strong>{{ fieldsToFill }}</strong> more field(s) require(s) attention.
-          </ee-text>
-        </transition>
-        <ee-footer />
-      </div>
-
-      <div v-else-if="!isSubmitted">
-        <ee-text class="r3d-form__text-block before-submit" type="block">
-          <strong>Last but not least</strong>, please fill out your contact information below so we can
-          get in touch with you once we've reviewed your responses.
-          <br><br>
-          <strong>Both fields are required.</strong>
-        </ee-text>
-        <br>
-        <div class="r3d-form__input-container">
-          <ee-input v-model="name"
-                    class="r3d-form__text-input"
-                    name="name"
-                    type="text"
-                    :tally="true"
-                    :minchars="minFieldChars"
-                    :maxchars="maxFieldChars"
-          >
-            Enter First Name or Alias
-          </ee-input><br>
-          <ee-input v-model="email"
-                    class="r3d-form__text-input"
-                    name="email"
-                    type="text"
-                    errmsg="Enter a <em>valid</em> E-mail"
-                    :regex="emailRegex"
-          >
-            Enter E-mail
-          </ee-input>
-          <br>
-          <ee-button class="r3d-form__button submit"
-                     theme="attention"
-                     type="submit"
-                     :loading="isSubmitting"
-                     :disabled="!userDataValid"
-                     @click="submit"
-          >
-            SUBMIT
-          </ee-button>
-          <ee-form-error :update="errorUpdVal"
-                         :text="errorText"
-                         custom-class="r3d-form__submit-error"
-          />
-        </div>
+        <ee-qnaform
+          id="red33mForm"
+          :type="3"
+          :questions="questions"
+          :show-back="true"
+          :minchars="120"
+          :maxchars="500"
+          @back="back"
+          @submitted="submitted"
+        />
         <ee-footer />
       </div>
 
@@ -169,18 +101,13 @@
 
 
 <script lang='ts'>
-import { computed, defineComponent, reactive, ref, toRefs } from "vue";
+import { computed, defineComponent, reactive, toRefs } from "vue";
 import titlebarVue  from "@/components/layout/ee-titlebar.vue";
 import eeButton     from "@/components/ui/ee-button.vue";
-import eeInput      from "@/components/ui/ee-input.vue";
 import eeTextVue    from "@/components/ui/ee-text.vue";
 import eeFooterVue  from '@/components/layout/ee-footer.vue';
-import { useStore } from "vuex";
-import { VuexStore } from "@/vuex/vuex-store";
-import { useAPI } from "@/services/api_internal";
-import eeFormErrorVue from "@/components/ui/ee-form-error.vue";
+import eeQnaformVue, { FormQuestion } from "@/components/layout/ee-qnaform.vue";
 
-type Question = { text: string, answer: string };
 
 const _risks = [
 ' It can be especially toxic for those pursuing Enlightenment.'
@@ -224,20 +151,20 @@ in it so as to not bring anyone harm.
 
 
 const _questions = [
-  'What is your definition of Enlightenment (what does it mean to be Enlightened)?',
+  { text: 'What is your definition of Enlightenment (what does it mean to be Enlightened)?' },
 
-  'Do you find the pursuit of Enlightenment to be spiritually beneficial? If so, what \
-   benefits can Enlightenment provide to spiritual practitioners and those in their life?',
+  { text: 'Do you find the pursuit of Enlightenment to be spiritually beneficial? If so, what \
+           benefits can Enlightenment provide to spiritual practitioners and those in their life?' },
 
-  'Do you think there are any <strong>cons</strong> to Enlightenment or is it all \
-   <strong>pros</strong>?',
+  { text: 'Do you think there are any <strong>cons</strong> to Enlightenment or is it all \
+           <strong>pros</strong>?' },
 
-  'Do you think the ego should be regarded as real or illusory? Should it be cultivated \
-   or unrealized?',
+  { text: 'Do you think the ego should be regarded as real or illusory? Should it be cultivated \
+           or unrealized?' },
 
-  'Do you think that egoic desires can be good or are they problematic by nature? Does \
-   the ego provide any beneficial functions or is it inherently-destructive?'
-];
+  { text: 'Do you think that egoic desires can be good or are they problematic by nature? Does \
+           the ego provide any beneficial functions or is it inherently-destructive?' }
+] as FormQuestion[];
 
 
 const _aptitudes = [
@@ -248,90 +175,38 @@ const _aptitudes = [
   ' Your spiritual inclinations and your application of them in life.'
 ];
 
+
 export default defineComponent({
   components: {
     'ee-titlebar'   : titlebarVue,
     'ee-text'       : eeTextVue,
     'ee-button'     : eeButton,
-    'ee-input'      : eeInput,
     'ee-footer'     : eeFooterVue,
-    'ee-form-error' : eeFormErrorVue,
+    'ee-qnaform'    : eeQnaformVue,
   },
   setup() {
     const titleBarVal = computed(() =>
       formState.isSubmitted ? 'REQUEST SUBMITTED' : 'Exclusive Content Form'
     );
-    const name       = ref('');
-    const email      = ref('');
-    const emailRegex = /^[a-z0-9]+@[a-z0-9]+\..{2,4}$/
-    ;
-    const minFieldChars = 2;   const maxFieldChars = 30;
-    const minAreaChars  = 120; const maxAreaChars  = 500
-    ;
     const formState = reactive({
       isAccepted     : false,
-      isCompleted    : false,
       isSubmitted    : false,
-      errorUpdVal    : 0,
-      errorText      : '',
-      userDataValid  : computed(() => emailRegex.test(email.value) && name.value.length >= minFieldChars),
-      fieldsToFill   : computed(() => {
-                        let fields = 0;
-                        fields += questions.reduce((pv, cv) => {
-                          return cv.answer.length < minAreaChars ? pv + 1 : pv;
-                        }, 0);
-                        return fields;
-                     }),
     });
-    const api            = useAPI();
-    const authAPI        = api.auth;
-    const store          = useStore<VuexStore>();
-    const savedQuestions = store.state.dataCache['form-questions'] as Question[];
-    const questionToRef  = (q: string) => reactive({ text: q, answer: '' });
-    const questions      = savedQuestions?.length ? savedQuestions : _questions.map(questionToRef);
 
-    if (!savedQuestions)
-      store.commit('data-cache-add', { name: 'form-questions', data: questions })
-    ;
-
-    function forwardState(state: 'isAccepted'|'isCompleted'|'isSubmitted') {
-      formState[state] = true;
+    function setState(name: keyof typeof formState, val: boolean) {
+      formState[name] = val;
       document.body.scrollTo(0, 0);
     }
 
-    function setSubmitError(err: string) {
-      formState.errorUpdVal = Date.now();
-      formState.errorText = err;
-    }
-
-    const accept   = () => forwardState('isAccepted');
-    const complete = () => forwardState('isCompleted');
-    const submit = () => {
-      const formData = {
-        name      : name.value,
-        email     : email.value,
-        questions : questions.map(q => [q.text, q.answer])
-      };
-      api.debounce(200, () => {
-        authAPI.post('/red33m', formData)
-          .then(() => {
-            forwardState('isSubmitted');
-            // Clear questions store
-            store.commit('data-cache-add', { name: 'form-questions', data: _questions.map(questionToRef) });
-          })
-          .catch(setSubmitError);
-      });
-    };
+    const accept    = () => setState('isAccepted',  true);
+    const back      = () => setState('isAccepted',  false);
+    const submitted = () => setState('isSubmitted', true);
 
     return {
-
       ...toRefs(formState),
-      accept, complete, submit,
-      isSubmitting: api.isPending,
+      accept, submitted, back,
+      questions: _questions,
       titleBarVal,
-      name, email,
-      questions, emailRegex,
-      minFieldChars, maxFieldChars, maxAreaChars, minAreaChars,
       risks: _risks, aptitudes: _aptitudes,
     };
   }
