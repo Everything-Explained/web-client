@@ -87,6 +87,8 @@
   import eeFormErrorVue     from "../ui/ee-form-error.vue";
   import eeInputVue         from "../ui/ee-input.vue";
   import eeTextVue          from "../ui/ee-text.vue";
+import vuexStore, { VuexStore } from "@/vuex/vuex-store";
+import { useStore } from "vuex";
 
 
 export type FormQuestion = { text: string; subtext?: string; answer?: string; }
@@ -100,6 +102,7 @@ export default defineComponent({
     'ee-form-error' : eeFormErrorVue,
   },
   props: {
+    id        : { type: String  as PropType<string>,         required: true       },
     type      : { type: Number  as PropType<number>,         required: true       },
     questions : { type: Array   as PropType<FormQuestion[]>, default: []          },
     nameLabel : { type: String  as PropType<string>,         default: 'Your Name' },
@@ -110,20 +113,25 @@ export default defineComponent({
   emits: ['back', 'submitted'],
   setup(props, ctx) {
     const api             = useAPI();
+    const store           = useStore<VuexStore>();
     const nameRegex       = /^[^(){}\-[\]!@#$%^&*_+=<>.,?'";:|\\/`~]+$/i;
-    const questions       = computed(() => props.questions.map(q => reactive({ ...q, answer: q.answer || ''})));
+    const oldQuestions    = store.state.dataCache[props.id];
+    const questions       = computed(() => oldQuestions || toReactiveQuestions());
     const inputValidation = useInputValidation(2 + props.questions.length);
     const formData        = reactive({ name: '', email: '', });
     const formState       = reactive({ errorUpdate: 0, errorText: '' });
 
     if (!props.questions.length) throw Error('qnaform::Missing Questions');
+    if (!oldQuestions) store.commit('data-cache-add', { name: props.id, data: questions.value });
 
     function setFormError(msg: string) {
       formState.errorUpdate = Date.now();
       formState.errorText = msg;
     }
 
-
+    function toReactiveQuestions() {
+      return props.questions.map(q => reactive({ ...q, answer: q.answer || ''}));
+    }
 
     function submit() {
       const qData = {
@@ -133,7 +141,11 @@ export default defineComponent({
       };
       api
         .post('/form/qna', qData)
-        .then(() => ctx.emit('submitted'))
+        .then(() => {
+          // Clear answers in cache
+          store.commit('data-cache-add', { name: props.id, data: toReactiveQuestions() });
+          ctx.emit('submitted');
+        })
         .catch(setFormError)
       ;
     }

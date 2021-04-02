@@ -84,6 +84,7 @@
       </div>
       <div v-else-if="!isSubmitted">
         <ee-qnaform
+          :id="formID"
           :questions="questions"
           :type="formType"
           :name-label="'Name or Preferred Title'"
@@ -153,6 +154,7 @@ export default defineComponent({
   setup() {
     const isFormActive = ref(false);
     const isSubmitted  = ref(false);
+    const formID       = ref('');
     const pageTitle    = computed(() =>
       isFormActive.value
         ? isSubmitted.value
@@ -166,6 +168,7 @@ export default defineComponent({
     function activateForm(type: number) {
       questions.value    = _formTypes[type];
       formType.value     = type;
+      formID.value       = `support${type}`;
       isFormActive.value = true;
       document.body.scrollTo(0, 0);
     }
@@ -182,7 +185,8 @@ export default defineComponent({
       questions,
       isSubmitted,
       formType,
-      typeText: _typeText
+      typeText: _typeText,
+      formID,
     };
   }
 });
