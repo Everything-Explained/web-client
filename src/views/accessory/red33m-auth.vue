@@ -50,7 +50,7 @@
       will need to enter the code again, when you come back to this page
       later.
     </ee-text>
-    <ee-text class="r3d-auth__note" type="span-block">
+    <ee-text type="span-block" class="r3d-auth__note">
       <strong>CAVEAT:</strong> The passcode will only be saved for <em>this device</em>.
       In order to view this content on your other devices:
       <strong>computer, phone, tablet, etc...</strong>

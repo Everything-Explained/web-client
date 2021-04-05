@@ -8,8 +8,7 @@
     <p><slot /></p>
   </div>
   <span v-else :class="['md', 'ee-text', customClass, { '--block': isSpanBlock}]">
-    <p v-if="isSpanBlock"><slot /></p>
-    <slot v-else />
+    <slot />
   </span>
 </template>
 

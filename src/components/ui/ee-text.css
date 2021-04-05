@@ -2,7 +2,8 @@ span.ee-text {
   margin: auto;
 }
 
-.ee-text.--block p {
+.ee-text.--block {
+  display: block;
   margin: 2rem auto;
   background-color: transparent;
   box-shadow: none;
