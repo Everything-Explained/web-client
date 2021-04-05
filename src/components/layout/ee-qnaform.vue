@@ -1,5 +1,5 @@
 <template>
-  <div class="qnaf">
+  <div class="qnaf ee__page-content">
     <div class="qnaf__form">
       <ee-input
         v-model="name"
