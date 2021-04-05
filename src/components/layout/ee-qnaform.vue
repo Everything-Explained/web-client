@@ -118,7 +118,7 @@ export default defineComponent({
   setup(props, ctx) {
     const api             = useAPI();
     const store           = useStore<VuexStore>();
-    const nameRegex       = /^[^(){}\-[\]!@#$%^&*_+=<>.,?'";:|\\/`~]+$/i;
+    const nameRegex       = /^[a-z\s.]+$/i;
     const oldQuestions    = store.state.dataCache[props.id];
     const questions       = oldQuestions || getReactiveQuestions();
     const inputValidation = useInputValidation(2 + props.questions.length);
