@@ -17,26 +17,31 @@
       guarantee a Passcode, it only makes you eligible.
     </ee-text>
     <form class="r3d-auth__form">
-      <ee-input v-model="code"
-                class="r3d-auth__passcode"
-                :minchars="3"
-                :maxchars="6"
+      <ee-input
+        v-model="code"
+        class="r3d-auth__passcode"
+        :minchars="6"
+        :maxchars="6"
+        :validate="validate"
       >
         Passcode
       </ee-input>
 
-      <ee-button class="r3d-auth__button"
-                 type="submit"
-                 theme="attention"
-                 :loading="isLoading"
-                 :disabled="!hasValidCode"
-                 @click="submit"
+      <ee-button
+        class="r3d-auth__button"
+        type="submit"
+        theme="attention"
+        :loading="isLoading"
+        :disabled="!isValidated"
+        @click="submit"
       >
         ENTER
       </ee-button>
-      <ee-form-error :update="errorUpdVal"
-                     :text="errorText"
-                     custom-class="r3d-auth__error"
+      <br>
+      <ee-form-error
+        class="r3d-auth__error"
+        :update="errorUpdVal"
+        :text="errorText"
       />
     </form>
     <br>
@@ -56,7 +61,7 @@
 </template>
 
 <script lang='ts'>
-import { computed, defineComponent, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import eeButton from "@/components/ui/ee-button.vue";
 import eeInputField from "@/components/ui/ee-input.vue";
 import { APIErrorResp, useAPI } from "@/services/api_internal";
@@ -65,6 +70,7 @@ import { useRouter } from "vue-router";
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
 import eeFooterVue from "@/components/layout/ee-footer.vue";
 import eeFormErrorVue from "@/components/ui/ee-form-error.vue";
+import useInputValidation from "@/composeables/inputValidation";
 
 export default defineComponent({
   components: {
@@ -80,10 +86,9 @@ export default defineComponent({
     const codeRef      = ref('');
     const errorTextRef = ref('');
     const errorUpdVal  = ref(0);
-    const hasValidCode = computed(() => codeRef.value.length == codeLength);
     const api          = useAPI();
-    const authAPI      = api.auth;
     const router       = useRouter();
+    const inputValidation = useInputValidation(1);
 
     function setError(res: APIErrorResp) {
       errorTextRef.value = res.message;
@@ -107,10 +112,10 @@ export default defineComponent({
 
     return {
       isLoading: api.isPending,
-      hasValidCode,
       code: codeRef,
       codeLength,
       submit,
+      ...inputValidation,
       errorText: errorTextRef,
       errorUpdVal,
     };
