@@ -1,5 +1,5 @@
 <template>
-  <div class="r3d-form__container">
+  <div class="red33m-form">
     <ee-titlebar
       :ease-in="350"
       :ease-out="350"
@@ -7,53 +7,58 @@
       :class="['r3d-form__titlebar', { '--submitted': isSubmitted }]"
     />
     <transition name="fade" mode="out-in">
-      <div v-if="!isAccepted" class="r3d-form__acceptance">
-        <ee-text type="block">
-          This form functions as an application for access to EC (exclusive content).
-          It is <em>by no means</em> a test for a single specific type of personality, intelligence,
-          or level of advancement in spirituality. <br><br>
-          <strong>Our team keeps this content exclusive for various significant reasons:</strong>
-        </ee-text>
-        <ee-text v-for="(risk, i) of risks"
-                 :key="i"
-                 class="r3d-form__list-item"
-                 type="block"
-        >
-          <ul><li v-html="risk" /></ul>
-        </ee-text>
-        <br>
-        <div class="r3d-form__iframe-parent">
-          <iframe src="//www.youtube-nocookie.com/embed/qskMClpUmvk?vq=hd1080&modestbranding=1&rel=0"
-                  frameborder="0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-          />
+      <div v-if="!isAccepted">
+        <div class="ee__page-content">
+          <ee-text type="block">
+            This form functions as an application for access to EC (exclusive content).
+            It is <em>by no means</em> a test for a single specific type of personality, intelligence,
+            or level of advancement in spirituality. <br><br>
+            <strong>Our team keeps this content exclusive for various significant reasons:</strong>
+          </ee-text>
+          <ee-text
+            v-for="(risk, i) of risks"
+            :key="i"
+            class="r3d-form__list-item"
+            type="block"
+          >
+            <ul><li v-html="risk" /></ul>
+          </ee-text>
+          <br>
+          <div class="r3d-form__iframe-parent">
+            <iframe src="//www.youtube-nocookie.com/embed/qskMClpUmvk?vq=hd1080&modestbranding=1&rel=0"
+                    frameborder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+            />
+          </div>
+          <br>
+          <ee-text class="r3d-form__begin-text" type="block">
+            <em>This application is meant to gauge you on the following:</em>
+          </ee-text>
+          <ee-text
+            v-for="(aptitude, i) of aptitudes"
+            :key="i"
+            class="r3d-form__list-item"
+            type="block"
+          >
+            <ul><li v-html="aptitude" /></ul>
+          </ee-text>
+          <br>
+          <ee-text type="block">
+            By clicking the <strong>ACCEPT</strong> button below, you're agreeing to take full responsibility for
+            all your (re)actions based on the exclusive content, <em>including but not limited to</em>,
+            <strong>all risks mentioned above</strong>. You also agree that <strong>everything-explained.org</strong>
+            and all associated persons are <em>not</em> responsible in any way for your (re)actions based on
+            the exclusive content.
+          </ee-text>
+          <ee-button
+            class="r3d-form__button"
+            theme="attention"
+            @click="accept"
+          >
+            ACCEPT AND BEGIN
+          </ee-button>
         </div>
-        <br>
-        <ee-text class="r3d-form__begin-text" type="block">
-          <em>This application is meant to gauge you on the following:</em>
-        </ee-text>
-        <ee-text v-for="(aptitude, i) of aptitudes"
-                 :key="i"
-                 class="r3d-form__list-item"
-                 type="block"
-        >
-          <ul><li v-html="aptitude" /></ul>
-        </ee-text>
-        <br><br>
-        <ee-text type="block">
-          By clicking the <strong>ACCEPT</strong> button below, you're agreeing to take full responsibility for
-          all your (re)actions based on the exclusive content, <em>including but not limited to</em>,
-          <strong>all risks mentioned above</strong>. You also agree that <strong>everything-explained.org</strong>
-          and all associated persons are <em>not</em> responsible in any way for your (re)actions based on
-          the exclusive content.
-        </ee-text>
-        <ee-button class="r3d-form__button"
-                   theme="attention"
-                   @click="accept"
-        >
-          ACCEPT AND BEGIN
-        </ee-button>
         <ee-footer />
       </div>
 
@@ -81,7 +86,7 @@
         <ee-footer />
       </div>
 
-      <div v-else-if="isSubmitted">
+      <div v-else>
         <ee-text class="r3d-form__text-block submitted" type="block">
           <strong>Thank you for your interest in this exclusive content.</strong> Our team will get back to
           you as soon as possible. Whatever the results may be, <em>do not take them personally</em>.<br><br>

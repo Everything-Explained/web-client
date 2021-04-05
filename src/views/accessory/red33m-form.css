@@ -1,9 +1,4 @@
 
-.r3d-form__form {
-  display: block;
-  margin: 0 auto;
-  max-width: 1024px;
-}
 .r3d-form__titlebar.--submitted {
   color: hsl(161, 80%, 60%);
   transition: color 800ms;
@@ -14,12 +9,6 @@
   margin: 0 auto;
   margin-bottom: 100px;
   width: 70%;
-}
-
-.r3d-form__acceptance {
-  display: block;
-  margin: 0 auto;
-  max-width: 1024px;
 }
 
 .r3d-form__iframe-parent {
