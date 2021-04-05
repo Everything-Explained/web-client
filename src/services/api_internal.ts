@@ -8,6 +8,13 @@ export interface APIResponse<T> {
   data: T
 }
 
+export interface APIErrorResp {
+  response: any; // This is a large response object
+  status: number;
+  text: string;
+  message: string;
+}
+
 interface APIOptions {
   endpoint: string;
   method: 'get'|'put'|'post';
@@ -76,7 +83,6 @@ function callAPI<T>(opts: APIOptions): Promise<APIResponse<T>> {
       : apiEndpoint.url(endpoint)[method](body)
     ;
     api
-      .notFound(() => rj('Endpoint Not Found'))
       .res(async (res) => rs({
         status: res.status,
         data: method == 'get' ? await res.json() : await res.text()

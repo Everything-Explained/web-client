@@ -59,7 +59,7 @@
 import { computed, defineComponent, ref } from "vue";
 import eeButton from "@/components/ui/ee-button.vue";
 import eeInputField from "@/components/ui/ee-input.vue";
-import { useAPI } from "@/services/api_internal";
+import { APIErrorResp, useAPI } from "@/services/api_internal";
 import eeText from '@/components/ui/ee-text.vue';
 import { useRouter } from "vue-router";
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
@@ -85,8 +85,8 @@ export default defineComponent({
     const authAPI      = api.auth;
     const router       = useRouter();
 
-    function setError(msg: string) {
-      errorTextRef.value = msg.toUpperCase();
+    function setError(res: APIErrorResp) {
+      errorTextRef.value = res.message;
       errorUpdVal.value = Date.now();
     }
 
@@ -100,7 +100,7 @@ export default defineComponent({
             localStorage.setItem('passcode', 'yes');
             router.push('/red33m/videos');
           })
-          .catch((err) => setError(err.message))
+          .catch(setError)
         ;
       });
     };

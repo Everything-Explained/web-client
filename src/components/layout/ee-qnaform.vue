@@ -86,7 +86,7 @@
 <script lang='ts'>
 import { defineComponent, PropType, reactive, toRefs } from "@vue/runtime-core";
 import useInputValidation from "@/composeables/inputValidation";
-import { useAPI }         from "@/services/api_internal";
+import { APIErrorResp, useAPI }         from "@/services/api_internal";
 import eeButtonVue        from "../ui/ee-button.vue";
 import eeFormErrorVue     from "../ui/ee-form-error.vue";
 import eeInputVue         from "../ui/ee-input.vue";
@@ -128,9 +128,9 @@ export default defineComponent({
     if (!props.questions.length) throw Error('qnaform::Missing Questions');
     if (!oldQuestions) store.commit('data-cache-add', { name: props.id, data: questions });
 
-    function setFormError(msg: string) {
+    function setFormError(err: APIErrorResp) {
       formState.errorUpdate = Date.now();
-      formState.errorText = msg;
+      formState.errorText = err.message;
     }
 
     function getReactiveQuestions() {
