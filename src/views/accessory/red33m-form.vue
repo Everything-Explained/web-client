@@ -76,6 +76,7 @@
         <ee-qnaform
           id="red33mForm"
           :type="3"
+          name-label="Name or Preferred Title"
           :questions="questions"
           :show-back="true"
           :minchars="120"
