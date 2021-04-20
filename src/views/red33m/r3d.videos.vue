@@ -23,14 +23,18 @@
             {{ v.title }}
           </ee-video>
         </div>
+        <div ref="intObserverEl" class="int-observer" />
         <ee-footer />
       </div>
     </transition>
   </div>
 </template>
 
+
+
+
 <script lang='ts'>
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useStore }       from "vuex";
 import { VuexStore }      from "@/vuex/vuex-store";
 import { useTask }        from "vue-concurrency";
@@ -54,26 +58,49 @@ export default defineComponent({
     const store = useStore<VuexStore>();
     const isToggling = ref(false);
     const videos = computed(() => store.state.dataCache['red33m']?.slice());
+    const visibleVideos = ref<any[]>([]);
+    const intObserverEl = ref();
+    let visiblePages = 1;
 
-    const api = useAPI();
-    const getVideos = useTask(function*() {
-      const resp: APIResponse<any> = yield api.get('/data/red33m/videos.json', null, 'static');
-      store.commit('data-cache-add', { name: 'red33m', data: resp.data });
-    });
+    function displayVideoPage(page: number) {
+      visiblePages = page;
+      visibleVideos.value = videos.value.slice(0, page * 15);
+    }
 
     const toggle = () => {
       if (isToggling.value) return;
       videos.value.reverse();
+      displayVideoPage(1);
       // Wait for toggle input element to be "checked"
       setTimeout(() => isToggling.value = true, 1);
       // Debounce toggling
       setTimeout(() => isToggling.value = false, 300);
     };
 
+    const observer = new IntersectionObserver((entries, obs) => {
+      if (entries[0].isIntersecting) {
+        displayVideoPage(visiblePages + 1);
+      }
+    });
+
+    // Wait for videos to render before observation
+    watch(() => intObserverEl.value, (val) => {
+      if (val) observer.observe(val);
+    });
+
+    const api = useAPI();
+    const getVideos = useTask(function*() {
+      const resp: APIResponse<any> = yield api.get('/data/red33m/videos.json', null, 'static');
+      store.commit('data-cache-add', { name: 'red33m', data: resp.data });
+      displayVideoPage(1);
+    });
+
     if (!videos.value) getVideos.perform();
 
+
     return {
-      videos,
+      videos: visibleVideos,
+      intObserverEl,
       getVideos,
       toggle,
       isToggling,
