@@ -71,7 +71,7 @@
             is something incorrect?
           </ee-text>
           <ee-text type="block" class="support__after-header">
-            Did you see something posted in an article or video that you felt <b>inaccurately</b> represented
+            Did you see something posted in an article or video that you felt <em>inaccurately</em> represented
             your organization or area of expertise? <b>Click the button below</b> and let us know what we
             need to correct.
           </ee-text>
