@@ -29,8 +29,7 @@ export default defineComponent({
     ;
     const isDisabled = computed(() => {
       // Prevent clicks when loading
-      if (props.loading) return true;
-      return props.disabled;
+      return props.loading || props.disabled;
     });
 
     return { isDisabled };
