@@ -24,6 +24,7 @@
           </ee-video>
         </div>
         <div ref="intObserverEl" class="int-observer" />
+        <div v-if="isPaginating" class="page_loader preloader" />
         <ee-footer />
       </div>
     </transition>
@@ -34,7 +35,7 @@
 
 
 <script lang='ts'>
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import { computed, defineComponent, ref, watch } from "vue";
 import { useStore }       from "vuex";
 import { VuexStore }      from "@/vuex/vuex-store";
 import { useTask }        from "vue-concurrency";
@@ -60,9 +61,11 @@ export default defineComponent({
     const videos = computed(() => store.state.dataCache['red33m']?.slice());
     const visibleVideos = ref<any[]>([]);
     const intObserverEl = ref();
+    const isPaginating = ref(false);
     let visiblePages = 1;
 
     function displayVideoPage(page: number) {
+      if (visibleVideos.value.length == videos.value.length) return;
       visiblePages = page;
       visibleVideos.value = videos.value.slice(0, page * 15);
     }
@@ -79,7 +82,11 @@ export default defineComponent({
 
     const observer = new IntersectionObserver((entries, obs) => {
       if (entries[0].isIntersecting) {
-        displayVideoPage(visiblePages + 1);
+        isPaginating.value = true;
+        setTimeout(() => {
+          displayVideoPage(visiblePages + 1);
+          isPaginating.value = false;
+        }, 700);
       }
     });
 
@@ -103,6 +110,7 @@ export default defineComponent({
       intObserverEl,
       getVideos,
       toggle,
+      isPaginating,
       isToggling,
     };
   }

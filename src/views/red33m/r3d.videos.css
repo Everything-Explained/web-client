@@ -41,9 +41,14 @@
 
 
 .int-observer {
-  height: 20px;
+  height: 0px;
   width: 100%;
 }
 
+.page_loader {
+  margin: 0 auto;
+  height: 150px;
+  width: 150px;
+}
 
 
