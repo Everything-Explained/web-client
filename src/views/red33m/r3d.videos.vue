@@ -65,7 +65,6 @@ export default defineComponent({
     let visiblePages = 1;
 
     function displayVideoPage(page: number) {
-      if (visibleVideos.value.length == videos.value.length) return;
       visiblePages = page;
       visibleVideos.value = videos.value.slice(0, page * 15);
     }
