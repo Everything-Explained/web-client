@@ -86,7 +86,7 @@ export default defineComponent({
         setTimeout(() => {
           displayVideoPage(visiblePages + 1);
           isPaginating.value = false;
-        }, 700);
+        }, 400);
       }
     });
 
