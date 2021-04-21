@@ -26,7 +26,8 @@
         </div>
         <div ref="intObserverEl" class="int-observer" />
         <div v-if="isPaginating" class="page_loader preloader" />
-        <ee-footer />
+        <!-- Loading footer before videos 'fixes' it to bottom -->
+        <ee-footer v-if="videos.length" />
       </div>
     </transition>
   </div>
