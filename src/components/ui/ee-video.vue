@@ -2,6 +2,9 @@
   <div class="ee-video">
     <div class="ee-video_img-container">
       <ee-img :src="thumbnail" class="ee-video_img" />
+      <div :class="['ee-video_text-widget', { '--open': descState }]">
+        {{ useDate(date).toRelativeTime() }}
+      </div>
       <ee-icon
         :class="['ee-video_widget ee-video_widget-open-video', { '--open': descState }]"
         type="export"
@@ -35,6 +38,7 @@
 <script lang='ts'>import { computed, defineComponent, ref, toRefs } from "vue";
 import eeIconVue from '@/components/ui/ee-icon.vue';
 import eeImgVue from "./ee-img.vue";
+import { useDate } from "@/composeables/date";
 
 export default defineComponent({
   components: {
@@ -44,6 +48,7 @@ export default defineComponent({
   props: {
     desc    : { type: String, default: '' },
     videoId : { type: String, default: '' },
+    date    : { type: String, default: '' }
   },
   setup(props) {
     const { videoId, desc } = toRefs(props);
@@ -67,7 +72,7 @@ export default defineComponent({
       thumbnail: thumbnailRef,
       description: desc,
       descState: descStateRef,
-      openVideo, setDescState
+      openVideo, setDescState, useDate,
     };
   }
 });

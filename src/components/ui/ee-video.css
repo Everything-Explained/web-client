@@ -20,7 +20,8 @@
   outline        : 1px dotted var(--video-desc-outline-c);
 }
 
-.ee-video_widget {
+.ee-video_widget,
+.ee-video_text-widget {
   position         : absolute;
   padding          : 5px;
   font-size        : 1.7rem;
@@ -35,7 +36,16 @@
   color            : var(--video-widget-hov-c);
   background-color : var(--video-widget-bg-hov-c);
 }
-.ee-video_widget.--open { opacity: 0; }
+.ee-video_widget.--open,
+.ee-video_text-widget.--open { opacity: 0; }
+
+.ee-video_text-widget {
+  top: 0;
+  padding: 1px 5px;
+  border-radius: 0;
+  font-size: 1rem;
+  cursor: none;
+}
 
 .ee-video_widget-open-video {
   right        : 7px;

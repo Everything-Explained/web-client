@@ -17,6 +17,7 @@
             v-for="(v, i) of videos"
             :key="i"
             :video-id="v.id"
+            :date="v.date"
             :desc="v.content"
             class="red33m-video"
           >
