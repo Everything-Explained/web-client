@@ -61,7 +61,6 @@ export default defineComponent({
 
     const { displayVideoPage,
             observedEl,
-            isPaginating,
             paginatedVideos } = useVideoPagination(videos)
     ;
 
@@ -71,14 +70,13 @@ export default defineComponent({
     });
 
     const videoTask = getVideoTask(() => { displayVideoPage(1, 30); });
-    videoTask.getVideos();
+    videoTask.loadVideos();
 
     return {
       videos: paginatedVideos,
       observedEl,
       isVideoTaskRunning: videoTask.isRunning,
       toggle,
-      isPaginating,
       isToggling,
     };
   }
@@ -90,17 +88,17 @@ function useVideos() {
   const videos = computed(() => store.state.dataCache['red33m']?.slice());
   const api    = useAPI();
 
-  function getVideoTask(onRender: () => void) {
+  function getVideoTask(onVideosLoaded: () => void) {
     const videoTask = useTask(function*() {
     const resp: APIResponse<any> = yield api.get('/data/red33m/videos.json', null, 'static');
       store.commit('data-cache-add', { name: 'red33m', data: resp.data });
-      onRender();
+      onVideosLoaded();
     });
     return {
       isRunning: computed(() => videoTask.isRunning),
-      getVideos: () => {
+      loadVideos: () => {
         if (!videos.value) videoTask.perform();
-        else onRender();
+        else onVideosLoaded();
       }
     };
   }
@@ -113,9 +111,8 @@ function useVideos() {
 
 
 function useVideoPagination(videos: Ref<any[]>) {
-  const isPaginating    = ref(false);
   const paginatedVideos = ref<any[]>([]);
-  const observedEl      = ref();
+  const observedEl      = ref<HTMLElement>();
   const visiblePages    = ref(0);
 
   function displayVideoPage(page: number, amount = 15) {
@@ -140,7 +137,7 @@ function useVideoPagination(videos: Ref<any[]>) {
   document.body.addEventListener('scroll', renderVideos);
   onUnmounted(() => document.body.removeEventListener('scroll', renderVideos));
 
-  return { displayVideoPage, observedEl, paginatedVideos, isPaginating };
+  return { displayVideoPage, observedEl, paginatedVideos };
 }
 
 
