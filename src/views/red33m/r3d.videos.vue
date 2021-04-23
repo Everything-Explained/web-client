@@ -2,7 +2,7 @@
   <div class="red33m">
     <ee-titlebar>RED33M Videos</ee-titlebar>
     <transition name="fade" mode="out-in">
-      <div v-if="getVideos.isRunning" class="preloader page" />
+      <div v-if="isVideoTaskRunning" class="preloader page" />
       <div v-else>
         <ee-toggle
           class="red33m-toggle"
@@ -12,7 +12,7 @@
           :callback="toggle"
           :prevent="isToggling"
         />
-        <div class="red33m-video-list">
+        <div ref="observedEl" class="red33m-video-list">
           <ee-video
             v-for="(v, i) of videos"
             :key="i"
@@ -24,8 +24,6 @@
             {{ v.title }}
           </ee-video>
         </div>
-        <div ref="intObserverEl" class="int-observer" />
-        <div v-if="isPaginating" class="page_loader preloader" />
         <!-- Loading footer before videos 'fixes' it to bottom -->
         <ee-footer v-if="videos.length" />
       </div>
@@ -37,7 +35,7 @@
 
 
 <script lang='ts'>
-import { computed, defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, onUnmounted, Ref, ref } from "vue";
 import { useStore }       from "vuex";
 import { VuexStore }      from "@/vuex/vuex-store";
 import { useTask }        from "vue-concurrency";
@@ -58,62 +56,107 @@ export default defineComponent({
     'ee-footer'   : eeFooterVue,
   },
   setup() {
-    const store = useStore<VuexStore>();
-    const isToggling = ref(false);
-    const videos = computed(() => store.state.dataCache['red33m']?.slice());
-    const visibleVideos = ref<any[]>([]);
-    const intObserverEl = ref();
-    const isPaginating = ref(false);
-    let visiblePages = 1;
 
-    function displayVideoPage(page: number) {
-      visiblePages = page;
-      visibleVideos.value = videos.value.slice(0, page * 15);
-    }
+    const { videos, getVideoTask } = useVideos();
 
-    const toggle = () => {
-      if (isToggling.value) return;
+    const { displayVideoPage,
+            observedEl,
+            isPaginating,
+            paginatedVideos } = useVideoPagination(videos)
+    ;
+
+    const { toggle, isToggling } = useToggle(() => {
       videos.value.reverse();
-      displayVideoPage(1);
-      // Wait for toggle input element to be "checked"
-      setTimeout(() => isToggling.value = true, 1);
-      // Debounce toggling
-      setTimeout(() => isToggling.value = false, 300);
-    };
-
-    const observer = new IntersectionObserver((entries, obs) => {
-      if (entries[0].isIntersecting) {
-        isPaginating.value = true;
-        setTimeout(() => {
-          displayVideoPage(visiblePages + 1);
-          isPaginating.value = false;
-        }, 400);
-      }
+      displayVideoPage(1, 30);
     });
 
-    // Wait for videos to render before observation
-    watch(() => intObserverEl.value, (val) => {
-      if (val) observer.observe(val);
-    });
-
-    const api = useAPI();
-    const getVideos = useTask(function*() {
-      const resp: APIResponse<any> = yield api.get('/data/red33m/videos.json', null, 'static');
-      store.commit('data-cache-add', { name: 'red33m', data: resp.data });
-      displayVideoPage(1);
-    });
-
-    if (!videos.value) getVideos.perform();
-
+    const videoTask = getVideoTask(() => { displayVideoPage(1, 30); });
+    videoTask.getVideos();
 
     return {
-      videos: visibleVideos,
-      intObserverEl,
-      getVideos,
+      videos: paginatedVideos,
+      observedEl,
+      isVideoTaskRunning: videoTask.isRunning,
       toggle,
       isPaginating,
       isToggling,
     };
   }
 });
+
+
+function useVideos() {
+  const store  = useStore<VuexStore>();
+  const videos = computed(() => store.state.dataCache['red33m']?.slice());
+  const api    = useAPI();
+
+  function getVideoTask(onRender: () => void) {
+    const videoTask = useTask(function*() {
+    const resp: APIResponse<any> = yield api.get('/data/red33m/videos.json', null, 'static');
+      store.commit('data-cache-add', { name: 'red33m', data: resp.data });
+      onRender();
+    });
+    return {
+      isRunning: computed(() => videoTask.isRunning),
+      getVideos: () => {
+        if (!videos.value) videoTask.perform();
+        else onRender();
+      }
+    };
+  }
+
+  return {
+    videos,
+    getVideoTask,
+  };
+}
+
+
+function useVideoPagination(videos: Ref<any[]>) {
+  const isPaginating    = ref(false);
+  const paginatedVideos = ref<any[]>([]);
+  const observedEl      = ref();
+  const visiblePages    = ref(0);
+
+  function displayVideoPage(page: number, amount = 15) {
+    visiblePages.value = page;
+    paginatedVideos.value = videos.value.slice(0, page * amount);
+  }
+
+  const renderVideos = () => {
+    const body = document.body;
+    if (!observedEl.value) return;
+    const thresholdRatio =
+      body.scrollTop > 450
+        ? 0.65
+        : 0.15 // Compensate for page header
+    ;
+    const threshold = observedEl.value.clientHeight * thresholdRatio;
+    if (body.scrollTop > threshold) {
+      displayVideoPage(visiblePages.value + 1);
+    }
+  };
+
+  document.body.addEventListener('scroll', renderVideos);
+  onUnmounted(() => document.body.removeEventListener('scroll', renderVideos));
+
+  return { displayVideoPage, observedEl, paginatedVideos, isPaginating };
+}
+
+
+function useToggle(cb: () => void) {
+  const isToggling = ref(false);
+
+  function toggle() {
+    if (isToggling.value) return;
+      cb();
+      // Wait for toggle input element to be "checked"
+      setTimeout(() => isToggling.value = true, 1);
+      // Debounce toggling
+      setTimeout(() => isToggling.value = false, 300);
+  }
+
+  return { toggle, isToggling };
+}
+
 </script>
