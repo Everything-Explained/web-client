@@ -4,10 +4,10 @@
       Library Videos
     </ee-titlebar>
     <transition name="fade" mode="out-in">
-      <div v-if="!categories" class="preloader page" />
+      <div v-if="isVideoTaskRunning" class="preloader page" />
       <div v-else>
         <div
-          v-for="(cat, i) of categories"
+          v-for="(cat, i) of videoCategories"
           :key="i"
           class="category"
         >
@@ -34,17 +34,15 @@
 
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
-import { useTask } from "vue-concurrency";
-import { useStore } from "vuex";
-import { APIResponse, useAPI } from "@/services/api_internal";
-import { VuexStore } from "@/vuex/vuex-store"
+import { defineComponent } from "vue"
 ;
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
 import eeVideo       from "@/components/ui/ee-video.vue";
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
+import useVideos from "@/composeables/useVideos";
+import { Video } from "@/typings/global-types";
 
-
+type VideoCategories = { name: string; videos: Video[] };
 
 export default defineComponent({
   components: {
@@ -53,22 +51,12 @@ export default defineComponent({
     'ee-footer'   : eeFooterVue,
   },
   setup() {
-    const store      = useStore<VuexStore>();
-    const api        = useAPI();
-    const categories = computed(() => store.state.dataCache['library/videos']);
+    const { videos: videoCategories, getVideoTask } = useVideos<VideoCategories>('/data/library/videos.json');
 
-    const getVideos = useTask(function*() {
-      const resp: APIResponse<any> = yield api.get('/data/library/videos.json', null, 'static');
-      const videos = [];
-      for (const cat in resp.data) {
-        videos.push({name: cat, videos: resp.data[cat]});
-      }
-      store.commit('data-cache-add', { name: 'library/videos', data: videos });
-    });
+    const videoTask = getVideoTask(() => void(0));
+    videoTask.loadVideos();
 
-    getVideos.perform();
-
-    return { categories, };
+    return { videoCategories, isVideoTaskRunning: videoTask.isRunning };
   }
 });
 </script>

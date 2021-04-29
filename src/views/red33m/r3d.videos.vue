@@ -35,16 +35,14 @@
 
 
 <script lang='ts'>
-import { computed, defineComponent, onUnmounted, Ref, ref } from "vue";
-import { useStore }       from "vuex";
-import { VuexStore }      from "@/vuex/vuex-store";
-import { useTask }        from "vue-concurrency";
-import { APIResponse, useAPI }         from "@/services/api_internal";
+import { defineComponent, onUnmounted, Ref, ref } from "vue";
 // Components
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
 import eeVideo       from "@/components/ui/ee-video.vue";
 import eeToggleVue   from "@/components/ui/ee-toggle.vue";
+import useVideos from "@/composeables/useVideos";
+import { Video } from "@/typings/global-types";
 
 
 
@@ -56,8 +54,8 @@ export default defineComponent({
     'ee-footer'   : eeFooterVue,
   },
   setup() {
-
-    const { videos, getVideoTask } = useVideos();
+    const maxVideosToStart = 20;
+    const { videos, getVideoTask } = useVideos<Video>('/data/red33m/videos.json');
 
     const { displayVideoPage,
             observedEl,
@@ -66,10 +64,10 @@ export default defineComponent({
 
     const { toggle, isToggling } = useToggle(() => {
       videos.value.reverse();
-      displayVideoPage(1, 30);
+      displayVideoPage(1, maxVideosToStart);
     });
 
-    const videoTask = getVideoTask(() => { displayVideoPage(1, 30); });
+    const videoTask = getVideoTask(() => { displayVideoPage(1, maxVideosToStart); });
     videoTask.loadVideos();
 
     return {
@@ -83,35 +81,8 @@ export default defineComponent({
 });
 
 
-function useVideos() {
-  const store  = useStore<VuexStore>();
-  const videos = computed(() => store.state.dataCache['red33m']?.slice());
-  const api    = useAPI();
-
-  function getVideoTask(onVideosLoaded: () => void) {
-    const videoTask = useTask(function*() {
-    const resp: APIResponse<any> = yield api.get('/data/red33m/videos.json', null, 'static');
-      store.commit('data-cache-add', { name: 'red33m', data: resp.data });
-      onVideosLoaded();
-    });
-    return {
-      isRunning: computed(() => videoTask.isRunning),
-      loadVideos: () => {
-        if (!videos.value) videoTask.perform();
-        else onVideosLoaded();
-      }
-    };
-  }
-
-  return {
-    videos,
-    getVideoTask,
-  };
-}
-
-
-function useVideoPagination(videos: Ref<any[]>) {
-  const paginatedVideos = ref<any[]>([]);
+function useVideoPagination(videos: Ref<Video[]>) {
+  const paginatedVideos = ref<Video[]>([]);
   const observedEl      = ref<HTMLElement>();
   const visiblePages    = ref(0);
 
