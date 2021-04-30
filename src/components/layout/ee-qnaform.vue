@@ -97,6 +97,12 @@ import { useStore } from "vuex";
 
 export type FormQuestion = { text: string; subtext?: string; answer?: string; }
 
+interface ReactiveQuestion {
+  answer   : string;
+  text     : string;
+  subtext? : string;
+}
+
 
 export default defineComponent({
   components: {
@@ -119,7 +125,7 @@ export default defineComponent({
     const api             = useAPI();
     const store           = useStore<VuexStore>();
     const nameRegex       = /^[a-z\s.]+$/i;
-    const oldQuestions    = store.state.dataCache[props.id];
+    const oldQuestions    = store.state.dataCache[props.id] as ReactiveQuestion[]|undefined;
     const questions       = oldQuestions || getReactiveQuestions();
     const inputValidation = useInputValidation(2 + props.questions.length);
     const formData        = reactive({ name: '', email: '', });
