@@ -6,16 +6,14 @@
   display: flex;
   margin: 0 auto;
   margin-top: 15px;
-  max-width: 1024px;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
 }
 .lit-expanded .lit__cards {
-  flex-direction: column;
-}
-.lit-expanded .lit__cards {
   margin-top: 2rem;
+  flex-direction: column;
+  max-width: 1024px;
 }
 
 .lit__card {
