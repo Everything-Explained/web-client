@@ -102,15 +102,11 @@ export default defineComponent({
       () => pager.pageTitle.value || props.title
     );
 
-    function isEthan(author: string) {
-      return author.toLowerCase().includes('ethan');
-    }
-
     return {
       titleRef,
       ...pager,
       useDate,
-      isEthan,
+      isEthan: (author: string) => author.toLowerCase().includes('ethan'),
       sizeClass,
     };
   }
