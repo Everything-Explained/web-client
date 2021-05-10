@@ -92,6 +92,7 @@
             :type="formType"
             :name-label="'Name or Preferred Title'"
             :show-back="true"
+            :minchars="70"
             @back="back"
             @submitted="submitted"
           />
