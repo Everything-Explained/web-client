@@ -21,6 +21,7 @@
               class="lib-videos_video"
               :video-id="v.id"
               :desc="v.content"
+              :date="v.date"
             >
               {{ v.title }}
             </ee-video>
