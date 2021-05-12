@@ -43,6 +43,7 @@ import eeVideo       from "@/components/ui/ee-video.vue";
 import eeToggleVue   from "@/components/ui/ee-toggle.vue";
 import useVideos from "@/composeables/useVideos";
 import { Video } from "@/typings/global-types";
+import { isMobile } from "@/globals";
 
 
 
@@ -54,7 +55,7 @@ export default defineComponent({
     'ee-footer'   : eeFooterVue,
   },
   setup() {
-    const maxVideosToStart = 20;
+    const maxVideosToStart = isMobile() ? 10 : 30;
     const { videos, getVideoTask } = useVideos<Video>('/data/red33m/videos.json');
 
     const { displayVideoPage,
@@ -86,24 +87,21 @@ function useVideoPagination(videos: Ref<Video[]>) {
   const observedEl      = ref<HTMLElement>();
   const visiblePages    = ref(0);
 
-  function displayVideoPage(page: number, amount = 15) {
+  function displayVideoPage(page: number, amount = isMobile() ? 5 : 30) {
     visiblePages.value = page;
     paginatedVideos.value = videos.value.slice(0, page * amount);
   }
 
-  const renderVideos = () => {
-    const body = document.body;
+  function renderVideos() {
     if (!observedEl.value) return;
-    const thresholdRatio =
-      body.scrollTop > 450
-        ? 0.65
-        : 0.15 // Compensate for page header
+    const body          = document.body;
+    const maxScrollDist = body.scrollHeight - window.innerHeight;
+    const renderDist    = maxScrollDist - 700
     ;
-    const threshold = observedEl.value.clientHeight * thresholdRatio;
-    if (body.scrollTop > threshold) {
+    if (body.scrollTop >= renderDist) {
       displayVideoPage(visiblePages.value + 1);
     }
-  };
+  }
 
   document.body.addEventListener('scroll', renderVideos);
   onUnmounted(() => document.body.removeEventListener('scroll', renderVideos));
