@@ -68,9 +68,8 @@ export function useDate(date: Date|ISODateStr) {
         if (diff <= 13) return "a moment ago";
         if (diff > timeSpan[span]) {
           const relNum = Math.round(diff / timeSpan[span]);
-          if (span == 'week' && relNum == 4) {
-            return rtf.format(-1, 'month');
-          }
+          if (span == 'month' && relNum == 12) return rtf.format(-1, 'year');
+          if (span == 'week' && relNum == 4) return rtf.format(-1, 'month');
           return rtf.format(-relNum, span);
         }
       }

@@ -1,9 +1,4 @@
 
-.r3d-form__form {
-  display: block;
-  margin: 0 auto;
-  max-width: 1024px;
-}
 .r3d-form__titlebar.--submitted {
   color: hsl(161, 80%, 60%);
   transition: color 800ms;
@@ -14,12 +9,6 @@
   margin: 0 auto;
   margin-bottom: 100px;
   width: 70%;
-}
-
-.r3d-form__acceptance {
-  display: block;
-  margin: 0 auto;
-  max-width: 1024px;
 }
 
 .r3d-form__iframe-parent {
@@ -97,29 +86,6 @@ iframe {
 .r3d-form__submit-error {
   display: inline-block;
   margin-left: 1.5rem;
-  font-size: 1.2rem;
-  letter-spacing: 2px;
-  word-spacing: 3px;
-  font-weight: 400;
-  color: hsl(0, 100%, 80%);
-  opacity: 0;
-  visibility: hidden;
-  transition:
-              opacity 2s ease-in,
-              visibility 2s ease-in
-            ;
-  text-shadow:  0    0    0   transparent,
-                0    0   10px hsl(0, 100%, 65%),
-                0    0   20px hsl(0, 100%, 65%),
-                0    0   40px hsl(0, 100%, 65%);
-}
-.r3d-form__submit-error.--on {
-  opacity: 1;
-  visibility: visible;
-  transition:
-              opacity 0.15s ease-out,
-              visibility 0.15s ease-out
-            ;
 }
 
 .r3d-form__area {
@@ -135,7 +101,6 @@ iframe {
 }
 
 .r3d-form__text-input {
-  display: inline-block;
   margin-bottom: 50px;
   width: 50%;
 }

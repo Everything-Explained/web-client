@@ -1,0 +1,61 @@
+.qnaf__form {
+  margin : 0 auto;
+  width  : 75%; }
+  .qnaf__form:first-child { margin-top: 2rem; }
+
+.qnaf__input,
+.qnaf__area-input {
+  width: 50%;
+}
+
+.qnaf__question-block {
+  margin-top: 2rem; }
+  .qnaf__question-block:nth-child(odd) { margin-top: 1rem; }
+
+.qnaf__question {
+  font-size      : 1.20rem;
+  font-weight    : 400;
+  letter-spacing : 1px; }
+  .qnaf__question::before {
+    position    : absolute;
+    top         : -0.03rem;
+    margin-left : -1.5rem;
+    content     : attr(data-num);
+    font-weight : 400;
+    font-size   : 1.3rem;
+    color       : hsl(0, 100%, 68%); }
+
+.qnaf__subtext {
+  margin-top: 10px;
+  margin-bottom: 0.5rem;
+  color: hsl(197, 11%, 57%);
+  font-size: 1.15rem;
+}
+
+.qnaf__area-input {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.qnaf__controls {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.qnaf__validation-text {
+  margin-left: 0.5rem !important;
+  color: hsl(196, 11%, 40%); }
+  .qnaf__validation-text strong {
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: hsl(47, 80%, 60%); }
+
+.qnaf__error-text {
+  margin: auto;
+  margin-left: 1rem;
+}
+
+.qnaf__back-button {
+  margin-right: 1rem;
+}

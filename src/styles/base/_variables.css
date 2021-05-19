@@ -138,10 +138,10 @@
   /*** Button - Dangerous ***/
   --button-dangerous-c             : white;
   --button-dangerous-bg-c          : hsl(0, 100%, 60%);
-  --button-dangerous-bg-hov-c      : hsl(0, 100%, 69%);
+  --button-dangerous-bg-hov-c      : hsl(0, 100%, 65%);
   --button-dangerous-bdr-c         : var(--button-dangerous-bg-hov-c);
   --button-dangerous-bxs-c         : hsla(0, 100%, 63%, 0.7);
-  --button-dangerous-bxs-hov-c     : hsla(0, 100%, 69%, 0.9);
+  --button-dangerous-bxs-hov-c     : hsla(0, 100%, 65%, 0.9);
   --button-dangerous-loading-c     : hsla(0, 100%, 100%, 0.6);
   --button-dangerous-loading-bg-c  : hsl(0, 100%, 70%);
   --button-dangerous-loading-bdr-c : hsl(0, 100%, 73%);

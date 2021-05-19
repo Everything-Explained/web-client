@@ -1,29 +1,34 @@
 <template>
   <div class="ee-input__container">
     <!-- TEXT FIELD -->
-    <input v-if="isTextField"
-           :id="id"
-           :class="['ee-input__text', { '--limit-reached': charLimitReached && hasValidInput }]"
-           :type="type"
-           :minlength="minchars"
-           :maxlength="maxchars"
-           :value="modelValue"
-           placeholder="placeholder"
-           @input="onInput($event), $emit('update:modelValue', getVal($event))"
+    <input
+      v-if="isTextField"
+      :id="id"
+      :class="['ee-input__text', { '--limit-reached': charLimitReached && hasValidInput }]"
+      :type="type"
+      :minlength="minchars"
+      :maxlength="maxchars"
+      :value="modelValue"
+      placeholder="placeholder"
+      @input="onInput($event), $emit('update:modelValue', getVal($event))"
     >
     <!-- Floating LABEL -->
-    <label v-if="isTextField"
-           class="ee-input__label"
-           :for="id"
+    <label
+      v-if="isTextField"
+      class="ee-input__label"
+      :for="id"
     ><slot /></label>
 
-    <textarea v-if="type == 'area'"
-              ref="areaText"
-              :class="['ee-input__area', { '--limit-reached': charLimitReached }]"
-              :value="modelValue"
-              :placeholder="placeholder"
-              :maxlength="maxchars"
-              @input="onInput($event), $emit('update:modelValue', getVal($event))"
+    <textarea
+      v-if="type == 'area'"
+      :id="id"
+      ref="areaText"
+      :class="['ee-input__area', { '--limit-reached': charLimitReached }]"
+      :value="modelValue"
+      :placeholder="placeholder"
+      :maxlength="maxchars"
+      @keyup="validate(charLimitReached && hasValidInput, id)"
+      @input="onInput($event), $emit('update:modelValue', getVal($event))"
     />
 
     <!-- Animated Bottom Border -->
@@ -31,29 +36,28 @@
 
     <!-- Character Length Tally **/** -->
     <transition name="fade">
-      <span v-if="isTextField ? showCharTally && tally : tally || showCharTally"
-            :class="[
-              'ee-input__char-limit',
-              { '--length-reached': charLengthReached,
-                '--limit-reached' : charLimitReached }
-            ]"
+      <span
+        v-if="isTextField ? showCharTally && tally : tally || showCharTally"
+        :class="[
+          'ee-input__char-limit',
+          { '--length-reached': charLengthReached,
+            '--limit-reached' : charLimitReached }
+        ]"
       >
         {{ charLength }}&nbsp;/&nbsp;{{ maxchars }}
       </span>
     </transition>
-
-    <!-- Required Chars Message -->
     <transition name="fade">
-      <span v-if="isTextField ? showCharLimit && tally : showCharLimit"
-            class="ee-input__char-limit-msg"
+      <span
+        v-if="isTextField ? showCharLimit && tally : showCharLimit"
+        class="ee-input__char-limit-msg"
       >
         <em>{{ charsRequired }}</em> more chars required
       </span>
-    </transition>
-    <transition name="fade">
-      <span v-if="!hasValidInput && charLength > 0"
-            class="ee-input__error-msg"
-            v-html="errmsg"
+      <span
+        v-else-if="!hasValidInput && charLength > 0"
+        class="ee-input__error-msg"
+        v-html="errorMessage"
       />
     </transition>
   </div>
@@ -61,8 +65,10 @@
 
 
 <script lang='ts'>
-import { computed, defineComponent, onMounted, ref } from "vue";
+import { computed, defineComponent, onMounted, PropType, ref, watch } from "vue";
 
+
+type ValidateFn = (val: boolean, id: string) => void;
 
 const _inputTypes = ['text', 'area', 'email', 'password'];
 
@@ -78,14 +84,19 @@ export default defineComponent({
     errmsg      : { type: String  , default: '<b>Invalid</b>' },
     placeholder : { type: String  , default: ''               },
     modelValue  : { type: String  , default: ''               },
+    validate    : { type: Function as PropType<ValidateFn>, default: () => void(0)    },
   },
   emits: ['update:modelValue'],
   setup(props) {
-    const { maxchars, minchars, type, regex } = props;
-    const charLength = ref(0);
-    const areaText = ref<HTMLTextAreaElement>();
-    const hasValidInput = computed(() => regex.test(props.modelValue));
-    const isTextField = type == 'text';
+    const { maxchars, minchars, type, regex, errmsg } = props;
+    const id            = genID();
+    const charLength    = ref(0);
+    const areaText      = ref<HTMLTextAreaElement>();
+    const isTextField   = type == 'text' || type == 'email';
+    const emailRegex    = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    const workingRegex  = type == 'email' ? emailRegex : regex;
+    const hasValidInput = computed(() => workingRegex.test(props.modelValue));
+    const errorMessage  = computed(() => type == 'email' ? "Enter a <em>valid</em> E-mail" : errmsg);
     const charsRequired = computed(() => minchars - charLength.value);
     const showCharLimit = computed(() =>
       charLength.value > 0 && charsRequired.value > 0
@@ -93,8 +104,9 @@ export default defineComponent({
     const showCharTally     = computed(() => charLength.value > 0);
     const charLimitReached  = computed(() => charsRequired.value <= 0);
     const charLengthReached = computed(() => charLength.value == maxchars);
+    const isValidated       = computed(() => charLimitReached.value && hasValidInput.value);
 
-    if (maxchars > 255 && type == 'text')
+    if (maxchars > 255 && isTextField)
       throw Error('ee-input:: text input has a 255 character max-limit.')
     ;
     if (!_inputTypes.includes(props.type)) throw Error('ee-input:: invalid input type');
@@ -117,6 +129,11 @@ export default defineComponent({
       charLength.value = val.length;
     }
 
+    // onValidation
+    watch(() => isValidated.value,
+      (val: boolean) => { props.validate(val, id); }
+    );
+
     onMounted(() => {
       // Update textarea if it starts with a value.
       if (props.modelValue.length) {
@@ -126,9 +143,9 @@ export default defineComponent({
     });
 
     return {
-      id: type == 'text' ? genID() : '',
+      id,
       charLength, charsRequired, showCharLimit, isTextField,
-      areaText,
+      areaText, errorMessage,
       charLengthReached, charLimitReached, showCharTally,
       getVal: (e: Event) => (e.target as HTMLInputElement).value,
       hasValidInput,

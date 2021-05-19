@@ -8,12 +8,8 @@
 /*** 511px ***/
 @media only screen and (--medium-screen) {
   .title-bar { font-size: 1.5rem; }
-  .title-bar__text {
-    margin-left: 3rem;
-  }
-  .title-bar__menu-icon {
-    font-size: 1.8rem;
-  }
+  .title-bar__text { margin-left: 3rem; }
+  .title-bar__menu-icon { font-size: 1.8rem; }
 }
 /*** 380px ***/
 @media only screen and (--small-screen) {

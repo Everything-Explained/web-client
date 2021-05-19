@@ -1,7 +1,8 @@
 .app-menu {
-  top: 0; bottom: 0;
-  z-index      : 3;
   position     : absolute;
+  top          : 0;
+  bottom       : 0;
+  z-index      : 3;
   background   : var(--menu-bg-c);
   box-shadow   : 5px 10px 10px 0 var(--menu-bxs-c);
   transform    : translateX(-110%);

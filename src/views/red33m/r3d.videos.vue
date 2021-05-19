@@ -2,42 +2,48 @@
   <div class="red33m">
     <ee-titlebar>RED33M Videos</ee-titlebar>
     <transition name="fade" mode="out-in">
-      <div v-if="getVideos.isRunning" class="preloader page" />
+      <div v-if="isVideoTaskRunning" class="preloader page" />
       <div v-else>
-        <ee-toggle class="red33m-toggle"
-                   legend="Sort By"
-                   left-text="Oldest"
-                   right-text="Latest"
-                   :callback="toggle"
-                   :prevent="isToggling"
+        <ee-toggle
+          class="red33m-toggle"
+          legend="Sort By"
+          left-text="Oldest"
+          right-text="Latest"
+          :callback="toggle"
+          :prevent="isToggling"
         />
-        <div class="red33m-video-list">
-          <ee-video v-for="(v, i) of videos"
-                    :key="i"
-                    :video-id="v.id"
-                    :desc="v.content"
-                    class="red33m-video"
+        <div ref="observedEl" class="red33m-video-list">
+          <ee-video
+            v-for="(v, i) of videos"
+            :key="i"
+            :video-id="v.id"
+            :date="v.date"
+            :desc="v.content"
+            class="red33m-video"
           >
             {{ v.title }}
           </ee-video>
         </div>
-        <ee-footer />
+        <!-- Loading footer before videos 'fixes' it to bottom -->
+        <ee-footer v-if="videos.length" />
       </div>
     </transition>
   </div>
 </template>
 
+
+
+
 <script lang='ts'>
-import { computed, defineComponent, ref } from "vue";
-import { useStore }       from "vuex";
-import { VuexStore }      from "@/vuex/vuex-store";
-import { useTask }        from "vue-concurrency";
-import { useAPI }         from "@/services/api_internal";
+import { defineComponent, onUnmounted, Ref, ref } from "vue";
 // Components
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
 import eeVideo       from "@/components/ui/ee-video.vue";
 import eeToggleVue   from "@/components/ui/ee-toggle.vue";
+import useVideos from "@/composeables/useVideos";
+import { Video } from "@/typings/global-types";
+import { isMobile } from "@/globals";
 
 
 
@@ -49,33 +55,74 @@ export default defineComponent({
     'ee-footer'   : eeFooterVue,
   },
   setup() {
-    const store = useStore<VuexStore>();
-    const isToggling = ref(false);
-    const videos = computed(() => store.state.dataCache['red33m']?.slice());
+    const maxVideosToStart = isMobile() ? 10 : 30;
+    const { videos, getVideoTask } = useVideos<Video>('/data/red33m/videos.json');
 
-    const api = useAPI().data;
-    const getVideos = useTask(function*() {
-      const red33mData = yield api.get('/red33m/videos', console.error);
-      store.commit('data-cache-add', { name: 'red33m', data: red33mData });
+    const { displayVideoPage,
+            observedEl,
+            paginatedVideos } = useVideoPagination(videos)
+    ;
+
+    const { toggle, isToggling } = useToggle(() => {
+      videos.value.reverse();
+      displayVideoPage(1, maxVideosToStart);
     });
 
-    const toggle = () => {
-      if (isToggling.value) return;
-      videos.value.reverse();
-      // Wait for toggle input element to be "checked"
-      setTimeout(() => isToggling.value = true, 1);
-      // Debounce toggling
-      setTimeout(() => isToggling.value = false, 300);
-    };
-
-    if (!videos.value) getVideos.perform();
+    const videoTask = getVideoTask(() => { displayVideoPage(1, maxVideosToStart); });
+    videoTask.loadVideos();
 
     return {
-      videos,
-      getVideos,
+      videos: paginatedVideos,
+      observedEl,
+      isVideoTaskRunning: videoTask.isRunning,
       toggle,
       isToggling,
     };
   }
 });
+
+
+function useVideoPagination(videos: Ref<Video[]>) {
+  const paginatedVideos = ref<Video[]>([]);
+  const observedEl      = ref<HTMLElement>();
+  const visiblePages    = ref(0);
+
+  function displayVideoPage(page: number, amount = isMobile() ? 5 : 30) {
+    visiblePages.value = page;
+    paginatedVideos.value = videos.value.slice(0, page * amount);
+  }
+
+  function renderVideos() {
+    if (!observedEl.value) return;
+    const body          = document.body;
+    const maxScrollDist = body.scrollHeight - window.innerHeight;
+    const renderDist    = maxScrollDist - 700
+    ;
+    if (body.scrollTop >= renderDist) {
+      displayVideoPage(visiblePages.value + 1);
+    }
+  }
+
+  document.body.addEventListener('scroll', renderVideos);
+  onUnmounted(() => document.body.removeEventListener('scroll', renderVideos));
+
+  return { displayVideoPage, observedEl, paginatedVideos };
+}
+
+
+function useToggle(cb: () => void) {
+  const isToggling = ref(false);
+
+  function toggle() {
+    if (isToggling.value) return;
+      cb();
+      // Wait for toggle input element to be "checked"
+      setTimeout(() => isToggling.value = true, 1);
+      // Debounce toggling
+      setTimeout(() => isToggling.value = false, 300);
+  }
+
+  return { toggle, isToggling };
+}
+
 </script>

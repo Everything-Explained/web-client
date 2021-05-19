@@ -4,7 +4,7 @@ export interface VuexStore {
   pageTitle     : string;
   isMenuOpening : boolean;
   lazyimgCache  : string[];
-  dataCache     : { [key: string]: any[] };
+  dataCache     : { [key: string]: unknown[] };
 }
 
 export default createStore<VuexStore>({

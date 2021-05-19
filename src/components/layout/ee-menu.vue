@@ -2,22 +2,25 @@
   <menu ref="menu" :class="['app-menu', { '--opened': opened }]">
     <header class="app-menu__header">
       <span class="app-menu__header_text">Menu</span>
-      <ee-icon class="app-menu__header_exit-icon"
-               :type="'cross'"
-               @mousedown="closeMenu"
+      <ee-icon
+        class="app-menu__header_exit-icon"
+        :type="'cross'"
+        @mousedown="closeMenu"
       />
     </header>
     <ul>
       <template v-for="(map, i) of routeMap" :key="i">
-        <li v-if="map.name != 'root' && !map.hidden"
-            class="app-menu_category"
+        <li
+          v-if="map.name != 'root' && !map.hidden"
+          class="app-menu_category"
         >
           {{ map.name }}
         </li>
-        <li v-for="(route, j) of map.routes"
-            :key="j"
-            class="app-menu_item"
-            @click="closeMenu"
+        <li
+          v-for="(route, j) of map.routes"
+          :key="j"
+          class="app-menu_item"
+          @click="closeMenu"
         >
           <router-link :to="route.path">
             {{ route.title }}

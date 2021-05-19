@@ -1,7 +1,7 @@
 .md {
   max-width   : 1024px;
   margin      : 0 auto;
-  margin-top: 10px;
+  margin-top  : 10px;
   font-weight : 300;
   font-size   : var(--md-f-sz);
   color       : var(--md-c);
@@ -16,6 +16,8 @@
 .md h3, .md h4,
 .md h5 {
   margin-top     : 3rem;
+  margin-left    : 3rem;
+  margin-bottom  : 0.3rem;
   color          : var(--md-head-c);
   font-variant   : small-caps;
   font-weight    : 300;

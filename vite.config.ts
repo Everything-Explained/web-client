@@ -4,8 +4,10 @@ import { resolve as pathResolve } from 'path';
 
 export default defineConfig({
   plugins: [vue()],
-  alias: {
-    '@': pathResolve(__dirname, 'src')
+  resolve: {
+    alias: {
+      '@': pathResolve(__dirname, 'src')
+    },
   },
   build: {
     cleanCssOptions: {

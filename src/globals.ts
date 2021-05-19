@@ -3,6 +3,7 @@ export const isProduction =
 ;
 
 export const isDevelopment = !isProduction;
+export const isMobile = () => window.outerWidth <= 511;
 
 export const isAuthed = () => {
   return (

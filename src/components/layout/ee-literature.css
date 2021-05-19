@@ -6,16 +6,14 @@
   display: flex;
   margin: 0 auto;
   margin-top: 15px;
-  max-width: 1024px;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
 }
 .lit-expanded .lit__cards {
-  flex-direction: column;
-}
-.lit-expanded .lit__cards {
   margin-top: 2rem;
+  flex-direction: column;
+  max-width: 1024px;
 }
 
 .lit__card {
@@ -77,8 +75,7 @@
   border-top: 1px solid hsl(197, 11%, 20%);
   border-radius: 0 0 7px 7px;
   box-shadow: 0 -5px 15px -2px black;
-  transition: color var(--lit-transition-speed),
-              background var(--lit-transition-speed),
+  transition: background var(--lit-transition-speed),
               border var(--lit-transition-speed);
 }
 .lit-expanded .lit__card footer {

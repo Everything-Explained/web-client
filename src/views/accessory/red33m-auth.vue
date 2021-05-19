@@ -17,35 +17,40 @@
       guarantee a Passcode, it only makes you eligible.
     </ee-text>
     <form class="r3d-auth__form">
-      <ee-input v-model="code"
-                class="r3d-auth__passcode"
-                :minchars="3"
-                :maxchars="6"
+      <ee-input
+        v-model="code"
+        class="r3d-auth__passcode"
+        :minchars="6"
+        :maxchars="6"
+        :validate="validate"
       >
         Passcode
       </ee-input>
 
-      <ee-button class="r3d-auth__button"
-                 type="submit"
-                 theme="attention"
-                 :loading="isLoading"
-                 :disabled="!hasValidCode"
-                 @click="submit"
+      <ee-button
+        class="r3d-auth__button"
+        type="submit"
+        theme="attention"
+        :loading="isLoading"
+        :disabled="!isValidated"
+        @click="submit"
       >
         ENTER
       </ee-button>
-
-      <div :class="['r3d-auth__error', { '--on': isError }]">
-        {{ errorText }}
-      </div>
+      <br>
+      <ee-form-error
+        class="r3d-auth__error"
+        :update="errorUpdVal"
+        :text="errorText"
+      />
     </form>
     <br>
-    <ee-text type='span-block' class="r3d-auth__note">
+    <ee-text type="span-block" class="r3d-auth__note">
       <strong>NOTE:</strong> Do not clear your browser cache, otherwise you
       will need to enter the code again, when you come back to this page
       later.
     </ee-text>
-    <ee-text class="r3d-auth__note" type='span-block'>
+    <ee-text type="span-block" class="r3d-auth__note">
       <strong>CAVEAT:</strong> The passcode will only be saved for <em>this device</em>.
       In order to view this content on your other devices:
       <strong>computer, phone, tablet, etc...</strong>
@@ -56,64 +61,63 @@
 </template>
 
 <script lang='ts'>
-import { computed, defineComponent, ref } from "vue";
+import { defineComponent, ref } from "vue";
 import eeButton from "@/components/ui/ee-button.vue";
 import eeInputField from "@/components/ui/ee-input.vue";
-import { useAPI } from "@/services/api_internal";
+import { APIErrorResp, useAPI } from "@/services/api_internal";
 import eeText from '@/components/ui/ee-text.vue';
 import { useRouter } from "vue-router";
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
 import eeFooterVue from "@/components/layout/ee-footer.vue";
+import eeFormErrorVue from "@/components/ui/ee-form-error.vue";
+import useInputValidation from "@/composeables/inputValidation";
 
 export default defineComponent({
   components: {
-    'ee-input'    : eeInputField,
-    'ee-button'   : eeButton,
-    'ee-titlebar' : eeTitlebarVue,
-    'ee-text'     : eeText,
-    'ee-footer'   : eeFooterVue,
+    'ee-input'      : eeInputField,
+    'ee-button'     : eeButton,
+    'ee-titlebar'   : eeTitlebarVue,
+    'ee-text'       : eeText,
+    'ee-footer'     : eeFooterVue,
+    'ee-form-error' : eeFormErrorVue,
   },
   setup() {
     const codeLength   = 6;
     const codeRef      = ref('');
     const errorTextRef = ref('');
-    const isErrorRef   = ref(false);
-    const hasValidCode = computed(() => codeRef.value.length == codeLength);
+    const errorUpdVal  = ref(0);
     const api          = useAPI();
-    const authAPI      = api.auth;
     const router       = useRouter();
+    const inputValidation = useInputValidation(1);
 
-    let errorTimeout = 0;
-    function setError(msg: string) {
-      clearTimeout(errorTimeout);
-      errorTextRef.value = msg.toUpperCase();
-      isErrorRef.value   = true;
-      errorTimeout       = setTimeout(() => isErrorRef.value = false, 2500);
+    function setError(res: APIErrorResp) {
+      errorTextRef.value = res.message;
+      errorUpdVal.value = Date.now();
     }
 
     const submit = (e: MouseEvent) => {
       e.preventDefault();
       const passcode = codeRef.value.toUpperCase();
-      api.debounce(600, () => {
-        authAPI
-          .put('/red33m', { passcode })
+      api.debounce(200, () => {
+        api
+          .put('/auth/red33m', { passcode })
           .then(() => {
             localStorage.setItem('passcode', 'yes');
             router.push('/red33m/videos');
           })
-          .catch((err) => setError(err))
+          .catch(setError)
         ;
       });
     };
 
     return {
       isLoading: api.isPending,
-      hasValidCode,
       code: codeRef,
       codeLength,
-      isError: isErrorRef,
       submit,
+      ...inputValidation,
       errorText: errorTextRef,
+      errorUpdVal,
     };
   }
 });
