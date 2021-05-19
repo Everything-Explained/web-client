@@ -114,7 +114,7 @@ export default defineComponent({
   props: {
     id        : { type: String  as PropType<string>,         required: true       },
     type      : { type: Number  as PropType<number>,         required: true       },
-    questions : { type: Array   as PropType<FormQuestion[]>, default: []          },
+    questions : { type: Array   as PropType<FormQuestion[]>, default: () => []    },
     nameLabel : { type: String  as PropType<string>,         default: 'Your Name' },
     showBack  : { type: Boolean as PropType<boolean>,        default: false       },
     minchars  : { type: Number  as PropType<number>,         default: 100         },
@@ -134,15 +134,6 @@ export default defineComponent({
     if (!props.questions.length) throw Error('qnaform::Missing Questions');
     if (!oldQuestions) store.commit('data-cache-add', { name: props.id, data: questions });
 
-    function setFormError(err: APIErrorResp) {
-      formState.errorUpdate = Date.now();
-      formState.errorText = err.message;
-    }
-
-    function getReactiveQuestions() {
-      return props.questions.map(q => reactive({ ...q, answer: q.answer || ''}));
-    }
-
     function submit() {
       const qData = {
         ...formData,
@@ -158,6 +149,15 @@ export default defineComponent({
         })
         .catch(setFormError)
       ;
+    }
+
+    function setFormError(err: APIErrorResp) {
+      formState.errorUpdate = Date.now();
+      formState.errorText = err.message;
+    }
+
+    function getReactiveQuestions() {
+      return props.questions.map(q => reactive({ ...q, answer: q.answer || ''}));
     }
 
     return {
