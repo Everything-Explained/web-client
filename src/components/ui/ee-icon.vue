@@ -46,8 +46,9 @@ export default defineComponent({
     if (!iconMap[type.value])
       throw Error(`<icon>::invalid icon type: ${type.value}`)
     ;
-    const icon = computed(() => iconMap[type.value!]);
-    return { icon };
+    return {
+      icon: computed(() => iconMap[type.value])
+    };
   }
 });
 
