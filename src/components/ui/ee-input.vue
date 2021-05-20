@@ -90,18 +90,16 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props) {
     const { maxchars, minchars, type, regex, errmsg } = props;
-    const id            = useUniqueID().getID();
-    const charLength    = ref(0);
-    const areaText      = ref<HTMLTextAreaElement>();
-    const isTextField   = type == 'text' || type == 'email';
-    const emailRegex    = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    const workingRegex  = type == 'email' ? emailRegex : regex;
-    const hasValidInput = computed(() => workingRegex.test(props.modelValue));
-    const errorMessage  = computed(() => type == 'email' ? "Enter a <em>valid</em> E-mail" : errmsg);
-    const charsRequired = computed(() => minchars - charLength.value);
-    const showCharLimit = computed(() =>
-      charLength.value > 0 && charsRequired.value > 0
-    );
+    const id                = useUniqueID().getID();
+    const charLength        = ref(0);
+    const areaText          = ref<HTMLTextAreaElement>();
+    const isTextField       = type == 'text' || type == 'email';
+    const emailRegex        = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    const workingRegex      = type == 'email' ? emailRegex : regex;
+    const hasValidInput     = computed(() => workingRegex.test(props.modelValue));
+    const errorMessage      = computed(() => type == 'email' ? "Enter a <em>valid</em> E-mail" : errmsg);
+    const charsRequired     = computed(() => minchars - charLength.value);
+    const showCharLimit     = computed(() => charLength.value > 0 && charsRequired.value > 0);
     const showCharTally     = computed(() => charLength.value > 0);
     const charLimitReached  = computed(() => charsRequired.value <= 0);
     const charLengthReached = computed(() => charLength.value == maxchars);
