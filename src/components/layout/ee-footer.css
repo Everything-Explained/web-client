@@ -8,42 +8,40 @@
   justify-content : center;
   font-weight     : 400;
   background      : var(--sub-panel-c);
-  box-shadow      : 0 -10px 7px -1px var(--footer-bxs-c);
-}
-.app-footer::before {
-  top: 0; left: 0; right: 0;
-  height        : 3px;
-  content       : '';
-  background    : var(--panel-c);
-  border-bottom : 1px solid black;
-}
-.app-footer::after {
-  bottom: 0; left: 0; right: 0;
-  position      : absolute;
-  content       : '';
-  height        : 3px;
-  background    : var(--app-ribbon-c);
-  border-top    : 1px solid black;
-  border-bottom : 1px solid black;
-}
+  box-shadow      : 0 -10px 7px -1px var(--footer-bxs-c); }
+  .app-footer::before {
+    top: 0; left: 0; right: 0;
+    height        : 3px;
+    content       : '';
+    background    : var(--panel-c);
+    border-bottom : 1px solid black; }
+  .app-footer::after {
+    bottom: 0; left: 0; right: 0;
+    position      : absolute;
+    content       : '';
+    height        : 3px;
+    background    : var(--app-ribbon-c);
+    border-top    : 1px solid black;
+    border-bottom : 1px solid black; }
+
 .app-footer_copyright {
   padding     : 13px 0 20px 0;
   font-size   : 0.87rem;
   color       : var(--footer-copyright-c);
   text-shadow : 1px 1px 0 black,
-                2px 2px 0 black
-  ;
-}
-.app-footer_copyright a:link,
-.app-footer_copyright a:visited {
-  display         : inline-block;
-  margin          : 5px 0;
-  color           : var(--footer-copyright-link-c);
-  text-shadow     : none;
-  text-decoration : underline;
-  transition      : color .3s, border .3s;
-}
-.app-footer_copyright a:hover {
-  color        : var(--footer-copyright-link-hov-c);
-  border-color : var(--footer-copyright-link-hov-c);
-}
+                2px 2px 0 black; }
+  .app-footer_copyright a:link,
+  .app-footer_copyright a:visited {
+    display         : inline-block;
+    margin          : 5px 0;
+    color           : var(--footer-copyright-link-c);
+    text-shadow     : none;
+    text-decoration : underline;
+    transition      : color .3s, border .3s; }
+  .app-footer_copyright a:hover {
+    color        : var(--footer-copyright-link-hov-c);
+    border-color : var(--footer-copyright-link-hov-c); }
+
+
+
+
