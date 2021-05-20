@@ -2,12 +2,19 @@
 
 type ISODateStr = string;
 
+const timeSpan = {
+  year   : 31536000,
+  month  : 2592000,
+  week   : 604800,
+  day    : 86400,
+  hour   : 3600,
+  minute : 60,
+  second : 1,
+};
+
+
 export function useDate(date: Date|ISODateStr) {
   const dateObj = typeof date == 'string' ? new Date(date) : date;
-
-  const get12HourClock = (hours: number) => ( hours > 12 ? hours - 12 : hours     );
-  const padTime        = (time: number)  => ( time  < 10 ? `0${time}` : `${time}` );
-  const getAMPM        = (hours: number) => ( hours < 12 ? 'am'       : 'pm'      );
 
   return {
     toDateStrings() {
@@ -30,7 +37,7 @@ export function useDate(date: Date|ISODateStr) {
       return {
         amPM: getAMPM(dateObj.getHours()),
         ...this.toTimeStrings(),
-        hours: `${get12HourClock(dateObj.getHours())}`,
+        hours: `${to12Hours(dateObj.getHours())}`,
       };
     },
 
@@ -53,16 +60,6 @@ export function useDate(date: Date|ISODateStr) {
       const rtf  = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
       const diff = Math.floor((Date.now() - dateObj.getTime()) / 1000);
 
-      const timeSpan = {
-        year   : 31536000,
-        month  : 2592000,
-        week   : 604800,
-        day    : 86400,
-        hour   : 3600,
-        minute : 60,
-        second : 1,
-      };
-
       let span: keyof typeof timeSpan;
       for (span in timeSpan) {
         if (diff <= 13) return "a moment ago";
@@ -76,3 +73,9 @@ export function useDate(date: Date|ISODateStr) {
     }
   };
 }
+
+
+function to12Hours(hours: number) { return hours > 12 ? hours - 12 : hours;     }
+function    padTime(time: number) { return time  < 10 ? `0${time}` : `${time}`; }
+function   getAMPM(hours: number) { return hours < 12 ? 'am'       : 'pm';      }
+
