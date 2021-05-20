@@ -9,6 +9,7 @@
 .chglog blockquote {
   margin: 0 auto;
   width: 90%;
+  text-align: left;
   margin-bottom: 3rem; }
   .chglog blockquote::after {
     position         : absolute;
