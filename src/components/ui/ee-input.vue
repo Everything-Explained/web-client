@@ -65,6 +65,7 @@
 
 
 <script lang='ts'>
+import useUniqueID from "@/composeables/useUniqueID";
 import { computed, defineComponent, onMounted, PropType, ref, watch } from "vue";
 
 
@@ -89,7 +90,7 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props) {
     const { maxchars, minchars, type, regex, errmsg } = props;
-    const id            = genID();
+    const id            = useUniqueID().getID();
     const charLength    = ref(0);
     const areaText      = ref<HTMLTextAreaElement>();
     const isTextField   = type == 'text' || type == 'email';
@@ -110,12 +111,6 @@ export default defineComponent({
       throw Error('ee-input:: text input has a 255 character max-limit.')
     ;
     if (!_inputTypes.includes(props.type)) throw Error('ee-input:: invalid input type');
-
-    function genID() {
-      const base36RndNum = Math.floor(Math.random() * 10000).toString(36);
-      const base36Time = Date.now().toString(36);
-      return `i${base36Time}${base36RndNum}`;
-    }
 
     function autoHeight(el: HTMLTextAreaElement) {
       el.style.height = '44px';
