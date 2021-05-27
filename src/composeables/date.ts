@@ -70,6 +70,13 @@ export function useDate(date: Date|ISODateStr) {
           return rtf.format(-relNum, span);
         }
       }
+    },
+
+    toDaysOldFromNow() {
+      const oldDateInMs = dateObj.getTime();
+      const nowInMs     = Date.now();
+      const secondsFromNow = (nowInMs / 1000) - (oldDateInMs / 1000);
+      return secondsFromNow / timeSpan['day'];
     }
   };
 }
@@ -78,4 +85,5 @@ export function useDate(date: Date|ISODateStr) {
 function to12Hours(hours: number) { return hours > 12 ? hours - 12 : hours;     }
 function    padTime(time: number) { return time  < 10 ? `0${time}` : `${time}`; }
 function   getAMPM(hours: number) { return hours < 12 ? 'am'       : 'pm';      }
+
 
