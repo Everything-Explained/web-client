@@ -21,7 +21,7 @@
   box-shadow: 0 0 10px 1px black;
   width: 340px;
   font-size: 1.2rem;
-  align-self: center;
+  align-self: flex-end;
   overflow: hidden;
 }
 .lit-expanded .lit__card {
