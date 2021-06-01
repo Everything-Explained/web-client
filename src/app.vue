@@ -59,7 +59,7 @@ export default defineComponent({
 });
 
 
-function useVersionToast(body: Ref<HTMLElement>, releaseDate: ISODateString, uri: string) {
+function useVersionToast(body: Ref<HTMLElement>, releaseDate: ISODateString, changelogURI: string) {
   if (localStorage.getItem('release-date') != releaseDate) {
     localStorage.setItem('release-date', releaseDate);
     localStorage.setItem('release-toast', 'open');
@@ -83,7 +83,7 @@ function useVersionToast(body: Ref<HTMLElement>, releaseDate: ISODateString, uri
 
   function openVersion() {
     closeToast();
-    router.push(`/changelog/${uri}`);
+    router.push(`/changelog/${changelogURI}`);
   }
 
   function closeToast() {

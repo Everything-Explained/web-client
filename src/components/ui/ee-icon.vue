@@ -5,7 +5,7 @@
 
 
 <script lang='ts'>
-import { computed, defineComponent, toRef } from "vue";
+import { computed, defineComponent, PropType, toRef } from "vue";
 
 type StringMap = { [key: string]: string };
 
@@ -36,7 +36,7 @@ const iconMap: StringMap = {
 
 export default defineComponent({
   props: {
-    type: { type: String, default: '' }
+    type: { type: String as PropType<keyof typeof iconMap>, default: '' }
   },
   setup(props) {
     const type = toRef(props, 'type');

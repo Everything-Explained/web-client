@@ -151,13 +151,13 @@ export default defineComponent({
       ;
     }
 
+    function getReactiveQuestions() {
+      return props.questions.map(q => reactive({ ...q, answer: q.answer || ''}));
+    }
+
     function setFormError(err: APIErrorResp) {
       formState.errorUpdate = Date.now();
       formState.errorText = err.message;
-    }
-
-    function getReactiveQuestions() {
-      return props.questions.map(q => reactive({ ...q, answer: q.answer || ''}));
     }
 
     return {
