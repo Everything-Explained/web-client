@@ -1,6 +1,8 @@
 
 
 type ISODateStr = string;
+/** Date in milliseconds */
+type MsDateFormat = number;
 
 const timeSpan = {
   year   : 31536000,
@@ -13,10 +15,12 @@ const timeSpan = {
 };
 
 
-export function useDate(date: Date|ISODateStr) {
-  const dateObj = typeof date == 'string' ? new Date(date) : date;
+export function useDate(date: Date|ISODateStr|MsDateFormat) {
+  const dateObj = date instanceof Date ? date : new Date(date);
 
   return {
+    toMs() { return dateObj.getTime(); },
+
     toDateStrings() {
       return {
         month : padTime(dateObj.getMonth() + 1), // 0 is first month
