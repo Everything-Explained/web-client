@@ -20,7 +20,7 @@
   box-shadow: 0 0 10px 1px black;
   width: 340px;
   font-size: 1.2rem;
-  align-self: flex-end;
+  align-self: flex-start;
   overflow: hidden;
 }
 .lit-expanded .lit__card {
@@ -52,8 +52,8 @@
 
 .lit__card article {
   padding: 10px 7px 10px 10px;
-  height: 250px;
-  overflow: hidden;
+  height: auto;
+  overflow: show;
   overflow-y: auto;
   color: var(--body-dark-c);
   background-color: hsl(197, 11%, 8%);
@@ -66,14 +66,11 @@
 }
 
 .lit__card footer {
-  padding: 5px 0;
+  padding: 7px 0.7rem 4px 0.7rem;
   text-align: center;
   font-weight: 400;
-  color: hsl(197, 11%, 40%);
-  background-color: var(--sub-panel-c);
-  border-top: 1px solid hsl(197, 11%, 20%);
+  color: var(--panel-c);
   border-radius: 0 0 7px 7px;
-  box-shadow: 0 -5px 15px -2px black;
   transition: background var(--lit-transition-speed),
               border var(--lit-transition-speed);
 }
@@ -81,8 +78,6 @@
   padding: 7px 0.7rem 4px 0.7rem;
   background: none;
   color: var(--panel-c);
-  border: none;
-  box-shadow: none;
   padding-left: 5px;
   text-align: right;
 }
