@@ -1,5 +1,3 @@
-@import "reset-css/reset.css";
-
 /**********************************************/
 /* If reset-css changes, this needs to update */
 /**********************************************/
@@ -21,7 +19,6 @@ time, mark, audio, video {
   padding        : 0;
   border         : 0;
   font-size      : 100%;
-  font           : inherit;
   vertical-align : baseline;
 }
 
@@ -36,6 +33,25 @@ code, h1, h2, h3, h4, h5
   box-sizing  : border-box;
 }
 
-a {
-  text-decoration: none;
+a { text-decoration: none; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, main, menu, nav, section {
+	display: block;
 }
+
+/* HTML5 hidden-attribute fix for newer browsers */
+*[hidden]     { display: none; }
+menu, ol, ul  { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
