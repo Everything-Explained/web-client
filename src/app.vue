@@ -66,7 +66,7 @@ function useVersionToast(body: Ref<HTMLElement>, releaseDate: ISODateString, cha
   }
 
   const router          = useRouter();
-  const isNewRelease    = ref(useDate(releaseDate).toDaysOldFromNow() <= 14);
+  const isNewRelease    = ref(useDate(releaseDate).toDaysOldFromNow() <= 7);
   const isToastClosed   = ref(localStorage.getItem('release-toast') == 'closed');
   const isToastHidden   = ref(false);
   const isToastVisible  = computed(() => {
