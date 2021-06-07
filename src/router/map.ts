@@ -14,7 +14,7 @@ const routeMap = [
   { name: 'root', routes: [
     mapRoute('/home', 'Home'),
     mapRoute('/blog', 'Blog'),
-    mapRoute('/support', 'Support Us'),
+    mapRoute('/support', 'Support'),
   ]},
   { name: 'Library', routes: [
     mapRoute('/library/videos', 'Videos'),
