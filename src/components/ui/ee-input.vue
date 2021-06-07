@@ -65,7 +65,7 @@
 
 
 <script lang='ts'>
-import useUniqueID from "@/composeables/useUniqueID";
+import useUniqueIDGen from "@/composeables/useUniqueID";
 import { computed, defineComponent, onMounted, PropType, ref, watch } from "vue";
 
 
@@ -90,7 +90,7 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props) {
     const { maxchars, minchars, type, regex, errmsg } = props;
-    const id                = useUniqueID().getID();
+    const id                = useUniqueIDGen().genID();
     const charLength        = ref(0);
     const areaText          = ref<HTMLTextAreaElement>();
     const isTextField       = type == 'text' || type == 'email';
