@@ -48,7 +48,7 @@
   vertical-align: middle;
 }
 
-.ee-chkbx__svg-ref {
+.ee-chkbx__checkmark {
   position: absolute;
   top: 3px;
   left: 2px;
@@ -63,12 +63,4 @@
   stroke-dashoffset: 18px;
   transition: all 0.15s ease;
   transform: translate3d(0, 0, 0);
-}
-
-.ee-chkbx__checkmark {
-  position: absolute;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-  user-select: none;
 }
