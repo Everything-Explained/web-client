@@ -1,16 +1,17 @@
 html {
-  height      : 100%;
-  color       : var(--body-c);
-  font-size   : var(--body-f-sz);
-  font-family : 'Nunito Sans', 'Arial', 'Verdana';
-  font-weight : 300;
-  background  : var(--body-bg-c);
-  transform   : translateZ(0);
-  /* DO NOT REMOVE - menu and scroll depend on this */
-  overflow    : hidden;
-  /**************************************************/
+  height                  : 100%;
+  color                   : var(--body-c);
+  font-size               : var(--body-f-sz);
+  font-family             : 'Nunito Sans', 'Arial', 'Verdana';
+  font-weight             : 300;
+  text-rendering          : optimizeLegibility;
+  background              : var(--body-bg-c);
+  transform               : translateZ(0);
   -webkit-font-smoothing  : subpixel-antialiased;
   -moz-osx-font-smoothing : grayscale;
+  /* DO NOT REMOVE - menu and scroll depend on this */
+  overflow       : hidden;
+  /**************************************************/
 }
 body {
   height: 100%;
