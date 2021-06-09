@@ -6,11 +6,10 @@
       <div v-else>
         <ee-toggle
           class="red33m-toggle"
-          legend="Sort By"
           left-text="Oldest"
           right-text="Latest"
-          :callback="toggle"
           :prevent="isToggling"
+          @toggle="toggle"
         />
         <div ref="observedEl" class="red33m-video-list">
           <ee-video
