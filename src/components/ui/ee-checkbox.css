@@ -1,11 +1,6 @@
 :root {
   --chkbx-scale: 1.4;
 }
-
-.ee-chkbx__container {
-  top: 10px;
-  left: 10px;
-}
 .ee-chkbx {
   position: absolute;
   visibility: hidden;
@@ -25,7 +20,7 @@
   transition: all 0.15s;
 }
 .ee-chkbx__label:hover {
-  background-color: hsl(30, 10%, 13%); /* hsl(197, 11%, 12%); */
+
   color: var(--md-p-hov-i-c);
 }
 
@@ -55,7 +50,7 @@
   width: 12px;
   height: 10px;
   fill: none;
-  stroke: var(--primary-c);
+  stroke: hsl(47, 100%, 65%);
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
