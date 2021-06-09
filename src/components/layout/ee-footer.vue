@@ -18,10 +18,16 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted, ref } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
     const { setFooterPos, debounceFooterPos, footRef } = useFooterPosition();
+    const store = useStore();
+
+    const storeUnsubscribe = store.subscribe(m => {
+      if ('update-footer' == m.type) debounceFooterPos();
+    });
 
     onMounted(() => {
       setFooterPos();
@@ -30,6 +36,7 @@ export default defineComponent({
 
     onUnmounted(() => {
       window.removeEventListener('resize', debounceFooterPos);
+      storeUnsubscribe();
     });
 
     return { footRef };

@@ -20,6 +20,7 @@ export default createStore<VuexStore>({
     'page-title': (state, text: string) => {
       state.pageTitle = text;
     },
+    'update-footer'  : () => void(0),
     'open-menu'      : (state) => { state.isMenuOpening = true;  },
     'close-menu'     : (state) => { state.isMenuOpening = false; },
     'lazyimg-cache-add':
