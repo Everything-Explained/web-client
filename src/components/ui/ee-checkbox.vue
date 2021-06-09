@@ -4,7 +4,8 @@
       :id="chkbxID"
       class="ee-chkbx"
       type="checkbox"
-      @change="$emit('update:modelValue', getVal($event))"
+      :checked="checked"
+      @change="$emit('changed', getVal($event)), $emit('update:modelValue', getVal($event))"
     >
     <label :for="chkbxID" class="ee-chkbx__label">
       <div>
@@ -26,12 +27,13 @@ import { defineComponent, PropType } from "@vue/runtime-core";
 
 export default defineComponent({
   props: {
-    value: { type: String as PropType<string>, required: true }
+    value:   { type: String as PropType<string>, required: true },
+    checked: { type: Boolean as PropType<boolean>, default: false }
   },
-  emits: ['update:modelValue'],
-  setup(props) {
+  emits: ['update:modelValue', 'changed'],
+  setup() {
     const genID  = useUniqueIDGen().genID;
-    const getVal = (e: Event) => [(e.target as HTMLInputElement).checked, props.value];
+    const getVal = (e: Event) => (e.target as HTMLInputElement).checked;
 
     return {
       svgID  : genID(),
