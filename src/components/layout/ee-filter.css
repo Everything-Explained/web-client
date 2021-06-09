@@ -1,4 +1,8 @@
 .ee-filter {
-  width: 95%;
-  height: 130px;
+  margin: 20px auto 20px auto;
+  width: 20rem;
+}
+
+.ee-filter__authors {
+  margin-top: 10px;
 }

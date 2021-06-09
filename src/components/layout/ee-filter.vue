@@ -1,11 +1,21 @@
 <template>
   <div class="ee-filter">
-    <ee-checkbox
-      v-for="(author, i) of authors"
-      :key="i"
-      v-model="isChecked"
-      :value="author"
-    />
+    <fieldset>
+      <legend>Filter</legend>
+      <ee-toggle
+        left-text="Oldest"
+        right-text="Latest"
+        @toggle="toggleAge"
+      />
+      <div class="ee-filter__authors">
+        <ee-checkbox
+          v-for="(author, i) of authors"
+          :key="i"
+          :value="author"
+          @changed="filterAuthor(i, $event)"
+        />
+      </div>
+    </fieldset>
   </div>
 </template>
 
@@ -13,11 +23,16 @@
 <script lang="ts">
 import { StaticPage } from "@/composeables/staticPager";
 import { defineComponent, PropType, ref } from "@vue/runtime-core";
+import { useStore } from "vuex";
 import eeCheckboxVue from "../ui/ee-checkbox.vue";
+import eeToggleVue from "../ui/ee-toggle.vue";
 
 
 export default defineComponent({
-  components: { 'ee-checkbox': eeCheckboxVue, },
+  components: {
+    'ee-checkbox': eeCheckboxVue,
+    'ee-toggle': eeToggleVue,
+  },
   props: {
     items: { type: Array as PropType<StaticPage[]>, required: true },
   },
@@ -30,13 +45,31 @@ export default defineComponent({
       authors.push(item.author);
     }
 
-    emit('filter', items.reverse());
+    const store = useStore();
+    const authorIndexMap: number[] = [];
+    const isChecked = ref([]);
 
-    const isChecked = ref([false, '']);
+    function filterAuthor(i: number, val: boolean) {
+      if (val) authorIndexMap.push(i);
+      else authorIndexMap.splice(authorIndexMap.indexOf(i), 1);
+      const filteredItems = items.filter(item => {
+        return authorIndexMap.some(i => authors[i] == item.author);
+      });
+      emit('filter', filteredItems.length ? filteredItems : items);
+      store.commit('update-footer');
+    }
+
+    function toggleAge() {
+      emit('filter', items.reverse().slice());
+    }
+
+    emit('filter', items);
 
     return {
       isChecked,
       authors,
+      filterAuthor,
+      toggleAge,
     };
   }
 });
