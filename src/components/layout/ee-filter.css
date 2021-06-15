@@ -3,6 +3,33 @@
   width: 20rem;
 }
 
+.ee-filter__fieldset {
+  max-height: 3.7rem;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
+}
+.ee-filter__fieldset.--visible {
+  max-height: 30rem;
+  transition: max-height 0.45s ease-in;
+}
+
+
+.ee-filter__expand-filter {
+  position: absolute;
+  bottom: -0.7rem;
+  right: 0.8rem;
+  padding-right: 5px;
+  font-size: 1.3rem;
+  font-variant: small-caps;
+  font-weight: 400;
+  background-color: var(--body-bg-c);
+  cursor: pointer;
+}
+.ee-filter__expand-filter .icon {
+  top: 0.3rem;
+  left: 3px;
+}
+
 .ee-filter__authors {
-  margin-top: 10px;
+  margin-top: 20px;
 }

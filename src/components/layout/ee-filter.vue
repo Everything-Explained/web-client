@@ -1,6 +1,6 @@
 <template>
   <div class="ee-filter">
-    <fieldset>
+    <fieldset :class="['ee-filter__fieldset', { '--visible': isFilterExpanded }]">
       <legend>Filter</legend>
       <ee-toggle
         left-text="Oldest"
@@ -16,6 +16,16 @@
         />
       </div>
     </fieldset>
+    <div class="ee-filter__expand-filter" @mousedown="toggleFilter">
+      <span v-if="isFilterExpanded">
+        <ee-icon type="chev-up" />
+        less
+      </span>
+      <span v-else>
+        <ee-icon type="chev-down" />
+        more
+      </span>
+    </div>
   </div>
 </template>
 
@@ -25,6 +35,7 @@ import { StaticPage } from "@/composeables/staticPager";
 import { defineComponent, PropType, ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import eeCheckboxVue from "../ui/ee-checkbox.vue";
+import eeIconVue from "../ui/ee-icon.vue";
 import eeToggleVue from "../ui/ee-toggle.vue";
 
 
@@ -32,6 +43,7 @@ export default defineComponent({
   components: {
     'ee-checkbox': eeCheckboxVue,
     'ee-toggle': eeToggleVue,
+    'ee-icon': eeIconVue,
   },
   props: {
     items: { type: Array as PropType<StaticPage[]>, required: true },
@@ -45,9 +57,11 @@ export default defineComponent({
       authors.push(item.author);
     }
 
+
     const store = useStore();
     const authorIndexMap: number[] = [];
     const isChecked = ref([]);
+    const isFilterExpanded = ref(false);
 
     function filterAuthor(i: number, val: boolean) {
       if (val) authorIndexMap.push(i);
@@ -63,13 +77,19 @@ export default defineComponent({
       emit('filter', items.reverse().slice());
     }
 
+    function toggleFilter() {
+      isFilterExpanded.value = !isFilterExpanded.value;
+    }
+
     emit('filter', items);
 
     return {
       isChecked,
       authors,
+      isFilterExpanded,
       filterAuthor,
       toggleAge,
+      toggleFilter,
     };
   }
 });
