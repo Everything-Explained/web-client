@@ -7,9 +7,10 @@
     />
     <transition name="fade" mode="out-in">
       <div v-if="isRunning" class="preloader page" />
-      <div v-else-if="pages.length && !activePage" class="lit-cards__container">
+      <div v-else-if="!activePage" class="lit-cards__container">
+        <ee-filter :pages="pages" @filter="onFilter" />
         <div class="lit__cards">
-          <div v-for="(article, i) of pages"
+          <div v-for="(article, i) of filteredPages"
                :key="i"
                class="lit__card"
           >
@@ -56,18 +57,19 @@
 
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
-import { useDate }    from "@/composeables/date"
+import { computed, defineComponent, ref } from "vue";
+import { useDate } from '@/composeables/date'
 ;
 import eeIconVue      from "@/components/ui/ee-icon.vue";
 import eeTitlebarVue  from "@/components/layout/ee-titlebar.vue";
 import { StaticPage, useStaticPager } from "@/composeables/staticPager";
 import eeBulletVue from "../ui/ee-bullet.vue";
 import eeFooterVue from "./ee-footer.vue";
+import eeFilterVue from "./ee-filter.vue";
 
 
 
-interface Article extends StaticPage {
+export interface Article extends StaticPage {
   summary: string;
 }
 
@@ -80,6 +82,7 @@ export default defineComponent({
     'ee-icon': eeIconVue,
     'ee-bullet': eeBulletVue,
     'ee-footer': eeFooterVue,
+    'ee-filter': eeFilterVue,
   },
   props: {
     size         : { type: String,  default: 'compact'       },
@@ -91,9 +94,8 @@ export default defineComponent({
   },
   setup(props) {
     const { size, uri } = props;
-    const sizeClass = {
-      'lit-expanded': size == 'expanded'
-    };
+    const sizeClass = { 'lit-expanded': size == 'expanded' }
+    ;
     if (!uri) throw Error('literature::Missing URL');
     if (!_sizes.includes(size)) throw Error('literature::Invalid Size')
     ;
@@ -101,11 +103,18 @@ export default defineComponent({
     const titleRef = computed(
       () => pager.pageTitle.value || props.title
     );
+    const filteredPages = ref<Article[]>([]);
+
+    function onFilter(pages: Article[]) {
+      filteredPages.value = pages;
+    }
 
     return {
       titleRef,
       ...pager,
       useDate,
+      onFilter,
+      filteredPages,
       isEthan: (author: string) => author.toLowerCase().includes('ethan'),
       sizeClass,
     };
