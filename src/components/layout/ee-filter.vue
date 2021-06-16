@@ -1,6 +1,6 @@
 <template>
   <div class="ee-filter">
-    <fieldset :class="['ee-filter__fieldset', { '--visible': isFilterExpanded }]">
+    <fieldset :class="['ee-filter__fieldset', { '--visible': isFilterOpen }]">
       <legend>Filter</legend>
       <ee-toggle
         left-text="Oldest"
@@ -12,12 +12,13 @@
           v-for="(author, i) of authors"
           :key="i"
           :value="author"
-          @changed="filterAuthor(i, $event)"
+          :checked="true"
+          @changed="onFilter(i, $event)"
         />
       </div>
     </fieldset>
     <div class="ee-filter__expand-filter" @mousedown="toggleFilter">
-      <span v-if="isFilterExpanded">
+      <span v-if="isFilterOpen">
         <ee-icon type="chev-up" />
         less
       </span>
@@ -46,53 +47,81 @@ export default defineComponent({
     'ee-icon': eeIconVue,
   },
   props: {
-    items: { type: Array as PropType<StaticPage[]>, required: true },
+    pages: { type: Array as PropType<StaticPage[]>, required: true },
   },
   emits: ['filter'],
   setup(props, {emit}) {
-    const authors: string[] = [];
-    const items = props.items.slice(0);
-    for (const item of items) {
-      if (authors.includes(item.author)) continue;
-      authors.push(item.author);
-    }
+    const isChecked        = ref([]);
+    const store            = useStore();
 
+    const {
+      toggleFilter,
+      filterAuthor,
+      reversePages,
+      authors,
+      isFilterOpen,
+      filteredPages
+    } = usePageFilter(props.pages);
 
-    const store = useStore();
-    const authorIndexMap: number[] = [];
-    const isChecked = ref([]);
-    const isFilterExpanded = ref(false);
-
-    function filterAuthor(i: number, val: boolean) {
-      if (val) authorIndexMap.push(i);
-      else authorIndexMap.splice(authorIndexMap.indexOf(i), 1);
-      const filteredItems = items.filter(item => {
-        return authorIndexMap.some(i => authors[i] == item.author);
-      });
-      emit('filter', filteredItems.length ? filteredItems : items);
+    function onFilter(i: number, val: boolean) {
+      emit('filter', filterAuthor(i, val));
       store.commit('update-footer');
     }
 
-    function toggleAge() {
-      emit('filter', items.reverse().slice());
-    }
+    function toggleAge() { emit('filter', reversePages()); }
 
-    function toggleFilter() {
-      isFilterExpanded.value = !isFilterExpanded.value;
-    }
-
-    emit('filter', items);
+    emit('filter', filteredPages);
 
     return {
       isChecked,
       authors,
-      isFilterExpanded,
-      filterAuthor,
+      isFilterOpen,
+      onFilter,
       toggleAge,
       toggleFilter,
     };
   }
 });
+
+
+
+function usePageFilter(pages: StaticPage[]) {
+  const clonedPages    = pages.slice(0);
+  const authors        = getAuthors(clonedPages);
+  const isFilterOpen   = ref(false);
+  const authorIndexMap = authors.map((a, i) => i); // Filter all authors
+  let filteredPages    = clonedPages.slice()
+  ;
+  function filterAuthor(pos: number, val: boolean) {
+    if (val)  authorIndexMap.push(pos);
+    if (!val) authorIndexMap.splice(authorIndexMap.indexOf(pos), 1)
+    ;
+    filteredPages = clonedPages.filter(item => {
+      return authorIndexMap.some(i => authors[i] == item.author);
+    });
+    return filteredPages;
+  }
+
+  function reversePages() {
+    clonedPages.reverse();
+    return filteredPages.reverse().slice();
+  }
+
+  function toggleFilter() { isFilterOpen.value = !isFilterOpen.value; }
+
+  return { filterAuthor, toggleFilter, reversePages, authors, isFilterOpen, filteredPages };
+}
+
+
+function getAuthors(pages: StaticPage[]) {
+  const authors: string[] = []
+  ;
+  for (const page of pages) {
+    if (authors.includes(page.author)) continue;
+    authors.push(page.author);
+  }
+  return authors;
+}
 
 
 </script>
