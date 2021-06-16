@@ -8,7 +8,10 @@
     <transition name="fade" mode="out-in">
       <div v-if="isRunning" class="preloader page" />
       <div v-else-if="!activePage" class="lit-cards__container">
-        <ee-filter :pages="pages" @filter="onFilter" />
+        <ee-filter v-if="showFilter"
+                   :pages="pages"
+                   @filter="onFilter"
+        />
         <div class="lit__cards">
           <div v-for="(article, i) of filteredPages"
                :key="i"
@@ -91,6 +94,7 @@ export default defineComponent({
     contentClass : { type: String,  default: ''              },
     showAuthor   : { type: Boolean, default: true            },
     showDateTime : { type: Boolean, default: false           },
+    showFilter   : { type: Boolean, default: true           },
   },
   setup(props) {
     const { size, uri } = props;
