@@ -107,7 +107,11 @@ export default defineComponent({
     const titleRef = computed(
       () => pager.pageTitle.value || props.title
     );
-    const filteredPages = ref<Article[]>([]);
+    const filteredPages =
+      props.showFilter
+        ? ref<Article[]>([])
+        : pager.pages
+    ;
 
     function onFilter(pages: Article[]) {
       filteredPages.value = pages;
