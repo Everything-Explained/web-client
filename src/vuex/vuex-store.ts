@@ -30,8 +30,7 @@ export default createStore<VuexStore>({
     'page-title': (state, text: string) => {
       state.pageTitle = text;
     },
-    'filter-update'  : (state, payload: { reverseAge: boolean; authorIndexMap: number[] }) => {
-      const { reverseAge, authorIndexMap } = payload;
+    'filter-update'  : (state, { reverseAge, authorIndexMap }) => {
       state.filter.reverseAge = reverseAge;
       state.filter.authorIndexMap = authorIndexMap;
     },
