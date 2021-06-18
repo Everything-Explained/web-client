@@ -13,7 +13,7 @@
           :key="i"
           :value="author"
           :checked="true"
-          @changed="onFilter(i, $event)"
+          @changed="filter(i, $event)"
         />
       </div>
     </fieldset>
@@ -63,22 +63,20 @@ export default defineComponent({
       filteredPages
     } = usePageFilter(props.pages);
 
-    function onFilter(i: number, val: boolean) {
-      emit('filter', filterAuthor(i, val));
-      store.commit('update-footer');
-    }
-
-    function toggleAge() { emit('filter', reversePages()); }
-
     emit('filter', filteredPages);
 
     return {
       isChecked,
       authors,
       isFilterOpen,
-      onFilter,
-      toggleAge,
       toggleFilter,
+
+      filter: (i: number, v: boolean) => {
+        emit('filter', filterAuthor(i, v));
+        store.commit('update-footer');
+      },
+
+      toggleAge: () => { emit('filter', reversePages()); },
     };
   }
 });
@@ -89,12 +87,13 @@ function usePageFilter(pages: StaticPage[]) {
   const clonedPages    = pages.slice(0);
   const authors        = getAuthors(clonedPages);
   const isFilterOpen   = ref(false);
-  const authorIndexMap = authors.map((a, i) => i); // Filter all authors
-  let filteredPages    = clonedPages.slice()
+  const authorIndexMap = authors.map((a, i) => i) // Filter all authors
   ;
-  function filterAuthor(pos: number, val: boolean) {
-    if (val)  authorIndexMap.push(pos);
-    if (!val) authorIndexMap.splice(authorIndexMap.indexOf(pos), 1)
+  let filteredPages    = clonedPages.slice();
+
+  function filterAuthor(index: number, val: boolean) {
+    if (val)  authorIndexMap.push(index);
+    if (!val) authorIndexMap.splice(authorIndexMap.indexOf(index), 1)
     ;
     filteredPages = clonedPages.filter(item => {
       return authorIndexMap.some(i => authors[i] == item.author);
@@ -103,6 +102,7 @@ function usePageFilter(pages: StaticPage[]) {
   }
 
   function reversePages() {
+    // Original pages must also reflect reverse order
     clonedPages.reverse();
     return filteredPages.reverse().slice();
   }
@@ -111,6 +111,7 @@ function usePageFilter(pages: StaticPage[]) {
 
   return { filterAuthor, toggleFilter, reversePages, authors, isFilterOpen, filteredPages };
 }
+
 
 
 function getAuthors(pages: StaticPage[]) {
