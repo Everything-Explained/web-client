@@ -32,12 +32,12 @@
 
 
 <script lang="ts">
-import { StaticPage } from "@/composeables/staticPager";
 import { defineComponent, PropType, ref } from "@vue/runtime-core";
-import { useStore } from "vuex";
-import eeCheckboxVue from "../ui/ee-checkbox.vue";
-import eeIconVue from "../ui/ee-icon.vue";
-import eeToggleVue from "../ui/ee-toggle.vue";
+import { StaticPage } from "@/composeables/staticPager";
+import { useStore }   from "vuex";
+import eeCheckboxVue  from "../ui/ee-checkbox.vue";
+import eeIconVue      from "../ui/ee-icon.vue";
+import eeToggleVue    from "../ui/ee-toggle.vue";
 
 
 export default defineComponent({
