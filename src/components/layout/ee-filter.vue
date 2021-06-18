@@ -38,6 +38,7 @@ import { useStore }   from "vuex";
 import eeCheckboxVue  from "../ui/ee-checkbox.vue";
 import eeIconVue      from "../ui/ee-icon.vue";
 import eeToggleVue    from "../ui/ee-toggle.vue";
+import { VuexStore } from "@/vuex/vuex-store";
 
 
 export default defineComponent({
@@ -52,7 +53,7 @@ export default defineComponent({
   emits: ['filter'],
   setup(props, {emit}) {
     const isChecked        = ref([]);
-    const store            = useStore();
+    const store            = useStore<VuexStore>();
 
     const {
       toggleFilter,
@@ -62,6 +63,13 @@ export default defineComponent({
       isFilterOpen,
       filteredPages
     } = usePageFilter(props.pages);
+
+    if (store.state.filter.persist) {
+      console.log('Use Persistent Filters');
+    }
+    else console.log('Reset Existing Filters');
+
+    store.commit('filter-persist', true);
 
     emit('filter', filteredPages);
 
