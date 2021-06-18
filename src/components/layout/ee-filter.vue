@@ -114,13 +114,11 @@ function usePageFilter(pages: StaticPage[]) {
 
 
 function getAuthors(pages: StaticPage[]) {
-  const authors: string[] = []
-  ;
-  for (const page of pages) {
-    if (authors.includes(page.author)) continue;
-    authors.push(page.author);
-  }
-  return authors;
+  return pages.reduce((pv, cv) => {
+    if (pv.includes(cv.author)) return pv;
+    pv.push(cv.author);
+    return pv;
+  }, [] as string[]);
 }
 
 
