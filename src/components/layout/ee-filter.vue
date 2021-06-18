@@ -125,8 +125,7 @@ function usePageFilter(pages: StaticPage[]) {
 function getAuthors(pages: StaticPage[]) {
   return pages.reduce((pv, cv) => {
     if (pv.includes(cv.author)) return pv;
-    pv.push(cv.author);
-    return pv;
+    pv.push(cv.author);         return pv;
   }, [] as string[]);
 }
 
