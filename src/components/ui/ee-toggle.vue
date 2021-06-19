@@ -4,7 +4,7 @@
       id="toggleLeft"
       type="radio"
       name="toggle"
-      :checked="true"
+      :checked="!state"
       :disabled="props.prevent"
     >
     <label
@@ -16,6 +16,7 @@
       id="toggleRight"
       type="radio"
       name="toggle"
+      :checked="state"
       :disabled="props.prevent"
     >
     <label
