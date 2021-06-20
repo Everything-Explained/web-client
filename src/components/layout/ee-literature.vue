@@ -73,6 +73,7 @@ import eeFooterVue from "./ee-footer.vue";
 import eeFilterVue from "./ee-filter.vue";
 import { VuexStore } from "@/vuex/vuex-store";
 import { useStore } from "vuex";
+import { isEthan } from "@/composeables/globals";
 
 
 
@@ -132,7 +133,7 @@ export default defineComponent({
       useDate,
       onFilter,
       filteredPages,
-      isEthan: (author: string) => author.toLowerCase().includes('ethan'),
+      isEthan,
       sizeClass,
     };
   }
