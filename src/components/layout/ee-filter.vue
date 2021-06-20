@@ -3,6 +3,7 @@
     <fieldset :class="['ee-filter__fieldset', { '--visible': isFilterOpen }]">
       <legend>Filter</legend>
       <ee-toggle
+        :init-state="arePagesReversed"
         left-text="Oldest"
         right-text="Latest"
         @toggle="toggleAge"
@@ -12,7 +13,7 @@
           v-for="(author, i) of authors"
           :key="i"
           :value="author"
-          :checked="true"
+          :checked="authorIndexMap.includes(i)"
           @changed="filter(i, $event)"
         />
       </div>
@@ -32,7 +33,7 @@
 
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "@vue/runtime-core";
+import { computed, defineComponent, PropType, ref } from "vue";
 import { StaticPage } from "@/composeables/staticPager";
 import { useStore }   from "vuex";
 import eeCheckboxVue  from "../ui/ee-checkbox.vue";
@@ -61,30 +62,30 @@ export default defineComponent({
       reversePages,
       authors,
       isFilterOpen,
-      filteredPages
+      arePagesReversed,
+      filteredPages,
+      authorIndexMap,
     } = usePageFilter(props.pages);
-
-    if (store.state.filter.persist) {
-      console.log('Use Persistent Filters');
-    }
-    else console.log('Reset Existing Filters');
-
-    store.commit('filter-persist', true);
 
     emit('filter', filteredPages);
 
     return {
-      isChecked,
-      authors,
-      isFilterOpen,
-      toggleFilter,
-
       filter: (i: number, v: boolean) => {
         emit('filter', filterAuthor(i, v));
         store.commit('update-footer');
       },
 
-      toggleAge: () => { emit('filter', reversePages()); },
+      toggleAge: () => {
+        console.log('reverse pages');
+        emit('filter', reversePages());
+      },
+
+      isChecked,
+      authors,
+      isFilterOpen,
+      arePagesReversed,
+      authorIndexMap,
+      toggleFilter,
     };
   }
 });
@@ -92,32 +93,62 @@ export default defineComponent({
 
 
 function usePageFilter(pages: StaticPage[]) {
-  const clonedPages    = pages.slice(0);
-  const authors        = getAuthors(clonedPages);
-  const isFilterOpen   = ref(false);
-  const authorIndexMap = authors.map((a, i) => i) // Filter all authors
+  const store            = useStore<VuexStore>();
+  const filterStore      = store.state.filter;
+  const clonedPages      = pages.slice();
+  const authors          = getAuthors(clonedPages);
+  const isFilterOpen     = ref(filterStore.isPersisting && filterStore.isOpen || false);
+  const arePagesReversed = computed(() => filterStore.reversed);
+  const authorIndexMap   =
+    filterStore.isPersisting
+      ? filterStore.authorIndexMap
+      : authors.map((a, i) => i)
   ;
-  let filteredPages    = clonedPages.slice();
+  let filteredPages      =
+    filterStore.isPersisting
+      ? filterStore.pages
+      : clonedPages.slice()
+  ;
 
-  function filterAuthor(index: number, val: boolean) {
-    if (val)  authorIndexMap.push(index);
-    if (!val) authorIndexMap.splice(authorIndexMap.indexOf(index), 1)
-    ;
-    filteredPages = clonedPages.filter(item => {
-      return authorIndexMap.some(i => authors[i] == item.author);
-    });
-    return filteredPages;
-  }
-
-  function reversePages() {
-    // Original pages must also reflect reverse order
+  if (filterStore.isPersisting && filterStore.reversed) {
     clonedPages.reverse();
-    return filteredPages.reverse().slice();
   }
 
-  function toggleFilter() { isFilterOpen.value = !isFilterOpen.value; }
+  store.commit('filter-upd-persist', true);
+  store.commit('filter-upd-map', authorIndexMap);
 
-  return { filterAuthor, toggleFilter, reversePages, authors, isFilterOpen, filteredPages };
+  return {
+    toggleFilter: () => {
+      isFilterOpen.value = !isFilterOpen.value;
+      store.commit('filter-upd-isOpen', isFilterOpen.value);
+    },
+
+    reversePages: () => {
+      // Original pages must also reflect reverse order
+      clonedPages.reverse();
+      const pages = filteredPages.reverse().slice();
+      store.commit('filter-upd-reversed', !filterStore.reversed);
+      return pages;
+    },
+
+    filterAuthor: (index: number, val: boolean) => {
+      if (val)  authorIndexMap.push(index);
+      if (!val) authorIndexMap.splice(authorIndexMap.indexOf(index), 1)
+      ;
+      store.commit('filter-upd-map', authorIndexMap);
+      filteredPages = clonedPages.filter(item => {
+        return authorIndexMap.some(i => authors[i] == item.author);
+      });
+      store.commit('filter-upd-pages', filteredPages);
+      return filteredPages;
+    },
+
+    authors,
+    isFilterOpen,
+    filteredPages,
+    authorIndexMap,
+    arePagesReversed
+  };
 }
 
 

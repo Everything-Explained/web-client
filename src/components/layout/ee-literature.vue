@@ -8,9 +8,10 @@
     <transition name="fade" mode="out-in">
       <div v-if="isRunning" class="preloader page" />
       <div v-else-if="!activePage" class="lit-cards__container">
-        <ee-filter v-if="showFilter"
-                   :pages="pages"
-                   @filter="onFilter"
+        <ee-filter
+          v-if="showFilter"
+          :pages="pages"
+          @filter="onFilter"
         />
         <div class="lit__cards">
           <div v-for="(article, i) of filteredPages"
@@ -60,7 +61,7 @@
 
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, onUnmounted, ref } from "vue";
 import { useDate } from '@/composeables/date'
 ;
 import eeIconVue      from "@/components/ui/ee-icon.vue";
@@ -69,6 +70,8 @@ import { StaticPage, useStaticPager } from "@/composeables/staticPager";
 import eeBulletVue from "../ui/ee-bullet.vue";
 import eeFooterVue from "./ee-footer.vue";
 import eeFilterVue from "./ee-filter.vue";
+import { VuexStore } from "@/vuex/vuex-store";
+import { useStore } from "vuex";
 
 
 
@@ -98,7 +101,8 @@ export default defineComponent({
   },
   setup(props) {
     const { size, uri } = props;
-    const sizeClass = { 'lit-expanded': size == 'expanded' }
+    const sizeClass = { 'lit-expanded': size == 'expanded' };
+    const store = useStore<VuexStore>()
     ;
     if (!uri) throw Error('literature::Missing URL');
     if (!_sizes.includes(size)) throw Error('literature::Invalid Size')
@@ -113,9 +117,12 @@ export default defineComponent({
         : pager.pages
     ;
 
-    function onFilter(pages: Article[]) {
-      filteredPages.value = pages;
-    }
+    function onFilter(pages: Article[]) { filteredPages.value = pages; }
+
+    onUnmounted(() => {
+      // Reset filter on page navigation
+      store.commit('filter-upd-persist', false);
+    });
 
     return {
       titleRef,

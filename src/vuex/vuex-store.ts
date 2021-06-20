@@ -1,3 +1,4 @@
+import { StaticPage } from "@/composeables/staticPager";
 import { createStore } from "vuex";
 
 export interface VuexStore {
@@ -6,9 +7,11 @@ export interface VuexStore {
   lazyimgCache  : string[];
   dataCache     : { [key: string]: unknown[] };
   filter        : {
-    reverseAge: boolean;
+    isOpen: boolean;
+    reversed: boolean;
     authorIndexMap: number[];
-    persist: boolean;
+    isPersisting: boolean;
+    pages: StaticPage[];
   };
 }
 
@@ -19,22 +22,35 @@ export default createStore<VuexStore>({
       isMenuOpening: false,
       lazyimgCache: [],
       filter: {
-        reverseAge: false,
+        pages: [],
+        isOpen: false,
+        reversed: false,
         authorIndexMap: [],
-        persist: false,
+        isPersisting: false,
       },
       dataCache: {},
     };
   },
   mutations: {
-    'page-title': (state, text: string) => {
-      state.pageTitle = text;
+    'page-title': (state, text: string) => { state.pageTitle = text; },
+
+    'filter-upd-pages'   : (state, payload) => { state.filter.pages          = payload; },
+    'filter-upd-isOpen'  : (state, payload) => { state.filter.isOpen         = payload; },
+    'filter-upd-reversed': (state, payload) => { state.filter.reversed       = payload; },
+    'filter-upd-map'     : (state, payload) => { state.filter.authorIndexMap = payload.slice(); },
+    'filter-upd-persist' : (state, payload) => {
+      if (!payload) {
+        state.filter = {
+          pages: [],
+          isOpen: false,
+          reversed: false,
+          authorIndexMap: [],
+          isPersisting: false,
+        }; return;
+      }
+      state.filter.isPersisting = true;
     },
-    'filter-update'  : (state, { reverseAge, authorIndexMap }) => {
-      state.filter.reverseAge = reverseAge;
-      state.filter.authorIndexMap = authorIndexMap;
-    },
-    'filter-persist' : (state, payload: boolean) => { state.filter.persist = payload; },
+
     'update-footer'  : () => void(0),
     'open-menu'      : (state) => { state.isMenuOpening = true;  },
     'close-menu'     : (state) => { state.isMenuOpening = false; },
