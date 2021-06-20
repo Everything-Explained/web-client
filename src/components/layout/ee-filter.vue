@@ -32,6 +32,8 @@
 </template>
 
 
+
+
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
 import { StaticPage } from "@/composeables/staticPager";
@@ -49,7 +51,8 @@ export default defineComponent({
     'ee-icon': eeIconVue,
   },
   props: {
-    pages: { type: Array as PropType<StaticPage[]>, required: true },
+    reverseOrder: { type: Boolean as PropType<boolean>,    default: false,             },
+    pages:        { type: Array as PropType<StaticPage[]>, default: [] as StaticPage[] },
   },
   emits: ['filter'],
   setup(props, {emit}) {
@@ -65,7 +68,7 @@ export default defineComponent({
       arePagesReversed,
       filteredPages,
       authorIndexMap,
-    } = usePageFilter(props.pages);
+    } = usePageFilter(props.pages, props.reverseOrder);
 
     emit('filter', filteredPages);
 
@@ -92,13 +95,13 @@ export default defineComponent({
 
 
 
-function usePageFilter(pages: StaticPage[]) {
+function usePageFilter(pages: StaticPage[], areReversed = false) {
   const store            = useStore<VuexStore>();
   const filterStore      = store.state.filter;
   const clonedPages      = pages.slice();
   const authors          = getAuthors(clonedPages);
   const isFilterOpen     = ref(filterStore.isPersisting && filterStore.isOpen || false);
-  const arePagesReversed = computed(() => filterStore.reversed);
+  const arePagesReversed = computed(() => areReversed ? !filterStore.reversed : filterStore.reversed);
   const authorIndexMap   =
     filterStore.isPersisting
       ? filterStore.authorIndexMap

@@ -11,6 +11,7 @@
         <ee-filter
           v-if="showFilter"
           :pages="pages"
+          :reverse-order="reverseOrder"
           @filter="onFilter"
         />
         <div class="lit__cards">
@@ -97,7 +98,8 @@ export default defineComponent({
     contentClass : { type: String,  default: ''              },
     showAuthor   : { type: Boolean, default: true            },
     showDateTime : { type: Boolean, default: false           },
-    showFilter   : { type: Boolean, default: true           },
+    showFilter   : { type: Boolean, default: true            },
+    reverseOrder : { type: Boolean, default: false           },
   },
   setup(props) {
     const { size, uri } = props;
