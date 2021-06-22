@@ -28,6 +28,21 @@
                   </li>
                 </ul>
               </div>
+              <h2>Latest Video</h2>
+              <div class="lib-vid-category__desc">
+                <a
+                  :href="getURLFromVideo(getLatestVideo(cat.videos))"
+                  target="_blank"
+                >{{ getLatestVideo(cat.videos).title }}</a><br>
+                <span :class="
+                  [
+                    'lib-vid__latest-author',
+                    { '--is-ethan': isEthan(getLatestVideo(cat.videos).author) }
+                  ]"
+                >
+                  ~ {{ getLatestVideo(cat.videos).author }}
+                </span>
+              </div>
             </div>
             <footer>Updated {{ useDate(cat.videos[cat.videos.length - 1].date).toRelativeTime() }}</footer>
           </div>
@@ -85,6 +100,8 @@ export default defineComponent({
     const videoTask = getVideoTask(() => void(0));
     videoTask.loadVideos();
 
+    const youtubeURL = '//www.youtube-nocookie.com/embed/';
+
     const getAuthors = (videos: Video[]) => {
       return [
         'Ethan Kahn', 'Vojtěch Kantor', 'KeSyia', 'Bilbou Baggins', 'Piccolo', 'Pippa Pig', 'Fievel Moskowitz'
@@ -96,7 +113,20 @@ export default defineComponent({
       // }, [] as string[]);
     };
 
-    return { categories, isVideoTaskRunning: videoTask.isRunning, useDate, getAuthors, isEthan };
+    return {
+      useDate,
+      getAuthors,
+      isEthan,
+      getLatestVideo: (videos: Video[]) => {
+        return videos[videos.length - 1];
+      },
+      getURLFromVideo: (video: Video) => {
+        return `//www.youtube-nocookie.com/embed/${video.id}?rel=0`;
+      },
+      categories,
+      isVideoTaskRunning: videoTask.isRunning,
+      youtubeURL,
+    };
   }
 });
 </script>

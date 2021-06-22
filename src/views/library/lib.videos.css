@@ -19,22 +19,22 @@
   z-index: 1;
   padding: 7px 7px 5px 10px;
   box-shadow: 0 5px 15px 1px hsla(0, 0%, 0%, 0.7);
-  border-bottom: 1px solid hsl(197, 11%, 20%);
+  border-bottom: 1px solid hsl(197, 15%, 25%);
   border-radius: 7px 7px 0 0;
-  background-color: var(--sub-panel-c);
+  background-color: hsl(197, 13%, 13%);
   text-align: center;
   text-shadow: 1px 1px 0 black,
                2px 2px 0 black
   ;
   font-size: 1.4rem;
   font-weight: 400;
+  color:hsl(47, 75%, 63%);
 }
 .lib-vid__category h2 {
   z-index: 1;
-  margin-top: 1px;
-  padding: 0.3rem 0 0.3rem 1rem;
-  box-shadow: 0 5px 10px -1px hsla(0, 0%, 0%, 0.8),
-              0 -5px 10px -1px hsla(0, 0%, 0%, 0.8)
+  padding: 0.2rem 0 0.2rem 1rem;
+  box-shadow: 0 5px 5px -2px hsla(0, 0%, 0%, 0.8),
+              0 -5px 5px -2px hsla(0, 0%, 0%, 0.8)
   ;
   border-top: 1px solid hsl(197, 11%, 20%);
   border-bottom: 1px solid hsl(197, 11%, 20%);
@@ -42,7 +42,7 @@
   text-shadow: 1px 1px 0 black,
                2px 2px 0 black
   ;
-  font-size: 1.1rem;
+  font-size: 1.17rem;
   font-weight: 400;
 }
 .lib-vid-category__desc {
@@ -50,7 +50,6 @@
   background-color: hsl(197, 11%, 8%);
 }
 .lib-vid-category__desc.--authors {
-  color: hsl(47, 60%, 63%);
   font-weight: 400;
 }
 .lib-vid-category__desc ul {
@@ -62,6 +61,7 @@
 }
 .lib-vid-category__desc li {
   margin-right: 0.5rem;
+  color: var(--body-c) !important;
 }
 .lib-vid-category__desc.--authors li::before {
   position: relative;
@@ -70,17 +70,17 @@
   margin-right: 0.5rem;
   font-size: 1.3rem;
   content: '\2022';
-  color: var(--body-c);
+  color: hsl(47, 60%, 63%);
+}
+.lib-vid-category__desc.--authors .--is-ethan::before {
+  color: hsl(0, 100%, 70%);
+}
+.lib-vid__latest-author {
+  padding-left: 10px;
+  color: hsl(47, 60%, 63%);
+  font-weight: 400;
 }
 
-/* .lib-vid-category__desc.--authors li::marker {
-  position: relative;
-  color: var(--body-c);
-  font-size: 1.3rem;
-} */
-.lib-vid-category__desc span:nth-child(odd)::after {
-  content: ' '
-}
 .lib-vid-category__desc:last-child {
   border-bottom: 3px solid hsla(0, 0%, 0%, 0.5);
 }
@@ -98,6 +98,18 @@
   ;
   color: hsl(197, 11%, 40%);
   font-weight: 400;
+}
+
+.lib-vid-category__desc a:link,
+.lib-vid-category__desc a:visited,
+.lib-vid-category__desc a:active {
+  color: hsl(197, 20%, 80%);
+  text-decoration: underline hsl(197, 13%, 50%);
+  font-size: 1.1rem;
+  transition: all 0.15s;
+}
+.lib-vid-category__desc a:hover {
+  text-decoration: underline hsl(0, 63%, 63%);
 }
 
 
