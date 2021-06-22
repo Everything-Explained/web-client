@@ -28,8 +28,13 @@
         </div>
       </div>
     </div>
-    <div class="ee-video_title">
-      <slot />
+    <div class="ee-video__info-bar">
+      <div class="ee-video_title">
+        <slot />
+      </div>
+      <div :class="['ee-video__author', { '--is-ethan': isEthan(author) }]">
+        <ee-icon type="user" /> {{ author }}
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +44,7 @@
 import eeIconVue from '@/components/ui/ee-icon.vue';
 import eeImgVue from "./ee-img.vue";
 import { useDate } from "@/composeables/date";
+import { isEthan } from "@/composeables/globals";
 
 export default defineComponent({
   components: {
@@ -48,7 +54,8 @@ export default defineComponent({
   props: {
     desc    : { type: String, default: '' },
     videoId : { type: String, default: '' },
-    date    : { type: String, default: '' }
+    date    : { type: String, default: '' },
+    author  : { type: String, default: '' },
   },
   setup(props) {
     const { videoId, desc } = toRefs(props);
@@ -72,7 +79,7 @@ export default defineComponent({
       thumbnail: thumbnailRef,
       description: desc,
       descState: descStateRef,
-      openVideo, setDescState, useDate,
+      openVideo, setDescState, useDate, isEthan
     };
   }
 });
