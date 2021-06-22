@@ -96,9 +96,8 @@
 .lit-card__author-text {
   color: hsl(47, 60%, 63%);
   text-shadow: 1px 1px 0 black,
-               2px 2px 0 black; }
-  .lit-card__author-text.--is-ethan
-    { color: hsl(0, 100%, 70%); }
+               2px 2px 0 black;
+}
 
 .lit-card__timestamp {
   transition: color var(--lit-transition-speed);
