@@ -7,9 +7,22 @@
 }
 /*** 511px ***/
 @media only screen and (--medium-screen) {
+  .lib-vid-category__container {
+    min-width: 98%;
+    max-width: 98%;
+    margin-right: 14px;
+  }
+  .lib-vid__category h1 { font-size: 1.25rem; }
+  .lib-vid__category h2 { font-size: 1.1rem; }
+  .lib-vid-category__desc a:link,
+  .lib-vid-category__desc a:visited,
+  .lib-vid-category__desc a:active { font-size: 1rem; }
 }
 /*** 380px ***/
 @media only screen and (--small-screen) {
+  .lib-vid__category h1 { font-size: 1.15rem; }
+  .lib-vid__category h2 { font-size: 1.1rem; }
+  .lib-vid-category__desc { font-size: 0.95rem; }
   .category_name { font-size: 1.15rem; }
 }
 /*** 320px ***/
