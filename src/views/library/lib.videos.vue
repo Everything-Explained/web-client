@@ -5,14 +5,16 @@
     </ee-titlebar>
     <transition name="fade" mode="out-in">
       <div v-if="isVideoTaskRunning" class="preloader page" />
-      <div v-else>
+      <div v-else-if="categories.length && !showVideos">
         <div class="lib-vid__categories">
           <div v-for="(cat, i) of categories"
                :key="i"
                class="lib-vid-category__container"
           >
             <div class="lib-vid__category">
-              <h1>{{ cat.name }}</h1>
+              <h1 @click="openCategory(cat.videos)">
+                {{ cat.name }}
+              </h1>
               <div class="lib-vid-category__desc">
                 {{ cat.description }}
               </div>
@@ -27,7 +29,7 @@
                   </li>
                 </ul>
               </div>
-              <h2>Latest Video</h2>
+              <h2>Latest Video ({{ cat.videos.length }})</h2>
               <div class="lib-vid-category__desc">
                 <a :href="toYouTubeLink(getLatestVideo(cat.videos).id)"
                    target="_blank"
@@ -43,29 +45,22 @@
             </footer>
           </div>
         </div>
-        <!-- <div
-          v-for="(cat, i) of videoCategories"
-          :key="i"
-          class="category"
-        >
-          <div class="category_name">
-            {{ cat.name }}
-          </div>
-          <div class="cat_video-tray --default-scrollbar">
-            <ee-video
-              v-for="(v, j) of cat.videos"
-              :key="j"
-              class="lib-videos_video"
-              :video-id="v.id"
-              :desc="v.content"
-              :date="v.date"
-              :author="v.author"
-            >
-              {{ v.title }}
-            </ee-video>
-          </div>
-        </div> -->
         <ee-footer />
+      </div>
+      <div v-else-if="showVideos">
+        <div class="lib-vid__video-list">
+          <ee-video
+            v-for="(v, j) of videoList"
+            :key="j"
+            class="lib-videos__video"
+            :video-id="v.id"
+            :desc="v.content"
+            :date="v.date"
+            :author="v.author"
+          >
+            {{ v.title }}
+          </ee-video>
+        </div>
       </div>
     </transition>
   </div>
@@ -73,7 +68,7 @@
 
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, ref } from "vue"
 ;
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
 import eeVideo       from "@/components/ui/ee-video.vue";
@@ -88,7 +83,7 @@ type VideoCategories = { name: string; description: string; videos: Video[] };
 export default defineComponent({
   components: {
     'ee-titlebar' : eeTitlebarVue,
-    // 'ee-video'    : eeVideo,
+    'ee-video'    : eeVideo,
     'ee-footer'   : eeFooterVue,
   },
   setup() {
@@ -96,8 +91,11 @@ export default defineComponent({
     const videoTask = getVideoTask(() => void(0));
     videoTask.loadVideos();
 
+    const showVideos = ref(false);
+    const videoList = ref<Video[]>([]);
 
     return {
+      openCategory:    (videos: Video[]) => { videoList.value = videos; showVideos.value = true; },
       getAuthors:      (videos: Video[]) => videos.reduce(toAuthors, [] as string[]),
       getLatestVideo:  (videos: Video[]) => videos[videos.length - 1],
       toYouTubeLink:   (id: string)      => `//www.youtube-nocookie.com/embed/${id}?rel=0`,
@@ -105,6 +103,8 @@ export default defineComponent({
       isEthan,
       categories,
       isVideoTaskRunning: videoTask.isRunning,
+      showVideos,
+      videoList,
     };
   }
 });
