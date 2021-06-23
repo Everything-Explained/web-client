@@ -29,7 +29,7 @@
               </div>
               <h2>Latest Video</h2>
               <div class="lib-vid-category__desc">
-                <a :href="getURLFromVideo(getLatestVideo(cat.videos))"
+                <a :href="toYouTubeLink(getLatestVideo(cat.videos).id)"
                    target="_blank"
                 >{{ getLatestVideo(cat.videos).title }}</a>
                 <br>
@@ -100,7 +100,7 @@ export default defineComponent({
     return {
       getAuthors:      (videos: Video[]) => videos.reduce(toAuthors, [] as string[]),
       getLatestVideo:  (videos: Video[]) => videos[videos.length - 1],
-      getURLFromVideo: (video: Video)    => `//www.youtube-nocookie.com/embed/${video.id}?rel=0`,
+      toYouTubeLink:   (id: string)      => `//www.youtube-nocookie.com/embed/${id}?rel=0`,
       useDate,
       isEthan,
       categories,
