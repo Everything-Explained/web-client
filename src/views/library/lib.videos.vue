@@ -93,23 +93,16 @@ export default defineComponent({
   },
   setup() {
     const { videos: categories, getVideoTask } = useVideos<VideoCategories>('/data/library/videos.json');
-    console.log(categories);
     const videoTask = getVideoTask(() => void(0));
     videoTask.loadVideos();
 
-    const youtubeURL = '//www.youtube-nocookie.com/embed/';
 
     const getAuthors = (videos: Video[]) => {
-      return [
-        'Ethan Kahn', 'Vojtěch Kantor', 'KeSyia',
-        'Bilbou Baggins', 'Piccolo', 'Pippa Pig',
-        'Fievel Moskowitz'
-      ];
-      // return videos.reduce((authors, video) => {
-      //   if (authors.includes(video.author)) return authors;
-      //   authors.push(video.author);
-      //   return authors;
-      // }, [] as string[]);
+      return videos.reduce((authors, video) => {
+        if (authors.includes(video.author)) return authors;
+        authors.push(video.author);
+        return authors;
+      }, [] as string[]);
     };
 
     return {
