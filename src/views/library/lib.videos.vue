@@ -39,7 +39,7 @@
               </div>
             </div>
             <footer>
-              Updated {{ getRelativeTime(getLatestVideo(cat.videos).date) }}
+              Updated {{ useDate(getLatestVideo(cat.videos).date).toRelativeTime() }}
             </footer>
           </div>
         </div>
@@ -101,7 +101,6 @@ export default defineComponent({
       getAuthors:      (videos: Video[]) => videos.reduce(toAuthors, [] as string[]),
       getLatestVideo:  (videos: Video[]) => videos[videos.length - 1],
       getURLFromVideo: (video: Video)    => `//www.youtube-nocookie.com/embed/${video.id}?rel=0`,
-      getRelativeTime: (date: string)    => useDate(date).toRelativeTime(),
       useDate,
       isEthan,
       categories,
