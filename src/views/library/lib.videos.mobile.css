@@ -14,6 +14,7 @@
   }
   .lib-vid__category h1 { font-size: 1.25rem; }
   .lib-vid__category h2 { font-size: 1.1rem; }
+  .lib-vid-category__desc { font-size: 1rem; }
   .lib-vid-category__desc a:link,
   .lib-vid-category__desc a:visited,
   .lib-vid-category__desc a:active { font-size: 1rem; }

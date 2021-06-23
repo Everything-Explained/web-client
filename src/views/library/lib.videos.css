@@ -49,6 +49,7 @@
 .lib-vid-category__desc {
   padding: 10px 7px;
   background-color: hsl(197, 11%, 8%);
+  font-size: 1.07rem;
 }
 .lib-vid-category__desc.--authors {
   font-weight: 400;
