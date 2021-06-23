@@ -119,6 +119,7 @@ function usePageFilter(pages: StaticPage[], areReversed = false) {
 
   store.commit('filter-upd-persist', true);
   store.commit('filter-upd-map', authorIndexMap);
+  store.commit('filter-upd-pages', filteredPages);
 
   return {
     toggleFilter: () => {
