@@ -10,6 +10,7 @@
   max-width: 25rem;
 }
 .lib-vid__category {
+  border-radius: 7px 7px 0 0;
   border: 3px solid hsla(0, 0%, 0%, 0.3);
   border-bottom: none;
   /* box-shadow: 0 0 10px 1px black; */
