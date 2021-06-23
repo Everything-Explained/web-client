@@ -97,18 +97,14 @@ export default defineComponent({
     videoTask.loadVideos();
 
 
-    const getAuthors = (videos: Video[]) => {
-      return videos.reduce((authors, video) => {
-        if (authors.includes(video.author)) return authors;
-        authors.push(video.author);
-        return authors;
-      }, [] as string[]);
-    };
-
     return {
-      useDate,
-      getAuthors,
-      isEthan,
+      getAuthors: (videos: Video[]) => {
+        return videos.reduce((authors, video) => {
+          if (authors.includes(video.author)) return authors;
+          authors.push(video.author);
+          return authors;
+        }, [] as string[]);
+      },
       getLatestVideo: (videos: Video[]) => {
         return videos[videos.length - 1];
       },
@@ -118,9 +114,10 @@ export default defineComponent({
       getRelativeTime: (date: string) => {
         return useDate(date).toRelativeTime();
       },
+      useDate,
+      isEthan,
       categories,
       isVideoTaskRunning: videoTask.isRunning,
-      youtubeURL,
     };
   }
 });
