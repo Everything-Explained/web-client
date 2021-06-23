@@ -14,8 +14,7 @@
             <div class="lib-vid__category">
               <h1>{{ cat.name }}</h1>
               <div class="lib-vid-category__desc">
-                Cillum adipisicing do sint velit nisi proident. Mollit minim anim reprehenderit sunt
-                ea incididunt elit ipsum sint dolor. Officia esse id occaecat.
+                {{ cat.description }}
               </div>
               <h2>Contributing Authors</h2>
               <div class="lib-vid-category__desc --authors">
@@ -30,21 +29,18 @@
               </div>
               <h2>Latest Video</h2>
               <div class="lib-vid-category__desc">
-                <a
-                  :href="getURLFromVideo(getLatestVideo(cat.videos))"
-                  target="_blank"
-                >{{ getLatestVideo(cat.videos).title }}</a><br>
-                <span :class="
-                  [
-                    'lib-vid__latest-author',
-                    { '--is-ethan': isEthan(getLatestVideo(cat.videos).author) }
-                  ]"
-                >
-                  ~ {{ getLatestVideo(cat.videos).author }}
-                </span>
+                <a :href="getURLFromVideo(getLatestVideo(cat.videos))"
+                   target="_blank"
+                >{{ getLatestVideo(cat.videos).title }}</a>
+                <br>
+                <span :class="['lib-vid__latest-author',
+                               { '--is-ethan': isEthan(getLatestVideo(cat.videos).author) }]"
+                > ~ {{ getLatestVideo(cat.videos).author }}</span>
               </div>
             </div>
-            <footer>Updated {{ useDate(cat.videos[cat.videos.length - 1].date).toRelativeTime() }}</footer>
+            <footer>
+              Updated {{ getRelativeTime(getLatestVideo(cat.videos).date) }}
+            </footer>
           </div>
         </div>
         <!-- <div
@@ -87,16 +83,17 @@ import { Video } from "@/typings/global-types";
 import { useDate } from "@/composeables/date";
 import { isEthan } from "@/composeables/globals";
 
-type VideoCategories = { name: string; videos: Video[] };
+type VideoCategories = { name: string; description: string; videos: Video[] };
 
 export default defineComponent({
   components: {
     'ee-titlebar' : eeTitlebarVue,
-    'ee-video'    : eeVideo,
+    // 'ee-video'    : eeVideo,
     'ee-footer'   : eeFooterVue,
   },
   setup() {
     const { videos: categories, getVideoTask } = useVideos<VideoCategories>('/data/library/videos.json');
+    console.log(categories);
     const videoTask = getVideoTask(() => void(0));
     videoTask.loadVideos();
 
@@ -104,8 +101,10 @@ export default defineComponent({
 
     const getAuthors = (videos: Video[]) => {
       return [
-        'Ethan Kahn', 'Vojtěch Kantor', 'KeSyia', 'Bilbou Baggins', 'Piccolo', 'Pippa Pig', 'Fievel Moskowitz'
-      ]
+        'Ethan Kahn', 'Vojtěch Kantor', 'KeSyia',
+        'Bilbou Baggins', 'Piccolo', 'Pippa Pig',
+        'Fievel Moskowitz'
+      ];
       // return videos.reduce((authors, video) => {
       //   if (authors.includes(video.author)) return authors;
       //   authors.push(video.author);
@@ -122,6 +121,9 @@ export default defineComponent({
       },
       getURLFromVideo: (video: Video) => {
         return `//www.youtube-nocookie.com/embed/${video.id}?rel=0`;
+      },
+      getRelativeTime: (date: string) => {
+        return useDate(date).toRelativeTime();
       },
       categories,
       isVideoTaskRunning: videoTask.isRunning,
