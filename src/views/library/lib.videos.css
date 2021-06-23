@@ -90,6 +90,8 @@
   float: right;
   padding: 0.3rem 10px 0.3rem 10px;
   border: 3px solid hsla(0, 0%, 0%, 0.5);
+  border-bottom-width: 2px;
+  border-left-width: 2px;
   border-top: 2px dashed black;
   background-color: hsl(197, 11%, 8%);
   text-shadow: 0 0 1px black,
