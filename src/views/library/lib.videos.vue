@@ -98,22 +98,10 @@ export default defineComponent({
 
 
     return {
-      getAuthors: (videos: Video[]) => {
-        return videos.reduce((authors, video) => {
-          if (authors.includes(video.author)) return authors;
-          authors.push(video.author);
-          return authors;
-        }, [] as string[]);
-      },
-      getLatestVideo: (videos: Video[]) => {
-        return videos[videos.length - 1];
-      },
-      getURLFromVideo: (video: Video) => {
-        return `//www.youtube-nocookie.com/embed/${video.id}?rel=0`;
-      },
-      getRelativeTime: (date: string) => {
-        return useDate(date).toRelativeTime();
-      },
+      getAuthors:      (videos: Video[]) => videos.reduce(toAuthors, [] as string[]),
+      getLatestVideo:  (videos: Video[]) => videos[videos.length - 1],
+      getURLFromVideo: (video: Video)    => `//www.youtube-nocookie.com/embed/${video.id}?rel=0`,
+      getRelativeTime: (date: string)    => useDate(date).toRelativeTime(),
       useDate,
       isEthan,
       categories,
@@ -121,4 +109,13 @@ export default defineComponent({
     };
   }
 });
+
+
+function toAuthors(authors: string[], video: Video) {
+  if (authors.includes(video.author)) return authors;
+  authors.push(video.author);
+  return authors;
+}
 </script>
+
+
