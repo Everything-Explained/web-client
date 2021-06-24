@@ -21,7 +21,7 @@
  *
  */
 
-@custom-media --large-screen  (max-width: 711px);
+@custom-media --large-screen  (max-width: 768px);
 @custom-media --medium-screen (max-width: 511px);
 @custom-media --small-screen  (max-width: 380px);
 @custom-media --tiny-screen   (max-width: 320px);
