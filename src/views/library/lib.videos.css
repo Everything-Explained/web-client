@@ -125,7 +125,7 @@
   justify-content: space-evenly;
 }
 
-:root { --lib-vid-width: 350px; }
+:root { --lib-vid-width: 380px; }
 .lib-videos__video {
   max-width: var(--lib-vid-width);
   min-width: var(--lib-vid-width);

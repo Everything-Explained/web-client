@@ -1,12 +1,16 @@
-/*** 711px ***/
+/*** 768px ***/
 @media only screen and (--large-screen) {
   :root { --lib-vid-width: 320px; }
   .category_name {font-size: 1.2rem;}
-  .lib-videos_video .ee-video_title {font-size: 1.1rem;}
+  .lib-videos__video .ee-video_title {
+    height: 3.1rem;
+    font-size: 1.07rem;
+  }
   .cat_video-tray { margin-top: 2.3rem; }
 }
 /*** 511px ***/
 @media only screen and (--medium-screen) {
+  :root { --lib-vid-width: 350px; }
   .lib-vid-category__container {
     min-width: 98%;
     max-width: 98%;
@@ -21,6 +25,7 @@
 }
 /*** 380px ***/
 @media only screen and (--small-screen) {
+  :root { --lib-vid-width: 320px; }
   .lib-vid__category h1 { font-size: 1.15rem; }
   .lib-vid__category h2 { font-size: 1.1rem; }
   .lib-vid-category__desc { font-size: 0.95rem; }
@@ -28,4 +33,5 @@
 }
 /*** 320px ***/
 @media only screen and (--tiny-screen) {
+  :root { --lib-vid-width: 250px; }
 }
