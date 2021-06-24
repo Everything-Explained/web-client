@@ -11,18 +11,17 @@
 }
 .lib-vid__category {
   border-radius: 7px 7px 0 0;
-  border: 3px solid hsla(0, 0%, 0%, 0.3);
+  border: 2px solid black;
   border-bottom: none;
-  /* box-shadow: 0 0 10px 1px black; */
   overflow: hidden;
 }
 .lib-vid__category h1 {
   z-index: 1;
-  padding: 7px 7px 5px 10px;
+  padding: 7px 7px 3px 10px;
   box-shadow: 0 5px 15px 1px hsla(0, 0%, 0%, 0.7);
   border-bottom: 1px solid hsl(197, 15%, 25%);
   border-radius: 7px 7px 0 0;
-  background-color: hsl(197, 13%, 13%);
+  background-color: hsl(197, 13%, 15%);
   text-align: center;
   text-shadow: 1px 1px 0 black,
                2px 2px 0 black
@@ -30,6 +29,7 @@
   font-size: 1.4rem;
   font-weight: 400;
   color:hsl(47, 75%, 63%);
+  cursor: pointer;
 }
 .lib-vid__category h2 {
   z-index: 1;
@@ -90,11 +90,12 @@
   top: -3px;
   float: right;
   padding: 0.3rem 10px 0.3rem 10px;
-  border: 3px solid hsla(0, 0%, 0%, 0.5);
+  border: 2px solid black;
   border-bottom-width: 2px;
   border-left-width: 2px;
   border-top: 2px dashed black;
-  background-color: hsl(197, 11%, 8%);
+  background-color: var(--sub-panel-c);
+
   text-shadow: 0 0 1px black,
                1px 1px 1px black,
                2px 2px 2px black,
