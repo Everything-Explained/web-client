@@ -34,3 +34,4 @@ build/config.json
 *.map
 patreon.png
 patreon.txt
+*.vtpw.ts
