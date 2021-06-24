@@ -5,14 +5,14 @@
     </ee-titlebar>
     <transition name="fade" mode="out-in">
       <div v-if="isVideoTaskRunning" class="preloader page" />
-      <div v-else-if="categories.length && !showVideos">
+      <div v-else-if="categories.length && !activePage">
         <div class="lib-vid__categories">
           <div v-for="(cat, i) of categories"
                :key="i"
                class="lib-vid-category__container"
           >
             <div class="lib-vid__category">
-              <h1 @click="openCategory(cat.videos)">
+              <h1 @click="goTo(cat.name)">
                 {{ cat.name }}
               </h1>
               <div class="lib-vid-category__desc">
@@ -47,10 +47,10 @@
         </div>
         <ee-footer />
       </div>
-      <div v-else-if="showVideos">
+      <div v-else-if="activePage">
         <div class="lib-vid__video-list">
           <ee-video
-            v-for="(v, j) of videoList"
+            v-for="(v, j) of (activePage.data || [])"
             :key="j"
             class="lib-videos__video"
             :video-id="v.id"
@@ -68,7 +68,7 @@
 
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
+import { defineComponent, watch } from "vue"
 ;
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
 import eeVideo       from "@/components/ui/ee-video.vue";
@@ -77,8 +77,9 @@ import useVideos from "@/composeables/useVideos";
 import { Video } from "@/typings/global-types";
 import { useDate } from "@/composeables/date";
 import { isEthan } from "@/composeables/globals";
+import { useDynamicPager } from "@/composeables/dynamicPager";
 
-type VideoCategories = { name: string; description: string; videos: Video[] };
+type VideoCategory = { name: string; description: string; videos: Video[] };
 
 export default defineComponent({
   components: {
@@ -87,27 +88,38 @@ export default defineComponent({
     'ee-footer'   : eeFooterVue,
   },
   setup() {
-    const { videos: categories, getVideoTask } = useVideos<VideoCategories>('/data/library/videos.json');
+    const { videos: categories, getVideoTask } = useVideos<VideoCategory>('/data/library/videos.json');
     const videoTask = getVideoTask(() => void(0));
+
+    const {
+      setDynPages,
+      goTo,
+      activePage,
+    } = useDynamicPager('library/videos');
+
+    watch(() => videoTask.isRunning.value, (val) => {
+      if (!val) {
+        setDynPages(categories.value.map(cat => ({ name: cat.name, data: cat.videos })));
+      }
+    });
+
     videoTask.loadVideos();
 
-    const showVideos = ref(false);
-    const videoList = ref<Video[]>([]);
-
     return {
-      openCategory:    (videos: Video[]) => { videoList.value = videos; showVideos.value = true; },
       getAuthors:      (videos: Video[]) => videos.reduce(toAuthors, [] as string[]),
       getLatestVideo:  (videos: Video[]) => videos[videos.length - 1],
       toYouTubeLink:   (id: string)      => `//www.youtube-nocookie.com/embed/${id}?rel=0`,
       useDate,
+      goTo,
       isEthan,
       categories,
       isVideoTaskRunning: videoTask.isRunning,
-      showVideos,
-      videoList,
+      activePage,
     };
   }
 });
+
+
 
 
 function toAuthors(authors: string[], video: Video) {
