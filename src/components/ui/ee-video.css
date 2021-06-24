@@ -104,8 +104,8 @@
 }
 
 .ee-video_title {
-  height: 4rem;
-  padding: 0.5rem ;
+  height: 3.35rem;
+  padding: 0 0.3rem;
   background-color: hsl(197, 11%, 12%);
   border-top: 2px dashed var(--body-bg-c);
   overflow: hidden;
