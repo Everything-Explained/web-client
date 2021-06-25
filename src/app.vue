@@ -110,27 +110,29 @@ function useVersionToast(body: Ref<HTMLElement>, releaseDate: ISODateString, cha
 
 
 function useCustomScrollPos(body: Ref<HTMLElement>) {
-  const blogScrollPos = ref(0);
-  const router        = useRouter();
-  const route         = useRoute();
+  const router = useRouter();
+  const route  = useRoute();
 
   watch(() => route.path, onRouteChange);
 
   async function onRouteChange() {
     await router.isReady();
-    if (route.path.includes('/blog')) {
-      setBlogScrollPos(); return;
-    }
+    const blogScrollPos   = ref(0);
+    const libVidScrollPos = ref(0);
+    const blogURL         = '/blog';
+    const libVidURL       = '/library/videos';
+    if (route.path.includes(blogURL))   { setScrollPos(blogScrollPos, blogURL);     return; }
+    if (route.path.includes(libVidURL)) { setScrollPos(libVidScrollPos, libVidURL); return; }
     setScrollTop(0);
   }
 
-  function setBlogScrollPos() {
-    // If navigating to blog article
-    if (route.path.includes('/blog/')) {
-      blogScrollPos.value = body.value.scrollTop;
+  function setScrollPos(posRef: Ref<number>, url: string) {
+    // If navigating to sub-page
+    if (route.path.includes(`${url}/`)) {
+      posRef.value = body.value.scrollTop;
       setScrollTop(0); return;
     }
-    setScrollTop(blogScrollPos.value);
+    setScrollTop(posRef.value);
   }
 
   function setScrollTop(top: number) {
