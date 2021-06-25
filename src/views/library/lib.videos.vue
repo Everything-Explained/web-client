@@ -1,10 +1,12 @@
 <template>
   <div class="lib-vid">
-    <ee-titlebar :ease-in="350" :ease-out="350">
-      Library Videos
-    </ee-titlebar>
+    <ee-titlebar
+      :ease-in="350"
+      :ease-out="350"
+      :text="title"
+    />
     <transition name="fade" mode="out-in">
-      <div v-if="isVideoTaskRunning" class="preloader page" />
+      <div v-if="videoTask.isRunning.value" class="preloader page" />
       <div v-else-if="categories.length && !activePage">
         <div class="lib-vid__categories">
           <div v-for="(cat, i) of categories"
@@ -68,7 +70,7 @@
 
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { computed, defineComponent } from "vue"
 ;
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
 import eeVideo       from "@/components/ui/ee-video.vue";
@@ -98,14 +100,15 @@ export default defineComponent({
     videoTask.loadVideos();
 
     return {
-      getAuthors:      (videos: Video[]) => videos.reduce(toAuthors, [] as string[]),
-      getLatestVideo:  (videos: Video[]) => videos[videos.length - 1],
-      toYouTubeLink:   (id: string)      => `//www.youtube-nocookie.com/embed/${id}?rel=0`,
+      getAuthors:     (videos: Video[]) => videos.reduce(toAuthors, [] as string[]),
+      getLatestVideo: (videos: Video[]) => videos[videos.length - 1],
+      toYouTubeLink:  (id: string)      => `//www.youtube-nocookie.com/embed/${id}?rel=0`,
       useDate,
       goTo,
       isEthan,
+      title        : computed(() => activePage.value?.title || 'Video Categories'),
       categories,
-      isVideoTaskRunning: videoTask.isRunning,
+      videoTask,
       activePage,
     };
   }
