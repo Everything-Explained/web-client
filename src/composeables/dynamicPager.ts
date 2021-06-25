@@ -4,6 +4,7 @@ import { useURI } from "./useURI";
 
 type URIMap = {
   [key: string]: {
+    title: string;
     uri: string;
     data: any[];
   }
@@ -26,6 +27,7 @@ export function useDynamicPager(url: string) {
     setDynPages: (pages: { name: string; data: any[]; }[]) => {
       pages.reduce((map, page) => {
         map[page.name] = {
+          title: page.name,
           uri: useURI(page.name),
           data: page.data
         };
