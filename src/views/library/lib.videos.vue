@@ -68,7 +68,7 @@
 
 
 <script lang="ts">
-import { defineComponent, watch } from "vue"
+import { defineComponent } from "vue"
 ;
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
 import eeVideo       from "@/components/ui/ee-video.vue";
@@ -89,18 +89,10 @@ export default defineComponent({
   },
   setup() {
     const { videos: categories, getVideoTask } = useVideos<VideoCategory>('/data/library/videos.json');
-    const videoTask = getVideoTask(() => void(0));
+    const { setDynPages, goTo, activePage, }   = useDynamicPager('library/videos');
 
-    const {
-      setDynPages,
-      goTo,
-      activePage,
-    } = useDynamicPager('library/videos');
-
-    watch(() => videoTask.isRunning.value, (val) => {
-      if (!val) {
-        setDynPages(categories.value.map(cat => ({ name: cat.name, data: cat.videos })));
-      }
+    const videoTask = getVideoTask(() => {
+      setDynPages(categories.value.map(cat => ({ name: cat.name, data: cat.videos })));
     });
 
     videoTask.loadVideos();
