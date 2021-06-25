@@ -110,17 +110,18 @@ function useVersionToast(body: Ref<HTMLElement>, releaseDate: ISODateString, cha
 
 
 function useCustomScrollPos(body: Ref<HTMLElement>) {
-  const router = useRouter();
-  const route  = useRoute();
+  const router          = useRouter();
+  const route           = useRoute();
+  const blogScrollPos   = ref(0);
+  const libVidScrollPos = ref(0);
+  const blogURL         = '/blog';
+  const libVidURL       = '/library/videos';
 
   watch(() => route.path, onRouteChange);
 
   async function onRouteChange() {
     await router.isReady();
-    const blogScrollPos   = ref(0);
-    const libVidScrollPos = ref(0);
-    const blogURL         = '/blog';
-    const libVidURL       = '/library/videos';
+
     if (route.path.includes(blogURL))   { setScrollPos(blogScrollPos, blogURL);     return; }
     if (route.path.includes(libVidURL)) { setScrollPos(libVidScrollPos, libVidURL); return; }
     setScrollTop(0);
