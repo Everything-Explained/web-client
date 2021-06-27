@@ -89,25 +89,20 @@
   font-weight: 400;
 }
 
-}
-.lib-vid-category__container footer {
-  top: -3px;
-  float: right;
-  padding: 0.3rem 10px 0.3rem 10px;
-  border: 2px solid black;
-  border-bottom-width: 2px;
-  border-left-width: 2px;
-  border-top: 2px dashed black;
-  background-color: var(--sub-panel-c);
 
+.lib-vid-category__time {
+  float: right;
+  margin-right: 7px;
   text-shadow: 0 0 1px black,
                1px 1px 1px black,
                2px 2px 2px black,
                -1px -1px 1px black
-  ;
+              ;
   color: hsl(197, 11%, 40%);
   font-weight: 400;
+
 }
+
 
 .lib-vid-category__desc a:link,
 .lib-vid-category__desc a:visited,

@@ -31,7 +31,12 @@
                   </li>
                 </ul>
               </div>
-              <h2>Latest Video ({{ cat.videos.length }})</h2>
+              <h2>
+                Latest Video
+                <span class="lib-vid-category__time">
+                  {{ useDate(getLatestVideo(cat.videos).date).toRelativeTime() }}
+                </span>
+              </h2>
               <div class="lib-vid-category__desc">
                 <a :href="toYouTubeLink(getLatestVideo(cat.videos).id)"
                    target="_blank"
@@ -42,9 +47,6 @@
                 > ~ {{ getLatestVideo(cat.videos).author }}</span>
               </div>
             </div>
-            <footer>
-              Updated {{ useDate(getLatestVideo(cat.videos).date).toRelativeTime() }}
-            </footer>
           </div>
         </div>
         <ee-footer />
