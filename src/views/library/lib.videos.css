@@ -1,90 +1,94 @@
 .lib-vid__categories {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
+  display         : flex;
+  margin          : 0 0;
+  margin-top      : 20px;
+  flex-direction  : row;
+  justify-content : center;
+  flex-wrap       : wrap;
 }
+
 .lib-vid-category__container {
-  margin: 1rem 1.2rem 1rem 1.2rem;
+  margin: 1rem 1.2rem 1.7rem 1.2rem;
   min-width: 25rem;
   max-width: 25rem;
 }
+
+
 .lib-vid__category {
-  border-radius: 7px 7px 0 0;
-  border: 2px solid black;
-  border-bottom: none;
-  overflow: hidden;
-}
-.lib-vid__category h1 {
-  z-index: 1;
-  padding: 7px 7px 3px 10px;
-  box-shadow: 0 5px 15px 1px hsla(0, 0%, 0%, 0.7);
-  border-bottom: 1px solid hsl(197, 15%, 25%);
-  border-radius: 7px 7px 0 0;
-  background-color: hsl(197, 13%, 15%);
-  text-align: center;
-  text-shadow: 1px 1px 0 black,
-               2px 2px 0 black
-  ;
-  font-size: 1.4rem;
-  font-weight: 400;
-  color:hsl(47, 75%, 63%);
-  cursor: pointer;
-}
-.lib-vid__category h2 {
-  z-index: 1;
-  padding: 0.2rem 0 0.2rem 1rem;
-  box-shadow: 0 5px 5px -2px hsla(0, 0%, 0%, 0.8),
-              0 -5px 5px -2px hsla(0, 0%, 0%, 0.8)
-  ;
-  border-top: 1px solid hsl(197, 11%, 20%);
-  border-bottom: 1px solid hsl(197, 11%, 20%);
-  background-color: var(--sub-panel-c);
-  text-shadow: 1px 1px 0 black,
-               2px 2px 0 black
-  ;
-  font-size: 1.17rem;
-  font-weight: 400;
-}
+  border-radius : 7px 7px 0 0;
+  border        : 2px solid black;
+  box-shadow    : 0 0 5px 2px hsl(197, 11%, 17%);
+  border-bottom : none;
+  overflow      : hidden; }
+  .lib-vid__category h1 {
+    z-index          : 1;
+    padding          : 7px 7px 3px 10px;
+    box-shadow       : 0 5px 10px 1px hsla(0, 0%, 0%, 0.7);
+    border-bottom    : 1px solid hsl(197, 15%, 25%);
+    border-radius    : 7px 7px 0 0;
+    background-color : hsl(197, 13%, 15%);
+    text-align       : center;
+    text-shadow      : 1px 1px 0 black,
+                       2px 2px 0 black
+                     ;
+    font-size        : 1.4rem;
+    font-weight      : 400;
+    color            :hsl(47, 75%, 63%);
+    cursor           : pointer; }
+  .lib-vid__category h2 {
+    z-index          : 1;
+    padding          : 0.2rem 0 0.2rem 1rem;
+    box-shadow       : 0  5px 5px -2px hsla(0, 0%, 0%, 0.8),
+                       0 -5px 5px -2px hsla(0, 0%, 0%, 0.8)
+                     ;
+    border-top       : 1px solid hsl(197, 11%, 20%);
+    border-left      : 1px solid black;
+    border-right     : 1px solid black;
+    border-bottom    : 1px solid hsl(197, 11%, 20%);
+    background-color : var(--sub-panel-c);
+    text-shadow      : 1px 1px 0 black,
+                       2px 2px 0 black
+                     ;
+    font-size        : 1.17rem;
+    font-weight      : 400; }
+
+
 .lib-vid-category__desc {
-  padding: 10px 7px;
-  background-color: hsl(197, 11%, 8%);
-  font-size: 1.07rem;
-}
-.lib-vid-category__desc.--authors {
-  font-weight: 400;
-}
-.lib-vid-category__desc ul {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: left;
-  align-items: baseline;
-}
-.lib-vid-category__desc li {
-  margin-right: 0.5rem;
-  color: var(--body-c) !important;
-}
-.lib-vid-category__desc.--authors li::before {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  margin-right: 0.5rem;
-  font-size: 1.3rem;
-  content: '\2022';
-  color: hsl(47, 60%, 63%);
-}
-.lib-vid-category__desc.--authors .--is-ethan::before {
-  color: hsl(0, 100%, 70%);
-}
+  padding          : 10px 7px;
+  background-color : hsl(197, 11%, 8%);
+  border-left      : 1px solid black;
+  border-right     : 1px solid black;
+  font-size        : 1.07rem; }
+  .lib-vid-category__desc:last-child {
+    border-bottom : 2px solid black; }
+  .lib-vid-category__desc.--authors { font-weight: 400; }
+  .lib-vid-category__desc ul {
+    display         : flex;
+    flex-direction  : row;
+    flex-wrap       : wrap;
+    justify-content : left;
+    align-items     : baseline; }
+  .lib-vid-category__desc li {
+    margin-right : 0.5rem;
+    color        : var(--body-c) !important; }
+  .lib-vid-category__desc.--authors li::before {
+    position     : relative;
+    top          : 1px;
+    display      : inline-block;
+    margin-right : 0.5rem;
+    font-size    : 1.3rem;
+    content      : '\2022';
+    color        : hsl(47, 60%, 63%); }
+    .lib-vid-category__desc.--authors .--is-ethan::before {
+      color : hsl(0, 100%, 70%); }
+
+
 .lib-vid__latest-author {
   padding-left: 10px;
   color: hsl(47, 60%, 63%);
   font-weight: 400;
 }
 
-.lib-vid-category__desc:last-child {
-  border-bottom: 3px solid hsla(0, 0%, 0%, 0.5);
 }
 .lib-vid-category__container footer {
   top: -3px;
