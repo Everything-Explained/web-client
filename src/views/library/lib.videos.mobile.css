@@ -1,6 +1,6 @@
 /*** 768px ***/
 @media only screen and (--large-screen) {
-  :root { --lib-vid-width: 320px; }
+  :root { --lib-vid-width: 45%; }
   .lib-videos__video .ee-video_title {
     height: 3.1rem;
     font-size: 1.07rem;
@@ -9,7 +9,7 @@
 }
 /*** 511px ***/
 @media only screen and (--medium-screen) {
-  :root { --lib-vid-width: 350px; }
+  :root { --lib-vid-width: 95%; }
   .lib-vid-category__container {
     min-width: 96%;
     max-width: 96%;
@@ -24,12 +24,10 @@
 }
 /*** 380px ***/
 @media only screen and (--small-screen) {
-  :root { --lib-vid-width: 320px; }
   .lib-vid__category h1 { font-size: 1.2rem; }
   .lib-vid__category h2 { font-size: 1.1rem; }
   .lib-vid-category__desc { font-size: 0.95rem; }
 }
 /*** 320px ***/
 @media only screen and (--tiny-screen) {
-  :root { --lib-vid-width: 250px; }
 }
