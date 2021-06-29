@@ -1,5 +1,5 @@
 <template>
-  <div :class="['lit', sizeClass]">
+  <div class="lit">
     <ee-titlebar
       :ease-in="350"
       :ease-out="350"
@@ -14,15 +14,15 @@
           :reverse-order="reverseOrder"
           @filter="onFilter"
         />
-        <div class="lit__cards">
+        <div :class="['lit__cards', sizeClass]">
           <div v-for="(article, i) of filteredPages"
                :key="i"
-               class="lit__card"
+               :class="['lit__card', sizeClass]"
           >
             <header @click="goTo(article.uri)">
               {{ article.title }}
             </header>
-            <article class="lit-card__desc --subtle-scrollbar">
+            <article class="--subtle-scrollbar">
               {{ article.summary }}
             </article>
             <footer>
@@ -104,7 +104,7 @@ export default defineComponent({
   },
   setup(props) {
     const { size, uri } = props;
-    const sizeClass = { 'lit-expanded': size == 'expanded' };
+    const sizeClass = { '--expanded': size == 'expanded' };
     const store = useStore<VuexStore>()
     ;
     if (!uri) throw Error('literature::Missing URL');
