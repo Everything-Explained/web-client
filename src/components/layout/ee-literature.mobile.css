@@ -22,7 +22,7 @@
   .lit-expanded .lit__card header { padding: 5px 10px; }
   .lit__card article,
   .lit-expanded .lit__card article { font-size: 1.07rem; line-height: 1.35rem; }
-  .lit__card footer { font-size: 1rem; padding: 3px 0; }
+  .lit__card footer { font-size: 1rem; padding-bottom: 1px; }
 }
 /*** 380px ***/
 @media only screen and (--small-screen) {
