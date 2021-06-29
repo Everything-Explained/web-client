@@ -3,7 +3,7 @@
   .qnaf__input { width: 100% }
   .qnaf__form { width: 90%; }
 }
-/*** 511px ***/
+/*** 540px ***/
 @media only screen and (--medium-screen) {
   .qnaf__form { width: 95%; }
   .qnaf__question-container { padding-left: 0.8rem; }

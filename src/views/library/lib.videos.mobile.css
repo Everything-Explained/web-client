@@ -12,7 +12,7 @@
     margin-right: 14px;
   }
 }
-/*** 511px ***/
+/*** 540px ***/
 @media only screen and (--medium-screen) {
   :root { --lib-vid-width: 95%; }
   .lib-vid-category__container {

@@ -5,7 +5,7 @@
 @media only screen and (--large-screen) {
   .lit__card { width: 90%; }
 }
-/*** 511px ***/
+/*** 540px ***/
 @media only screen and (--medium-screen) {
   .lit__card {
     margin: 15px 0;

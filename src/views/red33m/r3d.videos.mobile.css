@@ -3,7 +3,7 @@
   :root { --r3d-vid-width: 210px; }
   .red33m-video .ee-video_title { font-size: 1.1rem; }
 }
-/*** 511px ***/
+/*** 540px ***/
 @media only screen and (--medium-screen) {
   :root { --r3d-vid-width: 95%; }
   .red33m-video { margin-right: 10px; }

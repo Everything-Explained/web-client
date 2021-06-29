@@ -1,7 +1,7 @@
 /*** 768px ***/
 @media only screen and (--large-screen) {
 }
-/*** 511px ***/
+/*** 540px ***/
 @media only screen and (--medium-screen) {
   .app-menu__header  { font-size: 1.4rem; padding-bottom: 0.2rem; }
   .app-menu_category { font-size: 1.25rem; margin-top: 0.7rem; }
