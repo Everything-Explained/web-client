@@ -22,7 +22,7 @@
             <header @click="goTo(article.uri)">
               {{ article.title }}
             </header>
-            <article class="--subtle-scrollbar">
+            <article class="lit-card__desc --subtle-scrollbar">
               {{ article.summary }}
             </article>
             <footer>

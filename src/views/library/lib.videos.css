@@ -15,15 +15,41 @@
 
 
 .lib-vid__category {
-  border-radius : 7px 7px 0 0;
+  border-radius : 10px 10px 0 0;
   border        : 2px solid black;
-  box-shadow    : 0 0 5px 2px hsl(197, 11%, 17%);
   border-bottom : none;
-  overflow      : hidden; }
+  box-shadow    : 0 0 5px 2px hsl(197, 11%, 17%);
+  overflow      : hidden;
+  transition    : box-shadow 0.15s ease; }
+  .lib-vid__category:hover {
+    box-shadow : 0 0 5px 2px hsl(30, 11%, 19%); }
+  .lib-vid__category:hover h1 {
+    color: hsl(47, 100%, 65%);
+    background-color: hsl(30, 11%, 17%);
+    border-color: hsl(30, 11%, 27%); }
+  .lib-vid__category:hover h2 {
+    border-top: 1px solid hsl(30, 13%, 25%);
+    border-bottom: 1px solid hsl(30, 13%, 25%);
+    background-color: hsl(30, 13%, 15%);
+    color: hsl(30, 11%, 83%); }
+  .lib-vid__category:hover .lib-vid-category__desc {
+    background-color: hsl(30, 11%, 11%);
+    color: hsl(30, 11%, 83%); }
+  .lib-vid__category:hover .lib-vid-category__desc.--authors li {
+    color: hsl(30, 11%, 83%); }
+  .lib-vid__category:hover .lib-vid-category__time {
+    color: hsl(30, 13%, 48%); }
+  .lib-vid__category:hover .lib-vid-category__desc a:link,
+  .lib-vid__category:hover .lib-vid-category__desc a:visited,
+  .lib-vid__category:hover .lib-vid-category__desc a:active {
+    color: hsl(30, 11%, 83%);
+    text-decoration: underline hsl(30, 11%, 55%); }
+  .lib-vid__category:hover .lib-vid-category__desc a:hover {
+    text-decoration: underline hsl(47, 63%, 63%); }
   .lib-vid__category h1 {
     z-index          : 1;
     padding          : 7px 7px 3px 10px;
-    box-shadow       : 0 5px 10px 1px hsla(0, 0%, 0%, 0.7);
+    box-shadow       : 0 5px 20px -1px hsl(0, 0%, 0%);
     border-bottom    : 1px solid hsl(197, 15%, 25%);
     border-radius    : 7px 7px 0 0;
     background-color : hsl(197, 13%, 15%);
@@ -34,31 +60,35 @@
     font-size        : 1.4rem;
     font-weight      : 400;
     color            :hsl(47, 75%, 63%);
-    cursor           : pointer; }
+    cursor           : pointer;
+    transition: all 0.15s ease; }
   .lib-vid__category h2 {
     z-index          : 1;
     padding          : 0.2rem 0 0.2rem 1rem;
-    box-shadow       : 0  5px 5px -2px hsla(0, 0%, 0%, 0.8),
-                       0 -5px 5px -2px hsla(0, 0%, 0%, 0.8)
+    box-shadow       :
+                       0 -3px 20px -4px hsla(0, 0%, 0%, 0.8),
+                       0  3px 20px -4px hsla(0, 0%, 0%, 0.8)
                      ;
-    border-top       : 1px solid hsl(197, 11%, 20%);
     border-left      : 1px solid black;
     border-right     : 1px solid black;
-    border-bottom    : 1px solid hsl(197, 11%, 20%);
-    background-color : var(--sub-panel-c);
+    border-top       : 1px solid hsl(197, 13%, 25%);
+    border-bottom    : 1px solid hsl(197, 13%, 25%);
+    background-color : hsl(197, 13%, 13%);
     text-shadow      : 1px 1px 0 black,
                        2px 2px 0 black
                      ;
     font-size        : 1.17rem;
-    font-weight      : 400; }
+    font-weight      : 400;
+    transition       : all 0.15s ease; }
 
 
 .lib-vid-category__desc {
-  padding          : 10px 7px;
-  background-color : hsl(197, 11%, 8%);
+  padding          : 5px 7px;
+  background-color : hsl(197, 11%, 11%);
   border-left      : 1px solid black;
   border-right     : 1px solid black;
-  font-size        : 1.07rem; }
+  font-size        : 1.07rem;
+  transition       : all 0.15s ease; }
   .lib-vid-category__desc:last-child {
     border-bottom : 2px solid black; }
   .lib-vid-category__desc.--authors { font-weight: 400; }
@@ -68,9 +98,11 @@
     flex-wrap       : wrap;
     justify-content : left;
     align-items     : baseline; }
+  .lib-vid-category__desc li,
   .lib-vid-category__desc li {
     margin-right : 0.5rem;
-    color        : var(--body-c) !important; }
+    color        : var(--body-c);
+    transition: color 0.15s ease; }
   .lib-vid-category__desc.--authors li::before {
     position     : relative;
     top          : 1px;
@@ -79,15 +111,16 @@
     font-size    : 1.3rem;
     content      : '\2022';
     color        : hsl(47, 60%, 63%); }
-    .lib-vid-category__desc.--authors .--is-ethan::before {
-      color : hsl(0, 100%, 70%); }
+    .lib-vid-category__desc.--authors li.--is-ethan::before {
+      color: hsl(0, 100%, 70%); }
 
 
 .lib-vid__latest-author {
   padding-left: 10px;
-  color: hsl(47, 60%, 63%);
-  font-weight: 400;
-}
+  color: hsl(197, 15%, 87%);
+  font-weight: 400; }
+  .lib-vid__latest-author.--is-ethan {
+    color: hsl(0, 100%, 70%); }
 
 
 .lib-vid-category__time {
@@ -100,7 +133,7 @@
               ;
   color: hsl(197, 11%, 40%);
   font-weight: 400;
-
+  transition: color 0.15s ease;
 }
 
 
@@ -110,11 +143,9 @@
   color: hsl(197, 20%, 80%);
   text-decoration: underline hsl(197, 13%, 50%);
   font-size: 1.1rem;
-  transition: all 0.15s;
-}
-.lib-vid-category__desc a:hover {
-  text-decoration: underline hsl(0, 63%, 63%);
-}
+  transition: all 0.15s; }
+  .lib-vid-category__desc a:hover {
+    text-decoration: underline hsl(0, 63%, 63%); }
 
 .lib-vid__video-list {
   display: flex;

@@ -113,13 +113,16 @@
 .ee-video__author {
   float: right;
   padding: 0.2rem 0.5rem 0.2rem 0.5rem;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   font-weight: 400;
   color: hsl(47, 70%, 63%);
   border-top: 2px dashed var(--body-bg-c);
   background-color: hsl(197, 11%, 12%);
 }
+.ee-video__author.--is-ethan {
+  color: hsl(0, 100%, 70%);
+}
 .ee-video__author .icon {
-  top: 0.1rem;
+  top: 0.15rem;
   color: var(--body-c);
 }

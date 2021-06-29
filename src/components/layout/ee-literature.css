@@ -1,5 +1,5 @@
 :root {
-  --lit-transition-speed: .2s;
+  --lit-transition-speed: .15s ease;
 }
 
 .lit__cards {
@@ -17,11 +17,14 @@
 
 .lit__card {
   margin: 20px 15px;
-  box-shadow: 0 0 10px 1px black;
+  border        : 2px solid black;
+  box-shadow    : 0 0 5px 2px hsl(197, 11%, 17%);
+  border-radius: 10px 10px 0 0;
   width: 31%;
   font-size: 1.2rem;
   align-self: flex-start;
   overflow: hidden;
+  transition: box-shadow var(--lit-transition-speed);
 }
 .lit-expanded .lit__card {
   margin-bottom: 30px;
@@ -29,18 +32,19 @@
 }
 
 .lit__card header {
+  z-index: 2;
   padding: 7px 7px 5px 10px;
+  border-bottom: 1px solid hsl(197, 11%, 25%);
+  border-radius: 7px 7px 0 0;
+  box-shadow: 0 5px 20px -1px hsl(0, 0%, 0%);
+  background-color : hsl(197, 13%, 15%);
   text-align: center;
-  font-size: 1.4rem;
-  font-weight: 400;
   text-shadow: 1px 1px 0 black,
                2px 2px 0 black;
-  background-color: var(--sub-panel-c);
-  border-bottom: 1px solid hsl(197, 11%, 20%);
-  border-radius: 7px 7px 0 0;
-  box-shadow: 0 5px 15px 1px black;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color            :hsl(47, 75%, 63%);
   cursor: pointer;
-  z-index: 1;
   transition: color var(--lit-transition-speed),
               background var(--lit-transition-speed),
               border var(--lit-transition-speed);
@@ -50,17 +54,19 @@
   font-size: 1.5rem;
 }
 
-.lit__card article {
+.lit-card__desc {
+  z-index: 1;
   padding: 10px 7px 10px 10px;
   height: auto;
   overflow: show;
   overflow-y: auto;
-  color: var(--body-dark-c);
-  background-color: hsl(197, 11%, 8%);
+  color: var(--body-c);
+  background-color: hsl(197, 11%, 11%);
+  box-shadow: 0 5px 20px 0 black;
   transition: background var(--lit-transition-speed),
               color var(--lit-transition-speed);
 }
-.lit-expanded .lit__card article {
+.lit-expanded .lit-card__desc {
   height: auto;
   line-height: 2rem;
 }
@@ -69,7 +75,7 @@
   padding: 7px 0.7rem 4px 0.7rem;
   text-align: center;
   font-weight: 400;
-  color: var(--panel-c);
+  color: hsl(197, 11%, 38%);
   border-radius: 0 0 7px 7px;
   transition: background var(--lit-transition-speed),
               border var(--lit-transition-speed);
@@ -94,24 +100,38 @@
 .lit-expanded .lit-card__author { float: left; }
 
 .lit-card__author-text {
-  color: hsl(47, 60%, 63%);
+  color: hsl(197, 15%, 87%);
   text-shadow: 1px 1px 0 black,
                2px 2px 0 black;
 }
+.lit-card__author-text.--is-ethan {
+  color: hsl(0, 100%, 72%);
+}
 
 .lit-card__timestamp {
+  text-shadow: 0 0 1px black,
+               1px 1px 1px black,
+               2px 2px 2px black,
+               -1px -1px 1px black
+              ;
+  font-weight: 400;
   transition: color var(--lit-transition-speed);
 }
 
-.lit__card:hover header,
-.lit__card:hover footer {
-  color: var(--md-p-hov-i-c);
+.lit__card:hover {
+  box-shadow    : 0 0 5px 2px hsl(30, 11%, 19%);
+}
+.lit__card:hover header {
+  color: hsl(47, 100%, 65%);
   background-color: var(--sub-panel-hov-c);
   border-color: hsl(30, 11%, 27%);
 }
+.lit__card:hover footer {
+  background-color: hsl(30, 11%, 8%);
+}
 .lit__card:hover article {
-  background-color: hsl(30, 10%, 9%);
-  color: var(--md-p-hov-c);
+  background-color: hsl(30, 11%, 11%);
+  color: hsl(30, 11%, 83%);
 }
 .lit__card:hover .lit-card__timestamp,
 .lit__card:hover .icon {
