@@ -9,7 +9,7 @@
   background-color : var(--sub-panel-c);
   box-shadow       : 0 10px 8px -3px black;
   overflow         : visible;
-  z-index          : 2;
+  z-index          : 5;
 }
 .title-bar__text {
   padding-right: 5px;
