@@ -6,6 +6,11 @@
     font-size: 1.07rem;
   }
   .cat_video-tray { margin-top: 2.3rem; }
+  .lib-vid-category__container {
+    min-width: 80%;
+    max-width: 80%;
+    margin-right: 14px;
+  }
 }
 /*** 511px ***/
 @media only screen and (--medium-screen) {
@@ -15,9 +20,9 @@
     max-width: 96%;
     margin-right: 14px;
   }
-  .lib-vid__category h1 { font-size: 1.25rem; }
-  .lib-vid__category h2 { font-size: 1.1rem; }
-  .lib-vid-category__desc { font-size: 1rem; }
+  .lib-vid__category h1 { font-size: 1.27rem; }
+  .lib-vid__category h2 { font-size: 1.17rem; }
+  .lib-vid-category__desc { font-size: 1.07rem; }
   .lib-vid-category__desc a:link,
   .lib-vid-category__desc a:visited,
   .lib-vid-category__desc a:active { font-size: 1rem; }

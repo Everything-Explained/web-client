@@ -22,7 +22,7 @@
  */
 
 @custom-media --large-screen  (max-width: 768px);
-@custom-media --medium-screen (max-width: 511px);
+@custom-media --medium-screen (max-width: 540px);
 @custom-media --small-screen  (max-width: 380px);
 @custom-media --tiny-screen   (max-width: 320px);
 
@@ -42,7 +42,7 @@
   --body-bg-c            : hsl(197, 11%, 8%);
   --body-c               : hsl(197, 11%, 73%);
   --body-dark-c          : hsl(197, 11%, 65%);
-  --selection-bg-c       : hsla(197, 9%, 30%, 0.993); /* hsla(0, 40%, 41%, 0.993); */
+  --selection-bg-c       : hsla(197, 9%, 30%, 0.993);
   --scrollbar-c          : var(--panel-c);
   --scrollbar-hov-c      : hsl(197, 9%, 43%);
   --scrollbar-track-c    : hsl(0, 0%, 0%);
