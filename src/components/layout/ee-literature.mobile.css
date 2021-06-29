@@ -1,6 +1,9 @@
+@media only screen and (max-width: 1024px) {
+  .lit__card { width: 44%; }
+}
 /*** 768px ***/
 @media only screen and (--large-screen) {
-  .lit__card { width: 250px; }
+  .lit__card { width: 90%; }
 }
 /*** 511px ***/
 @media only screen and (--medium-screen) {
