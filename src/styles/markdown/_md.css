@@ -139,13 +139,15 @@
 
 
 .md code {
-  padding       : 2px 3px 0 3px;
+  display: inline-block;
+  padding       : 1px 10px 2px 10px;
   color         : var(--md-code-c);
   background    : var(--md-code-bg-c);
-  border        : 1px solid black;
+  text-shadow   : 1px 1px 0 black,
+                  2px 2px 0 black,
+                  3px 3px 0 black;
   font-size     : 1.125rem;
   font-family   : Consolas, 'Courier New', Courier, monospace;
-  border-radius : 5px;
   white-space   : nowrap;
   word-spacing  : -3px;
 }
