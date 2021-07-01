@@ -52,7 +52,7 @@
                      ; }
   .lit__card:hover        header  {
     border-color     : hsl(30, 15%, 27%);
-    background-color : hsl(30, 15%, 15%);
+    background-color : hsl(30, 15%, 16%);
     color            : hsl(47, 100%, 65%); }
   .lit__card.--expanded   header  {
     text-align : left;
