@@ -6,6 +6,7 @@
   color: hsl(197, 11%, 75%); }
   .chglog h1:first-child { margin-top: 2rem; }
 
+
 .chglog blockquote {
   margin: 0 auto;
   width: 90%;
@@ -18,7 +19,7 @@
     height           : 100%;
     content          : '';
     bottom           : -10px;
-    background-color : hsl(197, 11%, 15%);
+    background-color : hsl(197, 11%, 17%);
     transform        : translateX(-50%);
     z-index          : -1;
     transition       : background var(--md-trans-speed); }
@@ -37,9 +38,9 @@
   .chglog blockquote:hover li
     { background-color: var(--sub-panel-hov-c); }
   .chglog blockquote:hover::after
-    { background-color: hsl(30, 11%, 23%); }
+    { background-color: hsl(30, 15%, 20%); }
   .chglog blockquote:hover code
-    { color: var(--md-p-hov-i-c); background: hsl(30, 20%, 30%); }
+    { color: var(--md-p-hov-b-c); background-color: hsl(30, 15%, 23%); }
 
 .chglog li {
   position         : relative;
