@@ -71,6 +71,7 @@
 .md em {
   color      : var(--md-i-c);
   font-style : normal;
+  font-weight: 400;
 }
 .md > p:hover em { color: var(--md-p-hov-i-c); }
 

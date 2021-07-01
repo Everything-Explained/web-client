@@ -61,8 +61,8 @@
   --md-p-bxs-c          : hsla(0, 0%, 0%, 0.4);
   --md-b-c              : hsl(197, 20%, 86%);
   --md-p-hov-b-c        : hsl(30, 30%, 92%);
-  --md-i-c              : hsl(0, 74%, 77%);
-  --md-p-hov-i-c        : hsl(47, 100%, 72%);
+  --md-i-c              : hsl(0, 100%, 73%);
+  --md-p-hov-i-c        : hsl(47, 77%, 67%);
   --md-b-i-c            : hsl(197, 45%, 69%);
   --md-link-c           : var(--md-b-c);
   --md-link-hov-c       : var(--md-p-hov-i-c);
