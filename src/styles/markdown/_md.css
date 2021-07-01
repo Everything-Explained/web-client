@@ -80,7 +80,7 @@
 .md a:visited {
   color           : var(--md-link-c);
   text-decoration : none;
-  font-weight     : 300;
+  font-weight     : 400;
   text-decoration: underline var(--md-link-bdr-c);
   transition      : text-decoration var(--md-trans-speed),
                     color var(--md-trans-speed);

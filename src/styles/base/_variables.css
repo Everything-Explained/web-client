@@ -35,12 +35,12 @@
 
   --panel-c              : hsl(197, 11%, 25%);
   --panel-hov-c          : hsl(197, 11%, 30%);
-  --sub-panel-c          : hsl(197, 11%, 10%);
-  --sub-panel-hov-c      : hsl(30, 11%, 15%);
+  --sub-panel-c          : hsl(197, 11%, 12%);
+  --sub-panel-hov-c      : hsl(30, 15%, 13%);
 
   --body-f-sz            : 1em;
   --body-bg-c            : hsl(197, 11%, 8%);
-  --body-c               : hsl(197, 11%, 73%);
+  --body-c               : hsl(197, 11%, 74%);
   --body-dark-c          : hsl(197, 11%, 65%);
   --selection-bg-c       : hsla(197, 9%, 30%, 0.993);
   --scrollbar-c          : var(--panel-c);
@@ -55,14 +55,14 @@
   --md-mobile-sm-f-sz   : 0.97rem;
   --md-head-c           : hsl(197, 20%, 80%);
   --md-c                : var(--body-c);
-  --md-p-hov-c          : hsl(30, 11%, 80%);
+  --md-p-hov-c          : hsl(30, 15%, 83%);
   --md-p-bg-c           : var(--sub-panel-c);
   --md-p-bg-hov-c       : var(--sub-panel-hov-c);
   --md-p-bxs-c          : hsla(0, 0%, 0%, 0.4);
-  --md-b-c              : hsl(197, 11%, 82%);
-  --md-p-hov-b-c        : hsl(30, 11%, 89%);
+  --md-b-c              : hsl(197, 20%, 86%);
+  --md-p-hov-b-c        : hsl(30, 30%, 92%);
   --md-i-c              : hsl(0, 74%, 77%);
-  --md-p-hov-i-c        : hsl(47, 80%, 70%);
+  --md-p-hov-i-c        : hsl(47, 100%, 72%);
   --md-b-i-c            : hsl(197, 45%, 69%);
   --md-link-c           : var(--md-b-c);
   --md-link-hov-c       : var(--md-p-hov-i-c);
@@ -77,7 +77,7 @@
   --md-bullet-c         : var(--md-head-c);
   --md-bullet-hov-c     : hsl(47, 100%, 50%);
   --md-code-c           : var(--md-b-c);
-  --md-code-bg-c        : var(--panel-c);
+  --md-code-bg-c        : hsl(197, 11%, 19%);
   --md-code-hov-c       : hsl(279, 20%, 80%);
   --md-code-bg-hov-c    : hsl(278, 25%, 47%);
   --md-img-bxs-c        : hsla(0, 0%, 0%, 0.4);
