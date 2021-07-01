@@ -1,7 +1,7 @@
 <template>
   <div id="App" class="app-container">
     <div class="app-ribbon" />
-    <div :class="['app__toast-buffer', { '--show': !isToastClosed }]" />
+    <div :class="['app__toast-buffer', { '--show': isToastVisible }]" />
     <div :class="['app__toast', { '--show': isToastVisible }]" @click="openVersion">
       Click here to see the New Release Changes!
       <ee-icon class="app__toast-icon"
