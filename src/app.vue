@@ -114,8 +114,10 @@ function useCustomScrollPos(body: Ref<HTMLElement>) {
   const route           = useRoute();
   const blogScrollPos   = ref(0);
   const libVidScrollPos = ref(0);
+  const r3dLitScrollPos = ref(0);
   const blogURL         = '/blog';
   const libVidURL       = '/library/videos';
+  const r3dLitURL       = '/red33m/literature';
 
   watch(() => route.path, onRouteChange);
 
@@ -124,6 +126,7 @@ function useCustomScrollPos(body: Ref<HTMLElement>) {
 
     if (route.path.includes(blogURL))   { setScrollPos(blogScrollPos, blogURL);     return; }
     if (route.path.includes(libVidURL)) { setScrollPos(libVidScrollPos, libVidURL); return; }
+    if (route.path.includes(r3dLitURL)) { setScrollPos(r3dLitScrollPos, r3dLitURL); return; }
     setScrollTop(0);
   }
 
