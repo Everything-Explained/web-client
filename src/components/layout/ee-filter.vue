@@ -84,7 +84,6 @@ export default defineComponent({
       },
 
       toggleAge: () => {
-        console.log('reverse pages');
         emit('filter', reversePages());
       },
 
