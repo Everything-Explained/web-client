@@ -4,13 +4,33 @@
 }
 
 .ee-filter__fieldset {
-  max-height: 3.7rem;
+  display        : block;
+  max-height     : 3.9rem;
+  margin         : 0 auto;
+  padding        : 1.2rem;
+  padding-top    : 10px; /* Accommodate legend */
+  padding-bottom : 1rem;
+  border-radius  : 5px;
+  border         : 2px solid var(--toggle-fieldset-bdr-c);
+  box-shadow     :
+                   0 0 5px 2px var(--toggle-fieldset-bxs-c),
+                   inset 0 0 0 2px var(--toggle-fieldset-bxs-c)
+                  ;
   overflow: hidden;
   transition: max-height 0.25s ease-out;
 }
 .ee-filter__fieldset.--visible {
   max-height: 30rem;
   transition: max-height 0.45s ease-in;
+}
+.ee-filter__fieldset legend {
+  padding          : 0 5px 0 7px;
+  font-size        : 1.3rem;
+  font-weight      : bold;
+  word-spacing     : 2px;
+  letter-spacing   : 1px;
+  color            : var(--toggle-legend-c);
+  background-color : var(--toggle-legend-bg-c);
 }
 
 
@@ -22,6 +42,7 @@
   font-size: 1.3rem;
   font-variant: small-caps;
   font-weight: 400;
+  color: hsl(47, 100%, 60%);
   background-color: var(--body-bg-c);
   cursor: pointer;
 }

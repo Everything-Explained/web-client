@@ -1,25 +1,4 @@
 
-fieldset {
-  display        : block;
-  margin         : 0 auto;
-  padding        : 1.2rem;
-  padding-top    : 0.4rem; /* Accommodate legend */
-  padding-bottom : 1rem;
-  border-radius  : 5px;
-  border         : 2px solid var(--toggle-fieldset-bdr-c);
-  box-shadow     :
-                   0 0 5px 2px var(--toggle-fieldset-bxs-c),
-                   inset 0 0 0 2px var(--toggle-fieldset-bxs-c)
-                 ;
-}
-fieldset legend {
-  padding          : 0 10px;
-  font-size        : 1.3rem;
-  font-weight      : 400;
-  word-spacing     : 2px;
-  color            : var(--toggle-legend-c);
-  background-color : var(--toggle-legend-bg-c);
-}
 /* TOGGLE STYLING */
 .toggle {
   margin          : 0 auto;
