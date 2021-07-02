@@ -58,6 +58,7 @@ export default defineComponent({
   props: {
     reverseOrder: { type: Boolean as PropType<boolean>,    default: false,             },
     items:        { type: Array as PropType<FilterData[]>, default: [] as FilterData[] },
+    persist:      { type: Boolean as PropType<boolean>,    default: true               },
   },
   emits: ['filter'],
   setup(props, {emit}) {
@@ -73,7 +74,7 @@ export default defineComponent({
       arePagesReversed,
       filteredPages,
       authorIndexMap,
-    } = usePageFilter(props.items, props.reverseOrder);
+    } = usePageFilter(props.items, props.persist, props.reverseOrder);
 
     emit('filter', filteredPages);
 
@@ -99,7 +100,7 @@ export default defineComponent({
 
 
 
-function usePageFilter(pages: FilterData[], areReversed = false) {
+function usePageFilter(pages: FilterData[], isPersisting: boolean, areReversed = false) {
   const store            = useStore<VuexStore>();
   const filterStore      = store.state.filter;
   const clonedPages      = pages.slice();
@@ -121,7 +122,7 @@ function usePageFilter(pages: FilterData[], areReversed = false) {
     clonedPages.reverse();
   }
 
-  store.commit('filter-upd-persist', true);
+  store.commit('filter-upd-persist', isPersisting);
   store.commit('filter-upd-map', authorIndexMap);
   store.commit('filter-upd-pages', filteredPages);
 
