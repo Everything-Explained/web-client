@@ -3,7 +3,7 @@
     <fieldset :class="['ee-filter__fieldset', { '--visible': isFilterOpen }]">
       <legend>Filter</legend>
       <ee-toggle
-        :init-state="arePagesReversed"
+        :init-state="areItemsReversed"
         left-text="Oldest"
         right-text="Latest"
         @toggle="toggleAge"
@@ -71,7 +71,7 @@ export default defineComponent({
       reversePages,
       authors,
       isFilterOpen,
-      arePagesReversed,
+      areItemsReversed,
       filteredPages,
       authorIndexMap,
     } = usePageFilter(props.items, props.persist, props.reverseOrder);
@@ -91,7 +91,7 @@ export default defineComponent({
       isChecked,
       authors,
       isFilterOpen,
-      arePagesReversed,
+      areItemsReversed,
       authorIndexMap,
       toggleFilter,
     };
@@ -106,7 +106,11 @@ function usePageFilter(pages: FilterData[], isPersisting: boolean, areReversed =
   const clonedPages      = pages.slice();
   const authors          = getAuthors(clonedPages);
   const isFilterOpen     = ref(filterStore.isPersisting && filterStore.isOpen || false);
-  const arePagesReversed = computed(() => areReversed ? !filterStore.reversed : filterStore.reversed);
+  const areItemsReversed =
+    filterStore.isPersisting
+      ? areReversed ? !filterStore.reversed : filterStore.reversed
+      : areReversed
+  ;
   const authorIndexMap   =
     filterStore.isPersisting
       ? filterStore.authorIndexMap
@@ -156,7 +160,7 @@ function usePageFilter(pages: FilterData[], isPersisting: boolean, areReversed =
     isFilterOpen,
     filteredPages,
     authorIndexMap,
-    arePagesReversed
+    areItemsReversed,
   };
 }
 
