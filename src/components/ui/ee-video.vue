@@ -32,7 +32,7 @@
       <div class="ee-video_title">
         <slot />
       </div>
-      <div :class="['ee-video__author', { '--is-ethan': isEthan(author) }]">
+      <div v-if="author" :class="['ee-video__author', { '--is-ethan': isEthan(author) }]">
         <ee-icon type="user" /> {{ author }}
       </div>
     </div>
