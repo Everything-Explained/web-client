@@ -70,6 +70,7 @@
             {{ v.title }}
           </ee-video>
         </div>
+        <ee-footer />
       </div>
     </transition>
   </div>
