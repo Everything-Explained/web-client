@@ -36,13 +36,18 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
-import { StaticPage } from "@/composeables/staticPager";
 import { useStore }   from "vuex";
 import eeCheckboxVue  from "../ui/ee-checkbox.vue";
 import eeIconVue      from "../ui/ee-icon.vue";
 import eeToggleVue    from "../ui/ee-toggle.vue";
 import { VuexStore } from "@/vuex/vuex-store";
 
+interface FilterData {
+  // Allow ignorable props
+  [key: string]: any;
+  author: string;
+  date: string;
+}
 
 export default defineComponent({
   components: {
@@ -52,7 +57,7 @@ export default defineComponent({
   },
   props: {
     reverseOrder: { type: Boolean as PropType<boolean>,    default: false,             },
-    pages:        { type: Array as PropType<StaticPage[]>, default: [] as StaticPage[] },
+    items:        { type: Array as PropType<FilterData[]>, default: [] as FilterData[] },
   },
   emits: ['filter'],
   setup(props, {emit}) {
@@ -68,7 +73,7 @@ export default defineComponent({
       arePagesReversed,
       filteredPages,
       authorIndexMap,
-    } = usePageFilter(props.pages, props.reverseOrder);
+    } = usePageFilter(props.items, props.reverseOrder);
 
     emit('filter', filteredPages);
 
@@ -95,7 +100,7 @@ export default defineComponent({
 
 
 
-function usePageFilter(pages: StaticPage[], areReversed = false) {
+function usePageFilter(pages: FilterData[], areReversed = false) {
   const store            = useStore<VuexStore>();
   const filterStore      = store.state.filter;
   const clonedPages      = pages.slice();
@@ -157,7 +162,7 @@ function usePageFilter(pages: StaticPage[], areReversed = false) {
 
 
 
-function getAuthors(pages: StaticPage[]) {
+function getAuthors(pages: FilterData[]) {
   return pages.reduce((authors, cpg) => {
     if (authors.includes(cpg.author)) return authors;
     authors.push(cpg.author);         return authors;

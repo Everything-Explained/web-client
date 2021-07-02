@@ -10,7 +10,7 @@
       <div v-else-if="!activePage" class="lit-cards__container">
         <ee-filter
           v-if="showFilter"
-          :pages="pages"
+          :items="pages"
           :reverse-order="reverseOrder"
           @filter="onFilter"
         />
