@@ -52,9 +52,14 @@
         <ee-footer />
       </div>
       <div v-else-if="activePage">
+        <ee-filter
+          :items="activePage.data"
+          :persist="false"
+          @filter="onFilter"
+        />
         <div class="lib-vid__video-list">
           <ee-video
-            v-for="(v, j) of (activePage.data || [])"
+            v-for="(v, j) of activeVideos"
             :key="j"
             class="lib-videos__video"
             :video-id="v.id"
@@ -72,7 +77,7 @@
 
 
 <script lang="ts">
-import { computed, defineComponent } from "vue"
+import { computed, defineComponent, ref, watch } from "vue"
 ;
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
 import eeVideo       from "@/components/ui/ee-video.vue";
@@ -82,6 +87,7 @@ import { Video } from "@/typings/global-types";
 import { useDate } from "@/composeables/date";
 import { isEthan } from "@/composeables/globals";
 import { useDynamicPager } from "@/composeables/dynamicPager";
+import eeFilterVue from "@/components/layout/ee-filter.vue";
 
 type VideoCategory = { name: string; description: string; videos: Video[] };
 
@@ -90,6 +96,7 @@ export default defineComponent({
     'ee-titlebar' : eeTitlebarVue,
     'ee-video'    : eeVideo,
     'ee-footer'   : eeFooterVue,
+    'ee-filter'   : eeFilterVue,
   },
   setup() {
     const { videos: categories, getVideoTask } = useVideos<VideoCategory>('/data/library/videos.json');
@@ -98,6 +105,14 @@ export default defineComponent({
     const videoTask = getVideoTask(() => {
       setDynPages(categories.value.map(cat => ({ name: cat.name, data: cat.videos })));
     });
+
+    // Prevent loading of inherently cached videos
+    watch(() => activePage.value, (page) => {
+      if (!page?.data) { activeVideos.value = []; }
+    });
+
+    const activeVideos = ref<Video[]>([]);
+    function onFilter(videos: Video[]) { activeVideos.value = videos; }
 
     videoTask.loadVideos();
 
@@ -108,10 +123,12 @@ export default defineComponent({
       useDate,
       goTo,
       isEthan,
+      onFilter,
       title        : computed(() => activePage.value?.title || 'Video Categories'),
       categories,
       videoTask,
       activePage,
+      activeVideos,
     };
   }
 });
