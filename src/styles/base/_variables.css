@@ -23,7 +23,7 @@
 
 @custom-media --large-screen  (max-width: 768px);
 @custom-media --medium-screen (max-width: 540px);
-@custom-media --small-screen  (max-width: 380px);
+@custom-media --small-screen  (max-width: 420px);
 @custom-media --tiny-screen   (max-width: 320px);
 
 :root {
