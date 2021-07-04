@@ -1,8 +1,6 @@
 <template>
   <div class="ee-video">
     <div class="ee-video_img-container">
-      <!-- TODO: Compartmentalize this element and add a
-      pseudo element with a 56.25% padding-top -->
       <div class="ee-video__thumbnail-container">
         <ee-img :src="thumbnail" class="ee-video_img" />
       </div>
