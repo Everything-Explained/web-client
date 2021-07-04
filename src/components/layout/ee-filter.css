@@ -26,7 +26,7 @@
 .ee-filter__fieldset legend {
   padding          : 0 5px 0 7px;
   font-size        : 1.3rem;
-  font-weight      : bold;
+  font-weight      : 400;
   word-spacing     : 2px;
   letter-spacing   : 1px;
   color            : var(--toggle-legend-c);
@@ -42,7 +42,7 @@
   font-size: 1.3rem;
   font-variant: small-caps;
   font-weight: 400;
-  color: hsl(47, 100%, 60%);
+  color: var(--toggle-legend-c);
   background-color: var(--body-bg-c);
   cursor: pointer;
 }
