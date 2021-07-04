@@ -165,5 +165,4 @@
   min-width     : var(--lib-vid-width);
   margin-right  : 10px;
   margin-bottom : 1.3rem; }
-  .lib-videos__video .ee-video_img   { height: calc(var(--lib-vid-width) / (16 / 9)); }
   .lib-videos__video .ee-video_title { font-size: 1.2rem; }

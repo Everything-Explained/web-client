@@ -32,9 +32,6 @@
   user-select: none;
   transition: color .3s;
 }
-.red33m-video .ee-video_img {
-  height: calc(var(--r3d-vid-width) / (16 / 9));
-}
 .red33m-video .ee-video_title {
   font-size: 1.2rem;
 }
