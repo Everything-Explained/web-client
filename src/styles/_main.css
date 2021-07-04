@@ -17,6 +17,7 @@
 @import '../components/layout/ee-footer.css';
 /*** Filter ***/
 @import '../components/layout/ee-filter.css';
+@import '../components/layout/ee-filter.mobile.css';
 /*** QnA Form ***/
 @import '../components/layout/ee-qnaform.css';
 @import '../components/layout/ee-qnaform.mobile.css';
