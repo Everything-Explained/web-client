@@ -29,7 +29,7 @@
   }
 }
 
-/*** 380px ***/
+/*** 420px ***/
 @media only screen and (--small-screen) {
   .md h1, .md h2, .md h3 { font-size: 1.4rem; }
 }

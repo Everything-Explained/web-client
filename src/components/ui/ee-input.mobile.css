@@ -4,7 +4,7 @@
 /*** 540px ***/
 @media only screen and (--medium-screen) {
 }
-/*** 380px ***/
+/*** 420px ***/
 @media only screen and (--small-screen) {
   .ee-input__area { font-size: 1.33rem; }
 }

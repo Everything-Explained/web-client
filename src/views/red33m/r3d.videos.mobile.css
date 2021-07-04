@@ -1,16 +1,17 @@
+
 /*** 768px ***/
 @media only screen and (--large-screen) {
-  :root { --r3d-vid-width: 210px; }
+  :root { --r3d-vid-width: 45% }
   .red33m-video .ee-video_title { font-size: 1.1rem; }
 }
 /*** 540px ***/
 @media only screen and (--medium-screen) {
-  :root { --r3d-vid-width: 95%; }
+  :root { --r3d-vid-width: 80%; }
   .red33m-video { margin-right: 10px; }
 }
-/*** 380px ***/
+/*** 420px ***/
 @media only screen and (--small-screen) {
-
+  :root { --r3d-vid-width: 97% }
 }
 /*** 320px ***/
 @media only screen and (--tiny-screen) {

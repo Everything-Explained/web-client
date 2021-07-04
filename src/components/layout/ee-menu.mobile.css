@@ -7,7 +7,7 @@
   .app-menu_category { font-size: 1.25rem; margin-top: 0.7rem; }
   .app-menu_item a   { font-size: 1.13rem; }
 }
-/*** 380px ***/
+/*** 420px ***/
 @media only screen and (--small-screen) {
   .app-menu_category { font-size: 1.15rem; margin-top: 0.5rem; }
   .app-menu_item a   { font-size: 1.05rem; }

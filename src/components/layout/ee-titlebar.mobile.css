@@ -11,7 +11,7 @@
   .title-bar__text { margin-left: 3rem; }
   .title-bar__menu-icon { font-size: 1.8rem; }
 }
-/*** 380px ***/
+/*** 420px ***/
 @media only screen and (--small-screen) {
   .title-bar { font-size: 1.4rem; }
   .title-bar__menu-icon { font-size: 1.7rem; }

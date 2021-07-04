@@ -1,6 +1,6 @@
 /*** 768px ***/
 @media only screen and (--large-screen) {
-  :root { --lib-vid-width: 45%; }
+  :root { --lib-vid-width: 47%; }
   .lib-videos__video .ee-video_title {
     height: 3.1rem;
     font-size: 1.07rem;
@@ -27,7 +27,7 @@
   .lib-vid-category__desc a:visited,
   .lib-vid-category__desc a:active { font-size: 1rem; }
 }
-/*** 380px ***/
+/*** 420px ***/
 @media only screen and (--small-screen) {
   .lib-vid__category h1 { font-size: 1.2rem; }
   .lib-vid__category h2 { font-size: 1.1rem; }
