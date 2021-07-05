@@ -6,7 +6,6 @@ html {
   font-weight             : 300;
   text-rendering          : optimizeLegibility;
   background              : var(--body-bg-c);
-  transform               : translateZ(0);
   -webkit-font-smoothing  : subpixel-antialiased;
   -moz-osx-font-smoothing : grayscale;
   /* DO NOT REMOVE - menu and scroll depend on this */
@@ -19,6 +18,7 @@ body {
   overflow: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
+  transform: translateZ(0);
 }
 a {
   word-wrap: break-word;
