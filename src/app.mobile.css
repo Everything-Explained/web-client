@@ -24,14 +24,12 @@
 
 
 @media only screen and (--small-screen) {
-  .app-header       { height: 3.9rem; }
+  .app-header       { height: 18vw; }
 
-  .app-header__title { font-size: 2rem; }
+  .app-header__title { font-size: 10vw; }
 }
 
 
 @media only screen and (--tiny-screen) {
-  .app-header       { height: 3.7rem; }
-
-  .app-header__title { font-size: 1.8rem; }
+  /* .app-header       { height: 3.7rem; } */
 }
