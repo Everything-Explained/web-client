@@ -18,7 +18,6 @@ body {
   overflow: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-  transform: translateZ(0);
 }
 a {
   word-wrap: break-word;
