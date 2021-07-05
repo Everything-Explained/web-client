@@ -36,7 +36,7 @@
   --panel-c              : hsl(197, 11%, 25%);
   --panel-hov-c          : hsl(197, 11%, 30%);
   --sub-panel-c          : hsl(197, 11%, 12%);
-  --sub-panel-hov-c      : hsl(30, 15%, 13%);
+  --sub-panel-hov-c      : hsl(30, 15%, 11%);
 
   --body-f-sz            : 1em;
   --body-bg-c            : hsl(197, 11%, 8%);
@@ -55,7 +55,7 @@
   --md-mobile-sm-f-sz   : 0.97rem;
   --md-head-c           : hsl(197, 20%, 80%);
   --md-c                : var(--body-c);
-  --md-p-hov-c          : hsl(30, 15%, 83%);
+  --md-p-hov-c          : hsl(30, 15%, 85%);
   --md-p-bg-c           : var(--sub-panel-c);
   --md-p-bg-hov-c       : var(--sub-panel-hov-c);
   --md-p-bxs-c          : hsla(0, 0%, 0%, 0.4);

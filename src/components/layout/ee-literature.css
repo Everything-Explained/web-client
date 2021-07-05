@@ -70,7 +70,7 @@
                        color var(--lit-transition-speed); }
   .lit__card:hover        article {
     background-color : hsl(30, 15%, 11%);
-    color            : hsl(30, 15%, 83%); }
+    color            : hsl(30, 15%, 85%); }
   .lit__card.--expanded   article {
     line-height : 2rem; }
   .lit__card              footer  {
