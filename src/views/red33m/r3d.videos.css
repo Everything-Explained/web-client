@@ -29,7 +29,7 @@
   max-width: var(--r3d-vid-width);
   min-width: var(--r3d-vid-width);
   margin-right: 7px;
-  margin-bottom: 2px;
+  margin-bottom: 25px;
   user-select: none;
   transition: color .3s;
 }
