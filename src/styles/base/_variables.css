@@ -40,7 +40,7 @@
 
   --body-f-sz            : 1em;
   --body-bg-c            : hsl(197, 11%, 8%);
-  --body-c               : hsl(197, 11%, 74%);
+  --body-c               : hsl(197, 11%, 75%);
   --body-dark-c          : hsl(197, 11%, 65%);
   --selection-bg-c       : hsla(197, 9%, 30%, 0.993);
   --scrollbar-c          : var(--panel-c);
