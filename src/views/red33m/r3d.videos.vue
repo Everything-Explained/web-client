@@ -4,12 +4,11 @@
     <transition name="fade" mode="out-in">
       <div v-if="isVideoTaskRunning" class="preloader page" />
       <div v-else>
-        <ee-toggle
-          class="red33m-toggle"
-          left-text="Oldest"
-          right-text="Latest"
-          :prevent="isToggling"
-          @toggle="toggle"
+        <ee-filter
+          :age-only="true"
+          :persist="false"
+          :items="rawVideos"
+          @filter="onFilter"
         />
         <div ref="observedEl" class="red33m-video-list">
           <ee-video
@@ -39,43 +38,45 @@ import { defineComponent, onUnmounted, Ref, ref } from "vue";
 import eeTitlebarVue from "@/components/layout/ee-titlebar.vue";
 import eeFooterVue   from "@/components/layout/ee-footer.vue";
 import eeVideo       from "@/components/ui/ee-video.vue";
-import eeToggleVue   from "@/components/ui/ee-toggle.vue";
 import useVideos from "@/composeables/useVideos";
 import { Video } from "@/typings/global-types";
 import { isMobile } from "@/globals";
+import eeFilterVue from "@/components/layout/ee-filter.vue";
 
 
 
 export default defineComponent({
   components: {
     'ee-titlebar' : eeTitlebarVue,
-    'ee-toggle'   : eeToggleVue,
     'ee-video'    : eeVideo,
     'ee-footer'   : eeFooterVue,
+    'ee-filter'   : eeFilterVue,
   },
   setup() {
     const maxVideosToStart = isMobile() ? 10 : 30;
-    const { videos, getVideoTask } = useVideos<Video>('/data/red33m/videos.json');
+    const { videos: rawVideos, getVideoTask } = useVideos<Video>('/data/red33m/videos.json');
+
+    const videos = ref<Video[]>([]);
 
     const { displayVideoPage,
             observedEl,
             paginatedVideos } = useVideoPagination(videos)
     ;
 
-    const { toggle, isToggling } = useToggle(() => {
-      videos.value.reverse();
+    function onFilter(newVideos: Video[]) {
+      videos.value = newVideos;
       displayVideoPage(1, maxVideosToStart);
-    });
+    }
 
     const videoTask = getVideoTask(() => { displayVideoPage(1, maxVideosToStart); });
     videoTask.loadVideos();
 
     return {
+      rawVideos,
       videos: paginatedVideos,
       observedEl,
       isVideoTaskRunning: videoTask.isRunning,
-      toggle,
-      isToggling,
+      onFilter,
     };
   }
 });
