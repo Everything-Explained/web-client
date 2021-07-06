@@ -18,7 +18,11 @@
         />
       </div>
     </fieldset>
-    <div class="ee-filter__expand-filter" @mousedown="toggleFilter">
+    <div
+      v-if="!ageOnly"
+      class="ee-filter__expand-filter"
+      @mousedown="toggleFilter"
+    >
       <span v-if="isFilterOpen">
         <ee-icon type="chev-up" />
         less
@@ -35,7 +39,7 @@
 
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import { useStore }   from "vuex";
 import eeCheckboxVue  from "../ui/ee-checkbox.vue";
 import eeIconVue      from "../ui/ee-icon.vue";
@@ -56,12 +60,13 @@ export default defineComponent({
     'ee-icon': eeIconVue,
   },
   props: {
+    ageOnly:      { type: Boolean as PropType<boolean>,    default: false,             },
     reverseOrder: { type: Boolean as PropType<boolean>,    default: false,             },
     items:        { type: Array as PropType<FilterData[]>, default: [] as FilterData[] },
     persist:      { type: Boolean as PropType<boolean>,    default: true               },
   },
   emits: ['filter'],
-  setup(props, {emit}) {
+  setup({items, persist, reverseOrder}, {emit}) {
     const isChecked        = ref([]);
     const store            = useStore<VuexStore>();
 
@@ -74,7 +79,7 @@ export default defineComponent({
       areItemsReversed,
       filteredPages,
       authorIndexMap,
-    } = usePageFilter(props.items, props.persist, props.reverseOrder);
+    } = usePageFilter(items, persist, reverseOrder);
 
     emit('filter', filteredPages);
 
