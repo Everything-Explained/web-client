@@ -109,20 +109,4 @@ function useVideoPagination(videos: Ref<Video[]>) {
   return { displayVideoPage, observedEl, paginatedVideos };
 }
 
-
-function useToggle(cb: () => void) {
-  const isToggling = ref(false);
-
-  function toggle() {
-    if (isToggling.value) return;
-      cb();
-      // Wait for toggle input element to be "checked"
-      setTimeout(() => isToggling.value = true, 1);
-      // Debounce toggling
-      setTimeout(() => isToggling.value = false, 300);
-  }
-
-  return { toggle, isToggling };
-}
-
 </script>
