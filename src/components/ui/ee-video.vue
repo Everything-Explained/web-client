@@ -1,7 +1,9 @@
 <template>
   <div class="ee-video">
     <div class="ee-video_img-container">
-      <ee-img :src="thumbnail" class="ee-video_img" />
+      <div class="ee-video__thumbnail-container">
+        <ee-img :src="thumbnail" class="ee-video_img" />
+      </div>
       <div :class="['ee-video_text-widget', { '--open': descState }]">
         {{ useDate(date).toRelativeTime() }}
       </div>
@@ -28,8 +30,13 @@
         </div>
       </div>
     </div>
-    <div class="ee-video_title">
-      <slot />
+    <div class="ee-video__info-bar">
+      <div class="ee-video_title">
+        <slot />
+      </div>
+      <div v-if="author" :class="['ee-video__author', { '--is-ethan': isEthan(author) }]">
+        <ee-icon type="user" /> {{ author }}
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +46,7 @@
 import eeIconVue from '@/components/ui/ee-icon.vue';
 import eeImgVue from "./ee-img.vue";
 import { useDate } from "@/composeables/date";
+import { isEthan } from "@/composeables/globals";
 
 export default defineComponent({
   components: {
@@ -48,7 +56,8 @@ export default defineComponent({
   props: {
     desc    : { type: String, default: '' },
     videoId : { type: String, default: '' },
-    date    : { type: String, default: '' }
+    date    : { type: String, default: '' },
+    author  : { type: String, default: '' },
   },
   setup(props) {
     const { videoId, desc } = toRefs(props);
@@ -72,7 +81,7 @@ export default defineComponent({
       thumbnail: thumbnailRef,
       description: desc,
       descState: descStateRef,
-      openVideo, setDescState, useDate,
+      openVideo, setDescState, useDate, isEthan
     };
   }
 });

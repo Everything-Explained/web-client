@@ -4,6 +4,9 @@
   .app-header        { height: 6rem; }
 
   .app-header__title { font-size: 3.5rem; }
+
+  .app__toast { font-size: 1.3rem; }
+  .app__toast-icon { font-size: 1.75rem; }
 }
 
 
@@ -11,18 +14,22 @@
   .app-header       { height: 4.6rem; }
 
   .app-header__title { font-size: 2.5rem; }
+
+  .app__toast-buffer.--show { height: 3.2rem; }
+  .app__toast {
+    padding-left: 5px;
+    padding-right: 40px;
+  }
 }
 
 
 @media only screen and (--small-screen) {
-  .app-header       { height: 3.9rem; }
+  .app-header       { height: 18vw; }
 
-  .app-header__title { font-size: 2rem; }
+  .app-header__title { font-size: 10vw; }
 }
 
 
 @media only screen and (--tiny-screen) {
-  .app-header       { height: 3.7rem; }
-
-  .app-header__title { font-size: 1.8rem; }
+  /* .app-header       { height: 3.7rem; } */
 }

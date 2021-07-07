@@ -65,6 +65,7 @@
 
 
 <script lang='ts'>
+import useUniqueIDGen from "@/composeables/useUniqueID";
 import { computed, defineComponent, onMounted, PropType, ref, watch } from "vue";
 
 
@@ -89,18 +90,16 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props) {
     const { maxchars, minchars, type, regex, errmsg } = props;
-    const id            = genID();
-    const charLength    = ref(0);
-    const areaText      = ref<HTMLTextAreaElement>();
-    const isTextField   = type == 'text' || type == 'email';
-    const emailRegex    = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    const workingRegex  = type == 'email' ? emailRegex : regex;
-    const hasValidInput = computed(() => workingRegex.test(props.modelValue));
-    const errorMessage  = computed(() => type == 'email' ? "Enter a <em>valid</em> E-mail" : errmsg);
-    const charsRequired = computed(() => minchars - charLength.value);
-    const showCharLimit = computed(() =>
-      charLength.value > 0 && charsRequired.value > 0
-    );
+    const id                = useUniqueIDGen().genID();
+    const charLength        = ref(0);
+    const areaText          = ref<HTMLTextAreaElement>();
+    const isTextField       = type == 'text' || type == 'email';
+    const emailRegex        = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    const workingRegex      = type == 'email' ? emailRegex : regex;
+    const hasValidInput     = computed(() => workingRegex.test(props.modelValue));
+    const errorMessage      = computed(() => type == 'email' ? "Enter a <em>valid</em> E-mail" : errmsg);
+    const charsRequired     = computed(() => minchars - charLength.value);
+    const showCharLimit     = computed(() => charLength.value > 0 && charsRequired.value > 0);
     const showCharTally     = computed(() => charLength.value > 0);
     const charLimitReached  = computed(() => charsRequired.value <= 0);
     const charLengthReached = computed(() => charLength.value == maxchars);
@@ -110,12 +109,6 @@ export default defineComponent({
       throw Error('ee-input:: text input has a 255 character max-limit.')
     ;
     if (!_inputTypes.includes(props.type)) throw Error('ee-input:: invalid input type');
-
-    function genID() {
-      const base36RndNum = Math.floor(Math.random() * 10000).toString(36);
-      const base36Time = Date.now().toString(36);
-      return `i${base36Time}${base36RndNum}`;
-    }
 
     function autoHeight(el: HTMLTextAreaElement) {
       el.style.height = '44px';

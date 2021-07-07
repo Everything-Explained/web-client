@@ -21,9 +21,9 @@
  *
  */
 
-@custom-media --large-screen  (max-width: 711px);
-@custom-media --medium-screen (max-width: 511px);
-@custom-media --small-screen  (max-width: 380px);
+@custom-media --large-screen  (max-width: 768px);
+@custom-media --medium-screen (max-width: 540px);
+@custom-media --small-screen  (max-width: 420px);
 @custom-media --tiny-screen   (max-width: 320px);
 
 :root {
@@ -34,15 +34,15 @@
   --accent-4-c   : hsl(47, 50%, 50%);  /* Gold */
 
   --panel-c              : hsl(197, 11%, 25%);
-  --panel-hov-c          : hsl(197, 11%, 12%);
-  --sub-panel-c          : hsl(197, 11%, 10%);
-  --sub-panel-hov-c      : hsl(30, 11%, 15%);
+  --panel-hov-c          : hsl(197, 11%, 30%);
+  --sub-panel-c          : hsl(197, 11%, 12%);
+  --sub-panel-hov-c      : hsl(30, 15%, 11%);
 
   --body-f-sz            : 1em;
-  --body-bg-c            : hsl(197, 11%, 6.5%);
-  --body-c               : hsl(197, 11%, 73%);
+  --body-bg-c            : hsl(197, 11%, 8%);
+  --body-c               : hsl(197, 11%, 75%);
   --body-dark-c          : hsl(197, 11%, 65%);
-  --selection-bg-c       : hsla(197, 9%, 30%, 0.993); /* hsla(0, 40%, 41%, 0.993); */
+  --selection-bg-c       : hsla(197, 9%, 30%, 0.993);
   --scrollbar-c          : var(--panel-c);
   --scrollbar-hov-c      : hsl(197, 9%, 43%);
   --scrollbar-track-c    : hsl(0, 0%, 0%);
@@ -55,14 +55,14 @@
   --md-mobile-sm-f-sz   : 0.97rem;
   --md-head-c           : hsl(197, 20%, 80%);
   --md-c                : var(--body-c);
-  --md-p-hov-c          : hsl(30, 11%, 80%);
+  --md-p-hov-c          : hsl(30, 15%, 85%);
   --md-p-bg-c           : var(--sub-panel-c);
   --md-p-bg-hov-c       : var(--sub-panel-hov-c);
   --md-p-bxs-c          : hsla(0, 0%, 0%, 0.4);
-  --md-b-c              : hsl(197, 11%, 82%);
-  --md-p-hov-b-c        : hsl(30, 11%, 89%);
-  --md-i-c              : hsl(0, 74%, 77%);
-  --md-p-hov-i-c        : hsl(47, 80%, 70%);
+  --md-b-c              : hsl(197, 23%, 87%);
+  --md-p-hov-b-c        : hsl(30, 30%, 92%);
+  --md-i-c              : hsl(0, 100%, 74%);
+  --md-p-hov-i-c        : hsl(47, 77%, 67%);
   --md-b-i-c            : hsl(197, 45%, 69%);
   --md-link-c           : var(--md-b-c);
   --md-link-hov-c       : var(--md-p-hov-i-c);
@@ -77,7 +77,7 @@
   --md-bullet-c         : var(--md-head-c);
   --md-bullet-hov-c     : hsl(47, 100%, 50%);
   --md-code-c           : var(--md-b-c);
-  --md-code-bg-c        : var(--panel-c);
+  --md-code-bg-c        : hsl(197, 11%, 19%);
   --md-code-hov-c       : hsl(279, 20%, 80%);
   --md-code-bg-hov-c    : hsl(278, 25%, 47%);
   --md-img-bxs-c        : hsla(0, 0%, 0%, 0.4);
@@ -87,7 +87,7 @@
   --app-ribbon-c            : hsl(0, 100%, 64%);
   --app-head-f-sz           : 5rem;
   --app-head-c              : var(--app-ribbon-c);
-  --app-titlebar-c          : hsl(197, 11%, 83%);
+  --app-titlebar-c          : hsl(197, 20%, 87%);
   --app-titlebar-icon-c     : hsl(197, 11%, 60%);
   --app-titlebar-icon-hov-c : hsl(0, 70%, 64%);
 
@@ -96,7 +96,7 @@
   --footer-bxs-c: hsla(0, 0%, 0%, 0.4);
   --footer-copyright-c: hsl(197, 11%, 35%);
   --footer-copyright-link-c: hsl(197, 11%, 50%);
-  --footer-copyright-link-hov-c: hsl(0, 50%, 60%);
+  --footer-copyright-link-hov-c: hsl(47, 50%, 60%);
 
 
   /*** Preloader ***/
@@ -194,9 +194,10 @@
   --video-widget-close-hov-c  : var(--menu-exit-icon-hov-c);
 
   /*** Toggle ***/
-  --toggle-fieldset-bdr-c: hsl(0, 100%, 67%);
-  --toggle-fieldset-bxs-c: var(--app-ribbon-c);
-  --toggle-legend-c: var(--body-bg-c);
+  --toggle-fieldset-bdr-c: hsl(0, 100%, 70%);
+  --toggle-fieldset-bxs-c: hsl(0, 100%, 30%);
+  --toggle-legend-bg-c: var(--body-bg-c);
+  --toggle-legend-c: hsl(197, 15%, 87%);
   --toggle-inactive-c: var(--body-c);
   --toggle-inactive-hov-c: hsl(47, 74%, 70%);
   --toggle-inactive-bdr-c: hsl(197, 11%, 28%);

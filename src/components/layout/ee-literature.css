@@ -1,121 +1,115 @@
 :root {
-  --lit-transition-speed: .2s;
+  --lit-transition-speed: .17s ease;
 }
 
 .lit__cards {
-  display: flex;
-  margin: 0 auto;
-  margin-top: 15px;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.lit-expanded .lit__cards {
-  margin-top: 2rem;
-  flex-direction: column;
-  max-width: 1024px;
-}
+  display         : flex;
+  margin          : 0 auto;
+  margin-top      : 15px;
+  flex-direction  : row;
+  flex-wrap       : wrap;
+  justify-content : center; }
+  .lit__cards.--expanded {
+    margin-top : 2rem;
+    max-width  : 1024px; }
+
 
 .lit__card {
-  margin: 20px 15px;
-  box-shadow: 0 0 10px 1px black;
-  width: 340px;
-  font-size: 1.2rem;
-  align-self: center;
-  overflow: hidden;
-}
-.lit-expanded .lit__card {
-  margin-bottom: 30px;
-  width: 95%;
-}
-
-.lit__card header {
-  padding: 7px 7px 5px 10px;
-  text-align: center;
-  font-size: 1.4rem;
-  font-weight: 400;
-  text-shadow: 1px 1px 0 black,
-               2px 2px 0 black;
-  background-color: var(--sub-panel-c);
-  border-bottom: 1px solid hsl(197, 11%, 20%);
-  border-radius: 7px 7px 0 0;
-  box-shadow: 0 5px 15px 1px black;
-  cursor: pointer;
-  z-index: 1;
-  transition: color var(--lit-transition-speed),
-              background var(--lit-transition-speed),
-              border var(--lit-transition-speed);
-}
-.lit-expanded .lit__card header {
-  text-align: left;
-  font-size: 1.5rem;
-}
-
-.lit__card article {
-  padding: 10px 7px 10px 10px;
-  height: 250px;
-  overflow: hidden;
-  overflow-y: auto;
-  color: var(--body-dark-c);
-  background-color: hsl(197, 11%, 8%);
-  transition: background var(--lit-transition-speed),
-              color var(--lit-transition-speed);
-}
-.lit-expanded .lit__card article {
-  height: auto;
-  line-height: 2rem;
-}
-
-.lit__card footer {
-  padding: 5px 0;
-  text-align: center;
-  font-weight: 400;
-  color: hsl(197, 11%, 40%);
-  background-color: var(--sub-panel-c);
-  border-top: 1px solid hsl(197, 11%, 20%);
-  border-radius: 0 0 7px 7px;
-  box-shadow: 0 -5px 15px -2px black;
-  transition: background var(--lit-transition-speed),
-              border var(--lit-transition-speed);
-}
-.lit-expanded .lit__card footer {
-  padding: 3px 0.7rem;
-  padding-left: 5px;
-  text-align: right;
-}
-
-.lit__card .icon {
-  top: 0.17rem;
-  margin-right: 5px;
-  color: hsl(197, 11%, 40%);
-  transition: color var(--lit-transition-speed);
-}
-
-
-.lit-expanded .lit-card__author { float: left; }
+  margin        : 20px 15px;
+  width         : 31%;
+  align-self    : flex-start;
+  overflow      : hidden;
+  box-shadow    : 0 0 5px 2px hsl(197, 11%, 17%);
+  border        : 3px solid black;
+  border-radius : 10px 10px 0 0;
+  font-size     : 1.2rem;
+  transition    : box-shadow var(--lit-transition-speed); }
+  .lit__card:hover                {
+    box-shadow : 0 0 5px 2px hsl(30, 15%, 19%); }
+  .lit__card.--expanded           {
+    margin-bottom : 30px;
+    width         : 95%; }
+  .lit__card              header  {
+    z-index          : 2;
+    padding          : 7px 7px 5px 10px;
+    box-shadow       : 0 7px 15px -3px black;
+    border-bottom    : 1px solid hsl(197, 11%, 25%);
+    border-radius    : 7px 7px 0 0;
+    background-color : hsl(197, 13%, 15%);
+    text-align       : center;
+    text-shadow      :
+                       1px 1px 0 black,
+                       2px 2px 0 black
+                      ;
+    font-size        : 1.4rem;
+    font-weight      : 400;
+    color            :hsl(47, 75%, 63%);
+    cursor           : pointer;
+    transition       :
+                       color var(--lit-transition-speed),
+                       background var(--lit-transition-speed),
+                       border var(--lit-transition-speed)
+                     ; }
+  .lit__card:hover        header  {
+    border-color     : hsl(30, 15%, 27%);
+    background-color : hsl(30, 15%, 16%);
+    color            : hsl(47, 100%, 65%); }
+  .lit__card.--expanded   header  {
+    text-align : left;
+    font-size  : 1.5rem; }
+  .lit__card              article {
+    z-index          : 1;
+    height           : auto;
+    overflow         : show;
+    overflow-y       : auto;
+    padding          : 5px 0 5px 3px;
+    box-shadow       : 0 2px 8px 3px hsla(0, 0%, 0%, 0.9);
+    background-color : hsl(197, 11%, 11%);
+    color            : var(--body-c);
+    transition       : background var(--lit-transition-speed),
+                       color var(--lit-transition-speed); }
+  .lit__card:hover        article {
+    background-color : hsl(30, 15%, 11%);
+    color            : hsl(30, 15%, 85%); }
+  .lit__card.--expanded   article {
+    line-height : 2rem; }
+  .lit__card              footer  {
+    padding       : 5px 0.7rem 2px 0.7rem;
+    border-radius : 0 0 7px 7px;
+    text-align    : center;
+    font-weight   : 400;
+    color         : hsl(197, 11%, 35%);
+    transition    : background var(--lit-transition-speed),
+                    border var(--lit-transition-speed); }
+  .lit__card:hover        footer  {
+    background-color : hsl(30, 15%, 8%); }
+  .lit__card.--expanded   footer  {
+    padding-left : 5px;
+    text-align   : right; }
+    .lit__card.--expanded footer .lit-card__author { float: left; }
+  .lit__card       .icon {
+    top          : 2px;
+    left         : 3px;
+    margin-right : 7px;
+    color        : hsl(197, 11%, 40%);
+    transition   : color var(--lit-transition-speed); }
+  .lit__card:hover .icon,
+  .lit__card:hover .lit-card__timestamp {
+    color: hsl(30, 15%, 45%); }
 
 .lit-card__author-text {
-  color: hsl(47, 60%, 63%);
-  text-shadow: 1px 1px 0 black,
-               2px 2px 0 black; }
-  .lit-card__author-text.--is-ethan
-    { color: hsl(0, 100%, 70%); }
+  text-shadow : 1px 1px 0 black,
+                2px 2px 0 black;
+  color       : hsl(197, 20%, 87%); }
+  .lit-card__author-text.--is-ethan {
+    color : hsl(0, 100%, 72%); }
+
 
 .lit-card__timestamp {
-  transition: color var(--lit-transition-speed);
-}
-
-.lit__card:hover header,
-.lit__card:hover footer {
-  color: var(--md-p-hov-i-c);
-  background-color: var(--sub-panel-hov-c);
-  border-color: hsl(30, 11%, 27%);
-}
-.lit__card:hover article {
-  background-color: hsl(30, 10%, 9%);
-  color: var(--md-p-hov-c);
-}
-.lit__card:hover .lit-card__timestamp,
-.lit__card:hover .icon {
-  color: hsl(30, 11%, 45%);
-}
+  text-shadow : 0    0   1px black,
+                1px  1px 1px black,
+                2px  2px 2px black,
+               -1px -1px 1px black
+              ;
+  font-weight : 400;
+  transition  : color var(--lit-transition-speed); }

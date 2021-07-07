@@ -19,6 +19,8 @@ import { computed, defineComponent, onMounted, reactive, ref, toRefs, watch } fr
 import { useStore } from "vuex";
 import { VuexStore } from "../../vuex/vuex-store";
 
+type IMGProps = { src: string; asset: boolean }
+
 export default defineComponent({
   props: {
     src:   { type: String,  default: ''    },
@@ -27,56 +29,13 @@ export default defineComponent({
   setup(props) {
     if (!props.src) throw Error('LazyImg::missing SRC attribute');
 
-    const imgRef        = ref<HTMLImageElement>();
-    const containerRef  = ref<HTMLElement>();
-    const store         = useStore<VuexStore>();
-
-    const state = reactive({
-      img           : computed(() => imgRef.value!),
-      loaded        : false,
-      showPreloader : false,
-      activeSrc     : computed(() => props.src!),
-      cache         : computed(() => store.state.lazyimgCache)
-    });
-
-    function isImageCached(uri: string) {
-      const uriSlug = uri ? uri.split('//', 2)[1] : uri;
-      return state.cache.find(v => v.includes(uriSlug));
-    }
-
-    function detectAssetSize() {
-      if (props.asset) {
-        const [width, height] = state.activeSrc.split('/')[5].split('x');
-        state.img.height = parseInt(height);
-        state.img.width = parseInt(width);
-      }
-    }
-
-    const updateImageSrc = () => state.img.src = state.activeSrc;
-    function loadImage(entries: IntersectionObserverEntry[], obs: IntersectionObserver) {
-      if (entries[0].isIntersecting) {
-        if (!isImageCached(state.activeSrc)) {
-          state.showPreloader = true;
-          // Provides a smoother transition with fast loading images
-          setTimeout(updateImageSrc, 150);
-          store.commit('lazyimg-cache-add', state.activeSrc);
-        }
-        else updateImageSrc();
-
-        obs.unobserve(containerRef.value!);
-      }
-    }
-
-    const observer = new IntersectionObserver(loadImage);
-    let loadEvents = true;
-    function observeImage() {
-      if (loadEvents) {
-        state.img.addEventListener('load', () => state.loaded = true);
-        state.img.addEventListener('animationend', () => state.showPreloader = false);
-        loadEvents = false;
-      }
-      observer.observe(containerRef.value!);
-    }
+    const {
+      detectAssetSize,
+      observeImage,
+      imgRef,
+      state,
+      containerRef } = useImageObserver(props)
+    ;
 
     onMounted(() => {
       detectAssetSize();
@@ -93,4 +52,60 @@ export default defineComponent({
     return { imgRef, containerRef, ...toRefs(state) };
   }
 });
+
+
+function useImageObserver(props: IMGProps) {
+  const imgRef        = ref<HTMLImageElement>();
+  const containerRef  = ref<HTMLElement>();
+  const store         = useStore<VuexStore>();
+
+  const state = reactive({
+    img           : computed(() => imgRef.value!),
+    loaded        : false,
+    showPreloader : false,
+    activeSrc     : computed(() => props.src!),
+    cache         : computed(() => store.state.lazyimgCache)
+  });
+
+  function isImageCached(uri: string) {
+    const uriSlug = uri ? uri.split('//', 2)[1] : uri;
+    return state.cache.find(v => v.includes(uriSlug));
+  }
+
+  function detectAssetSize() {
+    if (props.asset) {
+      const [width, height] = state.activeSrc.split('/')[5].split('x');
+      state.img.height = parseInt(height);
+      state.img.width = parseInt(width);
+    }
+  }
+
+  const updateImageSrc = () => state.img.src = state.activeSrc;
+  function loadImage(entries: IntersectionObserverEntry[], obs: IntersectionObserver) {
+    if (entries[0].isIntersecting) {
+      if (!isImageCached(state.activeSrc)) {
+        state.showPreloader = true;
+        // Provides a smoother transition with fast loading images
+        setTimeout(updateImageSrc, 150);
+        store.commit('lazyimg-cache-add', state.activeSrc);
+      }
+      else updateImageSrc();
+
+      obs.unobserve(containerRef.value!);
+    }
+  }
+
+  const observer = new IntersectionObserver(loadImage);
+  let loadEvents = true;
+  function observeImage() {
+    if (loadEvents) {
+      state.img.addEventListener('load', () => state.loaded = true);
+      state.img.addEventListener('animationend', () => state.showPreloader = false);
+      loadEvents = false;
+    }
+    observer.observe(containerRef.value!);
+  }
+
+  return { state, imgRef, containerRef, observeImage, detectAssetSize };
+}
 </script>

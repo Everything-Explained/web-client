@@ -1,7 +1,7 @@
-/*** 711px ***/
+/*** 768px ***/
 @media only screen and (--large-screen) {
 }
-/*** 511px ***/
+/*** 540px ***/
 @media only screen and (--medium-screen) {
   .r3d-form__input-block { width: 95%; }
 
@@ -18,7 +18,7 @@
   .r3d-form__input-container { width: 95%; }
   .r3d-form__submission-text p { width: 95%; margin: 0 auto; }
 }
-/*** 380px ***/
+/*** 420px ***/
 @media only screen and (--small-screen) {
 }
 /*** 320px ***/

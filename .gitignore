@@ -32,3 +32,6 @@ build/config.json
 *.sln
 *.sw?
 *.map
+patreon.png
+patreon.txt
+*.vtpw.ts

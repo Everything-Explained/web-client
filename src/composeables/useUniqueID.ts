@@ -1,5 +1,8 @@
 
 let id = 0;
-export default function useUniqueID() {
-  return { getID: () => ++id };
+export default function useUniqueIDGen() {
+  return {
+    genID: () => `uid${++id}`,
+    readID: () => id,
+  };
 }

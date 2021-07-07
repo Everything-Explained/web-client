@@ -40,6 +40,7 @@ export default defineComponent({
       enter: props.easeIn ?? 400,
       leave: props.easeOut ?? 400
     };
+
     const openMenu = () => store.commit('open-menu');
 
     return { openMenu, isMenuOpen, ...duration };

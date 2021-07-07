@@ -1,5 +1,5 @@
 <template>
-  <div :class="['lit', sizeClass]">
+  <div class="lit">
     <ee-titlebar
       :ease-in="350"
       :ease-out="350"
@@ -7,11 +7,17 @@
     />
     <transition name="fade" mode="out-in">
       <div v-if="isRunning" class="preloader page" />
-      <div v-else-if="pages.length && !activePage" class="lit-cards__container">
-        <div class="lit__cards">
-          <div v-for="(article, i) of pages"
+      <div v-else-if="!activePage" class="lit-cards__container">
+        <ee-filter
+          v-if="showFilter"
+          :items="pages"
+          :reverse-order="reverseOrder"
+          @filter="onFilter"
+        />
+        <div :class="['lit__cards', sizeClass]">
+          <div v-for="(article, i) of filteredPages"
                :key="i"
-               class="lit__card"
+               :class="['lit__card', sizeClass]"
           >
             <header @click="goTo(article.uri)">
               {{ article.title }}
@@ -56,18 +62,22 @@
 
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
-import { useDate }    from "@/composeables/date"
+import { computed, defineComponent, onUnmounted, ref } from "vue";
+import { useDate } from '@/composeables/date'
 ;
 import eeIconVue      from "@/components/ui/ee-icon.vue";
 import eeTitlebarVue  from "@/components/layout/ee-titlebar.vue";
 import { StaticPage, useStaticPager } from "@/composeables/staticPager";
 import eeBulletVue from "../ui/ee-bullet.vue";
 import eeFooterVue from "./ee-footer.vue";
+import eeFilterVue from "./ee-filter.vue";
+import { VuexStore } from "@/vuex/vuex-store";
+import { useStore } from "vuex";
+import { isEthan } from "@/composeables/globals";
 
 
 
-interface Article extends StaticPage {
+export interface Article extends StaticPage {
   summary: string;
 }
 
@@ -80,6 +90,7 @@ export default defineComponent({
     'ee-icon': eeIconVue,
     'ee-bullet': eeBulletVue,
     'ee-footer': eeFooterVue,
+    'ee-filter': eeFilterVue,
   },
   props: {
     size         : { type: String,  default: 'compact'       },
@@ -88,12 +99,14 @@ export default defineComponent({
     contentClass : { type: String,  default: ''              },
     showAuthor   : { type: Boolean, default: true            },
     showDateTime : { type: Boolean, default: false           },
+    showFilter   : { type: Boolean, default: true            },
+    reverseOrder : { type: Boolean, default: false           },
   },
   setup(props) {
     const { size, uri } = props;
-    const sizeClass = {
-      'lit-expanded': size == 'expanded'
-    };
+    const sizeClass = { '--expanded': size == 'expanded' };
+    const store = useStore<VuexStore>()
+    ;
     if (!uri) throw Error('literature::Missing URL');
     if (!_sizes.includes(size)) throw Error('literature::Invalid Size')
     ;
@@ -101,12 +114,26 @@ export default defineComponent({
     const titleRef = computed(
       () => pager.pageTitle.value || props.title
     );
+    const filteredPages =
+      props.showFilter
+        ? ref<Article[]>([])
+        : pager.pages
+    ;
+
+    function onFilter(pages: Article[]) { filteredPages.value = pages; }
+
+    onUnmounted(() => {
+      // Reset filter on page navigation
+      store.commit('filter-upd-persist', false);
+    });
 
     return {
       titleRef,
       ...pager,
       useDate,
-      isEthan: (author: string) => author.toLowerCase().includes('ethan'),
+      onFilter,
+      filteredPages,
+      isEthan,
       sizeClass,
     };
   }

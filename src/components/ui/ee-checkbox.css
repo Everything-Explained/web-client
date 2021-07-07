@@ -1,0 +1,61 @@
+:root {
+  --chkbx-scale: 1.4;
+}
+.ee-chkbx {
+  position: absolute;
+  visibility: hidden;
+}
+.ee-chkbx:checked + label div svg {
+  stroke-dashoffset: 0;
+}
+
+.ee-chkbx__label {
+  display: inline-block;
+  padding: 8px 8px;
+  padding-left: 12px;
+  border-radius: 6px;
+  font-weight: 400;
+  color:hsl(197, 15%, 85%);
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ee-chkbx__label:hover {
+  color: var(--md-p-hov-i-c);
+}
+
+.ee-chkbx__label div:first-child {
+  margin-right: 0.6rem;
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background-color: var(--body-bg-c);
+  border: 1px solid hsl(197, 11%, 40%);
+  box-shadow: 0 0 1px 2px black;
+  transform: scale(var(--chkbx-scale));
+  transition: all 0.2s ease;
+}
+
+.ee-chkbx__label div:last-child {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.ee-chkbx__checkmark {
+  position: absolute;
+  top: 3px;
+  left: 2px;
+  width: 12px;
+  height: 10px;
+  fill: none;
+  stroke: hsl(47, 100%, 65%);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 18px;
+  stroke-dashoffset: 18px;
+  transition: all 0.15s ease;
+  transform: translate3d(0, 0, 0);
+}

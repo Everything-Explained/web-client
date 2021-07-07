@@ -1,6 +1,19 @@
 
 .ee-video_img     { overflow : hidden;         }
 .ee-video_img img { margin   : -9.5% 0 -11% 0; }
+.ee-video_img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.ee-video__thumbnail-container::before {
+  display: block;
+  content: '';
+  padding-top: 56.25%;
+}
 
 .ee-video_desc {
   top: 0; left: 0; right: 0; bottom: 0;
@@ -103,4 +116,26 @@
   border-bottom : 1px solid var(--video-desc-link-bdr-hov-c);
 }
 
-.ee-video_title { padding: 5px 0 0 2px; }
+.ee-video_title {
+  height: 3.35rem;
+  padding: 0 0.3rem;
+  background-color: hsl(197, 11%, 12%);
+  border-top: 2px dashed var(--body-bg-c);
+  overflow: hidden;
+}
+.ee-video__author {
+  float: right;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: hsl(197, 20%, 87%);
+  border-top: 2px dashed var(--body-bg-c);
+  background-color: hsl(197, 11%, 12%);
+}
+.ee-video__author.--is-ethan {
+  color: hsl(0, 100%, 70%);
+}
+.ee-video__author .icon {
+  top: 0.15rem;
+  color: var(--body-c);
+}

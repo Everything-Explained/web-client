@@ -164,7 +164,7 @@ export default defineComponent({
         ? isSubmitted.value
           ? 'Request Submitted'
           : _typeText[formType.value]
-        : 'Support Us'
+        : 'Support'
     );
     const questions    = ref<FormQuestion[]>([]);
     const formType     = ref(0);

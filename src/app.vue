@@ -1,6 +1,14 @@
 <template>
   <div id="App" class="app-container">
     <div class="app-ribbon" />
+    <div :class="['app__toast-buffer', { '--show': !isToastClosed }]" />
+    <div :class="['app__toast', { '--show': isToastVisible }]" @click="openVersion">
+      Click here to see the New Release Changes!
+      <ee-icon class="app__toast-icon"
+               :type="'cross'"
+               @click.stop="closeToast"
+      />
+    </div>
     <header id="AppHeader" class="app-header">
       <router-link :to="{ name: 'home' }" class="app-header__title">
         Everything Explained
@@ -22,52 +30,123 @@
 
 
 <script lang='ts'>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, onUnmounted, Ref, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import eeMenuVue from "@/components/layout/ee-menu.vue";
+import eeIconVue from "./components/ui/ee-icon.vue";
+import { useDate } from "./composeables/date";
+import { ISODateString } from "./typings/global-types";
 
 export default defineComponent({
   components: {
     'ee-menu': eeMenuVue,
+    'ee-icon': eeIconVue,
   },
   setup() {
-    // const version     = '36';
-    // const versionType = 'α';
-    const body          = ref<HTMLBodyElement|null>(null);
-    const blogScrollPos = ref(0);
-    const router        = useRouter();
-    const route         = useRoute();
+    const body = computed(() => document.body);
 
-    onMounted(() => {
-      body.value = document.getElementsByTagName('body')[0];
-    });
+    const {
+      isToastVisible,
+      isToastClosed,
+      closeToast,
+      openVersion,
+    } = useVersionToast(body, '2021-07-07T00:58:57.144Z', 'a3-insulation');
 
-    const setScrollTop = (top: number) => {
-      // Prevents user from noticing scroll reset.
-      // Resets when view is hidden in transition.
-      setTimeout(() => body.value!.scrollTop = top, 450);
-    };
+    useCustomScrollPos(body);
 
-    const setBlogScrollPos = () => {
-      if (route.path.includes('/blog/')) {
-        blogScrollPos.value = body.value!.scrollTop;
-        setScrollTop(0);
-      }
-      if (route.path == '/blog') {
-        setScrollTop(blogScrollPos.value);
-      }
-    };
-
-    // onRouteChange
-    watch(() => route.path,
-      async () => {
-        await router.isReady();
-        if (route.path.includes('/blog')) {
-          setBlogScrollPos(); return;
-        }
-        setScrollTop(0);
-      }
-    );
+    return { isToastVisible, isToastClosed, closeToast, openVersion };
   }
 });
+
+
+function useVersionToast(body: Ref<HTMLElement>, releaseDate: ISODateString, changelogURI: string) {
+  if (localStorage.getItem('release-date') != releaseDate) {
+    localStorage.setItem('release-date', releaseDate);
+    localStorage.setItem('release-toast', 'open');
+  }
+
+  const router          = useRouter();
+  const isNewRelease    = ref(useDate(releaseDate).toDaysOldFromNow() <= 13);
+  const isToastClosed   = ref(localStorage.getItem('release-toast') == 'closed');
+  const isToastHidden   = ref(false);
+  const isToastVisible  = computed(() => {
+    return isNewRelease.value && !isToastClosed.value && !isToastHidden.value;
+  });
+
+  function hideToastOnScroll() {
+    if (isToastClosed.value || !isNewRelease.value) return;
+    if (body.value.scrollTop >= 40) {
+      return isToastHidden.value = true;
+    }
+    return isToastHidden.value = false;
+  }
+
+  function openVersion() {
+    closeToast();
+    router.push(`/changelog/${changelogURI}`);
+  }
+
+  function closeToast() {
+    isToastClosed.value = true;
+    localStorage.setItem('release-toast', 'closed');
+  }
+
+  onMounted(() => {
+    if (!isToastVisible.value) return;
+    body.value.addEventListener('scroll', hideToastOnScroll);
+  });
+
+  onUnmounted(() => {
+    body.value.removeEventListener('scroll', hideToastOnScroll);
+  });
+
+  return {
+    closeToast,
+    openVersion,
+    isToastVisible,
+    isToastClosed,
+  };
+}
+
+
+function useCustomScrollPos(body: Ref<HTMLElement>) {
+  const router          = useRouter();
+  const route           = useRoute();
+  const blogScrollPos   = ref(0);
+  const libVidScrollPos = ref(0);
+  const r3dLitScrollPos = ref(0);
+  const blogURL         = '/blog';
+  const libVidURL       = '/library/videos';
+  const r3dLitURL       = '/red33m/literature';
+
+  watch(() => route.path, onRouteChange);
+
+  async function onRouteChange() {
+    await router.isReady();
+
+    if (route.path.includes(blogURL))   { setScrollPos(blogScrollPos, blogURL);     return; }
+    if (route.path.includes(libVidURL)) { setScrollPos(libVidScrollPos, libVidURL); return; }
+    if (route.path.includes(r3dLitURL)) { setScrollPos(r3dLitScrollPos, r3dLitURL); return; }
+    setScrollTop(0);
+  }
+
+  function setScrollPos(posRef: Ref<number>, url: string) {
+    // If navigating to sub-page
+    if (route.path.includes(`${url}/`)) {
+      posRef.value = body.value.scrollTop;
+      setScrollTop(0); return;
+    }
+    setScrollTop(posRef.value);
+  }
+
+  function setScrollTop(top: number) {
+    // Scrolls page after navigation transition delay
+    setTimeout(() => body.value.scrollTop = top, 430);
+  }
+}
+
+
 </script>
+
+
+

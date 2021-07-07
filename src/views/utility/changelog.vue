@@ -4,6 +4,7 @@
     size="expanded"
     :show-date-time="true"
     :show-author="false"
+    :show-filter="false"
     content-class="chglog"
     title="Changelog"
   />

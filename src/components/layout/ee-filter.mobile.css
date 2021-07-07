@@ -1,0 +1,22 @@
+/*** 768px ***/
+@media only screen and (--large-screen) {
+}
+/*** 540px ***/
+@media only screen and (--medium-screen) {
+}
+/*** 420px ***/
+@media only screen and (--small-screen) {
+  .ee-filter { width: 95%; }
+  .ee-filter__fieldset {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .ee-filter__fieldset legend {
+    margin-left: 10px;
+  }
+  .ee-filter__fieldset legend,
+  .ee-filter__expand-filter { font-size: 1.2rem; }
+}
+/*** 320px ***/
+@media only screen and (--tiny-screen) {
+}

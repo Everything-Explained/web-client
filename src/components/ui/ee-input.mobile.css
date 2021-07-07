@@ -1,10 +1,10 @@
-/*** 711px ***/
+/*** 768px ***/
 @media only screen and (--large-screen) {
 }
-/*** 511px ***/
+/*** 540px ***/
 @media only screen and (--medium-screen) {
 }
-/*** 380px ***/
+/*** 420px ***/
 @media only screen and (--small-screen) {
   .ee-input__area { font-size: 1.33rem; }
 }

@@ -5,17 +5,20 @@
 
 
 <script lang='ts'>
-import { computed, defineComponent, toRef } from "vue";
+import { computed, defineComponent, PropType, toRef } from "vue";
 
 type StringMap = { [key: string]: string };
 
 const iconMap: StringMap = {
   'clock'      : 'Y',
   'calendar'   : 'M',
+  'checkmark'  : 'S',
   'cross'      : '9',
   'gear'       : '~',
-  'right-chev' : 'V',
-  'left-chev'  : 'U',
+  'chev-up'    : 'W',
+  'chev-down'  : 'T',
+  'chev-right' : 'V',
+  'chev-left'  : 'U',
   'log-in'     : '<',
   'log-out'    : '=',
   'doc'        : 'y',
@@ -36,7 +39,7 @@ const iconMap: StringMap = {
 
 export default defineComponent({
   props: {
-    type: { type: String, default: '' }
+    type: { type: String as PropType<keyof typeof iconMap>, default: '' }
   },
   setup(props) {
     const type = toRef(props, 'type');
@@ -46,8 +49,9 @@ export default defineComponent({
     if (!iconMap[type.value])
       throw Error(`<icon>::invalid icon type: ${type.value}`)
     ;
-    const icon = computed(() => iconMap[type.value!]);
-    return { icon };
+    return {
+      icon: computed(() => iconMap[type.value])
+    };
   }
 });
 

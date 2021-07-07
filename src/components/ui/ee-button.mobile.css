@@ -1,11 +1,11 @@
-/*** 711px ***/
+/*** 768px ***/
 @media only screen and (--large-screen) {
 }
-/*** 511px ***/
+/*** 540px ***/
 @media only screen and (--medium-screen) {
   .ee-btn { font-size: 0.95rem; }
 }
-/*** 380px ***/
+/*** 420px ***/
 @media only screen and (--small-screen) {
 }
 /*** 320px ***/

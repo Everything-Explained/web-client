@@ -95,7 +95,7 @@ export default defineComponent({
       errorUpdVal.value = Date.now();
     }
 
-    const submit = (e: MouseEvent) => {
+    function submit(e: MouseEvent) {
       e.preventDefault();
       const passcode = codeRef.value.toUpperCase();
       api.debounce(200, () => {
@@ -108,7 +108,7 @@ export default defineComponent({
           .catch(setError)
         ;
       });
-    };
+    }
 
     return {
       isLoading: api.isPending,

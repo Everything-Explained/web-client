@@ -21,22 +21,18 @@
   margin-right: -15px;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
-:root { --r3d-vid-width: 300px }
+:root { --r3d-vid-width: 380px }
 .red33m-video {
-  width: var(--r3d-vid-width);
+  max-width: var(--r3d-vid-width);
+  min-width: var(--r3d-vid-width);
   margin-right: 7px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   user-select: none;
   transition: color .3s;
 }
-.red33m-video .ee-video_img {
-  height: calc(var(--r3d-vid-width) / (16 / 9));
-}
-.red33m-video .ee-video_title {
-  font-size: 1.2rem;
-}
+.red33m-video .ee-video_title { font-size: 1.2rem; }
 
 

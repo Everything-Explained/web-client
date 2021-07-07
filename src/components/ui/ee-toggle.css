@@ -1,24 +1,4 @@
 
-fieldset {
-  display        : block;
-  margin         : 0 auto;
-  padding        : 1.2rem;
-  padding-top    : 0.4rem; /* Accommodate legend */
-  padding-bottom : 1rem;
-  border         : 2px solid var(--toggle-fieldset-bdr-c);
-  border-radius  : 10px;
-  box-shadow     :
-                   0 0 10px 0 var(--toggle-fieldset-bxs-c),
-                   inset 0 0 10px 0 var(--toggle-fieldset-bxs-c)
-                 ;
-}
-fieldset legend {
-  padding          : 0 10px;
-  font-size        : 1.3rem;
-  font-weight      : 400;
-  word-spacing     : 2px;
-  background-color : var(--toggle-legend-c);
-}
 /* TOGGLE STYLING */
 .toggle {
   margin          : 0 auto;
@@ -41,7 +21,7 @@ fieldset legend {
   position         : relative;
   display          : inline-block;
   margin           : 0;
-  padding          : .3rem 1.2rem;
+  padding          : .1rem 0.75rem;
   font-size        : 1.2rem;
   text-align       : center;
   font-weight      : 400;

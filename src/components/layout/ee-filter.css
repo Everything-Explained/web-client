@@ -1,0 +1,56 @@
+.ee-filter {
+  margin: 20px auto 20px auto;
+  width: 20rem;
+}
+
+.ee-filter__fieldset {
+  display        : block;
+  max-height     : 3.9rem;
+  margin         : 0 auto;
+  padding        : 1.2rem;
+  padding-top    : 10px; /* Accommodate legend */
+  padding-bottom : 1rem;
+  border-radius  : 5px;
+  border         : 2px solid var(--toggle-fieldset-bdr-c);
+  box-shadow     :
+                   0 0 5px 2px var(--toggle-fieldset-bxs-c),
+                   inset 0 0 0 2px var(--toggle-fieldset-bxs-c)
+                  ;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
+}
+.ee-filter__fieldset.--visible {
+  max-height: 30rem;
+  transition: max-height 0.45s ease-in;
+}
+.ee-filter__fieldset legend {
+  padding          : 0 5px 0 7px;
+  font-size        : 1.3rem;
+  font-weight      : 400;
+  word-spacing     : 2px;
+  letter-spacing   : 1px;
+  color            : var(--toggle-legend-c);
+  background-color : var(--toggle-legend-bg-c);
+}
+
+
+.ee-filter__expand-filter {
+  position: absolute;
+  bottom: -0.7rem;
+  right: 0.8rem;
+  padding-right: 5px;
+  font-size: 1.3rem;
+  font-variant: small-caps;
+  font-weight: 400;
+  color: var(--toggle-legend-c);
+  background-color: var(--body-bg-c);
+  cursor: pointer;
+}
+.ee-filter__expand-filter .icon {
+  top: 0.3rem;
+  left: 3px;
+}
+
+.ee-filter__authors {
+  margin-top: 20px;
+}

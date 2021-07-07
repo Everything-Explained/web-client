@@ -3,6 +3,7 @@
     title="Blog Entires"
     size="expanded"
     :show-date-time="true"
+    :reverse-order="true"
     uri="blog"
   />
 </template>

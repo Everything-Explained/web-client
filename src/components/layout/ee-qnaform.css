@@ -14,7 +14,6 @@
 
 .qnaf__question {
   font-size      : 1.20rem;
-  font-weight    : 400;
   letter-spacing : 1px; }
   .qnaf__question::before {
     position    : absolute;
