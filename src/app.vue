@@ -50,7 +50,7 @@ export default defineComponent({
       isToastClosed,
       closeToast,
       openVersion,
-    } = useVersionToast(body, '2021-05-27T19:03:43.501Z', 'a2-snickerdoodle');
+    } = useVersionToast(body, '2021-07-07T00:58:57.144Z', 'a3-insulation');
 
     useCustomScrollPos(body);
 
