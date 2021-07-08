@@ -14,7 +14,6 @@
   opacity: 0;
 }
 .lazyimg_image {
-  width: 100%;
   opacity: 0;
 }
 .lazyimg_image.--loaded {

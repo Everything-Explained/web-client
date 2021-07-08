@@ -74,9 +74,14 @@ function useImageObserver(props: IMGProps) {
 
   function detectAssetSize() {
     if (props.asset) {
-      const [width, height] = state.activeSrc.split('/')[5].split('x');
-      state.img.height = parseInt(height);
-      state.img.width = parseInt(width);
+      const [width, height] = state.activeSrc.split('/')[5].split('x').map(v => parseInt(v));
+
+      const winWidth = document.body.clientWidth;
+      const contentWidth = winWidth > 1024 ? 1024 : winWidth;
+      const ratio = width / height;
+
+      if (width >= contentWidth) state.img.height = (contentWidth * 0.97) / ratio;
+      else state.img.height = width / ratio;
     }
   }
 
