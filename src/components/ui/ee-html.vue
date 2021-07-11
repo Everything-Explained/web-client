@@ -2,7 +2,11 @@
   <div>
     <template v-for="(n, i) of htmlNodes" :key="i">
       <p v-if="'p' == n[0]" v-html="n[1]" />
-      <ol v-else-if="'ol' == n[0]" v-html="n[1]" />
+      <ol
+        v-else-if="'ol' == n[0]"
+        :start="n[2] || 1"
+        v-html="n[1]"
+      />
       <ee-img
         v-else-if="'img' == n[0]"
         :src="n[1]"
@@ -44,6 +48,10 @@ export default defineComponent({
 
 
 function useHTMLNodeParser(html: string) {
+  const youTubeHTML = 'embed-responsive-item youtube-player';
+  const imageHTML   = '<ee-img';
+  const olHTML      = '<ol';
+
 
   function getNodesUsingBQ() {
     const htmlParts = html.split('</blockquote>');
@@ -60,34 +68,45 @@ function useHTMLNodeParser(html: string) {
     return nodes;
   }
 
+
   function getNodesUsingP(newHTML?: string) {
     const htmlParts   = (newHTML ?? html).split('<p>');
     const nodes       = [] as string[][];
-    const youTubeHTML = 'embed-responsive-item youtube-player';
-    const imageHTML   = '<ee-img';
-    const olHTML      = '<ol>';
 
     for (const p of htmlParts) {
       if (!p.trim()) continue;
       if (p.includes(youTubeHTML)) { nodes.push(getNodeData(p, 'span')); continue; }
-      if (p.includes(olHTML)) {
-        const [pHTML, listHTML] = p.split(olHTML);
-        nodes.push(getNodeData(pHTML), getNodeData(listHTML.trim(), 'ol'));
-        continue;
-      }
-      if (p.includes(imageHTML)) {
-        const [nodeHTML, ...imagesHTML] = p.split(imageHTML);
-        if (nodeHTML.trim()) nodes.push(getNodeData(nodeHTML));
-        for (const imgHTML of imagesHTML) nodes.push(getImgNode(imgHTML));
-        continue;
-      }
+      if (p.includes(olHTML))      { nodes.push(...filterListNode(p));   continue; }
+      if (p.includes(imageHTML))   { nodes.push(...filterImageNodes(p)); continue; }
       nodes.push(getNodeData(p));
     }
     return nodes;
   }
 
-  const getNodeData = (html: string, el = 'p') => [el, html.trim().substring(0, html.length - 5)];
-  const getImgNode  = (html: string)           => ['img', html.trim().split('https:')[1].split('"')[0]];
+
+  function filterListNode(partialHTML: string) {
+    const [pHTML, listHTML] = partialHTML.split(olHTML);
+    const attrib = listHTML.split('>', 1)[0].trim();
+    const cleanList = attrib
+      ? listHTML.trimStart().substring(attrib.length + 1).trim()
+      : listHTML.trimStart().substring(1).trim()
+    ;
+    const listNodeData = getNodeData(cleanList, 'ol');
+    if (attrib) listNodeData.push(attrib.split('"')[1]);
+    return [getNodeData(pHTML), listNodeData];
+  }
+
+
+  function filterImageNodes(partialHTML: string) {
+    const [nodeHTML, ...imagesHTML] = partialHTML.split(imageHTML);
+    const imgNodeData = imagesHTML.map(getImgNodeData);
+    return nodeHTML.trim() ? [getNodeData(nodeHTML), ...imgNodeData] : imgNodeData;
+  }
+
+
+  const getNodeData     = (html: string, el = 'p') => [el, html.trim().substring(0, html.length - 5)];
+  const getImgNodeData  = (html: string)           => ['img', html.trim().split('https:')[1].split('"')[0]];
+
 
   return {
     getNodesUsingBQ,
