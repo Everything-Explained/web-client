@@ -61,33 +61,33 @@ function useHTMLNodeParser(html: string) {
   }
 
   function getNodesUsingP(newHTML?: string) {
-    const htmlParts      = (newHTML ?? html).split('<p>');
-    const nodes          = [] as string[][];
-    const ytVideoStr     = 'embed-responsive-item youtube-player';
-    const imageStr       = '<ee-img';
-    const orderedListStr = '<ol>';
+    const htmlParts   = (newHTML ?? html).split('<p>');
+    const nodes       = [] as string[][];
+    const youTubeHTML = 'embed-responsive-item youtube-player';
+    const imageHTML   = '<ee-img';
+    const olHTML      = '<ol>';
 
     for (const p of htmlParts) {
       if (!p.trim()) continue;
-      if (p.includes(ytVideoStr)) { nodes.push(getNodeFromText(p, 'span')); continue; }
-      if (p.includes(orderedListStr)) {
-        const [pg, list] = p.split(orderedListStr);
-        nodes.push(getNodeFromText(pg), getNodeFromText(list.trim(), 'ol'));
+      if (p.includes(youTubeHTML)) { nodes.push(getNodeData(p, 'span')); continue; }
+      if (p.includes(olHTML)) {
+        const [pHTML, listHTML] = p.split(olHTML);
+        nodes.push(getNodeData(pHTML), getNodeData(listHTML.trim(), 'ol'));
         continue;
       }
-      if (p.includes(imageStr)) {
-        const [nodeHTML, ...imagesHTML] = p.split(imageStr);
-        if (nodeHTML.trim()) nodes.push(getNodeFromText(nodeHTML));
-        for (const imgHTML of imagesHTML) nodes.push(getNodeFromSrc(imgHTML));
+      if (p.includes(imageHTML)) {
+        const [nodeHTML, ...imagesHTML] = p.split(imageHTML);
+        if (nodeHTML.trim()) nodes.push(getNodeData(nodeHTML));
+        for (const imgHTML of imagesHTML) nodes.push(getImgNode(imgHTML));
         continue;
       }
-      nodes.push(getNodeFromText(p));
+      nodes.push(getNodeData(p));
     }
     return nodes;
   }
 
-  const getNodeFromText = (node: string, el = 'p') => [el, node.trim().substring(0, node.length - 5)];
-  const getNodeFromSrc  = (node: string)           => ['img', node.trim().split('https:')[1].split('"')[0]];
+  const getNodeData = (html: string, el = 'p') => [el, html.trim().substring(0, html.length - 5)];
+  const getImgNode  = (html: string)           => ['img', html.trim().split('https:')[1].split('"')[0]];
 
   return {
     getNodesUsingBQ,
