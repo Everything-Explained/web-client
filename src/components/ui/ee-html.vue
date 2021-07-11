@@ -60,18 +60,18 @@ function useHTMLNodeParser(html: string) {
   }
 
   function getNodesUsingP(newHTML?: string) {
-    const htmlParts = (newHTML ?? html).split('<p>');
-    const nodes = [] as string[][];
+    const htmlParts  = (newHTML ?? html).split('<p>');
+    const ytVideoStr = 'embed-responsive-item youtube-player';
+    const imageStr   = '<ee-img';
+    const nodes      = [] as string[][];
+
     for (const p of htmlParts) {
       if (!p.trim()) continue;
-      if (p.includes('embed-responsive-item youtube-player')) {
-        nodes.push(getNodeFromText(p, 'span'));
-        continue;
-      }
-      if (p.includes('ee-img')) {
-        const [text, ...images] = p.split('<ee-img');
-        if (text.trim()) nodes.push(getNodeFromText(text));
-        for (const img of images) nodes.push(getNodeFromSrc(img));
+      if (p.includes(ytVideoStr)) { nodes.push(getNodeFromText(p, 'span')); continue; }
+      if (p.includes(imageStr)) {
+        const [nodeHTML, ...imagesHTML] = p.split(imageStr);
+        if (nodeHTML.trim()) nodes.push(getNodeFromText(nodeHTML));
+        for (const imgHTML of imagesHTML) nodes.push(getNodeFromSrc(imgHTML));
         continue;
       }
       nodes.push(getNodeFromText(p));
