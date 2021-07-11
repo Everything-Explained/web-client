@@ -2,6 +2,7 @@
   <div>
     <template v-for="(n, i) of htmlNodes" :key="i">
       <p v-if="'p' == n[0]" v-html="n[1]" />
+      <ol v-else-if="'ol' == n[0]" v-html="n[1]" />
       <ee-img
         v-else-if="'img' == n[0]"
         :src="n[1]"
@@ -60,14 +61,20 @@ function useHTMLNodeParser(html: string) {
   }
 
   function getNodesUsingP(newHTML?: string) {
-    const htmlParts  = (newHTML ?? html).split('<p>');
-    const ytVideoStr = 'embed-responsive-item youtube-player';
-    const imageStr   = '<ee-img';
-    const nodes      = [] as string[][];
+    const htmlParts      = (newHTML ?? html).split('<p>');
+    const nodes          = [] as string[][];
+    const ytVideoStr     = 'embed-responsive-item youtube-player';
+    const imageStr       = '<ee-img';
+    const orderedListStr = '<ol>';
 
     for (const p of htmlParts) {
       if (!p.trim()) continue;
       if (p.includes(ytVideoStr)) { nodes.push(getNodeFromText(p, 'span')); continue; }
+      if (p.includes(orderedListStr)) {
+        const [pg, list] = p.split(orderedListStr);
+        nodes.push(getNodeFromText(pg), getNodeFromText(list.trim(), 'ol'));
+        continue;
+      }
       if (p.includes(imageStr)) {
         const [nodeHTML, ...imagesHTML] = p.split(imageStr);
         if (nodeHTML.trim()) nodes.push(getNodeFromText(nodeHTML));
