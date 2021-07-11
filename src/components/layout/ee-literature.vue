@@ -53,7 +53,7 @@
         <ee-footer />
       </div>
       <div v-else-if="activePage">
-        <article :class="['md', contentClass]" v-html="activePage.content" />
+        <ee-html :class="['md', contentClass]" :html="activePage.content" />
         <ee-footer />
       </div>
     </transition>
@@ -74,6 +74,7 @@ import eeFilterVue from "./ee-filter.vue";
 import { VuexStore } from "@/vuex/vuex-store";
 import { useStore } from "vuex";
 import { isEthan } from "@/composeables/globals";
+import eeHtmlVue from "../ui/ee-html.vue";
 
 
 
@@ -91,6 +92,7 @@ export default defineComponent({
     'ee-bullet': eeBulletVue,
     'ee-footer': eeFooterVue,
     'ee-filter': eeFilterVue,
+    'ee-html'  : eeHtmlVue,
   },
   props: {
     size         : { type: String,  default: 'compact'       },
