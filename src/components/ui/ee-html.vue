@@ -1,13 +1,13 @@
 <template>
   <div>
     <template v-for="(n, i) of htmlNodes" :key="i">
-      <p v-if="isP(n[0])" v-html="n[1]" />
+      <p v-if="'p' == n[0]" v-html="n[1]" />
       <ee-img
-        v-else-if="isImg(n[0])"
+        v-else-if="'img' == n[0]"
         :src="n[1]"
         :asset="true"
       />
-      <blockquote v-else-if="isBlockquote(n[0])" v-html="n[1]" />
+      <blockquote v-else-if="'bq' == n[0]" v-html="n[1]" />
       <span v-else v-html="n[1]" />
     </template>
   </div>
@@ -30,17 +30,12 @@ export default defineComponent({
   setup({html}) {
     const { getNodesUsingBQ, getNodesUsingP } = useHTMLNodeParser(html);
 
-    const htmlNodes =
-      html.includes('<blockquote>')
-        ? getNodesUsingBQ()
-        : getNodesUsingP()
-    ;
-
     return {
-      isP: (node: string) => node == 'p',
-      isImg: (node: string) => node == 'img',
-      isBlockquote: (node: string) => node == 'bq',
-      htmlNodes
+      htmlNodes:
+        html.includes('<blockquote>')
+          ? getNodesUsingBQ()
+          : getNodesUsingP()
+      ,
     };
   }
 
@@ -57,14 +52,9 @@ function useHTMLNodeParser(html: string) {
     htmlParts.forEach((p, i) => {
       if (p.includes('<blockquote>')) {
         const [html, bq] = p.split('<blockquote>');
-        const parsedNodes = getNodesUsingP(html);
-        const bqNode = ['bq', bq];
-        nodes.push(...[...parsedNodes, bqNode]);
+        nodes.push(...getNodesUsingP(html), ['bq', bq]);
       }
-      else if (i == partsLength - 1) {
-        const parsedNodes = getNodesUsingP(p);
-        nodes.push(...parsedNodes);
-      }
+      else if (i == partsLength - 1) nodes.push(...getNodesUsingP(p));
     });
     return nodes;
   }
@@ -75,22 +65,22 @@ function useHTMLNodeParser(html: string) {
     for (const p of htmlParts) {
       if (!p.trim()) continue;
       if (p.includes('embed-responsive-item youtube-player')) {
-        nodes.push(getTextFromNode(p, 'span'));
+        nodes.push(getNodeFromText(p, 'span'));
         continue;
       }
       if (p.includes('ee-img')) {
         const [text, ...images] = p.split('<ee-img');
-        if (text.trim()) nodes.push(getTextFromNode(text));
-        for (const img of images) nodes.push(getSrcFromNode(img));
+        if (text.trim()) nodes.push(getNodeFromText(text));
+        for (const img of images) nodes.push(getNodeFromSrc(img));
         continue;
       }
-      nodes.push(['p', p.trim().substring(0, p.length - 5)]);
+      nodes.push(getNodeFromText(p));
     }
     return nodes;
   }
 
-  const getTextFromNode = (node: string, el = 'p') => [el, node.trim().substring(0, node.length - 5)];
-  const getSrcFromNode  = (node: string) => ['img', node.trim().split('https:')[1].split('"')[0]];
+  const getNodeFromText = (node: string, el = 'p') => [el, node.trim().substring(0, node.length - 5)];
+  const getNodeFromSrc  = (node: string)           => ['img', node.trim().split('https:')[1].split('"')[0]];
 
   return {
     getNodesUsingBQ,
