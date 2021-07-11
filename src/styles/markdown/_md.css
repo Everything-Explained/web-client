@@ -177,25 +177,31 @@
 }
 .md > ol li { margin-bottom: 0.5rem; }
 
-
+.md img {
+  display: block;
+  margin: 20px auto;
+  max-width: 97%;
+  box-shadow : 0 0 10px 3px black;
+}
 .md > p > img {
   display    : block;
   margin     : 10px auto;
   max-width  : 100%;
+  min-height : 100%;
   box-shadow : 0 0 10px 3px var(--md-img-bxs-c);
 }
 .md > p > img + br { display: none; }
 
 
 /* ### Embeded Video Styles ### */
-.md > .embed-responsive {
+.md > span .embed-responsive {
   margin : 20px auto;
   width  : 90%;
   height : 0;
   padding-bottom: calc(100% / (16 / 9));
   overflow: visible;
 }
-.md > .embed-responsive iframe {
+.md > span .embed-responsive iframe {
   position: absolute;
   left: 0; top: 0;
   width  : 100%;
