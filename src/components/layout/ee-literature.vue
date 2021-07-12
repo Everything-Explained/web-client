@@ -53,7 +53,14 @@
         <ee-footer />
       </div>
       <div v-else-if="activePage">
-        <ee-html :class="['md', contentClass]" :html="activePage.content" />
+        <ee-html v-if="useCustomRenderer"
+                 :class="['md', contentClass]"
+                 :html="activePage.content"
+        />
+        <article v-else
+                 :class="['md', contentClass]"
+                 v-html="activePage.content"
+        />
         <ee-footer />
       </div>
     </transition>
@@ -95,14 +102,15 @@ export default defineComponent({
     'ee-html'  : eeHtmlVue,
   },
   props: {
-    size         : { type: String,  default: 'compact'       },
-    uri          : { type: String,  default: ''              },
-    title        : { type: String,  default: 'Default Title' },
-    contentClass : { type: String,  default: ''              },
-    showAuthor   : { type: Boolean, default: true            },
-    showDateTime : { type: Boolean, default: false           },
-    showFilter   : { type: Boolean, default: true            },
-    reverseOrder : { type: Boolean, default: false           },
+    size              : { type: String,  default: 'compact'       },
+    uri               : { type: String,  default: ''              },
+    title             : { type: String,  default: 'Default Title' },
+    contentClass      : { type: String,  default: ''              },
+    showAuthor        : { type: Boolean, default: true            },
+    showDateTime      : { type: Boolean, default: false           },
+    showFilter        : { type: Boolean, default: true            },
+    reverseOrder      : { type: Boolean, default: false           },
+    useCustomRenderer : { type: Boolean, default: true            },
   },
   setup(props) {
     const { size, uri } = props;
