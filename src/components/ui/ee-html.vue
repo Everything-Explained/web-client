@@ -47,6 +47,9 @@ export default defineComponent({
 });
 
 
+
+
+
 function useHTMLNodeParser(html: string) {
   const youTubeHTML = 'embed-responsive-item youtube-player';
   const imageHTML   = '<ee-img';
@@ -80,12 +83,14 @@ function useHTMLNodeParser(html: string) {
       if (p.includes(imageHTML))   { nodes.push(...filterImageNodes(p)); continue; }
       nodes.push(getNodeData(p));
     }
+
     return nodes;
   }
 
 
   function filterListNode(partialHTML: string) {
     const [pHTML, listHTML] = partialHTML.split(olHTML);
+    // Some ordered lists need to "start" at a different number
     const attrib = listHTML.split('>', 1)[0].trim();
     const cleanList = attrib
       ? listHTML.trimStart().substring(attrib.length + 1).trim()
