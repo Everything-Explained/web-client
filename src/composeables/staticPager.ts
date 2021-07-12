@@ -1,9 +1,8 @@
 import { APIResponse, useAPI } from "@/services/api_internal";
-import { VuexStore } from "@/vuex/vuex-store";
+import { useDateCache } from "@/state/cache-state";
 import { computed, ref, watch } from "vue";
 import { useTask } from "vue-concurrency";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
 
 export interface StaticPage {
   title: string;
@@ -16,10 +15,10 @@ export interface StaticPage {
 export function useStaticPager<T extends StaticPage>(url: string) {
   const router     = useRouter();
   const route      = router.currentRoute;
-  const store      = useStore<VuexStore>();
+  const dataCache  = useDateCache();
   const activePage = ref<T|null>();
   const pageURI    = route.value.params.page as string|undefined;
-  const pages      = computed(() => store.state.dataCache[url] as T[] || []);
+  const pages      = dataCache.getArrayData<T>(url);
   const pageTitle  = ref('');
 
   function displayPage(uri: string) {
@@ -32,7 +31,7 @@ export function useStaticPager<T extends StaticPage>(url: string) {
   const api = useAPI();
   const getPageData = useTask(function*() {
     const resp: APIResponse<StaticPage[]> = yield api.get(`/data/${url}.json`, null, 'static');
-    store.commit('data-cache-add', { name: url, data: resp.data });
+    dataCache.setArrayData(url, resp.data);
     // The URL points to a specific page on index load
     if (pageURI) displayPage(pageURI);
   });
