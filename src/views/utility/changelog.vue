@@ -5,6 +5,7 @@
     :show-date-time="true"
     :show-author="false"
     :show-filter="false"
+    :use-custom-renderer="false"
     content-class="chglog"
     title="Changelog"
   />
