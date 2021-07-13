@@ -16,6 +16,10 @@ export function useDateCache() {
       catchMissingState(key);
       state[key] = val.slice();
     },
+    updArrayData: (key: string, val: string|boolean|number) => {
+      catchMissingState(key);
+      (state[key] as any[]).push(val);
+    },
     getArrayData: <T>(key: string) => {
       catchMissingState(key);
       return computed(() => (state[key]?.slice() || []) as T[]);
@@ -25,18 +29,18 @@ export function useDateCache() {
       catchMissingState(key);
       state[key] = { ...val };
     },
-    getObjData: (key: string) => {
+    getObjData: <T>(key: string) => {
       catchMissingState(key);
-      return computed(() => ({ ...state[key] }));
+      return computed(() => ({ ...state[key] } as T));
     },
 
-    setPrimitiveData: (key: string, val: string|boolean|number) => {
+    setData: (key: DataKeys, val: string|boolean|number) => {
       catchMissingState(key);
       state[key] = val;
     },
-    getPrimitiveData: (key: string) => {
+    getData: <T>(key: DataKeys) => {
       catchMissingState(key);
-      return computed(() => state[key]);
+      return computed(() => state[key] as T);
     }
   };
 }
