@@ -10,7 +10,7 @@
   transform: translate(-50%, -50%);
   transition: opacity 0.5s, visibility 0.5s;
 }
-.lazyimg_preloader.--disabled {
+.lazyimg_image, .lazyimg_preloader.--disabled {
   opacity: 0;
 }
 .lazyimg_image.--loaded {
