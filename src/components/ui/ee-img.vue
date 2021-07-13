@@ -15,9 +15,8 @@
 
 
 <script lang="ts">
+import { useDateCache } from "@/state/cache-state";
 import { computed, defineComponent, onMounted, reactive, ref, toRefs, watch } from "vue";
-import { useStore } from "vuex";
-import { VuexStore } from "../../vuex/vuex-store";
 
 type IMGProps = { src: string; asset: boolean }
 
@@ -57,14 +56,14 @@ export default defineComponent({
 function useImageObserver(props: IMGProps) {
   const imgRef        = ref<HTMLImageElement>();
   const containerRef  = ref<HTMLElement>();
-  const store         = useStore<VuexStore>();
+  const dataCache     = useDateCache();
 
   const state = reactive({
     img           : computed(() => imgRef.value!),
     loaded        : false,
     showPreloader : false,
     activeSrc     : computed(() => props.src!),
-    cache         : computed(() => store.state.lazyimgCache)
+    cache         : dataCache.getArrayData<string>('lazyimg-data'),
   });
 
   function isImageCached(uri: string) {
@@ -92,7 +91,7 @@ function useImageObserver(props: IMGProps) {
         state.showPreloader = true;
         // Provides a smoother transition with fast loading images
         setTimeout(updateImageSrc, 150);
-        store.commit('lazyimg-cache-add', state.activeSrc);
+        dataCache.updArrayData('lazyimg-data', state.activeSrc);
       }
       else updateImageSrc();
 

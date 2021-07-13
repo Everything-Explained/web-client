@@ -2,28 +2,29 @@ import { computed, reactive } from "vue";
 
 const state = reactive({
   'titlebar-menu-open' : false,
-  'blog'               : [] as any[],
-  'changelog'          : [] as any[],
-  'library/literature' : [] as any[],
-  'red33m/literature'  : [] as any[],
+  'lazyimg-data'       : [],
+  'blog'               : [],
+  'changelog'          : [],
+  'library/literature' : [],
+  'red33m/literature'  : [],
 } as { [key: string]: any });
 
+type DataArrayKeys = 'lazyimg-data';
 type DataKeys = 'titlebar-menu-open';
 
 // NOTE: We are assuming that all contained non-primitive types will
 //       NOT be mutated. E.g. [Object, Object] or { foo: ['bar'] }
 export function useDateCache() {
-
   return {
-    setArrayData: (key: string, val: any[]) => {
+    setArrayData: (key: DataArrayKeys, val: any[]) => {
       catchMissingState(key);
       state[key] = val.slice();
     },
-    updArrayData: (key: string, val: string|boolean|number) => {
+    updArrayData: (key: DataArrayKeys, val: string|boolean|number) => {
       catchMissingState(key);
       (state[key] as any[]).push(val);
     },
-    getArrayData: <T>(key: string) => {
+    getArrayData: <T>(key: DataArrayKeys) => {
       catchMissingState(key);
       return computed(() => (state[key]?.slice() || []) as T[]);
     },
