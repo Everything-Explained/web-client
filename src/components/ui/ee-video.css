@@ -1,13 +1,14 @@
 
-.ee-video_img     { overflow : hidden;         }
-.ee-video_img img { margin   : -9.5% 0 -11% 0; }
 .ee-video_img {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-}
+  overflow: hidden; }
+  .ee-video_img img {
+    margin   : -9.5% 0 -11% 0;
+    width: 100%; }
 
 .ee-video__thumbnail-container::before {
   display: block;
