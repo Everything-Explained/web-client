@@ -1,16 +1,18 @@
 import { computed, reactive } from "vue";
 
 const state = reactive({
-  'titlebar-menu-open' : false,
-  'lazyimg-data'       : [],
-  'blog'               : [],
-  'changelog'          : [],
-  'library/literature' : [],
-  'red33m/literature'  : [],
+  'titlebar-menu-open'        : false,
+  'lazyimg-data'              : [],
+  'blog'                      : [],
+  'changelog'                 : [],
+  'library/literature'        : [],
+  'red33m/literature'         : [],
+  '/data/red33m/videos.json'  : [],
+  '/data/library/videos.json' : [],
 } as { [key: string]: any });
 
-type DataArrayKeys = 'lazyimg-data';
-type DataKeys = 'titlebar-menu-open';
+type DataArrayKeys = 'lazyimg-data'|string;
+type DataKeys = 'titlebar-menu-open'|string;
 
 // NOTE: We are assuming that all contained non-primitive types will
 //       NOT be mutated. E.g. [Object, Object] or { foo: ['bar'] }
