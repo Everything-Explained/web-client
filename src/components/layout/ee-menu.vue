@@ -35,10 +35,9 @@
 
 <script lang='ts'>
 import { computed, defineComponent, onMounted, ref, watch, Ref } from "vue";
-import { useStore } from "vuex";
 import { useRouteMap } from "@/router/map";
-import { VuexStore } from "@/vuex/vuex-store";
 import eeIconVue from '@/components/ui/ee-icon.vue';
+import { useDateCache } from "@/state/cache-state";
 
 interface ExternalElements {
   body   ?: HTMLElement;
@@ -57,7 +56,8 @@ export default defineComponent({
   setup(props) {
     const menuElRef = ref<HTMLDivElement|null>(null);
     const opened  = ref(false);
-    const store   = useStore<VuexStore>();
+    const dataCache = useDateCache();
+    const isMenuOpening = dataCache.getData<boolean>('titlebar-menu-open');
     const routeMap = useRouteMap();
 
     if (!props.contentId) throw Error('Missing content ID');
@@ -85,7 +85,7 @@ export default defineComponent({
     });
 
     // Toggle menu
-    watch(() => store.state.isMenuOpening,
+    watch(() => isMenuOpening.value,
       async (isOpening) => {
         opened.value = isOpening;
         els.body?.classList[isOpening ? 'add' : 'remove']('--menu-open');
@@ -94,7 +94,7 @@ export default defineComponent({
     return {
       menu: menuElRef,
       opened,
-      closeMenu: () => store.commit('close-menu'),
+      closeMenu: () => dataCache.setData('titlebar-menu-open', false),
       routeMap,
     };
   }

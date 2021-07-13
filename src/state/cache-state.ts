@@ -1,11 +1,14 @@
 import { computed, reactive } from "vue";
 
 const state = reactive({
-  'blog': [] as any[],
-  'changelog': [] as any[],
-  'library/literature': [] as any[],
-  'red33m/literature': [] as any[],
+  'titlebar-menu-open' : false,
+  'blog'               : [] as any[],
+  'changelog'          : [] as any[],
+  'library/literature' : [] as any[],
+  'red33m/literature'  : [] as any[],
 } as { [key: string]: any });
+
+type DataKeys = 'titlebar-menu-open';
 
 // NOTE: We are assuming that all contained non-primitive types will
 //       NOT be mutated. E.g. [Object, Object] or { foo: ['bar'] }

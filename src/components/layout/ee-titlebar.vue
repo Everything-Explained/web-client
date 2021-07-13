@@ -20,10 +20,9 @@
 
 
 <script lang='ts'>
-import { computed, defineComponent } from "vue";
-import { useStore } from "vuex";
-import { VuexStore } from "@/vuex/vuex-store";
+import { defineComponent } from "vue";
 import eeIconVue from '@/components/ui/ee-icon.vue';
+import { useDateCache } from "@/state/cache-state";
 
 
 export default defineComponent({
@@ -34,14 +33,15 @@ export default defineComponent({
     text:    { type: String, default: '' }
   },
   setup(props) {
-    const store      = useStore<VuexStore>();
-    const isMenuOpen = computed(() => store.state.isMenuOpening);
+    const stateStr   = 'titlebar-menu-open';
+    const dataCache = useDateCache();
+    const isMenuOpen = dataCache.getData<boolean>(stateStr);
     const duration = {
       enter: props.easeIn ?? 400,
       leave: props.easeOut ?? 400
     };
 
-    const openMenu = () => store.commit('open-menu');
+    const openMenu = () => dataCache.setData(stateStr, true);
 
     return { openMenu, isMenuOpen, ...duration };
   }
